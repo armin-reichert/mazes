@@ -58,12 +58,12 @@ public class BreadthFirstTraversal<V, E extends Edge<V>> extends GraphTraversal<
 		queue.add(source);
 		while (!queue.isEmpty()) {
 			V vertex = queue.poll();
-			for (V neighbor : graph.adjVertices(vertex)) {
+			graph.adjVertices(vertex).forEach(neighbor -> {
 				if (getState(neighbor) == UNVISITED) {
 					visit(neighbor, vertex, getDistance(vertex) + 1);
 					queue.add(neighbor);
 				}
-			}
+			});
 			setState(vertex, COMPLETED);
 		}
 	}

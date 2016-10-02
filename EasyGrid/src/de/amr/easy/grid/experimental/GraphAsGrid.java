@@ -58,10 +58,10 @@ public class GraphAsGrid<P> extends DefaultObservableGraph<P, DefaultWeightedEdg
 			for (int y = 0; y < numRows; y++) {
 				P p = position(x, y);
 				if (x + 1 < numCols) {
-					addEdge(new DefaultWeightedEdge<P>(p, position(x + 1, y)));
+					addEdge(new DefaultWeightedEdge<>(p, position(x + 1, y)));
 				}
 				if (y + 1 < numRows) {
-					addEdge(new DefaultWeightedEdge<P>(p, position(x, y + 1)));
+					addEdge(new DefaultWeightedEdge<>(p, position(x, y + 1)));
 				}
 			}
 		}
@@ -149,12 +149,7 @@ public class GraphAsGrid<P> extends DefaultObservableGraph<P, DefaultWeightedEdg
 		if (q == null) {
 			return false;
 		}
-		for (P x : adjVertices(p)) {
-			if (x == q) {
-				return true;
-			}
-		}
-		return false;
+		return adjVertices(p).anyMatch(neighbor -> neighbor == q);
 	}
 
 	@Override

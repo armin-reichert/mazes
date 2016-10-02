@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Before;
@@ -47,11 +48,11 @@ public class FullGridTest {
 		assertTrue(grid.edgeStream().count() == 2 * WIDTH * HEIGHT - (WIDTH + HEIGHT));
 	}
 
-	private void assertContainsExactly(Iterable<Integer> it, Integer... cells) {
+	private void assertContainsExactly(Stream<Integer> stream, Integer... cells) {
 		Set<Integer> set = new HashSet<>();
-		for (Integer cell : cells) {
+		stream.forEach(cell -> {
 			set.add(cell);
-		}
+		});
 		for (Integer cell : cells) {
 			assertTrue(set.contains(cell));
 		}
@@ -70,11 +71,11 @@ public class FullGridTest {
 		cell = grid.cell(GridPosition.TOP_LEFT);
 		assertContainsExactly(grid.adjVertices(cell), grid.cell(1, 0), grid.cell(0, 1));
 		cell = grid.cell(GridPosition.TOP_RIGHT);
-		assertContainsExactly(grid.adjVertices(cell), grid.cell(HEIGHT - 2, 0), grid.cell(HEIGHT - 1, 1));
+		assertContainsExactly(grid.adjVertices(cell), grid.cell(WIDTH - 2, 0), grid.cell(WIDTH - 1, 1));
 		cell = grid.cell(GridPosition.BOTTOM_LEFT);
-		assertContainsExactly(grid.adjVertices(cell), grid.cell(1, 0), grid.cell(HEIGHT - 1, 1));
-		cell = grid.cell(GridPosition.TOP_RIGHT);
-		assertContainsExactly(grid.adjVertices(cell), grid.cell(HEIGHT - 2, 0), grid.cell(HEIGHT - 1, 1));
+		assertContainsExactly(grid.adjVertices(cell), grid.cell(0, HEIGHT - 2), grid.cell(1, HEIGHT - 1));
+		cell = grid.cell(GridPosition.BOTTOM_RIGHT);
+		assertContainsExactly(grid.adjVertices(cell), grid.cell(WIDTH - 1, HEIGHT - 2), grid.cell(WIDTH - 2, HEIGHT - 1));
 	}
 
 	@Test

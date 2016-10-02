@@ -129,7 +129,7 @@ public class DefaultGraph<V, E extends Edge<V>> implements Graph<V, E> {
 	}
 
 	@Override
-	public Iterable<V> adjVertices(V v) {
+	public Stream<V> adjVertices(V v) {
 		assertVertexExists(v);
 		List<V> result = new ArrayList<>();
 		for (E e : adjEdges.get(v)) {
@@ -139,7 +139,7 @@ public class DefaultGraph<V, E extends Edge<V>> implements Graph<V, E> {
 				result.add(e.either());
 			}
 		}
-		return result;
+		return result.stream();
 	}
 
 	@Override

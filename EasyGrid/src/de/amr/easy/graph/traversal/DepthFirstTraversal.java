@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;
@@ -25,7 +26,8 @@ import de.amr.easy.graph.api.SingleSourcePathFinder;
  * 
  * @author Armin Reichert
  */
-public class DepthFirstTraversal<V, E extends Edge<V>> extends GraphTraversal<V, E> implements SingleSourcePathFinder<V> {
+public class DepthFirstTraversal<V, E extends Edge<V>> extends GraphTraversal<V, E>
+		implements SingleSourcePathFinder<V> {
 
 	private final V source;
 	private final V target;
@@ -67,13 +69,13 @@ public class DepthFirstTraversal<V, E extends Edge<V>> extends GraphTraversal<V,
 		stack.push(currentVertex);
 		visit(currentVertex, null);
 		while (!stack.isEmpty() && !foundTarget(currentVertex)) {
-			V neighbor = findUnvisitedNeighbour(currentVertex);
-			if (neighbor != null) {
-				visit(neighbor, currentVertex);
-				if (findUnvisitedNeighbour(neighbor) != null) {
-					stack.push(neighbor);
+			Optional<V> neighbor = findUnvisitedNeighbour(currentVertex);
+			if (neighbor.isPresent()) {
+				visit(neighbor.get(), currentVertex);
+				if (findUnvisitedNeighbour(neighbor.get()) != null) {
+					stack.push(neighbor.get());
 				}
-				currentVertex = neighbor;
+				currentVertex = neighbor.get();
 			} else {
 				setState(currentVertex, COMPLETED);
 				if (!stack.isEmpty()) {
@@ -108,13 +110,8 @@ public class DepthFirstTraversal<V, E extends Edge<V>> extends GraphTraversal<V,
 		return false;
 	}
 
-	private V findUnvisitedNeighbour(V v) {
-		for (V w : graph.adjVertices(v)) {
-			if (getState(w) == UNVISITED) {
-				return w;
-			}
-		}
-		return null;
+	private Optional<V> findUnvisitedNeighbour(V v) {
+		return graph.adjVertices(v).filter(neighbor -> getState(neighbor) == UNVISITED).findAny();
 	}
 
 	// PathFinder implementation

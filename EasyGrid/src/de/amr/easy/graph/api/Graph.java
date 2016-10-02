@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 public interface Graph<V, E extends Edge<V>> {
 
 	/**
-	 * @return stream of the vertices of this graph
+	 * @return a stream of the vertices of this graph
 	 */
 	public Stream<V> vertexStream();
 
@@ -26,7 +26,7 @@ public interface Graph<V, E extends Edge<V>> {
 	public int vertexCount();
 
 	/**
-	 * @return the edges of this graph as stream
+	 * @return a stream of the edges of this graph
 	 */
 	public Stream<E> edgeStream();
 
@@ -78,7 +78,7 @@ public interface Graph<V, E extends Edge<V>> {
 	 *          a vertex
 	 * @return the vertices adjacent to the given vertex
 	 */
-	public Iterable<V> adjVertices(V v);
+	public Stream<V> adjVertices(V v);
 
 	/**
 	 * Tells if the given vertices are adjacent.

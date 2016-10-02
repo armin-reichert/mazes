@@ -4,7 +4,6 @@ import java.util.BitSet;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -139,13 +138,12 @@ public class RawGrid implements Grid2D<Integer, DefaultEdge<Integer>> {
 	}
 
 	@Override
-	public Iterable<Integer> adjVertices(Integer cell) {
+	public Stream<Integer> adjVertices(Integer cell) {
 		checkCell(cell);
 		/*@formatter:off*/
 		return Stream.of(Direction.values())
 			.filter(dir -> isCellConnected(cell, dir))
-			.map(dir -> neighbor(cell, dir))
-			.collect(Collectors.toList());
+			.map(dir -> neighbor(cell, dir));
 		/*@formatter:on*/
 	}
 
