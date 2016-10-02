@@ -45,16 +45,6 @@ public class GridTest {
 		assertEquals(grid.numRows(), HEIGHT);
 	}
 
-	@Test
-	public void testGridVertexIterator() {
-		Iterator<Integer> vertexIterator = grid.vertexSequence().iterator();
-		for (int i = 0; i < grid.vertexCount(); ++i) {
-			assertTrue(vertexIterator.hasNext());
-			vertexIterator.next();
-		}
-		assertFalse(vertexIterator.hasNext());
-	}
-
 	@Test(expected = UnsupportedOperationException.class)
 	public void testAddVertexThrowsException() {
 		grid.addVertex(0);

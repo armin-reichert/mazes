@@ -42,12 +42,6 @@ public class EmptyGridTest {
 	}
 
 	@Test
-	public void testGridVertexIterator() {
-		Iterator<Integer> vertexIterator = grid.vertexSequence().iterator();
-		assertFalse(vertexIterator.hasNext());
-	}
-	
-	@Test
 	public void testGridEdgeStream() {
 		assertTrue(grid.edgeStream().count() == 0);
 	}

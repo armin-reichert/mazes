@@ -19,9 +19,9 @@ public class WilsonUSTRandomCell extends WilsonUST {
 	public WilsonUSTRandomCell(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
 		super(grid);
 		cellsOutsideTree = new LinkedList<>();
-		for (Integer cell : grid.vertexSequence()) {
+		grid.vertexStream().forEach(cell -> {
 			cellsOutsideTree.add(cell);
-		}
+		});
 	}
 
 	@Override

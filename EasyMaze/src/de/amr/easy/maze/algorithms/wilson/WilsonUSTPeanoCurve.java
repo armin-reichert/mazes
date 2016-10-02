@@ -5,6 +5,8 @@ import static de.amr.easy.maze.misc.Utils.nextPow;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.impl.DefaultEdge;
@@ -28,7 +30,7 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 	}
 
 	@Override
-	protected Iterable<Integer> getCellSequence() {
+	protected Stream<Integer> getCellSequence() {
 		int nextPow3 = nextPow(3, Math.max(grid.numCols(), grid.numRows()));
 		RawGrid squareGrid = new RawGrid(nextPow3, nextPow3);
 		Integer cell = squareGrid.cell(0, squareGrid.numRows() - 1);
@@ -37,7 +39,7 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 			cell = squareGrid.neighbor(cell, d);
 			addCellToPath(squareGrid.col(cell), squareGrid.row(cell));
 		}
-		return path;
+		return StreamSupport.stream(path.spliterator(), false);
 	}
 
 	private void addCellToPath(int x, int y) {

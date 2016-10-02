@@ -5,6 +5,8 @@ import static de.amr.easy.grid.iterators.IteratorFactory.parallel;
 import static de.amr.easy.grid.iterators.IteratorFactory.sequence;
 
 import java.util.Iterator;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.impl.DefaultEdge;
@@ -28,8 +30,8 @@ public class WilsonUSTExpandingCircles extends WilsonUST {
 	}
 
 	@Override
-	protected Iterable<Integer> getCellSequence() {
-		return new Iterable<Integer>() {
+	protected Stream<Integer> getCellSequence() {
+		Iterable<Integer> it = new Iterable<Integer>() {
 
 			@Override
 			public Iterator<Integer> iterator() {
@@ -58,6 +60,7 @@ public class WilsonUSTExpandingCircles extends WilsonUST {
 				/*@formatter:on*/
 			}
 		};
+		return StreamSupport.stream(it.spliterator(), false);
 	}
 
 	private Iterator<Integer> expandingCircle(int centerX, int centerY, int rmin, int rmax) {

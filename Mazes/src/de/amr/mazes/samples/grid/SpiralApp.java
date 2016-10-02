@@ -1,7 +1,10 @@
 package de.amr.mazes.samples.grid;
 
-import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.GridPosition;
+import static de.amr.easy.graph.api.TraversalState.COMPLETED;
+import static de.amr.easy.graph.api.TraversalState.UNVISITED;
+import static de.amr.easy.graph.api.TraversalState.VISITED;
+import static de.amr.easy.grid.api.GridPosition.CENTER;
+
 import de.amr.easy.grid.iterators.traversals.Spiral;
 
 public class SpiralApp extends GridSampleApp {
@@ -17,16 +20,16 @@ public class SpiralApp extends GridSampleApp {
 	@Override
 	public void run() {
 		canvas.setDelay(0);
-		for (Integer cell : grid.vertexSequence()) {
-			grid.set(cell, TraversalState.COMPLETED);
-		}
+		grid.vertexStream().forEach(cell -> {
+			grid.set(cell, COMPLETED);
+		});
 		canvas.setDelay(4);
-		Spiral<Integer> spiral = new Spiral<>(grid, grid.cell(GridPosition.CENTER));
+		Spiral<Integer> spiral = new Spiral<>(grid, grid.cell(CENTER));
 		Integer prevCell = null;
 		for (Integer cell : spiral) {
-			grid.set(cell, TraversalState.VISITED);
+			grid.set(cell, VISITED);
 			if (prevCell != null) {
-				grid.set(prevCell, TraversalState.UNVISITED);
+				grid.set(prevCell, UNVISITED);
 			}
 			prevCell = cell;
 		}

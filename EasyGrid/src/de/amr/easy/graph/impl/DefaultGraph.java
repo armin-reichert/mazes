@@ -93,11 +93,6 @@ public class DefaultGraph<V, E extends Edge<V>> implements Graph<V, E> {
 	}
 
 	@Override
-	public Set<V> vertexSequence() {
-		return Collections.unmodifiableSet((vertexSet));
-	}
-
-	@Override
 	public Stream<V> vertexStream() {
 		return vertexSet.stream();
 	}

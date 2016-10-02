@@ -3,6 +3,8 @@ package de.amr.easy.maze.algorithms.wilson;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.impl.DefaultEdge;
@@ -28,8 +30,8 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 	}
 
 	@Override
-	protected Iterable<Integer> getCellSequence() {
-		return new Iterable<Integer>() {
+	protected Stream<Integer> getCellSequence() {
+		Iterable<Integer> it = new Iterable<Integer>() {
 
 			@Override
 			public Iterator<Integer> iterator() {
@@ -40,6 +42,7 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 					expRects.add(expandingRectangle(firstCell, rate).iterator());
 					rate /= 2;
 				}
+				@SuppressWarnings("unchecked")
 				Iterator<Integer>[] expRectsArray = expRects.toArray(new Iterator[expRects.size()]);
 
 				Rectangle<Integer> firstColumn = new Rectangle<>(grid, grid.cell(0, 0), 1, grid.numRows());
@@ -52,6 +55,7 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 				return IteratorFactory.sequence(IteratorFactory.sequence(expRectsArray), sweep.iterator());
 			}
 		};
+		return StreamSupport.stream(it.spliterator(), false);
 	}
 
 	private ExpandingRectangle<Integer> expandingRectangle(Rectangle<Integer> startRectangle, int rate) {

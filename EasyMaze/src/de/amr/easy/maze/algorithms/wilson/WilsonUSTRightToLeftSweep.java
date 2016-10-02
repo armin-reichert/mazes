@@ -1,5 +1,8 @@
 package de.amr.easy.maze.algorithms.wilson;
 
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
@@ -17,8 +20,8 @@ public class WilsonUSTRightToLeftSweep extends WilsonUST {
 	}
 
 	@Override
-	protected Iterable<Integer> getCellSequence() {
-		return new RightToLeftSweep<>(grid);
+	protected Stream<Integer> getCellSequence() {
+		return StreamSupport.stream(new RightToLeftSweep<>(grid).spliterator(), false);
 	}
 
 	@Override

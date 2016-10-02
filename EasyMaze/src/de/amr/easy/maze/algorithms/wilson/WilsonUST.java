@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.impl.DefaultEdge;
@@ -46,14 +47,14 @@ public abstract class WilsonUST implements Consumer<Integer> {
 	public void accept(Integer start) {
 		start = modifyStartVertex(start);
 		addCellToTree(start);
-		for (Integer walkStart : getCellSequence()) {
+		getCellSequence().forEach(walkStart -> {
 			if (!isCellInTree(walkStart)) {
 				loopErasedRandomWalk(walkStart);
 			}
-			if (grid.edgeCount() == grid.vertexCount() - 1)
-				return;
+		});
+		if (grid.edgeCount() != grid.vertexCount() - 1) {
+			throw new IllegalStateException("Maze is incomplete");
 		}
-		throw new IllegalStateException("Maze is incomplete");
 	}
 
 	/**
@@ -87,8 +88,8 @@ public abstract class WilsonUST implements Consumer<Integer> {
 	/**
 	 * @return iterator defining the cell order used by the maze generator
 	 */
-	protected Iterable<Integer> getCellSequence() {
-		return grid.vertexSequence();
+	protected Stream<Integer> getCellSequence() {
+		return grid.vertexStream();
 	}
 
 	/**

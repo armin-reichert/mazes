@@ -10,6 +10,8 @@ import static java.lang.Math.max;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.impl.DefaultEdge;
@@ -30,7 +32,7 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 	}
 
 	@Override
-	protected Iterable<Integer> getCellSequence() {
+	protected Stream<Integer> getCellSequence() {
 		// Hilbert curve need a square grid, so create one
 		int n = nextPow(2, max(grid.numCols(), grid.numRows()));
 		RawGrid square = new RawGrid(n, n);
@@ -48,6 +50,6 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 				path.add(grid.cell(col, row));
 			}
 		}
-		return path;
+		return StreamSupport.stream(path.spliterator(), false);
 	}
 }

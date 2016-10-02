@@ -4,6 +4,7 @@ import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 
 import java.util.Random;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.impl.DefaultEdge;
@@ -26,14 +27,14 @@ public class BinaryTree implements Consumer<Integer> {
 
 	@Override
 	public void accept(Integer start) {
-		for (Integer cell : getCells()) {
+		getCells().forEach(cell -> {
 			Integer neighbor = getRandomNeighbor(cell, Direction.S, Direction.E);
 			if (neighbor != null) {
 				grid.addEdge(new DefaultEdge<>(cell, neighbor));
 				grid.set(cell, COMPLETED);
 				grid.set(neighbor, COMPLETED);
 			}
-		}
+		});
 	}
 
 	private Integer getRandomNeighbor(Integer cell, Direction d1, Direction d2) {
@@ -45,7 +46,7 @@ public class BinaryTree implements Consumer<Integer> {
 	/*
 	 * Can be overriden by subclass to specify different cell iteration.
 	 */
-	protected Iterable<Integer> getCells() {
-		return grid.vertexSequence();
+	protected Stream<Integer> getCells() {
+		return grid.vertexStream();
 	}
 }

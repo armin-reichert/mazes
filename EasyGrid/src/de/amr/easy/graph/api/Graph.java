@@ -16,11 +16,6 @@ import java.util.stream.Stream;
 public interface Graph<V, E extends Edge<V>> {
 
 	/**
-	 * @return sequence of the vertices of this graph
-	 */
-	public Iterable<V> vertexSequence();
-
-	/**
 	 * @return stream of the vertices of this graph
 	 */
 	public Stream<V> vertexStream();
@@ -29,11 +24,6 @@ public interface Graph<V, E extends Edge<V>> {
 	 * @return the number of vertices of this graph
 	 */
 	public int vertexCount();
-
-	/**
-	 * @return sequence of the edges of this graph
-	 */
-//	public Iterable<E> edgeSequence();
 
 	/**
 	 * @return the edges of this graph as stream

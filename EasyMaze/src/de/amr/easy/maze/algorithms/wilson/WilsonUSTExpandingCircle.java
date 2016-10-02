@@ -1,5 +1,8 @@
 package de.amr.easy.maze.algorithms.wilson;
 
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.GridPosition;
@@ -18,9 +21,10 @@ public class WilsonUSTExpandingCircle extends WilsonUST {
 	}
 
 	@Override
-	protected Iterable<Integer> getCellSequence() {
+	protected Stream<Integer> getCellSequence() {
 		Integer center = grid.cell(GridPosition.CENTER);
-		return new ExpandingCircle<>(grid, center, 1, Math.max(grid.numCols(), grid.numRows()));
+		Iterable<Integer> it = new ExpandingCircle<>(grid, center, 1, Math.max(grid.numCols(), grid.numRows()));
+		return StreamSupport.stream(it.spliterator(), false);
 	}
 
 	@Override

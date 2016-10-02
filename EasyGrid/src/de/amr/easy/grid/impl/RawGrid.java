@@ -67,11 +67,6 @@ public class RawGrid implements Grid2D<Integer, DefaultEdge<Integer>> {
 	}
 
 	@Override
-	public Iterable<Integer> vertexSequence() {
-		return vertexStream()::iterator;
-	}
-
-	@Override
 	public Stream<Integer> vertexStream() {
 		return IntStream.range(0, numCells()).boxed();
 	}
