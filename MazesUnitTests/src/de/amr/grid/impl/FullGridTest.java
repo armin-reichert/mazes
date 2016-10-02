@@ -1,11 +1,9 @@
 package de.amr.grid.impl;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 import org.junit.After;
@@ -22,7 +20,7 @@ public class FullGridTest {
 
 	private static final int WIDTH = 15;
 	private static final int HEIGHT = 10;
-	
+
 	private Grid2D<Integer, DefaultEdge<Integer>> grid;
 
 	@Before
@@ -45,13 +43,8 @@ public class FullGridTest {
 	}
 
 	@Test
-	public void testGridEdgeIterator() {
-		Iterator<DefaultEdge<Integer>> edgeIterator = grid.edgeSequence().iterator();
-		for (int i = 0; i < 2 * WIDTH * HEIGHT - (WIDTH + HEIGHT); ++i) {
-			assertTrue(edgeIterator.hasNext());
-			edgeIterator.next();
-		}
-		assertFalse(edgeIterator.hasNext());
+	public void testGridEdgeStream() {
+		assertTrue(grid.edgeStream().count() == 2 * WIDTH * HEIGHT - (WIDTH + HEIGHT));
 	}
 
 	private void assertContainsExactly(Iterable<Integer> it, Integer... cells) {
@@ -68,8 +61,7 @@ public class FullGridTest {
 	@Test
 	public void testAdjVertices() {
 		Integer cell = grid.cell(1, 1);
-		assertContainsExactly(grid.adjVertices(cell), grid.cell(1, 0), grid.cell(1, 2), grid.cell(2, 1),
-				grid.cell(0, 1));
+		assertContainsExactly(grid.adjVertices(cell), grid.cell(1, 0), grid.cell(1, 2), grid.cell(2, 1), grid.cell(0, 1));
 	}
 
 	@Test

@@ -33,7 +33,7 @@ public interface Graph<V, E extends Edge<V>> {
 	/**
 	 * @return sequence of the edges of this graph
 	 */
-	public Iterable<E> edgeSequence();
+//	public Iterable<E> edgeSequence();
 
 	/**
 	 * @return the edges of this graph as stream

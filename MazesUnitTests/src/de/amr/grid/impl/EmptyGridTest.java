@@ -2,6 +2,7 @@ package de.amr.grid.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
 
@@ -47,9 +48,8 @@ public class EmptyGridTest {
 	}
 	
 	@Test
-	public void testGridEdgeIterator() {
-		Iterator<DefaultEdge<Integer>> edgeIterator = grid.edgeSequence().iterator();
-		assertFalse(edgeIterator.hasNext());
+	public void testGridEdgeStream() {
+		assertTrue(grid.edgeStream().count() == 0);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -59,7 +59,7 @@ public class EmptyGridTest {
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testGridEdgeAdd() {
-		grid.addEdge(new DefaultEdge<Integer>(0, 1));
+		grid.addEdge(new DefaultEdge<>(0, 1));
 	}
 
 	@Test(expected = IllegalArgumentException.class)

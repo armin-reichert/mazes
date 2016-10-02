@@ -2,7 +2,6 @@ package de.amr.grid.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
@@ -62,12 +61,6 @@ public class GridTest {
 	}
 
 	@Test
-	public void testGridEdgeIterator() {
-		Iterator<DefaultEdge<Integer>> edgeIterator = grid.edgeSequence().iterator();
-		assertFalse(edgeIterator.hasNext());
-	}
-
-	@Test
 	public void testGetNonexistingEdge() {
 		assertFalse(grid.edge(0, 1).isPresent());
 	}
@@ -82,7 +75,7 @@ public class GridTest {
 	@Test
 	public void testAddEdge() {
 		int numEdges = grid.edgeCount();
-		assert(!grid.edge(0, 1).isPresent());
+		assert (!grid.edge(0, 1).isPresent());
 		DefaultEdge<Integer> edge = new DefaultEdge<>(0, 1);
 		grid.addEdge(edge);
 		assertEquals(numEdges + 1, grid.edgeCount());

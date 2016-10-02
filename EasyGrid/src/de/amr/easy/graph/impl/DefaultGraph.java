@@ -107,8 +107,7 @@ public class DefaultGraph<V, E extends Edge<V>> implements Graph<V, E> {
 		return vertexSet.size();
 	}
 
-	@Override
-	public Set<E> edgeSequence() {
+	private Set<E> createEdgeSet() {
 		Set<E> edges = new HashSet<>();
 		for (V v : vertexSet) {
 			for (E edge : adjEdges.get(v)) {
@@ -120,7 +119,7 @@ public class DefaultGraph<V, E extends Edge<V>> implements Graph<V, E> {
 
 	@Override
 	public Stream<E> edgeStream() {
-		return edgeSequence().stream(); // TODO more efficient way possible?
+		return createEdgeSet().stream(); // TODO more efficient way possible?
 	}
 
 	@Override
@@ -156,7 +155,7 @@ public class DefaultGraph<V, E extends Edge<V>> implements Graph<V, E> {
 		for (V v : vertexSet) {
 			s.append(v).append("\n");
 		}
-		for (E e : edgeSequence()) {
+		for (E e : createEdgeSet()) {
 			V v = e.either();
 			V w = e.other(v);
 			s.append(v).append(" ").append(w).append("\n");

@@ -97,11 +97,6 @@ public class RawGrid implements Grid2D<Integer, DefaultEdge<Integer>> {
 	}
 
 	@Override
-	public Iterable<DefaultEdge<Integer>> edgeSequence() {
-		return createEdgeSet();
-	}
-
-	@Override
 	public Stream<DefaultEdge<Integer>> edgeStream() {
 		return createEdgeSet().stream(); // TODO is there a more efficient way?
 	}

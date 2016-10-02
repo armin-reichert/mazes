@@ -43,9 +43,7 @@ public class GridRenderer<V, E extends Edge<V>> {
 	}
 
 	public void drawGrid(Graphics2D g, Grid2D<V, E> grid) {
-		for (E passage : grid.edgeSequence()) {
-			drawPassage(g, grid, passage, true);
-		}
+		grid.edgeStream().forEach(passage -> drawPassage(g, grid, passage, true));
 	}
 
 	public void drawPassage(Graphics2D g, Grid2D<V, E> grid, E passage, boolean visible) {

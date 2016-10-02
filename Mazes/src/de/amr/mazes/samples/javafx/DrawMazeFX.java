@@ -136,7 +136,7 @@ public class DrawMazeFX extends Application {
 		gc.translate(cellSize, cellSize);
 		gc.setStroke(Color.WHITE);
 		gc.setLineWidth(cellSize / 2);
-		maze.edgeSequence().forEach(edge -> {
+		maze.edgeStream().forEach(edge -> {
 			Integer u = edge.either(), v = edge.other(u);
 			drawPassage(u, v);
 		});
