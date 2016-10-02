@@ -13,7 +13,7 @@ import java.util.stream.Stream;
  * @param <E>
  *          edge type
  */
-public interface Graph<V, E> {
+public interface Graph<V, E extends Edge<V>> {
 
 	/**
 	 * @return sequence of the vertices of this graph

@@ -9,6 +9,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.SingleSourcePathFinder;
 
@@ -24,7 +25,7 @@ import de.amr.easy.graph.api.SingleSourcePathFinder;
  * 
  * @author Armin Reichert
  */
-public class DepthFirstTraversal<V, E> extends GraphTraversal<V, E> implements SingleSourcePathFinder<V> {
+public class DepthFirstTraversal<V, E extends Edge<V>> extends GraphTraversal<V, E> implements SingleSourcePathFinder<V> {
 
 	private final V source;
 	private final V target;

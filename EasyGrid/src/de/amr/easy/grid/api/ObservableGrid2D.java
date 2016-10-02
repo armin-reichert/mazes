@@ -1,5 +1,6 @@
 package de.amr.easy.grid.api;
 
+import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;
 
 /**
@@ -12,5 +13,6 @@ import de.amr.easy.graph.api.ObservableGraph;
  * @param <Passage>
  *          grid passage type
  */
-public interface ObservableGrid2D<Cell, Passage> extends Grid2D<Cell, Passage>, ObservableGraph<Cell, Passage> {
+public interface ObservableGrid2D<Cell, Passage extends Edge<Cell>>
+		extends Grid2D<Cell, Passage>, ObservableGraph<Cell, Passage> {
 }

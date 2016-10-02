@@ -10,7 +10,7 @@ import de.amr.easy.graph.event.GraphListener;
  * @param <E>
  *          the edge type
  */
-public interface ObservableGraph<V, E> extends Graph<V, E> {
+public interface ObservableGraph<V, E extends Edge<V>> extends Graph<V, E> {
 
 	public void addGraphListener(GraphListener<V, E> listener);
 

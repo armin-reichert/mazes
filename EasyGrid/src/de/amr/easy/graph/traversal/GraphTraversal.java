@@ -5,10 +5,11 @@ import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.TraversalState;
 
-public abstract class GraphTraversal<V, E> implements Runnable {
+public abstract class GraphTraversal<V, E extends Edge<V>> implements Runnable {
 
 	protected final ObservableGraph<V, E> graph;
 	private final Map<V, V> parentMap = new HashMap<>();

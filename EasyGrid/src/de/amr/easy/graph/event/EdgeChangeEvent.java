@@ -1,5 +1,6 @@
 package de.amr.easy.graph.event;
 
+import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;
 
 /**
@@ -12,7 +13,7 @@ import de.amr.easy.graph.api.ObservableGraph;
  * @param <E>
  *          the edge type
  */
-public class EdgeChangeEvent<V, E> extends EdgeEvent<V, E> {
+public class EdgeChangeEvent<V, E extends Edge<V>> extends EdgeEvent<V, E> {
 
 	private Object oldValue;
 	private Object newValue;

@@ -2,6 +2,7 @@ package de.amr.easy.grid.api;
 
 import java.util.function.Predicate;
 
+import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
 
 /**
@@ -17,7 +18,7 @@ import de.amr.easy.graph.api.Graph;
  * @param <Passage>
  *          passage type
  */
-public interface Grid2D<Cell, Passage> extends Graph<Cell, Passage> {
+public interface Grid2D<Cell, Passage extends Edge<Cell>> extends Graph<Cell, Passage> {
 
 	/**
 	 * @return the number of grid columns

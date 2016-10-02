@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.SingleSourcePathFinder;
 
@@ -33,7 +34,8 @@ import de.amr.easy.graph.api.SingleSourcePathFinder;
  * 
  * @author Armin Reichert
  */
-public class BreadthFirstTraversal<V, E> extends GraphTraversal<V, E> implements SingleSourcePathFinder<V> {
+public class BreadthFirstTraversal<V, E extends Edge<V>> extends GraphTraversal<V, E>
+		implements SingleSourcePathFinder<V> {
 
 	private final V source;
 	private final Map<V, Integer> distanceFromSource = new HashMap<>();

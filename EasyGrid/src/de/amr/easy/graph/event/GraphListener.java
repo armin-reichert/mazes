@@ -1,5 +1,6 @@
 package de.amr.easy.graph.event;
 
+import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;
 
 /**
@@ -13,7 +14,7 @@ import de.amr.easy.graph.api.ObservableGraph;
  * 
  * @author Armin Reichert
  */
-public interface GraphListener<V, E> {
+public interface GraphListener<V, E extends Edge<V>> {
 
 	public void vertexChanged(V vertex, Object oldValue, Object newValue);
 
