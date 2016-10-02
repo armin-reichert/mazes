@@ -1,7 +1,5 @@
 package de.amr.easy.grid.impl;
 
-import de.amr.easy.graph.impl.DefaultEdge;
-import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.GridDataAccess;
 
 /**
