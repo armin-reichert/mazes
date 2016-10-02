@@ -2,6 +2,7 @@ package de.amr.easy.grid.impl;
 
 import java.util.BitSet;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -116,10 +117,10 @@ public class RawGrid implements Grid2D<Integer, DefaultEdge<Integer>> {
 	}
 
 	@Override
-	public DefaultEdge<Integer> edge(Integer p, Integer q) {
+	public Optional<DefaultEdge<Integer>> edge(Integer p, Integer q) {
 		checkCell(p);
 		checkCell(q);
-		return adjacent(p, q) ? new DefaultEdge<>(p, q) : null;
+		return adjacent(p, q) ? Optional.of(new DefaultEdge<>(p, q)) : Optional.empty();
 	}
 
 	@Override

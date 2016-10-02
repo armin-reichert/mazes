@@ -61,7 +61,7 @@ public class DepthFirstTraversal<V, E> extends GraphTraversal<V, E> implements S
 	@Override
 	public void run() {
 		clear();
-		stack = new LinkedList<V>();
+		stack = new LinkedList<>();
 		V currentVertex = source;
 		stack.push(currentVertex);
 		visit(currentVertex, null);
@@ -90,8 +90,7 @@ public class DepthFirstTraversal<V, E> extends GraphTraversal<V, E> implements S
 	private void visit(V v, V parent) {
 		setState(v, VISITED);
 		if (parent != null) {
-			E e = graph.edge(parent, v);
-			graph.fireEdgeChange(e, UNVISITED, VISITED);
+			graph.edge(parent, v).ifPresent(edge -> graph.fireEdgeChange(edge, UNVISITED, VISITED));
 		}
 		setParent(v, parent);
 	}

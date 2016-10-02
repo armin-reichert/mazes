@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -49,15 +50,15 @@ public class DefaultGraph<V, E extends Edge<V>> implements Graph<V, E> {
 	}
 
 	@Override
-	public E edge(V v, V w) {
+	public Optional<E> edge(V v, V w) {
 		assertVertexExists(v);
 		assertVertexExists(w);
 		for (E edge : adjEdges.get(v)) {
 			if (w == edge.either() || w == edge.other(v)) {
-				return edge;
+				return Optional.of(edge);
 			}
 		}
-		return null;
+		return Optional.empty();
 	}
 
 	@Override

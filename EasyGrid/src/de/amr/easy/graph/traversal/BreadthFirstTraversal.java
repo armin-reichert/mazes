@@ -75,8 +75,7 @@ public class BreadthFirstTraversal<V, E> extends GraphTraversal<V, E> implements
 		setState(vertex, VISITED);
 		setParent(vertex, parent);
 		if (parent != null) {
-			E edge = graph.edge(parent, vertex);
-			graph.fireEdgeChange(edge, UNVISITED, VISITED);
+			graph.edge(parent, vertex).ifPresent(edge -> graph.fireEdgeChange(edge, UNVISITED, VISITED));
 		}
 	}
 

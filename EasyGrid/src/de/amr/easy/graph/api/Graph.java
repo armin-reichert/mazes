@@ -1,5 +1,6 @@
 package de.amr.easy.graph.api;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -65,9 +66,9 @@ public interface Graph<V, E> {
 	 *          a vertex
 	 * @param w
 	 *          a vertex
-	 * @return the edge between the vertices if it exists or <code>null</code> otherwise
+	 * @return the edge between the vertices if it exists
 	 */
-	public E edge(V v, V w);
+	public Optional<E> edge(V v, V w);
 
 	/**
 	 * Removes the given edge from this graph.

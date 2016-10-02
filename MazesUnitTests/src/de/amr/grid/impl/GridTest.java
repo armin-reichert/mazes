@@ -69,30 +69,30 @@ public class GridTest {
 
 	@Test
 	public void testGetNonexistingEdge() {
-		assertNull(grid.edge(0, 1));
+		assertFalse(grid.edge(0, 1).isPresent());
 	}
 
 	@Test
 	public void testGetExistingEdge() {
-		DefaultEdge<Integer> edge = new DefaultEdge<Integer>(0, 1);
+		DefaultEdge<Integer> edge = new DefaultEdge<>(0, 1);
 		grid.addEdge(edge);
-		assertEquals(edge, grid.edge(0, 1));
+		assertEquals(edge, grid.edge(0, 1).get());
 	}
 
 	@Test
 	public void testAddEdge() {
 		int numEdges = grid.edgeCount();
-		assertNull(grid.edge(0, 1));
-		DefaultEdge<Integer> edge = new DefaultEdge<Integer>(0, 1);
+		assert(!grid.edge(0, 1).isPresent());
+		DefaultEdge<Integer> edge = new DefaultEdge<>(0, 1);
 		grid.addEdge(edge);
 		assertEquals(numEdges + 1, grid.edgeCount());
-		assertEquals(edge, grid.edge(0, 1));
+		assertEquals(edge, grid.edge(0, 1).get());
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void addEdgeTwiceThrowsException() {
-		grid.addEdge(new DefaultEdge<Integer>(0, 1));
-		grid.addEdge(new DefaultEdge<Integer>(0, 1));
+		grid.addEdge(new DefaultEdge<>(0, 1));
+		grid.addEdge(new DefaultEdge<>(0, 1));
 	}
 
 	@Test
@@ -105,19 +105,19 @@ public class GridTest {
 	@Test
 	public void testRemoveEdge() {
 		int numEdges = grid.edgeCount();
-		DefaultEdge<Integer> edge = new DefaultEdge<Integer>(0, 1);
+		DefaultEdge<Integer> edge = new DefaultEdge<>(0, 1);
 		grid.addEdge(edge);
 		assertEquals(grid.edgeCount(), numEdges + 1);
 		grid.removeEdge(edge);
 		assertEquals(grid.edgeCount(), numEdges);
-		assertNull(grid.edge(0, 1));
+		assertFalse(grid.edge(0, 1).isPresent());
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testRemoveEdgeTwiceThrowsException() {
-		grid.addEdge(new DefaultEdge<Integer>(0, 1));
-		grid.removeEdge(new DefaultEdge<Integer>(0, 1));
-		grid.removeEdge(new DefaultEdge<Integer>(0, 1));
+		grid.addEdge(new DefaultEdge<>(0, 1));
+		grid.removeEdge(new DefaultEdge<>(0, 1));
+		grid.removeEdge(new DefaultEdge<>(0, 1));
 	}
 
 	@Test
@@ -132,7 +132,7 @@ public class GridTest {
 	@Test
 	public void testAdjVertices() {
 		assertFalse(grid.adjacent(0, 1));
-		DefaultEdge<Integer> edge = new DefaultEdge<Integer>(0, 1);
+		DefaultEdge<Integer> edge = new DefaultEdge<>(0, 1);
 		grid.addEdge(edge);
 		assertTrue(grid.adjacent(0, 1));
 		grid.removeEdge(edge);
