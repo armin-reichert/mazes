@@ -25,7 +25,7 @@ public class WilsonUSTLeftToRightSweep extends WilsonUST {
 	}
 
 	@Override
-	protected Integer modifyStartVertex(Integer start) {
+	protected Integer getStartCell(Integer start) {
 		return grid.cell(0, 0);
 	}
 }

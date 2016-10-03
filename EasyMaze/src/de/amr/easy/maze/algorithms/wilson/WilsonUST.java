@@ -37,7 +37,7 @@ public abstract class WilsonUST implements Consumer<Integer> {
 
 	protected final ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid;
 	protected final Random rnd = new Random();
-	protected final Map<Integer, Direction> lastWalkDir = new HashMap<>();
+	private final Map<Integer, Direction> lastWalkDir = new HashMap<>();
 
 	protected WilsonUST(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
 		this.grid = grid;
@@ -45,7 +45,7 @@ public abstract class WilsonUST implements Consumer<Integer> {
 
 	@Override
 	public void accept(Integer start) {
-		start = modifyStartVertex(start);
+		start = getStartCell(start);
 		addCellToTree(start);
 		getCellSequence().forEach(walkStart -> {
 			if (!isCellInTree(walkStart)) {
@@ -68,12 +68,12 @@ public abstract class WilsonUST implements Consumer<Integer> {
 		Integer v = walkStart;
 		while (!isCellInTree(v)) {
 			Direction dir = Direction.randomValue();
-			Integer w = grid.neighbor(v, dir);
-			if (w == null) {
+			Integer neighbor = grid.neighbor(v, dir);
+			if (neighbor == null) {
 				continue;
 			}
 			lastWalkDir.put(v, dir);
-			v = w;
+			v = neighbor;
 		}
 		// add loop-erased path to tree
 		v = walkStart;
@@ -98,7 +98,7 @@ public abstract class WilsonUST implements Consumer<Integer> {
 	 *          the start cell as passed to the run-method of the generator
 	 * @return the maybe modified start cell of the generator
 	 */
-	protected Integer modifyStartVertex(Integer start) {
+	protected Integer getStartCell(Integer start) {
 		return start;
 	}
 
