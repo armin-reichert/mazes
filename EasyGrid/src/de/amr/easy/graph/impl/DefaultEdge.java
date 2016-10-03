@@ -1,5 +1,7 @@
 package de.amr.easy.graph.impl;
 
+import java.util.Objects;
+
 import de.amr.easy.graph.api.Edge;
 
 /**
@@ -16,16 +18,20 @@ public class DefaultEdge<V> implements Edge<V> {
 	protected V v;
 
 	public DefaultEdge(V u, V v) {
+		Objects.requireNonNull(u);
+		Objects.requireNonNull(v);
 		this.u = u;
 		this.v = v;
 	}
 
-	public void setEither(V v) {
-		this.u = v;
+	public void setEither(V either) {
+		Objects.requireNonNull(either);
+		this.u = either;
 	}
 
-	public void setOther(V tail) {
-		this.v = tail;
+	public void setOther(V other) {
+		Objects.requireNonNull(other);
+		this.v = other;
 	}
 
 	@Override
