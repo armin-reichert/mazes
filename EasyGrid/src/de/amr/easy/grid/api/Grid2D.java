@@ -1,6 +1,9 @@
 package de.amr.easy.grid.api;
 
+import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
@@ -96,19 +99,18 @@ public interface Grid2D<Cell, Passage extends Edge<Cell>> extends Graph<Cell, Pa
 	 * 
 	 * @param cell
 	 *          a grid cell
-	 * @param predicate
-	 *          a predicate that must hold for the returned cell
-	 * @return a randomly chosen neighbor cell fulfilling the predicate or <code>null</code> if no
-	 *         such neighbor exists
+	 * @param condition
+	 *          a condition that must hold for the returned cell
+	 * @return a random neighbor cell fulfilling the condition if any
 	 */
-	public default Cell randomNeighbor(Cell cell, Predicate<Cell> predicate) {
-		for (Direction randomDir : Direction.randomOrder()) {
-			Cell neighbor = neighbor(cell, randomDir);
-			if (neighbor != null && predicate.test(neighbor)) {
-				return neighbor;
-			}
-		}
-		return null;
+	public default Optional<Cell> randomNeighbor(Cell cell, Predicate<Cell> condition) {
+		/*@formatter:off*/
+		return Stream.of(Direction.randomOrder())
+			.map(dir -> neighbor(cell, dir))
+			.filter(Objects::nonNull)
+			.filter(condition)
+			.findAny();
+		/*@formatter:on*/
 	}
 
 	/**

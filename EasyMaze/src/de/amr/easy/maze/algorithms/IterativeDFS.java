@@ -6,6 +6,7 @@ import static de.amr.easy.graph.api.TraversalState.VISITED;
 
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import de.amr.easy.graph.api.TraversalState;
@@ -42,14 +43,14 @@ public class IterativeDFS implements Consumer<Integer> {
 		stack.push(current);
 		grid.set(current, VISITED);
 		while (!stack.isEmpty()) {
-			Integer neighbor = grid.randomNeighbor(current, cell -> grid.get(cell) == UNVISITED);
-			if (neighbor != null) {
-				if (grid.randomNeighbor(neighbor, cell -> true) != null) {
-					stack.push(neighbor);
+			Optional<Integer> neighbor = grid.randomNeighbor(current, cell -> grid.get(cell) == UNVISITED);
+			if (neighbor.isPresent()) {
+				if (grid.randomNeighbor(neighbor.get(), cell -> true).isPresent()) {
+					stack.push(neighbor.get());
 				}
-				grid.addEdge(new DefaultEdge<>(current, neighbor));
-				grid.set(neighbor, VISITED);
-				current = neighbor;
+				grid.addEdge(new DefaultEdge<>(current, neighbor.get()));
+				grid.set(neighbor.get(), VISITED);
+				current = neighbor.get();
 			} else {
 				grid.set(current, COMPLETED);
 				if (!stack.isEmpty()) {

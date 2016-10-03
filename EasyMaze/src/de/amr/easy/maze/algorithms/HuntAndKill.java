@@ -5,6 +5,7 @@ import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -47,10 +48,10 @@ public class HuntAndKill implements Consumer<Integer> {
 		Integer current = start;
 		addCellToMaze(current);
 		while (current != null) {
-			Integer unvisitedNeighbor = grid.randomNeighbor(current, c -> grid.get(c) == UNVISITED);
-			if (unvisitedNeighbor != null) {
-				connect(current, unvisitedNeighbor);
-				current = unvisitedNeighbor;
+			Optional<Integer> unvisitedNeighbor = grid.randomNeighbor(current, c -> grid.get(c) == UNVISITED);
+			if (unvisitedNeighbor.isPresent()) {
+				connect(current, unvisitedNeighbor.get());
+				current = unvisitedNeighbor.get();
 			} else {
 				current = huntForCell();
 			}
@@ -67,8 +68,8 @@ public class HuntAndKill implements Consumer<Integer> {
 			}
 			Integer cell = fairGameIterator.next();
 			// Note: a completed neighbor always exists:
-			Integer mazeCell = grid.randomNeighbor(cell, c -> grid.get(c) == COMPLETED);
-			connect(mazeCell, cell);
+			Optional<Integer> mazeCell = grid.randomNeighbor(cell, c -> grid.get(c) == COMPLETED);
+			connect(mazeCell.get(), cell);
 			return cell;
 		}
 		return null;
