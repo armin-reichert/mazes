@@ -65,6 +65,7 @@ public abstract class WilsonUST implements Consumer<Integer> {
 	 *          the start cell of the random walk
 	 */
 	protected void loopErasedRandomWalk(Integer walkStart) {
+		// do a random walk starting at walkStart until tree cell is reached
 		Integer v = walkStart;
 		while (!isCellInTree(v)) {
 			Direction dir = Direction.randomValue();
@@ -78,10 +79,11 @@ public abstract class WilsonUST implements Consumer<Integer> {
 		// add loop-erased path to tree
 		v = walkStart;
 		while (!isCellInTree(v)) {
+			Direction dir = lastWalkDir.get(v);
+			Integer neighbor = grid.neighbor(v, dir);
 			addCellToTree(v);
-			Integer w = grid.neighbor(v, lastWalkDir.get(v));
-			grid.addEdge(new DefaultEdge<>(v, w));
-			v = w;
+			grid.addEdge(new DefaultEdge<>(v, neighbor));
+			v = neighbor;
 		}
 	}
 
@@ -120,5 +122,4 @@ public abstract class WilsonUST implements Consumer<Integer> {
 	protected void addCellToTree(Integer cell) {
 		grid.set(cell, COMPLETED);
 	}
-
 }
