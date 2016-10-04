@@ -20,7 +20,8 @@ import de.amr.easy.grid.iterators.traversals.ExpandingRectangle;
  */
 public class WilsonUSTNestedRectangles extends WilsonUST {
 
-	public WilsonUSTNestedRectangles(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
+	public WilsonUSTNestedRectangles(
+			ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
 		super(grid);
 	}
 
@@ -58,7 +59,8 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 		return StreamSupport.stream(it.spliterator(), false);
 	}
 
-	private ExpandingRectangle<Integer> expandingRectangle(Rectangle<Integer> startRectangle, int rate) {
+	private ExpandingRectangle<Integer> expandingRectangle(Rectangle<Integer> startRectangle,
+			int rate) {
 		ExpandingRectangle<Integer> r = new ExpandingRectangle<>(startRectangle);
 		r.setExpandHorizontally(true);
 		r.setExpandVertically(true);

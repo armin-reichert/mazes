@@ -13,7 +13,8 @@ public class BinaryTreeRandom extends BinaryTree {
 
 	private final List<Integer> cellsInRandomOrder;
 
-	public BinaryTreeRandom(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
+	public BinaryTreeRandom(
+			ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
 		super(grid);
 		cellsInRandomOrder = new ArrayList<>(grid.vertexCount());
 		grid.vertexStream().forEach(cell -> {

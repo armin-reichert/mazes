@@ -23,7 +23,10 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
 public class PrimMST implements Consumer<Integer> {
 
 	private final ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid;
+
+	// Edges connecting partial maze with rest of grid
 	private final PriorityQueue<DefaultWeightedEdge<Integer>> cut = new PriorityQueue<>();
+
 	private final Random rnd = new Random();
 
 	public PrimMST(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
@@ -51,8 +54,8 @@ public class PrimMST implements Consumer<Integer> {
 			.filter(Objects::nonNull)
 			.filter(neighbor -> !inMaze(neighbor))
 			.forEach(frontierCell -> {
-				cut.add(new DefaultWeightedEdge<>(cell, frontierCell, rnd.nextDouble()));
 				grid.set(frontierCell, VISITED);
+				cut.add(new DefaultWeightedEdge<>(cell, frontierCell, rnd.nextDouble()));
 			});
 		/*@formatter:on*/
 	}

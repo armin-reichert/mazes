@@ -48,7 +48,8 @@ public class HuntAndKill implements Consumer<Integer> {
 		Integer current = start;
 		addCellToMaze(current);
 		while (current != null) {
-			Optional<Integer> unvisitedNeighbor = grid.randomNeighbor(current, c -> grid.get(c) == UNVISITED);
+			Optional<Integer> unvisitedNeighbor = grid.randomNeighbor(current,
+					c -> grid.get(c) == UNVISITED);
 			if (unvisitedNeighbor.isPresent()) {
 				connect(current, unvisitedNeighbor.get());
 				current = unvisitedNeighbor.get();

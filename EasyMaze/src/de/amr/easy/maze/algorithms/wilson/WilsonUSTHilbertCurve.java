@@ -27,7 +27,8 @@ import de.amr.easy.grid.iterators.traversals.HilbertCurve;
  */
 public class WilsonUSTHilbertCurve extends WilsonUST {
 
-	public WilsonUSTHilbertCurve(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
+	public WilsonUSTHilbertCurve(
+			ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
 		super(grid);
 	}
 

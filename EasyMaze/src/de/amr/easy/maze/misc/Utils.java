@@ -85,8 +85,8 @@ public abstract class Utils {
 	 * @return pair (width, height) for grid
 	 */
 	public static Dimension maxGridDimensionForDisplay(int cellSize) {
-		DisplayMode displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
-				.getDisplayMode();
+		DisplayMode displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment()
+				.getDefaultScreenDevice().getDisplayMode();
 		return new Dimension(displayMode.getWidth() / cellSize, displayMode.getHeight() / cellSize);
 	}
 
