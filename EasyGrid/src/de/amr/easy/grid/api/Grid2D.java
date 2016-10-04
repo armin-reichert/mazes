@@ -12,7 +12,7 @@ import de.amr.easy.graph.api.Graph;
  * A two-dimensional grid of "cells", i.e. a graph with vertex set
  * 
  * <pre>
- * {(x, y) | x &isin; {0, ..., N - 1}, y &isin; { 0, ..., M - 1}}
+ * {(x,y) | x &isin; {0, ..., N - 1}, y &isin; { 0, ..., M - 1}}
  * </pre>
  * 
  * where <code>x</code> denotes the column index and <code>y</code> the row index of the "cell".
@@ -135,10 +135,9 @@ public interface Grid2D<Cell, Passage extends Edge<Cell>> extends Graph<Cell, Pa
 	 *          either cell
 	 * @param other
 	 *          other cell
-	 * @return the direction from either to other cell (if those cells are neighbors) and
-	 *         <code>null</code> otherwise
+	 * @return the direction from either to other cell (if those cells are neighbors)
 	 */
-	public Direction direction(Cell either, Cell other);
+	public Optional<Direction> direction(Cell either, Cell other);
 
 	/**
 	 * Populates all edges of the grid.

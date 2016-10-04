@@ -1,5 +1,7 @@
 package de.amr.easy.grid.experimental;
 
+import java.util.Optional;
+
 import de.amr.easy.graph.impl.DefaultObservableGraph;
 import de.amr.easy.graph.impl.DefaultWeightedEdge;
 import de.amr.easy.grid.api.Direction;
@@ -12,7 +14,7 @@ import de.amr.easy.grid.api.GridPosition;
  * @author Armin Reichert
  * 
  * @param <P>
- *          grid cell type
+ *            grid cell type
  */
 public class GraphAsGrid<P> extends DefaultObservableGraph<P, DefaultWeightedEdge<P>>
 		implements Grid2D<P, DefaultWeightedEdge<P>> {
@@ -41,7 +43,7 @@ public class GraphAsGrid<P> extends DefaultObservableGraph<P, DefaultWeightedEdg
 	 * Creates all grid positions.
 	 * 
 	 * @param factory
-	 *          factory for grid position objects
+	 *            factory for grid position objects
 	 */
 	private void fillPositions(GridPositionFactory<P> factory) {
 		for (int x = 0; x < numCols; x++) {
@@ -153,15 +155,17 @@ public class GraphAsGrid<P> extends DefaultObservableGraph<P, DefaultWeightedEdg
 	}
 
 	@Override
-	public Direction direction(P p, P q) {
+	public Optional<Direction> direction(P p, P q) {
 		int dx = col(q) - col(p);
 		int dy = row(q) - row(p);
+		Direction result = null;
 		for (Direction dir : Direction.values()) {
 			if (dir.dx == dx && dir.dy == dy) {
-				return dir;
+				result = dir;
+				break;
 			}
 		}
-		return null;
+		return Optional.ofNullable(result);
 	}
 
 	@Override

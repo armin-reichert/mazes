@@ -14,8 +14,9 @@ import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.GridPosition;
 
 /**
- * A {@link Grid2D} implementation where the grid cells are represented by their coordinates (not
- * explicitly stored) and the edges are stored in a single bit-set.
+ * A {@link Grid2D} implementation where the grid cells are represented by their
+ * coordinates (not explicitly stored) and the edges are stored in a single
+ * bit-set.
  * 
  * @author Armin Reichert
  */
@@ -97,7 +98,8 @@ public class RawGrid implements Grid2D<Integer, DefaultEdge<Integer>> {
 
 	@Override
 	public int edgeCount() {
-		return edges.cardinality() / 2; // two bits are set for each undirected edge
+		return edges.cardinality() / 2; // two bits are set for each undirected
+										// edge
 	}
 
 	@Override
@@ -119,7 +121,7 @@ public class RawGrid implements Grid2D<Integer, DefaultEdge<Integer>> {
 		if (adjacent(p, q)) {
 			throw new IllegalStateException("Duplicate edge: " + edge);
 		}
-		setConnected(p, q, direction(p, q), true);
+		direction(p, q).ifPresent(dir -> setConnected(p, q, dir, true));
 	}
 
 	@Override
@@ -129,7 +131,7 @@ public class RawGrid implements Grid2D<Integer, DefaultEdge<Integer>> {
 		if (!adjacent(p, q)) {
 			throw new IllegalStateException("Unknown edge: " + edge);
 		}
-		setConnected(p, q, direction(p, q), false);
+		direction(p, q).ifPresent(dir -> setConnected(p, q, dir, false));
 	}
 
 	@Override
@@ -248,14 +250,13 @@ public class RawGrid implements Grid2D<Integer, DefaultEdge<Integer>> {
 	}
 
 	@Override
-	public Direction direction(Integer source, Integer target) {
+	public Optional<Direction> direction(Integer source, Integer target) {
 		checkCell(source);
 		checkCell(target);
 		/*@formatter:off*/
 		return Stream.of(Direction.values())
 			.filter(dir -> target.equals(neighbor(source, dir)))
-			.findFirst()
-			.orElse(null);
+			.findFirst();
 		/*@formatter:on*/
 	}
 

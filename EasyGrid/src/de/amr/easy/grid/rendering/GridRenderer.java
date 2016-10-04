@@ -48,7 +48,7 @@ public class GridRenderer<V, E extends Edge<V>> {
 
 	public void drawPassage(Graphics2D g, Grid2D<V, E> grid, E passage, boolean visible) {
 		V p = passage.either(), q = passage.other(p);
-		Direction dir = grid.direction(p, q);
+		Direction dir = grid.direction(p, q).get();
 		drawCellContent(g, grid, p);
 		drawHalfPassage(g, grid, p, dir, visible ? rm.getPassageColor(p, dir) : rm.getGridBgColor());
 		drawCellContent(g, grid, q);
