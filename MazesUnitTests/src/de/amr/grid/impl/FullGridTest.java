@@ -102,18 +102,18 @@ public class FullGridTest {
 				Integer cell = grid.cell(x, y);
 				if (grid.numCols() > 1) {
 					if (x == 0) {
-						assertTrue(grid.isCellConnected(cell, Direction.E));
+						assertTrue(grid.connected(cell, Direction.E));
 					}
 					if (x == grid.numCols() - 1) {
-						assertTrue(grid.isCellConnected(cell, Direction.W));
+						assertTrue(grid.connected(cell, Direction.W));
 					}
 				}
 				if (grid.numRows() > 1) {
 					if (y == 0) {
-						assertTrue(grid.isCellConnected(cell, Direction.S));
+						assertTrue(grid.connected(cell, Direction.S));
 					}
 					if (y == grid.numRows() - 1) {
-						assertTrue(grid.isCellConnected(cell, Direction.N));
+						assertTrue(grid.connected(cell, Direction.N));
 					}
 				}
 			}

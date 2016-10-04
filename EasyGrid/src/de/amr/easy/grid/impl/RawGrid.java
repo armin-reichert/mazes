@@ -79,7 +79,7 @@ public class RawGrid implements Grid2D<Integer, DefaultEdge<Integer>> {
 		Set<DefaultEdge<Integer>> edgeSet = new HashSet<>();
 		vertexStream().forEach(cell -> {
 			Stream.of(Direction.values()).forEach(dir -> {
-				if (isCellConnected(cell, dir)) {
+				if (connected(cell, dir)) {
 					Integer neighbor = neighbor(cell, dir);
 					if (neighbor != null && cell < neighbor) {
 						edgeSet.add(new DefaultEdge<>(cell, neighbor));
@@ -142,7 +142,7 @@ public class RawGrid implements Grid2D<Integer, DefaultEdge<Integer>> {
 		checkCell(cell);
 		/*@formatter:off*/
 		return Stream.of(Direction.values())
-			.filter(dir -> isCellConnected(cell, dir))
+			.filter(dir -> connected(cell, dir))
 			.map(dir -> neighbor(cell, dir));
 		/*@formatter:on*/
 	}
@@ -153,7 +153,7 @@ public class RawGrid implements Grid2D<Integer, DefaultEdge<Integer>> {
 		checkCell(q);
 		/*@formatter:off*/
 		return Stream.of(Direction.values())
-			.filter(dir -> isCellConnected(p, dir))
+			.filter(dir -> connected(p, dir))
 			.map(dir -> neighbor(p, dir))
 			.anyMatch(neighbor -> neighbor.equals(q));
 		/*@formatter:on*/
@@ -164,7 +164,7 @@ public class RawGrid implements Grid2D<Integer, DefaultEdge<Integer>> {
 		checkCell(cell);
 		/*@formatter:off*/
 		return (int) Stream.of(Direction.values())
-			.filter(dir -> isCellConnected(cell, dir))
+			.filter(dir -> connected(cell, dir))
 			.count();
 		/*@formatter:on*/
 	}
@@ -242,7 +242,7 @@ public class RawGrid implements Grid2D<Integer, DefaultEdge<Integer>> {
 	}
 
 	@Override
-	public boolean isCellConnected(Integer cell, Direction dir) {
+	public boolean connected(Integer cell, Direction dir) {
 		checkCell(cell);
 		return edges.get(bit(cell, dir));
 	}

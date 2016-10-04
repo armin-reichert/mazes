@@ -9,17 +9,24 @@ import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
 
 /**
- * Two-dimensional grid of cells.
+ * A two-dimensional grid of "cells", i.e. a graph with vertex set
+ * 
+ * <pre>
+ * {(x, y) | x &isin; {0, ..., N - 1}, y &isin; { 0, ..., M - 1}}
+ * </pre>
+ * 
+ * where <code>x</code> denotes the column index and <code>y</code> the row index of the "cell".
  * <p>
  * Extends the {@link Graph} interface such that graph algorithms can be applied to objects of this
  * type.
  * 
+ * @param <Cell>
+ *          cell/vertex type
+ * @param <Passage>
+ *          passage/edge type
+ * 
  * @author Armin Reichert
  * 
- * @param <Cell>
- *          cell type
- * @param <Passage>
- *          passage type
  */
 public interface Grid2D<Cell, Passage extends Edge<Cell>> extends Graph<Cell, Passage> {
 
@@ -116,19 +123,19 @@ public interface Grid2D<Cell, Passage extends Edge<Cell>> extends Graph<Cell, Pa
 	/**
 	 * 
 	 * @param cell
-	 *          grid position
+	 *          a grid cell
 	 * @param dir
-	 *          direction
-	 * @return if the position in the given direction is connected ("no wall")
+	 *          the direction to which the cell is checked for connectivity
+	 * @return if the cell is connected with the cell in the given direction ("passage", "no wall")
 	 */
-	public boolean isCellConnected(Cell cell, Direction dir);
+	public boolean connected(Cell cell, Direction dir);
 
 	/**
 	 * @param either
 	 *          either cell
 	 * @param other
 	 *          other cell
-	 * @return the direction from the source to the target cell (if cells are neighbors) and
+	 * @return the direction from either to other cell (if those cells are neighbors) and
 	 *         <code>null</code> otherwise
 	 */
 	public Direction direction(Cell either, Cell other);

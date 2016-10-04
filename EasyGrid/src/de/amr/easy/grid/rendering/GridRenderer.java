@@ -58,7 +58,7 @@ public class GridRenderer<V, E extends Edge<V>> {
 	public void drawCell(Graphics2D g, Grid2D<V, E> grid, V cell) {
 		drawCellContent(g, grid, cell);
 		for (Direction dir : Direction.values()) {
-			if (grid.isCellConnected(cell, dir)) {
+			if (grid.connected(cell, dir)) {
 				drawHalfPassage(g, grid, cell, dir, rm.getPassageColor(cell, dir));
 			}
 		}

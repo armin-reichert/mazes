@@ -143,7 +143,7 @@ public class GraphAsGrid<P> extends DefaultObservableGraph<P, DefaultWeightedEdg
 	}
 
 	@Override
-	public boolean isCellConnected(P p, Direction dir) {
+	public boolean connected(P p, Direction dir) {
 		assertVertexExists(p);
 		P q = neighbor(p, dir);
 		if (q == null) {

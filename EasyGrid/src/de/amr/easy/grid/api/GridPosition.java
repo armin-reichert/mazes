@@ -1,7 +1,7 @@
 package de.amr.easy.grid.api;
 
 /**
- * Common grid positions.
+ * Enumeration of commonly used grid positions like "BOTTOM_LEFT".
  * 
  * @author Armin Reichert
  */
