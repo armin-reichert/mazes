@@ -15,8 +15,7 @@ import de.amr.easy.grid.iterators.traversals.RightToLeftSweep;
  */
 public class WilsonUSTRightToLeftSweep extends WilsonUST {
 
-	public WilsonUSTRightToLeftSweep(
-			ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
+	public WilsonUSTRightToLeftSweep(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
 		super(grid);
 	}
 

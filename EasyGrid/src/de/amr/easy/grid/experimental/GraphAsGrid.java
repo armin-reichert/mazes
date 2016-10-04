@@ -14,7 +14,7 @@ import de.amr.easy.grid.api.GridPosition;
  * @author Armin Reichert
  * 
  * @param <P>
- *            grid cell type
+ *          grid cell type
  */
 public class GraphAsGrid<P> extends DefaultObservableGraph<P, DefaultWeightedEdge<P>>
 		implements Grid2D<P, DefaultWeightedEdge<P>> {
@@ -43,7 +43,7 @@ public class GraphAsGrid<P> extends DefaultObservableGraph<P, DefaultWeightedEdg
 	 * Creates all grid positions.
 	 * 
 	 * @param factory
-	 *            factory for grid position objects
+	 *          factory for grid position objects
 	 */
 	private void fillPositions(GridPositionFactory<P> factory) {
 		for (int x = 0; x < numCols; x++) {

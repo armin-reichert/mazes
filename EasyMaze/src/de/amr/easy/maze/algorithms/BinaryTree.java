@@ -41,8 +41,7 @@ public class BinaryTree implements Consumer<Integer> {
 	private Optional<Integer> getRandomNeighbor(Integer cell, Direction d1, Direction d2) {
 		boolean b = rnd.nextBoolean();
 		Integer neighbor = grid.neighbor(cell, b ? d1 : d2);
-		return neighbor != null ? Optional.of(neighbor)
-				: Optional.ofNullable(grid.neighbor(cell, b ? d2 : d1));
+		return neighbor != null ? Optional.of(neighbor) : Optional.ofNullable(grid.neighbor(cell, b ? d2 : d1));
 	}
 
 	/*

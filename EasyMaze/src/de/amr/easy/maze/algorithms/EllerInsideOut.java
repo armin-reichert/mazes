@@ -60,8 +60,7 @@ public class EllerInsideOut implements Consumer<Integer> {
 		connectCellsInsideLayer(true);
 
 		if (grid.edgeCount() != grid.vertexCount() - 1) {
-			throw new IllegalStateException(
-					"#edges: " + grid.edgeCount() + ", #cells: " + grid.vertexCount());
+			throw new IllegalStateException("#edges: " + grid.edgeCount() + ", #cells: " + grid.vertexCount());
 		}
 	}
 
@@ -127,8 +126,8 @@ public class EllerInsideOut implements Consumer<Integer> {
 			}
 			prevCell = cell;
 		}
-		if (prevCell != null && firstCell != null && prevCell != firstCell
-				&& areNeighbors(prevCell, firstCell) && !grid.adjacent(prevCell, firstCell)) {
+		if (prevCell != null && firstCell != null && prevCell != firstCell && areNeighbors(prevCell, firstCell)
+				&& !grid.adjacent(prevCell, firstCell)) {
 			if (all || rnd.nextBoolean()) {
 				if (mazeParts.find(prevCell) != mazeParts.find(firstCell)) {
 					connectCells(prevCell, firstCell);

@@ -14,9 +14,8 @@ import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.GridPosition;
 
 /**
- * A {@link Grid2D} implementation where the grid cells are represented by their
- * coordinates (not explicitly stored) and the edges are stored in a single
- * bit-set.
+ * A {@link Grid2D} implementation where the grid cells are represented by their coordinates (not
+ * explicitly stored) and the edges are stored in a single bit-set.
  * 
  * @author Armin Reichert
  */
@@ -98,8 +97,7 @@ public class RawGrid implements Grid2D<Integer, DefaultEdge<Integer>> {
 
 	@Override
 	public int edgeCount() {
-		return edges.cardinality() / 2; // two bits are set for each undirected
-										// edge
+		return edges.cardinality() / 2; // two bits are set for each undirected edge
 	}
 
 	@Override

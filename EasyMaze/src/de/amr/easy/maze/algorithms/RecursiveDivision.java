@@ -17,8 +17,7 @@ public class RecursiveDivision implements Consumer<Integer> {
 	private final ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid;
 	private final Random rnd;
 
-	public RecursiveDivision(
-			ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
+	public RecursiveDivision(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
 		this.grid = grid;
 		rnd = new Random();
 		grid.setEventsEnabled(false);
