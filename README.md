@@ -2,6 +2,8 @@
 
 Maze generation algorithms in Java
 
+Main emphasis is on readability of generation algorithms by separating graph algorithm from visualization.
+
 Implemented algorithms:
 
 - Aldous Broder
