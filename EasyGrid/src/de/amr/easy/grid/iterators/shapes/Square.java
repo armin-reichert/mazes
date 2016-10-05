@@ -1,5 +1,12 @@
 package de.amr.easy.grid.iterators.shapes;
 
+import static de.amr.easy.grid.api.Direction.E;
+import static de.amr.easy.grid.api.Direction.N;
+import static de.amr.easy.grid.api.Direction.S;
+import static de.amr.easy.grid.api.Direction.W;
+
+import java.util.Arrays;
+
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.Grid2D;
 
@@ -18,18 +25,20 @@ public class Square<Cell> extends Shape<Cell> {
 
 	public Square(Grid2D<Cell, ?> grid, Cell topLeft, int size) {
 		super(grid);
+
 		this.topLeft = topLeft;
 		this.size = size;
 		if (size == 0) {
 			return;
 		}
+
 		int x = grid.col(topLeft), y = grid.row(topLeft);
 		if (size == 1) {
 			addCell(x, y);
 			return;
 		}
-		Direction[] clockwise = { Direction.E, Direction.S, Direction.W, Direction.N };
-		for (Direction dir : clockwise) {
+
+		for (Direction dir : Arrays.asList(E, S, W, N)) {
 			for (int i = 0; i < size - 1; ++i) {
 				addCell(x, y);
 				x += dir.dx;

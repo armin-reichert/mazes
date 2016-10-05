@@ -3,7 +3,7 @@ package de.amr.easy.grid.iterators.shapes;
 import de.amr.easy.grid.api.Grid2D;
 
 /**
- * Iterates the grid cells clockwise in a rectangle with given left upper corner.
+ * A rectangle with given cell as left upper corner.
  * 
  * @author Armin Reichert
  *
@@ -18,9 +18,11 @@ public class Rectangle<Cell> extends Shape<Cell> {
 
 	public Rectangle(Grid2D<Cell, ?> grid, Cell leftUpperCorner, int width, int height) {
 		super(grid);
+		
 		this.leftUpperCorner = leftUpperCorner;
 		this.width = width;
 		this.height = height;
+
 		int cornerX = grid.col(leftUpperCorner), cornerY = grid.row(leftUpperCorner);
 		int x = cornerX - 1, y = cornerY;
 		for (int i = 0; i < width; ++i) {

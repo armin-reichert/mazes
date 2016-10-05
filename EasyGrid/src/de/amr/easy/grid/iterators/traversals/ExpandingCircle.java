@@ -49,7 +49,7 @@ public class ExpandingCircle<Cell> implements Iterable<Cell> {
 				if (newRadius > maxRadius) {
 					return false;
 				}
-				circle = new Circle<>(circle.getGrid(), circle.getCenter(), newRadius);
+				circle = new Circle<>(grid, circle.getCenter(), newRadius);
 				iterator = circle.iterator();
 				return iterator.hasNext();
 			}

@@ -3,7 +3,7 @@ package de.amr.easy.grid.iterators.shapes;
 import de.amr.easy.grid.api.Grid2D;
 
 /**
- * Iterates over cells forming a circle around a center cell.
+ * A "circle" of grid cells around a center cell.
  * 
  * @author Armin Reichert
  *

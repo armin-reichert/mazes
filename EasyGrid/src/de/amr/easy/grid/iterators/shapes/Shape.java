@@ -3,6 +3,7 @@ package de.amr.easy.grid.iterators.shapes;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
 import de.amr.easy.grid.api.Grid2D;
 
@@ -25,26 +26,26 @@ import de.amr.easy.grid.api.Grid2D;
  */
 public abstract class Shape<Cell> implements Iterable<Cell> {
 
-	protected final Grid2D<Cell, ?> grid;
-	protected final List<Cell> cells;
+	public final Grid2D<Cell, ?> grid;
+
+	protected final List<Cell> cells = new ArrayList<>();
 
 	protected Shape(Grid2D<Cell, ?> grid) {
 		this.grid = grid;
-		cells = new ArrayList<Cell>();
 	}
 
-	protected void addCell(int x, int y) {
-		if (grid.isValidCol(x) && grid.isValidRow(y)) {
-			cells.add(grid.cell(x, y));
+	protected void addCell(int col, int row) {
+		if (grid.isValidCol(col) && grid.isValidRow(row)) {
+			cells.add(grid.cell(col, row));
 		}
-	}
-
-	public Grid2D<Cell, ?> getGrid() {
-		return grid;
 	}
 
 	@Override
 	public Iterator<Cell> iterator() {
 		return cells.iterator();
+	}
+
+	public Stream<Cell> stream() {
+		return cells.stream();
 	}
 }
