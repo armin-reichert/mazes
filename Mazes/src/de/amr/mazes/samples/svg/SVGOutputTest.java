@@ -47,8 +47,7 @@ public class SVGOutputTest {
 		watch.start();
 		mazeGenerator.accept(grid.cell(TOP_LEFT));
 		watch.stop();
-		out.println(String.format("Created maze with %d cells in %f seconds", grid.numCells(),
-				watch.getDuration()));
+		out.println(String.format("Created maze with %d cells in %f seconds", grid.numCells(), watch.getDuration()));
 	}
 
 	private void writeFile(String path, OutputFormat fmt) throws IOException {
@@ -58,7 +57,6 @@ public class SVGOutputTest {
 		} else if (fmt == HTML) {
 			SVGUtils.writeToHTML(file, "Maze", svgRenderer.getSVGGraphics().getSVGElement());
 		}
-		out.println(
-				String.format("Created file %s (%d KB)", file.getAbsolutePath(), file.length() / 1024));
+		out.println(String.format("Created file %s (%d KB)", file.getAbsolutePath(), file.length() / 1024));
 	}
 }

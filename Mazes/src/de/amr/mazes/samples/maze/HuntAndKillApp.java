@@ -2,7 +2,7 @@ package de.amr.mazes.samples.maze;
 
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
 import de.amr.easy.maze.algorithms.HuntAndKill;
 import de.amr.mazes.samples.grid.GridSampleApp;
@@ -16,12 +16,13 @@ public class HuntAndKillApp extends GridSampleApp {
 
 	public HuntAndKillApp() {
 		super("Hunt And Kill");
+		setFullscreen(true);
 	}
 
 	@Override
 	public void run() {
 		Integer startCell = grid.cell(TOP_LEFT);
-		Stream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
+		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			fitWindowSize(window.getWidth(), window.getHeight(), cellSize);
 			new HuntAndKill(grid).accept(startCell);
 			new BFSAnimation(canvas, grid).runAnimation(startCell);

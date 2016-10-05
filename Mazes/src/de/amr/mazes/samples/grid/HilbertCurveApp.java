@@ -62,7 +62,8 @@ public class HilbertCurveApp extends GridSampleApp {
 	public void run() {
 		setDelay(5);
 		Stream.of(TOP_RIGHT, TOP_LEFT, BOTTOM_LEFT, BOTTOM_RIGHT).forEach(start -> {
-			for (int cellSize = MAX_CELLSIZE; cellSize >= MIN_CELLSIZE; cellSize /= 2, fitWindowSize(WIDTH, HEIGHT, cellSize)) {
+			for (int cellSize = MAX_CELLSIZE; cellSize >= MIN_CELLSIZE; cellSize /= 2, fitWindowSize(WIDTH, HEIGHT,
+					cellSize)) {
 				int depth = log(2, WIDTH / cellSize);
 				HilbertCurve hilbert = createCurve(start, depth);
 				followCurve(grid, hilbert, grid.cell(start), () -> window.setTitle(composeTitle()));

@@ -41,6 +41,7 @@ public abstract class GridSampleApp implements Runnable {
 	protected JFrame window;
 	protected GridCanvas<Integer, DefaultEdge<Integer>> canvas;
 	protected JSlider delaySlider;
+	private boolean fullscreen;
 
 	protected GridSampleApp(String appName) {
 		this(appName, 16);
@@ -55,6 +56,10 @@ public abstract class GridSampleApp implements Runnable {
 	protected GridSampleApp(String appName, int gridWidth, int gridHeight, int cellSize) {
 		this.appName = appName;
 		init(gridWidth, gridHeight, cellSize);
+	}
+
+	public void setFullscreen(boolean fullscreen) {
+		this.fullscreen = fullscreen;
 	}
 
 	private void init(int gridWidth, int gridHeight, int cellSize) {
@@ -92,8 +97,10 @@ public abstract class GridSampleApp implements Runnable {
 				canvas.setDelay(delaySlider.getValue());
 		});
 		window.add(delaySlider, BorderLayout.SOUTH);
-		window.setExtendedState(MAXIMIZED_BOTH);
-		window.setUndecorated(true);
+		if (fullscreen) {
+			window.setExtendedState(MAXIMIZED_BOTH);
+			window.setUndecorated(true);
+		}
 		window.pack();
 		window.setVisible(true);
 		new Thread(this).start();

@@ -29,8 +29,7 @@ public class BFSAnimation {
 	private Integer maxDistanceCell;
 	private boolean distancesVisible;
 
-	public BFSAnimation(GridCanvas<Integer, ?> canvas,
-			ObservableGrid2D<Integer, DefaultEdge<Integer>> grid) {
+	public BFSAnimation(GridCanvas<Integer, ?> canvas, ObservableGrid2D<Integer, DefaultEdge<Integer>> grid) {
 		this.canvas = canvas;
 		this.grid = grid;
 		renderingModel = new BFSRenderingModel(canvas.currentRenderingModel().getCellSize(),
@@ -102,8 +101,7 @@ public class BFSAnimation {
 
 		@Override
 		public String getCellText(Integer cell) {
-			return distancesVisible && bfs.getDistance(cell) != -1 ? String.valueOf(bfs.getDistance(cell))
-					: "";
+			return distancesVisible && bfs.getDistance(cell) != -1 ? String.valueOf(bfs.getDistance(cell)) : "";
 		}
 
 		@Override

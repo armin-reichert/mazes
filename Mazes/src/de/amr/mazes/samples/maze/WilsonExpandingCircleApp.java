@@ -2,7 +2,7 @@ package de.amr.mazes.samples.maze;
 
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTExpandingCircle;
 import de.amr.mazes.samples.grid.GridSampleApp;
@@ -16,12 +16,13 @@ public class WilsonExpandingCircleApp extends GridSampleApp {
 
 	public WilsonExpandingCircleApp() {
 		super("Wilson UST / Expanding Circle");
+		setFullscreen(true);
 	}
 
 	@Override
 	public void run() {
 		Integer startCell = grid.cell(CENTER);
-		Stream.of(64, 32, 16, 8, 4, 2).forEach(cellSize -> {
+		IntStream.of(64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			fitWindowSize(window.getWidth(), window.getHeight(), cellSize);
 			new WilsonUSTExpandingCircle(grid).accept(startCell);
 			new BFSAnimation(canvas, grid).runAnimation(startCell);

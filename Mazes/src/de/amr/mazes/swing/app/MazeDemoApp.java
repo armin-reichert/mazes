@@ -30,7 +30,7 @@ public class MazeDemoApp {
 	}
 
 	public final MazeDemoModel model;
-	
+
 	final SettingsWindow settingsWindow;
 	final MazeWindow mazeWindow;
 
@@ -77,18 +77,18 @@ public class MazeDemoApp {
 		settingsWindow.setVisible(true);
 		settingsWindow.requestFocus();
 	}
-	
+
 	public void updateCanvas() {
 		mazeWindow.invalidateCanvas();
 	}
-	
+
 	public void setGridPassageThickness(int percent) {
 		model.setPassageThicknessPct(percent);
 		canvas().clear();
 		canvas().invalidateRenderer();
 		canvas().render();
 	}
-	
+
 	public void setDelay(int delay) {
 		model.setDelay(delay);
 		canvas().setDelay(delay);

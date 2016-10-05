@@ -33,7 +33,7 @@ public class AlgorithmInfo<Tag> {
 	public Set<Tag> getTags() {
 		return tags;
 	}
-	
+
 	public boolean isTagged(Object tag) {
 		return tags.contains(tag);
 	}

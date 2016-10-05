@@ -24,8 +24,8 @@ public class AlgorithmMenu extends JMenu {
 		addMenu("Graph Traversals", model.algorithms().filter(alg -> alg.isTagged(Traversal)));
 		addMenu("Minimum Spanning Tree", model.algorithms().filter(alg -> alg.isTagged(MST)));
 		addMenu("Uniform Spanning Tree", model.algorithms().filter(alg -> alg.isTagged(UST)));
-		addMenu("Other Algorithms", model.algorithms()
-				.filter(alg -> !alg.isTagged(Traversal) && !alg.isTagged(MST) && !alg.isTagged(UST)));
+		addMenu("Other Algorithms",
+				model.algorithms().filter(alg -> !alg.isTagged(Traversal) && !alg.isTagged(MST) && !alg.isTagged(UST)));
 		((JMenu) getItem(0)).getItem(0).setSelected(true);
 	}
 

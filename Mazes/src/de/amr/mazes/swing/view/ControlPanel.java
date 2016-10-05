@@ -34,72 +34,70 @@ public class ControlPanel extends JPanel {
 		JPanel controls = new JPanel();
 		add(controls, BorderLayout.NORTH);
 		GridBagLayout gbl_controls = new GridBagLayout();
-		gbl_controls.columnWeights = new double[]{0.0, 0.0};
-		gbl_controls.rowWeights = new double[]{0.0, 0.0, 0.0};
+		gbl_controls.columnWeights = new double[] { 0.0, 0.0 };
+		gbl_controls.rowWeights = new double[] { 0.0, 0.0, 0.0 };
 		controls.setLayout(gbl_controls);
-				
-				
-				
-						JLabel lblGridResolution = new JLabel("Grid Resolution");
-						GridBagConstraints gbc_lblGridResolution = new GridBagConstraints();
-						gbc_lblGridResolution.fill = GridBagConstraints.BOTH;
-						gbc_lblGridResolution.insets = new Insets(0, 0, 5, 5);
-						gbc_lblGridResolution.gridx = 0;
-						gbc_lblGridResolution.gridy = 0;
-						controls.add(lblGridResolution, gbc_lblGridResolution);
-				
-						resolutionSelector = new JComboBox<>();
-						GridBagConstraints gbc_resolutionSelector = new GridBagConstraints();
-						gbc_resolutionSelector.weightx = 1.0;
-						gbc_resolutionSelector.fill = GridBagConstraints.BOTH;
-						gbc_resolutionSelector.insets = new Insets(0, 0, 5, 0);
-						gbc_resolutionSelector.gridx = 1;
-						gbc_resolutionSelector.gridy = 0;
-						controls.add(resolutionSelector, gbc_resolutionSelector);
-				
-						lblPassageThickness = new JLabel("Passage Thickness");
-						GridBagConstraints gbc_lblPassageThickness = new GridBagConstraints();
-						gbc_lblPassageThickness.fill = GridBagConstraints.BOTH;
-						gbc_lblPassageThickness.insets = new Insets(0, 0, 5, 5);
-						gbc_lblPassageThickness.gridx = 0;
-						gbc_lblPassageThickness.gridy = 1;
-						controls.add(lblPassageThickness, gbc_lblPassageThickness);
-						lblPassageThickness.setLabelFor(passageThicknessSlider);
-		
-				passageThicknessSlider = new JSlider();
-				passageThicknessSlider.setPaintLabels(true);
-				passageThicknessSlider.setMinimum(1);
-				passageThicknessSlider.setToolTipText("Thickness of maze passages");
-				passageThicknessSlider.setPaintTicks(true);
-				GridBagConstraints gbc_passageThicknessSlider = new GridBagConstraints();
-				gbc_passageThicknessSlider.weightx = 1.0;
-				gbc_passageThicknessSlider.fill = GridBagConstraints.BOTH;
-				gbc_passageThicknessSlider.insets = new Insets(0, 0, 5, 0);
-				gbc_passageThicknessSlider.gridx = 1;
-				gbc_passageThicknessSlider.gridy = 1;
-				controls.add(passageThicknessSlider, gbc_passageThicknessSlider);
-				
-						lblDelay = new JLabel("Delay");
-						GridBagConstraints gbc_lblDelay = new GridBagConstraints();
-						gbc_lblDelay.fill = GridBagConstraints.BOTH;
-						gbc_lblDelay.insets = new Insets(0, 0, 0, 5);
-						gbc_lblDelay.gridx = 0;
-						gbc_lblDelay.gridy = 2;
-						controls.add(lblDelay, gbc_lblDelay);
-		
-				delaySlider = new JSlider();
-				delaySlider.setToolTipText("Rendering Delay");
-				delaySlider.setValue(10);
-				delaySlider.setSnapToTicks(true);
-				delaySlider.setMaximum(50);
-				delaySlider.setMinorTickSpacing(1);
-				delaySlider.setMajorTickSpacing(5);
-				GridBagConstraints gbc_delaySlider = new GridBagConstraints();
-				gbc_delaySlider.weightx = 1.0;
-				gbc_delaySlider.fill = GridBagConstraints.BOTH;
-				gbc_delaySlider.gridx = 1;
-				gbc_delaySlider.gridy = 2;
-				controls.add(delaySlider, gbc_delaySlider);
+
+		JLabel lblGridResolution = new JLabel("Grid Resolution");
+		GridBagConstraints gbc_lblGridResolution = new GridBagConstraints();
+		gbc_lblGridResolution.fill = GridBagConstraints.BOTH;
+		gbc_lblGridResolution.insets = new Insets(0, 0, 5, 5);
+		gbc_lblGridResolution.gridx = 0;
+		gbc_lblGridResolution.gridy = 0;
+		controls.add(lblGridResolution, gbc_lblGridResolution);
+
+		resolutionSelector = new JComboBox<>();
+		GridBagConstraints gbc_resolutionSelector = new GridBagConstraints();
+		gbc_resolutionSelector.weightx = 1.0;
+		gbc_resolutionSelector.fill = GridBagConstraints.BOTH;
+		gbc_resolutionSelector.insets = new Insets(0, 0, 5, 0);
+		gbc_resolutionSelector.gridx = 1;
+		gbc_resolutionSelector.gridy = 0;
+		controls.add(resolutionSelector, gbc_resolutionSelector);
+
+		lblPassageThickness = new JLabel("Passage Thickness");
+		GridBagConstraints gbc_lblPassageThickness = new GridBagConstraints();
+		gbc_lblPassageThickness.fill = GridBagConstraints.BOTH;
+		gbc_lblPassageThickness.insets = new Insets(0, 0, 5, 5);
+		gbc_lblPassageThickness.gridx = 0;
+		gbc_lblPassageThickness.gridy = 1;
+		controls.add(lblPassageThickness, gbc_lblPassageThickness);
+		lblPassageThickness.setLabelFor(passageThicknessSlider);
+
+		passageThicknessSlider = new JSlider();
+		passageThicknessSlider.setPaintLabels(true);
+		passageThicknessSlider.setMinimum(1);
+		passageThicknessSlider.setToolTipText("Thickness of maze passages");
+		passageThicknessSlider.setPaintTicks(true);
+		GridBagConstraints gbc_passageThicknessSlider = new GridBagConstraints();
+		gbc_passageThicknessSlider.weightx = 1.0;
+		gbc_passageThicknessSlider.fill = GridBagConstraints.BOTH;
+		gbc_passageThicknessSlider.insets = new Insets(0, 0, 5, 0);
+		gbc_passageThicknessSlider.gridx = 1;
+		gbc_passageThicknessSlider.gridy = 1;
+		controls.add(passageThicknessSlider, gbc_passageThicknessSlider);
+
+		lblDelay = new JLabel("Delay");
+		GridBagConstraints gbc_lblDelay = new GridBagConstraints();
+		gbc_lblDelay.fill = GridBagConstraints.BOTH;
+		gbc_lblDelay.insets = new Insets(0, 0, 0, 5);
+		gbc_lblDelay.gridx = 0;
+		gbc_lblDelay.gridy = 2;
+		controls.add(lblDelay, gbc_lblDelay);
+
+		delaySlider = new JSlider();
+		delaySlider.setToolTipText("Rendering Delay");
+		delaySlider.setValue(10);
+		delaySlider.setSnapToTicks(true);
+		delaySlider.setMaximum(50);
+		delaySlider.setMinorTickSpacing(1);
+		delaySlider.setMajorTickSpacing(5);
+		GridBagConstraints gbc_delaySlider = new GridBagConstraints();
+		gbc_delaySlider.weightx = 1.0;
+		gbc_delaySlider.fill = GridBagConstraints.BOTH;
+		gbc_delaySlider.gridx = 1;
+		gbc_delaySlider.gridy = 2;
+		controls.add(delaySlider, gbc_delaySlider);
 
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, BorderLayout.CENTER);
@@ -117,10 +115,10 @@ public class ControlPanel extends JPanel {
 
 		btnCreateMaze = new JButton("Create Maze");
 		buttonPanel.add(btnCreateMaze);
-		
+
 		btnCreateAllMazes = new JButton("Create All Mazes");
 		buttonPanel.add(btnCreateAllMazes);
-		
+
 		btnStop = new JButton("Stop");
 		buttonPanel.add(btnStop);
 	}
@@ -150,9 +148,11 @@ public class ControlPanel extends JPanel {
 	public JSlider getPassageThicknessSlider() {
 		return passageThicknessSlider;
 	}
+
 	public JButton getBtnCreateAllMazes() {
 		return btnCreateAllMazes;
 	}
+
 	public JButton getBtnStop() {
 		return btnStop;
 	}

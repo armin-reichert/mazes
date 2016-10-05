@@ -13,6 +13,7 @@ public class EllerApp extends GridSampleApp {
 
 	public EllerApp() {
 		super("Eller's Algorithm", 600, 360, 2);
+		setFullscreen(true);
 	}
 
 	@Override

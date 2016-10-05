@@ -9,9 +9,9 @@ import de.amr.easy.grid.impl.ObservableDataGrid;
 
 public class CurveUtil {
 
-	public static void followCurve(ObservableDataGrid<TraversalState> grid, Iterable<Direction> curve,
-			Integer startCell, Runnable edgeAddedAction) {
-		DefaultEdge<Integer> dummyEdge = new DefaultEdge<>(null, null);
+	public static void followCurve(ObservableDataGrid<TraversalState> grid, Iterable<Direction> curve, Integer startCell,
+			Runnable edgeAddedAction) {
+		DefaultEdge<Integer> dummyEdge = new DefaultEdge<>(0, 0);
 		Integer current = startCell;
 		grid.set(current, COMPLETED);
 		for (Direction dir : curve) {

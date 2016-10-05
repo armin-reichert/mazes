@@ -25,8 +25,8 @@ public class DFSAnimation {
 	private final DepthFirstTraversal<Integer, ?> dfs;
 	private final Set<Integer> path;
 
-	public DFSAnimation(GridCanvas<Integer, ?> canvas, ObservableGrid2D<Integer, ?> grid,
-			Integer source, Integer target) {
+	public DFSAnimation(GridCanvas<Integer, ?> canvas, ObservableGrid2D<Integer, ?> grid, Integer source,
+			Integer target) {
 		this.canvas = canvas;
 		this.grid = grid;
 		this.renderingModel = new DFSRenderingModel(canvas.currentRenderingModel().getCellSize(),
@@ -56,8 +56,7 @@ public class DFSAnimation {
 		private final int cellSize;
 		private final int passageThickness;
 
-		public DFSRenderingModel(int cellSize, int passageThickness, Color pathColor,
-				Color visitColor) {
+		public DFSRenderingModel(int cellSize, int passageThickness, Color pathColor, Color visitColor) {
 			this.cellSize = cellSize;
 			this.passageThickness = passageThickness > 5 ? passageThickness / 2 : passageThickness;
 			this.pathColor = pathColor;
