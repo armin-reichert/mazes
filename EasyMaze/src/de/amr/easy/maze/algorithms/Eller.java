@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.impl.DefaultEdge;
@@ -38,11 +39,11 @@ public class Eller implements Consumer<Integer> {
 
 	@Override
 	public void accept(Integer start) {
-		for (int y = 0; y < grid.numRows() - 1; ++y) {
-			connectCellsHorizontally(y, false);
-			connectCellsVertically(y);
-		}
-		connectCellsHorizontally(grid.numRows() - 1, true);
+		IntStream.range(0, grid.numRows() - 1).forEach(row -> {
+			connectCellsInsideRow(row, false);
+			connectCellsWithNextRow(row);
+		});
+		connectCellsInsideRow(grid.numRows() - 1, true);
 	}
 
 	private void connectCells(Integer v, Integer w) {
@@ -52,47 +53,47 @@ public class Eller implements Consumer<Integer> {
 		partition.union(partition.find(v), partition.find(w));
 	}
 
-	private void connectCellsHorizontally(int y, boolean all) {
-		for (int x = 0; x < grid.numCols() - 1; ++x) {
+	private void connectCellsInsideRow(int row, boolean all) {
+		IntStream.range(0, grid.numCols() - 1).forEach(col -> {
 			if (all || rnd.nextBoolean()) {
-				Integer left = grid.cell(x, y);
-				Integer right = grid.cell(x + 1, y);
+				Integer left = grid.cell(col, row);
+				Integer right = grid.cell(col + 1, row);
 				if (partition.find(left) != partition.find(right)) {
 					connectCells(left, right);
 				}
 			}
-		}
+		});
 	}
 
-	private void connectCellsVertically(int y) {
+	private void connectCellsWithNextRow(int row) {
 		Set<EquivClass> connected = new HashSet<>();
-		for (int x = 0; x < grid.numCols(); ++x) {
+		IntStream.range(0, grid.numCols()).forEach(col -> {
 			if (rnd.nextBoolean()) {
-				Integer cell = grid.cell(x, y);
-				Integer below = grid.cell(x, y + 1);
-				connectCells(cell, below);
-				connected.add(partition.find(cell));
+				Integer above = grid.cell(col, row);
+				Integer below = grid.cell(col, row + 1);
+				connectCells(above, below);
+				connected.add(partition.find(above));
 			}
-		}
+		});
 		// collect cells of still unconnected components
 		List<Integer> unconnected = new ArrayList<>();
-		for (int x = 0; x < grid.numCols(); ++x) {
-			Integer cell = grid.cell(x, y);
+		IntStream.range(0, grid.numCols()).forEach(col -> {
+			Integer cell = grid.cell(col, row);
 			EquivClass component = partition.find(cell);
 			if (!connected.contains(component)) {
 				unconnected.add(cell);
 			}
-		}
+		});
 		// shuffle cells to avoid biased maze
 		Collections.shuffle(unconnected);
 		// connect cells and mark component as connected
-		for (Integer cell : unconnected) {
-			EquivClass component = partition.find(cell);
+		unconnected.forEach(above -> {
+			EquivClass component = partition.find(above);
 			if (!connected.contains(component)) {
-				Integer below = grid.cell(grid.col(cell), y + 1);
-				connectCells(cell, below);
+				Integer below = grid.cell(grid.col(above), row + 1);
+				connectCells(above, below);
 				connected.add(component);
 			}
-		}
+		});
 	}
 }
