@@ -4,7 +4,6 @@ import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
-import java.util.Optional;
 import java.util.function.Consumer;
 
 import de.amr.easy.graph.api.TraversalState;
@@ -53,11 +52,11 @@ public class AldousBroderUST implements Consumer<Integer> {
 		grid.set(v, COMPLETED);
 		mazeCellCount = 1;
 		while (mazeCellCount < grid.numCells()) {
-			v = neighbor(v).get();
+			v = addRandomNeighbor(v);
 		}
 	}
 
-	private Optional<Integer> neighbor(Integer v) {
+	private Integer addRandomNeighbor(Integer v) {
 		return grid.randomNeighbor(v).map(u -> {
 			// animate visit
 			TraversalState state = grid.get(u);
@@ -70,6 +69,6 @@ public class AldousBroderUST implements Consumer<Integer> {
 				grid.addEdge(new DefaultEdge<>(u, v));
 			}
 			return u;
-		});
+		}).get();
 	}
 }
