@@ -4,11 +4,11 @@ import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.impl.DefaultEdge;
-import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 
 /**
@@ -42,38 +42,40 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
 public class AldousBroderUST implements Consumer<Integer> {
 
 	private final ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid;
-	private int numMazeCells;
+	private int mazeCellCount;
 
 	public AldousBroderUST(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
 		this.grid = grid;
 	}
 
 	@Override
-	public void accept(Integer start) {
-		numMazeCells = 0;
-		Integer u = start;
-		addToMaze(u);
-		while (numMazeCells < grid.vertexCount()) {
-			Integer v = grid.neighbor(u, Direction.randomValue());
-			if (v != null) {
-				animate(v);
-				if (grid.get(v) == UNVISITED) {
-					addToMaze(v);
-					grid.addEdge(new DefaultEdge<>(v, u));
-				}
-				u = v;
-			}
+	public void accept(Integer v) {
+		grid.set(v, COMPLETED);
+		mazeCellCount = 1;
+		while (mazeCellCount < grid.numCells()) {
+			v = eitherNewNeighbor(v).orElse(v);
 		}
 	}
 
-	private void addToMaze(Integer cell) {
-		grid.set(cell, COMPLETED);
-		++numMazeCells;
-	}
-
-	private void animate(Integer cell) {
-		TraversalState state = grid.get(cell);
-		grid.set(cell, VISITED);
-		grid.set(cell, state);
+	private Optional<Integer> eitherNewNeighbor(Integer v) {
+		/*@formatter:off*/
+		return grid.randomNeighbor(v)
+				.map(u -> {
+					// animate visit
+					TraversalState state = grid.get(u);
+					grid.set(u, VISITED);
+					grid.set(u, state);
+					return u;
+				})
+				.map(u -> {
+					// add unvisited neighbor to maze
+					if (grid.get(u) == UNVISITED) {
+						grid.set(u, COMPLETED);
+						++mazeCellCount;
+						grid.addEdge(new DefaultEdge<>(u, v));
+					}
+					return u;
+				});
+		/*@formatter:on*/
 	}
 }

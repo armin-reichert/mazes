@@ -124,6 +124,16 @@ public interface Grid2D<Cell, Passage extends Edge<Cell>> extends Graph<Cell, Pa
 	 * 
 	 * @param cell
 	 *          a grid cell
+	 * @return a random neighbor cell
+	 */
+	public default Optional<Cell> randomNeighbor(Cell cell) {
+		return randomNeighbor(cell, c -> true);
+	}
+
+	/**
+	 * 
+	 * @param cell
+	 *          a grid cell
 	 * @param dir
 	 *          the direction to which the cell is checked for connectivity
 	 * @return if the cell is connected with the cell in the given direction ("passage", "no wall")

@@ -45,7 +45,7 @@ public class IterativeDFS implements Consumer<Integer> {
 		while (!stack.isEmpty()) {
 			Optional<Integer> neighbor = grid.randomNeighbor(current, cell -> grid.get(cell) == UNVISITED);
 			if (neighbor.isPresent()) {
-				if (grid.randomNeighbor(neighbor.get(), cell -> true).isPresent()) {
+				if (grid.randomNeighbor(neighbor.get()).isPresent()) {
 					stack.push(neighbor.get());
 				}
 				grid.addEdge(new DefaultEdge<>(current, neighbor.get()));
