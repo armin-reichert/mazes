@@ -53,11 +53,11 @@ public class AldousBroderUST implements Consumer<Integer> {
 		grid.set(v, COMPLETED);
 		mazeCellCount = 1;
 		while (mazeCellCount < grid.numCells()) {
-			v = eitherNewNeighbor(v).orElse(v);
+			v = neighbor(v).get();
 		}
 	}
 
-	private Optional<Integer> eitherNewNeighbor(Integer v) {
+	private Optional<Integer> neighbor(Integer v) {
 		/*@formatter:off*/
 		return grid.randomNeighbor(v)
 				.map(u -> {
@@ -68,7 +68,7 @@ public class AldousBroderUST implements Consumer<Integer> {
 					return u;
 				})
 				.map(u -> {
-					// add unvisited neighbor to maze
+					// if unvisited, add neighbor to maze
 					if (grid.get(u) == UNVISITED) {
 						grid.set(u, COMPLETED);
 						++mazeCellCount;
