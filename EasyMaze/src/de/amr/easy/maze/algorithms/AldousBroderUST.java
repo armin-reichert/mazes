@@ -58,24 +58,18 @@ public class AldousBroderUST implements Consumer<Integer> {
 	}
 
 	private Optional<Integer> neighbor(Integer v) {
-		/*@formatter:off*/
-		return grid.randomNeighbor(v)
-				.map(u -> {
-					// animate visit
-					TraversalState state = grid.get(u);
-					grid.set(u, VISITED);
-					grid.set(u, state);
-					return u;
-				})
-				.map(u -> {
-					// if unvisited, add neighbor to maze
-					if (grid.get(u) == UNVISITED) {
-						grid.set(u, COMPLETED);
-						++mazeCellCount;
-						grid.addEdge(new DefaultEdge<>(u, v));
-					}
-					return u;
-				});
-		/*@formatter:on*/
+		return grid.randomNeighbor(v).map(u -> {
+			// animate visit
+			TraversalState state = grid.get(u);
+			grid.set(u, VISITED);
+			grid.set(u, state);
+			// if unvisited, add neighbor to maze
+			if (grid.get(u) == UNVISITED) {
+				grid.set(u, COMPLETED);
+				++mazeCellCount;
+				grid.addEdge(new DefaultEdge<>(u, v));
+			}
+			return u;
+		});
 	}
 }
