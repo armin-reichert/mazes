@@ -20,7 +20,7 @@ public class BinaryTreeRandom extends BinaryTree {
 	}
 
 	@Override
-	protected Stream<Integer> getCells() {
+	protected Stream<Integer> cellStream() {
 		return cellsInRandomOrder.stream();
 	}
 }

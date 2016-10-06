@@ -1,6 +1,8 @@
 package de.amr.easy.maze.algorithms;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
+import static de.amr.easy.grid.api.Direction.E;
+import static de.amr.easy.grid.api.Direction.S;
 
 import java.util.Optional;
 import java.util.Random;
@@ -29,8 +31,8 @@ public class BinaryTree implements Consumer<Integer> {
 
 	@Override
 	public void accept(Integer start) {
-		getCells().forEach(cell -> {
-			getRandomNeighbor(cell, Direction.S, Direction.E).ifPresent(neighbor -> {
+		cellStream().forEach(cell -> {
+			randomNeighbor(cell, S, E).ifPresent(neighbor -> {
 				grid.addEdge(new DefaultEdge<>(cell, neighbor));
 				grid.set(cell, COMPLETED);
 				grid.set(neighbor, COMPLETED);
@@ -38,16 +40,27 @@ public class BinaryTree implements Consumer<Integer> {
 		});
 	}
 
-	private Optional<Integer> getRandomNeighbor(Integer cell, Direction d1, Direction d2) {
+	/**
+	 * 
+	 * @param cell
+	 *          a grid cell
+	 * @param firstDir
+	 *          first direction of tree
+	 * @param secondDir
+	 *          second direction of tree
+	 * @return a random neighbor towards one of the given directions or nothing
+	 */
+	private Optional<Integer> randomNeighbor(Integer cell, Direction firstDir, Direction secondDir) {
 		boolean b = rnd.nextBoolean();
-		Integer neighbor = grid.neighbor(cell, b ? d1 : d2);
-		return neighbor != null ? Optional.of(neighbor) : Optional.ofNullable(grid.neighbor(cell, b ? d2 : d1));
+		Integer neighbor = grid.neighbor(cell, b ? firstDir : secondDir);
+		return neighbor != null ? Optional.of(neighbor)
+				: Optional.ofNullable(grid.neighbor(cell, b ? secondDir : firstDir));
 	}
 
 	/*
-	 * Overridden by subclass to specify different cell iteration.
+	 * @return stream of all grid cells in the order used for maze creation
 	 */
-	protected Stream<Integer> getCells() {
+	protected Stream<Integer> cellStream() {
 		return grid.vertexStream();
 	}
 }
