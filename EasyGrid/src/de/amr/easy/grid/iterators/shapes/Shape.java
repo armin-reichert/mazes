@@ -6,25 +6,20 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.iterators.traversals.Sequence;
 
 /**
  * Base class for shapes (square, rectangle, ...) on a grid.
  * <p>
- * Implements the {@link Iterable} interface such that code like the following can be written:
- * 
- * <pre>
- * Rectangle&lt;Integer> rect = new Rectangle<>(grid, grid.getCell(0, 0), 10, 5);
- * for (Integer cell : rect) {
- * 	// process cell
- * }
- * </pre>
+ * Implements the {@link Sequence} interface such that a shape can be used as an Iterator or a
+ * Stream of cells.
  * 
  * @author Armin Reichert
  *
  * @param <Cell>
  *          the grid cell type
  */
-public abstract class Shape<Cell> implements Iterable<Cell> {
+public abstract class Shape<Cell> implements Sequence<Cell> {
 
 	public final Grid2D<Cell, ?> grid;
 
@@ -45,6 +40,7 @@ public abstract class Shape<Cell> implements Iterable<Cell> {
 		return cells.iterator();
 	}
 
+	@Override
 	public Stream<Cell> stream() {
 		return cells.stream();
 	}
