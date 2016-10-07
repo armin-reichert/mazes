@@ -52,23 +52,35 @@ public class AldousBroderUST implements Consumer<Integer> {
 		grid.set(v, COMPLETED);
 		mazeCellCount = 1;
 		while (mazeCellCount < grid.numCells()) {
-			v = addRandomNeighbor(v);
+			v = visitRandomNeighbor(v);
 		}
 	}
 
-	private Integer addRandomNeighbor(Integer v) {
-		return grid.randomNeighbor(v).map(u -> {
-			// animate visit
-			TraversalState state = grid.get(u);
-			grid.set(u, VISITED);
-			grid.set(u, state);
-			// if unvisited, add neighbor to maze
-			if (grid.get(u) == UNVISITED) {
-				grid.set(u, COMPLETED);
-				++mazeCellCount;
-				grid.addEdge(new DefaultEdge<>(u, v));
-			}
-			return u;
-		}).get();
+	/**
+	 * Visits a random neighbor cell and adds it to the maze if it is visited for the first time.
+	 * 
+	 * @param v
+	 *          a maze cell
+	 * @return the visited neighbor
+	 */
+	private Integer visitRandomNeighbor(Integer v) {
+		/*@formatter:off*/
+		return grid
+			.randomNeighbor(v)
+      .map(u -> {
+				// animate visit
+				TraversalState state = grid.get(u);
+				grid.set(u, VISITED);
+				grid.set(u, state);
+				// if first time visit, add neighbor to maze
+				if (grid.get(u) == UNVISITED) {
+					grid.set(u, COMPLETED);
+					++mazeCellCount;
+					grid.addEdge(new DefaultEdge<>(u, v));
+				}
+				return u;
+			})
+      .get();
+		/*@formatter:on*/
 	}
 }

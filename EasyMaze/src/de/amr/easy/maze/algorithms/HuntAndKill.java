@@ -24,7 +24,7 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  * Jamis Buck's blog</a> is that this algorithm does not "hunt" row-wise through the unvisited maze
  * cells in the neighborhood of the already completed maze, but it stores exactly these cells in a
  * set and picks a random candidate from this set in the "hunt"-stage. That means the "hunt" is like
- * getting the poor animal placed directly before the gun ;-)
+ * getting the poor animal placed directly in front of the gun ;-)
  * 
  * @author Armin Reichert
  * 
