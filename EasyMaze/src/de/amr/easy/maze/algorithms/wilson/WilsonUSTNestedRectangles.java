@@ -30,7 +30,7 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 	}
 
 	@Override
-	protected Stream<Integer> getCellSequence() {
+	protected Stream<Integer> cellStream() {
 		Iterable<Integer> it = new Iterable<Integer>() {
 
 			@Override

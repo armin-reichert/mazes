@@ -32,7 +32,7 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 	}
 
 	@Override
-	protected Stream<Integer> getCellSequence() {
+	protected Stream<Integer> cellStream() {
 		// Hilbert curve need a square grid, so create one
 		int n = nextPow(2, max(grid.numCols(), grid.numRows()));
 		RawGrid square = new RawGrid(n, n);

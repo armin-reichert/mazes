@@ -1,5 +1,7 @@
 package de.amr.easy.maze.algorithms.wilson;
 
+import java.util.stream.IntStream;
+
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
@@ -18,13 +20,13 @@ public class WilsonUSTRowsTopDown extends WilsonUST {
 	@Override
 	public void accept(Integer start) {
 		addCellToTree(start);
-		for (int y = 0; y < grid.numRows(); ++y) {
-			for (int x = 0; x < grid.numCols(); ++x) {
-				Integer walkStart = grid.cell(x, y);
+		IntStream.range(0, grid.numRows()).forEach(row -> {
+			IntStream.range(0, grid.numCols()).forEach(col -> {
+				Integer walkStart = grid.cell(col, row);
 				if (!isCellInTree(walkStart)) {
 					loopErasedRandomWalk(walkStart);
 				}
-			}
-		}
+			});
+		});
 	}
 }

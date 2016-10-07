@@ -12,7 +12,7 @@ import de.amr.easy.grid.api.Grid2D;
  * @param <Cell>
  *          the grid cell type
  */
-public class CollapsingWalls<Cell> implements Iterable<Cell> {
+public class CollapsingWalls<Cell> implements Sequence<Cell> {
 
 	private final Grid2D<Cell, ?> grid;
 

@@ -13,7 +13,7 @@ import de.amr.easy.grid.iterators.shapes.Square;
  * @param <Cell>
  *          the grid cell type
  */
-public class ExpandingSquare<Cell> implements Iterable<Cell> {
+public class ExpandingSquare<Cell> implements Sequence<Cell> {
 
 	private final Grid2D<Cell, ?> grid;
 	private final Cell topLeft;

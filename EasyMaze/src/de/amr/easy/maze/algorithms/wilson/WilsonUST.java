@@ -47,7 +47,7 @@ public abstract class WilsonUST implements Consumer<Integer> {
 	public void accept(Integer start) {
 		start = getStartCell(start);
 		addCellToTree(start);
-		getCellSequence().forEach(walkStart -> {
+		cellStream().forEach(walkStart -> {
 			if (!isCellInTree(walkStart)) {
 				loopErasedRandomWalk(walkStart);
 			}
@@ -90,7 +90,7 @@ public abstract class WilsonUST implements Consumer<Integer> {
 	/**
 	 * @return iterator defining the cell order used by the maze generator
 	 */
-	protected Stream<Integer> getCellSequence() {
+	protected Stream<Integer> cellStream() {
 		return grid.vertexStream();
 	}
 

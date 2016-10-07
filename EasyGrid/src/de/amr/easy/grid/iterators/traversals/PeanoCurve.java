@@ -12,7 +12,7 @@ import de.amr.easy.grid.api.Direction;
  * 
  * @author Armin Reichert
  */
-public class PeanoCurve implements Iterable<Direction> {
+public class PeanoCurve implements Sequence<Direction> {
 
 	private final List<Direction> directions = new ArrayList<>();
 
@@ -47,6 +47,7 @@ public class PeanoCurve implements Iterable<Direction> {
 		return directions.iterator();
 	}
 
+	@Override
 	public Stream<Direction> stream() {
 		return directions.stream();
 	}

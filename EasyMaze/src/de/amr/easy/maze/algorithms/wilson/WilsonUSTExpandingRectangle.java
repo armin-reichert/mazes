@@ -1,7 +1,6 @@
 package de.amr.easy.maze.algorithms.wilson;
 
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.impl.DefaultEdge;
@@ -21,13 +20,13 @@ public class WilsonUSTExpandingRectangle extends WilsonUST {
 	}
 
 	@Override
-	protected Stream<Integer> getCellSequence() {
+	protected Stream<Integer> cellStream() {
 		Rectangle<Integer> startRectangle = new Rectangle<>(grid, grid.cell(0, 0), 1, 1);
 		ExpandingRectangle<Integer> expRect = new ExpandingRectangle<>(startRectangle);
 		expRect.setExpandHorizontally(true);
 		expRect.setExpandVertically(true);
 		expRect.setMaxExpansion(grid.numCols() - 1);
-		return StreamSupport.stream(expRect.spliterator(), false);
+		return expRect.stream();
 	}
 
 	@Override

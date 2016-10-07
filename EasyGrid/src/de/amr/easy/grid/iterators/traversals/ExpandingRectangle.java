@@ -12,7 +12,7 @@ import de.amr.easy.grid.iterators.shapes.Rectangle;
  * @param <Cell>
  *          the grid cell type
  */
-public class ExpandingRectangle<Cell> implements Iterable<Cell> {
+public class ExpandingRectangle<Cell> implements Sequence<Cell> {
 
 	private final Rectangle<Cell> startRectangle;
 	private boolean expandHorizontally;

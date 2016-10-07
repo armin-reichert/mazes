@@ -13,7 +13,7 @@ import de.amr.easy.grid.iterators.shapes.Circle;
  * @param <Cell>
  *          the grid cell type
  */
-public class ExpandingCircle<Cell> implements Iterable<Cell> {
+public class ExpandingCircle<Cell> implements Sequence<Cell> {
 
 	private final Grid2D<Cell, ?> grid;
 	private final Cell center;

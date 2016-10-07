@@ -3,7 +3,6 @@ package de.amr.easy.maze.algorithms.wilson;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.impl.DefaultEdge;
@@ -22,9 +21,9 @@ public class WilsonUSTExpandingSpiral extends WilsonUST {
 	}
 
 	@Override
-	protected Stream<Integer> getCellSequence() {
+	protected Stream<Integer> cellStream() {
 		Integer center = grid.cell(CENTER);
-		return StreamSupport.stream(new Spiral<>(grid, center).spliterator(), false);
+		return new Spiral<>(grid, center).stream();
 	}
 
 	@Override

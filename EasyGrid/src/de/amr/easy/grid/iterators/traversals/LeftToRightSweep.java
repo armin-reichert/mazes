@@ -12,7 +12,7 @@ import de.amr.easy.grid.api.Grid2D;
  * @param <Cell>
  *          the grid cell type
  */
-public class LeftToRightSweep<Cell> implements Iterable<Cell> {
+public class LeftToRightSweep<Cell> implements Sequence<Cell> {
 
 	private final Grid2D<Cell, ?> grid;
 

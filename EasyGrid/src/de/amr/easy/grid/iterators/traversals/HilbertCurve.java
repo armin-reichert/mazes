@@ -8,6 +8,7 @@ import static de.amr.easy.grid.api.Direction.W;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
 import de.amr.easy.grid.api.Direction;
 
@@ -16,7 +17,7 @@ import de.amr.easy.grid.api.Direction;
  *
  * @author Armin Reichert
  */
-public class HilbertCurve implements Iterable<Direction> {
+public class HilbertCurve implements Sequence<Direction> {
 
 	private final List<Direction> curve = new ArrayList<>();
 
@@ -43,6 +44,11 @@ public class HilbertCurve implements Iterable<Direction> {
 	@Override
 	public Iterator<Direction> iterator() {
 		return curve.iterator();
+	}
+
+	@Override
+	public Stream<Direction> stream() {
+		return curve.stream();
 	}
 
 	@Override
