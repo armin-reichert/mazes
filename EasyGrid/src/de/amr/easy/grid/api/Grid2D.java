@@ -92,6 +92,15 @@ public interface Grid2D<Cell, Passage extends Edge<Cell>> extends Graph<Cell, Pa
 	public boolean isValidRow(int row);
 
 	/**
+	 * Returns all neighbor cells of the given cell.
+	 * 
+	 * @return stream of all neighbor cells in the order given by the specified directions
+	 */
+	public default Stream<Cell> neighbors(Cell cell, Direction... dirs) {
+		return Stream.of(dirs).map(dir -> neighbor(cell, dir)).filter(Objects::nonNull);
+	}
+
+	/**
 	 * 
 	 * @param cell
 	 *          a grid position
@@ -112,11 +121,9 @@ public interface Grid2D<Cell, Passage extends Edge<Cell>> extends Graph<Cell, Pa
 	 */
 	public default Optional<Cell> randomNeighbor(Cell cell, Predicate<Cell> condition) {
 		/*@formatter:off*/
-		return Stream.of(Direction.randomOrder())
-			.map(dir -> neighbor(cell, dir))
-			.filter(Objects::nonNull)
+		return neighbors(cell, Direction.randomOrder())
 			.filter(condition)
-			.findAny();
+			.findFirst();
 		/*@formatter:on*/
 	}
 
@@ -127,7 +134,7 @@ public interface Grid2D<Cell, Passage extends Edge<Cell>> extends Graph<Cell, Pa
 	 * @return a random neighbor cell
 	 */
 	public default Optional<Cell> randomNeighbor(Cell cell) {
-		return randomNeighbor(cell, c -> true);
+		return neighbors(cell, Direction.randomOrder()).findFirst();
 	}
 
 	/**

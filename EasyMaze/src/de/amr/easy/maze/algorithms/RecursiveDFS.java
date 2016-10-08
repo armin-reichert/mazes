@@ -20,6 +20,7 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
 public class RecursiveDFS implements Consumer<Integer> {
 
 	private final ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid;
+	private Optional<Integer> unvisitedNeighbor;
 
 	public RecursiveDFS(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
 		this.grid = grid;
@@ -28,10 +29,9 @@ public class RecursiveDFS implements Consumer<Integer> {
 	@Override
 	public void accept(Integer cell) {
 		grid.set(cell, VISITED);
-		Optional<Integer> neighbor;
-		while ((neighbor = grid.randomNeighbor(cell, c -> grid.get(c) == UNVISITED)).isPresent()) {
-			grid.addEdge(new DefaultEdge<>(cell, neighbor.get()));
-			accept(neighbor.get());
+		while ((unvisitedNeighbor = grid.randomNeighbor(cell, nb -> grid.get(nb) == UNVISITED)).isPresent()) {
+			grid.addEdge(new DefaultEdge<>(cell, unvisitedNeighbor.get()));
+			accept(unvisitedNeighbor.get());
 		}
 		grid.set(cell, COMPLETED);
 	}
