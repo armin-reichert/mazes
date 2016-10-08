@@ -44,7 +44,7 @@ public class CreateSingleMazeAction extends AbstractAction {
 				if (pathFinder != null) {
 					runPathFinder(pathFinder);
 				}
-			} catch (Exception x) {
+			} catch (Throwable x) {
 				x.printStackTrace(System.err);
 				app.showMessage("An exception occured: " + x);
 			} finally {
