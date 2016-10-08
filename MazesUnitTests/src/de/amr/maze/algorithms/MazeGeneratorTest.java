@@ -54,7 +54,6 @@ public class MazeGeneratorTest {
 
 	@After
 	public void tearDown() {
-		assertEquals(grid.vertexCount(), WIDTH * HEIGHT);
 		assertEquals(grid.edgeCount(), grid.vertexCount() - 1);
 	}
 
@@ -82,7 +81,7 @@ public class MazeGeneratorTest {
 	public void testEllerInsideOut() {
 		new EllerInsideOut(grid).accept(grid.cell(CENTER));
 	}
-	
+
 	@Test
 	public void testHuntAndKill() {
 		new HuntAndKill(grid).accept(grid.cell(CENTER));
@@ -108,8 +107,9 @@ public class MazeGeneratorTest {
 		new RandomBFS(grid).accept(grid.cell(CENTER));
 	}
 
-	// @Test
+	@Test
 	public void testRecursiveDFS() {
+		grid = new ObservableDataGrid<>(50, 40, UNVISITED);
 		new RecursiveDFS(grid).accept(grid.cell(CENTER));
 	}
 
