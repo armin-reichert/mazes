@@ -37,10 +37,10 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 		int n = nextPow(2, max(grid.numCols(), grid.numRows()));
 		RawGrid square = new RawGrid(n, n);
 		HilbertCurve hilbert = new HilbertCurve(log(2, n), W, N, E, S);
-		List<Integer> path = new ArrayList<>();
-		path.add(grid.cell(0, 0));
 		// Traverse the intersection of the square grid cells with the original grid
+		List<Integer> path = new ArrayList<>();
 		Integer cell = square.cell(0, 0);
+		path.add(cell);
 		for (Direction dir : hilbert) {
 			// As the Hilbert curve never leaves the square grid, the neighbor is never NULL
 			cell = square.neighbor(cell, dir);
@@ -50,6 +50,6 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 				path.add(grid.cell(col, row));
 			}
 		}
-		return StreamSupport.stream(path.spliterator(), false);
+		return path.stream();
 	}
 }
