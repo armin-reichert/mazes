@@ -30,18 +30,22 @@ public class PrimMST implements Consumer<Integer> {
 
 	@Override
 	public void accept(Integer start) {
-		addToMaze(start);
+		extendMaze(start);
 		while (!cut.isEmpty()) {
 			DefaultWeightedEdge<Integer> edge = cut.poll();
-			Integer p = edge.either(), q = edge.other(p);
-			if (outsideMaze(p) || outsideMaze(q)) {
+			Integer eitherCell = edge.either(), otherCell = edge.other(eitherCell);
+			if (outsideMaze(eitherCell) || outsideMaze(otherCell)) {
 				grid.addEdge(edge);
-				addToMaze(outsideMaze(p) ? p : q);
+				extendMaze(outsideMaze(eitherCell) ? eitherCell : otherCell);
 			}
 		}
 	}
 
-	private void addToMaze(Integer cell) {
+	/**
+	 * Adds the given cell to the maze and extends the cut to the rest of the grid with randomly
+	 * weighted edges.
+	 */
+	private void extendMaze(Integer cell) {
 		grid.set(cell, COMPLETED);
 		/*@formatter:off*/
 		grid.neighbors(cell, Direction.valuesPermuted())
