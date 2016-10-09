@@ -10,12 +10,12 @@ import de.amr.easy.grid.api.GridDataAccess;
  * @param <Content>
  *          cell content type
  */
-class ArrayData<Content> implements GridDataAccess<Integer, Content> {
+class ArrayGridDataAccess<Content> implements GridDataAccess<Integer, Content> {
 
 	private Object[] cellContent;
 	private Object defaultContent;
 
-	public ArrayData(int size) {
+	public ArrayGridDataAccess(int size) {
 		cellContent = new Object[size];
 	}
 

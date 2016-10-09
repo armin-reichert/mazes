@@ -12,7 +12,7 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
-import de.amr.easy.grid.impl.RawGrid;
+import de.amr.easy.grid.impl.Grid;
 import de.amr.easy.grid.iterators.traversals.PeanoCurve;
 
 /**
@@ -31,7 +31,7 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 	@Override
 	protected Stream<Integer> cellStream() {
 		int n = nextPow(3, Math.max(grid.numCols(), grid.numRows()));
-		RawGrid squareGrid = new RawGrid(n, n);
+		Grid squareGrid = new Grid(n, n);
 		Integer cell = squareGrid.cell(BOTTOM_LEFT);
 		addCellToPath(squareGrid.col(cell), squareGrid.row(cell));
 		for (Direction d : new PeanoCurve(log(3, n))) {

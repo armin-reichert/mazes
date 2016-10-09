@@ -15,12 +15,12 @@ import de.amr.easy.grid.api.GridDataAccess;
  * @param <Content>
  *          cell content type
  */
-class HashMapData<Cell, Content> implements GridDataAccess<Cell, Content> {
+class HashMapGridDataAccess<Cell, Content> implements GridDataAccess<Cell, Content> {
 
 	private final Map<Cell, Content> cellContent = new HashMap<>();
 	private Content defaultContent;
 
-	public HashMapData() {
+	public HashMapGridDataAccess() {
 	}
 
 	@Override

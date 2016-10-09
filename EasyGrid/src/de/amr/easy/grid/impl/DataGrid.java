@@ -1,5 +1,7 @@
 package de.amr.easy.grid.impl;
 
+import de.amr.easy.graph.impl.DefaultEdge;
+import de.amr.easy.grid.api.DataGrid2D;
 import de.amr.easy.grid.api.GridDataAccess;
 
 /**
@@ -7,13 +9,13 @@ import de.amr.easy.grid.api.GridDataAccess;
  * 
  * @author Armin Reichert
  */
-public class DataGrid<Content> extends RawGrid implements GridDataAccess<Integer, Content> {
+public class DataGrid<Content> extends Grid implements DataGrid2D<Integer, DefaultEdge<Integer>, Content> {
 
 	private GridDataAccess<Integer, Content> contentStore;
 
 	public DataGrid(int numCols, int numRows, Content defaultContent, boolean sparse) {
 		super(numCols, numRows);
-		contentStore = sparse ? new HashMapData<>() : new ArrayData<>(numCols * numRows);
+		contentStore = sparse ? new HashMapGridDataAccess<>() : new ArrayGridDataAccess<>(numCols * numRows);
 		contentStore.setDefault(defaultContent);
 	}
 

@@ -13,12 +13,12 @@ import de.amr.easy.grid.api.ObservableGrid2D;
  * 
  * @author Armin Reichert
  */
-public class ObservableRawGrid extends RawGrid implements ObservableGrid2D<Integer, DefaultEdge<Integer>> {
+public class ObservableGrid extends Grid implements ObservableGrid2D<Integer, DefaultEdge<Integer>> {
 
 	private final Set<GraphListener<Integer, DefaultEdge<Integer>>> listeners = new HashSet<>();
 	private boolean eventsEnabled;
 
-	public ObservableRawGrid(int numCols, int numRows) {
+	public ObservableGrid(int numCols, int numRows) {
 		super(numCols, numRows);
 		eventsEnabled = true;
 	}

@@ -22,7 +22,7 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
-import de.amr.easy.grid.impl.RawGrid;
+import de.amr.easy.grid.impl.Grid;
 import de.amr.easy.grid.iterators.shapes.Rectangle;
 import de.amr.easy.grid.iterators.shapes.Square;
 import de.amr.easy.maze.datastructures.Partition;
@@ -37,7 +37,7 @@ import de.amr.easy.maze.datastructures.Partition.EquivClass;
 public class EllerInsideOut implements Consumer<Integer> {
 
 	private final ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid;
-	private final RawGrid squareGrid;
+	private final Grid squareGrid;
 	private final Random rnd = new Random();
 	private final Partition<Integer> mazeParts = new Partition<>();
 	private Square<Integer> square;
@@ -51,7 +51,7 @@ public class EllerInsideOut implements Consumer<Integer> {
 		int n = Math.max(grid.numCols(), grid.numRows());
 		offsetX = (n - grid.numCols()) / 2;
 		offsetY = (n - grid.numRows()) / 2;
-		squareGrid = new RawGrid(n, n);
+		squareGrid = new Grid(n, n);
 	}
 
 	@Override

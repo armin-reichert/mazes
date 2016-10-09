@@ -18,7 +18,7 @@ public class Rectangle<Cell> extends Shape<Cell> {
 
 	public Rectangle(Grid2D<Cell, ?> grid, Cell leftUpperCorner, int width, int height) {
 		super(grid);
-		
+
 		this.leftUpperCorner = leftUpperCorner;
 		this.width = width;
 		this.height = height;

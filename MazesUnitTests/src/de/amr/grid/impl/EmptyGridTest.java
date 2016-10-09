@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.grid.impl.RawGrid;
+import de.amr.easy.grid.impl.Grid;
 
 public class EmptyGridTest {
 
@@ -20,7 +20,7 @@ public class EmptyGridTest {
 
 	@Before
 	public void setUp() {
-		grid = new RawGrid(0, 0);
+		grid = new Grid(0, 0);
 	}
 
 	@After

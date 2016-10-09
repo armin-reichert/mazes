@@ -15,7 +15,7 @@ import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.grid.impl.RawGrid;
+import de.amr.easy.grid.impl.Grid;
 
 public class FullGridTest {
 
@@ -26,7 +26,7 @@ public class FullGridTest {
 
 	@Before
 	public void setUp() {
-		grid = new RawGrid(WIDTH, HEIGHT);
+		grid = new Grid(WIDTH, HEIGHT);
 		grid.fillAllEdges();
 	}
 

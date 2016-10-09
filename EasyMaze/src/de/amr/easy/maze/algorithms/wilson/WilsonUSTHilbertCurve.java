@@ -16,7 +16,7 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
-import de.amr.easy.grid.impl.RawGrid;
+import de.amr.easy.grid.impl.Grid;
 import de.amr.easy.grid.iterators.traversals.HilbertCurve;
 
 /**
@@ -34,7 +34,7 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 	protected Stream<Integer> cellStream() {
 		// Hilbert curve need a square grid, so create one
 		int n = nextPow(2, max(grid.numCols(), grid.numRows()));
-		RawGrid square = new RawGrid(n, n);
+		Grid square = new Grid(n, n);
 		HilbertCurve hilbert = new HilbertCurve(log(2, n), W, N, E, S);
 		// Traverse the intersection of the square grid cells with the original grid
 		List<Integer> path = new ArrayList<>();

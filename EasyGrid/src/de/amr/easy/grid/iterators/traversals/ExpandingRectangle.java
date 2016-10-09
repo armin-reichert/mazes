@@ -63,8 +63,8 @@ public class ExpandingRectangle<Cell> implements Sequence<Cell> {
 					int width = currentRectangle.getWidth() + (expandHorizontally ? expansionRate : 0);
 					int height = currentRectangle.getHeight() + (expandVertically ? expansionRate : 0);
 					expansion += expansionRate;
-					currentRectangle = new Rectangle<>(currentRectangle.grid, currentRectangle.getLeftUpperCorner(),
-							width, height);
+					currentRectangle = new Rectangle<>(currentRectangle.grid, currentRectangle.getLeftUpperCorner(), width,
+							height);
 					iterator = currentRectangle.iterator();
 				}
 				return iterator.next();

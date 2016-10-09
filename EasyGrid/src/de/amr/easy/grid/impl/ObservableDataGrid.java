@@ -12,14 +12,14 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  * 
  * @author Armin Reichert
  */
-public class ObservableDataGrid<Content> extends ObservableRawGrid
+public class ObservableDataGrid<Content> extends ObservableGrid
 		implements ObservableDataGrid2D<Integer, DefaultEdge<Integer>, Content> {
 
 	private GridDataAccess<Integer, Content> data;
 
 	public ObservableDataGrid(int numCols, int numRows, Content defaultContent, boolean sparse) {
 		super(numCols, numRows);
-		data = sparse ? new HashMapData<>() : new ArrayData<>(numCols * numRows);
+		data = sparse ? new HashMapGridDataAccess<>() : new ArrayGridDataAccess<>(numCols * numRows);
 		data.setDefault(defaultContent);
 	}
 
