@@ -120,7 +120,7 @@ public class EllerInsideOut implements Consumer<Integer> {
 			if (firstCell == null) {
 				firstCell = cell;
 			}
-			if (prevCell != null && areNeighbors(prevCell, cell)) {
+			if (prevCell != null && grid.areNeighbors(prevCell, cell)) {
 				if (all || rnd.nextBoolean()) {
 					if (mazeParts.find(prevCell) != mazeParts.find(cell)) {
 						connectCells(prevCell, cell);
@@ -129,7 +129,7 @@ public class EllerInsideOut implements Consumer<Integer> {
 			}
 			prevCell = cell;
 		}
-		if (prevCell != null && firstCell != null && prevCell != firstCell && areNeighbors(prevCell, firstCell)
+		if (prevCell != null && firstCell != null && prevCell != firstCell && grid.areNeighbors(prevCell, firstCell)
 				&& !grid.adjacent(prevCell, firstCell)) {
 			if (all || rnd.nextBoolean()) {
 				if (mazeParts.find(prevCell) != mazeParts.find(firstCell)) {
@@ -215,10 +215,5 @@ public class EllerInsideOut implements Consumer<Integer> {
 		if (neighbour != null) {
 			list.add(neighbour);
 		}
-	}
-
-	private boolean areNeighbors(Integer c, Integer d) {
-		return d.equals(grid.neighbor(c, N)) || d.equals(grid.neighbor(c, E))
-				|| d.equals(grid.neighbor(c, S)) || d.equals(grid.neighbor(c, W));
 	}
 }

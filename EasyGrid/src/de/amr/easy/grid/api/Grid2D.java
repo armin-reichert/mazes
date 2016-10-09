@@ -112,6 +112,20 @@ public interface Grid2D<Cell, Passage extends Edge<Cell>> extends Graph<Cell, Pa
 	public Cell neighbor(Cell cell, Direction dir);
 
 	/**
+	 * Tells if the given cells are neighbors, that is they are on grid positions that may be
+	 * connected.
+	 * 
+	 * @param either
+	 *          either cell
+	 * @param other
+	 *          the other cell
+	 * @return if the cells are neighbors
+	 */
+	public default boolean areNeighbors(Cell either, Cell other) {
+		return neighbors(either, Direction.values()).anyMatch(neighbor -> neighbor.equals(other));
+	}
+
+	/**
 	 * 
 	 * @param cell
 	 *          a grid cell
