@@ -45,7 +45,7 @@ public class PrimMST implements Consumer<Integer> {
 		grid.set(cell, COMPLETED);
 		/*@formatter:off*/
 		grid.neighbors(cell, Direction.randomOrder())
-			.filter(neighbor -> outsideMaze(neighbor))
+			.filter(this::outsideMaze)
 			.forEach(frontierCell -> {
 				grid.set(frontierCell, VISITED);
 				cut.add(new DefaultWeightedEdge<>(cell, frontierCell, rnd.nextDouble()));
