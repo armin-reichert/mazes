@@ -1,6 +1,12 @@
 package de.amr.easy.maze.algorithms;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
+import static de.amr.easy.grid.api.Direction.E;
+import static de.amr.easy.grid.api.Direction.N;
+import static de.amr.easy.grid.api.Direction.S;
+import static de.amr.easy.grid.api.Direction.W;
+import static de.amr.easy.grid.api.GridPosition.CENTER;
+import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +21,6 @@ import java.util.function.Consumer;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.Direction;
-import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 import de.amr.easy.grid.impl.RawGrid;
 import de.amr.easy.grid.iterators.shapes.Rectangle;
@@ -32,8 +37,8 @@ public class EllerInsideOut implements Consumer<Integer> {
 
 	private final ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid;
 	private final RawGrid squareGrid;
-	private final Random rnd;
-	private final Partition<Integer> mazeParts;
+	private final Random rnd = new Random();
+	private final Partition<Integer> mazeParts = new Partition<>();
 	private Square<Integer> square;
 	private Iterable<Integer> layer;
 	private Map<Integer, Integer> cellIndex;
@@ -46,8 +51,6 @@ public class EllerInsideOut implements Consumer<Integer> {
 		offsetX = (n - grid.numCols()) / 2;
 		offsetY = (n - grid.numRows()) / 2;
 		squareGrid = new RawGrid(n, n);
-		rnd = new Random();
-		mazeParts = new Partition<>();
 	}
 
 	@Override
@@ -56,7 +59,7 @@ public class EllerInsideOut implements Consumer<Integer> {
 			connectCellsInsideLayer(false);
 			connectCellsWithNextLayer();
 		}
-		layer = new Rectangle<>(grid, grid.cell(GridPosition.TOP_LEFT), grid.numCols(), grid.numRows());
+		layer = new Rectangle<>(grid, grid.cell(TOP_LEFT), grid.numCols(), grid.numRows());
 		connectCellsInsideLayer(true);
 
 		if (grid.edgeCount() != grid.vertexCount() - 1) {
@@ -67,7 +70,7 @@ public class EllerInsideOut implements Consumer<Integer> {
 	private int nextLayer() {
 		int x, y, size;
 		if (square == null) {
-			Integer center = grid.cell(GridPosition.CENTER);
+			Integer center = grid.cell(CENTER);
 			x = grid.col(center) + offsetX;
 			y = grid.row(center) + offsetY;
 			size = 1;
@@ -176,33 +179,33 @@ public class EllerInsideOut implements Consumer<Integer> {
 		List<Integer> result = new ArrayList<>(4);
 		int squareSize = square.getSize();
 		if (squareSize == 1) {
-			addNeighborIfAny(cell, Direction.N, result);
-			addNeighborIfAny(cell, Direction.E, result);
-			addNeighborIfAny(cell, Direction.S, result);
-			addNeighborIfAny(cell, Direction.W, result);
+			addNeighborIfAny(cell, N, result);
+			addNeighborIfAny(cell, E, result);
+			addNeighborIfAny(cell, S, result);
+			addNeighborIfAny(cell, W, result);
 			return result;
 		}
 		int index = cellIndex.get(cell);
 		if (index == 0) {
-			addNeighborIfAny(cell, Direction.W, result);
-			addNeighborIfAny(cell, Direction.N, result);
+			addNeighborIfAny(cell, W, result);
+			addNeighborIfAny(cell, N, result);
 		} else if (index < squareSize - 1) {
-			addNeighborIfAny(cell, Direction.N, result);
+			addNeighborIfAny(cell, N, result);
 		} else if (index == squareSize - 1) {
-			addNeighborIfAny(cell, Direction.N, result);
-			addNeighborIfAny(cell, Direction.E, result);
+			addNeighborIfAny(cell, N, result);
+			addNeighborIfAny(cell, E, result);
 		} else if (index < 2 * (squareSize - 1)) {
-			addNeighborIfAny(cell, Direction.E, result);
+			addNeighborIfAny(cell, E, result);
 		} else if (index == 2 * (squareSize - 1)) {
-			addNeighborIfAny(cell, Direction.E, result);
-			addNeighborIfAny(cell, Direction.S, result);
+			addNeighborIfAny(cell, E, result);
+			addNeighborIfAny(cell, S, result);
 		} else if (index < 3 * (squareSize - 1)) {
-			addNeighborIfAny(cell, Direction.S, result);
+			addNeighborIfAny(cell, S, result);
 		} else if (index == 3 * (squareSize - 1)) {
-			addNeighborIfAny(cell, Direction.S, result);
-			addNeighborIfAny(cell, Direction.W, result);
+			addNeighborIfAny(cell, S, result);
+			addNeighborIfAny(cell, W, result);
 		} else {
-			addNeighborIfAny(cell, Direction.W, result);
+			addNeighborIfAny(cell, W, result);
 		}
 		return result;
 	}
@@ -215,7 +218,7 @@ public class EllerInsideOut implements Consumer<Integer> {
 	}
 
 	private boolean areNeighbors(Integer c, Integer d) {
-		return d.equals(grid.neighbor(c, Direction.N)) || d.equals(grid.neighbor(c, Direction.E))
-				|| d.equals(grid.neighbor(c, Direction.S)) || d.equals(grid.neighbor(c, Direction.W));
+		return d.equals(grid.neighbor(c, N)) || d.equals(grid.neighbor(c, E))
+				|| d.equals(grid.neighbor(c, S)) || d.equals(grid.neighbor(c, W));
 	}
 }
