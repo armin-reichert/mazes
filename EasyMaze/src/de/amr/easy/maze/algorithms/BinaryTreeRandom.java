@@ -9,6 +9,11 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 
+/**
+ * Creates maze as a binary tree with random cell selection.
+ * 
+ * @author Armin Reichert
+ */
 public class BinaryTreeRandom extends BinaryTree {
 
 	private final List<Integer> cellsInRandomOrder;

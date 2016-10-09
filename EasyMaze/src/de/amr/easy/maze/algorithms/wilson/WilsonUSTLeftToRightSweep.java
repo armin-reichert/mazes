@@ -1,5 +1,7 @@
 package de.amr.easy.maze.algorithms.wilson;
 
+import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
+
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
@@ -25,6 +27,6 @@ public class WilsonUSTLeftToRightSweep extends WilsonUST {
 
 	@Override
 	protected Integer getStartCell(Integer start) {
-		return grid.cell(0, 0);
+		return grid.cell(TOP_LEFT);
 	}
 }

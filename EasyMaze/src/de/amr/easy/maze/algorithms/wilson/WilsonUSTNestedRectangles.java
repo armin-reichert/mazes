@@ -1,5 +1,7 @@
 package de.amr.easy.maze.algorithms.wilson;
 
+import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -26,7 +28,7 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 
 	@Override
 	protected Integer getStartCell(Integer start) {
-		return grid.cell(0, 0);
+		return grid.cell(TOP_LEFT);
 	}
 
 	@Override
@@ -35,7 +37,7 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 
 			@Override
 			public Iterator<Integer> iterator() {
-				Rectangle<Integer> firstCell = new Rectangle<>(grid, grid.cell(0, 0), 1, 1);
+				Rectangle<Integer> firstCell = new Rectangle<>(grid, grid.cell(TOP_LEFT), 1, 1);
 				List<Iterator<Integer>> expRects = new ArrayList<>();
 				int rate = grid.numCols();
 				while (rate > 1) {
@@ -45,7 +47,7 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 				@SuppressWarnings("unchecked")
 				Iterator<Integer>[] expRectsArray = expRects.toArray(new Iterator[expRects.size()]);
 
-				Rectangle<Integer> firstColumn = new Rectangle<>(grid, grid.cell(0, 0), 1, grid.numRows());
+				Rectangle<Integer> firstColumn = new Rectangle<>(grid, grid.cell(TOP_LEFT), 1, grid.numRows());
 				ExpandingRectangle<Integer> sweep = new ExpandingRectangle<>(firstColumn);
 				sweep.setExpandHorizontally(true);
 				sweep.setExpandVertically(false);

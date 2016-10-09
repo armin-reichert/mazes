@@ -22,22 +22,21 @@ import de.amr.easy.grid.iterators.traversals.PeanoCurve;
  */
 public class WilsonUSTPeanoCurve extends WilsonUST {
 
-	private final List<Integer> path;
+	private final List<Integer> path = new ArrayList<>();
 
 	public WilsonUSTPeanoCurve(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
 		super(grid);
-		path = new ArrayList<>();
 	}
 
 	@Override
 	protected Stream<Integer> cellStream() {
 		int n = nextPow(3, Math.max(grid.numCols(), grid.numRows()));
-		RawGrid quadraticGrid = new RawGrid(n, n);
-		Integer cell = quadraticGrid.cell(BOTTOM_LEFT);
-		addCellToPath(quadraticGrid.col(cell), quadraticGrid.row(cell));
+		RawGrid squareGrid = new RawGrid(n, n);
+		Integer cell = squareGrid.cell(BOTTOM_LEFT);
+		addCellToPath(squareGrid.col(cell), squareGrid.row(cell));
 		for (Direction d : new PeanoCurve(log(3, n))) {
-			cell = quadraticGrid.neighbor(cell, d);
-			addCellToPath(quadraticGrid.col(cell), quadraticGrid.row(cell));
+			cell = squareGrid.neighbor(cell, d);
+			addCellToPath(squareGrid.col(cell), squareGrid.row(cell));
 		}
 		return path.stream();
 	}

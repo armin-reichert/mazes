@@ -27,9 +27,6 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  * getting the poor animal placed directly in front of the gun ;-)
  * 
  * @author Armin Reichert
- * 
- * @param <Integer>
- *          grid cell type
  */
 public class HuntAndKill implements Consumer<Integer> {
 

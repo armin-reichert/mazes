@@ -23,18 +23,14 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  * <a href="http://algs4.cs.princeton.edu/41graph/">online book</a> by Sedgewick and Wayne.
  * 
  * @author Armin Reichert
- * 
- * @param <Integer>
- *          grid cell type
  */
 public class IterativeDFS implements Consumer<Integer> {
 
 	private final ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid;
-	private final Deque<Integer> stack;
+	private final Deque<Integer> stack = new LinkedList<>();
 
 	public IterativeDFS(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
 		this.grid = grid;
-		stack = new LinkedList<>();
 	}
 
 	@Override

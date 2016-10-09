@@ -29,7 +29,8 @@ import de.amr.easy.maze.datastructures.Partition;
 import de.amr.easy.maze.datastructures.Partition.EquivClass;
 
 /**
- * Maze generator similar to Eller's algorithm but growing the maze inside-out.
+ * Maze generator similar to Eller's algorithm but growing the maze inside-out. To my knowledge this
+ * is a new algorithm.
  * 
  * @author Armin Reichert
  */

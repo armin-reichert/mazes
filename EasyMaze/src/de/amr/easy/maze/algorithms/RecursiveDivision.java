@@ -1,5 +1,7 @@
 package de.amr.easy.maze.algorithms;
 
+import static de.amr.easy.graph.api.TraversalState.COMPLETED;
+
 import java.util.Random;
 import java.util.function.Consumer;
 
@@ -15,15 +17,14 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
 public class RecursiveDivision implements Consumer<Integer> {
 
 	private final ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid;
-	private final Random rnd;
+	private final Random rnd = new Random();
 
 	public RecursiveDivision(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
 		this.grid = grid;
-		rnd = new Random();
 		grid.setEventsEnabled(false);
 		grid.fillAllEdges();
 		grid.setEventsEnabled(true);
-		grid.setDefault(TraversalState.COMPLETED);
+		grid.setDefault(COMPLETED);
 	}
 
 	@Override
