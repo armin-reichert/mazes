@@ -4,7 +4,7 @@ import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;
 
 /**
- * A two-dimensional grid that can be observed by graph listeners.
+ * A 2D-grid with cell data that can be observed by graph listeners.
  * 
  * @author Armin Reichert
  * 
@@ -16,5 +16,5 @@ import de.amr.easy.graph.api.ObservableGraph;
  *          content type
  */
 public interface ObservableDataGrid2D<Cell, Passage extends Edge<Cell>, Content>
-		extends Grid2D<Cell, Passage>, ObservableGraph<Cell, Passage>, GridDataAccess<Cell, Content> {
+		extends DataGrid2D<Cell, Passage, Content>, ObservableGraph<Cell, Passage> {
 }
