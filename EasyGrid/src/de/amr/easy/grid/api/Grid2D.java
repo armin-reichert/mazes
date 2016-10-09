@@ -94,9 +94,17 @@ public interface Grid2D<Cell, Passage extends Edge<Cell>> extends Graph<Cell, Pa
 	/**
 	 * Returns all neighbor cells of the given cell.
 	 * 
+	 * @param cell
+	 *          a grid cell
+	 * @param dirs
+	 *          a list of directions, if empty, the neighbors in all directions are returned
+	 * 
 	 * @return stream of all neighbor cells in the order given by the specified directions
 	 */
 	public default Stream<Cell> neighbors(Cell cell, Direction... dirs) {
+		if (dirs.length == 0) {
+			dirs = Direction.values();
+		}
 		return Stream.of(dirs).map(dir -> neighbor(cell, dir)).filter(Objects::nonNull);
 	}
 
@@ -122,7 +130,7 @@ public interface Grid2D<Cell, Passage extends Edge<Cell>> extends Graph<Cell, Pa
 	 * @return if the cells are neighbors
 	 */
 	public default boolean areNeighbors(Cell either, Cell other) {
-		return neighbors(either, Direction.values()).anyMatch(neighbor -> neighbor.equals(other));
+		return neighbors(either).anyMatch(neighbor -> neighbor.equals(other));
 	}
 
 	/**
