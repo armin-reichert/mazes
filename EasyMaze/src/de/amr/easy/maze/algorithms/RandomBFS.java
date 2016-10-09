@@ -40,7 +40,7 @@ public class RandomBFS implements Consumer<Integer> {
 			int index = frontier.size() == 1 ? 0 : rnd.nextInt(frontier.size());
 			Integer cell = frontier.remove(index);
 			/*@formatter:off*/
-			grid.neighbors(cell, Direction.randomOrder())
+			grid.neighbors(cell, Direction.valuesPermuted())
 				.filter(neighbor -> !mazeCells.contains(neighbor))
 				.forEach(newMazeCell -> {
 					mazeCells.add(newMazeCell);

@@ -135,7 +135,7 @@ public interface Grid2D<Cell, Passage extends Edge<Cell>> extends Graph<Cell, Pa
 	 */
 	public default Optional<Cell> randomNeighbor(Cell cell, Predicate<Cell> condition) {
 		/*@formatter:off*/
-		return neighbors(cell, Direction.randomOrder())
+		return neighbors(cell, Direction.valuesPermuted())
 			.filter(condition)
 			.findFirst();
 		/*@formatter:on*/
@@ -148,7 +148,7 @@ public interface Grid2D<Cell, Passage extends Edge<Cell>> extends Graph<Cell, Pa
 	 * @return a random neighbor cell
 	 */
 	public default Optional<Cell> randomNeighbor(Cell cell) {
-		return neighbors(cell, Direction.randomOrder()).findFirst();
+		return neighbors(cell, Direction.valuesPermuted()).findFirst();
 	}
 
 	/**

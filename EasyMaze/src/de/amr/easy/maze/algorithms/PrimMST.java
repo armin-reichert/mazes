@@ -44,7 +44,7 @@ public class PrimMST implements Consumer<Integer> {
 	private void addToMaze(Integer cell) {
 		grid.set(cell, COMPLETED);
 		/*@formatter:off*/
-		grid.neighbors(cell, Direction.randomOrder())
+		grid.neighbors(cell, Direction.valuesPermuted())
 			.filter(this::outsideMaze)
 			.forEach(frontierCell -> {
 				grid.set(frontierCell, VISITED);
