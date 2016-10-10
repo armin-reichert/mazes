@@ -12,7 +12,6 @@ import java.util.function.Consumer;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.impl.DefaultEdge;
-import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 
 /**
@@ -31,63 +30,48 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
 public class HuntAndKill implements Consumer<Integer> {
 
 	private final ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid;
-	private final Set<Integer> fairGame; // cells that are "hunted" for
-	private final Random rnd;
+	private final Set<Integer> targets = new HashSet<>();
+	private final Random rnd = new Random();
 
 	public HuntAndKill(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
 		this.grid = grid;
-		fairGame = new HashSet<>();
-		rnd = new Random();
 	}
 
 	@Override
-	public void accept(Integer start) {
-		Integer current = start;
-		addCellToMaze(current);
-		while (current != null) {
-			Optional<Integer> unvisitedNeighbor = grid.randomNeighbor(current, c -> grid.get(c) == UNVISITED);
-			if (unvisitedNeighbor.isPresent()) {
-				connect(current, unvisitedNeighbor.get());
-				current = unvisitedNeighbor.get();
-			} else {
-				current = huntForCell();
+	public void accept(Integer animal) {
+		do {
+			kill(animal);
+			grid.neighbors(animal).filter(this::isAlive).forEach(targets::add);
+			Optional<Integer> survivingNeighbor = grid.randomNeighbor(animal, this::isAlive);
+			if (survivingNeighbor.isPresent()) {
+				grid.addEdge(new DefaultEdge<>(animal, survivingNeighbor.get()));
+				animal = survivingNeighbor.get();
+			} else if (!targets.isEmpty()) {
+				animal = hunt();
+				grid.addEdge(new DefaultEdge<>(animal, grid.randomNeighbor(animal, this::isDead).get()));
 			}
-		}
+		} while (!targets.isEmpty());
 	}
 
-	private Integer huntForCell() {
-		Iterator<Integer> fairGameIterator = fairGame.iterator();
-		if (fairGameIterator.hasNext()) {
-			// pick a random set element
-			int i = rnd.nextInt(fairGame.size());
-			while (i-- > 0) {
-				fairGameIterator.next();
-			}
-			Integer cell = fairGameIterator.next();
-			// Note: a completed neighbor always exists:
-			Optional<Integer> mazeCell = grid.randomNeighbor(cell, c -> grid.get(c) == COMPLETED);
-			connect(mazeCell.get(), cell);
-			return cell;
-		}
-		return null;
+	private void kill(Integer animal) {
+		grid.set(animal, COMPLETED);
+		targets.remove(animal);
 	}
 
-	private void addCellToMaze(Integer cell) {
-		grid.set(cell, COMPLETED);
-		fairGame.remove(cell);
-		for (Direction dir : Direction.values()) {
-			Integer neighbor = grid.neighbor(cell, dir);
-			if (neighbor == null)
-				continue;
-			TraversalState state = grid.get(neighbor);
-			if (state == TraversalState.UNVISITED) {
-				fairGame.add(neighbor);
-			}
+	private Integer hunt() {
+		Iterator<Integer> it = targets.iterator();
+		int i = rnd.nextInt(targets.size());
+		while (i-- > 0) {
+			it.next();
 		}
+		return it.next();
 	}
 
-	private void connect(Integer mazeCell, Integer newCell) {
-		addCellToMaze(newCell);
-		grid.addEdge(new DefaultEdge<>(mazeCell, newCell));
+	private boolean isAlive(Integer animal) {
+		return grid.get(animal) == UNVISITED;
+	}
+
+	private boolean isDead(Integer animal) {
+		return grid.get(animal) == COMPLETED;
 	}
 }
