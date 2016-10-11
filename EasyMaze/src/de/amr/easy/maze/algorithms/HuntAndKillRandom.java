@@ -1,11 +1,10 @@
-package de.amr.mazes.samples.maze;
+package de.amr.easy.maze.algorithms;
 
 import java.util.Random;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
-import de.amr.easy.maze.algorithms.HuntAndKill;
 
 /**
  * Variant of "hunt-and-kill" algorithm where the "hunt" picks cells randomly from the set of

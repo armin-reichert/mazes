@@ -18,6 +18,7 @@ import de.amr.easy.maze.algorithms.BinaryTreeRandom;
 import de.amr.easy.maze.algorithms.Eller;
 import de.amr.easy.maze.algorithms.EllerInsideOut;
 import de.amr.easy.maze.algorithms.HuntAndKill;
+import de.amr.easy.maze.algorithms.HuntAndKillRandom;
 import de.amr.easy.maze.algorithms.IterativeDFS;
 import de.amr.easy.maze.algorithms.KruskalMST;
 import de.amr.easy.maze.algorithms.PrimMST;
@@ -37,7 +38,6 @@ import de.amr.easy.maze.algorithms.wilson.WilsonUSTPeanoCurve;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTRandomCell;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTRightToLeftSweep;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTRowsTopDown;
-import de.amr.mazes.samples.maze.HuntAndKillRandom;
 
 public class MazeGeneratorTest {
 
