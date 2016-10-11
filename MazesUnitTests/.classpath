@@ -3,7 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/MazeDemos"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/EasyGrid"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/EasyMaze"/>
 	<classpathentry kind="output" path="bin"/>
