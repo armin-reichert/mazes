@@ -27,7 +27,7 @@ public class HuntAndKill implements Consumer<Integer> {
 
 	public HuntAndKill(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
 		this.grid = grid;
-		targets = new BitSet();
+		targets = new BitSet(grid.numCells());
 	}
 
 	@Override
