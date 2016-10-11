@@ -36,6 +36,7 @@ import de.amr.easy.maze.algorithms.wilson.WilsonUSTPeanoCurve;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTRandomCell;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTRightToLeftSweep;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTRowsTopDown;
+import de.amr.mazes.samples.maze.HuntAndKillRandom;
 import de.amr.mazes.swing.rendering.BFSAnimation;
 import de.amr.mazes.swing.rendering.DFSAnimation;
 
@@ -72,6 +73,7 @@ public class MazeDemoModel {
 			new AlgorithmInfo<>(WilsonUSTHilbertCurve.class, "Wilson UST (Hilbert curve)", UST),
 			new AlgorithmInfo<>(WilsonUSTPeanoCurve.class, "Wilson UST (Peano curve)", UST),
 			new AlgorithmInfo<>(HuntAndKill.class, "Hunt-And-Kill"),
+			new AlgorithmInfo<>(HuntAndKillRandom.class, "Hunt-And-Kill (random)"),
 			new AlgorithmInfo<>(RecursiveDivision.class, "Recursive Division"),
 			new AlgorithmInfo<>(Eller.class, "Eller's Algorithm"), 
 			new AlgorithmInfo<>(EllerInsideOut.class, "Armin's Algorithm"), 

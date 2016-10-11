@@ -37,6 +37,7 @@ import de.amr.easy.maze.algorithms.wilson.WilsonUSTPeanoCurve;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTRandomCell;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTRightToLeftSweep;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTRowsTopDown;
+import de.amr.mazes.samples.maze.HuntAndKillRandom;
 
 public class MazeGeneratorTest {
 
@@ -85,6 +86,11 @@ public class MazeGeneratorTest {
 	@Test
 	public void testHuntAndKill() {
 		new HuntAndKill(grid).accept(grid.cell(CENTER));
+	}
+
+	@Test
+	public void testHuntAndKillRandom() {
+		new HuntAndKillRandom(grid).accept(grid.cell(CENTER));
 	}
 
 	@Test
