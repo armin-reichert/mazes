@@ -14,6 +14,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import java.awt.Color;
 
 public class ControlPanel extends JPanel {
 
@@ -26,6 +29,7 @@ public class ControlPanel extends JPanel {
 	private JLabel lblDelay;
 	private JButton btnCreateAllMazes;
 	private JButton btnStop;
+	private JLabel algorithmLabel;
 
 	public ControlPanel() {
 		setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -34,16 +38,28 @@ public class ControlPanel extends JPanel {
 		JPanel controls = new JPanel();
 		add(controls, BorderLayout.NORTH);
 		GridBagLayout gbl_controls = new GridBagLayout();
-		gbl_controls.columnWeights = new double[] { 0.0, 0.0 };
-		gbl_controls.rowWeights = new double[] { 0.0, 0.0, 0.0 };
+		gbl_controls.columnWeights = new double[] { 0.0, 1.0 };
+		gbl_controls.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0 };
 		controls.setLayout(gbl_controls);
+		
+		algorithmLabel = new JLabel("Generation Algorithm");
+		algorithmLabel.setForeground(Color.BLUE);
+		algorithmLabel.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		algorithmLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints gbc_algorithmLabel = new GridBagConstraints();
+		gbc_algorithmLabel.fill = GridBagConstraints.HORIZONTAL;
+		gbc_algorithmLabel.gridwidth = 2;
+		gbc_algorithmLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_algorithmLabel.gridx = 0;
+		gbc_algorithmLabel.gridy = 0;
+		controls.add(algorithmLabel, gbc_algorithmLabel);
 
 		JLabel lblGridResolution = new JLabel("Grid Resolution");
 		GridBagConstraints gbc_lblGridResolution = new GridBagConstraints();
 		gbc_lblGridResolution.fill = GridBagConstraints.BOTH;
 		gbc_lblGridResolution.insets = new Insets(0, 0, 5, 5);
 		gbc_lblGridResolution.gridx = 0;
-		gbc_lblGridResolution.gridy = 0;
+		gbc_lblGridResolution.gridy = 1;
 		controls.add(lblGridResolution, gbc_lblGridResolution);
 
 		resolutionSelector = new JComboBox<>();
@@ -52,7 +68,7 @@ public class ControlPanel extends JPanel {
 		gbc_resolutionSelector.fill = GridBagConstraints.BOTH;
 		gbc_resolutionSelector.insets = new Insets(0, 0, 5, 0);
 		gbc_resolutionSelector.gridx = 1;
-		gbc_resolutionSelector.gridy = 0;
+		gbc_resolutionSelector.gridy = 1;
 		controls.add(resolutionSelector, gbc_resolutionSelector);
 
 		lblPassageThickness = new JLabel("Passage Thickness");
@@ -60,7 +76,7 @@ public class ControlPanel extends JPanel {
 		gbc_lblPassageThickness.fill = GridBagConstraints.BOTH;
 		gbc_lblPassageThickness.insets = new Insets(0, 0, 5, 5);
 		gbc_lblPassageThickness.gridx = 0;
-		gbc_lblPassageThickness.gridy = 1;
+		gbc_lblPassageThickness.gridy = 2;
 		controls.add(lblPassageThickness, gbc_lblPassageThickness);
 		lblPassageThickness.setLabelFor(passageThicknessSlider);
 
@@ -74,7 +90,7 @@ public class ControlPanel extends JPanel {
 		gbc_passageThicknessSlider.fill = GridBagConstraints.BOTH;
 		gbc_passageThicknessSlider.insets = new Insets(0, 0, 5, 0);
 		gbc_passageThicknessSlider.gridx = 1;
-		gbc_passageThicknessSlider.gridy = 1;
+		gbc_passageThicknessSlider.gridy = 2;
 		controls.add(passageThicknessSlider, gbc_passageThicknessSlider);
 
 		lblDelay = new JLabel("Delay");
@@ -82,7 +98,7 @@ public class ControlPanel extends JPanel {
 		gbc_lblDelay.fill = GridBagConstraints.BOTH;
 		gbc_lblDelay.insets = new Insets(0, 0, 0, 5);
 		gbc_lblDelay.gridx = 0;
-		gbc_lblDelay.gridy = 2;
+		gbc_lblDelay.gridy = 3;
 		controls.add(lblDelay, gbc_lblDelay);
 
 		delaySlider = new JSlider();
@@ -96,7 +112,7 @@ public class ControlPanel extends JPanel {
 		gbc_delaySlider.weightx = 1.0;
 		gbc_delaySlider.fill = GridBagConstraints.BOTH;
 		gbc_delaySlider.gridx = 1;
-		gbc_delaySlider.gridy = 2;
+		gbc_delaySlider.gridy = 3;
 		controls.add(delaySlider, gbc_delaySlider);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -155,5 +171,8 @@ public class ControlPanel extends JPanel {
 
 	public JButton getBtnStop() {
 		return btnStop;
+	}
+	public JLabel getAlgorithmLabel() {
+		return algorithmLabel;
 	}
 }

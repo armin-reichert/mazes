@@ -1,16 +1,25 @@
 # mazes
 
-Maze generation algorithms in Java
+Maze generation algorithms implemented in Java 8 (using streams and lambda expressions)
 
-Main emphasis is on readability of generation algorithms by separating graph algorithm from visualization.
+My main goal was to provide maze generation algorithms in a readable form that clearly shows the
+underlying graph manipulation, not polluted by details of rendering and internals of the used grid
+data structure.
 
-Implemented algorithms:
+To achieve this
+- Graph and Grid interfaces are provided as the API on which the generators operate
+- An efficient implementation of the Grid API is provided
+- A publish-subscribe mechanism for observing graph operations is provided
+- Maze generation algorithms work strictly against the Grid API, renderers are attached as graph
+listeners
 
-- Aldous Broder
+Implemented maze generation algorithms:
+
+- Aldous-Broder
 - Binary Tree (top-down and random)
 - Eller's
-- My own variation of Eller's growing the maze inside out
-- Hunt-And-Kill
+- My own variation of Eller's growing the maze inside-out
+- Hunt-And-Kill (top-down and random)
 - Iterative random depth-first-search
 - Kruskal Minimum Spanning Tree
 - Prim Minimum Spanning Tree
@@ -19,6 +28,5 @@ Implemented algorithms:
 - Recursive division
 - Wilson' algorithm (13 different variants)
 
-Generation can be animated using eventing mechanism and grid rendering in JComponent.
-
-Animated path finding (DFS and BFS)
+Path finding algorithms:
+- The EazyGrid library contains a DFS and BFS-based path finding implementation.

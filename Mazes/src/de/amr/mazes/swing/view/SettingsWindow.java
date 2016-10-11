@@ -36,7 +36,7 @@ public class SettingsWindow extends JFrame {
 		setTitle("Maze Generation Algorithms");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setJMenuBar(new JMenuBar());
-		getJMenuBar().add(algorithmMenu = new AlgorithmMenu(app.model));
+		getJMenuBar().add(algorithmMenu = new AlgorithmMenu(app.model, this));
 		getJMenuBar().add(pathFinderMenu = new PathFinderMenu());
 		getJMenuBar().add(optionMenu = new OptionMenu(app));
 
@@ -51,6 +51,8 @@ public class SettingsWindow extends JFrame {
 		);
 		/*@formatter:on*/
 
+		controlPanel.getAlgorithmLabel().setText(algorithmMenu.getSelectedAlgorithm().getDescription());
+		
 		controlPanel.getResolutionSelector()
 				.setSelectedIndex(Utils.indexOf(app.model.getGridCellSize(), app.model.getGridCellSizes()));
 

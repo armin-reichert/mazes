@@ -54,7 +54,7 @@ public class MazeDemoModel {
 	private static final AlgorithmInfo<?>[] ALGORITHMS = {
 			/*@formatter:off*/
 			new AlgorithmInfo<>(IterativeDFS.class, "Depth-First-Traversal (iterative)", Traversal),
-			new AlgorithmInfo<>(RecursiveDFS.class, "Depth-First-Traversal (recursive), only for small grids!)", Traversal, SmallGridOnly),
+			new AlgorithmInfo<>(RecursiveDFS.class, "Depth-First-Traversal (recursive), small grids only!)", Traversal, SmallGridOnly),
 			new AlgorithmInfo<>(RandomBFS.class, "Breadth-First-Traversal", Traversal),
 			new AlgorithmInfo<>(KruskalMST.class, "Kruskal MST", MST),
 			new AlgorithmInfo<>(PrimMST.class, "Prim MST", MST),
