@@ -67,7 +67,7 @@ public class AldousBroderUST implements Consumer<Integer> {
 		/*@formatter:off*/
 		return grid
 			.randomNeighbor(v)
-      .map(u -> {
+			.map(u -> {
 				// animate visit
 				TraversalState state = grid.get(u);
 				grid.set(u, VISITED);
@@ -80,7 +80,7 @@ public class AldousBroderUST implements Consumer<Integer> {
 				}
 				return u;
 			})
-      .get();
+			.get();
 		/*@formatter:on*/
 	}
 }
