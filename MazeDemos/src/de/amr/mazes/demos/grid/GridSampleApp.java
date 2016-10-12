@@ -2,6 +2,7 @@ package de.amr.mazes.demos.grid;
 
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static java.awt.Frame.MAXIMIZED_BOTH;
+import static javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
 import java.awt.BorderLayout;
@@ -11,6 +12,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JFrame;
 import javax.swing.JSlider;
 import javax.swing.KeyStroke;
@@ -75,19 +77,21 @@ public abstract class GridSampleApp implements Runnable {
 		window.pack();
 	}
 
+	private Action exitAction = new AbstractAction() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.exit(0);
+		}
+	};
+
 	private void showUI() {
 		window = new JFrame();
 		window.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		window.setTitle(composeTitle());
 		canvas = new GridCanvas<>(grid, changeRenderingModel(cellSize));
-		canvas.getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "exit");
-		canvas.getActionMap().put("exit", new AbstractAction() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
+		canvas.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "exit");
+		canvas.getActionMap().put("exit", exitAction);
 		canvas.setDelay(0);
 		window.add(canvas, BorderLayout.CENTER);
 		delaySlider = new JSlider(0, 50);
