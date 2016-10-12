@@ -25,6 +25,7 @@ import de.amr.easy.maze.algorithms.RandomBFS;
 import de.amr.easy.maze.algorithms.RecursiveDFS;
 import de.amr.easy.maze.algorithms.RecursiveDivision;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTCollapsingCircle;
+import de.amr.easy.maze.algorithms.wilson.WilsonUSTCollapsingRectangle;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTCollapsingWalls;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTExpandingCircle;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTExpandingCircles;
@@ -64,6 +65,7 @@ public class MazeDemoModel {
 			new AlgorithmInfo<>(WilsonUSTLeftToRightSweep.class, "Wilson UST (left to right)", UST),
 			new AlgorithmInfo<>(WilsonUSTRightToLeftSweep.class, "Wilson UST (right to left)", UST),
 			new AlgorithmInfo<>(WilsonUSTCollapsingWalls.class, "Wilson UST (collapsing horizontally)", UST),
+			new AlgorithmInfo<>(WilsonUSTCollapsingRectangle.class, "Wilson UST (collapsing rectangle)", UST),
 			new AlgorithmInfo<>(WilsonUSTExpandingCircle.class, "Wilson UST (circle, expanding)", UST),
 			new AlgorithmInfo<>(WilsonUSTCollapsingCircle.class, "Wilson UST (circle, collapsing)", UST),
 			new AlgorithmInfo<>(WilsonUSTExpandingCircles.class, "Wilson UST (circles, expanding)", UST),
