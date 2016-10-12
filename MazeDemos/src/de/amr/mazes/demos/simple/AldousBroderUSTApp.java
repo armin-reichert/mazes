@@ -1,30 +1,30 @@
-package de.amr.mazes.demos.maze;
+package de.amr.mazes.demos.simple;
 
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.maze.algorithms.IterativeDFS;
+import de.amr.easy.maze.algorithms.AldousBroderUST;
 import de.amr.mazes.demos.grid.GridSampleApp;
 import de.amr.mazes.demos.swing.rendering.BFSAnimation;
 
-public class IterativeDFSApp extends GridSampleApp {
+public class AldousBroderUSTApp extends GridSampleApp {
 
 	public static void main(String[] args) {
-		launch(new IterativeDFSApp());
+		launch(new AldousBroderUSTApp());
 	}
 
-	public IterativeDFSApp() {
-		super("Randomized-DFS Maze");
+	public AldousBroderUSTApp() {
+		super("Aldous-Broder UST Maze");
 		setFullscreen(true);
 	}
 
 	@Override
 	public void run() {
 		Integer startCell = grid.cell(TOP_LEFT);
-		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
+		IntStream.of(128, 64, 32, 16, 8, 4).forEach(cellSize -> {
 			fitWindowSize(window.getWidth(), window.getHeight(), cellSize);
-			new IterativeDFS(grid).accept(startCell);
+			new AldousBroderUST(grid).accept(startCell);
 			new BFSAnimation(canvas, grid).runAnimation(startCell);
 			sleep(3000);
 			clear();

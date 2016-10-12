@@ -1,4 +1,6 @@
-package de.amr.mazes.demos.maze;
+package de.amr.mazes.demos.simple;
+
+import java.util.stream.IntStream;
 
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.maze.algorithms.Eller;
@@ -12,17 +14,18 @@ public class EllerApp extends GridSampleApp {
 	}
 
 	public EllerApp() {
-		super("Eller's Algorithm", 600, 360, 2);
+		super("Eller's Algorithm", 64);
 		setFullscreen(true);
 	}
 
 	@Override
 	public void run() {
-		while (true) {
+		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
+			fitWindowSize(window.getWidth(), window.getHeight(), cellSize);
 			new Eller(grid).accept(null);
 			new BFSAnimation(canvas, grid).runAnimation(grid.cell(GridPosition.TOP_LEFT));
 			sleep(1000);
 			clear();
-		}
+		});
 	}
 }

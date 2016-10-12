@@ -1,30 +1,30 @@
-package de.amr.mazes.demos.maze;
+package de.amr.mazes.demos.simple;
 
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.maze.algorithms.wilson.WilsonUSTHilbertCurve;
+import de.amr.easy.maze.algorithms.RecursiveDFS;
 import de.amr.mazes.demos.grid.GridSampleApp;
 import de.amr.mazes.demos.swing.rendering.BFSAnimation;
 
-public class WilsonHilbertApp extends GridSampleApp {
+public class RecursiveDFSApp extends GridSampleApp {
 
 	public static void main(String[] args) {
-		launch(new WilsonHilbertApp());
+		launch(new RecursiveDFSApp());
 	}
 
-	public WilsonHilbertApp() {
-		super("Wilson UST / Hilbert Curve Maze");
+	public RecursiveDFSApp() {
+		super("Randomized-DFS Maze");
 		setFullscreen(true);
 	}
 
 	@Override
 	public void run() {
 		Integer startCell = grid.cell(TOP_LEFT);
-		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
+		IntStream.of(256, 128, 64, 32).forEach(cellSize -> {
 			fitWindowSize(window.getWidth(), window.getHeight(), cellSize);
-			new WilsonUSTHilbertCurve(grid).accept(startCell);
+			new RecursiveDFS(grid).accept(startCell);
 			new BFSAnimation(canvas, grid).runAnimation(startCell);
 			sleep(3000);
 			clear();

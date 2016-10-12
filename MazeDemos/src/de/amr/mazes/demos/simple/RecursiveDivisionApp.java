@@ -1,4 +1,4 @@
-package de.amr.mazes.demos.maze;
+package de.amr.mazes.demos.simple;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;

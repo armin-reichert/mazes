@@ -1,21 +1,21 @@
-package de.amr.mazes.demos.maze;
+package de.amr.mazes.demos.simple;
 
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.maze.algorithms.RandomBFS;
+import de.amr.easy.maze.algorithms.PrimMST;
 import de.amr.mazes.demos.grid.GridSampleApp;
 import de.amr.mazes.demos.swing.rendering.BFSAnimation;
 
-public class RandomBFSApp extends GridSampleApp {
+public class PrimMSTApp extends GridSampleApp {
 
 	public static void main(String[] args) {
-		launch(new RandomBFSApp());
+		launch(new PrimMSTApp());
 	}
 
-	public RandomBFSApp() {
-		super("Randomized Bread-First-Traversal Maze");
+	public PrimMSTApp() {
+		super("Prim-MST Maze");
 		setFullscreen(true);
 	}
 
@@ -24,7 +24,7 @@ public class RandomBFSApp extends GridSampleApp {
 		Integer startCell = grid.cell(TOP_LEFT);
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			fitWindowSize(window.getWidth(), window.getHeight(), cellSize);
-			new RandomBFS(grid).accept(startCell);
+			new PrimMST(grid).accept(startCell);
 			new BFSAnimation(canvas, grid).runAnimation(startCell);
 			sleep(3000);
 			clear();
