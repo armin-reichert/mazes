@@ -47,6 +47,7 @@ public class ControlPanel extends JPanel {
 		algorithmLabel.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		algorithmLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_algorithmLabel = new GridBagConstraints();
+		gbc_algorithmLabel.ipady = 5;
 		gbc_algorithmLabel.fill = GridBagConstraints.HORIZONTAL;
 		gbc_algorithmLabel.gridwidth = 2;
 		gbc_algorithmLabel.insets = new Insets(0, 0, 5, 0);
