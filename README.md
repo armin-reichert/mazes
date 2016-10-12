@@ -26,7 +26,7 @@ Implemented maze generation algorithms:
 - Random breadth-first-search
 - Recursive depth-first-search
 - Recursive division
-- Wilson' algorithm (13 different variants)
+- Wilson' algorithm (14 different variants)
 
 Path finding algorithms:
 - The EazyGrid library contains a DFS and BFS-based path finding implementation.
