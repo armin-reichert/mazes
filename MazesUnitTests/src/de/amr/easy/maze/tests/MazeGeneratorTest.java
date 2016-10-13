@@ -42,8 +42,8 @@ import de.amr.easy.maze.algorithms.wilson.WilsonUSTRowsTopDown;
 
 public class MazeGeneratorTest {
 
-	private static final int WIDTH = 99;
-	private static final int HEIGHT = 81;
+	private static final int WIDTH = 100;
+	private static final int HEIGHT = 100;
 
 	private ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid;
 

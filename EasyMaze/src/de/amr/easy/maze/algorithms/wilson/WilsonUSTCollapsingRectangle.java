@@ -30,9 +30,9 @@ public class WilsonUSTCollapsingRectangle extends WilsonUST {
 					loopErasedRandomWalk(walkStart);
 				}
 			});
-			width = Math.max(width - 2, 0);
+			width -= 2;
 			++col;
-			height = Math.max(height - 2, 0);
+			height -= 2;
 			++row;
 		}
 	}
