@@ -17,8 +17,8 @@ public class GridAnimation implements GraphListener<Integer, DefaultEdge<Integer
 	private final GridRenderer<Integer, DefaultEdge<Integer>> renderer;
 	private int delay;
 
-	public GridAnimation(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid,
-			int gridCellSize, int width, int height) {
+	public GridAnimation(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid, int gridCellSize,
+			int width, int height) {
 		this.grid = grid;
 		canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		renderer = new GridRenderer<>();

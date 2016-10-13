@@ -12,8 +12,7 @@ public class GridVisualization extends DefaultGridRenderingModel<Integer> {
 	protected final ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid;
 	private final int gridCellSize;
 
-	public GridVisualization(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid,
-			int gridCellSize) {
+	public GridVisualization(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid, int gridCellSize) {
 		this.grid = grid;
 		this.gridCellSize = gridCellSize;
 	}

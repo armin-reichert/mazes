@@ -48,8 +48,8 @@ public class BFSTraversal extends Scene<MazeDemo> {
 			Log.info("BFS finished.");
 			maxDistance = bfs.getMaxDistance();
 			Log.info("Max distance: " + maxDistance);
-			animation.setRenderingModel(new BFSAnimationRenderingModel(grid,
-					Application.Settings.getInt("cellSize"), bfs, maxDistance));
+			animation.setRenderingModel(
+					new BFSAnimationRenderingModel(grid, Application.Settings.getInt("cellSize"), bfs, maxDistance));
 			grid.addGraphListener(animation);
 			animation.setDelay(0);
 			Log.info("Start second, animated BFS:");

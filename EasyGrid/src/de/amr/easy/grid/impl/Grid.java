@@ -7,7 +7,6 @@ import java.util.Set;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.Grid2D;
@@ -29,15 +28,6 @@ public class Grid implements Grid2D<Integer, DefaultEdge<Integer>> {
 		if (cell == null || cell < 0 || cell >= numCells()) {
 			throw new IllegalArgumentException("Invalid cell: " + cell);
 		}
-	}
-
-	private void checkEdge(Edge<Integer> edge) {
-		if (edge == null) {
-			throw new IllegalArgumentException("Invalid edge: null");
-		}
-		Integer either = edge.either(), other = edge.other(either);
-		checkCell(either);
-		checkCell(other);
 	}
 
 	private int cellIndex(int col, int row) {

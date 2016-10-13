@@ -37,10 +37,9 @@ public class MazeGeneration extends Scene<MazeDemo> {
 
 	private static final Logger LOG = Logger.getLogger(MazeGeneration.class.getName());
 
-	private static final Class<?>[] ALGORITHMS = { BinaryTree.class, BinaryTreeRandom.class,
-			Eller.class, EllerInsideOut.class, HuntAndKill.class, IterativeDFS.class, KruskalMST.class,
-			PrimMST.class, RandomBFS.class, RecursiveDivision.class, WilsonUSTHilbertCurve.class,
-			WilsonUSTNestedRectangles.class };
+	private static final Class<?>[] ALGORITHMS = { BinaryTree.class, BinaryTreeRandom.class, Eller.class,
+			EllerInsideOut.class, HuntAndKill.class, IterativeDFS.class, KruskalMST.class, PrimMST.class, RandomBFS.class,
+			RecursiveDivision.class, WilsonUSTHilbertCurve.class, WilsonUSTNestedRectangles.class };
 
 	private ObservableDataGrid<TraversalState> grid;
 	private Consumer<Integer> algorithm;
@@ -61,8 +60,7 @@ public class MazeGeneration extends Scene<MazeDemo> {
 		startCell = grid.cell(GridPosition.TOP_LEFT);
 		mazeGeneration = new Thread(() -> {
 			chooseRandomAlgorithm();
-			animation
-					.setRenderingModel(new GridVisualization(grid, Application.Settings.getInt("cellSize")));
+			animation.setRenderingModel(new GridVisualization(grid, Application.Settings.getInt("cellSize")));
 			animation.clearCanvas();
 			prepareGrid(algorithm);
 			algorithm.accept(startCell);
@@ -99,8 +97,7 @@ public class MazeGeneration extends Scene<MazeDemo> {
 	private void chooseRandomAlgorithm() {
 		Class<?> algorithmClass = ALGORITHMS[new Random().nextInt(ALGORITHMS.length)];
 		try {
-			algorithm = (Consumer<Integer>) algorithmClass.getConstructor(ObservableDataGrid2D.class)
-					.newInstance(grid);
+			algorithm = (Consumer<Integer>) algorithmClass.getConstructor(ObservableDataGrid2D.class).newInstance(grid);
 			LOG.info("Maze generation algorithm: " + algorithmClass);
 		} catch (Exception e) {
 			throw new RuntimeException(e);

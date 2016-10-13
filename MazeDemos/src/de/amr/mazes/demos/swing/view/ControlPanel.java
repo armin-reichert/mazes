@@ -1,7 +1,9 @@
 package de.amr.mazes.demos.swing.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -13,10 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
-import javax.swing.border.EmptyBorder;
 import javax.swing.SwingConstants;
-import java.awt.Font;
-import java.awt.Color;
+import javax.swing.border.EmptyBorder;
 
 public class ControlPanel extends JPanel {
 
@@ -41,7 +41,7 @@ public class ControlPanel extends JPanel {
 		gbl_controls.columnWeights = new double[] { 0.0, 1.0 };
 		gbl_controls.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0 };
 		controls.setLayout(gbl_controls);
-		
+
 		algorithmLabel = new JLabel("Generation Algorithm");
 		algorithmLabel.setForeground(Color.BLUE);
 		algorithmLabel.setFont(new Font("Arial Black", Font.PLAIN, 14));
@@ -173,6 +173,7 @@ public class ControlPanel extends JPanel {
 	public JButton getBtnStop() {
 		return btnStop;
 	}
+
 	public JLabel getAlgorithmLabel() {
 		return algorithmLabel;
 	}

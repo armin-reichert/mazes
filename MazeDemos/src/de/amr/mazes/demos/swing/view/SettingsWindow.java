@@ -52,7 +52,7 @@ public class SettingsWindow extends JFrame {
 		/*@formatter:on*/
 
 		controlPanel.getAlgorithmLabel().setText(algorithmMenu.getSelectedAlgorithm().getDescription());
-		
+
 		controlPanel.getResolutionSelector()
 				.setSelectedIndex(Utils.indexOf(app.model.getGridCellSize(), app.model.getGridCellSizes()));
 
