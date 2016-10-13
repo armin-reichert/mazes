@@ -8,7 +8,7 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
 import de.amr.easy.grid.iterators.shapes.Rectangle;
 
 /**
- * Wilson's algorithm where the vertices are selected from a collapsing circle.
+ * Wilson's algorithm where the vertices are selected from a collapsing rectangle.
  * 
  * @author Armin Reichert
  */
@@ -30,14 +30,10 @@ public class WilsonUSTCollapsingRectangle extends WilsonUST {
 					loopErasedRandomWalk(walkStart);
 				}
 			});
-			if (width > 0) {
-				width = Math.max(width - 2, 0);
-				++col;
-			}
-			if (height > 0) {
-				height = Math.max(height - 2, 0);
-				++row;
-			}
+			width = Math.max(width - 2, 0);
+			++col;
+			height = Math.max(height - 2, 0);
+			++row;
 		}
 	}
 }

@@ -1,4 +1,4 @@
-package de.amr.grid.impl;
+package de.amr.easy.grid.tests;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
