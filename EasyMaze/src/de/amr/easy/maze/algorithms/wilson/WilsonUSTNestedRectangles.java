@@ -21,7 +21,7 @@ import de.amr.easy.grid.iterators.traversals.ExpandingRectangle;
  */
 public class WilsonUSTNestedRectangles extends WilsonUST {
 
-	public WilsonUSTNestedRectangles(ObservableDataGrid2D<Integer, TraversalState> grid) {
+	public WilsonUSTNestedRectangles(ObservableDataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
 
@@ -36,7 +36,7 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 
 			@Override
 			public Iterator<Integer> iterator() {
-				Rectangle<Integer> firstCell = new Rectangle<>(grid, grid.cell(TOP_LEFT), 1, 1);
+				Rectangle firstCell = new Rectangle(grid, grid.cell(TOP_LEFT), 1, 1);
 				List<Iterator<Integer>> expRects = new ArrayList<>();
 				int rate = grid.numCols();
 				while (rate > 1) {
@@ -46,8 +46,8 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 				@SuppressWarnings("unchecked")
 				Iterator<Integer>[] expRectsArray = expRects.toArray(new Iterator[expRects.size()]);
 
-				Rectangle<Integer> firstColumn = new Rectangle<>(grid, grid.cell(TOP_LEFT), 1, grid.numRows());
-				ExpandingRectangle<Integer> sweep = new ExpandingRectangle<>(firstColumn);
+				Rectangle firstColumn = new Rectangle(grid, grid.cell(TOP_LEFT), 1, grid.numRows());
+				ExpandingRectangle sweep = new ExpandingRectangle(firstColumn);
 				sweep.setExpandHorizontally(true);
 				sweep.setExpandVertically(false);
 				sweep.setExpansionRate(1);
@@ -59,8 +59,8 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 		return StreamSupport.stream(it.spliterator(), false);
 	}
 
-	private ExpandingRectangle<Integer> expandingRectangle(Rectangle<Integer> startRectangle, int rate) {
-		ExpandingRectangle<Integer> r = new ExpandingRectangle<>(startRectangle);
+	private ExpandingRectangle expandingRectangle(Rectangle startRectangle, int rate) {
+		ExpandingRectangle r = new ExpandingRectangle(startRectangle);
 		r.setExpandHorizontally(true);
 		r.setExpandVertically(true);
 		r.setExpansionRate(rate);

@@ -13,7 +13,7 @@ import de.amr.easy.grid.iterators.shapes.Rectangle;
  */
 public class WilsonUSTCollapsingRectangle extends WilsonUST {
 
-	public WilsonUSTCollapsingRectangle(ObservableDataGrid2D<Integer, TraversalState> grid) {
+	public WilsonUSTCollapsingRectangle(ObservableDataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
 
@@ -24,7 +24,7 @@ public class WilsonUSTCollapsingRectangle extends WilsonUST {
 		int width = grid.numCols(), height = grid.numRows();
 		int col = 0, row = 0;
 		while (width > 0 && height > 0) {
-			new Rectangle<>(grid, grid.cell(col, row), width, height).forEach(walkStart -> {
+			new Rectangle(grid, grid.cell(col, row), width, height).forEach(walkStart -> {
 				if (!isCellInTree(walkStart)) {
 					loopErasedRandomWalk(walkStart);
 				}

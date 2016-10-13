@@ -20,13 +20,10 @@ import de.amr.easy.graph.impl.DefaultEdge;
  * Extends the {@link Graph} interface such that graph algorithms can be applied to objects of this
  * type.
  * 
- * @param <Cell>
- *          cell/vertex type
- * 
  * @author Armin Reichert
  * 
  */
-public interface Grid2D<Cell> extends Graph<Cell, DefaultEdge<Cell>> {
+public interface Grid2D extends Graph<Integer, DefaultEdge<Integer>> {
 
 	/**
 	 * @return the number of grid columns
@@ -52,28 +49,28 @@ public interface Grid2D<Cell> extends Graph<Cell, DefaultEdge<Cell>> {
 	 *          the row index
 	 * @return the cell at coordinate (col, row)
 	 */
-	public Cell cell(int col, int row);
+	public Integer cell(int col, int row);
 
 	/**
 	 * @param position
 	 *          the grid position
 	 * @return the cell at the given position
 	 */
-	public Cell cell(GridPosition position);
+	public Integer cell(GridPosition position);
 
 	/**
 	 * @param cell
 	 *          a grid position
 	 * @return the column index of the given cell
 	 */
-	public int col(Cell cell);
+	public int col(Integer cell);
 
 	/**
 	 * @param cell
 	 *          a grid position
 	 * @return the row index of the given cell
 	 */
-	public int row(Cell cell);
+	public int row(Integer cell);
 
 	/**
 	 * @param col
@@ -99,7 +96,7 @@ public interface Grid2D<Cell> extends Graph<Cell, DefaultEdge<Cell>> {
 	 * 
 	 * @return stream of all neighbor cells in the order given by the specified directions
 	 */
-	public default Stream<Cell> neighbors(Cell cell, Direction... dirs) {
+	public default Stream<Integer> neighbors(Integer cell, Direction... dirs) {
 		if (dirs.length == 0) {
 			dirs = Direction.values();
 		}
@@ -115,7 +112,7 @@ public interface Grid2D<Cell> extends Graph<Cell, DefaultEdge<Cell>> {
 	 * @return the neighbor in the given direction or <code>null</code> if there exists no cell in
 	 *         that direction
 	 */
-	public Cell neighbor(Cell cell, Direction dir);
+	public Integer neighbor(Integer cell, Direction dir);
 
 	/**
 	 * Tells if the given cells are neighbors, that is they are on grid positions that may be
@@ -127,7 +124,7 @@ public interface Grid2D<Cell> extends Graph<Cell, DefaultEdge<Cell>> {
 	 *          the other cell
 	 * @return if the cells are neighbors
 	 */
-	public default boolean areNeighbors(Cell either, Cell other) {
+	public default boolean areNeighbors(Integer either, Integer other) {
 		return neighbors(either).anyMatch(neighbor -> neighbor.equals(other));
 	}
 
@@ -139,7 +136,7 @@ public interface Grid2D<Cell> extends Graph<Cell, DefaultEdge<Cell>> {
 	 *          a condition that must hold for the returned cell
 	 * @return a random neighbor cell fulfilling the condition if any
 	 */
-	public default Optional<Cell> randomNeighbor(Cell cell, Predicate<Cell> condition) {
+	public default Optional<Integer> randomNeighbor(Integer cell, Predicate<Integer> condition) {
 		/*@formatter:off*/
 		return neighbors(cell, Direction.valuesPermuted())
 			.filter(condition)
@@ -153,7 +150,7 @@ public interface Grid2D<Cell> extends Graph<Cell, DefaultEdge<Cell>> {
 	 *          a grid cell
 	 * @return a random neighbor cell
 	 */
-	public default Optional<Cell> randomNeighbor(Cell cell) {
+	public default Optional<Integer> randomNeighbor(Integer cell) {
 		return neighbors(cell, Direction.valuesPermuted()).findFirst();
 	}
 
@@ -165,7 +162,7 @@ public interface Grid2D<Cell> extends Graph<Cell, DefaultEdge<Cell>> {
 	 *          the direction to which the cell is checked for connectivity
 	 * @return if the cell is connected with the cell in the given direction ("passage", "no wall")
 	 */
-	public boolean connected(Cell cell, Direction dir);
+	public boolean connected(Integer cell, Direction dir);
 
 	/**
 	 * @param either
@@ -174,7 +171,7 @@ public interface Grid2D<Cell> extends Graph<Cell, DefaultEdge<Cell>> {
 	 *          other cell
 	 * @return the direction from either to other cell (if those cells are neighbors)
 	 */
-	public Optional<Direction> direction(Cell either, Cell other);
+	public Optional<Direction> direction(Integer either, Integer other);
 
 	/**
 	 * Populates all edges of the grid.

@@ -15,7 +15,7 @@ public class HuntAndKillRandom extends HuntAndKill {
 
 	private final Random rnd = new Random();
 
-	public HuntAndKillRandom(ObservableDataGrid2D<Integer, TraversalState> grid) {
+	public HuntAndKillRandom(ObservableDataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
 

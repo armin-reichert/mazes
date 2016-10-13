@@ -45,7 +45,7 @@ public class MazeGeneratorTest {
 	private static final int WIDTH = 100;
 	private static final int HEIGHT = 80;
 
-	private ObservableDataGrid2D<Integer, TraversalState> grid;
+	private ObservableDataGrid2D<TraversalState> grid;
 
 	@Before
 	public void setUp() {

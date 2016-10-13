@@ -25,10 +25,10 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class IterativeDFS implements Consumer<Integer> {
 
-	private final ObservableDataGrid2D<Integer, TraversalState> grid;
+	private final ObservableDataGrid2D<TraversalState> grid;
 	private final Deque<Integer> stack = new LinkedList<>();
 
-	public IterativeDFS(ObservableDataGrid2D<Integer, TraversalState> grid) {
+	public IterativeDFS(ObservableDataGrid2D<TraversalState> grid) {
 		this.grid = grid;
 	}
 

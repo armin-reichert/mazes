@@ -15,15 +15,13 @@ import de.amr.easy.grid.api.Grid2D;
  * 
  * @author Armin Reichert
  *
- * @param <Cell>
- *          grid cell type
  */
-public class Square<Cell> extends Shape<Cell> {
+public class Square extends Shape {
 
-	private final Cell topLeft;
+	private final Integer topLeft;
 	private final int size;
 
-	public Square(Grid2D<Cell> grid, Cell topLeft, int size) {
+	public Square(Grid2D grid, Integer topLeft, int size) {
 		super(grid);
 
 		this.topLeft = topLeft;
@@ -47,7 +45,7 @@ public class Square<Cell> extends Shape<Cell> {
 		}
 	}
 
-	public Cell getTopLeft() {
+	public Integer getTopLeft() {
 		return topLeft;
 	}
 

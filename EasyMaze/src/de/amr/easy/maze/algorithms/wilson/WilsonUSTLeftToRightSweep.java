@@ -15,13 +15,13 @@ import de.amr.easy.grid.iterators.traversals.LeftToRightSweep;
  */
 public class WilsonUSTLeftToRightSweep extends WilsonUST {
 
-	public WilsonUSTLeftToRightSweep(ObservableDataGrid2D<Integer, TraversalState> grid) {
+	public WilsonUSTLeftToRightSweep(ObservableDataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
 
 	@Override
 	protected Stream<Integer> cellStream() {
-		return new LeftToRightSweep<>(grid).stream();
+		return new LeftToRightSweep(grid).stream();
 	}
 
 	@Override

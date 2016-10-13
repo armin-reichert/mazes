@@ -8,9 +8,9 @@ import de.amr.easy.grid.api.GridDataAccess;
  * 
  * @author Armin Reichert
  */
-public class DataGrid<Content> extends Grid implements DataGrid2D<Integer, Content> {
+public class DataGrid<Content> extends Grid implements DataGrid2D<Content> {
 
-	private GridDataAccess<Integer, Content> contentStore;
+	private GridDataAccess<Content> contentStore;
 
 	public DataGrid(int numCols, int numRows, Content defaultContent, boolean sparse) {
 		super(numCols, numRows);

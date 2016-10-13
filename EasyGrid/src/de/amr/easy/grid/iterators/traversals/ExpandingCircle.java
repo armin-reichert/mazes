@@ -10,18 +10,16 @@ import de.amr.easy.grid.iterators.shapes.Circle;
  * 
  * @author Armin Reichert
  *
- * @param <Cell>
- *          the grid cell type
  */
-public class ExpandingCircle<Cell> implements Sequence<Cell> {
+public class ExpandingCircle implements Sequence<Integer> {
 
-	private final Grid2D<Cell> grid;
-	private final Cell center;
+	private final Grid2D grid;
+	private final Integer center;
 	private final int minRadius;
 	private final int maxRadius;
 	private int expansionRate;
 
-	public ExpandingCircle(Grid2D<Cell> grid, Cell center, int minRadius, int maxRadius) {
+	public ExpandingCircle(Grid2D grid, Integer center, int minRadius, int maxRadius) {
 		this.grid = grid;
 		this.center = center;
 		this.minRadius = minRadius;
@@ -34,11 +32,11 @@ public class ExpandingCircle<Cell> implements Sequence<Cell> {
 	}
 
 	@Override
-	public Iterator<Cell> iterator() {
-		return new Iterator<Cell>() {
+	public Iterator<Integer> iterator() {
+		return new Iterator<Integer>() {
 
-			private Circle<Cell> circle = new Circle<>(grid, center, minRadius);
-			private Iterator<Cell> iterator = circle.iterator();
+			private Circle circle = new Circle(grid, center, minRadius);
+			private Iterator<Integer> iterator = circle.iterator();
 
 			@Override
 			public boolean hasNext() {
@@ -49,13 +47,13 @@ public class ExpandingCircle<Cell> implements Sequence<Cell> {
 				if (newRadius > maxRadius) {
 					return false;
 				}
-				circle = new Circle<>(grid, circle.getCenter(), newRadius);
+				circle = new Circle(grid, circle.getCenter(), newRadius);
 				iterator = circle.iterator();
 				return iterator.hasNext();
 			}
 
 			@Override
-			public Cell next() {
+			public Integer next() {
 				return iterator.next();
 			}
 		};

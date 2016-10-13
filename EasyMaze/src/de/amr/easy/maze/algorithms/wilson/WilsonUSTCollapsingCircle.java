@@ -14,7 +14,7 @@ import de.amr.easy.grid.iterators.shapes.Circle;
  */
 public class WilsonUSTCollapsingCircle extends WilsonUST {
 
-	public WilsonUSTCollapsingCircle(ObservableDataGrid2D<Integer, TraversalState> grid) {
+	public WilsonUSTCollapsingCircle(ObservableDataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
 
@@ -23,7 +23,7 @@ public class WilsonUSTCollapsingCircle extends WilsonUST {
 		start = grid.cell(CENTER);
 		addCellToTree(start);
 		for (int radius = max(grid.numRows(), grid.numCols()) - 1; radius >= 0; radius--) {
-			new Circle<>(grid, start, radius).forEach(walkStart -> {
+			new Circle(grid, start, radius).forEach(walkStart -> {
 				if (!isCellInTree(walkStart)) {
 					loopErasedRandomWalk(walkStart);
 				}

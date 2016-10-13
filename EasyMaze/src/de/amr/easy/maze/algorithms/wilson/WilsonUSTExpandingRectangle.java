@@ -16,14 +16,14 @@ import de.amr.easy.grid.iterators.traversals.ExpandingRectangle;
  */
 public class WilsonUSTExpandingRectangle extends WilsonUST {
 
-	public WilsonUSTExpandingRectangle(ObservableDataGrid2D<Integer, TraversalState> grid) {
+	public WilsonUSTExpandingRectangle(ObservableDataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
 
 	@Override
 	protected Stream<Integer> cellStream() {
-		Rectangle<Integer> startRectangle = new Rectangle<>(grid, grid.cell(TOP_LEFT), 1, 1);
-		ExpandingRectangle<Integer> expRect = new ExpandingRectangle<>(startRectangle);
+		Rectangle startRectangle = new Rectangle(grid, grid.cell(TOP_LEFT), 1, 1);
+		ExpandingRectangle expRect = new ExpandingRectangle(startRectangle);
 		expRect.setExpandHorizontally(true);
 		expRect.setExpandVertically(true);
 		expRect.setMaxExpansion(grid.numCols() - 1);

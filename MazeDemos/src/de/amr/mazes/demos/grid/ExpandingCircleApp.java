@@ -18,6 +18,6 @@ public class ExpandingCircleApp extends GridSampleApp {
 	@Override
 	public void run() {
 		setDelay(4);
-		new ExpandingCircle<>(grid, grid.cell(CENTER), 0, grid.numRows()).forEach(cell -> grid.set(cell, COMPLETED));
+		new ExpandingCircle(grid, grid.cell(CENTER), 0, grid.numRows()).forEach(cell -> grid.set(cell, COMPLETED));
 	}
 }

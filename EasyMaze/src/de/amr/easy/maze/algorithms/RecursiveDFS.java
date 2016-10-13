@@ -18,10 +18,10 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class RecursiveDFS implements Consumer<Integer> {
 
-	private final ObservableDataGrid2D<Integer, TraversalState> grid;
+	private final ObservableDataGrid2D<TraversalState> grid;
 	private Optional<Integer> unvisitedNeighbor;
 
-	public RecursiveDFS(ObservableDataGrid2D<Integer, TraversalState> grid) {
+	public RecursiveDFS(ObservableDataGrid2D<TraversalState> grid) {
 		this.grid = grid;
 	}
 

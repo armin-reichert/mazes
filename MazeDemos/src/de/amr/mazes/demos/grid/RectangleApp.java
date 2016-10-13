@@ -17,8 +17,8 @@ public class RectangleApp extends GridSampleApp {
 	@Override
 	public void run() {
 		canvas.setDelay(3);
-		Rectangle<Integer> startRectangle = new Rectangle<>(grid, grid.cell(0, 0), 1, 1);
-		ExpandingRectangle<Integer> expRect = new ExpandingRectangle<>(startRectangle);
+		Rectangle startRectangle = new Rectangle(grid, grid.cell(0, 0), 1, 1);
+		ExpandingRectangle expRect = new ExpandingRectangle(startRectangle);
 		expRect.setExpandHorizontally(true);
 		expRect.setExpandVertically(true);
 		expRect.setExpansionRate(1);

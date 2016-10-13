@@ -60,7 +60,7 @@ public class MazeDemoApp {
 		mazeWindow.setVisible(true);
 	}
 
-	public GridCanvas<Integer> canvas() {
+	public GridCanvas canvas() {
 		return mazeWindow.getCanvas();
 	}
 

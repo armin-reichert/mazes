@@ -12,7 +12,7 @@ import de.amr.easy.grid.impl.Grid;
 
 public class EmptyGridTest {
 
-	private Grid2D<Integer> grid;
+	private Grid2D grid;
 
 	@Before
 	public void setUp() {

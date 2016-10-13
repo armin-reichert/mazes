@@ -34,11 +34,11 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public abstract class WilsonUST implements Consumer<Integer> {
 
-	protected final ObservableDataGrid2D<Integer, TraversalState> grid;
+	protected final ObservableDataGrid2D<TraversalState> grid;
 	protected final Random rnd = new Random();
 	private final Map<Integer, Direction> lastWalkDir = new HashMap<>();
 
-	protected WilsonUST(ObservableDataGrid2D<Integer, TraversalState> grid) {
+	protected WilsonUST(ObservableDataGrid2D<TraversalState> grid) {
 		this.grid = grid;
 	}
 

@@ -12,18 +12,18 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
 import de.amr.easy.grid.rendering.DefaultGridRenderingModel;
 import de.amr.easy.grid.rendering.GridRenderer;
 
-public class SVGGridRenderer<Cell> implements GraphListener<Cell, DefaultEdge<Cell>> {
+public class SVGGridRenderer implements GraphListener<Integer, DefaultEdge<Integer>> {
 
-	private final ObservableDataGrid2D<Cell, TraversalState> grid;
+	private final ObservableDataGrid2D<TraversalState> grid;
 	private final SVGGraphics2D g;
-	private final GridRenderer<Cell> renderer;
+	private final GridRenderer renderer;
 
-	public SVGGridRenderer(ObservableDataGrid2D<Cell,  TraversalState> grid, int cellSize) {
+	public SVGGridRenderer(ObservableDataGrid2D<TraversalState> grid, int cellSize) {
 		this.grid = grid;
 		int width = grid.numCols() * cellSize, height = grid.numRows() * cellSize;
 		g = new SVGGraphics2D(width, height);
-		renderer = new GridRenderer<>();
-		DefaultGridRenderingModel<Cell> renderingModel = new DefaultGridRenderingModel<>();
+		renderer = new GridRenderer();
+		DefaultGridRenderingModel renderingModel = new DefaultGridRenderingModel();
 		renderingModel.setCellSize(cellSize);
 		renderingModel.setGridBgColor(Color.DARK_GRAY);
 		renderer.setRenderingModel(renderingModel);
@@ -37,24 +37,24 @@ public class SVGGridRenderer<Cell> implements GraphListener<Cell, DefaultEdge<Ce
 	}
 
 	@Override
-	public void vertexChanged(Cell vertex, Object oldValue, Object newValue) {
+	public void vertexChanged(Integer vertex, Object oldValue, Object newValue) {
 	}
 
 	@Override
-	public void edgeChanged(DefaultEdge<Cell> edge, Object oldValue, Object newValue) {
+	public void edgeChanged(DefaultEdge<Integer> edge, Object oldValue, Object newValue) {
 	}
 
 	@Override
-	public void edgeAdded(DefaultEdge<Cell> edge) {
+	public void edgeAdded(DefaultEdge<Integer> edge) {
 		renderer.drawPassage(g, grid, edge, true);
 	}
 
 	@Override
-	public void edgeRemoved(DefaultEdge<Cell> edge) {
+	public void edgeRemoved(DefaultEdge<Integer> edge) {
 		renderer.drawPassage(g, grid, edge, false);
 	}
 
 	@Override
-	public void graphChanged(ObservableGraph<Cell, DefaultEdge<Cell>> graph) {
+	public void graphChanged(ObservableGraph<Integer, DefaultEdge<Integer>> graph) {
 	}
 }

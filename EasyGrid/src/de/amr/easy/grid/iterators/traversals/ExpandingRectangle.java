@@ -9,18 +9,16 @@ import de.amr.easy.grid.iterators.shapes.Rectangle;
  * 
  * @author Armin Reichert
  *
- * @param <Cell>
- *          the grid cell type
  */
-public class ExpandingRectangle<Cell> implements Sequence<Cell> {
+public class ExpandingRectangle implements Sequence<Integer> {
 
-	private final Rectangle<Cell> startRectangle;
+	private final Rectangle startRectangle;
 	private boolean expandHorizontally;
 	private boolean expandVertically;
 	private int maxExpansion;
 	private int expansionRate;
 
-	public ExpandingRectangle(Rectangle<Cell> startRectangle) {
+	public ExpandingRectangle(Rectangle startRectangle) {
 		this.startRectangle = startRectangle;
 		this.expandHorizontally = true;
 		this.expandVertically = true;
@@ -45,11 +43,11 @@ public class ExpandingRectangle<Cell> implements Sequence<Cell> {
 	}
 
 	@Override
-	public Iterator<Cell> iterator() {
-		return new Iterator<Cell>() {
+	public Iterator<Integer> iterator() {
+		return new Iterator<Integer>() {
 
-			private Rectangle<Cell> currentRectangle = startRectangle;
-			private Iterator<Cell> iterator = currentRectangle.iterator();
+			private Rectangle currentRectangle = startRectangle;
+			private Iterator<Integer> iterator = currentRectangle.iterator();
 			private int expansion;
 
 			@Override
@@ -58,13 +56,12 @@ public class ExpandingRectangle<Cell> implements Sequence<Cell> {
 			}
 
 			@Override
-			public Cell next() {
+			public Integer next() {
 				if (!iterator.hasNext()) {
 					int width = currentRectangle.getWidth() + (expandHorizontally ? expansionRate : 0);
 					int height = currentRectangle.getHeight() + (expandVertically ? expansionRate : 0);
 					expansion += expansionRate;
-					currentRectangle = new Rectangle<>(currentRectangle.grid, currentRectangle.getLeftUpperCorner(), width,
-							height);
+					currentRectangle = new Rectangle(currentRectangle.grid, currentRectangle.getLeftUpperCorner(), width, height);
 					iterator = currentRectangle.iterator();
 				}
 				return iterator.next();

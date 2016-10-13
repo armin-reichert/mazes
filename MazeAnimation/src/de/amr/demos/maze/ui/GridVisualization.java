@@ -6,12 +6,12 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 import de.amr.easy.grid.rendering.DefaultGridRenderingModel;
 
-public class GridVisualization extends DefaultGridRenderingModel<Integer> {
+public class GridVisualization extends DefaultGridRenderingModel {
 
-	protected final ObservableDataGrid2D<Integer, TraversalState> grid;
+	protected final ObservableDataGrid2D<TraversalState> grid;
 	private final int gridCellSize;
 
-	public GridVisualization(ObservableDataGrid2D<Integer, TraversalState> grid, int gridCellSize) {
+	public GridVisualization(ObservableDataGrid2D<TraversalState> grid, int gridCellSize) {
 		this.grid = grid;
 		this.gridCellSize = gridCellSize;
 	}

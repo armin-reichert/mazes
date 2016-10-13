@@ -10,7 +10,7 @@ import de.amr.mazes.demos.swing.model.MazeDemoModel;
  * 
  * @author Armin Reichert
  */
-public class GridColoring extends DefaultGridRenderingModel<Integer> {
+public class GridColoring extends DefaultGridRenderingModel {
 
 	private static final Color VISITED_COLOR = Color.BLUE;
 

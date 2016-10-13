@@ -17,6 +17,6 @@ public class RecursiveCrossesApp extends GridSampleApp {
 	@Override
 	public void run() {
 		setDelay(6);
-		new RecursiveCrosses<>(grid).forEach(cell -> grid.set(cell, COMPLETED));
+		new RecursiveCrosses(grid).forEach(cell -> grid.set(cell, COMPLETED));
 	}
 }

@@ -40,7 +40,7 @@ public abstract class GridSampleApp implements Runnable {
 	protected int cellSize;
 	protected String appName;
 	protected JFrame window;
-	protected GridCanvas<Integer> canvas;
+	protected GridCanvas canvas;
 	protected JSlider delaySlider;
 	private boolean fullscreen;
 
@@ -88,7 +88,7 @@ public abstract class GridSampleApp implements Runnable {
 		window = new JFrame();
 		window.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		window.setTitle(composeTitle());
-		canvas = new GridCanvas<>(grid, changeRenderingModel(cellSize));
+		canvas = new GridCanvas(grid, changeRenderingModel(cellSize));
 		canvas.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "exit");
 		canvas.getActionMap().put("exit", exitAction);
 		canvas.setDelay(0);
@@ -134,7 +134,7 @@ public abstract class GridSampleApp implements Runnable {
 		}
 	}
 
-	private DefaultGridRenderingModel<Integer> renderingModel = new DefaultGridRenderingModel<Integer>() {
+	private DefaultGridRenderingModel renderingModel = new DefaultGridRenderingModel() {
 
 		@Override
 		public Color getCellBgColor(Integer cell) {
@@ -151,7 +151,7 @@ public abstract class GridSampleApp implements Runnable {
 		}
 	};
 
-	protected GridRenderingModel<Integer> changeRenderingModel(int cellSize) {
+	protected GridRenderingModel changeRenderingModel(int cellSize) {
 		renderingModel.setCellSize(cellSize);
 		return renderingModel;
 	}

@@ -7,16 +7,16 @@ import de.amr.easy.grid.api.Grid2D;
  * 
  * @author Armin Reichert
  *
- * @param <Cell>
+ * @param <Integer>
  *          grid cell type
  */
-public class Rectangle<Cell> extends Shape<Cell> {
+public class Rectangle extends Shape {
 
-	private final Cell leftUpperCorner;
+	private final Integer leftUpperCorner;
 	private final int width;
 	private final int height;
 
-	public Rectangle(Grid2D<Cell> grid, Cell leftUpperCorner, int width, int height) {
+	public Rectangle(Grid2D grid, Integer leftUpperCorner, int width, int height) {
 		super(grid);
 
 		this.leftUpperCorner = leftUpperCorner;
@@ -43,7 +43,7 @@ public class Rectangle<Cell> extends Shape<Cell> {
 		}
 	}
 
-	public Cell getLeftUpperCorner() {
+	public Integer getLeftUpperCorner() {
 		return leftUpperCorner;
 	}
 

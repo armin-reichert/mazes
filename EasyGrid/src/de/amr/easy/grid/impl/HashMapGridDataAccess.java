@@ -10,27 +10,25 @@ import de.amr.easy.grid.api.GridDataAccess;
  * 
  * @author Armin Reichert
  *
- * @param <Cell>
- *          cell type
  * @param <Content>
  *          cell content type
  */
-class HashMapGridDataAccess<Cell, Content> implements GridDataAccess<Cell, Content> {
+class HashMapGridDataAccess<Content> implements GridDataAccess<Content> {
 
-	private final Map<Cell, Content> cellContent = new HashMap<>();
+	private final Map<Integer, Content> cellContent = new HashMap<>();
 	private Content defaultContent;
 
 	public HashMapGridDataAccess() {
 	}
 
 	@Override
-	public Content get(Cell cell) {
+	public Content get(Integer cell) {
 		Content content = cellContent.get(cell);
 		return content != null ? content : defaultContent;
 	}
 
 	@Override
-	public void set(Cell cell, Content content) {
+	public void set(Integer cell, Content content) {
 		cellContent.put(cell, content);
 	}
 

@@ -15,10 +15,10 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class RecursiveDivision implements Consumer<Integer> {
 
-	private final ObservableDataGrid2D<Integer, TraversalState> grid;
+	private final ObservableDataGrid2D<TraversalState> grid;
 	private final Random rnd = new Random();
 
-	public RecursiveDivision(ObservableDataGrid2D<Integer, TraversalState> grid) {
+	public RecursiveDivision(ObservableDataGrid2D<TraversalState> grid) {
 		this.grid = grid;
 		grid.setEventsEnabled(false);
 		grid.fillAllEdges();

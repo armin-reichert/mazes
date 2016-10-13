@@ -10,17 +10,15 @@ import de.amr.easy.grid.iterators.shapes.Square;
  * 
  * @author Armin Reichert
  *
- * @param <Cell>
- *          the grid cell type
  */
-public class ExpandingSquare<Cell> implements Sequence<Cell> {
+public class ExpandingSquare implements Sequence<Integer> {
 
-	private final Grid2D<Cell> grid;
-	private final Cell topLeft;
+	private final Grid2D grid;
+	private final Integer topLeft;
 	private final int minSize;
 	private final int maxSize;
 
-	public ExpandingSquare(Grid2D<Cell> grid, Cell topLeft, int minSize, int maxSize) {
+	public ExpandingSquare(Grid2D grid, Integer topLeft, int minSize, int maxSize) {
 		this.grid = grid;
 		this.topLeft = topLeft;
 		this.minSize = minSize;
@@ -28,12 +26,12 @@ public class ExpandingSquare<Cell> implements Sequence<Cell> {
 	}
 
 	@Override
-	public Iterator<Cell> iterator() {
+	public Iterator<Integer> iterator() {
 
-		return new Iterator<Cell>() {
+		return new Iterator<Integer>() {
 
-			private Square<Cell> currentSquare = new Square<>(grid, topLeft, minSize);
-			private Iterator<Cell> currentIterator = currentSquare.iterator();
+			private Square currentSquare = new Square(grid, topLeft, minSize);
+			private Iterator<Integer> currentIterator = currentSquare.iterator();
 
 			@Override
 			public boolean hasNext() {
@@ -41,9 +39,9 @@ public class ExpandingSquare<Cell> implements Sequence<Cell> {
 			}
 
 			@Override
-			public Cell next() {
+			public Integer next() {
 				if (!currentIterator.hasNext()) {
-					currentSquare = new Square<>(grid, topLeft, currentSquare.getSize() + 1);
+					currentSquare = new Square(grid, topLeft, currentSquare.getSize() + 1);
 					currentIterator = currentSquare.iterator();
 				}
 				return currentIterator.next();

@@ -8,12 +8,9 @@ import de.amr.easy.grid.api.Direction;
 /**
  * Interface for classes providing grid rendering data.
  * 
- * @param Cell
- *          grid cell type
- * 
  * @author Armin Reichert
  */
-public interface GridRenderingModel<Cell> {
+public interface GridRenderingModel {
 
 	public int getCellSize();
 
@@ -21,11 +18,11 @@ public interface GridRenderingModel<Cell> {
 
 	public Color getGridBgColor();
 
-	public Color getPassageColor(Cell cell, Direction dir);
+	public Color getPassageColor(Integer cell, Direction dir);
 
-	public Color getCellBgColor(Cell cell);
+	public Color getCellBgColor(Integer cell);
 
-	public String getCellText(Cell cell);
+	public String getCellText(Integer cell);
 
 	public Font getCellTextFont();
 

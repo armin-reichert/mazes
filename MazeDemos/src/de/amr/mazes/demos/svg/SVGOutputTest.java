@@ -35,12 +35,12 @@ public class SVGOutputTest {
 	}
 
 	private final ObservableDataGrid<TraversalState> grid;
-	private final SVGGridRenderer<Integer> svgRenderer;
+	private final SVGGridRenderer svgRenderer;
 	private final Consumer<Integer> mazeGenerator;
 
 	public SVGOutputTest() {
 		grid = new ObservableDataGrid<>(COLS, ROWS, UNVISITED);
-		svgRenderer = new SVGGridRenderer<>(grid, CELLSIZE);
+		svgRenderer = new SVGGridRenderer(grid, CELLSIZE);
 		mazeGenerator = new IterativeDFS(grid);
 		StopWatch watch = new StopWatch();
 		watch.start();

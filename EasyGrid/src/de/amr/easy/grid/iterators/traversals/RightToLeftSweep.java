@@ -9,20 +9,18 @@ import de.amr.easy.grid.api.Grid2D;
  * 
  * @author Armin Reichert
  *
- * @param <Cell>
- *          the grid cell type
  */
-public class RightToLeftSweep<Cell> implements Sequence<Cell> {
+public class RightToLeftSweep implements Sequence<Integer> {
 
-	private final Grid2D<Cell> grid;
+	private final Grid2D grid;
 
-	public RightToLeftSweep(Grid2D<Cell> grid) {
+	public RightToLeftSweep(Grid2D grid) {
 		this.grid = grid;
 	}
 
 	@Override
-	public Iterator<Cell> iterator() {
-		return new Iterator<Cell>() {
+	public Iterator<Integer> iterator() {
+		return new Iterator<Integer>() {
 
 			private int x = grid.numCols() - 1;
 			private int y = grid.numRows() - 1;
@@ -33,7 +31,7 @@ public class RightToLeftSweep<Cell> implements Sequence<Cell> {
 			}
 
 			@Override
-			public Cell next() {
+			public Integer next() {
 				if (y > 0) {
 					--y;
 				} else {

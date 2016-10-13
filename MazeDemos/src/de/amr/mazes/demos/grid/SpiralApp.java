@@ -24,7 +24,7 @@ public class SpiralApp extends GridSampleApp {
 			grid.set(cell, COMPLETED);
 		});
 		canvas.setDelay(4);
-		Spiral<Integer> spiral = new Spiral<>(grid, grid.cell(CENTER));
+		Spiral spiral = new Spiral(grid, grid.cell(CENTER));
 		Integer prevCell = null;
 		for (Integer cell : spiral) {
 			grid.set(cell, VISITED);

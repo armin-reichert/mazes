@@ -7,15 +7,13 @@ import de.amr.easy.grid.api.Grid2D;
  * 
  * @author Armin Reichert
  *
- * @param <Cell>
- *          grid cell type
  */
-public class Circle<Cell> extends Shape<Cell> {
+public class Circle extends Shape {
 
-	private final Cell center;
+	private final Integer center;
 	private final int radius;
 
-	public Circle(Grid2D<Cell> grid, Cell center, int radius) {
+	public Circle(Grid2D grid, Integer center, int radius) {
 		super(grid);
 		this.center = center;
 		this.radius = radius;
@@ -49,7 +47,7 @@ public class Circle<Cell> extends Shape<Cell> {
 		}
 	}
 
-	public Cell getCenter() {
+	public Integer getCenter() {
 		return center;
 	}
 

@@ -18,7 +18,7 @@ import de.amr.mazes.demos.swing.rendering.GridColoring;
 public class MazeWindow extends JFrame {
 
 	private final MazeDemoApp app;
-	private GridCanvas<Integer> canvas;
+	private GridCanvas canvas;
 
 	public MazeWindow(MazeDemoApp app) {
 		this.app = app;
@@ -31,9 +31,9 @@ public class MazeWindow extends JFrame {
 		canvas = null;
 	}
 
-	public GridCanvas<Integer> getCanvas() {
+	public GridCanvas getCanvas() {
 		if (canvas == null) {
-			canvas = new GridCanvas<>(app.grid(), new GridColoring(app.model));
+			canvas = new GridCanvas(app.grid(), new GridColoring(app.model));
 			canvas.setDelay(app.model.getDelay());
 			canvas.getActionMap().put("showControlsView", new AbstractAction() {
 

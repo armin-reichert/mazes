@@ -11,7 +11,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.GridPosition;
@@ -22,7 +21,7 @@ public class FullGridTest {
 	private static final int WIDTH = 15;
 	private static final int HEIGHT = 10;
 
-	private Grid2D<Integer> grid;
+	private Grid2D grid;
 
 	@Before
 	public void setUp() {

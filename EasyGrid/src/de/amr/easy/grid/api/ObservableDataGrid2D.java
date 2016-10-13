@@ -8,11 +8,9 @@ import de.amr.easy.graph.impl.DefaultEdge;
  * 
  * @author Armin Reichert
  * 
- * @param <Cell>
- *          grid cell type
  * @param <Content>
  *          content type
  */
-public interface ObservableDataGrid2D<Cell, Content>
-		extends DataGrid2D<Cell, Content>, ObservableGraph<Cell, DefaultEdge<Cell>> {
+public interface ObservableDataGrid2D<Content>
+		extends DataGrid2D<Content>, ObservableGraph<Integer, DefaultEdge<Integer>> {
 }

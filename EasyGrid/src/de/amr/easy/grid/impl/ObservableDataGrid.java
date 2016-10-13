@@ -11,9 +11,9 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  * 
  * @author Armin Reichert
  */
-public class ObservableDataGrid<Content> extends ObservableGrid implements ObservableDataGrid2D<Integer, Content> {
+public class ObservableDataGrid<Content> extends ObservableGrid implements ObservableDataGrid2D<Content> {
 
-	private GridDataAccess<Integer, Content> data;
+	private GridDataAccess<Content> data;
 
 	public ObservableDataGrid(int numCols, int numRows, Content defaultContent, boolean sparse) {
 		super(numCols, numRows);

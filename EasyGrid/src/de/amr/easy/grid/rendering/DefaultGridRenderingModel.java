@@ -8,12 +8,9 @@ import de.amr.easy.grid.api.Direction;
 /**
  * Grid rendering model providing sensible default values.
  * 
- * @param Cell
- *          the grid cell type
- * 
  * @author Armin Reichert
  */
-public class DefaultGridRenderingModel<Cell> implements GridRenderingModel<Cell> {
+public class DefaultGridRenderingModel implements GridRenderingModel {
 
 	private Color gridBgColor = Color.BLACK;
 	private Color cellTextColor = Color.BLACK;
@@ -47,7 +44,7 @@ public class DefaultGridRenderingModel<Cell> implements GridRenderingModel<Cell>
 	}
 
 	@Override
-	public Color getPassageColor(Cell cell, Direction dir) {
+	public Color getPassageColor(Integer cell, Direction dir) {
 		return getCellBgColor(cell);
 	}
 
@@ -57,12 +54,12 @@ public class DefaultGridRenderingModel<Cell> implements GridRenderingModel<Cell>
 	}
 
 	@Override
-	public Color getCellBgColor(Cell cell) {
+	public Color getCellBgColor(Integer cell) {
 		return Color.WHITE;
 	}
 
 	@Override
-	public String getCellText(Cell cell) {
+	public String getCellText(Integer cell) {
 		return "";
 	}
 

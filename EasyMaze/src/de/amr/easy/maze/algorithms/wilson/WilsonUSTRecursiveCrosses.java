@@ -13,12 +13,12 @@ import de.amr.easy.grid.iterators.traversals.RecursiveCrosses;
  */
 public class WilsonUSTRecursiveCrosses extends WilsonUST {
 
-	public WilsonUSTRecursiveCrosses(ObservableDataGrid2D<Integer, TraversalState> grid) {
+	public WilsonUSTRecursiveCrosses(ObservableDataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
 
 	@Override
 	protected Stream<Integer> cellStream() {
-		return new RecursiveCrosses<>(grid).stream();
+		return new RecursiveCrosses(grid).stream();
 	}
 }

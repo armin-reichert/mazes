@@ -21,13 +21,13 @@ import de.amr.easy.maze.datastructures.Partition.EquivClass;
  */
 public class KruskalMST implements Consumer<Integer> {
 
-	private final ObservableDataGrid2D<Integer, TraversalState> grid;
+	private final ObservableDataGrid2D<TraversalState> grid;
 
 	// Note: The partition has not to be initialized because the find-operation
 	// creates new equivalence-classes on demand.
 	private final Partition<Integer> forest = new Partition<>();
 
-	public KruskalMST(ObservableDataGrid2D<Integer, TraversalState> grid) {
+	public KruskalMST(ObservableDataGrid2D<TraversalState> grid) {
 		this.grid = grid;
 	}
 

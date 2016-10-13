@@ -12,7 +12,7 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class WilsonUSTRowsTopDown extends WilsonUST {
 
-	public WilsonUSTRowsTopDown(ObservableDataGrid2D<Integer, TraversalState> grid) {
+	public WilsonUSTRowsTopDown(ObservableDataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
 

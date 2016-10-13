@@ -16,16 +16,14 @@ import de.amr.easy.grid.iterators.traversals.Sequence;
  * 
  * @author Armin Reichert
  *
- * @param <Cell>
- *          the grid cell type
  */
-public abstract class Shape<Cell> implements Sequence<Cell> {
+public abstract class Shape implements Sequence<Integer> {
 
-	public final Grid2D<Cell> grid;
+	public final Grid2D grid;
 
-	protected final List<Cell> cells = new ArrayList<>();
+	protected final List<Integer> cells = new ArrayList<>();
 
-	protected Shape(Grid2D<Cell> grid) {
+	protected Shape(Grid2D grid) {
 		this.grid = grid;
 	}
 
@@ -36,12 +34,12 @@ public abstract class Shape<Cell> implements Sequence<Cell> {
 	}
 
 	@Override
-	public Iterator<Cell> iterator() {
+	public Iterator<Integer> iterator() {
 		return cells.iterator();
 	}
 
 	@Override
-	public Stream<Cell> stream() {
+	public Stream<Integer> stream() {
 		return cells.stream();
 	}
 }

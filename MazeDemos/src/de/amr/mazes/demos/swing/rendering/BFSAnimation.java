@@ -19,8 +19,8 @@ import de.amr.easy.grid.rendering.GridCanvas;
  */
 public class BFSAnimation {
 
-	private final GridCanvas<Integer> canvas;
-	private final ObservableGrid2D<Integer> grid;
+	private final GridCanvas canvas;
+	private final ObservableGrid2D grid;
 	private final BFSRenderingModel renderingModel;
 	private final Set<Integer> path;
 	private BreadthFirstTraversal<Integer, ?> bfs;
@@ -28,7 +28,7 @@ public class BFSAnimation {
 	private Integer maxDistanceCell;
 	private boolean distancesVisible;
 
-	public BFSAnimation(GridCanvas<Integer> canvas, ObservableGrid2D<Integer> grid) {
+	public BFSAnimation(GridCanvas canvas, ObservableGrid2D grid) {
 		this.canvas = canvas;
 		this.grid = grid;
 		renderingModel = new BFSRenderingModel(canvas.currentRenderingModel().getCellSize(),
@@ -80,7 +80,7 @@ public class BFSAnimation {
 
 	// -- Rendering model
 
-	private class BFSRenderingModel extends DefaultGridRenderingModel<Integer> {
+	private class BFSRenderingModel extends DefaultGridRenderingModel {
 
 		private final int cellSize;
 		private final int passageThickness;

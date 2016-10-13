@@ -19,7 +19,7 @@ import de.amr.easy.grid.iterators.traversals.ExpandingCircle;
  */
 public class WilsonUSTExpandingCircles extends WilsonUST {
 
-	public WilsonUSTExpandingCircles(ObservableDataGrid2D<Integer, TraversalState> grid) {
+	public WilsonUSTExpandingCircles(ObservableDataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
 
@@ -63,6 +63,6 @@ public class WilsonUSTExpandingCircles extends WilsonUST {
 	}
 
 	private Iterator<Integer> expandingCircle(int centerX, int centerY, int rmin, int rmax) {
-		return new ExpandingCircle<>(grid, grid.cell(centerX, centerY), rmin, rmax).iterator();
+		return new ExpandingCircle(grid, grid.cell(centerX, centerY), rmin, rmax).iterator();
 	}
 }

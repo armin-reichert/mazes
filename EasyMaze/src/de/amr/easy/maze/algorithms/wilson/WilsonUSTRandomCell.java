@@ -15,7 +15,7 @@ public class WilsonUSTRandomCell extends WilsonUST {
 
 	private final List<Integer> cellsOutsideTree;
 
-	public WilsonUSTRandomCell(ObservableDataGrid2D<Integer, TraversalState> grid) {
+	public WilsonUSTRandomCell(ObservableDataGrid2D<TraversalState> grid) {
 		super(grid);
 		cellsOutsideTree = grid.vertexStream().collect(Collectors.toList());
 	}

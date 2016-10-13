@@ -20,11 +20,11 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class BinaryTree implements Consumer<Integer> {
 
-	protected final ObservableDataGrid2D<Integer, TraversalState> grid;
+	protected final ObservableDataGrid2D<TraversalState> grid;
 
 	private final Random rnd = new Random();
 
-	public BinaryTree(ObservableDataGrid2D<Integer, TraversalState> grid) {
+	public BinaryTree(ObservableDataGrid2D<TraversalState> grid) {
 		this.grid = grid;
 	}
 

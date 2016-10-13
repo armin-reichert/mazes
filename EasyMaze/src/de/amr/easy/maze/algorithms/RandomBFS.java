@@ -21,12 +21,12 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class RandomBFS implements Consumer<Integer> {
 
-	private final ObservableDataGrid2D<Integer, TraversalState> grid;
+	private final ObservableDataGrid2D<TraversalState> grid;
 	private final Random rnd = new Random();
 	private final Set<Integer> mazeCells = new HashSet<>();
 	private final List<Integer> frontier = new LinkedList<>();
 
-	public RandomBFS(ObservableDataGrid2D<Integer, TraversalState> grid) {
+	public RandomBFS(ObservableDataGrid2D<TraversalState> grid) {
 		this.grid = grid;
 	}
 

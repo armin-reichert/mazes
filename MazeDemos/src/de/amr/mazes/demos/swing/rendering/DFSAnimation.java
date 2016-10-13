@@ -19,13 +19,13 @@ import de.amr.easy.grid.rendering.GridCanvas;
  */
 public class DFSAnimation {
 
-	private final GridCanvas<Integer> canvas;
-	private final ObservableGrid2D<Integer> grid;
+	private final GridCanvas canvas;
+	private final ObservableGrid2D grid;
 	private final DFSRenderingModel renderingModel;
 	private final DepthFirstTraversal<Integer, ?> dfs;
 	private final Set<Integer> path;
 
-	public DFSAnimation(GridCanvas<Integer> canvas, ObservableGrid2D<Integer> grid, Integer source, Integer target) {
+	public DFSAnimation(GridCanvas canvas, ObservableGrid2D grid, Integer source, Integer target) {
 		this.canvas = canvas;
 		this.grid = grid;
 		this.renderingModel = new DFSRenderingModel(canvas.currentRenderingModel().getCellSize(),
@@ -48,7 +48,7 @@ public class DFSAnimation {
 
 	// -- Rendering model
 
-	private class DFSRenderingModel extends DefaultGridRenderingModel<Integer> {
+	private class DFSRenderingModel extends DefaultGridRenderingModel {
 
 		private final Color pathColor;
 		private final Color visitColor;

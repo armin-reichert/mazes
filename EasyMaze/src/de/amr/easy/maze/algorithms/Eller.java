@@ -26,11 +26,11 @@ import de.amr.easy.maze.datastructures.Partition.EquivClass;
  */
 public class Eller implements Consumer<Integer> {
 
-	private final ObservableDataGrid2D<Integer, TraversalState> grid;
+	private final ObservableDataGrid2D<TraversalState> grid;
 	private final Random rnd = new Random();
 	private final Partition<Integer> partition = new Partition<>();
 
-	public Eller(ObservableDataGrid2D<Integer, TraversalState> grid) {
+	public Eller(ObservableDataGrid2D<TraversalState> grid) {
 		this.grid = grid;
 	}
 

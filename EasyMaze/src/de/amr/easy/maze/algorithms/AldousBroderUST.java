@@ -39,10 +39,10 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class AldousBroderUST implements Consumer<Integer> {
 
-	private final ObservableDataGrid2D<Integer, TraversalState> grid;
+	private final ObservableDataGrid2D<TraversalState> grid;
 	private int mazeCellCount;
 
-	public AldousBroderUST(ObservableDataGrid2D<Integer, TraversalState> grid) {
+	public AldousBroderUST(ObservableDataGrid2D<TraversalState> grid) {
 		this.grid = grid;
 	}
 

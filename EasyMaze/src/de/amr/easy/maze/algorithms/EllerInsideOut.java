@@ -35,17 +35,17 @@ import de.amr.easy.maze.datastructures.Partition.EquivClass;
  */
 public class EllerInsideOut implements Consumer<Integer> {
 
-	private final ObservableDataGrid2D<Integer, TraversalState> grid;
+	private final ObservableDataGrid2D<TraversalState> grid;
 	private final Grid squareGrid;
 	private final Random rnd = new Random();
 	private final Partition<Integer> mazeParts = new Partition<>();
-	private Square<Integer> square;
+	private Square square;
 	private Iterable<Integer> layer;
 	private Map<Integer, Integer> cellIndex;
 	private final int offsetX;
 	private final int offsetY;
 
-	public EllerInsideOut(ObservableDataGrid2D<Integer, TraversalState> grid) {
+	public EllerInsideOut(ObservableDataGrid2D<TraversalState> grid) {
 		this.grid = grid;
 		int n = Math.max(grid.numCols(), grid.numRows());
 		offsetX = (n - grid.numCols()) / 2;
@@ -59,7 +59,7 @@ public class EllerInsideOut implements Consumer<Integer> {
 			connectCellsInsideLayer(false);
 			connectCellsWithNextLayer();
 		}
-		layer = new Rectangle<>(grid, grid.cell(TOP_LEFT), grid.numCols(), grid.numRows());
+		layer = new Rectangle(grid, grid.cell(TOP_LEFT), grid.numCols(), grid.numRows());
 		connectCellsInsideLayer(true);
 
 		if (grid.edgeCount() != grid.vertexCount() - 1) {
@@ -80,7 +80,7 @@ public class EllerInsideOut implements Consumer<Integer> {
 			size = square.getSize() + 2;
 		}
 		if (size <= squareGrid.numCols()) {
-			square = new Square<>(squareGrid, squareGrid.cell(x, y), size);
+			square = new Square(squareGrid, squareGrid.cell(x, y), size);
 			layer = croppedLayer();
 		}
 		return size;

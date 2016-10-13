@@ -9,23 +9,21 @@ import de.amr.easy.grid.api.Grid2D;
  * 
  * @author Armin Reichert
  *
- * @param <Cell>
- *          the grid cell type
  */
-public class CollapsingWalls<Cell> implements Sequence<Cell> {
+public class CollapsingWalls implements Sequence<Integer> {
 
-	private final Grid2D<Cell> grid;
+	private final Grid2D grid;
 
-	public CollapsingWalls(Grid2D<Cell> grid) {
+	public CollapsingWalls(Grid2D grid) {
 		this.grid = grid;
 	}
 
 	@Override
-	public Iterator<Cell> iterator() {
+	public Iterator<Integer> iterator() {
 
-		return new Iterator<Cell>() {
+		return new Iterator<Integer>() {
 
-			private Cell nextLeft, nextRight;
+			private Integer nextLeft, nextRight;
 			private boolean left;
 			private int visited;
 
@@ -43,9 +41,9 @@ public class CollapsingWalls<Cell> implements Sequence<Cell> {
 			}
 
 			@Override
-			public Cell next() {
+			public Integer next() {
 				if (left) {
-					Cell cell = nextLeft;
+					Integer cell = nextLeft;
 					int x = grid.col(nextLeft), y = grid.row(nextLeft);
 					if (y < grid.numRows() - 1) {
 						nextLeft = grid.cell(x, y + 1);
@@ -56,7 +54,7 @@ public class CollapsingWalls<Cell> implements Sequence<Cell> {
 					++visited;
 					return cell;
 				} else {
-					Cell cell = nextRight;
+					Integer cell = nextRight;
 					int x = grid.col(nextRight), y = grid.row(nextRight);
 					if (y > 0) {
 						nextRight = grid.cell(x, y - 1);

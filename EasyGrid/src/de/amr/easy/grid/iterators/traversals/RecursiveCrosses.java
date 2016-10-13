@@ -7,18 +7,18 @@ import java.util.stream.IntStream;
 
 import de.amr.easy.grid.api.Grid2D;
 
-public class RecursiveCrosses<Cell> implements Sequence<Cell> {
+public class RecursiveCrosses implements Sequence<Integer> {
 
-	private final Grid2D<Cell> grid;
-	private final List<Cell> path = new ArrayList<>();
+	private final Grid2D grid;
+	private final List<Integer> path = new ArrayList<>();
 
-	public RecursiveCrosses(Grid2D<Cell> grid) {
+	public RecursiveCrosses(Grid2D grid) {
 		this.grid = grid;
 		cross(grid.numCols(), grid.numRows(), 0, 0);
 	}
 
 	@Override
-	public Iterator<Cell> iterator() {
+	public Iterator<Integer> iterator() {
 		return path.iterator();
 	}
 

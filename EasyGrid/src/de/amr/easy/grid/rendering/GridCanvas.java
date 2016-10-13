@@ -24,29 +24,29 @@ import de.amr.easy.grid.api.ObservableGrid2D;
  * 
  * @author Armin Reichert
  */
-public class GridCanvas<V> extends JComponent implements GraphListener<V, DefaultEdge<V>> {
+public class GridCanvas extends JComponent implements GraphListener<Integer, DefaultEdge<Integer>> {
 
 	private BufferedImage buffer;
 	private Graphics2D g;
 
-	private ObservableGrid2D<V> grid;
-	private final Deque<GridRenderingModel<V>> renderStack = new LinkedList<>();
-	private GridRenderer<V> renderer;
+	private ObservableGrid2D grid;
+	private final Deque<GridRenderingModel> renderStack = new LinkedList<>();
+	private GridRenderer renderer;
 	private int delay;
 
-	public GridCanvas(ObservableGrid2D<V> grid, GridRenderingModel<V> renderingModel) {
+	public GridCanvas(ObservableGrid2D grid, GridRenderingModel renderingModel) {
 		setGrid(grid);
 		renderStack.push(renderingModel);
 		setDoubleBuffered(false);
 		updateRenderingBuffer();
 	}
 
-	public void setGrid(ObservableGrid2D<V> grid) {
+	public void setGrid(ObservableGrid2D grid) {
 		this.grid = grid;
 		grid.addGraphListener(this);
 	}
 
-	public void setRenderingModel(GridRenderingModel<V> renderingModel) {
+	public void setRenderingModel(GridRenderingModel renderingModel) {
 		renderStack.clear();
 		renderStack.push(renderingModel);
 		updateRenderingBuffer();
@@ -78,7 +78,7 @@ public class GridCanvas<V> extends JComponent implements GraphListener<V, Defaul
 		renderer = null;
 	}
 
-	public GridRenderingModel<V> currentRenderingModel() {
+	public GridRenderingModel currentRenderingModel() {
 		return renderStack.peek();
 	}
 
@@ -88,7 +88,7 @@ public class GridCanvas<V> extends JComponent implements GraphListener<V, Defaul
 		}
 	}
 
-	public void pushRenderingModel(GridRenderingModel<V> renderingModel) {
+	public void pushRenderingModel(GridRenderingModel renderingModel) {
 		renderStack.push(renderingModel);
 	}
 
@@ -129,7 +129,7 @@ public class GridCanvas<V> extends JComponent implements GraphListener<V, Defaul
 
 	private void doRender(Consumer<Graphics2D> task) {
 		if (renderer == null) {
-			renderer = new GridRenderer<>();
+			renderer = new GridRenderer();
 		}
 		renderer.setRenderingModel(currentRenderingModel());
 		task.accept(g);
@@ -137,11 +137,11 @@ public class GridCanvas<V> extends JComponent implements GraphListener<V, Defaul
 		sleep();
 	}
 
-	public void renderGridCell(V cell) {
+	public void renderGridCell(Integer cell) {
 		doRender(g -> renderer.drawCell(g, grid, cell));
 	}
 
-	public void renderGridPassage(DefaultEdge<V> edge, boolean visible) {
+	public void renderGridPassage(DefaultEdge<Integer> edge, boolean visible) {
 		doRender(g -> renderer.drawPassage(g, grid, edge, visible));
 	}
 
@@ -152,27 +152,27 @@ public class GridCanvas<V> extends JComponent implements GraphListener<V, Defaul
 	// GraphListener implementation
 
 	@Override
-	public void vertexChanged(V cell, Object oldValue, Object newValue) {
+	public void vertexChanged(Integer cell, Object oldValue, Object newValue) {
 		renderGridCell(cell);
 	}
 
 	@Override
-	public void edgeAdded(DefaultEdge<V> edge) {
+	public void edgeAdded(DefaultEdge<Integer> edge) {
 		renderGridPassage(edge, true);
 	}
 
 	@Override
-	public void edgeRemoved(DefaultEdge<V> edge) {
+	public void edgeRemoved(DefaultEdge<Integer> edge) {
 		renderGridPassage(edge, false);
 	}
 
 	@Override
-	public void edgeChanged(DefaultEdge<V> edge, Object oldValue, Object newValue) {
+	public void edgeChanged(DefaultEdge<Integer> edge, Object oldValue, Object newValue) {
 		renderGridPassage(edge, true);
 	}
 
 	@Override
-	public void graphChanged(ObservableGraph<V, DefaultEdge<V>> graph) {
+	public void graphChanged(ObservableGraph<Integer, DefaultEdge<Integer>> graph) {
 		render();
 	}
 }

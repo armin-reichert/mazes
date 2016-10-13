@@ -15,14 +15,14 @@ import de.amr.easy.grid.iterators.traversals.ExpandingCircle;
  */
 public class WilsonUSTExpandingCircle extends WilsonUST {
 
-	public WilsonUSTExpandingCircle(ObservableDataGrid2D<Integer, TraversalState> grid) {
+	public WilsonUSTExpandingCircle(ObservableDataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
 
 	@Override
 	protected Stream<Integer> cellStream() {
 		Integer center = grid.cell(CENTER);
-		return new ExpandingCircle<>(grid, center, 1, Math.max(grid.numCols(), grid.numRows())).stream();
+		return new ExpandingCircle(grid, center, 1, Math.max(grid.numCols(), grid.numRows())).stream();
 	}
 
 	@Override

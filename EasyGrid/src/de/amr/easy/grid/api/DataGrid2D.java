@@ -5,13 +5,9 @@ package de.amr.easy.grid.api;
  * 
  * @author Armin Reichert
  *
- * @param <Cell>
- *          grid cell type
- * @param <Passage>
- *          grid passage type
  * @param <Content>
  *          cell content type
  */
-public interface DataGrid2D<Cell, Content> extends Grid2D<Cell>, GridDataAccess<Cell, Content> {
+public interface DataGrid2D<Content> extends Grid2D, GridDataAccess<Content> {
 
 }

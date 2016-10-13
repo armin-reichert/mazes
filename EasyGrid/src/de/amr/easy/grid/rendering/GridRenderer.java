@@ -13,26 +13,23 @@ import de.amr.easy.grid.api.Grid2D;
 /**
  * Renders a grid as "passages" or "cells with walls" depending on the selected passage thickness.
  * 
- * @param <V>
- *          the grid vertex ("cell") type
- * 
  * @author Armin Reichert
  */
-public class GridRenderer<V> {
+public class GridRenderer {
 
 	private static final int MIN_FONT_SIZE = 7;
 
-	private GridRenderingModel<V> rm;
+	private GridRenderingModel rm;
 	private int thickness;
 	private int cellSize;
 	private int a;
 	private int b;
 
-	public GridRenderingModel<V> getRenderingModel() {
+	public GridRenderingModel getRenderingModel() {
 		return rm;
 	}
 
-	public void setRenderingModel(GridRenderingModel<V> renderingModel) {
+	public void setRenderingModel(GridRenderingModel renderingModel) {
 		this.rm = renderingModel;
 		thickness = renderingModel.getPassageThickness();
 		cellSize = renderingModel.getCellSize();
@@ -40,12 +37,12 @@ public class GridRenderer<V> {
 		b = a + thickness;
 	}
 
-	public void drawGrid(Graphics2D g, Grid2D<V> grid) {
+	public void drawGrid(Graphics2D g, Grid2D grid) {
 		grid.edgeStream().forEach(passage -> drawPassage(g, grid, passage, true));
 	}
 
-	public void drawPassage(Graphics2D g, Grid2D<V> grid, Edge<V> passage, boolean visible) {
-		V p = passage.either(), q = passage.other(p);
+	public void drawPassage(Graphics2D g, Grid2D grid, Edge<Integer> passage, boolean visible) {
+		Integer p = passage.either(), q = passage.other(p);
 		Direction dir = grid.direction(p, q).get();
 		drawCellContent(g, grid, p);
 		drawHalfPassage(g, grid, p, dir, visible ? rm.getPassageColor(p, dir) : rm.getGridBgColor());
@@ -53,7 +50,7 @@ public class GridRenderer<V> {
 		drawHalfPassage(g, grid, q, dir.inverse(), visible ? rm.getPassageColor(q, dir.inverse()) : rm.getGridBgColor());
 	}
 
-	public void drawCell(Graphics2D g, Grid2D<V> grid, V cell) {
+	public void drawCell(Graphics2D g, Grid2D grid, Integer cell) {
 		drawCellContent(g, grid, cell);
 		for (Direction dir : Direction.values()) {
 			if (grid.connected(cell, dir)) {
@@ -62,7 +59,7 @@ public class GridRenderer<V> {
 		}
 	}
 
-	private void drawHalfPassage(Graphics2D g, Grid2D<V> grid, V cell, Direction dir, Color passageColor) {
+	private void drawHalfPassage(Graphics2D g, Grid2D grid, Integer cell, Direction dir, Color passageColor) {
 		final int x = grid.col(cell) * cellSize;
 		final int y = grid.row(cell) * cellSize;
 		g.translate(x, y);
@@ -86,7 +83,7 @@ public class GridRenderer<V> {
 		g.translate(-x, -y);
 	}
 
-	private void drawCellContent(Graphics2D g, Grid2D<V> grid, V cell) {
+	private void drawCellContent(Graphics2D g, Grid2D grid, Integer cell) {
 		final int dx = grid.col(cell) * cellSize;
 		final int dy = grid.row(cell) * cellSize;
 		g.translate(dx, dy);
@@ -96,7 +93,7 @@ public class GridRenderer<V> {
 		g.translate(-dx, -dy);
 	}
 
-	private void drawCellText(Graphics2D g, Grid2D<V> grid, V cell) {
+	private void drawCellText(Graphics2D g, Grid2D grid, Integer cell) {
 		String text = rm.getCellText(cell);
 		text = (text == null) ? "" : text.trim();
 		if (text.length() == 0) {
