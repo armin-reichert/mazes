@@ -37,6 +37,7 @@ import de.amr.easy.maze.algorithms.wilson.WilsonUSTLeftToRightSweep;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTNestedRectangles;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTPeanoCurve;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTRandomCell;
+import de.amr.easy.maze.algorithms.wilson.WilsonUSTRecursiveCrosses;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTRightToLeftSweep;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTRowsTopDown;
 
@@ -134,7 +135,7 @@ public class MazeGeneratorTest {
 	public void testWilsonUSTCollapsingRectangle() {
 		new WilsonUSTCollapsingRectangle(grid).accept(grid.cell(CENTER));
 	}
-	
+
 	@Test
 	public void testWilsonUSTCollapsingWalls() {
 		new WilsonUSTCollapsingWalls(grid).accept(grid.cell(CENTER));
@@ -183,6 +184,11 @@ public class MazeGeneratorTest {
 	@Test
 	public void testWilsonUSTRandomCell() {
 		new WilsonUSTRandomCell(grid).accept(grid.cell(CENTER));
+	}
+
+	@Test
+	public void testWilsonUSTRecursiveCrosses() {
+		new WilsonUSTRecursiveCrosses(grid).accept(grid.cell(CENTER));
 	}
 
 	@Test

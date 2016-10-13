@@ -36,6 +36,7 @@ import de.amr.easy.maze.algorithms.wilson.WilsonUSTLeftToRightSweep;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTNestedRectangles;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTPeanoCurve;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTRandomCell;
+import de.amr.easy.maze.algorithms.wilson.WilsonUSTRecursiveCrosses;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTRightToLeftSweep;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTRowsTopDown;
 import de.amr.mazes.demos.swing.rendering.BFSAnimation;
@@ -72,6 +73,7 @@ public class MazeDemoModel {
 			new AlgorithmInfo<>(WilsonUSTExpandingSpiral.class, "Wilson UST (spiral, expanding)", UST),
 			new AlgorithmInfo<>(WilsonUSTExpandingRectangle.class, "Wilson UST (rectangle, expanding)", UST),
 			new AlgorithmInfo<>(WilsonUSTNestedRectangles.class, "Wilson UST (rectangles, nested)", UST),
+			new AlgorithmInfo<>(WilsonUSTRecursiveCrosses.class, "Wilson UST (crosses, recursive)", UST),
 			new AlgorithmInfo<>(WilsonUSTHilbertCurve.class, "Wilson UST (Hilbert curve)", UST),
 			new AlgorithmInfo<>(WilsonUSTPeanoCurve.class, "Wilson UST (Peano curve)", UST),
 			new AlgorithmInfo<>(HuntAndKill.class, "Hunt-And-Kill"),
