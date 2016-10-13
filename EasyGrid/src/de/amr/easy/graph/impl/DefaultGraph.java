@@ -10,7 +10,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
 
 /**
@@ -23,10 +22,10 @@ import de.amr.easy.graph.api.Graph;
  * @param <E>
  *          edge type
  */
-public class DefaultGraph<V, E extends Edge<V>> implements Graph<V, E> {
+public class DefaultGraph<V> implements Graph<V, DefaultEdge<V>> {
 
 	private final Set<V> vertexSet = new HashSet<>();
-	private final Map<V, Set<E>> adjEdges = new HashMap<>();
+	private final Map<V, Set<DefaultEdge<V>>> adjEdges = new HashMap<>();
 	private int numEdges; // number of undirected edges
 
 	public DefaultGraph() {
@@ -35,25 +34,24 @@ public class DefaultGraph<V, E extends Edge<V>> implements Graph<V, E> {
 	@Override
 	public void addVertex(V vertex) {
 		vertexSet.add(vertex);
-		adjEdges.put(vertex, new HashSet<E>()); // TODO improve
+		adjEdges.put(vertex, new HashSet<DefaultEdge<V>>()); // TODO improve
 	}
 
 	@Override
-	public void addEdge(E edge) {
-		V v = edge.either();
-		V w = edge.other(v);
+	public void addEdge(V v, V w) {
 		assertVertexExists(v);
 		assertVertexExists(w);
+		DefaultEdge<V> edge = new DefaultEdge<>(v, w);
 		adjEdges.get(v).add(edge);
 		adjEdges.get(w).add(edge);
 		numEdges += 1;
 	}
 
 	@Override
-	public Optional<E> edge(V v, V w) {
+	public Optional<DefaultEdge<V>> edge(V v, V w) {
 		assertVertexExists(v);
 		assertVertexExists(w);
-		for (E edge : adjEdges.get(v)) {
+		for (DefaultEdge<V> edge : adjEdges.get(v)) {
 			if (w == edge.either() || w == edge.other(v)) {
 				return Optional.of(edge);
 			}
@@ -62,14 +60,15 @@ public class DefaultGraph<V, E extends Edge<V>> implements Graph<V, E> {
 	}
 
 	@Override
-	public void removeEdge(E edge) {
-		V v = edge.either();
-		V w = edge.other(v);
+	public void removeEdge(V v, V w) {
 		assertVertexExists(v);
 		assertVertexExists(w);
-		adjEdges.get(v).remove(edge);
-		adjEdges.get(w).remove(edge);
-		numEdges -= 1;
+		edge(v, w).ifPresent(edge -> {
+			adjEdges.get(v).remove(edge);
+			adjEdges.get(w).remove(edge);
+			numEdges -= 1;
+
+		});
 	}
 
 	@Override
@@ -84,7 +83,7 @@ public class DefaultGraph<V, E extends Edge<V>> implements Graph<V, E> {
 	public boolean adjacent(V v, V w) {
 		assertVertexExists(v);
 		assertVertexExists(w);
-		for (E edge : adjEdges.get(v)) {
+		for (DefaultEdge<V> edge : adjEdges.get(v)) {
 			if (w == edge.either() || w == edge.other(v)) {
 				return true;
 			}
@@ -102,10 +101,10 @@ public class DefaultGraph<V, E extends Edge<V>> implements Graph<V, E> {
 		return vertexSet.size();
 	}
 
-	private Set<E> createEdgeSet() {
-		Set<E> edges = new HashSet<>();
+	private Set<DefaultEdge<V>> createEdgeSet() {
+		Set<DefaultEdge<V>> edges = new HashSet<>();
 		for (V v : vertexSet) {
-			for (E edge : adjEdges.get(v)) {
+			for (DefaultEdge<V> edge : adjEdges.get(v)) {
 				edges.add(edge);
 			}
 		}
@@ -113,7 +112,7 @@ public class DefaultGraph<V, E extends Edge<V>> implements Graph<V, E> {
 	}
 
 	@Override
-	public Stream<E> edgeStream() {
+	public Stream<DefaultEdge<V>> edgeStream() {
 		return createEdgeSet().stream(); // TODO more efficient way possible?
 	}
 
@@ -132,7 +131,7 @@ public class DefaultGraph<V, E extends Edge<V>> implements Graph<V, E> {
 	public Stream<V> adjVertices(V v) {
 		assertVertexExists(v);
 		List<V> result = new ArrayList<>();
-		for (E e : adjEdges.get(v)) {
+		for (DefaultEdge<V> e : adjEdges.get(v)) {
 			if (e.either() == v) {
 				result.add(e.other(v));
 			} else {
@@ -150,7 +149,7 @@ public class DefaultGraph<V, E extends Edge<V>> implements Graph<V, E> {
 		for (V v : vertexSet) {
 			s.append(v).append("\n");
 		}
-		for (E e : createEdgeSet()) {
+		for (DefaultEdge<V> e : createEdgeSet()) {
 			V v = e.either();
 			V w = e.other(v);
 			s.append(v).append(" ").append(w).append("\n");

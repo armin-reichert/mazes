@@ -39,7 +39,7 @@ public class KruskalMST implements Consumer<Integer> {
 			if (eitherTree != otherTree) {
 				grid.set(either, COMPLETED);
 				grid.set(other, COMPLETED);
-				grid.addEdge(edge);
+				grid.addEdge(either, other);
 				forest.union(eitherTree, otherTree);
 			}
 		});

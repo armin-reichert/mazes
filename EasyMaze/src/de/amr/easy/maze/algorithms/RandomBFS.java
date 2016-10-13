@@ -46,7 +46,7 @@ public class RandomBFS implements Consumer<Integer> {
 					mazeCells.add(newMazeCell);
 					frontier.add(newMazeCell);
 					grid.set(newMazeCell, VISITED);
-					grid.addEdge(new DefaultEdge<>(cell, newMazeCell));
+					grid.addEdge(cell, newMazeCell);
 				});
 			/*@formatter:on*/
 			grid.set(cell, COMPLETED);

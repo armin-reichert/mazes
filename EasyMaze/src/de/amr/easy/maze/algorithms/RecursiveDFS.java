@@ -30,7 +30,7 @@ public class RecursiveDFS implements Consumer<Integer> {
 	public void accept(Integer cell) {
 		grid.set(cell, VISITED);
 		while ((unvisitedNeighbor = grid.randomNeighbor(cell, nb -> grid.get(nb) == UNVISITED)).isPresent()) {
-			grid.addEdge(new DefaultEdge<>(cell, unvisitedNeighbor.get()));
+			grid.addEdge(cell, unvisitedNeighbor.get());
 			accept(unvisitedNeighbor.get());
 		}
 		grid.set(cell, COMPLETED);

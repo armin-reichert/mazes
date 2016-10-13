@@ -46,10 +46,12 @@ public interface Graph<V, E extends Edge<V>> {
 	/**
 	 * Adds the given edge to this graph.
 	 * 
-	 * @param edge
-	 *          an edge
+	 * @param v
+	 *          a vertex
+	 * @param w
+	 *          a vertex
 	 */
-	public void addEdge(E edge);
+	public void addEdge(V v, V w);
 
 	/**
 	 * @param v
@@ -61,12 +63,23 @@ public interface Graph<V, E extends Edge<V>> {
 	public Optional<E> edge(V v, V w);
 
 	/**
-	 * Removes the given edge from this graph.
+	 * Removes the edge between the given vertices from this graph.
 	 * 
 	 * @param edge
 	 *          an edge
 	 */
-	public void removeEdge(E edge);
+	public void removeEdge(V v, V w);
+
+	/**
+	 * Removes the given edge.
+	 * 
+	 * @param edge
+	 *          an edge
+	 */
+	public default void removeEdge(E edge) {
+		V either = edge.either(), other = edge.other(either);
+		removeEdge(either, other);
+	}
 
 	/**
 	 * Removes all edges from this graph.

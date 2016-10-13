@@ -113,21 +113,17 @@ public class Grid implements Grid2D<Integer, DefaultEdge<Integer>> {
 	}
 
 	@Override
-	public void addEdge(DefaultEdge<Integer> edge) {
-		checkEdge(edge);
-		Integer p = edge.either(), q = edge.other(p);
+	public void addEdge(Integer p, Integer q) {
 		if (adjacent(p, q)) {
-			throw new IllegalStateException("Duplicate edge: " + edge);
+			throw new IllegalStateException("Cannot add edge twice");
 		}
 		direction(p, q).ifPresent(dir -> setConnected(p, q, dir, true));
 	}
 
 	@Override
-	public void removeEdge(DefaultEdge<Integer> edge) {
-		checkEdge(edge);
-		Integer p = edge.either(), q = edge.other(p);
+	public void removeEdge(Integer p, Integer q) {
 		if (!adjacent(p, q)) {
-			throw new IllegalStateException("Unknown edge: " + edge);
+			throw new IllegalStateException("Cannot remove not-existing edge");
 		}
 		direction(p, q).ifPresent(dir -> setConnected(p, q, dir, false));
 	}

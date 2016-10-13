@@ -33,7 +33,7 @@ public class BinaryTree implements Consumer<Integer> {
 	public void accept(Integer start) {
 		cellStream().forEach(cell -> {
 			randomNeighbor(cell, S, E).ifPresent(neighbor -> {
-				grid.addEdge(new DefaultEdge<>(cell, neighbor));
+				grid.addEdge(cell, neighbor);
 				grid.set(cell, COMPLETED);
 				grid.set(neighbor, COMPLETED);
 			});

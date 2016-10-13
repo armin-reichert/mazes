@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Iterator;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -56,26 +54,17 @@ public class GridTest {
 	}
 
 	@Test
-	public void testGetExistingEdge() {
-		DefaultEdge<Integer> edge = new DefaultEdge<>(0, 1);
-		grid.addEdge(edge);
-		assertEquals(edge, grid.edge(0, 1).get());
-	}
-
-	@Test
 	public void testAddEdge() {
 		int numEdges = grid.edgeCount();
 		assert (!grid.edge(0, 1).isPresent());
-		DefaultEdge<Integer> edge = new DefaultEdge<>(0, 1);
-		grid.addEdge(edge);
+		grid.addEdge(0, 1);
 		assertEquals(numEdges + 1, grid.edgeCount());
-		assertEquals(edge, grid.edge(0, 1).get());
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void addEdgeTwiceThrowsException() {
-		grid.addEdge(new DefaultEdge<>(0, 1));
-		grid.addEdge(new DefaultEdge<>(0, 1));
+		grid.addEdge(0, 1);
+		grid.addEdge(0, 1);
 	}
 
 	@Test
@@ -88,19 +77,18 @@ public class GridTest {
 	@Test
 	public void testRemoveEdge() {
 		int numEdges = grid.edgeCount();
-		DefaultEdge<Integer> edge = new DefaultEdge<>(0, 1);
-		grid.addEdge(edge);
+		grid.addEdge(0, 1);
 		assertEquals(grid.edgeCount(), numEdges + 1);
-		grid.removeEdge(edge);
+		grid.removeEdge(0, 1);
 		assertEquals(grid.edgeCount(), numEdges);
 		assertFalse(grid.edge(0, 1).isPresent());
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testRemoveEdgeTwiceThrowsException() {
-		grid.addEdge(new DefaultEdge<>(0, 1));
-		grid.removeEdge(new DefaultEdge<>(0, 1));
-		grid.removeEdge(new DefaultEdge<>(0, 1));
+		grid.addEdge(0, 1);
+		grid.removeEdge(0, 1);
+		grid.removeEdge(0, 1);
 	}
 
 	@Test
@@ -115,10 +103,9 @@ public class GridTest {
 	@Test
 	public void testAdjVertices() {
 		assertFalse(grid.adjacent(0, 1));
-		DefaultEdge<Integer> edge = new DefaultEdge<>(0, 1);
-		grid.addEdge(edge);
+		grid.addEdge(0, 1);
 		assertTrue(grid.adjacent(0, 1));
-		grid.removeEdge(edge);
+		grid.removeEdge(0, 1);
 		assertFalse(grid.adjacent(0, 1));
 	}
 

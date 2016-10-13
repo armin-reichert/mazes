@@ -44,7 +44,7 @@ public class IterativeDFS implements Consumer<Integer> {
 				if (grid.randomNeighbor(neighbor.get()).isPresent()) {
 					stack.push(neighbor.get());
 				}
-				grid.addEdge(new DefaultEdge<>(current, neighbor.get()));
+				grid.addEdge(current, neighbor.get());
 				grid.set(neighbor.get(), VISITED);
 				current = neighbor.get();
 			} else {

@@ -76,7 +76,7 @@ public class AldousBroderUST implements Consumer<Integer> {
 				if (grid.get(u) == UNVISITED) {
 					grid.set(u, COMPLETED);
 					++mazeCellCount;
-					grid.addEdge(new DefaultEdge<>(u, v));
+					grid.addEdge(u, v);
 				}
 				return u;
 			})

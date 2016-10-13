@@ -82,7 +82,7 @@ public abstract class WilsonUST implements Consumer<Integer> {
 			Direction dir = lastWalkDir.get(v);
 			Integer neighbor = grid.neighbor(v, dir);
 			addCellToTree(v);
-			grid.addEdge(new DefaultEdge<>(v, neighbor));
+			grid.addEdge(v, neighbor);
 			v = neighbor;
 		}
 	}

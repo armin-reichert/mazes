@@ -9,7 +9,6 @@ import java.util.function.Consumer;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.impl.DefaultEdge;
-import de.amr.easy.graph.impl.DefaultWeightedEdge;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 
@@ -21,7 +20,7 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
 public class PrimMST implements Consumer<Integer> {
 
 	private final ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid;
-	private final PriorityQueue<DefaultWeightedEdge<Integer>> cut = new PriorityQueue<>();
+	private final PriorityQueue<DefaultEdge<Integer>> cut = new PriorityQueue<>();
 	private final Random rnd = new Random();
 
 	public PrimMST(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
@@ -32,10 +31,10 @@ public class PrimMST implements Consumer<Integer> {
 	public void accept(Integer start) {
 		extendMaze(start);
 		while (!cut.isEmpty()) {
-			DefaultWeightedEdge<Integer> edge = cut.poll();
+			DefaultEdge<Integer> edge = cut.poll();
 			Integer eitherCell = edge.either(), otherCell = edge.other(eitherCell);
 			if (outsideMaze(eitherCell) || outsideMaze(otherCell)) {
-				grid.addEdge(edge);
+				grid.addEdge(eitherCell, otherCell);
 				extendMaze(outsideMaze(eitherCell) ? eitherCell : otherCell);
 			}
 		}
@@ -52,7 +51,7 @@ public class PrimMST implements Consumer<Integer> {
 			.filter(this::outsideMaze)
 			.forEach(frontierCell -> {
 				grid.set(frontierCell, VISITED);
-				cut.add(new DefaultWeightedEdge<>(cell, frontierCell, rnd.nextDouble()));
+				cut.add(new DefaultEdge<>(cell, frontierCell, rnd.nextDouble()));
 			});
 		/*@formatter:on*/
 	}

@@ -3,7 +3,6 @@ package de.amr.easy.graph.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.event.GraphListener;
 
@@ -18,9 +17,9 @@ import de.amr.easy.graph.event.GraphListener;
  * @param <E>
  *          edge type
  */
-public class DefaultObservableGraph<V, E extends Edge<V>> extends DefaultGraph<V, E> implements ObservableGraph<V, E> {
+public class DefaultObservableGraph<V> extends DefaultGraph<V> implements ObservableGraph<V, DefaultEdge<V>> {
 
-	private Set<GraphListener<V, E>> listeners = new HashSet<>();
+	private Set<GraphListener<V, DefaultEdge<V>>> listeners = new HashSet<>();
 	private boolean listeningSuspended = false;
 
 	public DefaultObservableGraph() {
@@ -28,12 +27,12 @@ public class DefaultObservableGraph<V, E extends Edge<V>> extends DefaultGraph<V
 	}
 
 	@Override
-	public void addGraphListener(GraphListener<V, E> listener) {
+	public void addGraphListener(GraphListener<V, DefaultEdge<V>> listener) {
 		listeners.add(listener);
 	}
 
 	@Override
-	public void removeGraphListener(GraphListener<V, E> listener) {
+	public void removeGraphListener(GraphListener<V, DefaultEdge<V>> listener) {
 		listeners.remove(listener);
 	}
 
@@ -45,25 +44,25 @@ public class DefaultObservableGraph<V, E extends Edge<V>> extends DefaultGraph<V
 	@Override
 	public void fireVertexChange(V vertex, Object oldValue, Object newValue) {
 		if (!listeningSuspended) {
-			for (GraphListener<V, E> listener : listeners) {
+			for (GraphListener<V, DefaultEdge<V>> listener : listeners) {
 				listener.vertexChanged(vertex, oldValue, newValue);
 			}
 		}
 	}
 
 	@Override
-	public void fireEdgeChange(E edge, Object oldValue, Object newValue) {
+	public void fireEdgeChange(DefaultEdge<V> edge, Object oldValue, Object newValue) {
 		if (!listeningSuspended) {
-			for (GraphListener<V, E> listener : listeners) {
+			for (GraphListener<V, DefaultEdge<V>> listener : listeners) {
 				listener.edgeChanged(edge, oldValue, newValue);
 			}
 		}
 	}
 
 	@Override
-	public void fireGraphChange(ObservableGraph<V, E> graph) {
+	public void fireGraphChange(ObservableGraph<V, DefaultEdge<V>> graph) {
 		if (!listeningSuspended) {
-			for (GraphListener<V, E> listener : listeners) {
+			for (GraphListener<V, DefaultEdge<V>> listener : listeners) {
 				listener.graphChanged(graph);
 			}
 		}
@@ -76,15 +75,17 @@ public class DefaultObservableGraph<V, E extends Edge<V>> extends DefaultGraph<V
 	}
 
 	@Override
-	public void addEdge(E edge) {
-		super.addEdge(edge);
-		fireEdgeChange(edge, null, edge);
+	public void addEdge(V v, V w) {
+		super.addEdge(v, w);
+		edge(v, w).ifPresent(edge -> fireEdgeChange(edge, null, edge));
 	}
 
 	@Override
-	public void removeEdge(E edge) {
-		super.removeEdge(edge);
-		fireEdgeChange(edge, edge, null);
+	public void removeEdge(V v, V w) {
+		edge(v, w).ifPresent(edge -> {
+			super.removeEdge(v, w);
+			fireEdgeChange(edge, edge, null);
+		});
 	}
 
 	@Override

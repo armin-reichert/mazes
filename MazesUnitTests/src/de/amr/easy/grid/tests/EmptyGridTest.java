@@ -1,10 +1,7 @@
 package de.amr.easy.grid.tests;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import java.util.Iterator;
 
 import org.junit.After;
 import org.junit.Before;
@@ -16,7 +13,7 @@ import de.amr.easy.grid.impl.Grid;
 
 public class EmptyGridTest {
 
-	private Grid2D<Integer, DefaultEdge<Integer>>  grid;
+	private Grid2D<Integer, DefaultEdge<Integer>> grid;
 
 	@Before
 	public void setUp() {
@@ -50,10 +47,10 @@ public class EmptyGridTest {
 	public void testGridEdgeAccess() {
 		grid.edge(0, 1);
 	}
-	
+
 	@Test(expected = IllegalArgumentException.class)
 	public void testGridEdgeAdd() {
-		grid.addEdge(new DefaultEdge<>(0, 1));
+		grid.addEdge(0, 1);
 	}
 
 	@Test(expected = IllegalArgumentException.class)

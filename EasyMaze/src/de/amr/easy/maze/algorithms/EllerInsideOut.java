@@ -109,7 +109,7 @@ public class EllerInsideOut implements Consumer<Integer> {
 			return;
 		}
 		// System.out.println(coord(v) + "->" + coord(w));
-		grid.addEdge(new DefaultEdge<>(v, w));
+		grid.addEdge(v, w);
 		grid.set(v, COMPLETED);
 		grid.set(w, COMPLETED);
 		mazeParts.union(mazeParts.find(v), mazeParts.find(w));

@@ -45,7 +45,7 @@ public class Eller implements Consumer<Integer> {
 	}
 
 	private void connectCells(Integer v, Integer w) {
-		grid.addEdge(new DefaultEdge<>(v, w));
+		grid.addEdge(v, w);
 		grid.set(v, COMPLETED);
 		grid.set(w, COMPLETED);
 		partition.union(partition.find(v), partition.find(w));

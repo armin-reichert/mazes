@@ -24,23 +24,25 @@ public class ObservableGrid extends Grid implements ObservableGrid2D<Integer, De
 	}
 
 	@Override
-	public void addEdge(DefaultEdge<Integer> edge) {
-		super.addEdge(edge);
+	public void addEdge(Integer p, Integer q) {
+		super.addEdge(p, q);
 		if (eventsEnabled) {
 			for (GraphListener<Integer, DefaultEdge<Integer>> listener : listeners) {
-				listener.edgeAdded(edge);
+				listener.edgeAdded(edge(p, q).get());
 			}
 		}
 	}
 
 	@Override
-	public void removeEdge(DefaultEdge<Integer> edge) {
-		super.removeEdge(edge);
-		if (eventsEnabled) {
-			for (GraphListener<Integer, DefaultEdge<Integer>> listener : listeners) {
-				listener.edgeRemoved(edge);
+	public void removeEdge(Integer p, Integer q) {
+		edge(p, q).ifPresent(edge -> {
+			super.removeEdge(p, q);
+			if (eventsEnabled) {
+				for (GraphListener<Integer, DefaultEdge<Integer>> listener : listeners) {
+					listener.edgeRemoved(edge);
+				}
 			}
-		}
+		});
 	}
 
 	@Override

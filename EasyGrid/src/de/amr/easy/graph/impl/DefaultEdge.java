@@ -5,7 +5,7 @@ import java.util.Objects;
 import de.amr.easy.graph.api.Edge;
 
 /**
- * Edge of a undirected graph.
+ * Edge of a weighted graph. Edge weight type is <code>double</code>.
  * 
  * @author Armin Reichert
  * 
@@ -14,24 +14,20 @@ import de.amr.easy.graph.api.Edge;
  */
 public class DefaultEdge<V> implements Edge<V> {
 
-	protected V u;
-	protected V v;
+	private final V u;
+	private final V v;
+	private double weight;
 
-	public DefaultEdge(V u, V v) {
+	public DefaultEdge(V u, V v, double weight) {
 		Objects.requireNonNull(u);
 		Objects.requireNonNull(v);
 		this.u = u;
 		this.v = v;
+		this.weight = weight;
 	}
 
-	public void setEither(V either) {
-		Objects.requireNonNull(either);
-		this.u = either;
-	}
-
-	public void setOther(V other) {
-		Objects.requireNonNull(other);
-		this.v = other;
+	public DefaultEdge(V head, V tail) {
+		this(head, tail, 0);
 	}
 
 	@Override
@@ -48,11 +44,6 @@ public class DefaultEdge<V> implements Edge<V> {
 			return this.v;
 		}
 		throw new IllegalStateException();
-	}
-
-	@Override
-	public String toString() {
-		return "{" + u + "," + v + "}";
 	}
 
 	@Override
@@ -84,5 +75,31 @@ public class DefaultEdge<V> implements Edge<V> {
 		} else if (!v.equals(other.v))
 			return false;
 		return true;
+	}
+
+	@Override
+	public double getWeight() {
+		return weight;
+	}
+
+	@Override
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
+
+	@Override
+	public int compareTo(Edge<V> edge) {
+		if (weight < edge.getWeight()) {
+			return -1;
+		} else if (weight > edge.getWeight()) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "{" + u + "," + v + "}:" + weight;
 	}
 }
