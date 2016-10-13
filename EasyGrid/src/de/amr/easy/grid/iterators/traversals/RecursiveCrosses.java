@@ -9,10 +9,10 @@ import de.amr.easy.grid.api.Grid2D;
 
 public class RecursiveCrosses<Cell> implements Sequence<Cell> {
 
-	private final Grid2D<Cell, ?> grid;
+	private final Grid2D<Cell> grid;
 	private final List<Cell> path = new ArrayList<>();
 
-	public RecursiveCrosses(Grid2D<Cell, ?> grid) {
+	public RecursiveCrosses(Grid2D<Cell> grid) {
 		this.grid = grid;
 		cross(grid.numCols(), grid.numRows(), 0, 0);
 	}

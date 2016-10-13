@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 
@@ -22,12 +21,12 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class RandomBFS implements Consumer<Integer> {
 
-	private final ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid;
+	private final ObservableDataGrid2D<Integer, TraversalState> grid;
 	private final Random rnd = new Random();
 	private final Set<Integer> mazeCells = new HashSet<>();
 	private final List<Integer> frontier = new LinkedList<>();
 
-	public RandomBFS(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
+	public RandomBFS(ObservableDataGrid2D<Integer, TraversalState> grid) {
 		this.grid = grid;
 	}
 

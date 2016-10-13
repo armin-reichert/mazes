@@ -16,7 +16,7 @@ public class Rectangle<Cell> extends Shape<Cell> {
 	private final int width;
 	private final int height;
 
-	public Rectangle(Grid2D<Cell, ?> grid, Cell leftUpperCorner, int width, int height) {
+	public Rectangle(Grid2D<Cell> grid, Cell leftUpperCorner, int width, int height) {
 		super(grid);
 
 		this.leftUpperCorner = leftUpperCorner;

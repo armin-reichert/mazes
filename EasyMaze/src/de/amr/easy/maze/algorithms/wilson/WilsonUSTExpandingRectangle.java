@@ -5,7 +5,6 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 import de.amr.easy.grid.iterators.shapes.Rectangle;
 import de.amr.easy.grid.iterators.traversals.ExpandingRectangle;
@@ -17,7 +16,7 @@ import de.amr.easy.grid.iterators.traversals.ExpandingRectangle;
  */
 public class WilsonUSTExpandingRectangle extends WilsonUST {
 
-	public WilsonUSTExpandingRectangle(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
+	public WilsonUSTExpandingRectangle(ObservableDataGrid2D<Integer, TraversalState> grid) {
 		super(grid);
 	}
 

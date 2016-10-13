@@ -11,9 +11,9 @@ import java.util.function.Consumer;
 
 import javax.swing.JComponent;
 
-import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.event.GraphListener;
+import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.ObservableGrid2D;
 
 /**
@@ -21,29 +21,27 @@ import de.amr.easy.grid.api.ObservableGrid2D;
  * 
  * @param V
  *          the vertex type
- * @param E
- *          the edge type
  * 
  * @author Armin Reichert
  */
-public class GridCanvas<V, E extends Edge<V>> extends JComponent implements GraphListener<V, E> {
+public class GridCanvas<V> extends JComponent implements GraphListener<V, DefaultEdge<V>> {
 
 	private BufferedImage buffer;
 	private Graphics2D g;
 
-	private ObservableGrid2D<V, E> grid;
+	private ObservableGrid2D<V> grid;
 	private final Deque<GridRenderingModel<V>> renderStack = new LinkedList<>();
-	private GridRenderer<V, E> renderer;
+	private GridRenderer<V> renderer;
 	private int delay;
 
-	public GridCanvas(ObservableGrid2D<V, E> grid, GridRenderingModel<V> renderingModel) {
+	public GridCanvas(ObservableGrid2D<V> grid, GridRenderingModel<V> renderingModel) {
 		setGrid(grid);
 		renderStack.push(renderingModel);
 		setDoubleBuffered(false);
 		updateRenderingBuffer();
 	}
 
-	public void setGrid(ObservableGrid2D<V, E> grid) {
+	public void setGrid(ObservableGrid2D<V> grid) {
 		this.grid = grid;
 		grid.addGraphListener(this);
 	}
@@ -143,7 +141,7 @@ public class GridCanvas<V, E extends Edge<V>> extends JComponent implements Grap
 		doRender(g -> renderer.drawCell(g, grid, cell));
 	}
 
-	public void renderGridPassage(E edge, boolean visible) {
+	public void renderGridPassage(DefaultEdge<V> edge, boolean visible) {
 		doRender(g -> renderer.drawPassage(g, grid, edge, visible));
 	}
 
@@ -159,22 +157,22 @@ public class GridCanvas<V, E extends Edge<V>> extends JComponent implements Grap
 	}
 
 	@Override
-	public void edgeAdded(E edge) {
+	public void edgeAdded(DefaultEdge<V> edge) {
 		renderGridPassage(edge, true);
 	}
 
 	@Override
-	public void edgeRemoved(E edge) {
+	public void edgeRemoved(DefaultEdge<V> edge) {
 		renderGridPassage(edge, false);
 	}
 
 	@Override
-	public void edgeChanged(E edge, Object oldValue, Object newValue) {
+	public void edgeChanged(DefaultEdge<V> edge, Object oldValue, Object newValue) {
 		renderGridPassage(edge, true);
 	}
 
 	@Override
-	public void graphChanged(ObservableGraph<V, E> graph) {
+	public void graphChanged(ObservableGraph<V, DefaultEdge<V>> graph) {
 		render();
 	}
 }

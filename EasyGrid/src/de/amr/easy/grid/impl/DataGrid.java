@@ -1,6 +1,5 @@
 package de.amr.easy.grid.impl;
 
-import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.DataGrid2D;
 import de.amr.easy.grid.api.GridDataAccess;
 
@@ -9,7 +8,7 @@ import de.amr.easy.grid.api.GridDataAccess;
  * 
  * @author Armin Reichert
  */
-public class DataGrid<Content> extends Grid implements DataGrid2D<Integer, DefaultEdge<Integer>, Content> {
+public class DataGrid<Content> extends Grid implements DataGrid2D<Integer, Content> {
 
 	private GridDataAccess<Integer, Content> contentStore;
 

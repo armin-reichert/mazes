@@ -15,12 +15,10 @@ import de.amr.easy.grid.api.Grid2D;
  * 
  * @param <V>
  *          the grid vertex ("cell") type
- * @param <E>
- *          the grid edge ("passage") type
  * 
  * @author Armin Reichert
  */
-public class GridRenderer<V, E extends Edge<V>> {
+public class GridRenderer<V> {
 
 	private static final int MIN_FONT_SIZE = 7;
 
@@ -42,11 +40,11 @@ public class GridRenderer<V, E extends Edge<V>> {
 		b = a + thickness;
 	}
 
-	public void drawGrid(Graphics2D g, Grid2D<V, E> grid) {
+	public void drawGrid(Graphics2D g, Grid2D<V> grid) {
 		grid.edgeStream().forEach(passage -> drawPassage(g, grid, passage, true));
 	}
 
-	public void drawPassage(Graphics2D g, Grid2D<V, E> grid, E passage, boolean visible) {
+	public void drawPassage(Graphics2D g, Grid2D<V> grid, Edge<V> passage, boolean visible) {
 		V p = passage.either(), q = passage.other(p);
 		Direction dir = grid.direction(p, q).get();
 		drawCellContent(g, grid, p);
@@ -55,7 +53,7 @@ public class GridRenderer<V, E extends Edge<V>> {
 		drawHalfPassage(g, grid, q, dir.inverse(), visible ? rm.getPassageColor(q, dir.inverse()) : rm.getGridBgColor());
 	}
 
-	public void drawCell(Graphics2D g, Grid2D<V, E> grid, V cell) {
+	public void drawCell(Graphics2D g, Grid2D<V> grid, V cell) {
 		drawCellContent(g, grid, cell);
 		for (Direction dir : Direction.values()) {
 			if (grid.connected(cell, dir)) {
@@ -64,7 +62,7 @@ public class GridRenderer<V, E extends Edge<V>> {
 		}
 	}
 
-	private void drawHalfPassage(Graphics2D g, Grid2D<V, E> grid, V cell, Direction dir, Color passageColor) {
+	private void drawHalfPassage(Graphics2D g, Grid2D<V> grid, V cell, Direction dir, Color passageColor) {
 		final int x = grid.col(cell) * cellSize;
 		final int y = grid.row(cell) * cellSize;
 		g.translate(x, y);
@@ -88,7 +86,7 @@ public class GridRenderer<V, E extends Edge<V>> {
 		g.translate(-x, -y);
 	}
 
-	private void drawCellContent(Graphics2D g, Grid2D<V, E> grid, V cell) {
+	private void drawCellContent(Graphics2D g, Grid2D<V> grid, V cell) {
 		final int dx = grid.col(cell) * cellSize;
 		final int dy = grid.row(cell) * cellSize;
 		g.translate(dx, dy);
@@ -98,7 +96,7 @@ public class GridRenderer<V, E extends Edge<V>> {
 		g.translate(-dx, -dy);
 	}
 
-	private void drawCellText(Graphics2D g, Grid2D<V, E> grid, V cell) {
+	private void drawCellText(Graphics2D g, Grid2D<V> grid, V cell) {
 		String text = rm.getCellText(cell);
 		text = (text == null) ? "" : text.trim();
 		if (text.length() == 0) {

@@ -14,9 +14,9 @@ import de.amr.easy.grid.api.Grid2D;
  */
 public class CollapsingWalls<Cell> implements Sequence<Cell> {
 
-	private final Grid2D<Cell, ?> grid;
+	private final Grid2D<Cell> grid;
 
-	public CollapsingWalls(Grid2D<Cell, ?> grid) {
+	public CollapsingWalls(Grid2D<Cell> grid) {
 		this.grid = grid;
 	}
 

@@ -6,7 +6,6 @@ import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
-import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.rendering.GridCanvas;
 import de.amr.mazes.demos.swing.app.MazeDemoApp;
 import de.amr.mazes.demos.swing.rendering.GridColoring;
@@ -19,7 +18,7 @@ import de.amr.mazes.demos.swing.rendering.GridColoring;
 public class MazeWindow extends JFrame {
 
 	private final MazeDemoApp app;
-	private GridCanvas<Integer, DefaultEdge<Integer>> canvas;
+	private GridCanvas<Integer> canvas;
 
 	public MazeWindow(MazeDemoApp app) {
 		this.app = app;
@@ -32,7 +31,7 @@ public class MazeWindow extends JFrame {
 		canvas = null;
 	}
 
-	public GridCanvas<Integer, DefaultEdge<Integer>> getCanvas() {
+	public GridCanvas<Integer> getCanvas() {
 		if (canvas == null) {
 			canvas = new GridCanvas<>(app.grid(), new GridColoring(app.model));
 			canvas.setDelay(app.model.getDelay());

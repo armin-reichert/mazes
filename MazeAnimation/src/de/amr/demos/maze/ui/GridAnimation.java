@@ -12,13 +12,12 @@ import de.amr.easy.grid.rendering.GridRenderer;
 
 public class GridAnimation implements GraphListener<Integer, DefaultEdge<Integer>> {
 
-	private final ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid;
+	private final ObservableDataGrid2D<Integer, TraversalState> grid;
 	private final BufferedImage canvas;
-	private final GridRenderer<Integer, DefaultEdge<Integer>> renderer;
+	private final GridRenderer<Integer> renderer;
 	private int delay;
 
-	public GridAnimation(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid, int gridCellSize,
-			int width, int height) {
+	public GridAnimation(ObservableDataGrid2D<Integer, TraversalState> grid, int gridCellSize, int width, int height) {
 		this.grid = grid;
 		canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		renderer = new GridRenderer<>();

@@ -15,7 +15,7 @@ public class Circle<Cell> extends Shape<Cell> {
 	private final Cell center;
 	private final int radius;
 
-	public Circle(Grid2D<Cell, ?> grid, Cell center, int radius) {
+	public Circle(Grid2D<Cell> grid, Cell center, int radius) {
 		super(grid);
 		this.center = center;
 		this.radius = radius;

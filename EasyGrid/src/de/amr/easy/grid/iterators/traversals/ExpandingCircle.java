@@ -15,13 +15,13 @@ import de.amr.easy.grid.iterators.shapes.Circle;
  */
 public class ExpandingCircle<Cell> implements Sequence<Cell> {
 
-	private final Grid2D<Cell, ?> grid;
+	private final Grid2D<Cell> grid;
 	private final Cell center;
 	private final int minRadius;
 	private final int maxRadius;
 	private int expansionRate;
 
-	public ExpandingCircle(Grid2D<Cell, ?> grid, Cell center, int minRadius, int maxRadius) {
+	public ExpandingCircle(Grid2D<Cell> grid, Cell center, int minRadius, int maxRadius) {
 		this.grid = grid;
 		this.center = center;
 		this.minRadius = minRadius;

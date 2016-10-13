@@ -7,13 +7,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.Grid;
 
 public class EmptyGridTest {
 
-	private Grid2D<Integer, DefaultEdge<Integer>> grid;
+	private Grid2D<Integer> grid;
 
 	@Before
 	public void setUp() {

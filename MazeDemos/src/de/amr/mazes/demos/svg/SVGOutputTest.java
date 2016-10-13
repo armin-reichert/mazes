@@ -13,7 +13,6 @@ import java.util.function.Consumer;
 import org.jfree.graphics2d.svg.SVGUtils;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.impl.ObservableDataGrid;
 import de.amr.easy.grid.rendering.svg.SVGGridRenderer;
 import de.amr.easy.maze.algorithms.IterativeDFS;
@@ -36,7 +35,7 @@ public class SVGOutputTest {
 	}
 
 	private final ObservableDataGrid<TraversalState> grid;
-	private final SVGGridRenderer<Integer, DefaultEdge<Integer>> svgRenderer;
+	private final SVGGridRenderer<Integer> svgRenderer;
 	private final Consumer<Integer> mazeGenerator;
 
 	public SVGOutputTest() {

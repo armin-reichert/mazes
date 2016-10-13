@@ -10,7 +10,6 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 
@@ -21,11 +20,11 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class BinaryTree implements Consumer<Integer> {
 
-	protected final ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid;
+	protected final ObservableDataGrid2D<Integer, TraversalState> grid;
 
 	private final Random rnd = new Random();
 
-	public BinaryTree(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
+	public BinaryTree(ObservableDataGrid2D<Integer, TraversalState> grid) {
 		this.grid = grid;
 	}
 

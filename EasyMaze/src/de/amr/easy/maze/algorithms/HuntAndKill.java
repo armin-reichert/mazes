@@ -9,7 +9,6 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 
 /**
@@ -23,10 +22,10 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class HuntAndKill implements Consumer<Integer> {
 
-	protected final ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid;
+	protected final ObservableDataGrid2D<Integer, TraversalState> grid;
 	protected final BitSet targets;
 
-	public HuntAndKill(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
+	public HuntAndKill(ObservableDataGrid2D<Integer, TraversalState> grid) {
 		this.grid = grid;
 		targets = new BitSet(grid.numCells());
 	}

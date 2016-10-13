@@ -8,7 +8,6 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.impl.ObservableDataGrid;
 import de.amr.easy.grid.rendering.GridCanvas;
 import de.amr.easy.maze.misc.Utils;
@@ -61,7 +60,7 @@ public class MazeDemoApp {
 		mazeWindow.setVisible(true);
 	}
 
-	public GridCanvas<Integer, DefaultEdge<Integer>> canvas() {
+	public GridCanvas<Integer> canvas() {
 		return mazeWindow.getCanvas();
 	}
 

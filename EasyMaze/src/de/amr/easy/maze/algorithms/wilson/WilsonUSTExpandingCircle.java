@@ -5,7 +5,6 @@ import static de.amr.easy.grid.api.GridPosition.CENTER;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 import de.amr.easy.grid.iterators.traversals.ExpandingCircle;
 
@@ -16,7 +15,7 @@ import de.amr.easy.grid.iterators.traversals.ExpandingCircle;
  */
 public class WilsonUSTExpandingCircle extends WilsonUST {
 
-	public WilsonUSTExpandingCircle(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
+	public WilsonUSTExpandingCircle(ObservableDataGrid2D<Integer, TraversalState> grid) {
 		super(grid);
 	}
 

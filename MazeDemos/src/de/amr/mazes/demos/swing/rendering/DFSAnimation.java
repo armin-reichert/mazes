@@ -19,20 +19,19 @@ import de.amr.easy.grid.rendering.GridCanvas;
  */
 public class DFSAnimation {
 
-	private final GridCanvas<Integer, ?> canvas;
-	private final ObservableGrid2D<Integer, ?> grid;
+	private final GridCanvas<Integer> canvas;
+	private final ObservableGrid2D<Integer> grid;
 	private final DFSRenderingModel renderingModel;
 	private final DepthFirstTraversal<Integer, ?> dfs;
 	private final Set<Integer> path;
 
-	public DFSAnimation(GridCanvas<Integer, ?> canvas, ObservableGrid2D<Integer, ?> grid, Integer source,
-			Integer target) {
+	public DFSAnimation(GridCanvas<Integer> canvas, ObservableGrid2D<Integer> grid, Integer source, Integer target) {
 		this.canvas = canvas;
 		this.grid = grid;
 		this.renderingModel = new DFSRenderingModel(canvas.currentRenderingModel().getCellSize(),
 				canvas.currentRenderingModel().getPassageThickness(), Color.RED, Color.BLUE);
 		dfs = new DepthFirstTraversal<>(grid, source, target);
-		path = new LinkedHashSet<Integer>();
+		path = new LinkedHashSet<>();
 	}
 
 	public void runAnimation() {

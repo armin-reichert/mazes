@@ -14,9 +14,9 @@ import de.amr.easy.grid.api.Grid2D;
  */
 public class RightToLeftSweep<Cell> implements Sequence<Cell> {
 
-	private final Grid2D<Cell, ?> grid;
+	private final Grid2D<Cell> grid;
 
-	public RightToLeftSweep(Grid2D<Cell, ?> grid) {
+	public RightToLeftSweep(Grid2D<Cell> grid) {
 		this.grid = grid;
 	}
 

@@ -18,7 +18,7 @@ import de.amr.easy.grid.api.GridPosition;
  * 
  * @author Armin Reichert
  */
-public class Grid implements Grid2D<Integer, DefaultEdge<Integer>> {
+public class Grid implements Grid2D<Integer> {
 
 	private final int numCols;
 	private final int numRows;

@@ -23,7 +23,7 @@ public class Square<Cell> extends Shape<Cell> {
 	private final Cell topLeft;
 	private final int size;
 
-	public Square(Grid2D<Cell, ?> grid, Cell topLeft, int size) {
+	public Square(Grid2D<Cell> grid, Cell topLeft, int size) {
 		super(grid);
 
 		this.topLeft = topLeft;

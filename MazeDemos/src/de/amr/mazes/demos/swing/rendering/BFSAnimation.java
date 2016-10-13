@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.ObservableGrid2D;
@@ -20,8 +19,8 @@ import de.amr.easy.grid.rendering.GridCanvas;
  */
 public class BFSAnimation {
 
-	private final GridCanvas<Integer, ?> canvas;
-	private final ObservableGrid2D<Integer, ?> grid;
+	private final GridCanvas<Integer> canvas;
+	private final ObservableGrid2D<Integer> grid;
 	private final BFSRenderingModel renderingModel;
 	private final Set<Integer> path;
 	private BreadthFirstTraversal<Integer, ?> bfs;
@@ -29,12 +28,12 @@ public class BFSAnimation {
 	private Integer maxDistanceCell;
 	private boolean distancesVisible;
 
-	public BFSAnimation(GridCanvas<Integer, ?> canvas, ObservableGrid2D<Integer, DefaultEdge<Integer>> grid) {
+	public BFSAnimation(GridCanvas<Integer> canvas, ObservableGrid2D<Integer> grid) {
 		this.canvas = canvas;
 		this.grid = grid;
 		renderingModel = new BFSRenderingModel(canvas.currentRenderingModel().getCellSize(),
 				canvas.currentRenderingModel().getPassageThickness(), Color.RED);
-		path = new LinkedHashSet<Integer>();
+		path = new LinkedHashSet<>();
 		maxDistance = -1;
 		distancesVisible = true;
 	}

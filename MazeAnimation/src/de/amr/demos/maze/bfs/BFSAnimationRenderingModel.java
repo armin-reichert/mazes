@@ -14,7 +14,7 @@ public class BFSAnimationRenderingModel extends GridVisualization {
 	private BreadthFirstTraversal<Integer, DefaultEdge<Integer>> bfs;
 	private int maxDistance;
 
-	public BFSAnimationRenderingModel(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid,
+	public BFSAnimationRenderingModel(ObservableDataGrid2D<Integer, TraversalState> grid,
 			int gridCellSize, BreadthFirstTraversal<Integer, DefaultEdge<Integer>> bfs, int maxDistance) {
 		super(grid, gridCellSize);
 		this.bfs = bfs;

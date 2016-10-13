@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 import de.amr.easy.grid.impl.Grid;
@@ -24,7 +23,7 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 
 	private final List<Integer> path = new ArrayList<>();
 
-	public WilsonUSTPeanoCurve(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
+	public WilsonUSTPeanoCurve(ObservableDataGrid2D<Integer, TraversalState> grid) {
 		super(grid);
 	}
 

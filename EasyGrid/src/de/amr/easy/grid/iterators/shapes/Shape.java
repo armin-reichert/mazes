@@ -21,11 +21,11 @@ import de.amr.easy.grid.iterators.traversals.Sequence;
  */
 public abstract class Shape<Cell> implements Sequence<Cell> {
 
-	public final Grid2D<Cell, ?> grid;
+	public final Grid2D<Cell> grid;
 
 	protected final List<Cell> cells = new ArrayList<>();
 
-	protected Shape(Grid2D<Cell, ?> grid) {
+	protected Shape(Grid2D<Cell> grid) {
 		this.grid = grid;
 	}
 

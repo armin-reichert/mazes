@@ -15,12 +15,12 @@ import de.amr.easy.grid.iterators.shapes.Square;
  */
 public class ExpandingSquare<Cell> implements Sequence<Cell> {
 
-	private final Grid2D<Cell, ?> grid;
+	private final Grid2D<Cell> grid;
 	private final Cell topLeft;
 	private final int minSize;
 	private final int maxSize;
 
-	public ExpandingSquare(Grid2D<Cell, ?> grid, Cell topLeft, int minSize, int maxSize) {
+	public ExpandingSquare(Grid2D<Cell> grid, Cell topLeft, int minSize, int maxSize) {
 		this.grid = grid;
 		this.topLeft = topLeft;
 		this.minSize = minSize;

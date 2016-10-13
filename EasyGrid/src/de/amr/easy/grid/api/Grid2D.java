@@ -5,8 +5,8 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
+import de.amr.easy.graph.impl.DefaultEdge;
 
 /**
  * A two-dimensional grid of "cells", i.e. a graph with vertex set
@@ -22,13 +22,11 @@ import de.amr.easy.graph.api.Graph;
  * 
  * @param <Cell>
  *          cell/vertex type
- * @param <Passage>
- *          passage/edge type
  * 
  * @author Armin Reichert
  * 
  */
-public interface Grid2D<Cell, Passage extends Edge<Cell>> extends Graph<Cell, Passage> {
+public interface Grid2D<Cell> extends Graph<Cell, DefaultEdge<Cell>> {
 
 	/**
 	 * @return the number of grid columns

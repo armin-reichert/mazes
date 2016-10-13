@@ -22,7 +22,7 @@ public class FullGridTest {
 	private static final int WIDTH = 15;
 	private static final int HEIGHT = 10;
 
-	private Grid2D<Integer, DefaultEdge<Integer>> grid;
+	private Grid2D<Integer> grid;
 
 	@Before
 	public void setUp() {

@@ -19,11 +19,11 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class PrimMST implements Consumer<Integer> {
 
-	private final ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid;
+	private final ObservableDataGrid2D<Integer, TraversalState> grid;
 	private final PriorityQueue<DefaultEdge<Integer>> cut = new PriorityQueue<>();
 	private final Random rnd = new Random();
 
-	public PrimMST(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
+	public PrimMST(ObservableDataGrid2D<Integer, TraversalState> grid) {
 		this.grid = grid;
 	}
 

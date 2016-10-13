@@ -6,7 +6,6 @@ import java.util.Random;
 import java.util.function.Consumer;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 
 /**
@@ -16,10 +15,10 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class RecursiveDivision implements Consumer<Integer> {
 
-	private final ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid;
+	private final ObservableDataGrid2D<Integer, TraversalState> grid;
 	private final Random rnd = new Random();
 
-	public RecursiveDivision(ObservableDataGrid2D<Integer, DefaultEdge<Integer>, TraversalState> grid) {
+	public RecursiveDivision(ObservableDataGrid2D<Integer, TraversalState> grid) {
 		this.grid = grid;
 		grid.setEventsEnabled(false);
 		grid.fillAllEdges();

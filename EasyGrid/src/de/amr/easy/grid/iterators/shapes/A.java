@@ -11,7 +11,7 @@ public class A<C> extends Shape<C> implements Iterable<C> {
 
 	private final List<Iterator<C>> facets = new ArrayList<>();
 
-	public A(Grid2D<C, ?> grid, C leftUpperCorner, int width, int height, int thickness) {
+	public A(Grid2D<C> grid, C leftUpperCorner, int width, int height, int thickness) {
 		super(grid);
 		int x = grid.col(leftUpperCorner), y = grid.row(leftUpperCorner);
 		facets.add(new Rectangle<C>(grid, leftUpperCorner, thickness, height).iterator());

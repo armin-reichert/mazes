@@ -18,7 +18,6 @@ import javax.swing.JSlider;
 import javax.swing.KeyStroke;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.impl.ObservableDataGrid;
 import de.amr.easy.grid.rendering.DefaultGridRenderingModel;
 import de.amr.easy.grid.rendering.GridCanvas;
@@ -41,7 +40,7 @@ public abstract class GridSampleApp implements Runnable {
 	protected int cellSize;
 	protected String appName;
 	protected JFrame window;
-	protected GridCanvas<Integer, DefaultEdge<Integer>> canvas;
+	protected GridCanvas<Integer> canvas;
 	protected JSlider delaySlider;
 	private boolean fullscreen;
 
