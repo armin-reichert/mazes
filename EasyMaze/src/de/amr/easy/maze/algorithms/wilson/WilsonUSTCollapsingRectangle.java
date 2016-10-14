@@ -13,15 +13,18 @@ import de.amr.easy.grid.iterators.shapes.Rectangle;
  */
 public class WilsonUSTCollapsingRectangle extends WilsonUST {
 
+	private int width, height;
+
 	public WilsonUSTCollapsingRectangle(ObservableDataGrid2D<TraversalState> grid) {
 		super(grid);
+		width = grid.numCols();
+		height = grid.numRows();
 	}
 
 	@Override
 	public void accept(Integer start) {
 		start = grid.cell(CENTER);
 		addCellToTree(start);
-		int width = grid.numCols(), height = grid.numRows();
 		int col = 0, row = 0;
 		while (width > 0 && height > 0) {
 			new Rectangle(grid, grid.cell(col, row), width, height).forEach(walkStart -> {
@@ -30,8 +33,8 @@ public class WilsonUSTCollapsingRectangle extends WilsonUST {
 				}
 			});
 			width -= 2;
-			++col;
 			height -= 2;
+			++col;
 			++row;
 		}
 	}
