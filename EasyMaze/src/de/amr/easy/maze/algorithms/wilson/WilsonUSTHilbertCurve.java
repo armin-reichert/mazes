@@ -4,6 +4,7 @@ import static de.amr.easy.grid.api.Direction.E;
 import static de.amr.easy.grid.api.Direction.N;
 import static de.amr.easy.grid.api.Direction.S;
 import static de.amr.easy.grid.api.Direction.W;
+import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.maze.misc.Utils.log;
 import static de.amr.easy.maze.misc.Utils.nextPow;
 import static java.lang.Math.max;
@@ -25,6 +26,8 @@ import de.amr.easy.grid.iterators.traversals.HilbertCurve;
  */
 public class WilsonUSTHilbertCurve extends WilsonUST {
 
+	private final List<Integer> path = new ArrayList<>();
+
 	public WilsonUSTHilbertCurve(ObservableDataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
@@ -33,11 +36,10 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 	protected Stream<Integer> cellStream() {
 		// Hilbert curve need a square grid, so create one
 		int n = nextPow(2, max(grid.numCols(), grid.numRows()));
-		Grid square = new Grid(n, n);
 		HilbertCurve hilbert = new HilbertCurve(log(2, n), W, N, E, S);
+		Grid square = new Grid(n, n);
 		// Traverse the intersection of the square grid cells with the original grid
-		List<Integer> path = new ArrayList<>();
-		Integer cell = square.cell(0, 0);
+		Integer cell = square.cell(TOP_LEFT);
 		path.add(cell);
 		for (Direction dir : hilbert) {
 			// As the Hilbert curve never leaves the square grid, the neighbor is never NULL

@@ -30,19 +30,20 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 	@Override
 	protected Stream<Integer> cellStream() {
 		int n = nextPow(3, Math.max(grid.numCols(), grid.numRows()));
+		PeanoCurve peano = new PeanoCurve(log(3, n));
 		Grid squareGrid = new Grid(n, n);
 		Integer cell = squareGrid.cell(BOTTOM_LEFT);
 		addCellToPath(squareGrid.col(cell), squareGrid.row(cell));
-		for (Direction d : new PeanoCurve(log(3, n))) {
-			cell = squareGrid.neighbor(cell, d);
+		for (Direction dir : peano) {
+			cell = squareGrid.neighbor(cell, dir);
 			addCellToPath(squareGrid.col(cell), squareGrid.row(cell));
 		}
 		return path.stream();
 	}
 
-	private void addCellToPath(int x, int y) {
-		if (grid.isValidCol(x) && grid.isValidRow(y)) {
-			path.add(grid.cell(x, y));
+	private void addCellToPath(int col, int row) {
+		if (grid.isValidCol(col) && grid.isValidRow(row)) {
+			path.add(grid.cell(col, row));
 		}
 	}
 }
