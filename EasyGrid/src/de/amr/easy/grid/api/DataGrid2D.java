@@ -8,6 +8,6 @@ package de.amr.easy.grid.api;
  * @param <Content>
  *          cell content type
  */
-public interface DataGrid2D<Content> extends Grid2D, GridDataAccess<Content> {
+public interface DataGrid2D<Content> extends Grid2D, GridContent<Content> {
 
 }

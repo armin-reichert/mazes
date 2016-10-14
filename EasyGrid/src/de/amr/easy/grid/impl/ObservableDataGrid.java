@@ -1,6 +1,6 @@
 package de.amr.easy.grid.impl;
 
-import de.amr.easy.grid.api.GridDataAccess;
+import de.amr.easy.grid.api.GridContent;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 
 /**
@@ -13,11 +13,11 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class ObservableDataGrid<Content> extends ObservableGrid implements ObservableDataGrid2D<Content> {
 
-	private GridDataAccess<Content> data;
+	private GridContent<Content> data;
 
 	public ObservableDataGrid(int numCols, int numRows, Content defaultContent, boolean sparse) {
 		super(numCols, numRows);
-		data = sparse ? new HashMapGridDataAccess<>() : new ArrayGridDataAccess<>(numCols * numRows);
+		data = sparse ? new SparseGridContent<>() : new DenseGridContent<>(numCols * numRows);
 		data.setDefault(defaultContent);
 	}
 

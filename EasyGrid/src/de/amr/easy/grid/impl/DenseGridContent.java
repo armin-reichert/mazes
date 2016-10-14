@@ -1,6 +1,6 @@
 package de.amr.easy.grid.impl;
 
-import de.amr.easy.grid.api.GridDataAccess;
+import de.amr.easy.grid.api.GridContent;
 
 /**
  * Array storing grid content.
@@ -10,12 +10,12 @@ import de.amr.easy.grid.api.GridDataAccess;
  * @param <Content>
  *          cell content type
  */
-class ArrayGridDataAccess<Content> implements GridDataAccess<Content> {
+class DenseGridContent<Content> implements GridContent<Content> {
 
 	private Object[] cellContent;
-	private Object defaultContent;
+	private Object defaultCellContent;
 
-	public ArrayGridDataAccess(int size) {
+	public DenseGridContent(int size) {
 		cellContent = new Object[size];
 	}
 
@@ -23,7 +23,7 @@ class ArrayGridDataAccess<Content> implements GridDataAccess<Content> {
 	@Override
 	public Content get(Integer cell) {
 		Content content = (Content) cellContent[cell];
-		return content != null ? content : (Content) defaultContent;
+		return content != null ? content : (Content) defaultCellContent;
 	}
 
 	@Override
@@ -38,6 +38,6 @@ class ArrayGridDataAccess<Content> implements GridDataAccess<Content> {
 
 	@Override
 	public void setDefault(Content content) {
-		defaultContent = content;
+		defaultCellContent = content;
 	}
 }

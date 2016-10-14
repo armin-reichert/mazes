@@ -6,7 +6,7 @@ package de.amr.easy.grid.api;
  * @param <Content>
  *          grid cell content type
  */
-public interface GridDataAccess<Content> {
+public interface GridContent<Content> {
 
 	/**
 	 * Returns the content of the given cell.

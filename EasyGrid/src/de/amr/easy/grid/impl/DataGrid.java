@@ -1,46 +1,49 @@
 package de.amr.easy.grid.impl;
 
 import de.amr.easy.grid.api.DataGrid2D;
-import de.amr.easy.grid.api.GridDataAccess;
+import de.amr.easy.grid.api.GridContent;
 
 /**
  * A grid with cell content.
  * 
  * @author Armin Reichert
+ * 
+ * @param Content
+ *          grid content type
  */
 public class DataGrid<Content> extends Grid implements DataGrid2D<Content> {
 
-	private GridDataAccess<Content> contentStore;
+	private GridContent<Content> gridContent;
 
 	public DataGrid(int numCols, int numRows, Content defaultContent, boolean sparse) {
 		super(numCols, numRows);
-		contentStore = sparse ? new HashMapGridDataAccess<>() : new ArrayGridDataAccess<>(numCols * numRows);
-		contentStore.setDefault(defaultContent);
+		gridContent = sparse ? new SparseGridContent<>() : new DenseGridContent<>(numCols * numRows);
+		gridContent.setDefault(defaultContent);
 	}
 
 	public DataGrid(int numCols, int numRows, Content defaultContent) {
 		this(numCols, numRows, defaultContent, true);
 	}
 
-	// --- {@link GridContentStore} interface ---
+	// --- {@link GridContent} interface ---
 
 	@Override
 	public void clear() {
-		contentStore.clear();
+		gridContent.clear();
 	}
 
 	@Override
-	public void setDefault(Content content) {
-		contentStore.setDefault(content);
+	public void setDefault(Content cellContent) {
+		gridContent.setDefault(cellContent);
 	}
 
 	@Override
 	public Content get(Integer cell) {
-		return contentStore.get(cell);
+		return gridContent.get(cell);
 	}
 
 	@Override
-	public void set(Integer cell, Content content) {
-		contentStore.set(cell, content);
+	public void set(Integer cell, Content cellContent) {
+		gridContent.set(cell, cellContent);
 	}
 }
