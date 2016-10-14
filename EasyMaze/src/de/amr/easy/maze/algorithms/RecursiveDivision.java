@@ -4,6 +4,7 @@ import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 
 import java.util.Random;
 import java.util.function.Consumer;
+import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
@@ -35,35 +36,48 @@ public class RecursiveDivision implements Consumer<Integer> {
 		divide(0, 0, grid.numCols(), grid.numRows());
 	}
 
-	private void divide(int leftUpperCol, int leftUpperRow, int w, int h) {
-		if (w <= 1 && h <= 1) {
+	/**
+	 * Applies the division step to the subgrid defined by the given left column, top row, width and
+	 * height.
+	 * 
+	 * @param left
+	 *          left column of subgrid
+	 * @param top
+	 *          tpo row of subfrid
+	 * @param width
+	 *          number of columns of subgrid
+	 * @param height
+	 *          number of rows of subgrid
+	 */
+	private void divide(int left, int top, int width, int height) {
+		if (width <= 1 && height <= 1) {
 			return;
 		}
-		boolean horizontalCut = (w < h) || (w == h && rnd.nextBoolean());
+		boolean horizontalCut = (width < height) || (width == height && rnd.nextBoolean());
 		if (horizontalCut) {
-			// cut horizontally at random row from interval [leftUpperRow + 1, leftUpperRow + h - 1]
-			int cutRow = Math.min(grid.numRows() - 1, (leftUpperRow + 1) + rnd.nextInt(h - 1));
-			int passageCol = rnd.nextInt(w);
-			for (int col = 0; col < w; ++col) {
-				if (col != passageCol && grid.isValidCol(leftUpperCol + col) && grid.isValidRow(cutRow - 1)) {
-					Integer u = grid.cell(leftUpperCol + col, cutRow), v = grid.cell(leftUpperCol + col, cutRow - 1);
+			// cut horizontally at random row from interval [top + 1, top + height - 1]
+			int cut = Math.min(grid.numRows() - 1, (top + 1) + rnd.nextInt(height - 1));
+			int passage = rnd.nextInt(width);
+			IntStream.range(0, width).forEach(col -> {
+				if (col != passage && grid.isValidCol(left + col) && grid.isValidRow(cut - 1)) {
+					Integer u = grid.cell(left + col, cut), v = grid.cell(left + col, cut - 1);
 					grid.edge(u, v).ifPresent(grid::removeEdge);
 				}
-			}
-			divide(leftUpperCol, leftUpperRow, w, cutRow - leftUpperRow);
-			divide(leftUpperCol, cutRow, w, h - cutRow + leftUpperRow);
+			});
+			divide(left, top, width, cut - top);
+			divide(left, cut, width, height - cut + top);
 		} else {
-			// cut vertically at random col from interval [leftUpperCol + 1, leftUpperCol + w - 1]
-			int cutCol = Math.min(grid.numCols() - 1, (leftUpperCol + 1) + rnd.nextInt(w - 1));
-			int passageRow = rnd.nextInt(h);
-			for (int row = 0; row < h; ++row) {
-				if (row != passageRow && grid.isValidCol(cutCol - 1) && grid.isValidRow(leftUpperRow + row)) {
-					Integer u = grid.cell(cutCol, leftUpperRow + row), v = grid.cell(cutCol - 1, leftUpperRow + row);
+			// cut vertically at random column from interval [left + 1, left + width - 1]
+			int cut = Math.min(grid.numCols() - 1, (left + 1) + rnd.nextInt(width - 1));
+			int passage = rnd.nextInt(height);
+			IntStream.range(0, height).forEach(row -> {
+				if (row != passage && grid.isValidCol(cut - 1) && grid.isValidRow(top + row)) {
+					Integer u = grid.cell(cut, top + row), v = grid.cell(cut - 1, top + row);
 					grid.edge(u, v).ifPresent(grid::removeEdge);
 				}
-			}
-			divide(leftUpperCol, leftUpperRow, cutCol - leftUpperCol, h);
-			divide(cutCol, leftUpperRow, w - cutCol + leftUpperCol, h);
+			});
+			divide(left, top, cut - left, height);
+			divide(cut, top, width - cut + left, height);
 		}
 	}
 }
