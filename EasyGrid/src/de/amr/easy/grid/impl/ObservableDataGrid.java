@@ -13,12 +13,12 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class ObservableDataGrid<Content> extends ObservableGrid implements ObservableDataGrid2D<Content> {
 
-	private GridContent<Content> data;
+	private GridContent<Content> gridContent;
 
 	public ObservableDataGrid(int numCols, int numRows, Content defaultContent, boolean sparse) {
 		super(numCols, numRows);
-		data = sparse ? new SparseGridContent<>() : new DenseGridContent<>(numCols * numRows);
-		data.setDefault(defaultContent);
+		gridContent = sparse ? new SparseGridContent<>() : new DenseGridContent<>(numCols * numRows);
+		gridContent.setDefault(defaultContent);
 	}
 
 	public ObservableDataGrid(int numCols, int numRows, Content defaultContent) {
@@ -29,23 +29,23 @@ public class ObservableDataGrid<Content> extends ObservableGrid implements Obser
 
 	@Override
 	public void clear() {
-		data.clear();
+		gridContent.clear();
 	}
 
 	@Override
 	public void setDefault(Content content) {
-		data.setDefault(content);
+		gridContent.setDefault(content);
 	}
 
 	@Override
 	public Content get(Integer cell) {
-		return data.get(cell);
+		return gridContent.get(cell);
 	}
 
 	@Override
 	public void set(Integer cell, Content content) {
-		Content oldContent = data.get(cell);
-		data.set(cell, content);
+		Content oldContent = gridContent.get(cell);
+		gridContent.set(cell, content);
 		fireVertexChange(cell, oldContent, content);
 	}
 }
