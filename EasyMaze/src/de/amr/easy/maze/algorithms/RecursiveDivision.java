@@ -21,7 +21,7 @@ public class RecursiveDivision implements Consumer<Integer> {
 	public RecursiveDivision(ObservableDataGrid2D<TraversalState> grid) {
 		this.grid = grid;
 		grid.setEventsEnabled(false);
-		grid.fillAllEdges();
+		grid.makeFullGrid();
 		grid.setEventsEnabled(true);
 		grid.setDefault(COMPLETED);
 	}

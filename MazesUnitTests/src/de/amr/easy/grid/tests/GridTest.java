@@ -69,7 +69,7 @@ public class GridTest {
 	@Test
 	public void testFillAllEdges() {
 		assertEquals(grid.edgeCount(), 0);
-		grid.fillAllEdges();
+		grid.makeFullGrid();
 		assertEquals(grid.edgeCount(), 2 * WIDTH * HEIGHT - (WIDTH + HEIGHT));
 	}
 
@@ -93,7 +93,7 @@ public class GridTest {
 	@Test
 	public void testRemoveAllEdges() {
 		assertEquals(grid.edgeCount(), 0);
-		grid.fillAllEdges();
+		grid.makeFullGrid();
 		assertEquals(grid.edgeCount(), 2 * WIDTH * HEIGHT - (WIDTH + HEIGHT));
 		grid.removeEdges();
 		assertEquals(grid.edgeCount(), 0);

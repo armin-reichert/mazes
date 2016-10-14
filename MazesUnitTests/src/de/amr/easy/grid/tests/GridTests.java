@@ -6,6 +6,6 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ EmptyGridTest.class, FullGridTest.class, GridTest.class })
-public class AllTests {
+public class GridTests {
 
 }

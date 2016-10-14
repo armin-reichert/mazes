@@ -65,7 +65,23 @@ public class Grid implements Grid2D {
 		return numCells();
 	}
 
-	private Set<DefaultEdge<Integer>> createEdgeSet() {
+	@Override
+	public void makeFullGrid() {
+		removeEdges();
+		for (int col = 0; col < numCols; ++col) {
+			for (int row = 0; row < numRows; ++row) {
+				if (col + 1 < numCols) {
+					setConnected(cellIndex(col, row), cellIndex(col + 1, row), Direction.E, true);
+				}
+				if (row + 1 < numRows) {
+					setConnected(cellIndex(col, row), cellIndex(col, row + 1), Direction.S, true);
+				}
+			}
+		}
+	}
+
+	@Override
+	public Stream<DefaultEdge<Integer>> edgeStream() {
 		Set<DefaultEdge<Integer>> edgeSet = new HashSet<>();
 		vertexStream().forEach(cell -> {
 			Stream.of(Direction.values()).forEach(dir -> {
@@ -77,12 +93,7 @@ public class Grid implements Grid2D {
 				}
 			});
 		});
-		return edgeSet;
-	}
-
-	@Override
-	public Stream<DefaultEdge<Integer>> edgeStream() {
-		return createEdgeSet().stream(); // TODO is there a more efficient way?
+		return edgeSet.stream();
 	}
 
 	@Override
@@ -242,20 +253,5 @@ public class Grid implements Grid2D {
 			.filter(dir -> target.equals(neighbor(source, dir)))
 			.findFirst();
 		/*@formatter:on*/
-	}
-
-	@Override
-	public void fillAllEdges() {
-		removeEdges();
-		for (int col = 0; col < numCols; ++col) {
-			for (int row = 0; row < numRows; ++row) {
-				if (col + 1 < numCols) {
-					setConnected(cellIndex(col, row), cellIndex(col + 1, row), Direction.E, true);
-				}
-				if (row + 1 < numRows) {
-					setConnected(cellIndex(col, row), cellIndex(col, row + 1), Direction.S, true);
-				}
-			}
-		}
 	}
 }

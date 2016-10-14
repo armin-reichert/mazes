@@ -26,7 +26,7 @@ public class FullGridTest {
 	@Before
 	public void setUp() {
 		grid = new Grid(WIDTH, HEIGHT);
-		grid.fillAllEdges();
+		grid.makeFullGrid();
 	}
 
 	@After

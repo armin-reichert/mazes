@@ -47,7 +47,7 @@ public class KruskalMST implements Consumer<Integer> {
 
 	private Stream<DefaultEdge<Integer>> fullGridEdgesInRandomOrder() {
 		grid.setEventsEnabled(false);
-		grid.fillAllEdges();
+		grid.makeFullGrid();
 		List<DefaultEdge<Integer>> edges = grid.edgeStream().collect(Collectors.toList());
 		Collections.shuffle(edges); // takes linear time
 		grid.removeEdges();

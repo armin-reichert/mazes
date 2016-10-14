@@ -175,7 +175,7 @@ public interface Grid2D extends Graph<Integer, DefaultEdge<Integer>> {
 	public Optional<Direction> direction(Integer either, Integer other);
 
 	/**
-	 * Populates all edges of the grid.
+	 * Makes this grid a full grid.
 	 */
-	public void fillAllEdges();
+	public void makeFullGrid();
 }
