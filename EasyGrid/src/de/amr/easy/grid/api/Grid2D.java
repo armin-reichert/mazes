@@ -15,28 +15,28 @@ import de.amr.easy.graph.impl.DefaultEdge;
  * {(x,y) | x &isin; {0, ..., N - 1}, y &isin; { 0, ..., M - 1}}
  * </pre>
  * 
- * where <code>x</code> denotes the column index and <code>y</code> the row index of the "cell".
+ * where <code>x</code> denotes the column index and <code>y</code> the row index of the "cell". The
+ * cells are indexed row-wise from {@code 0 .. N * M - 1}.
  * <p>
- * Extends the {@link Graph} interface such that graph algorithms can be applied to objects of this
- * type.
+ * This interface extends the {@link Graph} interface such that graph algorithms can be applied to
+ * objects of this type.
  * 
  * @author Armin Reichert
- * 
  */
 public interface Grid2D extends Graph<Integer, DefaultEdge<Integer>> {
 
 	/**
-	 * @return the number of grid columns
+	 * @return the number of columns (width) of the grid
 	 */
 	public int numCols();
 
 	/**
-	 * @return the number of grid rows
+	 * @return the number of rows (height) of the grid
 	 */
 	public int numRows();
 
 	/**
-	 * @return the number of cells
+	 * @return the number of cells of the grid
 	 */
 	default public int numCells() {
 		return numCols() * numRows();
@@ -44,30 +44,30 @@ public interface Grid2D extends Graph<Integer, DefaultEdge<Integer>> {
 
 	/**
 	 * @param col
-	 *          the column index
+	 *          a column index
 	 * @param row
-	 *          the row index
-	 * @return the cell at coordinate (col, row)
+	 *          a row index
+	 * @return the cell index ("cell") for coordinate (col, row)
 	 */
 	public Integer cell(int col, int row);
 
 	/**
 	 * @param position
-	 *          the grid position
-	 * @return the cell at the given position
+	 *          a symbolic grid position like TOP_LEFT
+	 * @return the cell index at the given position
 	 */
 	public Integer cell(GridPosition position);
 
 	/**
 	 * @param cell
-	 *          a grid position
+	 *          a cell index
 	 * @return the column index of the given cell
 	 */
 	public int col(Integer cell);
 
 	/**
 	 * @param cell
-	 *          a grid position
+	 *          a cell index
 	 * @return the row index of the given cell
 	 */
 	public int row(Integer cell);
@@ -75,7 +75,7 @@ public interface Grid2D extends Graph<Integer, DefaultEdge<Integer>> {
 	/**
 	 * @param col
 	 *          the column index
-	 * @return if given column index is valid
+	 * @return {@code true} if the given column index is valid
 	 */
 	public boolean isValidCol(int col);
 
@@ -87,14 +87,14 @@ public interface Grid2D extends Graph<Integer, DefaultEdge<Integer>> {
 	public boolean isValidRow(int row);
 
 	/**
-	 * Returns all neighbor cells of the given cell.
+	 * Returns all neighbor cells of a cell as specified by the given directions.
 	 * 
 	 * @param cell
 	 *          a grid cell
 	 * @param dirs
-	 *          a list of directions, if empty, the neighbors in all directions are returned
-	 * 
-	 * @return stream of all neighbor cells in the order given by the specified directions
+	 *          a list of directions, if empty, the neighbors in all 4 directions (N, E, S, W) are
+	 *          returned
+	 * @return stream of the neighbor cells in the given directions
 	 */
 	public default Stream<Integer> neighbors(Integer cell, Direction... dirs) {
 		if (dirs.length == 0) {
@@ -115,14 +115,14 @@ public interface Grid2D extends Graph<Integer, DefaultEdge<Integer>> {
 	public Integer neighbor(Integer cell, Direction dir);
 
 	/**
-	 * Tells if the given cells are neighbors, that is they are on grid positions that may be
-	 * connected.
+	 * Tells if the given cells are "neighbors". Two cells are neighbors if you can reach one from the
+	 * other by going one step in any of the 4 directions.
 	 * 
 	 * @param either
-	 *          either cell
+	 *          a cell
 	 * @param other
-	 *          the other cell
-	 * @return if the cells are neighbors
+	 *          another cell
+	 * @return {@code true} if the cells are neighbors
 	 */
 	public default boolean areNeighbors(Integer either, Integer other) {
 		return neighbors(either).anyMatch(neighbor -> neighbor.equals(other));
@@ -160,9 +160,10 @@ public interface Grid2D extends Graph<Integer, DefaultEdge<Integer>> {
 	 *          a grid cell
 	 * @param dir
 	 *          the direction to which the cell is checked for connectivity
-	 * @return if the cell is connected with the cell in the given direction ("passage", "no wall")
+	 * @return {@code true} if the cell is connected to the neighbor in the given direction
+	 *         ("passage", no "wall")
 	 */
-	public boolean connected(Integer cell, Direction dir);
+	public boolean isConnected(Integer cell, Direction dir);
 
 	/**
 	 * @param either

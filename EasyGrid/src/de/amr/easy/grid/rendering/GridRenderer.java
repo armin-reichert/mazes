@@ -53,7 +53,7 @@ public class GridRenderer {
 	public void drawCell(Graphics2D g, Grid2D grid, Integer cell) {
 		drawCellContent(g, grid, cell);
 		for (Direction dir : Direction.values()) {
-			if (grid.connected(cell, dir)) {
+			if (grid.isConnected(cell, dir)) {
 				drawHalfPassage(g, grid, cell, dir, rm.getPassageColor(cell, dir));
 			}
 		}

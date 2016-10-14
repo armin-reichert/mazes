@@ -69,7 +69,7 @@ public class Grid implements Grid2D {
 		Set<DefaultEdge<Integer>> edgeSet = new HashSet<>();
 		vertexStream().forEach(cell -> {
 			Stream.of(Direction.values()).forEach(dir -> {
-				if (connected(cell, dir)) {
+				if (isConnected(cell, dir)) {
 					Integer neighbor = neighbor(cell, dir);
 					if (neighbor != null && cell < neighbor) {
 						edgeSet.add(new DefaultEdge<>(cell, neighbor));
@@ -128,7 +128,7 @@ public class Grid implements Grid2D {
 		checkCell(cell);
 		/*@formatter:off*/
 		return Stream.of(Direction.values())
-			.filter(dir -> connected(cell, dir))
+			.filter(dir -> isConnected(cell, dir))
 			.map(dir -> neighbor(cell, dir));
 		/*@formatter:on*/
 	}
@@ -139,7 +139,7 @@ public class Grid implements Grid2D {
 		checkCell(q);
 		/*@formatter:off*/
 		return Stream.of(Direction.values())
-			.filter(dir -> connected(p, dir))
+			.filter(dir -> isConnected(p, dir))
 			.map(dir -> neighbor(p, dir))
 			.anyMatch(neighbor -> neighbor.equals(q));
 		/*@formatter:on*/
@@ -150,7 +150,7 @@ public class Grid implements Grid2D {
 		checkCell(cell);
 		/*@formatter:off*/
 		return (int) Stream.of(Direction.values())
-			.filter(dir -> connected(cell, dir))
+			.filter(dir -> isConnected(cell, dir))
 			.count();
 		/*@formatter:on*/
 	}
@@ -228,7 +228,7 @@ public class Grid implements Grid2D {
 	}
 
 	@Override
-	public boolean connected(Integer cell, Direction dir) {
+	public boolean isConnected(Integer cell, Direction dir) {
 		checkCell(cell);
 		return edges.get(bit(cell, dir));
 	}
