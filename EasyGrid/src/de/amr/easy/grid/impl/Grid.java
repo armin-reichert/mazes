@@ -1,5 +1,8 @@
 package de.amr.easy.grid.impl;
 
+import static de.amr.easy.grid.api.Direction.E;
+import static de.amr.easy.grid.api.Direction.S;
+
 import java.util.BitSet;
 import java.util.HashSet;
 import java.util.Optional;
@@ -13,32 +16,34 @@ import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.GridPosition;
 
 /**
- * A {@link Grid2D} implementation where the grid cells are represented by their coordinates (not
- * explicitly stored) and the edges are stored in a single bit-set.
+ * Implementation of the {@link Grid2D} interface.
  * 
  * @author Armin Reichert
  */
 public class Grid implements Grid2D {
 
+	private static final int DIRECTION_COUNT = Direction.values().length;
+
 	private final int numCols;
 	private final int numRows;
+	private final int numCells;
 	private final BitSet edges;
 
 	private void checkCell(Integer cell) {
-		if (cell == null || cell < 0 || cell >= numCells()) {
+		if (cell == null || cell < 0 || cell >= numCells) {
 			throw new IllegalArgumentException("Invalid cell: " + cell);
 		}
 	}
 
-	private int cellIndex(int col, int row) {
+	private int index(int col, int row) {
 		return col + row * numCols;
 	}
 
 	private int bit(int cell, Direction dir) {
-		return cell * 4 + dir.ordinal();
+		return cell * DIRECTION_COUNT + dir.ordinal();
 	}
 
-	private void setConnected(int p, int q, Direction dir, boolean connected) {
+	private void connect(int p, int q, Direction dir, boolean connected) {
 		edges.set(bit(p, dir), connected);
 		edges.set(bit(q, dir.inverse()), connected);
 	}
@@ -52,32 +57,33 @@ public class Grid implements Grid2D {
 		}
 		this.numCols = numCols;
 		this.numRows = numRows;
-		edges = new BitSet(4 * numCols * numRows);
+		this.numCells = numCols * numRows;
+		edges = new BitSet(DIRECTION_COUNT * numCells);
 	}
 
 	@Override
 	public Stream<Integer> vertexStream() {
-		return IntStream.range(0, numCells()).boxed();
+		return IntStream.range(0, numCells).boxed();
 	}
 
 	@Override
 	public int vertexCount() {
-		return numCells();
+		return numCells;
 	}
 
 	@Override
 	public void makeFullGrid() {
 		removeEdges();
-		for (int col = 0; col < numCols; ++col) {
-			for (int row = 0; row < numRows; ++row) {
+		IntStream.range(0, numCols).forEach(col -> {
+			IntStream.range(0, numRows).forEach(row -> {
 				if (col + 1 < numCols) {
-					setConnected(cellIndex(col, row), cellIndex(col + 1, row), Direction.E, true);
+					connect(index(col, row), index(col + 1, row), E, true);
 				}
 				if (row + 1 < numRows) {
-					setConnected(cellIndex(col, row), cellIndex(col, row + 1), Direction.S, true);
+					connect(index(col, row), index(col, row + 1), S, true);
 				}
-			}
-		}
+			});
+		});
 	}
 
 	@Override
@@ -98,7 +104,7 @@ public class Grid implements Grid2D {
 
 	@Override
 	public int edgeCount() {
-		return edges.cardinality() / 2; // two bits are set for each undirected edge
+		return edges.cardinality() / 2; // two bits are set for each edge
 	}
 
 	@Override
@@ -118,15 +124,15 @@ public class Grid implements Grid2D {
 		if (adjacent(p, q)) {
 			throw new IllegalStateException("Cannot add edge twice");
 		}
-		direction(p, q).ifPresent(dir -> setConnected(p, q, dir, true));
+		direction(p, q).ifPresent(dir -> connect(p, q, dir, true));
 	}
 
 	@Override
 	public void removeEdge(Integer p, Integer q) {
 		if (!adjacent(p, q)) {
-			throw new IllegalStateException("Cannot remove not-existing edge");
+			throw new IllegalStateException("Cannot remove non-existing edge");
 		}
-		direction(p, q).ifPresent(dir -> setConnected(p, q, dir, false));
+		direction(p, q).ifPresent(dir -> connect(p, q, dir, false));
 	}
 
 	@Override
@@ -145,25 +151,14 @@ public class Grid implements Grid2D {
 	}
 
 	@Override
-	public boolean adjacent(Integer p, Integer q) {
-		checkCell(p);
-		checkCell(q);
-		/*@formatter:off*/
-		return Stream.of(Direction.values())
-			.filter(dir -> isConnected(p, dir))
-			.map(dir -> neighbor(p, dir))
-			.anyMatch(neighbor -> neighbor.equals(q));
-		/*@formatter:on*/
+	public boolean adjacent(Integer either, Integer other) {
+		checkCell(other);
+		return adjVertices(either).anyMatch(vertex -> vertex.equals(other));
 	}
 
 	@Override
 	public int degree(Integer cell) {
-		checkCell(cell);
-		/*@formatter:off*/
-		return (int) Stream.of(Direction.values())
-			.filter(dir -> isConnected(cell, dir))
-			.count();
-		/*@formatter:on*/
+		return (int) adjVertices(cell).count();
 	}
 
 	@Override
@@ -184,7 +179,7 @@ public class Grid implements Grid2D {
 		if (!isValidRow(row)) {
 			throw new IllegalArgumentException(String.format("Invalid row: (%d, %d)", col, row));
 		}
-		return cellIndex(col, row);
+		return index(col, row);
 	}
 
 	@Override
@@ -233,7 +228,7 @@ public class Grid implements Grid2D {
 		int col = col(cell) + dir.dx;
 		int row = row(cell) + dir.dy;
 		if (isValidCol(col) && isValidRow(row)) {
-			return cellIndex(col, row);
+			return index(col, row);
 		}
 		return null;
 	}
