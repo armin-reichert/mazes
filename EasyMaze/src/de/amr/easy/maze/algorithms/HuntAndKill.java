@@ -21,8 +21,8 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class HuntAndKill extends MazeAlgorithm {
 
-	private final Predicate<Integer> isAlive = a -> grid.get(a) == UNVISITED;
-	private final Predicate<Integer> isDead = isAlive.negate();
+	protected final Predicate<Integer> isAlive = animal -> grid.get(animal) == UNVISITED;
+	protected final Predicate<Integer> isDead = isAlive.negate();
 	protected final BitSet targets;
 
 	public HuntAndKill(ObservableDataGrid2D<TraversalState> grid) {
