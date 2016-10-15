@@ -4,7 +4,6 @@ import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -19,16 +18,12 @@ import de.amr.easy.maze.datastructures.Partition.EquivClass;
  * 
  * @author Armin Reichert
  */
-public class KruskalMST implements Consumer<Integer> {
+public class KruskalMST extends MazeAlgorithm {
 
-	private final ObservableDataGrid2D<TraversalState> grid;
-
-	// Note: The partition has not to be initialized because the find-operation
-	// creates new equivalence-classes on demand.
 	private final Partition<Integer> forest = new Partition<>();
 
 	public KruskalMST(ObservableDataGrid2D<TraversalState> grid) {
-		this.grid = grid;
+		super(grid);
 	}
 
 	@Override

@@ -6,9 +6,7 @@ import static de.amr.easy.graph.api.TraversalState.VISITED;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
-import java.util.function.Consumer;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Direction;
@@ -19,15 +17,13 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  * 
  * @author Armin Reichert
  */
-public class RandomBFS implements Consumer<Integer> {
+public class RandomBFS extends MazeAlgorithm {
 
-	private final ObservableDataGrid2D<TraversalState> grid;
-	private final Random rnd = new Random();
 	private final Set<Integer> mazeCells = new HashSet<>();
 	private final List<Integer> frontier = new LinkedList<>();
 
 	public RandomBFS(ObservableDataGrid2D<TraversalState> grid) {
-		this.grid = grid;
+		super(grid);
 	}
 
 	@Override

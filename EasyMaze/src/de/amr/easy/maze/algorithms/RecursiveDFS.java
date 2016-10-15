@@ -5,7 +5,6 @@ import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
 import java.util.Optional;
-import java.util.function.Consumer;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
@@ -16,13 +15,12 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  * 
  * @author Armin Reichert
  */
-public class RecursiveDFS implements Consumer<Integer> {
+public class RecursiveDFS extends MazeAlgorithm {
 
-	private final ObservableDataGrid2D<TraversalState> grid;
 	private Optional<Integer> unvisitedNeighbor;
 
 	public RecursiveDFS(ObservableDataGrid2D<TraversalState> grid) {
-		this.grid = grid;
+		super(grid);
 	}
 
 	@Override

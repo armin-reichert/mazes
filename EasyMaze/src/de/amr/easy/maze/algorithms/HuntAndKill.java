@@ -5,7 +5,6 @@ import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 
 import java.util.BitSet;
 import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import de.amr.easy.graph.api.TraversalState;
@@ -20,13 +19,12 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  *      "http://weblog.jamisbuck.org/2011/1/24/maze-generation-hunt-and-kill-algorithm.html">
  *      Hunt-And-Kill algorithm on Jamis Buck's blog</a>
  */
-public class HuntAndKill implements Consumer<Integer> {
+public class HuntAndKill extends MazeAlgorithm {
 
-	protected final ObservableDataGrid2D<TraversalState> grid;
 	protected final BitSet targets;
 
 	public HuntAndKill(ObservableDataGrid2D<TraversalState> grid) {
-		this.grid = grid;
+		super(grid);
 		targets = new BitSet(grid.numCells());
 	}
 

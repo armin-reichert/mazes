@@ -4,8 +4,6 @@ import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
-import java.util.function.Consumer;
-
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 
@@ -37,13 +35,12 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  * 
  * @author Armin Reichert
  */
-public class AldousBroderUST implements Consumer<Integer> {
+public class AldousBroderUST extends MazeAlgorithm {
 
-	private final ObservableDataGrid2D<TraversalState> grid;
 	private int mazeCellCount;
 
 	public AldousBroderUST(ObservableDataGrid2D<TraversalState> grid) {
-		this.grid = grid;
+		super(grid);
 	}
 
 	@Override

@@ -2,8 +2,6 @@ package de.amr.easy.maze.algorithms;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 
-import java.util.Random;
-import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
@@ -18,13 +16,10 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  *      "http://weblog.jamisbuck.org/2011/1/12/maze-generation-recursive-division-algorithm.html">The
  *      Buckblog</a>
  */
-public class RecursiveDivision implements Consumer<Integer> {
-
-	private final ObservableDataGrid2D<TraversalState> grid;
-	private final Random rnd = new Random();
+public class RecursiveDivision extends MazeAlgorithm {
 
 	public RecursiveDivision(ObservableDataGrid2D<TraversalState> grid) {
-		this.grid = grid;
+		super(grid);
 		grid.setEventsEnabled(false);
 		grid.makeFullGrid();
 		grid.setEventsEnabled(true);

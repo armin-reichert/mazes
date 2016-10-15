@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
-import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
@@ -24,14 +22,12 @@ import de.amr.easy.maze.datastructures.Partition.EquivClass;
  * 
  * @author Armin Reichert
  */
-public class Eller implements Consumer<Integer> {
+public class Eller extends MazeAlgorithm {
 
-	private final ObservableDataGrid2D<TraversalState> grid;
-	private final Random rnd = new Random();
 	private final Partition<Integer> partition = new Partition<>();
 
 	public Eller(ObservableDataGrid2D<TraversalState> grid) {
-		this.grid = grid;
+		super(grid);
 	}
 
 	@Override

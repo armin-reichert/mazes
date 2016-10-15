@@ -2,15 +2,12 @@ package de.amr.easy.maze.algorithms.wilson;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
+import de.amr.easy.maze.algorithms.MazeAlgorithm;
 
 /**
  * Wilson's algorithm.
@@ -32,14 +29,13 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  *      wikipedia.org/wiki/Loop -erased_random_walk</>
  * 
  */
-public abstract class WilsonUST implements Consumer<Integer> {
+public abstract class WilsonUST extends MazeAlgorithm {
 
-	protected final ObservableDataGrid2D<TraversalState> grid;
-	protected final Random rnd = new Random();
-	private final Map<Integer, Direction> lastWalkDir = new HashMap<>();
+	private final Direction[] lastWalkDir;
 
 	protected WilsonUST(ObservableDataGrid2D<TraversalState> grid) {
-		this.grid = grid;
+		super(grid);
+		lastWalkDir = new Direction[grid.numCells()];
 	}
 
 	@Override
@@ -47,7 +43,7 @@ public abstract class WilsonUST implements Consumer<Integer> {
 		start = getStartCell(start);
 		addCellToTree(start);
 		cellStream().forEach(walkStart -> {
-			if (!isCellInTree(walkStart)) {
+			if (cellOutsideTree(walkStart)) {
 				loopErasedRandomWalk(walkStart);
 			}
 		});
@@ -66,20 +62,19 @@ public abstract class WilsonUST implements Consumer<Integer> {
 	protected void loopErasedRandomWalk(Integer walkStart) {
 		// do a random walk starting at walkStart until tree cell is reached
 		Integer v = walkStart;
-		while (!isCellInTree(v)) {
+		while (cellOutsideTree(v)) {
 			Direction dir = Direction.randomValue();
 			Integer neighbor = grid.neighbor(v, dir);
 			if (neighbor == null) {
 				continue;
 			}
-			lastWalkDir.put(v, dir);
+			lastWalkDir[v] = dir;
 			v = neighbor;
 		}
 		// add loop-erased path to tree
 		v = walkStart;
-		while (!isCellInTree(v)) {
-			Direction dir = lastWalkDir.get(v);
-			Integer neighbor = grid.neighbor(v, dir);
+		while (cellOutsideTree(v)) {
+			Integer neighbor = grid.neighbor(v, lastWalkDir[v]);
 			addCellToTree(v);
 			grid.addEdge(v, neighbor);
 			v = neighbor;
@@ -106,10 +101,10 @@ public abstract class WilsonUST implements Consumer<Integer> {
 	/**
 	 * @param cell
 	 *          a grid cell
-	 * @return <code>true</code> if the cell is part of the current tree
+	 * @return <code>true</code> if the cell is outside of the current tree
 	 */
-	protected boolean isCellInTree(Integer cell) {
-		return grid.get(cell) == COMPLETED;
+	protected boolean cellOutsideTree(Integer cell) {
+		return grid.get(cell) != COMPLETED;
 	}
 
 	/**

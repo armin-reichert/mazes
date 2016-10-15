@@ -4,8 +4,6 @@ import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
 import java.util.PriorityQueue;
-import java.util.Random;
-import java.util.function.Consumer;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.impl.DefaultEdge;
@@ -17,14 +15,12 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  * 
  * @author Armin Reichert
  */
-public class PrimMST implements Consumer<Integer> {
+public class PrimMST extends MazeAlgorithm {
 
-	private final ObservableDataGrid2D<TraversalState> grid;
 	private final PriorityQueue<DefaultEdge<Integer>> cut = new PriorityQueue<>();
-	private final Random rnd = new Random();
 
 	public PrimMST(ObservableDataGrid2D<TraversalState> grid) {
-		this.grid = grid;
+		super(grid);
 	}
 
 	@Override

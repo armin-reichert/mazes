@@ -5,8 +5,6 @@ import static de.amr.easy.grid.api.Direction.E;
 import static de.amr.easy.grid.api.Direction.S;
 
 import java.util.Optional;
-import java.util.Random;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
@@ -18,14 +16,10 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  * 
  * @author Armin Reichert
  */
-public class BinaryTree implements Consumer<Integer> {
-
-	protected final ObservableDataGrid2D<TraversalState> grid;
-
-	private final Random rnd = new Random();
+public class BinaryTree extends MazeAlgorithm {
 
 	public BinaryTree(ObservableDataGrid2D<TraversalState> grid) {
-		this.grid = grid;
+		super(grid);
 	}
 
 	@Override

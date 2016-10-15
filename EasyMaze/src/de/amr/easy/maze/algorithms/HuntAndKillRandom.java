@@ -1,7 +1,5 @@
 package de.amr.easy.maze.algorithms;
 
-import java.util.Random;
-
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 
@@ -12,8 +10,6 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  * @author Armin Reichert
  */
 public class HuntAndKillRandom extends HuntAndKill {
-
-	private final Random rnd = new Random();
 
 	public HuntAndKillRandom(ObservableDataGrid2D<TraversalState> grid) {
 		super(grid);

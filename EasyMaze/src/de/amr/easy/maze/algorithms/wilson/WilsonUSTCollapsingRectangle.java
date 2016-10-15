@@ -28,7 +28,7 @@ public class WilsonUSTCollapsingRectangle extends WilsonUST {
 		int col = 0, row = 0;
 		while (width > 0 && height > 0) {
 			new Rectangle(grid, grid.cell(col, row), width, height).forEach(walkStart -> {
-				if (!isCellInTree(walkStart)) {
+				if (cellOutsideTree(walkStart)) {
 					loopErasedRandomWalk(walkStart);
 				}
 			});
