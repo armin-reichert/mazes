@@ -2,7 +2,6 @@ package de.amr.easy.grid.api;
 
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.Graph;
@@ -126,22 +125,6 @@ public interface Grid2D extends Graph<Integer, DefaultEdge<Integer>> {
 	 */
 	public default boolean areNeighbors(Integer either, Integer other) {
 		return neighbors(either).anyMatch(neighbor -> neighbor.equals(other));
-	}
-
-	/**
-	 * 
-	 * @param cell
-	 *          a grid cell
-	 * @param condition
-	 *          a condition that must hold for the returned cell
-	 * @return a random neighbor cell fulfilling the condition if any
-	 */
-	public default Optional<Integer> randomNeighbor(Integer cell, Predicate<Integer> condition) {
-		/*@formatter:off*/
-		return neighbors(cell, Direction.valuesPermuted())
-			.filter(condition)
-			.findFirst();
-		/*@formatter:on*/
 	}
 
 	/**

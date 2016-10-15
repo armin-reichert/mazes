@@ -35,13 +35,13 @@ public class HuntAndKill extends MazeAlgorithm {
 		do {
 			kill(animal);
 			grid.neighbors(animal).filter(isAlive).forEach(targets::set);
-			Optional<Integer> livingNeighbor = grid.randomNeighbor(animal, isAlive);
+			Optional<Integer> livingNeighbor = grid.randomNeighbor(animal).filter(isAlive);
 			if (livingNeighbor.isPresent()) {
 				grid.addEdge(animal, livingNeighbor.get());
 				animal = livingNeighbor.get();
 			} else if (!targets.isEmpty()) {
 				animal = hunt();
-				grid.addEdge(animal, grid.randomNeighbor(animal, isDead).get());
+				grid.addEdge(animal, grid.randomNeighbor(animal).filter(isDead).get());
 			}
 		} while (!targets.isEmpty());
 	}

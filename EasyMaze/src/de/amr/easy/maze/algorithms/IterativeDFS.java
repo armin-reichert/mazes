@@ -36,7 +36,7 @@ public class IterativeDFS extends MazeAlgorithm {
 		stack.push(current);
 		grid.set(current, VISITED);
 		while (!stack.isEmpty()) {
-			Optional<Integer> neighbor = grid.randomNeighbor(current, cell -> grid.get(cell) == UNVISITED);
+			Optional<Integer> neighbor = grid.randomNeighbor(current).filter(cell -> grid.get(cell) == UNVISITED);
 			if (neighbor.isPresent()) {
 				if (grid.randomNeighbor(neighbor.get()).isPresent()) {
 					stack.push(neighbor.get());
