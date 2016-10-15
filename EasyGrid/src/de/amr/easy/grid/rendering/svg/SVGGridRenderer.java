@@ -13,21 +13,21 @@ import de.amr.easy.graph.event.GraphListener;
 import de.amr.easy.graph.event.VertexChangeEvent;
 import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
-import de.amr.easy.grid.rendering.swing.DefaultGridRenderingModel;
-import de.amr.easy.grid.rendering.swing.GridRenderer;
+import de.amr.easy.grid.rendering.swing.SwingDefaultGridRenderingModel;
+import de.amr.easy.grid.rendering.swing.SwingGridRenderer;
 
 public class SVGGridRenderer implements GraphListener<Integer, DefaultEdge<Integer>> {
 
 	private final ObservableDataGrid2D<TraversalState> grid;
 	private final SVGGraphics2D g;
-	private final GridRenderer renderer;
+	private final SwingGridRenderer renderer;
 
 	public SVGGridRenderer(ObservableDataGrid2D<TraversalState> grid, int cellSize) {
 		this.grid = grid;
 		int width = grid.numCols() * cellSize, height = grid.numRows() * cellSize;
 		g = new SVGGraphics2D(width, height);
-		renderer = new GridRenderer();
-		DefaultGridRenderingModel renderingModel = new DefaultGridRenderingModel();
+		renderer = new SwingGridRenderer();
+		SwingDefaultGridRenderingModel renderingModel = new SwingDefaultGridRenderingModel();
 		renderingModel.setCellSize(cellSize);
 		renderingModel.setGridBgColor(Color.DARK_GRAY);
 		renderer.setRenderingModel(renderingModel);

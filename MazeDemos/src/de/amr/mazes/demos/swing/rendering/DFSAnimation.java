@@ -9,8 +9,8 @@ import java.util.Set;
 import de.amr.easy.graph.traversal.DepthFirstTraversal;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.ObservableGrid2D;
-import de.amr.easy.grid.rendering.swing.DefaultGridRenderingModel;
-import de.amr.easy.grid.rendering.swing.GridCanvas;
+import de.amr.easy.grid.rendering.swing.SwingDefaultGridRenderingModel;
+import de.amr.easy.grid.rendering.swing.SwingGridCanvas;
 
 /**
  * Animation of depth-first-search path finding.
@@ -19,13 +19,13 @@ import de.amr.easy.grid.rendering.swing.GridCanvas;
  */
 public class DFSAnimation {
 
-	private final GridCanvas canvas;
+	private final SwingGridCanvas canvas;
 	private final ObservableGrid2D grid;
 	private final DFSRenderingModel renderingModel;
 	private final DepthFirstTraversal<Integer, ?> dfs;
 	private final Set<Integer> path;
 
-	public DFSAnimation(GridCanvas canvas, ObservableGrid2D grid, Integer source, Integer target) {
+	public DFSAnimation(SwingGridCanvas canvas, ObservableGrid2D grid, Integer source, Integer target) {
 		this.canvas = canvas;
 		this.grid = grid;
 		this.renderingModel = new DFSRenderingModel(canvas.currentRenderingModel().getCellSize(),
@@ -48,7 +48,7 @@ public class DFSAnimation {
 
 	// -- Rendering model
 
-	private class DFSRenderingModel extends DefaultGridRenderingModel {
+	private class DFSRenderingModel extends SwingDefaultGridRenderingModel {
 
 		private final Color pathColor;
 		private final Color visitColor;

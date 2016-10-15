@@ -12,19 +12,19 @@ import de.amr.easy.graph.event.GraphListener;
 import de.amr.easy.graph.event.VertexChangeEvent;
 import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
-import de.amr.easy.grid.rendering.swing.GridRenderer;
+import de.amr.easy.grid.rendering.swing.SwingGridRenderer;
 
 public class GridAnimation implements GraphListener<Integer, DefaultEdge<Integer>> {
 
 	private final ObservableDataGrid2D<TraversalState> grid;
 	private final BufferedImage canvas;
-	private final GridRenderer renderer;
+	private final SwingGridRenderer renderer;
 	private int delay;
 
 	public GridAnimation(ObservableDataGrid2D<TraversalState> grid, int gridCellSize, int width, int height) {
 		this.grid = grid;
 		canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-		renderer = new GridRenderer();
+		renderer = new SwingGridRenderer();
 		setRenderingModel(new GridVisualization(grid, gridCellSize));
 	}
 

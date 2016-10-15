@@ -10,7 +10,7 @@ import de.amr.easy.grid.api.Direction;
  * 
  * @author Armin Reichert
  */
-public class DefaultGridRenderingModel implements GridRenderingModel {
+public class SwingDefaultGridRenderingModel implements SwingGridRenderingModel {
 
 	private Color gridBgColor = Color.BLACK;
 	private Color cellTextColor = Color.BLACK;

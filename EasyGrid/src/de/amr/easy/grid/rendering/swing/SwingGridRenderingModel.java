@@ -10,7 +10,7 @@ import de.amr.easy.grid.api.Direction;
  * 
  * @author Armin Reichert
  */
-public interface GridRenderingModel {
+public interface SwingGridRenderingModel {
 
 	public int getCellSize();
 

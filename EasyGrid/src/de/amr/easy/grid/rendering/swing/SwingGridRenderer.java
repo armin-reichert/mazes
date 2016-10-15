@@ -15,21 +15,21 @@ import de.amr.easy.grid.api.Grid2D;
  * 
  * @author Armin Reichert
  */
-public class GridRenderer {
+public class SwingGridRenderer {
 
 	private static final int MIN_FONT_SIZE = 7;
 
-	private GridRenderingModel rm;
+	private SwingGridRenderingModel rm;
 	private int thickness;
 	private int cellSize;
 	private int a;
 	private int b;
 
-	public GridRenderingModel getRenderingModel() {
+	public SwingGridRenderingModel getRenderingModel() {
 		return rm;
 	}
 
-	public void setRenderingModel(GridRenderingModel renderingModel) {
+	public void setRenderingModel(SwingGridRenderingModel renderingModel) {
 		this.rm = renderingModel;
 		thickness = renderingModel.getPassageThickness();
 		cellSize = renderingModel.getCellSize();

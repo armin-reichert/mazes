@@ -19,9 +19,9 @@ import javax.swing.KeyStroke;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.impl.ObservableDataGrid;
-import de.amr.easy.grid.rendering.swing.DefaultGridRenderingModel;
-import de.amr.easy.grid.rendering.swing.GridCanvas;
-import de.amr.easy.grid.rendering.swing.GridRenderingModel;
+import de.amr.easy.grid.rendering.swing.SwingDefaultGridRenderingModel;
+import de.amr.easy.grid.rendering.swing.SwingGridCanvas;
+import de.amr.easy.grid.rendering.swing.SwingGridRenderingModel;
 import de.amr.easy.maze.misc.Utils;
 
 /**
@@ -40,7 +40,7 @@ public abstract class GridSampleApp implements Runnable {
 	protected int cellSize;
 	protected String appName;
 	protected JFrame window;
-	protected GridCanvas canvas;
+	protected SwingGridCanvas canvas;
 	protected JSlider delaySlider;
 	private boolean fullscreen;
 
@@ -88,7 +88,7 @@ public abstract class GridSampleApp implements Runnable {
 		window = new JFrame();
 		window.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		window.setTitle(composeTitle());
-		canvas = new GridCanvas(grid, changeRenderingModel(cellSize));
+		canvas = new SwingGridCanvas(grid, changeRenderingModel(cellSize));
 		canvas.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "exit");
 		canvas.getActionMap().put("exit", exitAction);
 		canvas.setDelay(0);
@@ -134,7 +134,7 @@ public abstract class GridSampleApp implements Runnable {
 		}
 	}
 
-	private DefaultGridRenderingModel renderingModel = new DefaultGridRenderingModel() {
+	private SwingDefaultGridRenderingModel renderingModel = new SwingDefaultGridRenderingModel() {
 
 		@Override
 		public Color getCellBgColor(Integer cell) {
@@ -151,7 +151,7 @@ public abstract class GridSampleApp implements Runnable {
 		}
 	};
 
-	protected GridRenderingModel changeRenderingModel(int cellSize) {
+	protected SwingGridRenderingModel changeRenderingModel(int cellSize) {
 		renderingModel.setCellSize(cellSize);
 		return renderingModel;
 	}

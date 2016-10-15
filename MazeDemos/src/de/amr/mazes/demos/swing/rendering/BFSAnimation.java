@@ -8,8 +8,8 @@ import java.util.Set;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.ObservableGrid2D;
-import de.amr.easy.grid.rendering.swing.DefaultGridRenderingModel;
-import de.amr.easy.grid.rendering.swing.GridCanvas;
+import de.amr.easy.grid.rendering.swing.SwingDefaultGridRenderingModel;
+import de.amr.easy.grid.rendering.swing.SwingGridCanvas;
 
 /**
  * Animation of breadth-first-search path finding. Shows the distances as the BFS traverses the
@@ -19,7 +19,7 @@ import de.amr.easy.grid.rendering.swing.GridCanvas;
  */
 public class BFSAnimation {
 
-	private final GridCanvas canvas;
+	private final SwingGridCanvas canvas;
 	private final ObservableGrid2D grid;
 	private final BFSRenderingModel renderingModel;
 	private final Set<Integer> path;
@@ -28,7 +28,7 @@ public class BFSAnimation {
 	private Integer maxDistanceCell;
 	private boolean distancesVisible;
 
-	public BFSAnimation(GridCanvas canvas, ObservableGrid2D grid) {
+	public BFSAnimation(SwingGridCanvas canvas, ObservableGrid2D grid) {
 		this.canvas = canvas;
 		this.grid = grid;
 		renderingModel = new BFSRenderingModel(canvas.currentRenderingModel().getCellSize(),
@@ -80,7 +80,7 @@ public class BFSAnimation {
 
 	// -- Rendering model
 
-	private class BFSRenderingModel extends DefaultGridRenderingModel {
+	private class BFSRenderingModel extends SwingDefaultGridRenderingModel {
 
 		private final int cellSize;
 		private final int passageThickness;

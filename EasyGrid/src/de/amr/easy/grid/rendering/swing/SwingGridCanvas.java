@@ -29,17 +29,17 @@ import de.amr.easy.grid.api.ObservableGrid2D;
  * 
  * @author Armin Reichert
  */
-public class GridCanvas extends JComponent implements GraphListener<Integer, DefaultEdge<Integer>> {
+public class SwingGridCanvas extends JComponent implements GraphListener<Integer, DefaultEdge<Integer>> {
 
 	private BufferedImage buffer;
 	private Graphics2D g;
 
 	private ObservableGrid2D grid;
-	private final Deque<GridRenderingModel> renderStack = new LinkedList<>();
-	private GridRenderer renderer;
+	private final Deque<SwingGridRenderingModel> renderStack = new LinkedList<>();
+	private SwingGridRenderer renderer;
 	private int delay;
 
-	public GridCanvas(ObservableGrid2D grid, GridRenderingModel renderingModel) {
+	public SwingGridCanvas(ObservableGrid2D grid, SwingGridRenderingModel renderingModel) {
 		setGrid(grid);
 		renderStack.push(renderingModel);
 		setDoubleBuffered(false);
@@ -51,7 +51,7 @@ public class GridCanvas extends JComponent implements GraphListener<Integer, Def
 		grid.addGraphListener(this);
 	}
 
-	public void setRenderingModel(GridRenderingModel renderingModel) {
+	public void setRenderingModel(SwingGridRenderingModel renderingModel) {
 		renderStack.clear();
 		renderStack.push(renderingModel);
 		updateRenderingBuffer();
@@ -83,7 +83,7 @@ public class GridCanvas extends JComponent implements GraphListener<Integer, Def
 		renderer = null;
 	}
 
-	public GridRenderingModel currentRenderingModel() {
+	public SwingGridRenderingModel currentRenderingModel() {
 		return renderStack.peek();
 	}
 
@@ -93,7 +93,7 @@ public class GridCanvas extends JComponent implements GraphListener<Integer, Def
 		}
 	}
 
-	public void pushRenderingModel(GridRenderingModel renderingModel) {
+	public void pushRenderingModel(SwingGridRenderingModel renderingModel) {
 		renderStack.push(renderingModel);
 	}
 
@@ -134,7 +134,7 @@ public class GridCanvas extends JComponent implements GraphListener<Integer, Def
 
 	private void doRender(Consumer<Graphics2D> task) {
 		if (renderer == null) {
-			renderer = new GridRenderer();
+			renderer = new SwingGridRenderer();
 		}
 		renderer.setRenderingModel(currentRenderingModel());
 		task.accept(g);
