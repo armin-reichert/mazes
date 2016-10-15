@@ -9,7 +9,7 @@ import java.awt.EventQueue;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.impl.ObservableDataGrid;
-import de.amr.easy.grid.rendering.GridCanvas;
+import de.amr.easy.grid.rendering.swing.GridCanvas;
 import de.amr.easy.maze.misc.Utils;
 import de.amr.mazes.demos.swing.model.MazeDemoModel;
 import de.amr.mazes.demos.swing.view.MazeWindow;

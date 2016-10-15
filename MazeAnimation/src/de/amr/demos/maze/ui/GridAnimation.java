@@ -12,7 +12,7 @@ import de.amr.easy.graph.event.GraphListener;
 import de.amr.easy.graph.event.VertexChangeEvent;
 import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
-import de.amr.easy.grid.rendering.GridRenderer;
+import de.amr.easy.grid.rendering.swing.GridRenderer;
 
 public class GridAnimation implements GraphListener<Integer, DefaultEdge<Integer>> {
 

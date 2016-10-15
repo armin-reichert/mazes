@@ -8,8 +8,8 @@ import java.util.Set;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.ObservableGrid2D;
-import de.amr.easy.grid.rendering.DefaultGridRenderingModel;
-import de.amr.easy.grid.rendering.GridCanvas;
+import de.amr.easy.grid.rendering.swing.DefaultGridRenderingModel;
+import de.amr.easy.grid.rendering.swing.GridCanvas;
 
 /**
  * Animation of breadth-first-search path finding. Shows the distances as the BFS traverses the

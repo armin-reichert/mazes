@@ -1,4 +1,4 @@
-package de.amr.easy.grid.rendering;
+package de.amr.easy.grid.rendering.swing;
 
 import java.awt.Color;
 import java.awt.Font;

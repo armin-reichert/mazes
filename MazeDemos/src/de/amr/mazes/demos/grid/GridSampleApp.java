@@ -19,9 +19,9 @@ import javax.swing.KeyStroke;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.impl.ObservableDataGrid;
-import de.amr.easy.grid.rendering.DefaultGridRenderingModel;
-import de.amr.easy.grid.rendering.GridCanvas;
-import de.amr.easy.grid.rendering.GridRenderingModel;
+import de.amr.easy.grid.rendering.swing.DefaultGridRenderingModel;
+import de.amr.easy.grid.rendering.swing.GridCanvas;
+import de.amr.easy.grid.rendering.swing.GridRenderingModel;
 import de.amr.easy.maze.misc.Utils;
 
 /**

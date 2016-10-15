@@ -2,7 +2,7 @@ package de.amr.mazes.demos.swing.rendering;
 
 import java.awt.Color;
 
-import de.amr.easy.grid.rendering.DefaultGridRenderingModel;
+import de.amr.easy.grid.rendering.swing.DefaultGridRenderingModel;
 import de.amr.mazes.demos.swing.model.MazeDemoModel;
 
 /**
