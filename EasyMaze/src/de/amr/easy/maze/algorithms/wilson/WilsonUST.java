@@ -41,7 +41,7 @@ public abstract class WilsonUST extends MazeAlgorithm {
 
 	@Override
 	public void accept(Integer start) {
-		start = getStartCell(start);
+		start = customStartCell(start);
 		addCellToTree(start);
 		cellStream().forEach(walkStart -> {
 			if (cellOutsideTree(walkStart)) {
@@ -86,16 +86,6 @@ public abstract class WilsonUST extends MazeAlgorithm {
 	 */
 	protected Stream<Integer> cellStream() {
 		return grid.vertexStream();
-	}
-
-	/**
-	 * 
-	 * @param start
-	 *          the start cell as passed to the run-method of the generator
-	 * @return the maybe modified start cell of the generator
-	 */
-	protected Integer getStartCell(Integer start) {
-		return start;
 	}
 
 	/**

@@ -14,4 +14,16 @@ public abstract class MazeAlgorithm implements Consumer<Integer> {
 	public MazeAlgorithm(ObservableDataGrid2D<TraversalState> grid) {
 		this.grid = grid;
 	}
+
+	/**
+	 * Can be overridden by subclasses of a maze generation algorithm to specify a different start
+	 * cell.
+	 * 
+	 * @param originalStartCell
+	 *          the original start cell passed to the algorithm
+	 * @return the possibly modified start cell
+	 */
+	protected Integer customStartCell(Integer originalStartCell) {
+		return originalStartCell;
+	}
 }

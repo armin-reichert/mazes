@@ -21,12 +21,11 @@ public class WilsonUSTExpandingCircle extends WilsonUST {
 
 	@Override
 	protected Stream<Integer> cellStream() {
-		Integer center = grid.cell(CENTER);
-		return new ExpandingCircle(grid, center, 1, Math.max(grid.numCols(), grid.numRows())).stream();
+		return new ExpandingCircle(grid, grid.cell(CENTER), 1, Math.max(grid.numCols(), grid.numRows())).stream();
 	}
 
 	@Override
-	protected Integer getStartCell(Integer start) {
+	protected Integer customStartCell(Integer start) {
 		return grid.cell(CENTER);
 	}
 }

@@ -21,12 +21,11 @@ public class WilsonUSTExpandingSpiral extends WilsonUST {
 
 	@Override
 	protected Stream<Integer> cellStream() {
-		Integer center = grid.cell(CENTER);
-		return new Spiral(grid, center).stream();
+		return new Spiral(grid, grid.cell(CENTER)).stream();
 	}
 
 	@Override
-	protected Integer getStartCell(Integer start) {
+	protected Integer customStartCell(Integer start) {
 		return grid.cell(CENTER);
 	}
 }
