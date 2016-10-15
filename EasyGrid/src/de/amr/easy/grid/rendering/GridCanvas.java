@@ -11,8 +11,13 @@ import java.util.function.Consumer;
 
 import javax.swing.JComponent;
 
+import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;
+import de.amr.easy.graph.event.EdgeAddedEvent;
+import de.amr.easy.graph.event.EdgeChangeEvent;
+import de.amr.easy.graph.event.EdgeRemovedEvent;
 import de.amr.easy.graph.event.GraphListener;
+import de.amr.easy.graph.event.VertexChangeEvent;
 import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.ObservableGrid2D;
 
@@ -141,7 +146,7 @@ public class GridCanvas extends JComponent implements GraphListener<Integer, Def
 		doRender(g -> renderer.drawCell(g, grid, cell));
 	}
 
-	public void renderGridPassage(DefaultEdge<Integer> edge, boolean visible) {
+	public void renderGridPassage(Edge<Integer> edge, boolean visible) {
 		doRender(g -> renderer.drawPassage(g, grid, edge, visible));
 	}
 
@@ -152,23 +157,23 @@ public class GridCanvas extends JComponent implements GraphListener<Integer, Def
 	// GraphListener implementation
 
 	@Override
-	public void vertexChanged(Integer cell, Object oldValue, Object newValue) {
-		renderGridCell(cell);
+	public void vertexChanged(VertexChangeEvent<Integer, DefaultEdge<Integer>> event) {
+		renderGridCell(event.getVertex());
 	}
 
 	@Override
-	public void edgeAdded(DefaultEdge<Integer> edge) {
-		renderGridPassage(edge, true);
+	public void edgeAdded(EdgeAddedEvent<Integer, DefaultEdge<Integer>> event) {
+		renderGridPassage(event.getEdge(), true);
 	}
 
 	@Override
-	public void edgeRemoved(DefaultEdge<Integer> edge) {
-		renderGridPassage(edge, false);
+	public void edgeRemoved(EdgeRemovedEvent<Integer, DefaultEdge<Integer>> event) {
+		renderGridPassage(event.getEdge(), false);
 	}
 
 	@Override
-	public void edgeChanged(DefaultEdge<Integer> edge, Object oldValue, Object newValue) {
-		renderGridPassage(edge, true);
+	public void edgeChanged(EdgeChangeEvent<Integer, DefaultEdge<Integer>> event) {
+		renderGridPassage(event.getEdge(), true);
 	}
 
 	@Override

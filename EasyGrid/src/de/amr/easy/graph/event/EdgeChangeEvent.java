@@ -4,7 +4,7 @@ import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;
 
 /**
- * Event for edge state changes.
+ * Event for edge changes.
  * 
  * @author Armin Reichert
  *
@@ -13,15 +13,26 @@ import de.amr.easy.graph.api.ObservableGraph;
  * @param <E>
  *          the edge type
  */
-public class EdgeChangeEvent<V, E extends Edge<V>> extends EdgeEvent<V, E> {
+public class EdgeChangeEvent<V, E extends Edge<V>> {
 
-	private Object oldValue;
-	private Object newValue;
+	private final ObservableGraph<V, E> graph;
+	private final E edge;
+	private final Object oldValue;
+	private final Object newValue;
 
 	public EdgeChangeEvent(ObservableGraph<V, E> graph, E edge, Object oldValue, Object newValue) {
-		super(graph, edge);
+		this.graph = graph;
+		this.edge = edge;
 		this.oldValue = oldValue;
 		this.newValue = newValue;
+	}
+
+	public ObservableGraph<V, E> getGraph() {
+		return graph;
+	}
+
+	public E getEdge() {
+		return edge;
 	}
 
 	public Object getOldValue() {

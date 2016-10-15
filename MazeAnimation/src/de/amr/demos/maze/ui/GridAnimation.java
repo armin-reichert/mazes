@@ -5,7 +5,11 @@ import java.awt.image.BufferedImage;
 
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.graph.event.EdgeAddedEvent;
+import de.amr.easy.graph.event.EdgeChangeEvent;
+import de.amr.easy.graph.event.EdgeRemovedEvent;
 import de.amr.easy.graph.event.GraphListener;
+import de.amr.easy.graph.event.VertexChangeEvent;
 import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 import de.amr.easy.grid.rendering.GridRenderer;
@@ -69,27 +73,27 @@ public class GridAnimation implements GraphListener<Integer, DefaultEdge<Integer
 	// graph listener:
 
 	@Override
-	public void vertexChanged(Integer cell, Object oldValue, Object newValue) {
+	public void vertexChanged(VertexChangeEvent<Integer, DefaultEdge<Integer>> event) {
 		delay();
-		renderer.drawCell(getDrawGraphics(), grid, cell);
+		renderer.drawCell(getDrawGraphics(), grid, event.getVertex());
 	}
 
 	@Override
-	public void edgeChanged(DefaultEdge<Integer> edge, Object oldValue, Object newValue) {
+	public void edgeChanged(EdgeChangeEvent<Integer, DefaultEdge<Integer>> event) {
 		delay();
-		renderer.drawPassage(getDrawGraphics(), grid, edge, true);
+		renderer.drawPassage(getDrawGraphics(), grid, event.getEdge(), true);
 	}
 
 	@Override
-	public void edgeAdded(DefaultEdge<Integer> edge) {
+	public void edgeAdded(EdgeAddedEvent<Integer, DefaultEdge<Integer>> event) {
 		delay();
-		renderer.drawPassage(getDrawGraphics(), grid, edge, true);
+		renderer.drawPassage(getDrawGraphics(), grid, event.getEdge(), true);
 	}
 
 	@Override
-	public void edgeRemoved(DefaultEdge<Integer> edge) {
+	public void edgeRemoved(EdgeRemovedEvent<Integer, DefaultEdge<Integer>> event) {
 		delay();
-		renderer.drawPassage(getDrawGraphics(), grid, edge, false);
+		renderer.drawPassage(getDrawGraphics(), grid, event.getEdge(), false);
 	}
 
 	@Override

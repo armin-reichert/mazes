@@ -16,13 +16,13 @@ import de.amr.easy.graph.api.ObservableGraph;
  */
 public interface GraphListener<V, E extends Edge<V>> {
 
-	public void vertexChanged(V vertex, Object oldValue, Object newValue);
+	public void vertexChanged(VertexChangeEvent<V, E> event);
 
-	public void edgeChanged(E edge, Object oldValue, Object newValue);
+	public void edgeChanged(EdgeChangeEvent<V, E> event);
 
-	public void edgeAdded(E edge);
+	public void edgeAdded(EdgeAddedEvent<V, E> event);
 
-	public void edgeRemoved(E edge);
+	public void edgeRemoved(EdgeRemovedEvent<V, E> event);
 
 	public void graphChanged(ObservableGraph<V, E> graph);
 }

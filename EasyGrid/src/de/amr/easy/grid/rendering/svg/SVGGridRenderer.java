@@ -6,7 +6,11 @@ import org.jfree.graphics2d.svg.SVGGraphics2D;
 
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.graph.event.EdgeAddedEvent;
+import de.amr.easy.graph.event.EdgeChangeEvent;
+import de.amr.easy.graph.event.EdgeRemovedEvent;
 import de.amr.easy.graph.event.GraphListener;
+import de.amr.easy.graph.event.VertexChangeEvent;
 import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 import de.amr.easy.grid.rendering.DefaultGridRenderingModel;
@@ -37,21 +41,21 @@ public class SVGGridRenderer implements GraphListener<Integer, DefaultEdge<Integ
 	}
 
 	@Override
-	public void vertexChanged(Integer vertex, Object oldValue, Object newValue) {
+	public void vertexChanged(VertexChangeEvent<Integer, DefaultEdge<Integer>> event) {
 	}
 
 	@Override
-	public void edgeChanged(DefaultEdge<Integer> edge, Object oldValue, Object newValue) {
+	public void edgeChanged(EdgeChangeEvent<Integer, DefaultEdge<Integer>> event) {
 	}
 
 	@Override
-	public void edgeAdded(DefaultEdge<Integer> edge) {
-		renderer.drawPassage(g, grid, edge, true);
+	public void edgeAdded(EdgeAddedEvent<Integer, DefaultEdge<Integer>> event) {
+		renderer.drawPassage(g, grid, event.getEdge(), true);
 	}
 
 	@Override
-	public void edgeRemoved(DefaultEdge<Integer> edge) {
-		renderer.drawPassage(g, grid, edge, false);
+	public void edgeRemoved(EdgeRemovedEvent<Integer, DefaultEdge<Integer>> event) {
+		renderer.drawPassage(g, grid, event.getEdge(), false);
 	}
 
 	@Override

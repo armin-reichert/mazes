@@ -4,7 +4,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import de.amr.easy.graph.api.ObservableGraph;
+import de.amr.easy.graph.event.EdgeAddedEvent;
+import de.amr.easy.graph.event.EdgeChangeEvent;
+import de.amr.easy.graph.event.EdgeRemovedEvent;
 import de.amr.easy.graph.event.GraphListener;
+import de.amr.easy.graph.event.VertexChangeEvent;
 import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.ObservableGrid2D;
 
@@ -13,7 +17,7 @@ import de.amr.easy.grid.api.ObservableGrid2D;
  * 
  * @author Armin Reichert
  */
-public class ObservableGrid extends Grid implements ObservableGrid2D {
+public class ObservableGrid extends Grid implements ObservableGrid2D, ObservableGraph<Integer, DefaultEdge<Integer>> {
 
 	private final Set<GraphListener<Integer, DefaultEdge<Integer>>> listeners = new HashSet<>();
 	private boolean eventsEnabled;
@@ -28,7 +32,7 @@ public class ObservableGrid extends Grid implements ObservableGrid2D {
 		super.addEdge(p, q);
 		if (eventsEnabled) {
 			for (GraphListener<Integer, DefaultEdge<Integer>> listener : listeners) {
-				listener.edgeAdded(edge(p, q).get());
+				listener.edgeAdded(new EdgeAddedEvent<>(this, edge(p, q).get()));
 			}
 		}
 	}
@@ -39,7 +43,7 @@ public class ObservableGrid extends Grid implements ObservableGrid2D {
 			super.removeEdge(p, q);
 			if (eventsEnabled) {
 				for (GraphListener<Integer, DefaultEdge<Integer>> listener : listeners) {
-					listener.edgeRemoved(edge);
+					listener.edgeRemoved(new EdgeRemovedEvent<>(this, edge));
 				}
 			}
 		});
@@ -76,16 +80,16 @@ public class ObservableGrid extends Grid implements ObservableGrid2D {
 	public void fireVertexChange(Integer vertex, Object oldValue, Object newValue) {
 		if (eventsEnabled) {
 			for (GraphListener<Integer, DefaultEdge<Integer>> listener : listeners) {
-				listener.vertexChanged(vertex, oldValue, newValue);
+				listener.vertexChanged(new VertexChangeEvent<>(this, vertex, oldValue, newValue));
 			}
 		}
 	}
 
 	@Override
-	public void fireEdgeChange(DefaultEdge<Integer> event, Object oldValue, Object newValue) {
+	public void fireEdgeChange(DefaultEdge<Integer> edge, Object oldValue, Object newValue) {
 		if (eventsEnabled) {
 			for (GraphListener<Integer, DefaultEdge<Integer>> listener : listeners) {
-				listener.edgeChanged(event, oldValue, newValue);
+				listener.edgeChanged(new EdgeChangeEvent<>(this, edge, oldValue, newValue));
 			}
 		}
 	}

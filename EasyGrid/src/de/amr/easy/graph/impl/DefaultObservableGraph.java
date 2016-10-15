@@ -4,7 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import de.amr.easy.graph.api.ObservableGraph;
+import de.amr.easy.graph.event.EdgeChangeEvent;
 import de.amr.easy.graph.event.GraphListener;
+import de.amr.easy.graph.event.VertexChangeEvent;
 
 /**
  * Adjacency set based implementation of an undirected, observable graph.
@@ -45,7 +47,7 @@ public class DefaultObservableGraph<V> extends DefaultGraph<V> implements Observ
 	public void fireVertexChange(V vertex, Object oldValue, Object newValue) {
 		if (!listeningSuspended) {
 			for (GraphListener<V, DefaultEdge<V>> listener : listeners) {
-				listener.vertexChanged(vertex, oldValue, newValue);
+				listener.vertexChanged(new VertexChangeEvent<>(this, vertex, oldValue, newValue));
 			}
 		}
 	}
@@ -54,7 +56,7 @@ public class DefaultObservableGraph<V> extends DefaultGraph<V> implements Observ
 	public void fireEdgeChange(DefaultEdge<V> edge, Object oldValue, Object newValue) {
 		if (!listeningSuspended) {
 			for (GraphListener<V, DefaultEdge<V>> listener : listeners) {
-				listener.edgeChanged(edge, oldValue, newValue);
+				listener.edgeChanged(new EdgeChangeEvent<>(this, edge, oldValue, newValue));
 			}
 		}
 	}
