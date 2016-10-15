@@ -36,7 +36,7 @@ import javafx.stage.Stage;
  * @author Armin Reichert
  *
  */
-public class DrawMazeFX extends Application {
+public class SimpleDemoFX extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
@@ -54,7 +54,7 @@ public class DrawMazeFX extends Application {
 	private int rows;
 	private int cellSize;
 
-	public DrawMazeFX() {
+	public SimpleDemoFX() {
 		cellSize = 16;
 		computeGridSize();
 	}
@@ -77,7 +77,7 @@ public class DrawMazeFX extends Application {
 
 			@Override
 			public void run() {
-				Platform.runLater(DrawMazeFX.this::nextMaze);
+				Platform.runLater(SimpleDemoFX.this::nextMaze);
 			}
 		}, 0, 2000);
 
