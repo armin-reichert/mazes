@@ -33,26 +33,26 @@ public class IterativeDFS extends MazeAlgorithm {
 	}
 
 	@Override
-	public void accept(Integer start) {
-		Integer current = start;
-		stack.push(current);
-		grid.set(current, VISITED);
+	public void accept(Integer cell) {
+		stack.push(cell);
+		grid.set(cell, VISITED);
 		while (!stack.isEmpty()) {
-			Optional<Integer> neighbor = grid.neighbors(current).filter(isUnvisited).findAny();
-			if (neighbor.isPresent()) {
-				if (grid.randomNeighbor(neighbor.get()).isPresent()) {
-					stack.push(neighbor.get());
+			Optional<Integer> unvisitedNeighbor = grid.neighbors(cell).filter(isUnvisited).findAny();
+			if (unvisitedNeighbor.isPresent()) {
+				Integer neighbor = unvisitedNeighbor.get();
+				if (grid.randomNeighbor(neighbor).isPresent()) {
+					stack.push(neighbor);
 				}
-				grid.addEdge(current, neighbor.get());
-				grid.set(neighbor.get(), VISITED);
-				current = neighbor.get();
+				grid.addEdge(cell, neighbor);
+				grid.set(neighbor, VISITED);
+				cell = neighbor;
 			} else {
-				grid.set(current, COMPLETED);
+				grid.set(cell, COMPLETED);
 				if (!stack.isEmpty()) {
-					current = stack.pop();
+					cell = stack.pop();
 				}
-				if (grid.get(current) != COMPLETED) {
-					stack.push(current);
+				if (grid.get(cell) != COMPLETED) {
+					stack.push(cell);
 				}
 			}
 		}
