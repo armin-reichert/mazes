@@ -7,6 +7,7 @@ import static de.amr.easy.graph.api.TraversalState.VISITED;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
@@ -24,6 +25,7 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class IterativeDFS extends MazeAlgorithm {
 
+	private final Predicate<Integer> isUnvisited = cell -> grid.get(cell) == UNVISITED;
 	private final Deque<Integer> stack = new LinkedList<>();
 
 	public IterativeDFS(ObservableDataGrid2D<TraversalState> grid) {
@@ -36,7 +38,7 @@ public class IterativeDFS extends MazeAlgorithm {
 		stack.push(current);
 		grid.set(current, VISITED);
 		while (!stack.isEmpty()) {
-			Optional<Integer> neighbor = grid.randomNeighbor(current).filter(cell -> grid.get(cell) == UNVISITED);
+			Optional<Integer> neighbor = grid.neighbors(current).filter(isUnvisited).findAny();
 			if (neighbor.isPresent()) {
 				if (grid.randomNeighbor(neighbor.get()).isPresent()) {
 					stack.push(neighbor.get());

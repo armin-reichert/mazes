@@ -207,9 +207,6 @@ public class EllerInsideOut extends MazeAlgorithm {
 	}
 
 	private void addNeighborIfAny(Integer cell, Direction dir, List<Integer> list) {
-		Integer neighbour = grid.neighbor(cell, dir);
-		if (neighbour != null) {
-			list.add(neighbour);
-		}
+		grid.neighbor(cell, dir).ifPresent(list::add);
 	}
 }

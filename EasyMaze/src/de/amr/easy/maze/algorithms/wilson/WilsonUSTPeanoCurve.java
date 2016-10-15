@@ -35,7 +35,7 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 		Integer cell = squareGrid.cell(BOTTOM_LEFT);
 		addCellToPath(squareGrid.col(cell), squareGrid.row(cell));
 		for (Direction dir : peano) {
-			cell = squareGrid.neighbor(cell, dir);
+			cell = squareGrid.neighbor(cell, dir).get();
 			addCellToPath(squareGrid.col(cell), squareGrid.row(cell));
 		}
 		return path.stream();

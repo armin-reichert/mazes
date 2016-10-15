@@ -1,6 +1,5 @@
 package de.amr.easy.grid.api;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -95,12 +94,7 @@ public interface Grid2D extends Graph<Integer, DefaultEdge<Integer>> {
 	 *          returned
 	 * @return stream of the neighbor cells in the given directions
 	 */
-	public default Stream<Integer> neighbors(Integer cell, Direction... dirs) {
-		if (dirs.length == 0) {
-			dirs = Direction.values();
-		}
-		return Stream.of(dirs).map(dir -> neighbor(cell, dir)).filter(Objects::nonNull);
-	}
+	public Stream<Integer> neighbors(Integer cell, Direction... dirs);
 
 	/**
 	 * 
@@ -108,10 +102,9 @@ public interface Grid2D extends Graph<Integer, DefaultEdge<Integer>> {
 	 *          a grid position
 	 * @param dir
 	 *          a direction
-	 * @return the neighbor in the given direction or <code>null</code> if there exists no cell in
-	 *         that direction
+	 * @return the optional neighbor in the given direction
 	 */
-	public Integer neighbor(Integer cell, Direction dir);
+	public Optional<Integer> neighbor(Integer cell, Direction dir);
 
 	/**
 	 * Tells if the given cells are "neighbors". Two cells are neighbors if you can reach one from the

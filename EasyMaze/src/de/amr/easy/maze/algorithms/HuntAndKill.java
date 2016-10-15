@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 
 /**
@@ -35,13 +36,16 @@ public class HuntAndKill extends MazeAlgorithm {
 		do {
 			kill(animal);
 			grid.neighbors(animal).filter(isAlive).forEach(targets::set);
-			Optional<Integer> livingNeighbor = grid.randomNeighbor(animal).filter(isAlive);
+			Optional<Integer> livingNeighbor = grid.neighbors(animal).filter(isAlive).findAny();
 			if (livingNeighbor.isPresent()) {
 				grid.addEdge(animal, livingNeighbor.get());
 				animal = livingNeighbor.get();
 			} else if (!targets.isEmpty()) {
 				animal = hunt();
-				grid.addEdge(animal, grid.randomNeighbor(animal).filter(isDead).get());
+				Optional<Integer> deadNeighbor = grid.neighbors(animal).filter(isDead).findAny();
+				if (deadNeighbor.isPresent()) {
+					grid.addEdge(animal, deadNeighbor.get());
+				}
 			}
 		} while (!targets.isEmpty());
 	}

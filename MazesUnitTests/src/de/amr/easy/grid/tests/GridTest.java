@@ -1,5 +1,9 @@
 package de.amr.easy.grid.tests;
 
+import static de.amr.easy.grid.api.Direction.E;
+import static de.amr.easy.grid.api.Direction.N;
+import static de.amr.easy.grid.api.Direction.S;
+import static de.amr.easy.grid.api.Direction.W;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -8,7 +12,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.Grid;
 
@@ -125,19 +128,19 @@ public class GridTest {
 			for (int y = 0; y < grid.numRows(); ++y) {
 				Integer cell = grid.cell(x, y);
 				if (y > 0) {
-					Integer n = grid.neighbor(cell, Direction.N);
+					Integer n = grid.neighbor(cell, N).get();
 					assertEquals(n, grid.cell(x, y - 1));
 				}
 				if (x < grid.numCols() - 1) {
-					Integer e = grid.neighbor(cell, Direction.E);
+					Integer e = grid.neighbor(cell, E).get();
 					assertEquals(e, grid.cell(x + 1, y));
 				}
 				if (y < grid.numRows() - 1) {
-					Integer s = grid.neighbor(cell, Direction.S);
+					Integer s = grid.neighbor(cell, S).get();
 					assertEquals(s, grid.cell(x, y + 1));
 				}
 				if (x > 0) {
-					Integer w = grid.neighbor(cell, Direction.W);
+					Integer w = grid.neighbor(cell, W).get();
 					assertEquals(w, grid.cell(x - 1, y));
 				}
 			}

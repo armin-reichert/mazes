@@ -13,7 +13,7 @@ public class CurveUtil {
 		Integer current = startCell;
 		grid.set(current, COMPLETED);
 		for (Direction dir : curve) {
-			Integer next = grid.neighbor(current, dir);
+			Integer next = grid.neighbor(current, dir).get();
 			grid.addEdge(current, next);
 			edgeAddedAction.run();
 			current = next;

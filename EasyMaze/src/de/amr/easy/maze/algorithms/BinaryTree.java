@@ -45,9 +45,8 @@ public class BinaryTree extends MazeAlgorithm {
 	 */
 	private Optional<Integer> randomNeighbor(Integer cell, Direction firstDir, Direction secondDir) {
 		boolean b = rnd.nextBoolean();
-		Integer neighbor = grid.neighbor(cell, b ? firstDir : secondDir);
-		return neighbor != null ? Optional.of(neighbor)
-				: Optional.ofNullable(grid.neighbor(cell, b ? secondDir : firstDir));
+		Optional<Integer> neighbor = grid.neighbor(cell, b ? firstDir : secondDir);
+		return neighbor.isPresent() ? neighbor : grid.neighbor(cell, b ? secondDir : firstDir);
 	}
 
 	/*

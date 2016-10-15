@@ -27,7 +27,7 @@ public class Grid implements Grid2D {
 	private final int numCols;
 	private final int numRows;
 	private final int numCells;
-	private final BitSet edges;
+	private final BitSet connections;
 
 	private void checkCell(Integer cell) {
 		if (cell == null || cell < 0 || cell >= numCells) {
@@ -44,8 +44,8 @@ public class Grid implements Grid2D {
 	}
 
 	private void connect(int p, int q, Direction dir, boolean connected) {
-		edges.set(bit(p, dir), connected);
-		edges.set(bit(q, dir.inverse()), connected);
+		connections.set(bit(p, dir), connected);
+		connections.set(bit(q, dir.inverse()), connected);
 	}
 
 	public Grid(int numCols, int numRows) {
@@ -58,7 +58,7 @@ public class Grid implements Grid2D {
 		this.numCols = numCols;
 		this.numRows = numRows;
 		this.numCells = numCols * numRows;
-		edges = new BitSet(DIRECTION_COUNT * numCells);
+		connections = new BitSet(DIRECTION_COUNT * numCells);
 	}
 
 	@Override
@@ -92,10 +92,11 @@ public class Grid implements Grid2D {
 		vertexStream().forEach(cell -> {
 			Stream.of(Direction.values()).forEach(dir -> {
 				if (isConnected(cell, dir)) {
-					Integer neighbor = neighbor(cell, dir);
-					if (neighbor != null && cell < neighbor) {
-						edgeSet.add(new DefaultEdge<>(cell, neighbor));
-					}
+					neighbor(cell, dir).ifPresent(neighbor -> {
+						if (cell < neighbor) {
+							edgeSet.add(new DefaultEdge<>(cell, neighbor));
+						}
+					});
 				}
 			});
 		});
@@ -104,7 +105,7 @@ public class Grid implements Grid2D {
 
 	@Override
 	public int edgeCount() {
-		return edges.cardinality() / 2; // two bits are set for each edge
+		return connections.cardinality() / 2; // two bits are set for each edge
 	}
 
 	@Override
@@ -137,7 +138,7 @@ public class Grid implements Grid2D {
 
 	@Override
 	public void removeEdges() {
-		edges.clear();
+		connections.clear();
 	}
 
 	@Override
@@ -145,8 +146,8 @@ public class Grid implements Grid2D {
 		checkCell(cell);
 		/*@formatter:off*/
 		return Stream.of(Direction.values())
-			.filter(dir -> isConnected(cell, dir))
-			.map(dir -> neighbor(cell, dir));
+				.filter(dir -> isConnected(cell, dir))
+				.map(dir -> neighbor(cell, dir).get());
 		/*@formatter:on*/
 	}
 
@@ -223,20 +224,28 @@ public class Grid implements Grid2D {
 	}
 
 	@Override
-	public Integer neighbor(Integer cell, Direction dir) {
+	public Stream<Integer> neighbors(Integer cell, Direction... dirs) {
+		if (dirs.length == 0) {
+			dirs = Direction.values();
+		}
+		return Stream.of(dirs).map(dir -> neighbor(cell, dir)).filter(Optional::isPresent).map(Optional::get);
+	}
+
+	@Override
+	public Optional<Integer> neighbor(Integer cell, Direction dir) {
 		checkCell(cell);
 		int col = col(cell) + dir.dx;
 		int row = row(cell) + dir.dy;
 		if (isValidCol(col) && isValidRow(row)) {
-			return index(col, row);
+			return Optional.of(index(col, row));
 		}
-		return null;
+		return Optional.empty();
 	}
 
 	@Override
 	public boolean isConnected(Integer cell, Direction dir) {
 		checkCell(cell);
-		return edges.get(bit(cell, dir));
+		return connections.get(bit(cell, dir));
 	}
 
 	@Override
@@ -245,7 +254,8 @@ public class Grid implements Grid2D {
 		checkCell(target);
 		/*@formatter:off*/
 		return Stream.of(Direction.values())
-			.filter(dir -> target.equals(neighbor(source, dir)))
+			.filter(dir -> neighbor(source, dir).isPresent())
+			.filter(dir -> target.equals(neighbor(source, dir).get()))
 			.findFirst();
 		/*@formatter:on*/
 	}

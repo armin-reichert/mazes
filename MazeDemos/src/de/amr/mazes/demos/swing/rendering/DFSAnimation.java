@@ -85,7 +85,7 @@ public class DFSAnimation {
 
 		@Override
 		public Color getPassageColor(Integer cell, Direction dir) {
-			Integer neighbor = grid.neighbor(cell, dir);
+			Integer neighbor = grid.neighbor(cell, dir).get();
 			if (path.contains(cell) && path.contains(neighbor)) {
 				return pathColor;
 			}

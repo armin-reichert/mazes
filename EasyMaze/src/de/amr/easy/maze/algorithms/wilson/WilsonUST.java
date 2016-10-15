@@ -2,6 +2,7 @@ package de.amr.easy.maze.algorithms.wilson;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
@@ -64,17 +65,16 @@ public abstract class WilsonUST extends MazeAlgorithm {
 		Integer v = walkStart;
 		while (cellOutsideTree(v)) {
 			Direction dir = Direction.randomValue();
-			Integer neighbor = grid.neighbor(v, dir);
-			if (neighbor == null) {
-				continue;
+			Optional<Integer> neighbor = grid.neighbor(v, dir);
+			if (neighbor.isPresent()) {
+				lastWalkDir[v] = dir;
+				v = neighbor.get();
 			}
-			lastWalkDir[v] = dir;
-			v = neighbor;
 		}
 		// add loop-erased path to tree
 		v = walkStart;
 		while (cellOutsideTree(v)) {
-			Integer neighbor = grid.neighbor(v, lastWalkDir[v]);
+			Integer neighbor = grid.neighbor(v, lastWalkDir[v]).get();
 			addCellToTree(v);
 			grid.addEdge(v, neighbor);
 			v = neighbor;
