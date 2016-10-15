@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 
 /**
@@ -22,6 +21,8 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class HuntAndKill extends MazeAlgorithm {
 
+	private final Predicate<Integer> isAlive = a -> grid.get(a) == UNVISITED;
+	private final Predicate<Integer> isDead = isAlive.negate();
 	protected final BitSet targets;
 
 	public HuntAndKill(ObservableDataGrid2D<TraversalState> grid) {
@@ -31,8 +32,6 @@ public class HuntAndKill extends MazeAlgorithm {
 
 	@Override
 	public void accept(Integer animal) {
-		final Predicate<Integer> isAlive = a -> grid.get(a) == UNVISITED;
-		final Predicate<Integer> isDead = isAlive.negate();
 		do {
 			kill(animal);
 			grid.neighbors(animal).filter(isAlive).forEach(targets::set);
@@ -42,10 +41,7 @@ public class HuntAndKill extends MazeAlgorithm {
 				animal = livingNeighbor.get();
 			} else if (!targets.isEmpty()) {
 				animal = hunt();
-				Optional<Integer> deadNeighbor = grid.neighbors(animal).filter(isDead).findAny();
-				if (deadNeighbor.isPresent()) {
-					grid.addEdge(animal, deadNeighbor.get());
-				}
+				grid.addEdge(animal, grid.neighbors(animal).filter(isDead).findAny().get());
 			}
 		} while (!targets.isEmpty());
 	}
