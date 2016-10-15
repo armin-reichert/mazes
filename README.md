@@ -6,6 +6,8 @@ My main goal was to provide maze generation algorithms in a readable form that c
 underlying graph manipulation, not polluted by details of rendering and internals of the used grid
 data structure.
 
+The maze generation code has no dependencies to any UI library (AWT, Swing, JavaFX).
+
 To achieve this
 - Graph and Grid interfaces are provided as the API on which the generators operate
 - An efficient implementation of the Grid API is provided
