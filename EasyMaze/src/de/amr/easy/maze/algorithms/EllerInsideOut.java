@@ -7,6 +7,7 @@ import static de.amr.easy.grid.api.Direction.S;
 import static de.amr.easy.grid.api.Direction.W;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
+import static java.lang.Math.max;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Direction;
@@ -43,7 +45,7 @@ public class EllerInsideOut extends MazeAlgorithm {
 
 	public EllerInsideOut(ObservableDataGrid2D<TraversalState> grid) {
 		super(grid);
-		int n = Math.max(grid.numCols(), grid.numRows());
+		int n = max(grid.numCols(), grid.numRows());
 		offsetX = (n - grid.numCols()) / 2;
 		offsetY = (n - grid.numRows()) / 2;
 		squareGrid = new Grid(n, n);
@@ -175,38 +177,31 @@ public class EllerInsideOut extends MazeAlgorithm {
 		List<Integer> result = new ArrayList<>(4);
 		int squareSize = square.getSize();
 		if (squareSize == 1) {
-			addNeighborIfAny(cell, N, result);
-			addNeighborIfAny(cell, E, result);
-			addNeighborIfAny(cell, S, result);
-			addNeighborIfAny(cell, W, result);
+			addNeighborsIfAny(result, cell, N, E, S, W);
 			return result;
 		}
 		int index = cellIndex.get(cell);
 		if (index == 0) {
-			addNeighborIfAny(cell, W, result);
-			addNeighborIfAny(cell, N, result);
+			addNeighborsIfAny(result, cell, W, N);
 		} else if (index < squareSize - 1) {
-			addNeighborIfAny(cell, N, result);
+			addNeighborsIfAny(result, cell, N);
 		} else if (index == squareSize - 1) {
-			addNeighborIfAny(cell, N, result);
-			addNeighborIfAny(cell, E, result);
+			addNeighborsIfAny(result, cell, N, E);
 		} else if (index < 2 * (squareSize - 1)) {
-			addNeighborIfAny(cell, E, result);
+			addNeighborsIfAny(result, cell, E);
 		} else if (index == 2 * (squareSize - 1)) {
-			addNeighborIfAny(cell, E, result);
-			addNeighborIfAny(cell, S, result);
+			addNeighborsIfAny(result, cell, E, S);
 		} else if (index < 3 * (squareSize - 1)) {
-			addNeighborIfAny(cell, S, result);
+			addNeighborsIfAny(result, cell, S);
 		} else if (index == 3 * (squareSize - 1)) {
-			addNeighborIfAny(cell, S, result);
-			addNeighborIfAny(cell, W, result);
+			addNeighborsIfAny(result, cell, S, W);
 		} else {
-			addNeighborIfAny(cell, W, result);
+			addNeighborsIfAny(result, cell, W);
 		}
 		return result;
 	}
 
-	private void addNeighborIfAny(Integer cell, Direction dir, List<Integer> list) {
-		grid.neighbor(cell, dir).ifPresent(list::add);
+	private void addNeighborsIfAny(List<Integer> list, Integer cell, Direction... dirs) {
+		Stream.of(dirs).forEach(dir -> grid.neighbor(cell, dir).ifPresent(list::add));
 	}
 }
