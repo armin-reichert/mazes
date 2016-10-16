@@ -33,8 +33,9 @@ Implemented maze generation algorithms:
 Path finding algorithms:
 - The EazyGrid library contains a DFS and BFS-based path finding implementation.
 
-To give an example for the clarity of the code in this library, this is the maze generator based on Prim's MST algorithm: 
+To give an example for the clarity of the code in this library, this is the maze generator based on Prim's MST algorithm:
 
+```java
     public class PrimMST extends MazeAlgorithm {
 
 		private final PriorityQueue<DefaultEdge<Integer>> cut = new PriorityQueue<>();
@@ -77,4 +78,5 @@ To give an example for the clarity of the code in this library, this is the maze
 		}
     }
 
+```java
 
