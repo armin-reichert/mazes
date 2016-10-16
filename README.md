@@ -33,7 +33,8 @@ Implemented maze generation algorithms:
 Path finding algorithms:
 - The EazyGrid library contains a DFS and BFS-based path finding implementation.
 
-To give an example for the clarity of the code:
+
+To give an example for the clarity of the code in this library:
 
     public class PrimMST extends MazeAlgorithm {
 
@@ -75,6 +76,6 @@ To give an example for the clarity of the code:
 	private boolean outsideMaze(Integer cell) {
 		return grid.get(cell) != COMPLETED;
 	}
-}
+    }
 
 
