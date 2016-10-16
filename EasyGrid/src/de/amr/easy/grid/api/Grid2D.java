@@ -97,6 +97,17 @@ public interface Grid2D extends Graph<Integer, DefaultEdge<Integer>> {
 	public Stream<Integer> neighbors(Integer cell, Direction... dirs);
 
 	/**
+	 * Returns all neighbors of a cell in a random order.
+	 * 
+	 * @param cell
+	 *          a grid cell
+	 * @return stream of the neighbor cells in random order
+	 */
+	public default Stream<Integer> neighborsPermuted(Integer cell) {
+		return neighbors(cell, Direction.valuesPermuted());
+	}
+
+	/**
 	 * 
 	 * @param cell
 	 *          a grid position
@@ -127,7 +138,7 @@ public interface Grid2D extends Graph<Integer, DefaultEdge<Integer>> {
 	 * @return a random neighbor cell
 	 */
 	public default Optional<Integer> randomNeighbor(Integer cell) {
-		return neighbors(cell, Direction.valuesPermuted()).findFirst();
+		return neighborsPermuted(cell).findFirst();
 	}
 
 	/**

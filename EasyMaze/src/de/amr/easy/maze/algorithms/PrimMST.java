@@ -7,7 +7,6 @@ import java.util.PriorityQueue;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.impl.DefaultEdge;
-import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 
 /**
@@ -43,7 +42,7 @@ public class PrimMST extends MazeAlgorithm {
 	private void extendMaze(Integer cell) {
 		grid.set(cell, COMPLETED);
 		/*@formatter:off*/
-		grid.neighbors(cell, Direction.valuesPermuted())
+		grid.neighborsPermuted(cell)
 			.filter(this::outsideMaze)
 			.forEach(frontierCell -> {
 				grid.set(frontierCell, VISITED);

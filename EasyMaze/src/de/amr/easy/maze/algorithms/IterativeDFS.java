@@ -10,7 +10,6 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 
 /**
@@ -38,7 +37,7 @@ public class IterativeDFS extends MazeAlgorithm {
 		stack.push(cell);
 		grid.set(cell, VISITED);
 		while (!stack.isEmpty()) {
-			Optional<Integer> unvisitedNeighbor = grid.neighbors(cell, Direction.valuesPermuted()).filter(isUnvisited).findAny();
+			Optional<Integer> unvisitedNeighbor = grid.neighborsPermuted(cell).filter(isUnvisited).findAny();
 			if (unvisitedNeighbor.isPresent()) {
 				Integer neighbor = unvisitedNeighbor.get();
 				if (grid.randomNeighbor(neighbor).isPresent()) {
