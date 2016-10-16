@@ -64,7 +64,7 @@ To give an example for the clarity of the code in this library, this is the maze
 		private void extendMaze(Integer cell) {
 			grid.set(cell, COMPLETED);
 			/*@formatter:off*/
-			grid.neighborsPermuted(cell)
+			grid.neighbors(cell)
 				.filter(this::outsideMaze)
 				.forEach(frontierCell -> {
 					grid.set(frontierCell, VISITED);
