@@ -77,6 +77,5 @@ To give an example for the clarity of the code in this library, this is the maze
 			return grid.get(cell) != COMPLETED;
 		}
     }
-
 ```java
 
