@@ -18,7 +18,7 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class RandomBFS extends MazeAlgorithm {
 
-	private final Set<Integer> mazeCells = new HashSet<>();
+	private final Set<Integer> maze = new HashSet<>();
 	private final List<Integer> frontier = new LinkedList<>();
 
 	public RandomBFS(ObservableDataGrid2D<TraversalState> grid) {
@@ -27,23 +27,24 @@ public class RandomBFS extends MazeAlgorithm {
 
 	@Override
 	public void accept(Integer start) {
-		mazeCells.add(start);
-		frontier.add(start);
-		grid.set(start, VISITED);
+		extendMaze(start);
 		while (!frontier.isEmpty()) {
-			int index = frontier.size() == 1 ? 0 : rnd.nextInt(frontier.size());
-			Integer cell = frontier.remove(index);
+			Integer cell = frontier.remove(rnd.nextInt(frontier.size()));
 			/*@formatter:off*/
-			grid.neighborsPermuted(cell)
-				.filter(neighbor -> !mazeCells.contains(neighbor))
-				.forEach(newMazeCell -> {
-					mazeCells.add(newMazeCell);
-					frontier.add(newMazeCell);
-					grid.set(newMazeCell, VISITED);
-					grid.addEdge(cell, newMazeCell);
+			grid.neighbors(cell)
+				.filter(neighbor -> !maze.contains(neighbor))
+				.forEach(neighbor -> {
+					extendMaze(neighbor);
+					grid.addEdge(cell, neighbor);
 				});
 			/*@formatter:on*/
 			grid.set(cell, COMPLETED);
 		}
+	}
+
+	private void extendMaze(Integer cell) {
+		grid.set(cell, VISITED);
+		maze.add(cell);
+		frontier.add(cell);
 	}
 }
