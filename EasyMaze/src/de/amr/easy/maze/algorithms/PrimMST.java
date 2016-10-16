@@ -42,7 +42,7 @@ public class PrimMST extends MazeAlgorithm {
 	private void extendMaze(Integer cell) {
 		grid.set(cell, COMPLETED);
 		/*@formatter:off*/
-		grid.neighborsPermuted(cell)
+		grid.neighbors(cell)
 			.filter(this::outsideMaze)
 			.forEach(frontierCell -> {
 				grid.set(frontierCell, VISITED);
