@@ -64,10 +64,6 @@ public class AldousBroderUST extends MazeAlgorithm {
 		return grid
 			.randomNeighbor(v)
 			.map(u -> {
-				// animate visit
-				TraversalState state = grid.get(u);
-				grid.set(u, VISITED);
-				grid.set(u, state);
 				// if first time visit, add neighbor to maze
 				if (grid.get(u) == UNVISITED) {
 					grid.set(u, COMPLETED);
@@ -76,7 +72,22 @@ public class AldousBroderUST extends MazeAlgorithm {
 				}
 				return u;
 			})
+			.map(this::animateCellVisit)
 			.get();
 		/*@formatter:on*/
+	}
+
+	/**
+	 * Set cell state temporarily to "visited" such that renderer is informed.
+	 * 
+	 * @param cell
+	 *          a grid cell
+	 * @return the same cell
+	 */
+	private Integer animateCellVisit(Integer cell) {
+		TraversalState state = grid.get(cell);
+		grid.set(cell, VISITED);
+		grid.set(cell, state);
+		return cell;
 	}
 }
