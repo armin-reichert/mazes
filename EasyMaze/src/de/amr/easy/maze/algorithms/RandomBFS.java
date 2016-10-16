@@ -3,8 +3,8 @@ package de.amr.easy.maze.algorithms;
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
+import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -19,7 +19,7 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
 public class RandomBFS extends MazeAlgorithm {
 
 	private final BitSet maze;
-	private final List<Integer> frontier = new LinkedList<>();
+	private final List<Integer> frontier = new ArrayList<>();
 
 	public RandomBFS(ObservableDataGrid2D<TraversalState> grid) {
 		super(grid);
