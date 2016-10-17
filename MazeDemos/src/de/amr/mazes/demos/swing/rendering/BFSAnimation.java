@@ -3,6 +3,7 @@ package de.amr.mazes.demos.swing.rendering;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.LinkedHashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
@@ -115,8 +116,13 @@ public class BFSAnimation {
 
 		@Override
 		public Color getPassageColor(Integer cell, Direction dir) {
-			if (path.contains(cell) && path.contains(grid.neighbor(cell, dir))) {
-				return pathColor;
+			if (path.contains(cell)) {
+				Optional<Integer> neighbor = grid.neighbor(cell, dir);
+				if (neighbor.isPresent()) {
+					if (path.contains(neighbor.get())) {
+						return pathColor;
+					}
+				}
 			}
 			return cellColor(cell);
 		}
