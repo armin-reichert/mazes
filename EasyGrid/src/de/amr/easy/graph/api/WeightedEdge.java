@@ -1,7 +1,5 @@
 package de.amr.easy.graph.api;
 
-import java.util.Objects;
-
 /**
  * Edge of a weighted graph. Edge weight type is <code>double</code>.
  * 
@@ -10,38 +8,17 @@ import java.util.Objects;
  * @param <V>
  *          graph vertex type
  */
-public class WeightedEdge<V> implements Edge<V> {
+public class WeightedEdge<V> extends SimpleEdge<V> implements Edge<V>, Comparable<WeightedEdge<V>> {
 
-	private final V u;
-	private final V v;
 	private double weight;
 
 	public WeightedEdge(V u, V v, double weight) {
-		Objects.requireNonNull(u);
-		Objects.requireNonNull(v);
-		this.u = u;
-		this.v = v;
+		super(u, v);
 		this.weight = weight;
 	}
 
 	public WeightedEdge(V head, V tail) {
 		this(head, tail, 0);
-	}
-
-	@Override
-	public V either() {
-		return u;
-	}
-
-	@Override
-	public V other(V v) {
-		if (v == this.v) {
-			return this.u;
-		}
-		if (v == this.u) {
-			return this.v;
-		}
-		throw new IllegalStateException();
 	}
 
 	@Override
@@ -75,18 +52,16 @@ public class WeightedEdge<V> implements Edge<V> {
 		return true;
 	}
 
-	@Override
 	public double getWeight() {
 		return weight;
 	}
 
-	@Override
 	public void setWeight(double weight) {
 		this.weight = weight;
 	}
 
 	@Override
-	public int compareTo(Edge<V> edge) {
+	public int compareTo(WeightedEdge<V> edge) {
 		if (weight < edge.getWeight()) {
 			return -1;
 		} else if (weight > edge.getWeight()) {
