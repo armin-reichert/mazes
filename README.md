@@ -76,5 +76,5 @@ public class PrimMST extends MazeAlgorithm {
 	private boolean outsideMaze(Integer cell) {
 		return grid.get(cell) != COMPLETED;
 	}
-}```
-
+}
+```
