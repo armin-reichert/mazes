@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 import de.amr.easy.maze.datastructures.Partition;
 import de.amr.easy.maze.datastructures.Partition.EquivClass;
@@ -40,10 +40,10 @@ public class KruskalMST extends MazeAlgorithm {
 		});
 	}
 
-	private Stream<WeightedEdge<Integer>> fullGridEdgesInRandomOrder() {
+	private Stream<SimpleEdge<Integer>> fullGridEdgesInRandomOrder() {
 		grid.setEventsEnabled(false);
 		grid.makeFullGrid();
-		List<WeightedEdge<Integer>> edges = grid.edgeStream().collect(Collectors.toList());
+		List<SimpleEdge<Integer>> edges = grid.edgeStream().collect(Collectors.toList());
 		Collections.shuffle(edges); // takes linear time
 		grid.removeEdges();
 		grid.setEventsEnabled(true);
