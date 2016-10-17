@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import de.amr.easy.graph.impl.DefaultEdge;
+import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.GridPosition;
@@ -87,14 +87,14 @@ public class Grid implements Grid2D {
 	}
 
 	@Override
-	public Stream<DefaultEdge<Integer>> edgeStream() {
-		Set<DefaultEdge<Integer>> edgeSet = new HashSet<>();
+	public Stream<WeightedEdge<Integer>> edgeStream() {
+		Set<WeightedEdge<Integer>> edgeSet = new HashSet<>();
 		vertexStream().forEach(cell -> {
 			Stream.of(Direction.values()).forEach(dir -> {
 				if (isConnected(cell, dir)) {
 					neighbor(cell, dir).ifPresent(neighbor -> {
 						if (cell < neighbor) {
-							edgeSet.add(new DefaultEdge<>(cell, neighbor));
+							edgeSet.add(new WeightedEdge<>(cell, neighbor));
 						}
 					});
 				}
@@ -114,10 +114,10 @@ public class Grid implements Grid2D {
 	}
 
 	@Override
-	public Optional<DefaultEdge<Integer>> edge(Integer p, Integer q) {
+	public Optional<WeightedEdge<Integer>> edge(Integer p, Integer q) {
 		checkCell(p);
 		checkCell(q);
-		return adjacent(p, q) ? Optional.of(new DefaultEdge<>(p, q)) : Optional.empty();
+		return adjacent(p, q) ? Optional.of(new WeightedEdge<>(p, q)) : Optional.empty();
 	}
 
 	@Override

@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.Graph;
-import de.amr.easy.graph.impl.DefaultEdge;
+import de.amr.easy.graph.api.WeightedEdge;
 
 /**
  * A two-dimensional grid of "cells", i.e. a graph with vertex set
@@ -21,7 +21,7 @@ import de.amr.easy.graph.impl.DefaultEdge;
  * 
  * @author Armin Reichert
  */
-public interface Grid2D extends Graph<Integer, DefaultEdge<Integer>> {
+public interface Grid2D extends Graph<Integer, WeightedEdge<Integer>> {
 
 	/**
 	 * @return the number of columns (width) of the grid

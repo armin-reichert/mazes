@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.Graph;
+import de.amr.easy.graph.api.WeightedEdge;
 
 /**
  * Adjacency set based implementation of an undirected graph.
@@ -22,10 +23,10 @@ import de.amr.easy.graph.api.Graph;
  * @param <E>
  *          edge type
  */
-public class DefaultGraph<V> implements Graph<V, DefaultEdge<V>> {
+public class DefaultGraph<V> implements Graph<V, WeightedEdge<V>> {
 
 	private final Set<V> vertexSet = new HashSet<>();
-	private final Map<V, Set<DefaultEdge<V>>> adjEdges = new HashMap<>();
+	private final Map<V, Set<WeightedEdge<V>>> adjEdges = new HashMap<>();
 	private int numEdges; // number of undirected edges
 
 	public DefaultGraph() {
@@ -34,24 +35,24 @@ public class DefaultGraph<V> implements Graph<V, DefaultEdge<V>> {
 	@Override
 	public void addVertex(V vertex) {
 		vertexSet.add(vertex);
-		adjEdges.put(vertex, new HashSet<DefaultEdge<V>>()); // TODO improve
+		adjEdges.put(vertex, new HashSet<WeightedEdge<V>>()); // TODO improve
 	}
 
 	@Override
 	public void addEdge(V v, V w) {
 		assertVertexExists(v);
 		assertVertexExists(w);
-		DefaultEdge<V> edge = new DefaultEdge<>(v, w);
+		WeightedEdge<V> edge = new WeightedEdge<>(v, w);
 		adjEdges.get(v).add(edge);
 		adjEdges.get(w).add(edge);
 		numEdges += 1;
 	}
 
 	@Override
-	public Optional<DefaultEdge<V>> edge(V v, V w) {
+	public Optional<WeightedEdge<V>> edge(V v, V w) {
 		assertVertexExists(v);
 		assertVertexExists(w);
-		for (DefaultEdge<V> edge : adjEdges.get(v)) {
+		for (WeightedEdge<V> edge : adjEdges.get(v)) {
 			if (w == edge.either() || w == edge.other(v)) {
 				return Optional.of(edge);
 			}
@@ -83,7 +84,7 @@ public class DefaultGraph<V> implements Graph<V, DefaultEdge<V>> {
 	public boolean adjacent(V v, V w) {
 		assertVertexExists(v);
 		assertVertexExists(w);
-		for (DefaultEdge<V> edge : adjEdges.get(v)) {
+		for (WeightedEdge<V> edge : adjEdges.get(v)) {
 			if (w == edge.either() || w == edge.other(v)) {
 				return true;
 			}
@@ -101,10 +102,10 @@ public class DefaultGraph<V> implements Graph<V, DefaultEdge<V>> {
 		return vertexSet.size();
 	}
 
-	private Set<DefaultEdge<V>> createEdgeSet() {
-		Set<DefaultEdge<V>> edges = new HashSet<>();
+	private Set<WeightedEdge<V>> createEdgeSet() {
+		Set<WeightedEdge<V>> edges = new HashSet<>();
 		for (V v : vertexSet) {
-			for (DefaultEdge<V> edge : adjEdges.get(v)) {
+			for (WeightedEdge<V> edge : adjEdges.get(v)) {
 				edges.add(edge);
 			}
 		}
@@ -112,7 +113,7 @@ public class DefaultGraph<V> implements Graph<V, DefaultEdge<V>> {
 	}
 
 	@Override
-	public Stream<DefaultEdge<V>> edgeStream() {
+	public Stream<WeightedEdge<V>> edgeStream() {
 		return createEdgeSet().stream(); // TODO more efficient way possible?
 	}
 
@@ -131,7 +132,7 @@ public class DefaultGraph<V> implements Graph<V, DefaultEdge<V>> {
 	public Stream<V> adjVertices(V v) {
 		assertVertexExists(v);
 		List<V> result = new ArrayList<>();
-		for (DefaultEdge<V> e : adjEdges.get(v)) {
+		for (WeightedEdge<V> e : adjEdges.get(v)) {
 			if (e.either() == v) {
 				result.add(e.other(v));
 			} else {
@@ -149,7 +150,7 @@ public class DefaultGraph<V> implements Graph<V, DefaultEdge<V>> {
 		for (V v : vertexSet) {
 			s.append(v).append("\n");
 		}
-		for (DefaultEdge<V> e : createEdgeSet()) {
+		for (WeightedEdge<V> e : createEdgeSet()) {
 			V v = e.either();
 			V w = e.other(v);
 			s.append(v).append(" ").append(w).append("\n");

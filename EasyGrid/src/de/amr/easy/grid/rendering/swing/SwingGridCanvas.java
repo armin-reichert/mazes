@@ -13,12 +13,12 @@ import javax.swing.JComponent;
 
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;
+import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.graph.event.EdgeAddedEvent;
 import de.amr.easy.graph.event.EdgeChangeEvent;
 import de.amr.easy.graph.event.EdgeRemovedEvent;
 import de.amr.easy.graph.event.GraphListener;
 import de.amr.easy.graph.event.VertexChangeEvent;
-import de.amr.easy.graph.impl.DefaultEdge;
 import de.amr.easy.grid.api.ObservableGrid2D;
 
 /**
@@ -29,7 +29,7 @@ import de.amr.easy.grid.api.ObservableGrid2D;
  * 
  * @author Armin Reichert
  */
-public class SwingGridCanvas extends JComponent implements GraphListener<Integer, DefaultEdge<Integer>> {
+public class SwingGridCanvas extends JComponent implements GraphListener<Integer, WeightedEdge<Integer>> {
 
 	private BufferedImage buffer;
 	private Graphics2D g;
@@ -157,27 +157,27 @@ public class SwingGridCanvas extends JComponent implements GraphListener<Integer
 	// GraphListener implementation
 
 	@Override
-	public void vertexChanged(VertexChangeEvent<Integer, DefaultEdge<Integer>> event) {
+	public void vertexChanged(VertexChangeEvent<Integer, WeightedEdge<Integer>> event) {
 		renderGridCell(event.getVertex());
 	}
 
 	@Override
-	public void edgeAdded(EdgeAddedEvent<Integer, DefaultEdge<Integer>> event) {
+	public void edgeAdded(EdgeAddedEvent<Integer, WeightedEdge<Integer>> event) {
 		renderGridPassage(event.getEdge(), true);
 	}
 
 	@Override
-	public void edgeRemoved(EdgeRemovedEvent<Integer, DefaultEdge<Integer>> event) {
+	public void edgeRemoved(EdgeRemovedEvent<Integer, WeightedEdge<Integer>> event) {
 		renderGridPassage(event.getEdge(), false);
 	}
 
 	@Override
-	public void edgeChanged(EdgeChangeEvent<Integer, DefaultEdge<Integer>> event) {
+	public void edgeChanged(EdgeChangeEvent<Integer, WeightedEdge<Integer>> event) {
 		renderGridPassage(event.getEdge(), true);
 	}
 
 	@Override
-	public void graphChanged(ObservableGraph<Integer, DefaultEdge<Integer>> graph) {
+	public void graphChanged(ObservableGraph<Integer, WeightedEdge<Integer>> graph) {
 		render();
 	}
 }

@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import de.amr.easy.graph.api.ObservableGraph;
+import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.graph.event.EdgeChangeEvent;
 import de.amr.easy.graph.event.GraphListener;
 import de.amr.easy.graph.event.VertexChangeEvent;
@@ -19,9 +20,9 @@ import de.amr.easy.graph.event.VertexChangeEvent;
  * @param <E>
  *          edge type
  */
-public class DefaultObservableGraph<V> extends DefaultGraph<V> implements ObservableGraph<V, DefaultEdge<V>> {
+public class DefaultObservableGraph<V> extends DefaultGraph<V> implements ObservableGraph<V, WeightedEdge<V>> {
 
-	private Set<GraphListener<V, DefaultEdge<V>>> listeners = new HashSet<>();
+	private Set<GraphListener<V, WeightedEdge<V>>> listeners = new HashSet<>();
 	private boolean listeningSuspended = false;
 
 	public DefaultObservableGraph() {
@@ -29,12 +30,12 @@ public class DefaultObservableGraph<V> extends DefaultGraph<V> implements Observ
 	}
 
 	@Override
-	public void addGraphListener(GraphListener<V, DefaultEdge<V>> listener) {
+	public void addGraphListener(GraphListener<V, WeightedEdge<V>> listener) {
 		listeners.add(listener);
 	}
 
 	@Override
-	public void removeGraphListener(GraphListener<V, DefaultEdge<V>> listener) {
+	public void removeGraphListener(GraphListener<V, WeightedEdge<V>> listener) {
 		listeners.remove(listener);
 	}
 
@@ -46,25 +47,25 @@ public class DefaultObservableGraph<V> extends DefaultGraph<V> implements Observ
 	@Override
 	public void fireVertexChange(V vertex, Object oldValue, Object newValue) {
 		if (!listeningSuspended) {
-			for (GraphListener<V, DefaultEdge<V>> listener : listeners) {
+			for (GraphListener<V, WeightedEdge<V>> listener : listeners) {
 				listener.vertexChanged(new VertexChangeEvent<>(this, vertex, oldValue, newValue));
 			}
 		}
 	}
 
 	@Override
-	public void fireEdgeChange(DefaultEdge<V> edge, Object oldValue, Object newValue) {
+	public void fireEdgeChange(WeightedEdge<V> edge, Object oldValue, Object newValue) {
 		if (!listeningSuspended) {
-			for (GraphListener<V, DefaultEdge<V>> listener : listeners) {
+			for (GraphListener<V, WeightedEdge<V>> listener : listeners) {
 				listener.edgeChanged(new EdgeChangeEvent<>(this, edge, oldValue, newValue));
 			}
 		}
 	}
 
 	@Override
-	public void fireGraphChange(ObservableGraph<V, DefaultEdge<V>> graph) {
+	public void fireGraphChange(ObservableGraph<V, WeightedEdge<V>> graph) {
 		if (!listeningSuspended) {
-			for (GraphListener<V, DefaultEdge<V>> listener : listeners) {
+			for (GraphListener<V, WeightedEdge<V>> listener : listeners) {
 				listener.graphChanged(graph);
 			}
 		}

@@ -13,7 +13,7 @@ import de.amr.easy.game.Application;
 import de.amr.easy.game.input.Key;
 import de.amr.easy.game.scene.Scene;
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.impl.DefaultEdge;
+import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.ObservableDataGrid;
@@ -21,7 +21,7 @@ import de.amr.easy.grid.impl.ObservableDataGrid;
 public class BFSTraversal extends Scene<MazeDemo> {
 
 	private ObservableDataGrid<TraversalState> grid;
-	private BreadthFirstTraversal<Integer, DefaultEdge<Integer>> bfs;
+	private BreadthFirstTraversal<Integer, WeightedEdge<Integer>> bfs;
 	private GridAnimation animation;
 	private Thread bfsRunner;
 	private Integer startCell;

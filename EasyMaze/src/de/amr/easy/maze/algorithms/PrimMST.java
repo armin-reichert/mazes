@@ -6,7 +6,7 @@ import static de.amr.easy.graph.api.TraversalState.VISITED;
 import java.util.PriorityQueue;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.impl.DefaultEdge;
+import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 
 /**
@@ -16,7 +16,7 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class PrimMST extends MazeAlgorithm {
 
-	private final PriorityQueue<DefaultEdge<Integer>> cut = new PriorityQueue<>();
+	private final PriorityQueue<WeightedEdge<Integer>> cut = new PriorityQueue<>();
 
 	public PrimMST(ObservableDataGrid2D<TraversalState> grid) {
 		super(grid);
@@ -26,7 +26,7 @@ public class PrimMST extends MazeAlgorithm {
 	public void accept(Integer start) {
 		extendMaze(start);
 		while (!cut.isEmpty()) {
-			DefaultEdge<Integer> edge = cut.poll();
+			WeightedEdge<Integer> edge = cut.poll();
 			Integer eitherCell = edge.either(), otherCell = edge.other(eitherCell);
 			if (outsideMaze(eitherCell) || outsideMaze(otherCell)) {
 				grid.addEdge(eitherCell, otherCell);
@@ -46,7 +46,7 @@ public class PrimMST extends MazeAlgorithm {
 			.filter(this::outsideMaze)
 			.forEach(frontierCell -> {
 				grid.set(frontierCell, VISITED);
-				cut.add(new DefaultEdge<>(cell, frontierCell, rnd.nextDouble()));
+				cut.add(new WeightedEdge<>(cell, frontierCell, rnd.nextDouble()));
 			});
 		/*@formatter:on*/
 	}
