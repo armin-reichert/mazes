@@ -1,12 +1,11 @@
 package de.amr.easy.maze.algorithms;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
+import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.List;
-import java.util.function.Predicate;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
@@ -18,35 +17,31 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class RandomBFS extends MazeAlgorithm {
 
-	private final BitSet maze;
 	private final List<Integer> frontier = new ArrayList<>();
 
 	public RandomBFS(ObservableDataGrid2D<TraversalState> grid) {
 		super(grid);
-		maze = new BitSet(grid.numCells());
 	}
 
 	@Override
 	public void accept(Integer start) {
-		Predicate<Integer> outsideMaze = cell -> !maze.get(cell);
-		addToMaze(start);
+		extendsMaze(start);
 		while (!frontier.isEmpty()) {
 			Integer cell = frontier.remove(rnd.nextInt(frontier.size()));
-			/*@formatter:off*/
-			grid.neighbors(cell)
-				.filter(outsideMaze)
-				.forEach(neighbor -> {
-					addToMaze(neighbor);
-					grid.addEdge(cell, neighbor);
-				});
-			/*@formatter:on*/
+			grid.neighbors(cell).filter(this::outsideMaze).forEach(neighbor -> {
+				extendsMaze(neighbor);
+				grid.addEdge(cell, neighbor);
+			});
 			grid.set(cell, COMPLETED);
 		}
 	}
 
-	private void addToMaze(Integer cell) {
+	private void extendsMaze(Integer cell) {
 		grid.set(cell, VISITED);
-		maze.set(cell);
 		frontier.add(cell);
+	}
+
+	private boolean outsideMaze(Integer cell) {
+		return grid.get(cell) == UNVISITED;
 	}
 }

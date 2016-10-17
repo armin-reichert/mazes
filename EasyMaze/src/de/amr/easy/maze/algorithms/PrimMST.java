@@ -27,28 +27,20 @@ public class PrimMST extends MazeAlgorithm {
 		extendMaze(start);
 		while (!cut.isEmpty()) {
 			WeightedEdge<Integer> edge = cut.poll();
-			Integer eitherCell = edge.either(), otherCell = edge.other(eitherCell);
-			if (outsideMaze(eitherCell) || outsideMaze(otherCell)) {
-				grid.addEdge(eitherCell, otherCell);
-				extendMaze(outsideMaze(eitherCell) ? eitherCell : otherCell);
+			Integer either = edge.either(), other = edge.other(either);
+			if (outsideMaze(either) || outsideMaze(other)) {
+				grid.addEdge(either, other);
+				extendMaze(outsideMaze(either) ? either : other);
 			}
 		}
 	}
 
-	/**
-	 * Adds the given cell to the maze and extends the cut to the rest of the grid with randomly
-	 * weighted edges.
-	 */
 	private void extendMaze(Integer cell) {
+		grid.neighbors(cell).filter(this::outsideMaze).forEach(neighbor -> {
+			grid.set(neighbor, VISITED);
+			cut.add(new WeightedEdge<>(cell, neighbor, rnd.nextDouble()));
+		});
 		grid.set(cell, COMPLETED);
-		/*@formatter:off*/
-		grid.neighbors(cell)
-			.filter(this::outsideMaze)
-			.forEach(frontierCell -> {
-				grid.set(frontierCell, VISITED);
-				cut.add(new WeightedEdge<>(cell, frontierCell, rnd.nextDouble()));
-			});
-		/*@formatter:on*/
 	}
 
 	private boolean outsideMaze(Integer cell) {
