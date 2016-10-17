@@ -4,7 +4,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.maze.misc.Utils;
+import de.amr.mazes.demos.misc.Utils;
 
 public class FullGridApp extends GridSampleApp {
 

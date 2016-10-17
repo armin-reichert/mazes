@@ -13,7 +13,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JSlider;
 
 import de.amr.easy.grid.impl.ObservableDataGrid;
-import de.amr.easy.maze.misc.Utils;
+import de.amr.mazes.demos.misc.Utils;
 import de.amr.mazes.demos.swing.app.CreateAllMazesAction;
 import de.amr.mazes.demos.swing.app.CreateSingleMazeAction;
 import de.amr.mazes.demos.swing.app.MazeDemoApp;

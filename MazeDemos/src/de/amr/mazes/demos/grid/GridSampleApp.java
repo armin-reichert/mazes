@@ -22,7 +22,7 @@ import de.amr.easy.grid.impl.ObservableDataGrid;
 import de.amr.easy.grid.rendering.swing.SwingDefaultGridRenderingModel;
 import de.amr.easy.grid.rendering.swing.SwingGridCanvas;
 import de.amr.easy.grid.rendering.swing.SwingGridRenderingModel;
-import de.amr.easy.maze.misc.Utils;
+import de.amr.mazes.demos.misc.Utils;
 
 /**
  * Base class for grid sample applications.
