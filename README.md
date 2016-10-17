@@ -33,7 +33,7 @@ Implemented maze generation algorithms:
 Path finding algorithms:
 - The EazyGrid library contains a DFS and BFS-based path finding implementation.
 
-To give an example for the code in this library, this is the maze generator based on Prim's MST algorithm:
+To give an example for the code in this library, see Prim's MST algorithm versus Random-Breadth-First-Search:
 
 ```java
 public class PrimMST extends MazeAlgorithm {
@@ -49,32 +49,57 @@ public class PrimMST extends MazeAlgorithm {
 		extendMaze(start);
 		while (!cut.isEmpty()) {
 			WeightedEdge<Integer> edge = cut.poll();
-			Integer eitherCell = edge.either(), otherCell = edge.other(eitherCell);
-			if (outsideMaze(eitherCell) || outsideMaze(otherCell)) {
-				grid.addEdge(eitherCell, otherCell);
-				extendMaze(outsideMaze(eitherCell) ? eitherCell : otherCell);
+			Integer either = edge.either(), other = edge.other(either);
+			if (outsideMaze(either) || outsideMaze(other)) {
+				grid.addEdge(either, other);
+				extendMaze(outsideMaze(either) ? either : other);
 			}
 		}
 	}
 
-	/**
-	 * Adds the given cell to the maze and extends the cut to the rest of the grid with randomly
-	 * weighted edges.
-	 */
 	private void extendMaze(Integer cell) {
+		grid.neighbors(cell).filter(this::outsideMaze).forEach(neighbor -> {
+			grid.set(neighbor, VISITED);
+			cut.add(new WeightedEdge<>(cell, neighbor, rnd.nextDouble()));
+		});
 		grid.set(cell, COMPLETED);
-		/*@formatter:off*/
-		grid.neighbors(cell)
-			.filter(this::outsideMaze)
-			.forEach(frontierCell -> {
-				grid.set(frontierCell, VISITED);
-				cut.add(new WeightedEdge<>(cell, frontierCell, rnd.nextDouble()));
-			});
-		/*@formatter:on*/
 	}
 
 	private boolean outsideMaze(Integer cell) {
 		return grid.get(cell) != COMPLETED;
 	}
-}```
+}
+```
 
+```java
+public class RandomBFS extends MazeAlgorithm {
+
+	private final List<Integer> frontier = new ArrayList<>();
+
+	public RandomBFS(ObservableDataGrid2D<TraversalState> grid) {
+		super(grid);
+	}
+
+	@Override
+	public void accept(Integer start) {
+		extendsMaze(start);
+		while (!frontier.isEmpty()) {
+			Integer cell = frontier.remove(rnd.nextInt(frontier.size()));
+			grid.neighbors(cell).filter(this::outsideMaze).forEach(neighbor -> {
+				extendsMaze(neighbor);
+				grid.addEdge(cell, neighbor);
+			});
+			grid.set(cell, COMPLETED);
+		}
+	}
+
+	private void extendsMaze(Integer cell) {
+		grid.set(cell, VISITED);
+		frontier.add(cell);
+	}
+
+	private boolean outsideMaze(Integer cell) {
+		return grid.get(cell) == UNVISITED;
+	}
+}
+```
