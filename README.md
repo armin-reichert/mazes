@@ -82,18 +82,18 @@ public class RandomBFS extends MazeAlgorithm {
 
 	@Override
 	public void accept(Integer start) {
-		extendsMaze(start);
+		extendMaze(start);
 		while (!frontier.isEmpty()) {
 			Integer cell = frontier.remove(rnd.nextInt(frontier.size()));
 			grid.neighbors(cell).filter(this::outsideMaze).forEach(neighbor -> {
-				extendsMaze(neighbor);
+				extendMaze(neighbor);
 				grid.addEdge(cell, neighbor);
 			});
 			grid.set(cell, COMPLETED);
 		}
 	}
 
-	private void extendsMaze(Integer cell) {
+	private void extendMaze(Integer cell) {
 		grid.set(cell, VISITED);
 		frontier.add(cell);
 	}
