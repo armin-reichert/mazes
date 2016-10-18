@@ -1,5 +1,6 @@
 package de.amr.easy.grid.tests;
 
+import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.grid.api.Direction.E;
 import static de.amr.easy.grid.api.Direction.N;
 import static de.amr.easy.grid.api.Direction.S;
@@ -12,7 +13,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.graph.alg.CycleFinderUnionFind;
+import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.grid.api.DataGrid2D;
+import de.amr.easy.grid.impl.DataGrid;
 import de.amr.easy.grid.impl.Grid;
 
 /**
@@ -26,11 +30,11 @@ public class GridTest {
 	private static final int WIDTH = 1000;
 	private static final int HEIGHT = 1000;
 
-	private Grid2D grid;
+	private DataGrid2D<TraversalState> grid;
 
 	@Before
 	public void setUp() {
-		grid = new Grid(WIDTH, HEIGHT);
+		grid = new DataGrid<>(WIDTH, HEIGHT, UNVISITED);
 	}
 
 	@After
@@ -147,4 +151,20 @@ public class GridTest {
 		}
 	}
 
+	@Test
+	public void testCycleFinder() {
+		Integer a = grid.cell(0, 0);
+		Integer b = grid.cell(1, 0);
+		Integer c = grid.cell(1, 1);
+		Integer d = grid.cell(0, 1);
+		grid.addEdge(a, b);
+		grid.addEdge(b, c);
+		grid.addEdge(c, d);
+		assertTrue(grid.edgeCount() == 3);
+		assertFalse(new CycleFinderUnionFind<>(grid, 0).isCycleDetected());
+
+		grid.addEdge(d, a);
+		assertTrue(grid.edgeCount() == 4);
+		assertTrue(new CycleFinderUnionFind<>(grid, 0).isCycleDetected());
+	}
 }

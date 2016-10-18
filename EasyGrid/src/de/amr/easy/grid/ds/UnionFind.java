@@ -1,4 +1,4 @@
-package de.amr.easy.maze.datastructures;
+package de.amr.easy.grid.ds;
 
 import java.util.ArrayList;
 import java.util.HashMap;

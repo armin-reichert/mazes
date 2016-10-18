@@ -3,11 +3,13 @@ package de.amr.easy.maze.tests;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.amr.easy.graph.alg.CycleFinderUnionFind;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 import de.amr.easy.grid.impl.ObservableDataGrid;
@@ -57,6 +59,7 @@ public class MazeGeneratorTest {
 	@After
 	public void tearDown() {
 		assertEquals(grid.edgeCount(), grid.vertexCount() - 1);
+		assertFalse(new CycleFinderUnionFind<>(grid, grid.cell(CENTER)).isCycleDetected());
 	}
 
 	@Test
