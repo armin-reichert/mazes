@@ -15,25 +15,24 @@ To achieve this
 - Maze generation algorithms work strictly against the Grid API, renderers are attached as graph
 listeners
 
-Implemented maze generation algorithms:
+Implemented maze generation algorithms so far:
 
-- Aldous-Broder
-- Binary Tree (top-down and random)
-- Eller's
-- My own variation of Eller's growing the maze inside-out
-- Hunt-And-Kill (top-down and random)
-- Iterative random depth-first-search
-- Kruskal Minimum Spanning Tree
-- Prim Minimum Spanning Tree
-- Random breadth-first-search
-- Recursive depth-first-search
-- Recursive division
-- Wilson' algorithm (14 different variants)
+- [Aldous-Broder](EasyMaze/src/de/amr/easy/maze/algorithms/AldousBroderUST.java)
+- Binary Tree ([top-down](EasyMaze/src/de/amr/easy/maze/algorithms/BinaryTree.java) and [random](EasyMaze/src/de/amr/easy/maze/algorithms/BinaryTreeRandom.java))
+- [Eller's algorithm](EasyMaze/src/de/amr/easy/maze/algorithms/Eller.java)
+- My own [variation](EasyMaze/src/de/amr/easy/maze/algorithms/EllerInsideOut.java) of Eller's growing the maze inside-out
+- Hunt-And-Kill ([top-down](EasyMaze/src/de/amr/easy/maze/algorithms/HuntAndKill.java) and [random](EasyMaze/src/de/amr/easy/maze/algorithms/HuntAndKillRandom.java))
+- [Kruskal Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/algorithms/KruskalMST.java)
+- [Prim Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/algorithms/PrimMST.java)
+- [Random Breadth-First-Search](EasyMaze/src/de/amr/easy/maze/algorithms/RandomBFS.java)
+- Random Depth-First-Search ([non-recursive](EasyMaze/src/de/amr/easy/maze/algorithms/IterativeDFS.java) and [recursive](EasyMaze/src/de/amr/easy/maze/algorithms/RecursiveDFS.java))
+- [Recursive division](EasyMaze/src/de/amr/easy/maze/algorithms/RecursiveDivision.java)
+- [Wilson's algorithm](EasyMaze/src/de/amr/easy/maze/algorithms/wilson) (14 different variants)
 
 Path finding algorithms:
-- The EazyGrid library contains a DFS and BFS-based path finding implementation.
+- The EasyGrid library contains a DFS and BFS-based path finding implementation.
 
-To give an example for the code in this library, see Prim's MST algorithm versus Random-Breadth-First-Search:
+As an example, this is the code for Prim's MST algorithm and Random-Breadth-First-Search:
 
 ```java
 public class PrimMST extends MazeAlgorithm {
