@@ -1,6 +1,6 @@
 package de.amr.easy.grid.impl;
 
-import de.amr.easy.grid.api.GridContent;
+import de.amr.easy.graph.api.GraphContent;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
 
 /**
@@ -13,7 +13,7 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class ObservableDataGrid<Content> extends ObservableGrid implements ObservableDataGrid2D<Content> {
 
-	private GridContent<Content> gridContent;
+	private GraphContent<Integer, Content> gridContent;
 
 	public ObservableDataGrid(int numCols, int numRows, Content defaultContent, boolean sparse) {
 		super(numCols, numRows);
@@ -25,7 +25,7 @@ public class ObservableDataGrid<Content> extends ObservableGrid implements Obser
 		this(numCols, numRows, defaultContent, true);
 	}
 
-	// --- {@link GridDataAccess} interface ---
+	// --- {@link GraphContent} interface ---
 
 	@Override
 	public void clear() {

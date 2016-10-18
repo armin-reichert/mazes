@@ -1,7 +1,7 @@
 package de.amr.easy.grid.impl;
 
+import de.amr.easy.graph.api.GraphContent;
 import de.amr.easy.grid.api.DataGrid2D;
-import de.amr.easy.grid.api.GridContent;
 
 /**
  * A grid with cell content.
@@ -13,7 +13,7 @@ import de.amr.easy.grid.api.GridContent;
  */
 public class DataGrid<Content> extends Grid implements DataGrid2D<Content> {
 
-	private GridContent<Content> gridContent;
+	private GraphContent<Integer, Content> gridContent;
 
 	public DataGrid(int numCols, int numRows, Content defaultContent, boolean sparse) {
 		super(numCols, numRows);

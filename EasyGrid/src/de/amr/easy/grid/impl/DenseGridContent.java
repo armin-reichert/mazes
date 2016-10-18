@@ -1,6 +1,6 @@
 package de.amr.easy.grid.impl;
 
-import de.amr.easy.grid.api.GridContent;
+import de.amr.easy.graph.api.GraphContent;
 
 /**
  * Array storing grid content.
@@ -10,7 +10,7 @@ import de.amr.easy.grid.api.GridContent;
  * @param <Content>
  *          cell content type
  */
-class DenseGridContent<Content> implements GridContent<Content> {
+class DenseGridContent<Content> implements GraphContent<Integer, Content> {
 
 	private Object[] cellContent;
 	private Object defaultCellContent;

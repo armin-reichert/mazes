@@ -72,7 +72,7 @@ public class DepthFirstTraversal<V, E extends Edge<V>> extends GraphTraversal<V,
 			Optional<V> neighbor = findUnvisitedNeighbour(currentVertex);
 			if (neighbor.isPresent()) {
 				visit(neighbor.get(), currentVertex);
-				if (findUnvisitedNeighbour(neighbor.get()) != null) {
+				if (findUnvisitedNeighbour(neighbor.get()).isPresent()) {
 					stack.push(neighbor.get());
 				}
 				currentVertex = neighbor.get();
