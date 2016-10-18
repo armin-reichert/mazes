@@ -52,8 +52,6 @@ public class MazeGeneratorTest {
 	@Before
 	public void setUp() {
 		grid = new ObservableDataGrid<>(WIDTH, HEIGHT, UNVISITED);
-		assertEquals(grid.vertexCount(), WIDTH * HEIGHT);
-		assertEquals(grid.edgeCount(), 0);
 	}
 
 	@After

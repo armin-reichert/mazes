@@ -42,11 +42,18 @@ public class GridTest {
 	}
 
 	@Test
-	public void testGridSize() {
+	public void testGridInitialization() {
 		assertEquals(grid.edgeCount(), 0);
 		assertEquals(grid.vertexCount(), WIDTH * HEIGHT);
 		assertEquals(grid.numCols(), WIDTH);
 		assertEquals(grid.numRows(), HEIGHT);
+		assertEquals(grid.numCells(), grid.vertexStream().count());
+		assertEquals(grid.edgeCount(), grid.edgeStream().count());
+	}
+	
+	@Test
+	public void testInitialContent() {
+		assertEquals(grid.vertexStream().filter(cell -> grid.get(cell) == UNVISITED).count(), grid.numCells());
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
@@ -71,6 +78,11 @@ public class GridTest {
 	public void addEdgeTwiceThrowsException() {
 		grid.addEdge(0, 1);
 		grid.addEdge(0, 1);
+	}
+	
+	@Test(expected = IllegalStateException.class)
+	public void addEdgeToNonNeighborThrowsException() {
+		grid.addEdge(0, 2);
 	}
 
 	@Test
