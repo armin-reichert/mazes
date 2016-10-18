@@ -1,4 +1,4 @@
-package de.amr.easy.grid.ds;
+package de.amr.easy.graph.ds;
 
 import java.util.ArrayList;
 import java.util.HashMap;

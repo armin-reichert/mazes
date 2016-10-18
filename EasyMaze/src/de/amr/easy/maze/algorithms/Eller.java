@@ -10,9 +10,9 @@ import java.util.Set;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.graph.ds.Partition;
+import de.amr.easy.graph.ds.Partition.EquivClass;
 import de.amr.easy.grid.api.ObservableDataGrid2D;
-import de.amr.easy.grid.ds.Partition;
-import de.amr.easy.grid.ds.Partition.EquivClass;
 
 /**
  * Maze generator using Eller's algorithm.

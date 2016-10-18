@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
-import de.amr.easy.grid.ds.Partition;
+import de.amr.easy.graph.ds.Partition;
 
 public class CycleFinderUnionFind<V, E extends Edge<V>> {
 
