@@ -2,9 +2,8 @@ package de.amr.easy.graph.alg;
 
 import java.util.Iterator;
 
-import de.amr.easy.graph.api.DataGraph;
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.graph.api.Graph;
 import de.amr.easy.grid.ds.Partition;
 
 public class CycleFinderUnionFind<V, E extends Edge<V>> {
@@ -16,7 +15,7 @@ public class CycleFinderUnionFind<V, E extends Edge<V>> {
 		return cycleDetected;
 	}
 
-	public CycleFinderUnionFind(DataGraph<V, E, TraversalState> g, V start) {
+	public CycleFinderUnionFind(Graph<V, E> g, V start) {
 		for (Iterator<E> edges = g.edgeStream().iterator(); edges.hasNext();) {
 			E edge = edges.next();
 			V either = edge.either(), other = edge.other(either);
@@ -27,5 +26,4 @@ public class CycleFinderUnionFind<V, E extends Edge<V>> {
 			partition.union(partition.find(either), partition.find(other));
 		}
 	}
-
 }
