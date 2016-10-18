@@ -44,13 +44,10 @@ public abstract class WilsonUST extends MazeAlgorithm {
 		start = customStartCell(start);
 		addCellToTree(start);
 		cellStream().forEach(walkStart -> {
-			if (cellOutsideTree(walkStart)) {
+			if (isOutsideTree(walkStart)) {
 				loopErasedRandomWalk(walkStart);
 			}
 		});
-		if (grid.edgeCount() != grid.vertexCount() - 1) {
-			throw new IllegalStateException("Maze is incomplete");
-		}
 	}
 
 	/**
@@ -63,7 +60,7 @@ public abstract class WilsonUST extends MazeAlgorithm {
 	protected void loopErasedRandomWalk(Integer walkStart) {
 		// do a random walk starting at walkStart until tree cell is reached
 		Integer v = walkStart;
-		while (cellOutsideTree(v)) {
+		while (isOutsideTree(v)) {
 			Direction dir = Direction.randomValue();
 			Optional<Integer> neighbor = grid.neighbor(v, dir);
 			if (neighbor.isPresent()) {
@@ -73,7 +70,7 @@ public abstract class WilsonUST extends MazeAlgorithm {
 		}
 		// add loop-erased path to tree
 		v = walkStart;
-		while (cellOutsideTree(v)) {
+		while (isOutsideTree(v)) {
 			Integer neighbor = grid.neighbor(v, lastWalkDir[v]).get();
 			addCellToTree(v);
 			grid.addEdge(v, neighbor);
@@ -93,7 +90,7 @@ public abstract class WilsonUST extends MazeAlgorithm {
 	 *          a grid cell
 	 * @return <code>true</code> if the cell is outside of the current tree
 	 */
-	protected boolean cellOutsideTree(Integer cell) {
+	protected boolean isOutsideTree(Integer cell) {
 		return grid.get(cell) != COMPLETED;
 	}
 

@@ -22,7 +22,7 @@ public class WilsonUSTRowsTopDown extends WilsonUST {
 		IntStream.range(0, grid.numRows()).forEach(row -> {
 			IntStream.range(0, grid.numCols()).forEach(col -> {
 				Integer walkStart = grid.cell(col, row);
-				if (cellOutsideTree(walkStart)) {
+				if (isOutsideTree(walkStart)) {
 					loopErasedRandomWalk(walkStart);
 				}
 			});
