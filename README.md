@@ -3,10 +3,10 @@
 Maze generation algorithms implemented in Java 8 (using streams and lambda expressions)
 
 My main goal was to provide maze generation algorithms in a **readable** form that clearly shows the
-underlying graph manipulation, not polluted by details of rendering and internals of the used grid
+underlying **graph manipulation**, not polluted by details of rendering and internals of the used grid
 data structure.
 
-The maze generation code has **no dependencies to any UI library** (AWT, Swing, JavaFX).
+The maze generation code has no dependencies to any UI library (AWT, Swing, JavaFX).
 
 To achieve this
 - Graph and Grid interfaces are provided as the API on which the generators operate
@@ -15,7 +15,7 @@ To achieve this
 - Maze generation algorithms work strictly against the Grid API, renderers are attached as graph
 listeners
 
-Implemented maze generation algorithms so far:
+Implemented maze generation algorithms (more to come):
 
 - [Aldous-Broder](EasyMaze/src/de/amr/easy/maze/algorithms/AldousBroderUST.java)
 - Binary Tree ([top-down](EasyMaze/src/de/amr/easy/maze/algorithms/BinaryTree.java) and [random](EasyMaze/src/de/amr/easy/maze/algorithms/BinaryTreeRandom.java))
@@ -40,7 +40,7 @@ public class PrimMST extends MazeAlgorithm {
 
 	private final PriorityQueue<WeightedEdge<Integer>> cut = new PriorityQueue<>();
 
-	public PrimMST(ObservableDataGrid2D<TraversalState> grid) {
+	public PrimMST(DataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
 
@@ -76,7 +76,7 @@ public class RandomBFS extends MazeAlgorithm {
 
 	private final List<Integer> frontier = new ArrayList<>();
 
-	public RandomBFS(ObservableDataGrid2D<TraversalState> grid) {
+	public RandomBFS(DataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
 
