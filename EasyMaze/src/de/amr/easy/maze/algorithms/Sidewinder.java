@@ -15,11 +15,11 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  *      "http://weblog.jamisbuck.org/2011/2/3/maze-generation-sidewinder-algorithm.html">Jamis
  *      Buck's blog: Sidewinder algorithm</a>
  */
-public class SideWinder extends MazeAlgorithm {
+public class Sidewinder extends MazeAlgorithm {
 
 	private Integer runStart;
 
-	public SideWinder(ObservableDataGrid2D<TraversalState> grid) {
+	public Sidewinder(ObservableDataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
 
