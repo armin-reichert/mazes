@@ -16,7 +16,7 @@ import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.Grid;
 
-public class FullGridTest {
+public class FullGridTests {
 
 	private static final int WIDTH = 15;
 	private static final int HEIGHT = 10;

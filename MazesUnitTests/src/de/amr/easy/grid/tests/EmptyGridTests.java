@@ -10,7 +10,7 @@ import org.junit.Test;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.Grid;
 
-public class EmptyGridTest {
+public class EmptyGridTests {
 
 	private Grid2D grid;
 

@@ -1,5 +1,9 @@
 package de.amr.easy.maze.algorithms;
 
+import static de.amr.easy.graph.api.TraversalState.COMPLETED;
+import static de.amr.easy.graph.api.TraversalState.UNVISITED;
+import static de.amr.easy.graph.api.TraversalState.VISITED;
+
 import java.util.Random;
 import java.util.function.Consumer;
 
@@ -26,4 +30,17 @@ public abstract class MazeAlgorithm implements Consumer<Integer> {
 	protected Integer customStartCell(Integer originalStartCell) {
 		return originalStartCell;
 	}
+
+	protected boolean isCellUnvisited(Integer cell) {
+		return grid.get(cell) == UNVISITED;
+	}
+
+	protected boolean isCellVisited(Integer cell) {
+		return grid.get(cell) == VISITED;
+	}
+
+	protected boolean isCellCompleted(Integer cell) {
+		return grid.get(cell) == COMPLETED;
+	}
+
 }

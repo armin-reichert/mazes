@@ -16,6 +16,7 @@ import de.amr.easy.maze.algorithms.BinaryTree;
 import de.amr.easy.maze.algorithms.BinaryTreeRandom;
 import de.amr.easy.maze.algorithms.Eller;
 import de.amr.easy.maze.algorithms.EllerInsideOut;
+import de.amr.easy.maze.algorithms.GrowingTree;
 import de.amr.easy.maze.algorithms.HuntAndKill;
 import de.amr.easy.maze.algorithms.HuntAndKillRandom;
 import de.amr.easy.maze.algorithms.IterativeDFS;
@@ -84,6 +85,7 @@ public class MazeDemoModel {
 			new AlgorithmInfo<>(EllerInsideOut.class, "Armin's Algorithm"), 
 			new AlgorithmInfo<>(HuntAndKill.class, "Hunt-And-Kill"),
 			new AlgorithmInfo<>(HuntAndKillRandom.class, "Hunt-And-Kill (random)"),
+			new AlgorithmInfo<>(GrowingTree.class, "Growing Tree"),
 			new AlgorithmInfo<>(RecursiveDivision.class, "Recursive Division"),
 			/*@formatter:on*/
 	};
