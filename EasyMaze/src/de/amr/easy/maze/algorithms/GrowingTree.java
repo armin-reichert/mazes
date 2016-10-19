@@ -1,6 +1,3 @@
-/**
- * 
- */
 package de.amr.easy.maze.algorithms;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
