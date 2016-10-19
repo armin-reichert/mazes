@@ -62,6 +62,7 @@ public class CreateAllMazesAction extends CreateSingleMazeAction {
 		app.canvas().clear();
 		app.settingsWindow.getControlPanel().getAlgorithmLabel().setText(algorithm.getDescription());
 		try {
+			app.settingsWindow.getAlgorithmMenu().setSelectedAlgorithm(algorithm);
 			generateMaze(algorithm);
 			AlgorithmInfo<?> pathFinder = app.settingsWindow.getPathFinderMenu().getSelectedPathFinder();
 			if (pathFinder != null) {

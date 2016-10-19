@@ -48,12 +48,21 @@ public class AlgorithmMenu extends JMenu {
 	}
 
 	public AlgorithmInfo<?> getSelectedAlgorithm() {
-		for (Enumeration<AbstractButton> buttons = group.getElements(); buttons.hasMoreElements();) {
-			AbstractButton button = buttons.nextElement();
-			if (button.isSelected()) {
-				return (AlgorithmInfo<?>) button.getClientProperty("algorithm");
+		for (Enumeration<AbstractButton> items = group.getElements(); items.hasMoreElements();) {
+			AbstractButton item = items.nextElement();
+			if (item.isSelected()) {
+				return (AlgorithmInfo<?>) item.getClientProperty("algorithm");
 			}
 		}
 		return null;
+	}
+
+	public void setSelectedAlgorithm(AlgorithmInfo<?> alg) {
+		for (Enumeration<AbstractButton> items = group.getElements(); items.hasMoreElements();) {
+			AbstractButton item = items.nextElement();
+			if (alg.equals(item.getClientProperty("algorithm"))) {
+				item.setSelected(true);
+			}
+		}
 	}
 }
