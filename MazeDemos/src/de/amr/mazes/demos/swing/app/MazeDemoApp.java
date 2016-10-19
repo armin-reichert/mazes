@@ -2,6 +2,7 @@ package de.amr.mazes.demos.swing.app;
 
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
+import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
 import java.awt.Dimension;
@@ -41,7 +42,7 @@ public class MazeDemoApp {
 		model.setGridCellSizes(128, 64, 32, 16, 8, 4, 2);
 		model.setGridCellSize(8);
 		model.setPassageThicknessPct(50);
-		model.setGenerationStart(TOP_LEFT);
+		model.setGenerationStart(CENTER);
 		model.setPathFinderStart(TOP_LEFT);
 		model.setPathFinderTarget(BOTTOM_RIGHT);
 		model.setGenerationAnimated(true);
