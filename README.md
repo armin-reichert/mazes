@@ -19,6 +19,7 @@ Implemented maze generation algorithms so far:
 
 - [Aldous-Broder](EasyMaze/src/de/amr/easy/maze/algorithms/AldousBroderUST.java)
 - Binary Tree ([top-down](EasyMaze/src/de/amr/easy/maze/algorithms/BinaryTree.java) and [random](EasyMaze/src/de/amr/easy/maze/algorithms/BinaryTreeRandom.java))
+- [Sidewinder algorithm](EasyMaze/src/de/amr/easy/maze/algorithms/Sidewinder.java)
 - [Eller's algorithm](EasyMaze/src/de/amr/easy/maze/algorithms/Eller.java)
 - My own [variation](EasyMaze/src/de/amr/easy/maze/algorithms/EllerInsideOut.java) of Eller's growing the maze inside-out
 - Hunt-And-Kill ([top-down](EasyMaze/src/de/amr/easy/maze/algorithms/HuntAndKill.java) and [random](EasyMaze/src/de/amr/easy/maze/algorithms/HuntAndKillRandom.java))
