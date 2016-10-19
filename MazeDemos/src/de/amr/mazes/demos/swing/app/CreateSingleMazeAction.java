@@ -75,8 +75,8 @@ public class CreateSingleMazeAction extends AbstractAction {
 
 		// Create generator object (must happen after grid preparation)
 		@SuppressWarnings("unchecked")
-		Consumer<Integer> generator = (Consumer<Integer>) generatorInfo.getAlgorithmClass()
-				.getConstructor(DataGrid2D.class).newInstance(app.model.getGrid());
+		Consumer<Integer> generator = (Consumer<Integer>) generatorInfo.getAlgorithmClass().getConstructor(DataGrid2D.class)
+				.newInstance(app.model.getGrid());
 
 		app.canvas().resetRenderingModel();
 		if (app.grid().edgeCount() > 0) {

@@ -50,7 +50,7 @@ public class GridTests {
 		assertEquals(grid.numCells(), grid.vertexStream().count());
 		assertEquals(grid.edgeCount(), grid.edgeStream().count());
 	}
-	
+
 	@Test
 	public void testInitialContent() {
 		assertEquals(grid.vertexStream().filter(cell -> grid.get(cell) == UNVISITED).count(), grid.numCells());
@@ -79,7 +79,7 @@ public class GridTests {
 		grid.addEdge(0, 1);
 		grid.addEdge(0, 1);
 	}
-	
+
 	@Test(expected = IllegalStateException.class)
 	public void addEdgeToNonNeighborThrowsException() {
 		grid.addEdge(0, 2);

@@ -1,7 +1,6 @@
 package de.amr.easy.maze.algorithms;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
-import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 
 import java.util.BitSet;
 import java.util.Optional;
@@ -21,7 +20,7 @@ import de.amr.easy.grid.api.DataGrid2D;
  */
 public class HuntAndKill extends MazeAlgorithm {
 
-	protected final Predicate<Integer> isAlive = animal -> grid.get(animal) == UNVISITED;
+	protected final Predicate<Integer> isAlive = this::isCellUnvisited;
 	protected final Predicate<Integer> isDead = isAlive.negate();
 	protected final BitSet targets;
 

@@ -1,7 +1,6 @@
 package de.amr.easy.maze.algorithms;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
-import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class RandomBFS extends MazeAlgorithm {
 		extendMaze(start);
 		while (!frontier.isEmpty()) {
 			Integer cell = frontier.remove(rnd.nextInt(frontier.size()));
-			grid.neighbors(cell).filter(this::outsideMaze).forEach(neighbor -> {
+			grid.neighbors(cell).filter(this::isCellUnvisited).forEach(neighbor -> {
 				extendMaze(neighbor);
 				grid.addEdge(cell, neighbor);
 			});
@@ -39,9 +38,5 @@ public class RandomBFS extends MazeAlgorithm {
 	private void extendMaze(Integer cell) {
 		grid.set(cell, VISITED);
 		frontier.add(cell);
-	}
-
-	private boolean outsideMaze(Integer cell) {
-		return grid.get(cell) == UNVISITED;
 	}
 }

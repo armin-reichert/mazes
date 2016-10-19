@@ -87,7 +87,7 @@ public class MazeGeneratorTests {
 	public void testEllerInsideOut() {
 		new EllerInsideOut(grid).accept(grid.cell(CENTER));
 	}
-	
+
 	@Test
 	public void testGrowingTree() {
 		new GrowingTree(grid).accept(grid.cell(CENTER));

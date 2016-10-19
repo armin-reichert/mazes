@@ -1,7 +1,6 @@
 package de.amr.easy.maze.algorithms;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
-import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
 import de.amr.easy.graph.api.TraversalState;
@@ -65,7 +64,7 @@ public class AldousBroderUST extends MazeAlgorithm {
 			.randomNeighbor(v)
 			.map(u -> {
 				// if first time visit, add neighbor to maze
-				if (grid.get(u) == UNVISITED) {
+				if (isCellUnvisited(u)) {
 					grid.set(u, COMPLETED);
 					++mazeCellCount;
 					grid.addEdge(u, v);
