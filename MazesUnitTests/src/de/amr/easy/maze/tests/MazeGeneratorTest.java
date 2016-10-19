@@ -27,7 +27,7 @@ import de.amr.easy.maze.algorithms.PrimMST;
 import de.amr.easy.maze.algorithms.RandomBFS;
 import de.amr.easy.maze.algorithms.RecursiveDFS;
 import de.amr.easy.maze.algorithms.RecursiveDivision;
-import de.amr.easy.maze.algorithms.SideWinder;
+import de.amr.easy.maze.algorithms.Sidewinder;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTCollapsingCircle;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTCollapsingRectangle;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTCollapsingWalls;
@@ -130,7 +130,7 @@ public class MazeGeneratorTest {
 
 	@Test
 	public void testSideWinder() {
-		new SideWinder(grid).accept(grid.cell(TOP_LEFT));
+		new Sidewinder(grid).accept(grid.cell(TOP_LEFT));
 	}
 
 	@Test
