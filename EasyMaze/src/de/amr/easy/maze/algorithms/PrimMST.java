@@ -13,6 +13,9 @@ import de.amr.easy.grid.api.DataGrid2D;
  * Maze generator based on Prim's minimum spanning tree algorithm with random edge weights.
  * 
  * @author Armin Reichert
+ * 
+ * @see <a href="http://weblog.jamisbuck.org/2011/1/10/maze-generation-prim-s-algorithm.html">Maze
+ *      Generation: Prim's Algorithm</a>
  */
 public class PrimMST extends MazeAlgorithm {
 

@@ -22,17 +22,11 @@ import de.amr.easy.grid.api.DataGrid2D;
  * <li>Set v, the current vertex, to be u and return to step 1.
  * </ol>
  * 
- * References:
- * <ul>
- * <li><a href=
- * "https://www.physicsforums.com/threads/matlab-code-for-aldous-broder-algorithm-from-sp a n n i n
- * g -trees-of-a-graph.660566/ ">https://www.physicsforums.com/threads
- * /matlab-code-for-aldous-broder-algorithm-from-sp a n n i n g -trees-of-a-graph.660566/</a> <br>
- * <li><a href= "http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-broder-algorithm" >
- * http:// weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-broder-algorithm</a>
- * </ul>
- * 
  * @author Armin Reichert
+ * 
+ * @see<a href= "http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-broder-algorithm">Maze
+ *        Generation: Aldous-Broder algorithm</a>
+ * 
  */
 public class AldousBroderUST extends MazeAlgorithm {
 
@@ -60,8 +54,7 @@ public class AldousBroderUST extends MazeAlgorithm {
 	 */
 	private Integer visitRandomNeighbor(Integer v) {
 		/*@formatter:off*/
-		return grid
-			.randomNeighbor(v)
+		return grid.randomNeighbor(v)
 			.map(u -> {
 				// if first time visit, add neighbor to maze
 				if (isCellUnvisited(u)) {

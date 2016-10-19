@@ -13,12 +13,6 @@ import de.amr.easy.grid.api.DataGrid2D;
 /**
  * Generates a maze by iterative random depth-first-traversal of a grid.
  * 
- * <p>
- * More information on maze creation by "Recursive backtracking" can be found
- * <a href= "http://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking"> here
- * </a>. The iterative DFS implementation is inspired by the
- * <a href="http://algs4.cs.princeton.edu/41graph/">online book</a> by Sedgewick and Wayne.
- * 
  * @author Armin Reichert
  */
 public class IterativeDFS extends MazeAlgorithm {

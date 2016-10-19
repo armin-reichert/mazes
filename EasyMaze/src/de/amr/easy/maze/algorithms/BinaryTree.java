@@ -15,6 +15,10 @@ import de.amr.easy.grid.api.Direction;
  * Creates a random binary spanning tree.
  * 
  * @author Armin Reichert
+ * 
+ * @see <a href=
+ *      "http://weblog.jamisbuck.org/2011/2/1/maze-generation-binary-tree-algorithm.html">Maze
+ *      Generation: Binary Tree algorithm</a>
  */
 public class BinaryTree extends MazeAlgorithm {
 

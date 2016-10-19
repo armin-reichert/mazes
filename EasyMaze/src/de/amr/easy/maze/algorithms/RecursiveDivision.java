@@ -13,8 +13,8 @@ import de.amr.easy.grid.api.DataGrid2D;
  * @author Armin Reichert
  * 
  * @see <a href=
- *      "http://weblog.jamisbuck.org/2011/1/12/maze-generation-recursive-division-algorithm.html">The
- *      Buckblog</a>
+ *      "http://weblog.jamisbuck.org/2011/1/12/maze-generation-recursive-division-algorithm.html">Maze
+ *      Generation: Recursive Division</a>
  */
 public class RecursiveDivision extends MazeAlgorithm {
 

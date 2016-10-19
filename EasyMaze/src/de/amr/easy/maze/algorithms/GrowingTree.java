@@ -15,8 +15,8 @@ import de.amr.easy.grid.api.DataGrid2D;
  * @author Armin Reichert
  * 
  * @see <a href=
- *      "http://weblog.jamisbuck.org/2011/1/27/maze-generation-growing-tree-algorithm.html">Buckblog:
- *      Maze Generation: Growing Tree algorithm</a>
+ *      "http://weblog.jamisbuck.org/2011/1/27/maze-generation-growing-tree-algorithm.html">Maze
+ *      Generation: Growing Tree algorithm</a>
  *
  */
 public class GrowingTree extends MazeAlgorithm {

@@ -13,6 +13,10 @@ import de.amr.easy.grid.api.DataGrid2D;
  * of stack overflow.
  * 
  * @author Armin Reichert
+ * 
+ * @see <a href=
+ *      "http://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking">Maze
+ *      Generation: Recursive Backtracking</a>
  */
 public class RecursiveDFS extends MazeAlgorithm {
 

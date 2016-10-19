@@ -17,10 +17,10 @@ import de.amr.easy.grid.api.DataGrid2D;
 /**
  * Maze generator using Eller's algorithm.
  * 
- * More information
- * <a href= "http://weblog.jamisbuck.org/2010/12/29/maze-generation-eller-s-algorithm"> here</a>.
- * 
  * @author Armin Reichert
+ * 
+ * @see <a href= "http://weblog.jamisbuck.org/2010/12/29/maze-generation-eller-s-algorithm">Maze Generation: Eller's Algorithm</a>.
+ * 
  */
 public class Eller extends MazeAlgorithm {
 

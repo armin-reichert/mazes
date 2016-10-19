@@ -17,6 +17,9 @@ import de.amr.easy.grid.api.DataGrid2D;
  * Maze generator derived from Kruskal's minimum spanning tree algorithm.
  * 
  * @author Armin Reichert
+ * 
+ * @see <a href="http://weblog.jamisbuck.org/2011/1/3/maze-generation-kruskal-s-algorithm.html">Maze
+ *      Generation: Kruskal's Algorithm</a>
  */
 public class KruskalMST extends MazeAlgorithm {
 

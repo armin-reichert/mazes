@@ -15,8 +15,8 @@ import de.amr.easy.grid.api.DataGrid2D;
  * @author Armin Reichert
  * 
  * @see <a href=
- *      "http://weblog.jamisbuck.org/2011/1/24/maze-generation-hunt-and-kill-algorithm.html">
- *      Hunt-And-Kill algorithm on Jamis Buck's blog</a>
+ *      "http://weblog.jamisbuck.org/2011/1/24/maze-generation-hunt-and-kill-algorithm.html"> Maze
+ *      Generation: Hunt-and-Kill algorithm</a>
  */
 public class HuntAndKill extends MazeAlgorithm {
 
