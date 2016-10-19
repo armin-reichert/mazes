@@ -3,6 +3,7 @@ package de.amr.easy.maze.algorithms.wilson;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static de.amr.easy.grid.iterators.IteratorFactory.parallel;
 import static de.amr.easy.grid.iterators.IteratorFactory.sequence;
+import static java.lang.Math.max;
 
 import java.util.Iterator;
 import java.util.stream.Stream;
@@ -34,7 +35,7 @@ public class WilsonUSTExpandingCircles extends WilsonUST {
 
 			@Override
 			public Iterator<Integer> iterator() {
-				int w = grid.numCols(), h = grid.numRows(), r = Math.max(w / 2, h / 2);
+				int w = grid.numCols(), h = grid.numRows(), r = max(w / 2, h / 2);
 				/*@formatter:off*/
 				return sequence(
 					// expand 4 circles in parallel to certain size	

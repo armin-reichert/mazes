@@ -1,6 +1,7 @@
 package de.amr.easy.maze.algorithms.wilson;
 
 import static de.amr.easy.grid.api.GridPosition.CENTER;
+import static java.lang.Math.max;
 
 import java.util.stream.Stream;
 
@@ -21,7 +22,7 @@ public class WilsonUSTExpandingCircle extends WilsonUST {
 
 	@Override
 	protected Stream<Integer> cellStream() {
-		return new ExpandingCircle(grid, grid.cell(CENTER), 1, Math.max(grid.numCols(), grid.numRows())).stream();
+		return new ExpandingCircle(grid, grid.cell(CENTER), 1, max(grid.numCols(), grid.numRows())).stream();
 	}
 
 	@Override

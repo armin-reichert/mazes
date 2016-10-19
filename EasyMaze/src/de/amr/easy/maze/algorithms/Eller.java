@@ -1,13 +1,13 @@
 package de.amr.easy.maze.algorithms;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
+import static java.util.stream.IntStream.range;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.ds.Partition;
@@ -32,7 +32,7 @@ public class Eller extends MazeAlgorithm {
 
 	@Override
 	public void accept(Integer start) {
-		IntStream.range(0, grid.numRows() - 1).forEach(row -> {
+		range(0, grid.numRows() - 1).forEach(row -> {
 			connectCellsInsideRow(row, false);
 			connectCellsWithNextRow(row);
 		});
@@ -47,7 +47,7 @@ public class Eller extends MazeAlgorithm {
 	}
 
 	private void connectCellsInsideRow(int row, boolean all) {
-		IntStream.range(0, grid.numCols() - 1).forEach(col -> {
+		range(0, grid.numCols() - 1).forEach(col -> {
 			if (all || rnd.nextBoolean()) {
 				Integer left = grid.cell(col, row);
 				Integer right = grid.cell(col + 1, row);
@@ -60,7 +60,7 @@ public class Eller extends MazeAlgorithm {
 
 	private void connectCellsWithNextRow(int row) {
 		Set<EquivClass> connected = new HashSet<>();
-		IntStream.range(0, grid.numCols()).forEach(col -> {
+		range(0, grid.numCols()).forEach(col -> {
 			if (rnd.nextBoolean()) {
 				Integer above = grid.cell(col, row);
 				Integer below = grid.cell(col, row + 1);
@@ -70,7 +70,7 @@ public class Eller extends MazeAlgorithm {
 		});
 		// collect cells of still unconnected components
 		List<Integer> unconnected = new ArrayList<>();
-		IntStream.range(0, grid.numCols()).forEach(col -> {
+		range(0, grid.numCols()).forEach(col -> {
 			Integer cell = grid.cell(col, row);
 			EquivClass component = partition.find(cell);
 			if (!connected.contains(component)) {

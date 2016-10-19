@@ -1,8 +1,8 @@
 package de.amr.easy.maze.algorithms;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
-
-import java.util.stream.IntStream;
+import static java.lang.Math.min;
+import static java.util.stream.IntStream.range;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.DataGrid2D;
@@ -49,9 +49,9 @@ public class RecursiveDivision extends MazeAlgorithm {
 		boolean horizontalCut = (width < height) || (width == height && rnd.nextBoolean());
 		if (horizontalCut) {
 			// cut horizontally at random row from interval [top + 1, top + height - 1]
-			int cut = Math.min(grid.numRows() - 1, (top + 1) + rnd.nextInt(height - 1));
+			int cut = min(grid.numRows() - 1, (top + 1) + rnd.nextInt(height - 1));
 			int passage = rnd.nextInt(width);
-			IntStream.range(0, width).forEach(col -> {
+			range(0, width).forEach(col -> {
 				if (col != passage && grid.isValidCol(left + col) && grid.isValidRow(cut - 1)) {
 					Integer u = grid.cell(left + col, cut), v = grid.cell(left + col, cut - 1);
 					grid.edge(u, v).ifPresent(grid::removeEdge);
@@ -61,9 +61,9 @@ public class RecursiveDivision extends MazeAlgorithm {
 			divide(left, cut, width, height - cut + top);
 		} else {
 			// cut vertically at random column from interval [left + 1, left + width - 1]
-			int cut = Math.min(grid.numCols() - 1, (left + 1) + rnd.nextInt(width - 1));
+			int cut = min(grid.numCols() - 1, (left + 1) + rnd.nextInt(width - 1));
 			int passage = rnd.nextInt(height);
-			IntStream.range(0, height).forEach(row -> {
+			range(0, height).forEach(row -> {
 				if (row != passage && grid.isValidCol(cut - 1) && grid.isValidRow(top + row)) {
 					Integer u = grid.cell(cut, top + row), v = grid.cell(cut - 1, top + row);
 					grid.edge(u, v).ifPresent(grid::removeEdge);

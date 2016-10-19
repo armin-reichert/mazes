@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.DataGrid2D;
+import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.impl.Grid;
 import de.amr.easy.grid.iterators.traversals.HilbertCurve;
 
