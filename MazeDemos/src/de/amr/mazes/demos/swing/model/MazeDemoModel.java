@@ -24,6 +24,7 @@ import de.amr.easy.maze.algorithms.PrimMST;
 import de.amr.easy.maze.algorithms.RandomBFS;
 import de.amr.easy.maze.algorithms.RecursiveDFS;
 import de.amr.easy.maze.algorithms.RecursiveDivision;
+import de.amr.easy.maze.algorithms.SideWinder;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTCollapsingCircle;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTCollapsingRectangle;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTCollapsingWalls;
@@ -76,13 +77,14 @@ public class MazeDemoModel {
 			new AlgorithmInfo<>(WilsonUSTRecursiveCrosses.class, "Wilson UST (crosses, recursive)", UST),
 			new AlgorithmInfo<>(WilsonUSTHilbertCurve.class, "Wilson UST (Hilbert curve)", UST),
 			new AlgorithmInfo<>(WilsonUSTPeanoCurve.class, "Wilson UST (Peano curve)", UST),
+			new AlgorithmInfo<>(BinaryTree.class, "Binary Tree"),
+			new AlgorithmInfo<>(BinaryTreeRandom.class, "Binary Tree (random)"), 
+			new AlgorithmInfo<>(SideWinder.class, "SideWinder"),
+			new AlgorithmInfo<>(Eller.class, "Eller's Algorithm"), 
+			new AlgorithmInfo<>(EllerInsideOut.class, "Armin's Algorithm"), 
 			new AlgorithmInfo<>(HuntAndKill.class, "Hunt-And-Kill"),
 			new AlgorithmInfo<>(HuntAndKillRandom.class, "Hunt-And-Kill (random)"),
 			new AlgorithmInfo<>(RecursiveDivision.class, "Recursive Division"),
-			new AlgorithmInfo<>(Eller.class, "Eller's Algorithm"), 
-			new AlgorithmInfo<>(EllerInsideOut.class, "Armin's Algorithm"), 
-			new AlgorithmInfo<>(BinaryTree.class, "Binary Tree"),
-			new AlgorithmInfo<>(BinaryTreeRandom.class, "Binary Tree (random)"), 
 			/*@formatter:on*/
 	};
 

@@ -2,6 +2,7 @@ package de.amr.easy.maze.tests;
 
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
+import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -26,6 +27,7 @@ import de.amr.easy.maze.algorithms.PrimMST;
 import de.amr.easy.maze.algorithms.RandomBFS;
 import de.amr.easy.maze.algorithms.RecursiveDFS;
 import de.amr.easy.maze.algorithms.RecursiveDivision;
+import de.amr.easy.maze.algorithms.SideWinder;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTCollapsingCircle;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTCollapsingRectangle;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTCollapsingWalls;
@@ -124,6 +126,11 @@ public class MazeGeneratorTest {
 	@Test
 	public void testRecursiveDivision() {
 		new RecursiveDivision(grid).accept(grid.cell(CENTER));
+	}
+
+	@Test
+	public void testSideWinder() {
+		new SideWinder(grid).accept(grid.cell(TOP_LEFT));
 	}
 
 	@Test
