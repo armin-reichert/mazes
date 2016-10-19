@@ -22,6 +22,7 @@ Implemented maze generation algorithms (more to come):
 - [Sidewinder algorithm](EasyMaze/src/de/amr/easy/maze/algorithms/Sidewinder.java)
 - [Eller's algorithm](EasyMaze/src/de/amr/easy/maze/algorithms/Eller.java)
 - My own [variation](EasyMaze/src/de/amr/easy/maze/algorithms/EllerInsideOut.java) of Eller's growing the maze inside-out
+- [Growing Tree](EasyMaze/src/de/amr/easy/maze/algorithms/GrowingTree.java)
 - Hunt-And-Kill ([top-down](EasyMaze/src/de/amr/easy/maze/algorithms/HuntAndKill.java) and [random](EasyMaze/src/de/amr/easy/maze/algorithms/HuntAndKillRandom.java))
 - [Kruskal Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/algorithms/KruskalMST.java)
 - [Prim Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/algorithms/PrimMST.java)
