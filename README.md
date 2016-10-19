@@ -34,7 +34,7 @@ Implemented maze generation algorithms (more to come):
 Path finding algorithms:
 - The EasyGrid library contains a DFS and BFS-based path finding implementation.
 
-As an example, this is the code for Prim's MST algorithm and Random-Breadth-First-Search:
+As an example, this is the code for Prim's MST algorithm:
 
 ```java
 public class PrimMST extends MazeAlgorithm {
@@ -68,39 +68,6 @@ public class PrimMST extends MazeAlgorithm {
 
 	private boolean outsideMaze(Integer cell) {
 		return grid.get(cell) != COMPLETED;
-	}
-}
-```
-
-```java
-public class RandomBFS extends MazeAlgorithm {
-
-	private final List<Integer> frontier = new ArrayList<>();
-
-	public RandomBFS(DataGrid2D<TraversalState> grid) {
-		super(grid);
-	}
-
-	@Override
-	public void accept(Integer start) {
-		extendMaze(start);
-		while (!frontier.isEmpty()) {
-			Integer cell = frontier.remove(rnd.nextInt(frontier.size()));
-			grid.neighbors(cell).filter(this::outsideMaze).forEach(neighbor -> {
-				extendMaze(neighbor);
-				grid.addEdge(cell, neighbor);
-			});
-			grid.set(cell, COMPLETED);
-		}
-	}
-
-	private void extendMaze(Integer cell) {
-		grid.set(cell, VISITED);
-		frontier.add(cell);
-	}
-
-	private boolean outsideMaze(Integer cell) {
-		return grid.get(cell) == UNVISITED;
 	}
 }
 ```
