@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Direction;
-import de.amr.easy.grid.api.ObservableDataGrid2D;
+import de.amr.easy.grid.api.DataGrid2D;
 
 /**
  * Creates a random binary spanning tree.
@@ -18,7 +18,7 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class BinaryTree extends MazeAlgorithm {
 
-	public BinaryTree(ObservableDataGrid2D<TraversalState> grid) {
+	public BinaryTree(DataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
 

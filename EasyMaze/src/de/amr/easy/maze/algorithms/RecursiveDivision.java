@@ -5,7 +5,7 @@ import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.ObservableDataGrid2D;
+import de.amr.easy.grid.api.DataGrid2D;
 
 /**
  * Creates maze by recursive division.
@@ -18,11 +18,9 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class RecursiveDivision extends MazeAlgorithm {
 
-	public RecursiveDivision(ObservableDataGrid2D<TraversalState> grid) {
+	public RecursiveDivision(DataGrid2D<TraversalState> grid) {
 		super(grid);
-		grid.setEventsEnabled(false);
 		grid.makeFullGrid();
-		grid.setEventsEnabled(true);
 		grid.setDefault(COMPLETED);
 	}
 
@@ -38,7 +36,7 @@ public class RecursiveDivision extends MazeAlgorithm {
 	 * @param left
 	 *          left column of subgrid
 	 * @param top
-	 *          tpo row of subfrid
+	 *          top row of subgrid
 	 * @param width
 	 *          number of columns of subgrid
 	 * @param height

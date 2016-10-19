@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.ds.Partition;
 import de.amr.easy.graph.ds.Partition.EquivClass;
-import de.amr.easy.grid.api.ObservableDataGrid2D;
+import de.amr.easy.grid.api.DataGrid2D;
 
 /**
  * Maze generator using Eller's algorithm.
@@ -26,7 +26,7 @@ public class Eller extends MazeAlgorithm {
 
 	private final Partition<Integer> partition = new Partition<>();
 
-	public Eller(ObservableDataGrid2D<TraversalState> grid) {
+	public Eller(DataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
 

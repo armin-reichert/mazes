@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.ObservableDataGrid2D;
+import de.amr.easy.grid.api.DataGrid2D;
 
 /**
  * Maze generator using randomized recursive depth-first-search. Not suited for larger grids because
@@ -21,7 +21,7 @@ public class RecursiveDFS extends MazeAlgorithm {
 	private Optional<Integer> unvisitedNeighbor;
 	private final Predicate<Integer> isUnvisited = cell -> grid.get(cell) == UNVISITED;
 
-	public RecursiveDFS(ObservableDataGrid2D<TraversalState> grid) {
+	public RecursiveDFS(DataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
 

@@ -3,7 +3,7 @@ package de.amr.easy.maze.algorithms.wilson;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.ObservableDataGrid2D;
+import de.amr.easy.grid.api.DataGrid2D;
 import de.amr.easy.grid.iterators.traversals.CollapsingWalls;
 
 /**
@@ -14,7 +14,7 @@ import de.amr.easy.grid.iterators.traversals.CollapsingWalls;
  */
 public class WilsonUSTCollapsingWalls extends WilsonUST {
 
-	public WilsonUSTCollapsingWalls(ObservableDataGrid2D<TraversalState> grid) {
+	public WilsonUSTCollapsingWalls(DataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
 

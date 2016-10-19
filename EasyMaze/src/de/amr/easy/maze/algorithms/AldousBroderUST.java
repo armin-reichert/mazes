@@ -5,7 +5,7 @@ import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.ObservableDataGrid2D;
+import de.amr.easy.grid.api.DataGrid2D;
 
 /**
  * Let G = (V,E) be a graph with vertices V and edge set E.
@@ -39,7 +39,7 @@ public class AldousBroderUST extends MazeAlgorithm {
 
 	private int mazeCellCount;
 
-	public AldousBroderUST(ObservableDataGrid2D<TraversalState> grid) {
+	public AldousBroderUST(DataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
 

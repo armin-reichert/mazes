@@ -3,7 +3,7 @@ package de.amr.easy.maze.algorithms.wilson;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.ObservableDataGrid2D;
+import de.amr.easy.grid.api.DataGrid2D;
 
 /**
  * Wilson's algorithm where the vertices are selected row-wise.
@@ -12,7 +12,7 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class WilsonUSTRowsTopDown extends WilsonUST {
 
-	public WilsonUSTRowsTopDown(ObservableDataGrid2D<TraversalState> grid) {
+	public WilsonUSTRowsTopDown(DataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
 

@@ -1,7 +1,7 @@
 package de.amr.easy.maze.algorithms;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.ObservableDataGrid2D;
+import de.amr.easy.grid.api.DataGrid2D;
 
 /**
  * Variant of "hunt-and-kill" algorithm where the "hunt" picks cells randomly from the set of
@@ -11,7 +11,7 @@ import de.amr.easy.grid.api.ObservableDataGrid2D;
  */
 public class HuntAndKillRandom extends HuntAndKill {
 
-	public HuntAndKillRandom(ObservableDataGrid2D<TraversalState> grid) {
+	public HuntAndKillRandom(DataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
 

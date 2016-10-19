@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.ObservableDataGrid2D;
+import de.amr.easy.grid.api.DataGrid2D;
 
 /**
  * Creates maze as a binary tree with random cell selection.
@@ -17,7 +17,7 @@ public class BinaryTreeRandom extends BinaryTree {
 
 	private final List<Integer> cellsInRandomOrder;
 
-	public BinaryTreeRandom(ObservableDataGrid2D<TraversalState> grid) {
+	public BinaryTreeRandom(DataGrid2D<TraversalState> grid) {
 		super(grid);
 		cellsInRandomOrder = grid.vertexStream().collect(Collectors.toList());
 		Collections.shuffle(cellsInRandomOrder);

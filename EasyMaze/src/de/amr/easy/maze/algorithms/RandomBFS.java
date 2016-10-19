@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.ObservableDataGrid2D;
+import de.amr.easy.grid.api.DataGrid2D;
 
 /**
  * Maze generator using a randomized breadth-first-traversal.
@@ -19,7 +19,7 @@ public class RandomBFS extends MazeAlgorithm {
 
 	private final List<Integer> frontier = new ArrayList<>();
 
-	public RandomBFS(ObservableDataGrid2D<TraversalState> grid) {
+	public RandomBFS(DataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
 

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.ObservableDataGrid2D;
+import de.amr.easy.grid.api.DataGrid2D;
 
 /**
  * Wilson's algorithm with random vertex selection.
@@ -15,7 +15,7 @@ public class WilsonUSTRandomCell extends WilsonUST {
 
 	private final List<Integer> cellsOutsideTree;
 
-	public WilsonUSTRandomCell(ObservableDataGrid2D<TraversalState> grid) {
+	public WilsonUSTRandomCell(DataGrid2D<TraversalState> grid) {
 		super(grid);
 		cellsOutsideTree = grid.vertexStream().collect(Collectors.toList());
 	}

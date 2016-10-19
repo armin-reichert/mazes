@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 import javax.swing.AbstractAction;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.ObservableDataGrid2D;
+import de.amr.easy.grid.api.DataGrid2D;
 import de.amr.easy.maze.misc.StopWatch;
 import de.amr.mazes.demos.swing.model.AlgorithmInfo;
 import de.amr.mazes.demos.swing.rendering.BFSAnimation;
@@ -76,7 +76,7 @@ public class CreateSingleMazeAction extends AbstractAction {
 		// Create generator object (must happen after grid preparation)
 		@SuppressWarnings("unchecked")
 		Consumer<Integer> generator = (Consumer<Integer>) generatorInfo.getAlgorithmClass()
-				.getConstructor(ObservableDataGrid2D.class).newInstance(app.model.getGrid());
+				.getConstructor(DataGrid2D.class).newInstance(app.model.getGrid());
 
 		app.canvas().resetRenderingModel();
 		if (app.grid().edgeCount() > 0) {

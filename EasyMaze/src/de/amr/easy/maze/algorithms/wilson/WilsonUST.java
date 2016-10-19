@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Direction;
-import de.amr.easy.grid.api.ObservableDataGrid2D;
+import de.amr.easy.grid.api.DataGrid2D;
 import de.amr.easy.maze.algorithms.MazeAlgorithm;
 
 /**
@@ -34,7 +34,7 @@ public abstract class WilsonUST extends MazeAlgorithm {
 
 	private final Direction[] lastWalkDir;
 
-	protected WilsonUST(ObservableDataGrid2D<TraversalState> grid) {
+	protected WilsonUST(DataGrid2D<TraversalState> grid) {
 		super(grid);
 		lastWalkDir = new Direction[grid.numCells()];
 	}

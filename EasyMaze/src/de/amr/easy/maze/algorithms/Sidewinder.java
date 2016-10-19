@@ -4,7 +4,7 @@ import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static java.util.stream.IntStream.range;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.ObservableDataGrid2D;
+import de.amr.easy.grid.api.DataGrid2D;
 
 /**
  * The "Sidewinder" algorithm.
@@ -19,7 +19,7 @@ public class Sidewinder extends MazeAlgorithm {
 
 	private Integer runStart;
 
-	public Sidewinder(ObservableDataGrid2D<TraversalState> grid) {
+	public Sidewinder(DataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
 

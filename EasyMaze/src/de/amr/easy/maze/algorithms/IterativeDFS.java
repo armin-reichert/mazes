@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.ObservableDataGrid2D;
+import de.amr.easy.grid.api.DataGrid2D;
 
 /**
  * Generates a maze by iterative random depth-first-traversal of a grid.
@@ -28,7 +28,7 @@ public class IterativeDFS extends MazeAlgorithm {
 	private final Predicate<Integer> isUnvisited = cell -> grid.get(cell) == UNVISITED;
 	private final Deque<Integer> stack = new LinkedList<>();
 
-	public IterativeDFS(ObservableDataGrid2D<TraversalState> grid) {
+	public IterativeDFS(DataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
 

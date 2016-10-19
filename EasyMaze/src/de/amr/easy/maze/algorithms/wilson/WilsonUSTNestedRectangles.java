@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.ObservableDataGrid2D;
+import de.amr.easy.grid.api.DataGrid2D;
 import de.amr.easy.grid.iterators.IteratorFactory;
 import de.amr.easy.grid.iterators.shapes.Rectangle;
 import de.amr.easy.grid.iterators.traversals.ExpandingRectangle;
@@ -21,7 +21,7 @@ import de.amr.easy.grid.iterators.traversals.ExpandingRectangle;
  */
 public class WilsonUSTNestedRectangles extends WilsonUST {
 
-	public WilsonUSTNestedRectangles(ObservableDataGrid2D<TraversalState> grid) {
+	public WilsonUSTNestedRectangles(DataGrid2D<TraversalState> grid) {
 		super(grid);
 	}
 
