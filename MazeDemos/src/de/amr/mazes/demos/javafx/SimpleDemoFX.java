@@ -10,13 +10,20 @@ import java.util.function.Consumer;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
-import de.amr.easy.grid.api.ObservableDataGrid2D;
+import de.amr.easy.grid.api.DataGrid2D;
 import de.amr.easy.grid.impl.ObservableDataGrid;
+import de.amr.easy.maze.algorithms.BinaryTreeRandom;
+import de.amr.easy.maze.algorithms.Eller;
+import de.amr.easy.maze.algorithms.EllerInsideOut;
+import de.amr.easy.maze.algorithms.GrowingTree;
+import de.amr.easy.maze.algorithms.HuntAndKillRandom;
 import de.amr.easy.maze.algorithms.IterativeDFS;
 import de.amr.easy.maze.algorithms.KruskalMST;
 import de.amr.easy.maze.algorithms.PrimMST;
 import de.amr.easy.maze.algorithms.RandomBFS;
 import de.amr.easy.maze.algorithms.RecursiveDivision;
+import de.amr.easy.maze.algorithms.wilson.WilsonUSTCollapsingRectangle;
+import de.amr.easy.maze.algorithms.wilson.WilsonUSTRandomCell;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -44,8 +51,9 @@ public class SimpleDemoFX extends Application {
 
 	private static final int MAZE_WIDTH = 1000;
 	private static final Random RAND = new Random();
-	private static final Class<?> GENERATOR_CLASSES[] = { KruskalMST.class, PrimMST.class, IterativeDFS.class,
-			RandomBFS.class, RecursiveDivision.class };
+	private static final Class<?> GENERATOR_CLASSES[] = { BinaryTreeRandom.class, Eller.class, EllerInsideOut.class,
+			GrowingTree.class, HuntAndKillRandom.class, KruskalMST.class, PrimMST.class, IterativeDFS.class, RandomBFS.class,
+			RecursiveDivision.class, WilsonUSTRandomCell.class, WilsonUSTCollapsingRectangle.class };
 
 	private Canvas canvas;
 	private Timer timer;
@@ -55,7 +63,7 @@ public class SimpleDemoFX extends Application {
 	private int cellSize;
 
 	public SimpleDemoFX() {
-		cellSize = 16;
+		cellSize = 8;
 		computeGridSize();
 	}
 
@@ -116,7 +124,7 @@ public class SimpleDemoFX extends Application {
 	private Consumer<Integer> randomMazeGenerator() {
 		Class<?> generatorClass = GENERATOR_CLASSES[RAND.nextInt(GENERATOR_CLASSES.length)];
 		try {
-			return (Consumer<Integer>) generatorClass.getConstructor(ObservableDataGrid2D.class).newInstance(maze);
+			return (Consumer<Integer>) generatorClass.getConstructor(DataGrid2D.class).newInstance(maze);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Could not create maze generator instance");
