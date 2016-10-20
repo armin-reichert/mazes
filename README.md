@@ -41,7 +41,7 @@ public class PrimMST extends MazeAlgorithm {
 
 	private final PriorityQueue<WeightedEdge<Integer>> cut = new PriorityQueue<>();
 
-	public PrimMST(DataGrid2D<TraversalState> grid) {
+	public PrimMST(Grid2D<TraversalState> grid) {
 		super(grid);
 	}
 
