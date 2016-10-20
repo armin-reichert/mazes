@@ -1,12 +1,10 @@
 # mazes
 
-Maze generation algorithms implemented in Java 8 (using streams and lambda expressions)
+### Maze generation algorithms implemented in Java 8
 
-My main goal was to provide maze generation algorithms in a **readable** form that clearly shows the
-underlying **graph manipulation**, not polluted by details of rendering and internals of the used grid
-data structure.
+I got interested into maze algorithms by the [weblog of Jamis Buck](http://weblog.jamisbuck.org/archives.html). In his blog, Jamis  presents a whole number of maze algorithms together with a Ruby implementation.
 
-The maze generation code has no dependencies to any UI library (AWT, Swing, JavaFX).
+My goal was to provide a Java implementation for all of these algorithms (and in doing that I discovered a number of other ones). This implementation should clearly reflect the underlying **graph algorithm** (creating a spanning tree of an undirected grid graph), and the code should be free of rendering and grid data structure internals.
 
 To achieve this
 - Graph and Grid interfaces are provided as the API on which the generators operate
@@ -15,7 +13,9 @@ To achieve this
 - Maze generation algorithms work strictly against the Grid API, renderers are attached as graph
 listeners
 
-Implemented maze generation algorithms (more to come):
+The implementation uses Java 8 features (streams and lambda expressions) for better readability. The code has no dependencies to any UI library (AWT, Swing, JavaFX), there is a [Swing application](MazeDemos/src/de/amr/mazes/demos/swing/app/MazeDemoApp.java) demonstrating all maze generators with a control panel where you can change the grid dimensions and the rendering type ("walls" vs. "passages"). 
+
+Implemented maze generation algorithms so far:
 
 - [Aldous-Broder](EasyMaze/src/de/amr/easy/maze/algorithms/AldousBroderUST.java)
 - Binary Tree ([top-down](EasyMaze/src/de/amr/easy/maze/algorithms/BinaryTree.java) and [random](EasyMaze/src/de/amr/easy/maze/algorithms/BinaryTreeRandom.java))
