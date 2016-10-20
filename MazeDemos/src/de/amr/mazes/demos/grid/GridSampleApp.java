@@ -18,7 +18,7 @@ import javax.swing.JSlider;
 import javax.swing.KeyStroke;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.impl.ObservableDataGrid;
+import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.rendering.swing.SwingDefaultGridRenderingModel;
 import de.amr.easy.grid.rendering.swing.SwingGridCanvas;
 import de.amr.easy.grid.rendering.swing.SwingGridRenderingModel;
@@ -36,7 +36,7 @@ public abstract class GridSampleApp implements Runnable {
 		EventQueue.invokeLater(app::showUI);
 	}
 
-	protected ObservableDataGrid<TraversalState> grid;
+	protected ObservableGrid<TraversalState> grid;
 	protected int cellSize;
 	protected String appName;
 	protected JFrame window;
@@ -64,12 +64,12 @@ public abstract class GridSampleApp implements Runnable {
 	}
 
 	private void init(int gridWidth, int gridHeight, int cellSize) {
-		grid = new ObservableDataGrid<>(gridWidth, gridHeight, UNVISITED);
+		grid = new ObservableGrid<>(gridWidth, gridHeight, UNVISITED);
 		this.cellSize = cellSize;
 	}
 
 	protected void fitWindowSize(int windowWidth, int windowHeight, int cellSize) {
-		grid = new ObservableDataGrid<>(windowWidth / cellSize, windowHeight / cellSize, UNVISITED);
+		grid = new ObservableGrid<>(windowWidth / cellSize, windowHeight / cellSize, UNVISITED);
 		canvas.setGrid(grid);
 		canvas.setRenderingModel(changeRenderingModel(cellSize));
 		window.setTitle(composeTitle());

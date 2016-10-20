@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 import org.jfree.graphics2d.svg.SVGUtils;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.impl.ObservableDataGrid;
+import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.rendering.svg.SVGGridRenderer;
 import de.amr.easy.maze.algorithms.IterativeDFS;
 import de.amr.easy.maze.misc.StopWatch;
@@ -34,12 +34,12 @@ public class SVGOutputTest {
 		app.writeFile("maze.html", HTML);
 	}
 
-	private final ObservableDataGrid<TraversalState> grid;
+	private final ObservableGrid<TraversalState> grid;
 	private final SVGGridRenderer svgRenderer;
 	private final Consumer<Integer> mazeGenerator;
 
 	public SVGOutputTest() {
-		grid = new ObservableDataGrid<>(COLS, ROWS, UNVISITED);
+		grid = new ObservableGrid<>(COLS, ROWS, UNVISITED);
 		svgRenderer = new SVGGridRenderer(grid, CELLSIZE);
 		mazeGenerator = new IterativeDFS(grid);
 		StopWatch watch = new StopWatch();

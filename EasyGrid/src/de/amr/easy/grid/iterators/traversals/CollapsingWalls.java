@@ -2,7 +2,7 @@ package de.amr.easy.grid.iterators.traversals;
 
 import java.util.Iterator;
 
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.NakedGrid2D;
 
 /**
  * A grid traversal where the left and right grid "walls" are "collapsing".
@@ -12,9 +12,9 @@ import de.amr.easy.grid.api.Grid2D;
  */
 public class CollapsingWalls implements Sequence<Integer> {
 
-	private final Grid2D grid;
+	private final NakedGrid2D grid;
 
-	public CollapsingWalls(Grid2D grid) {
+	public CollapsingWalls(NakedGrid2D grid) {
 		this.grid = grid;
 	}
 

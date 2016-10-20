@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JSlider;
 
-import de.amr.easy.grid.impl.ObservableDataGrid;
+import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.mazes.demos.misc.Utils;
 import de.amr.mazes.demos.swing.app.CreateAllMazesAction;
 import de.amr.mazes.demos.swing.app.CreateSingleMazeAction;
@@ -61,7 +61,7 @@ public class SettingsWindow extends JFrame {
 			int cellSize = app.model.getGridCellSizes()[selector.getSelectedIndex()];
 			app.model.setGridCellSize(cellSize);
 			Dimension dim = Utils.maxGridDimensionForDisplay(cellSize);
-			app.model.setGrid(new ObservableDataGrid<>(dim.width, dim.height, UNVISITED));
+			app.model.setGrid(new ObservableGrid<>(dim.width, dim.height, UNVISITED));
 			app.updateCanvas();
 		});
 

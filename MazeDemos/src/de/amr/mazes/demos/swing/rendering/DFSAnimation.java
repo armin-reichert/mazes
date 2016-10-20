@@ -8,7 +8,7 @@ import java.util.Set;
 
 import de.amr.easy.graph.traversal.DepthFirstTraversal;
 import de.amr.easy.grid.api.Direction;
-import de.amr.easy.grid.api.ObservableGrid2D;
+import de.amr.easy.grid.api.ObservableNakedGrid2D;
 import de.amr.easy.grid.rendering.swing.SwingDefaultGridRenderingModel;
 import de.amr.easy.grid.rendering.swing.SwingGridCanvas;
 
@@ -20,12 +20,12 @@ import de.amr.easy.grid.rendering.swing.SwingGridCanvas;
 public class DFSAnimation {
 
 	private final SwingGridCanvas canvas;
-	private final ObservableGrid2D grid;
+	private final ObservableNakedGrid2D grid;
 	private final DFSRenderingModel renderingModel;
 	private final DepthFirstTraversal<Integer, ?> dfs;
 	private final Set<Integer> path;
 
-	public DFSAnimation(SwingGridCanvas canvas, ObservableGrid2D grid, Integer source, Integer target) {
+	public DFSAnimation(SwingGridCanvas canvas, ObservableNakedGrid2D grid, Integer source, Integer target) {
 		this.canvas = canvas;
 		this.grid = grid;
 		this.renderingModel = new DFSRenderingModel(canvas.currentRenderingModel().getCellSize(),

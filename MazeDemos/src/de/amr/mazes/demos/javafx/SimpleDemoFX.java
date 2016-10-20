@@ -10,8 +10,8 @@ import java.util.function.Consumer;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
-import de.amr.easy.grid.api.DataGrid2D;
-import de.amr.easy.grid.impl.ObservableDataGrid;
+import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.maze.algorithms.BinaryTreeRandom;
 import de.amr.easy.maze.algorithms.Eller;
 import de.amr.easy.maze.algorithms.EllerInsideOut;
@@ -57,7 +57,7 @@ public class SimpleDemoFX extends Application {
 
 	private Canvas canvas;
 	private Timer timer;
-	private ObservableDataGrid<TraversalState> maze;
+	private ObservableGrid<TraversalState> maze;
 	private int cols;
 	private int rows;
 	private int cellSize;
@@ -110,7 +110,7 @@ public class SimpleDemoFX extends Application {
 	}
 
 	private void nextMaze() {
-		maze = new ObservableDataGrid<>(cols, rows, UNVISITED);
+		maze = new ObservableGrid<>(cols, rows, UNVISITED);
 		canvas.resize((cols + 1) * cellSize, (rows + 1) * cellSize);
 		Consumer<Integer> generator = randomMazeGenerator();
 		generator.accept(maze.cell(0, 0));
@@ -124,7 +124,7 @@ public class SimpleDemoFX extends Application {
 	private Consumer<Integer> randomMazeGenerator() {
 		Class<?> generatorClass = GENERATOR_CLASSES[RAND.nextInt(GENERATOR_CLASSES.length)];
 		try {
-			return (Consumer<Integer>) generatorClass.getConstructor(DataGrid2D.class).newInstance(maze);
+			return (Consumer<Integer>) generatorClass.getConstructor(Grid2D.class).newInstance(maze);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Could not create maze generator instance");

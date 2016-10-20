@@ -12,20 +12,20 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.amr.easy.grid.api.Direction;
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.NakedGrid2D;
 import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.grid.impl.Grid;
+import de.amr.easy.grid.impl.NakedGrid;
 
 public class FullGridTests {
 
 	private static final int WIDTH = 15;
 	private static final int HEIGHT = 10;
 
-	private Grid2D grid;
+	private NakedGrid2D grid;
 
 	@Before
 	public void setUp() {
-		grid = new Grid(WIDTH, HEIGHT);
+		grid = new NakedGrid(WIDTH, HEIGHT);
 		grid.makeFullGrid();
 	}
 

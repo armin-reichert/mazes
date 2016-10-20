@@ -5,14 +5,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.NakedGrid2D;
 
 public class RecursiveCrosses implements Sequence<Integer> {
 
-	private final Grid2D grid;
+	private final NakedGrid2D grid;
 	private final List<Integer> path = new ArrayList<>();
 
-	public RecursiveCrosses(Grid2D grid) {
+	public RecursiveCrosses(NakedGrid2D grid) {
 		this.grid = grid;
 		cross(grid.numCols(), grid.numRows(), 0, 0);
 	}

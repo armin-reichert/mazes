@@ -1,105 +1,51 @@
 package de.amr.easy.grid.impl;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import de.amr.easy.graph.api.ObservableGraph;
-import de.amr.easy.graph.api.WeightedEdge;
-import de.amr.easy.graph.event.EdgeAddedEvent;
-import de.amr.easy.graph.event.EdgeChangeEvent;
-import de.amr.easy.graph.event.EdgeRemovedEvent;
-import de.amr.easy.graph.event.GraphListener;
-import de.amr.easy.graph.event.VertexChangeEvent;
+import de.amr.easy.graph.api.GraphContent;
 import de.amr.easy.grid.api.ObservableGrid2D;
 
 /**
- * A grid which can be observed by graph listeners.
+ * An observable grid with cell content.
+ * 
+ * @param <Content>
+ *          cell content data type
  * 
  * @author Armin Reichert
  */
-public class ObservableGrid extends Grid implements ObservableGrid2D, ObservableGraph<Integer, WeightedEdge<Integer>> {
+public class ObservableGrid<Content> extends ObservableNakedGrid implements ObservableGrid2D<Content> {
 
-	private final Set<GraphListener<Integer, WeightedEdge<Integer>>> listeners = new HashSet<>();
-	private boolean eventsEnabled;
+	private GraphContent<Integer, Content> gridContent;
 
-	public ObservableGrid(int numCols, int numRows) {
+	public ObservableGrid(int numCols, int numRows, Content defaultContent, boolean sparse) {
 		super(numCols, numRows);
-		eventsEnabled = true;
+		gridContent = sparse ? new SparseGridContent<>() : new DenseGridContent<>(numCols * numRows);
+		gridContent.setDefault(defaultContent);
+	}
+
+	public ObservableGrid(int numCols, int numRows, Content defaultContent) {
+		this(numCols, numRows, defaultContent, true);
+	}
+
+	// --- {@link GraphContent} interface ---
+
+	@Override
+	public void clear() {
+		gridContent.clear();
 	}
 
 	@Override
-	public void addEdge(Integer p, Integer q) {
-		super.addEdge(p, q);
-		if (eventsEnabled) {
-			for (GraphListener<Integer, WeightedEdge<Integer>> listener : listeners) {
-				listener.edgeAdded(new EdgeAddedEvent<>(this, edge(p, q).get()));
-			}
-		}
+	public void setDefault(Content content) {
+		gridContent.setDefault(content);
 	}
 
 	@Override
-	public void removeEdge(Integer p, Integer q) {
-		edge(p, q).ifPresent(edge -> {
-			super.removeEdge(p, q);
-			if (eventsEnabled) {
-				for (GraphListener<Integer, WeightedEdge<Integer>> listener : listeners) {
-					listener.edgeRemoved(new EdgeRemovedEvent<>(this, edge));
-				}
-			}
-		});
+	public Content get(Integer cell) {
+		return gridContent.get(cell);
 	}
 
 	@Override
-	public void removeEdges() {
-		super.removeEdges();
-		if (eventsEnabled) {
-			for (GraphListener<Integer, WeightedEdge<Integer>> listener : listeners) {
-				listener.graphChanged(this);
-			}
-		}
-	}
-
-	/* {@link ObservableGraph} interface */
-
-	@Override
-	public void addGraphListener(GraphListener<Integer, WeightedEdge<Integer>> listener) {
-		listeners.add(listener);
-	}
-
-	@Override
-	public void removeGraphListener(GraphListener<Integer, WeightedEdge<Integer>> listener) {
-		listeners.remove(listener);
-	}
-
-	@Override
-	public void setEventsEnabled(boolean enabled) {
-		eventsEnabled = enabled;
-	}
-
-	@Override
-	public void fireVertexChange(Integer vertex, Object oldValue, Object newValue) {
-		if (eventsEnabled) {
-			for (GraphListener<Integer, WeightedEdge<Integer>> listener : listeners) {
-				listener.vertexChanged(new VertexChangeEvent<>(this, vertex, oldValue, newValue));
-			}
-		}
-	}
-
-	@Override
-	public void fireEdgeChange(WeightedEdge<Integer> edge, Object oldValue, Object newValue) {
-		if (eventsEnabled) {
-			for (GraphListener<Integer, WeightedEdge<Integer>> listener : listeners) {
-				listener.edgeChanged(new EdgeChangeEvent<>(this, edge, oldValue, newValue));
-			}
-		}
-	}
-
-	@Override
-	public void fireGraphChange(ObservableGraph<Integer, WeightedEdge<Integer>> graph) {
-		if (eventsEnabled) {
-			for (GraphListener<Integer, WeightedEdge<Integer>> listener : listeners) {
-				listener.graphChanged(graph);
-			}
-		}
+	public void set(Integer cell, Content content) {
+		Content oldContent = gridContent.get(cell);
+		gridContent.set(cell, content);
+		fireVertexChange(cell, oldContent, content);
 	}
 }

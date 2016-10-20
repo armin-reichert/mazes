@@ -12,17 +12,17 @@ import de.amr.easy.graph.event.EdgeChangeEvent;
 import de.amr.easy.graph.event.EdgeRemovedEvent;
 import de.amr.easy.graph.event.GraphListener;
 import de.amr.easy.graph.event.VertexChangeEvent;
-import de.amr.easy.grid.api.ObservableDataGrid2D;
+import de.amr.easy.grid.api.ObservableGrid2D;
 import de.amr.easy.grid.rendering.swing.SwingDefaultGridRenderingModel;
 import de.amr.easy.grid.rendering.swing.SwingGridRenderer;
 
 public class SVGGridRenderer implements GraphListener<Integer, WeightedEdge<Integer>> {
 
-	private final ObservableDataGrid2D<TraversalState> grid;
+	private final ObservableGrid2D<TraversalState> grid;
 	private final SVGGraphics2D g;
 	private final SwingGridRenderer renderer;
 
-	public SVGGridRenderer(ObservableDataGrid2D<TraversalState> grid, int cellSize) {
+	public SVGGridRenderer(ObservableGrid2D<TraversalState> grid, int cellSize) {
 		this.grid = grid;
 		int width = grid.numCols() * cellSize, height = grid.numRows() * cellSize;
 		g = new SVGGraphics2D(width, height);

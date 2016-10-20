@@ -16,11 +16,11 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.grid.impl.ObservableDataGrid;
+import de.amr.easy.grid.impl.ObservableGrid;
 
 public class BFSTraversal extends Scene<MazeDemo> {
 
-	private ObservableDataGrid<TraversalState> grid;
+	private ObservableGrid<TraversalState> grid;
 	private BreadthFirstTraversal<Integer, WeightedEdge<Integer>> bfs;
 	private GridAnimation animation;
 	private Thread bfsRunner;

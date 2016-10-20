@@ -3,15 +3,15 @@ package de.amr.demos.maze.ui;
 import java.awt.Color;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.ObservableDataGrid2D;
+import de.amr.easy.grid.api.ObservableGrid2D;
 import de.amr.easy.grid.rendering.swing.SwingDefaultGridRenderingModel;
 
 public class GridVisualization extends SwingDefaultGridRenderingModel {
 
-	protected final ObservableDataGrid2D<TraversalState> grid;
+	protected final ObservableGrid2D<TraversalState> grid;
 	private final int gridCellSize;
 
-	public GridVisualization(ObservableDataGrid2D<TraversalState> grid, int gridCellSize) {
+	public GridVisualization(ObservableGrid2D<TraversalState> grid, int gridCellSize) {
 		this.grid = grid;
 		this.gridCellSize = gridCellSize;
 	}

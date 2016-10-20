@@ -7,7 +7,7 @@ import java.util.PriorityQueue;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.WeightedEdge;
-import de.amr.easy.grid.api.DataGrid2D;
+import de.amr.easy.grid.api.Grid2D;
 
 /**
  * Maze generator based on Prim's minimum spanning tree algorithm with random edge weights.
@@ -21,7 +21,7 @@ public class PrimMST extends MazeAlgorithm {
 
 	private final PriorityQueue<WeightedEdge<Integer>> cut = new PriorityQueue<>();
 
-	public PrimMST(DataGrid2D<TraversalState> grid) {
+	public PrimMST(Grid2D<TraversalState> grid) {
 		super(grid);
 	}
 

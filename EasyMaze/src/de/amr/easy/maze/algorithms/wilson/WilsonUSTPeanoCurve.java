@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.DataGrid2D;
+import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.Direction;
-import de.amr.easy.grid.impl.Grid;
+import de.amr.easy.grid.impl.NakedGrid;
 import de.amr.easy.grid.iterators.traversals.PeanoCurve;
 
 /**
@@ -24,7 +24,7 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 
 	private final List<Integer> path = new ArrayList<>();
 
-	public WilsonUSTPeanoCurve(DataGrid2D<TraversalState> grid) {
+	public WilsonUSTPeanoCurve(Grid2D<TraversalState> grid) {
 		super(grid);
 	}
 
@@ -32,7 +32,7 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 	protected Stream<Integer> cellStream() {
 		int n = nextPow(3, max(grid.numCols(), grid.numRows()));
 		PeanoCurve peano = new PeanoCurve(log(3, n));
-		Grid squareGrid = new Grid(n, n);
+		NakedGrid squareGrid = new NakedGrid(n, n);
 		Integer cell = squareGrid.cell(BOTTOM_LEFT);
 		addCellToPath(squareGrid.col(cell), squareGrid.row(cell));
 		for (Direction dir : peano) {

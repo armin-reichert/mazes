@@ -8,7 +8,7 @@ import java.awt.RenderingHints;
 
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.grid.api.Direction;
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.NakedGrid2D;
 
 /**
  * Renders a grid as "passages" or "cells with walls" depending on the selected passage thickness.
@@ -37,11 +37,11 @@ public class SwingGridRenderer {
 		b = a + thickness;
 	}
 
-	public void drawGrid(Graphics2D g, Grid2D grid) {
+	public void drawGrid(Graphics2D g, NakedGrid2D grid) {
 		grid.edgeStream().forEach(passage -> drawPassage(g, grid, passage, true));
 	}
 
-	public void drawPassage(Graphics2D g, Grid2D grid, Edge<Integer> passage, boolean visible) {
+	public void drawPassage(Graphics2D g, NakedGrid2D grid, Edge<Integer> passage, boolean visible) {
 		Integer p = passage.either(), q = passage.other(p);
 		Direction dir = grid.direction(p, q).get();
 		drawCellContent(g, grid, p);
@@ -50,7 +50,7 @@ public class SwingGridRenderer {
 		drawHalfPassage(g, grid, q, dir.inverse(), visible ? rm.getPassageColor(q, dir.inverse()) : rm.getGridBgColor());
 	}
 
-	public void drawCell(Graphics2D g, Grid2D grid, Integer cell) {
+	public void drawCell(Graphics2D g, NakedGrid2D grid, Integer cell) {
 		drawCellContent(g, grid, cell);
 		for (Direction dir : Direction.values()) {
 			if (grid.isConnected(cell, dir)) {
@@ -59,7 +59,7 @@ public class SwingGridRenderer {
 		}
 	}
 
-	private void drawHalfPassage(Graphics2D g, Grid2D grid, Integer cell, Direction dir, Color passageColor) {
+	private void drawHalfPassage(Graphics2D g, NakedGrid2D grid, Integer cell, Direction dir, Color passageColor) {
 		final int x = grid.col(cell) * cellSize;
 		final int y = grid.row(cell) * cellSize;
 		g.translate(x, y);
@@ -83,7 +83,7 @@ public class SwingGridRenderer {
 		g.translate(-x, -y);
 	}
 
-	private void drawCellContent(Graphics2D g, Grid2D grid, Integer cell) {
+	private void drawCellContent(Graphics2D g, NakedGrid2D grid, Integer cell) {
 		final int dx = grid.col(cell) * cellSize;
 		final int dy = grid.row(cell) * cellSize;
 		g.translate(dx, dy);
@@ -93,7 +93,7 @@ public class SwingGridRenderer {
 		g.translate(-dx, -dy);
 	}
 
-	private void drawCellText(Graphics2D g, Grid2D grid, Integer cell) {
+	private void drawCellText(Graphics2D g, NakedGrid2D grid, Integer cell) {
 		String text = rm.getCellText(cell);
 		text = (text == null) ? "" : text.trim();
 		if (text.length() == 0) {

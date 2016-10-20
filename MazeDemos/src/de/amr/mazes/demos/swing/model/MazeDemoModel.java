@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.grid.impl.ObservableDataGrid;
+import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.maze.algorithms.AldousBroderUST;
 import de.amr.easy.maze.algorithms.BinaryTree;
 import de.amr.easy.maze.algorithms.BinaryTreeRandom;
@@ -98,7 +98,7 @@ public class MazeDemoModel {
 			new AlgorithmInfo<>(DFSAnimation.class, "Depth-First-Search"),
 			new AlgorithmInfo<>(BFSAnimation.class, "Breadth-First-Search"), };
 
-	private ObservableDataGrid<TraversalState> grid;
+	private ObservableGrid<TraversalState> grid;
 	private int[] gridCellSizes;
 	private int gridCellSize;
 	private int passageThicknessPct;
@@ -158,11 +158,11 @@ public class MazeDemoModel {
 		this.longestPathHighlighted = longestPathHighlighted;
 	}
 
-	public ObservableDataGrid<TraversalState> getGrid() {
+	public ObservableGrid<TraversalState> getGrid() {
 		return grid;
 	}
 
-	public void setGrid(ObservableDataGrid<TraversalState> grid) {
+	public void setGrid(ObservableGrid<TraversalState> grid) {
 		this.grid = grid;
 	}
 

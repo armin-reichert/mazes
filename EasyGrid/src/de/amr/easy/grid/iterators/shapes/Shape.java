@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.NakedGrid2D;
 import de.amr.easy.grid.iterators.traversals.Sequence;
 
 /**
@@ -19,11 +19,11 @@ import de.amr.easy.grid.iterators.traversals.Sequence;
  */
 public abstract class Shape implements Sequence<Integer> {
 
-	public final Grid2D grid;
+	public final NakedGrid2D grid;
 
 	protected final List<Integer> cells = new ArrayList<>();
 
-	protected Shape(Grid2D grid) {
+	protected Shape(NakedGrid2D grid) {
 		this.grid = grid;
 	}
 

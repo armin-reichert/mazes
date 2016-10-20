@@ -11,7 +11,7 @@ import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.ds.Partition;
 import de.amr.easy.graph.ds.Partition.EquivClass;
-import de.amr.easy.grid.api.DataGrid2D;
+import de.amr.easy.grid.api.Grid2D;
 
 /**
  * Maze generator derived from Kruskal's minimum spanning tree algorithm.
@@ -25,7 +25,7 @@ public class KruskalMST extends MazeAlgorithm {
 
 	private final Partition<Integer> forest = new Partition<>();
 
-	public KruskalMST(DataGrid2D<TraversalState> grid) {
+	public KruskalMST(Grid2D<TraversalState> grid) {
 		super(grid);
 	}
 

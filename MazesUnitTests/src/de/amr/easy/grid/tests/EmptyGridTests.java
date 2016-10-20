@@ -7,16 +7,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.grid.impl.Grid;
+import de.amr.easy.grid.api.NakedGrid2D;
+import de.amr.easy.grid.impl.NakedGrid;
 
 public class EmptyGridTests {
 
-	private Grid2D grid;
+	private NakedGrid2D grid;
 
 	@Before
 	public void setUp() {
-		grid = new Grid(0, 0);
+		grid = new NakedGrid(0, 0);
 	}
 
 	@After

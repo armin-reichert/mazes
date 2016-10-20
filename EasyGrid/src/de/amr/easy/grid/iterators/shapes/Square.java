@@ -8,7 +8,7 @@ import static de.amr.easy.grid.api.Direction.W;
 import java.util.Arrays;
 
 import de.amr.easy.grid.api.Direction;
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.NakedGrid2D;
 
 /**
  * Iterates grid cells clockwise as a square with given top left corner and size.
@@ -21,7 +21,7 @@ public class Square extends Shape {
 	private final Integer topLeft;
 	private final int size;
 
-	public Square(Grid2D grid, Integer topLeft, int size) {
+	public Square(NakedGrid2D grid, Integer topLeft, int size) {
 		super(grid);
 
 		this.topLeft = topLeft;

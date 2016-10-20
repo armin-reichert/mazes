@@ -5,7 +5,7 @@ import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.DataGrid2D;
+import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.iterators.traversals.RightToLeftSweep;
 
 /**
@@ -15,7 +15,7 @@ import de.amr.easy.grid.iterators.traversals.RightToLeftSweep;
  */
 public class WilsonUSTRightToLeftSweep extends WilsonUST {
 
-	public WilsonUSTRightToLeftSweep(DataGrid2D<TraversalState> grid) {
+	public WilsonUSTRightToLeftSweep(Grid2D<TraversalState> grid) {
 		super(grid);
 	}
 

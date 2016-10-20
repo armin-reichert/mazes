@@ -5,19 +5,19 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.NakedGrid2D;
 import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.grid.impl.Grid;
+import de.amr.easy.grid.impl.NakedGrid;
 import de.amr.easy.grid.iterators.shapes.Square;
 
 public class Spiral implements Sequence<Integer> {
 
 	private final List<Integer> cells = new ArrayList<>();
 
-	public Spiral(Grid2D grid, Integer start) {
+	public Spiral(NakedGrid2D grid, Integer start) {
 		int size = Math.max(grid.numCols(), grid.numRows());
 		int offsetY = (size - grid.numRows()) / 2;
-		Grid2D quadraticGrid = new Grid(size, size);
+		NakedGrid2D quadraticGrid = new NakedGrid(size, size);
 		Integer leftUpperCorner = quadraticGrid.cell(GridPosition.CENTER);
 		for (int i = 0, n = size / 2 + 1; i < n; ++i) {
 			Square square = new Square(quadraticGrid, leftUpperCorner, 2 * i + 1);

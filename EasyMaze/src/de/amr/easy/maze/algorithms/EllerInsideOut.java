@@ -21,9 +21,9 @@ import java.util.stream.Stream;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.ds.Partition;
 import de.amr.easy.graph.ds.Partition.EquivClass;
-import de.amr.easy.grid.api.DataGrid2D;
+import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.Direction;
-import de.amr.easy.grid.impl.Grid;
+import de.amr.easy.grid.impl.NakedGrid;
 import de.amr.easy.grid.iterators.shapes.Rectangle;
 import de.amr.easy.grid.iterators.shapes.Square;
 
@@ -35,7 +35,7 @@ import de.amr.easy.grid.iterators.shapes.Square;
  */
 public class EllerInsideOut extends MazeAlgorithm {
 
-	private final Grid squareGrid;
+	private final NakedGrid squareGrid;
 	private final Partition<Integer> mazeParts = new Partition<>();
 	private Square square;
 	private Iterable<Integer> layer;
@@ -43,12 +43,12 @@ public class EllerInsideOut extends MazeAlgorithm {
 	private final int offsetX;
 	private final int offsetY;
 
-	public EllerInsideOut(DataGrid2D<TraversalState> grid) {
+	public EllerInsideOut(Grid2D<TraversalState> grid) {
 		super(grid);
 		int n = max(grid.numCols(), grid.numRows());
 		offsetX = (n - grid.numCols()) / 2;
 		offsetY = (n - grid.numRows()) / 2;
-		squareGrid = new Grid(n, n);
+		squareGrid = new NakedGrid(n, n);
 	}
 
 	@Override

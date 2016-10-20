@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.Optional;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.DataGrid2D;
+import de.amr.easy.grid.api.Grid2D;
 
 /**
  * Generates a maze by iterative random depth-first-traversal of a grid.
@@ -19,7 +19,7 @@ public class IterativeDFS extends MazeAlgorithm {
 
 	private final Deque<Integer> stack = new LinkedList<>();
 
-	public IterativeDFS(DataGrid2D<TraversalState> grid) {
+	public IterativeDFS(Grid2D<TraversalState> grid) {
 		super(grid);
 	}
 

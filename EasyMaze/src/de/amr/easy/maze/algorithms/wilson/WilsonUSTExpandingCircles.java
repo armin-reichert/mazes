@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.DataGrid2D;
+import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.iterators.traversals.ExpandingCircle;
 
 /**
@@ -20,7 +20,7 @@ import de.amr.easy.grid.iterators.traversals.ExpandingCircle;
  */
 public class WilsonUSTExpandingCircles extends WilsonUST {
 
-	public WilsonUSTExpandingCircles(DataGrid2D<TraversalState> grid) {
+	public WilsonUSTExpandingCircles(Grid2D<TraversalState> grid) {
 		super(grid);
 	}
 

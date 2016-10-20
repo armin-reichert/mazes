@@ -3,7 +3,7 @@ package de.amr.easy.maze.algorithms.wilson;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.DataGrid2D;
+import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.iterators.shapes.Rectangle;
 
 /**
@@ -15,7 +15,7 @@ public class WilsonUSTCollapsingRectangle extends WilsonUST {
 
 	private int width, height;
 
-	public WilsonUSTCollapsingRectangle(DataGrid2D<TraversalState> grid) {
+	public WilsonUSTCollapsingRectangle(Grid2D<TraversalState> grid) {
 		super(grid);
 		width = grid.numCols();
 		height = grid.numRows();

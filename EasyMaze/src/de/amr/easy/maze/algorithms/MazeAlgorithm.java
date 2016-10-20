@@ -8,14 +8,14 @@ import java.util.Random;
 import java.util.function.Consumer;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.DataGrid2D;
+import de.amr.easy.grid.api.Grid2D;
 
 public abstract class MazeAlgorithm implements Consumer<Integer> {
 
-	protected final DataGrid2D<TraversalState> grid;
+	protected final Grid2D<TraversalState> grid;
 	protected final Random rnd = new Random();
 
-	public MazeAlgorithm(DataGrid2D<TraversalState> grid) {
+	public MazeAlgorithm(Grid2D<TraversalState> grid) {
 		this.grid = grid;
 	}
 

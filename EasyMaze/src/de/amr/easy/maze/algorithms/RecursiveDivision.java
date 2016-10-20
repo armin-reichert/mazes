@@ -5,7 +5,7 @@ import static java.lang.Math.min;
 import static java.util.stream.IntStream.range;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.DataGrid2D;
+import de.amr.easy.grid.api.Grid2D;
 
 /**
  * Creates maze by recursive division.
@@ -18,7 +18,7 @@ import de.amr.easy.grid.api.DataGrid2D;
  */
 public class RecursiveDivision extends MazeAlgorithm {
 
-	public RecursiveDivision(DataGrid2D<TraversalState> grid) {
+	public RecursiveDivision(Grid2D<TraversalState> grid) {
 		super(grid);
 		grid.makeFullGrid();
 		grid.setDefault(COMPLETED);

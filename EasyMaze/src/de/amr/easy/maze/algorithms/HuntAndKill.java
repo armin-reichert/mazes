@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.DataGrid2D;
+import de.amr.easy.grid.api.Grid2D;
 
 /**
  * Generates a maze similar to the "hunt-and-kill" algorithm.
@@ -24,7 +24,7 @@ public class HuntAndKill extends MazeAlgorithm {
 	protected final Predicate<Integer> isDead = isAlive.negate();
 	protected final BitSet targets;
 
-	public HuntAndKill(DataGrid2D<TraversalState> grid) {
+	public HuntAndKill(Grid2D<TraversalState> grid) {
 		super(grid);
 		targets = new BitSet(grid.numCells());
 	}

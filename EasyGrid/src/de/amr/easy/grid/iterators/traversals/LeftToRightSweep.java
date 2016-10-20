@@ -2,7 +2,7 @@ package de.amr.easy.grid.iterators.traversals;
 
 import java.util.Iterator;
 
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.NakedGrid2D;
 
 /**
  * Traverses the grid by sweeping a vertical line from left to right.
@@ -14,9 +14,9 @@ import de.amr.easy.grid.api.Grid2D;
  */
 public class LeftToRightSweep implements Sequence<Integer> {
 
-	private final Grid2D grid;
+	private final NakedGrid2D grid;
 
-	public LeftToRightSweep(Grid2D grid) {
+	public LeftToRightSweep(NakedGrid2D grid) {
 		this.grid = grid;
 	}
 

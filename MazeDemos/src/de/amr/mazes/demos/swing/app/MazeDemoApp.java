@@ -9,7 +9,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.impl.ObservableDataGrid;
+import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.rendering.swing.SwingGridCanvas;
 import de.amr.mazes.demos.misc.Utils;
 import de.amr.mazes.demos.swing.model.MazeDemoModel;
@@ -50,7 +50,7 @@ public class MazeDemoApp {
 		model.setLongestPathHighlighted(false);
 		model.setDelay(0);
 		Dimension size = Utils.maxGridDimensionForDisplay(model.getGridCellSize());
-		model.setGrid(new ObservableDataGrid<>(size.width, size.height, UNVISITED));
+		model.setGrid(new ObservableGrid<>(size.width, size.height, UNVISITED));
 
 		settingsWindow = new SettingsWindow(this);
 		settingsWindow.setAlwaysOnTop(true);
@@ -65,7 +65,7 @@ public class MazeDemoApp {
 		return mazeWindow.getCanvas();
 	}
 
-	public ObservableDataGrid<TraversalState> grid() {
+	public ObservableGrid<TraversalState> grid() {
 		return model.getGrid();
 	}
 

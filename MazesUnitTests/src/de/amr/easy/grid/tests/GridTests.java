@@ -15,12 +15,12 @@ import org.junit.Test;
 
 import de.amr.easy.graph.alg.CycleFinderUnionFind;
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.DataGrid2D;
-import de.amr.easy.grid.impl.DataGrid;
+import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.Grid;
+import de.amr.easy.grid.impl.NakedGrid;
 
 /**
- * Test case for {@link Grid}
+ * Test case for {@link NakedGrid}
  * 
  * @author Armin Reichert
  *
@@ -30,11 +30,11 @@ public class GridTests {
 	private static final int WIDTH = 1000;
 	private static final int HEIGHT = 1000;
 
-	private DataGrid2D<TraversalState> grid;
+	private Grid2D<TraversalState> grid;
 
 	@Before
 	public void setUp() {
-		grid = new DataGrid<>(WIDTH, HEIGHT, UNVISITED);
+		grid = new Grid<>(WIDTH, HEIGHT, UNVISITED);
 	}
 
 	@After

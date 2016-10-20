@@ -17,9 +17,9 @@ import de.amr.easy.game.Application;
 import de.amr.easy.game.input.Key;
 import de.amr.easy.game.scene.Scene;
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.DataGrid2D;
+import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.grid.impl.ObservableDataGrid;
+import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.maze.algorithms.BinaryTree;
 import de.amr.easy.maze.algorithms.BinaryTreeRandom;
 import de.amr.easy.maze.algorithms.Eller;
@@ -41,7 +41,7 @@ public class MazeGeneration extends Scene<MazeDemo> {
 			EllerInsideOut.class, HuntAndKill.class, IterativeDFS.class, KruskalMST.class, PrimMST.class, RandomBFS.class,
 			RecursiveDivision.class, WilsonUSTHilbertCurve.class, WilsonUSTNestedRectangles.class };
 
-	private ObservableDataGrid<TraversalState> grid;
+	private ObservableGrid<TraversalState> grid;
 	private Consumer<Integer> algorithm;
 	private Integer startCell;
 	private Thread mazeGeneration;
@@ -97,7 +97,7 @@ public class MazeGeneration extends Scene<MazeDemo> {
 	private void chooseRandomAlgorithm() {
 		Class<?> algorithmClass = ALGORITHMS[new Random().nextInt(ALGORITHMS.length)];
 		try {
-			algorithm = (Consumer<Integer>) algorithmClass.getConstructor(DataGrid2D.class).newInstance(grid);
+			algorithm = (Consumer<Integer>) algorithmClass.getConstructor(Grid2D.class).newInstance(grid);
 			LOG.info("Maze generation algorithm: " + algorithmClass);
 		} catch (Exception e) {
 			throw new RuntimeException(e);

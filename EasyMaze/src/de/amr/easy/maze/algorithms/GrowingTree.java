@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.DataGrid2D;
+import de.amr.easy.grid.api.Grid2D;
 
 /**
  * The "Growing-Tree" algorithm.
@@ -23,7 +23,7 @@ public class GrowingTree extends MazeAlgorithm {
 
 	protected final List<Integer> cells = new ArrayList<>();
 
-	public GrowingTree(DataGrid2D<TraversalState> grid) {
+	public GrowingTree(Grid2D<TraversalState> grid) {
 		super(grid);
 	}
 

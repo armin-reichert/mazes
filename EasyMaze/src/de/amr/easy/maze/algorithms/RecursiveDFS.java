@@ -6,7 +6,7 @@ import static de.amr.easy.graph.api.TraversalState.VISITED;
 import java.util.Optional;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.DataGrid2D;
+import de.amr.easy.grid.api.Grid2D;
 
 /**
  * Maze generator using randomized recursive depth-first-search. Not suited for larger grids because
@@ -22,7 +22,7 @@ public class RecursiveDFS extends MazeAlgorithm {
 
 	private Optional<Integer> unvisitedNeighbor;
 
-	public RecursiveDFS(DataGrid2D<TraversalState> grid) {
+	public RecursiveDFS(Grid2D<TraversalState> grid) {
 		super(grid);
 	}
 

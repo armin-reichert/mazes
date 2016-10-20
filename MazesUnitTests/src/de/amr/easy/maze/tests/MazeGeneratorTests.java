@@ -12,8 +12,8 @@ import org.junit.Test;
 
 import de.amr.easy.graph.alg.CycleFinderUnionFind;
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.ObservableDataGrid2D;
-import de.amr.easy.grid.impl.ObservableDataGrid;
+import de.amr.easy.grid.api.ObservableGrid2D;
+import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.maze.algorithms.AldousBroderUST;
 import de.amr.easy.maze.algorithms.BinaryTree;
 import de.amr.easy.maze.algorithms.BinaryTreeRandom;
@@ -50,11 +50,11 @@ public class MazeGeneratorTests {
 	private static final int WIDTH = 100;
 	private static final int HEIGHT = 80;
 
-	private ObservableDataGrid2D<TraversalState> grid;
+	private ObservableGrid2D<TraversalState> grid;
 
 	@Before
 	public void setUp() {
-		grid = new ObservableDataGrid<>(WIDTH, HEIGHT, UNVISITED);
+		grid = new ObservableGrid<>(WIDTH, HEIGHT, UNVISITED);
 	}
 
 	@After
@@ -125,7 +125,7 @@ public class MazeGeneratorTests {
 
 	@Test
 	public void testRecursiveDFS() {
-		grid = new ObservableDataGrid<>(50, 40, UNVISITED);
+		grid = new ObservableGrid<>(50, 40, UNVISITED);
 		new RecursiveDFS(grid).accept(grid.cell(CENTER));
 	}
 
