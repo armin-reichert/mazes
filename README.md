@@ -4,16 +4,20 @@
 
 I got interested into maze algorithms by the [weblog of Jamis Buck](http://weblog.jamisbuck.org/archives.html). In his blog, Jamis  presents a whole number of maze algorithms together with a Ruby implementation.
 
-My goal was to provide a Java implementation for all of these algorithms (and in doing that I discovered a number of other ones). This implementation should clearly reflect the underlying **graph algorithm** (creating a spanning tree of an undirected grid graph), and the code should be free of rendering and grid data structure internals.
+My goal was to provide a Java implementation for all of these algorithms. In doing that, I discovered a whole number of other ones like for example a modified version of Eller's algorithm which generates the maze from the center towards the borders, or a variation of Wilson's algorithm which picks the sources of the random walks from a Hilbert curve. Probably not of any practical use but a lot of fun to watch. 
+
+The implementation should clearly reflect the underlying **graph algorithm** (creating a spanning tree of an undirected grid graph), and the code should be free of rendering and grid data structure internals.
 
 To achieve this
 - Graph and Grid interfaces are provided as the API on which the generators operate
 - An efficient implementation of the Grid API is provided
 - A publish-subscribe mechanism for observing graph operations is provided
-- Maze generation algorithms work strictly against the Grid API, renderers are attached as graph
-listeners
+- Maze generation algorithms work strictly against the Grid API
+- Renderers are attached as graph listeners
 
-The implementation uses Java 8 features (streams and lambda expressions) for better readability. The code has no dependencies to any UI library (AWT, Swing, JavaFX), there is a [Swing application](MazeDemos/src/de/amr/mazes/demos/swing/app/MazeDemoApp.java) demonstrating all maze generators with a control panel where you can change the grid dimensions and the rendering type ("walls" vs. "passages"). 
+The implementation uses Java 8 features (streams and lambda expressions) for better readability and has no dependencies to any UI library (AWT, Swing, JavaFX).
+
+Also included is a [Swing application](MazeDemos/src/de/amr/mazes/demos/swing/app/MazeDemoApp.java) demonstrating all maze generators with a control panel where you can change the grid dimensions and the rendering type ("walls" vs. "passages").
 
 Implemented maze generation algorithms so far:
 
