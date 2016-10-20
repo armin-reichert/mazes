@@ -125,7 +125,7 @@ public class Grid implements Grid2D {
 		if (adjacent(p, q)) {
 			throw new IllegalStateException("Cannot add edge twice");
 		}
-		if (neighbors(p).noneMatch(neighbor -> neighbor.equals(q))) {
+		if (!areNeighbors(p, q)) {
 			throw new IllegalStateException("Cannot add edge between cells which are not neighbors");
 		}
 		direction(p, q).ifPresent(dir -> connect(p, q, dir, true));
