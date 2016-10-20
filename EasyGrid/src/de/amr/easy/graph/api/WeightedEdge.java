@@ -73,6 +73,6 @@ public class WeightedEdge<V> extends SimpleEdge<V> implements Edge<V>, Comparabl
 
 	@Override
 	public String toString() {
-		return "{" + u + "," + v + "}:" + weight;
+		return String.format("[%4d,%4d,%10g]", u, v, weight);
 	}
 }
