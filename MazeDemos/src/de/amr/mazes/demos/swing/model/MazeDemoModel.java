@@ -25,6 +25,7 @@ import de.amr.easy.maze.algorithms.PrimMST;
 import de.amr.easy.maze.algorithms.RandomBFS;
 import de.amr.easy.maze.algorithms.RecursiveDFS;
 import de.amr.easy.maze.algorithms.RecursiveDivision;
+import de.amr.easy.maze.algorithms.ReverseDeleteMST;
 import de.amr.easy.maze.algorithms.Sidewinder;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTCollapsingCircle;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTCollapsingRectangle;
@@ -61,6 +62,7 @@ public class MazeDemoModel {
 			new AlgorithmInfo<>(RecursiveDFS.class, "Depth-First-Traversal (recursive), small grids only!)", Traversal, SmallGridOnly),
 			new AlgorithmInfo<>(RandomBFS.class, "Breadth-First-Traversal", Traversal),
 			new AlgorithmInfo<>(KruskalMST.class, "Kruskal MST", MST),
+			new AlgorithmInfo<>(ReverseDeleteMST.class, "Reverse-Delete MST", MST),
 			new AlgorithmInfo<>(PrimMST.class, "Prim MST", MST),
 			new AlgorithmInfo<>(AldousBroderUST.class, "Aldous-Broder UST (slow!)", UST, Slow),
 			new AlgorithmInfo<>(WilsonUSTRandomCell.class, "Wilson UST (random, slow!)", UST, Slow),

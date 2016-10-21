@@ -28,6 +28,7 @@ import de.amr.easy.maze.algorithms.PrimMST;
 import de.amr.easy.maze.algorithms.RandomBFS;
 import de.amr.easy.maze.algorithms.RecursiveDFS;
 import de.amr.easy.maze.algorithms.RecursiveDivision;
+import de.amr.easy.maze.algorithms.ReverseDeleteMST;
 import de.amr.easy.maze.algorithms.Sidewinder;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTCollapsingCircle;
 import de.amr.easy.maze.algorithms.wilson.WilsonUSTCollapsingRectangle;
@@ -113,6 +114,11 @@ public class MazeGeneratorTests {
 		new KruskalMST(grid).accept(null);
 	}
 
+	@Test
+	public void testReverseDelete() {
+		new ReverseDeleteMST(grid).accept(null);
+	}
+	
 	@Test
 	public void testPrim() {
 		new PrimMST(grid).accept(grid.cell(CENTER));
