@@ -3,9 +3,9 @@ package de.amr.demos.maze.bfs;
 import java.awt.Color;
 
 import de.amr.demos.maze.ui.GridVisualization;
+import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.WeightedEdge;
-import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.ObservableGrid2D;
 

@@ -8,8 +8,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.function.Consumer;
 
+import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.maze.algorithms.BinaryTreeRandom;

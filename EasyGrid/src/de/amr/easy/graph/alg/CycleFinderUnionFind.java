@@ -2,9 +2,9 @@ package de.amr.easy.graph.alg;
 
 import java.util.Iterator;
 
+import de.amr.easy.datastruct.Partition;
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
-import de.amr.easy.graph.ds.Partition;
 
 public class CycleFinderUnionFind<V, E extends Edge<V>> {
 

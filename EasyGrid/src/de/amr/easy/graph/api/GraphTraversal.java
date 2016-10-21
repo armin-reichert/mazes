@@ -1,4 +1,4 @@
-package de.amr.easy.graph.traversal;
+package de.amr.easy.graph.api;
 
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 
@@ -7,9 +7,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import de.amr.easy.graph.api.Edge;
-import de.amr.easy.graph.api.Graph;
-import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalListener;
 
 /**

@@ -11,9 +11,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
+import de.amr.easy.graph.alg.traversal.DepthFirstTraversal;
 import de.amr.easy.graph.api.WeightedEdge;
-import de.amr.easy.graph.traversal.BreadthFirstTraversal;
-import de.amr.easy.graph.traversal.DepthFirstTraversal;
 import de.amr.easy.grid.api.NakedGrid2D;
 import de.amr.easy.grid.impl.NakedGrid;
 

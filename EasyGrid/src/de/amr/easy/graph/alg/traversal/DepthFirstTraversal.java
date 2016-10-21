@@ -1,4 +1,4 @@
-package de.amr.easy.graph.traversal;
+package de.amr.easy.graph.alg.traversal;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
@@ -12,6 +12,7 @@ import java.util.Optional;
 
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
+import de.amr.easy.graph.api.GraphTraversal;
 import de.amr.easy.graph.api.SingleSourcePathFinder;
 import de.amr.easy.graph.api.TraversalState;
 
