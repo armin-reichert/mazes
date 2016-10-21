@@ -14,7 +14,7 @@ import de.amr.easy.graph.api.ObservableGraph;
  * 
  * @author Armin Reichert
  */
-public interface GraphListener<V, E extends Edge<V>> {
+public interface GraphObserver<V, E extends Edge<V>> {
 
 	public void vertexChanged(VertexChangeEvent<V, E> event);
 

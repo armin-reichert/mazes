@@ -5,7 +5,7 @@ package de.amr.easy.graph.api;
  * 
  * @author Armin Reichert
  */
-public interface SingleSourcePathFinder<V> extends Runnable {
+public interface PathFinder<V> extends Runnable {
 
 	/**
 	 * Returns the path to the given target.

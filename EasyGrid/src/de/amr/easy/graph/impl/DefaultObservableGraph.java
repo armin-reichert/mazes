@@ -6,7 +6,7 @@ import java.util.Set;
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.event.EdgeChangeEvent;
-import de.amr.easy.graph.api.event.GraphListener;
+import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.VertexChangeEvent;
 
 /**
@@ -22,7 +22,7 @@ import de.amr.easy.graph.api.event.VertexChangeEvent;
  */
 public class DefaultObservableGraph<V> extends DefaultGraph<V> implements ObservableGraph<V, SimpleEdge<V>> {
 
-	private Set<GraphListener<V, SimpleEdge<V>>> listeners = new HashSet<>();
+	private Set<GraphObserver<V, SimpleEdge<V>>> listeners = new HashSet<>();
 	private boolean listeningSuspended = false;
 
 	public DefaultObservableGraph() {
@@ -30,12 +30,12 @@ public class DefaultObservableGraph<V> extends DefaultGraph<V> implements Observ
 	}
 
 	@Override
-	public void addGraphListener(GraphListener<V, SimpleEdge<V>> listener) {
+	public void addGraphObserver(GraphObserver<V, SimpleEdge<V>> listener) {
 		listeners.add(listener);
 	}
 
 	@Override
-	public void removeGraphListener(GraphListener<V, SimpleEdge<V>> listener) {
+	public void removeGraphObserver(GraphObserver<V, SimpleEdge<V>> listener) {
 		listeners.remove(listener);
 	}
 
@@ -46,7 +46,7 @@ public class DefaultObservableGraph<V> extends DefaultGraph<V> implements Observ
 
 	protected void fireVertexChange(V vertex, Object oldValue, Object newValue) {
 		if (!listeningSuspended) {
-			for (GraphListener<V, SimpleEdge<V>> listener : listeners) {
+			for (GraphObserver<V, SimpleEdge<V>> listener : listeners) {
 				listener.vertexChanged(new VertexChangeEvent<>(this, vertex, oldValue, newValue));
 			}
 		}
@@ -54,7 +54,7 @@ public class DefaultObservableGraph<V> extends DefaultGraph<V> implements Observ
 
 	protected void fireEdgeChange(SimpleEdge<V> edge, Object oldValue, Object newValue) {
 		if (!listeningSuspended) {
-			for (GraphListener<V, SimpleEdge<V>> listener : listeners) {
+			for (GraphObserver<V, SimpleEdge<V>> listener : listeners) {
 				listener.edgeChanged(new EdgeChangeEvent<>(this, edge, oldValue, newValue));
 			}
 		}
@@ -62,7 +62,7 @@ public class DefaultObservableGraph<V> extends DefaultGraph<V> implements Observ
 
 	protected void fireGraphChange(ObservableGraph<V, SimpleEdge<V>> graph) {
 		if (!listeningSuspended) {
-			for (GraphListener<V, SimpleEdge<V>> listener : listeners) {
+			for (GraphObserver<V, SimpleEdge<V>> listener : listeners) {
 				listener.graphChanged(graph);
 			}
 		}

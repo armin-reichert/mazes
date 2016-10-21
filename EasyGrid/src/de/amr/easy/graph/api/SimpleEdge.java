@@ -2,6 +2,14 @@ package de.amr.easy.graph.api;
 
 import java.util.Objects;
 
+/**
+ * Simple edge.
+ * 
+ * @author Armin Reichert
+ *
+ * @param <V>
+ *          vertex type
+ */
 public class SimpleEdge<V> implements Edge<V> {
 
 	protected final V u;
@@ -29,5 +37,4 @@ public class SimpleEdge<V> implements Edge<V> {
 		}
 		throw new IllegalStateException();
 	}
-
 }

@@ -13,14 +13,14 @@ import java.util.Queue;
 
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
-import de.amr.easy.graph.api.SingleSourcePathFinder;
+import de.amr.easy.graph.api.PathFinder;
 
 /**
  * Breadth-first-traversal of an undirected graph from a given source vertex. After being executed,
  * the distance of each vertex from the source can be queried, additionally the maximum distance
  * from the source.
  * <p>
- * Implements the {@link SingleSourcePathFinder} interface such that the traversal state of each
+ * Implements the {@link PathFinder} interface such that the traversal state of each
  * vertex can be queried and a path from the source to any target vertex can be asked for.
  * 
  * <p>
@@ -35,7 +35,7 @@ import de.amr.easy.graph.api.SingleSourcePathFinder;
  * @author Armin Reichert
  */
 public class BreadthFirstTraversal<V, E extends Edge<V>> extends GraphTraversal<V, E>
-		implements SingleSourcePathFinder<V> {
+		implements PathFinder<V> {
 
 	private final V source;
 	private final Queue<V> q = new LinkedList<>();

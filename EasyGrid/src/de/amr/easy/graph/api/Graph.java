@@ -44,7 +44,7 @@ public interface Graph<V, E extends Edge<V>> {
 	public void addVertex(V vertex);
 
 	/**
-	 * Adds the given edge to this graph.
+	 * Connects the given vertices.
 	 * 
 	 * @param v
 	 *          a vertex
@@ -89,12 +89,12 @@ public interface Graph<V, E extends Edge<V>> {
 	/**
 	 * @param v
 	 *          a vertex
-	 * @return the vertices adjacent to the given vertex
+	 * @return all vertices adjacent to the given vertex
 	 */
 	public Stream<V> adjVertices(V v);
 
 	/**
-	 * Tells if the given vertices are adjacent.
+	 * Tells if the given vertices are "adjacent" that is connected by an edge.
 	 * 
 	 * @param v
 	 *          a vertex

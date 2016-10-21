@@ -12,13 +12,13 @@ import java.util.Optional;
 
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
-import de.amr.easy.graph.api.SingleSourcePathFinder;
+import de.amr.easy.graph.api.PathFinder;
 import de.amr.easy.graph.api.TraversalState;
 
 /**
  * Depth-first-traversal of an undirected graph.
  * <p>
- * Implements the {@link SingleSourcePathFinder} interface such that the traversal state of each
+ * Implements the {@link PathFinder} interface such that the traversal state of each
  * vertex can be queried and the path from the source to the target vertex can be asked for.
  * 
  * <p>
@@ -28,7 +28,7 @@ import de.amr.easy.graph.api.TraversalState;
  * @author Armin Reichert
  */
 public class DepthFirstTraversal<V, E extends Edge<V>> extends GraphTraversal<V, E>
-		implements SingleSourcePathFinder<V> {
+		implements PathFinder<V> {
 
 	private final V source;
 	private final V target;

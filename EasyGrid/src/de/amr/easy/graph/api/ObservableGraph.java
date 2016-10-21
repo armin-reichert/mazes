@@ -1,20 +1,38 @@
 package de.amr.easy.graph.api;
 
-import de.amr.easy.graph.api.event.GraphListener;
+import de.amr.easy.graph.api.event.GraphObserver;
 
 /**
- * A graph whose vertex and edge state can be observed by listeners.
+ * A graph whose operations can be observed.
  * 
  * @param <V>
- *          the graph vertex type
+ *          vertex type
  * @param <E>
- *          the edge type
+ *          edge type
  */
 public interface ObservableGraph<V, E extends Edge<V>> extends Graph<V, E> {
 
-	public void addGraphListener(GraphListener<V, E> listener);
+	/**
+	 * Adds the given observer to this graph.
+	 * 
+	 * @param observer
+	 *          graph observer
+	 */
+	public void addGraphObserver(GraphObserver<V, E> observer);
 
-	public void removeGraphListener(GraphListener<V, E> listener);
+	/**
+	 * Removes the given observer to this graph.
+	 * 
+	 * @param observer
+	 *          graph observer
+	 */
+	public void removeGraphObserver(GraphObserver<V, E> observer);
 
+	/**
+	 * Activates or deactivates eventing.
+	 * 
+	 * @param enabled
+	 *          tells if eventing should be enabled
+	 */
 	public void setEventsEnabled(boolean enabled);
 }

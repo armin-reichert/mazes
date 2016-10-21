@@ -41,7 +41,7 @@ public class BFSTraversal extends Scene<MazeDemo> {
 		animation.graphChanged(grid);
 		bfsRunner = new Thread(() -> {
 			animation.setDelay(0);
-			grid.removeGraphListener(animation);
+			grid.removeGraphObserver(animation);
 			Log.info("Start first BFS to compute maximum distance:");
 			bfs = new BreadthFirstTraversal<>(grid, startCell);
 			bfs.findPath(startCell);
@@ -50,7 +50,7 @@ public class BFSTraversal extends Scene<MazeDemo> {
 			Log.info("Max distance: " + maxDistance);
 			animation.setRenderingModel(
 					new BFSAnimationRenderingModel(grid, Application.Settings.getInt("cellSize"), bfs, maxDistance));
-			grid.addGraphListener(animation);
+			grid.addGraphObserver(animation);
 			animation.setDelay(0);
 			Log.info("Start second, animated BFS:");
 			bfs.findPath(startCell);
@@ -85,11 +85,11 @@ public class BFSTraversal extends Scene<MazeDemo> {
 
 	private void stopBreadthFirstTraversal() {
 		Log.info("Stopping BFS");
-		grid.removeGraphListener(animation);
+		grid.removeGraphObserver(animation);
 		while (bfsRunner.isAlive()) {
 			/* wait for BFS thread to finish */
 		}
-		grid.addGraphListener(animation);
+		grid.addGraphObserver(animation);
 		Log.info("BFS finished");
 	}
 }

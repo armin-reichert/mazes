@@ -1,12 +1,12 @@
 package de.amr.easy.graph.api;
 
 /**
- * Interface for accessing content stored in a graph.
+ * Interface for accessing content stored in a graph vertex.
  *
  * @param <Content>
  *          vertex content type
  */
-public interface GraphContent<V, Content> {
+public interface VertexContent<V, Content> {
 
 	/**
 	 * Returns the content of the given vertex.

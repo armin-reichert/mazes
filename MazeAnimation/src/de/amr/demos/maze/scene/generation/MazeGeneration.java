@@ -115,11 +115,11 @@ public class MazeGeneration extends Scene<MazeDemo> {
 
 	private void stopGeneration() {
 		LOG.info("Stopping maze generation, this may take some time...");
-		grid.removeGraphListener(animation);
+		grid.removeGraphObserver(animation);
 		while (mazeGeneration.isAlive()) {
 			/* wait for generator to finish */
 		}
-		grid.addGraphListener(animation);
+		grid.addGraphObserver(animation);
 		LOG.info("Maze generation finished");
 	}
 }

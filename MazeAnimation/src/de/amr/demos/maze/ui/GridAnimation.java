@@ -9,12 +9,12 @@ import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.graph.api.event.EdgeAddedEvent;
 import de.amr.easy.graph.api.event.EdgeChangeEvent;
 import de.amr.easy.graph.api.event.EdgeRemovedEvent;
-import de.amr.easy.graph.api.event.GraphListener;
+import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.VertexChangeEvent;
 import de.amr.easy.grid.api.ObservableGrid2D;
 import de.amr.easy.grid.rendering.swing.SwingGridRenderer;
 
-public class GridAnimation implements GraphListener<Integer, WeightedEdge<Integer>> {
+public class GridAnimation implements GraphObserver<Integer, WeightedEdge<Integer>> {
 
 	private final ObservableGrid2D<TraversalState> grid;
 	private final BufferedImage canvas;

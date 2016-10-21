@@ -1,7 +1,7 @@
 package de.amr.easy.graph.api;
 
 /**
- * Edge of a weighted graph. Edge weight type is <code>double</code>.
+ * Edge with weight of type {@code double}.
  * 
  * @author Armin Reichert
  * 
@@ -52,10 +52,19 @@ public class WeightedEdge<V> extends SimpleEdge<V> implements Edge<V>, Comparabl
 		return true;
 	}
 
+	/**
+	 * @return the weight of this edge
+	 */
 	public double getWeight() {
 		return weight;
 	}
 
+	/**
+	 * Sets the weight of this edge.
+	 * 
+	 * @param weight
+	 *          the weight
+	 */
 	public void setWeight(double weight) {
 		this.weight = weight;
 	}

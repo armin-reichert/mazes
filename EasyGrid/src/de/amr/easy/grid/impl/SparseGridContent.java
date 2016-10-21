@@ -3,7 +3,7 @@ package de.amr.easy.grid.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.amr.easy.graph.api.GraphContent;
+import de.amr.easy.graph.api.VertexContent;
 
 /**
  * Hash map storing the content for a grid.
@@ -13,7 +13,7 @@ import de.amr.easy.graph.api.GraphContent;
  * @param <Content>
  *          cell content type
  */
-class SparseGridContent<Content> implements GraphContent<Integer, Content> {
+class SparseGridContent<Content> implements VertexContent<Integer, Content> {
 
 	private final Map<Integer, Content> gridContent = new HashMap<>();
 	private Content defaultCellContent;

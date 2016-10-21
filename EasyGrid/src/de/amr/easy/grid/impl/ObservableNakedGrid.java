@@ -8,7 +8,7 @@ import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.graph.api.event.EdgeAddedEvent;
 import de.amr.easy.graph.api.event.EdgeChangeEvent;
 import de.amr.easy.graph.api.event.EdgeRemovedEvent;
-import de.amr.easy.graph.api.event.GraphListener;
+import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.VertexChangeEvent;
 import de.amr.easy.grid.api.ObservableNakedGrid2D;
 
@@ -19,7 +19,7 @@ import de.amr.easy.grid.api.ObservableNakedGrid2D;
  */
 public class ObservableNakedGrid extends NakedGrid implements ObservableNakedGrid2D, ObservableGraph<Integer, WeightedEdge<Integer>> {
 
-	private final Set<GraphListener<Integer, WeightedEdge<Integer>>> listeners = new HashSet<>();
+	private final Set<GraphObserver<Integer, WeightedEdge<Integer>>> listeners = new HashSet<>();
 	private boolean eventsEnabled;
 
 	public ObservableNakedGrid(int numCols, int numRows) {
@@ -31,7 +31,7 @@ public class ObservableNakedGrid extends NakedGrid implements ObservableNakedGri
 	public void addEdge(Integer p, Integer q) {
 		super.addEdge(p, q);
 		if (eventsEnabled) {
-			for (GraphListener<Integer, WeightedEdge<Integer>> listener : listeners) {
+			for (GraphObserver<Integer, WeightedEdge<Integer>> listener : listeners) {
 				listener.edgeAdded(new EdgeAddedEvent<>(this, edge(p, q).get()));
 			}
 		}
@@ -42,7 +42,7 @@ public class ObservableNakedGrid extends NakedGrid implements ObservableNakedGri
 		edge(p, q).ifPresent(edge -> {
 			super.removeEdge(p, q);
 			if (eventsEnabled) {
-				for (GraphListener<Integer, WeightedEdge<Integer>> listener : listeners) {
+				for (GraphObserver<Integer, WeightedEdge<Integer>> listener : listeners) {
 					listener.edgeRemoved(new EdgeRemovedEvent<>(this, edge));
 				}
 			}
@@ -53,7 +53,7 @@ public class ObservableNakedGrid extends NakedGrid implements ObservableNakedGri
 	public void removeEdges() {
 		super.removeEdges();
 		if (eventsEnabled) {
-			for (GraphListener<Integer, WeightedEdge<Integer>> listener : listeners) {
+			for (GraphObserver<Integer, WeightedEdge<Integer>> listener : listeners) {
 				listener.graphChanged(this);
 			}
 		}
@@ -62,12 +62,12 @@ public class ObservableNakedGrid extends NakedGrid implements ObservableNakedGri
 	/* {@link ObservableGraph} interface */
 
 	@Override
-	public void addGraphListener(GraphListener<Integer, WeightedEdge<Integer>> listener) {
+	public void addGraphObserver(GraphObserver<Integer, WeightedEdge<Integer>> listener) {
 		listeners.add(listener);
 	}
 
 	@Override
-	public void removeGraphListener(GraphListener<Integer, WeightedEdge<Integer>> listener) {
+	public void removeGraphObserver(GraphObserver<Integer, WeightedEdge<Integer>> listener) {
 		listeners.remove(listener);
 	}
 
@@ -78,7 +78,7 @@ public class ObservableNakedGrid extends NakedGrid implements ObservableNakedGri
 
 	protected void fireVertexChange(Integer vertex, Object oldValue, Object newValue) {
 		if (eventsEnabled) {
-			for (GraphListener<Integer, WeightedEdge<Integer>> listener : listeners) {
+			for (GraphObserver<Integer, WeightedEdge<Integer>> listener : listeners) {
 				listener.vertexChanged(new VertexChangeEvent<>(this, vertex, oldValue, newValue));
 			}
 		}
@@ -86,7 +86,7 @@ public class ObservableNakedGrid extends NakedGrid implements ObservableNakedGri
 
 	protected void fireEdgeChange(WeightedEdge<Integer> edge, Object oldValue, Object newValue) {
 		if (eventsEnabled) {
-			for (GraphListener<Integer, WeightedEdge<Integer>> listener : listeners) {
+			for (GraphObserver<Integer, WeightedEdge<Integer>> listener : listeners) {
 				listener.edgeChanged(new EdgeChangeEvent<>(this, edge, oldValue, newValue));
 			}
 		}
@@ -94,7 +94,7 @@ public class ObservableNakedGrid extends NakedGrid implements ObservableNakedGri
 
 	protected void fireGraphChange(ObservableGraph<Integer, WeightedEdge<Integer>> graph) {
 		if (eventsEnabled) {
-			for (GraphListener<Integer, WeightedEdge<Integer>> listener : listeners) {
+			for (GraphObserver<Integer, WeightedEdge<Integer>> listener : listeners) {
 				listener.graphChanged(graph);
 			}
 		}

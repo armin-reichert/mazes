@@ -1,6 +1,6 @@
 package de.amr.easy.grid.impl;
 
-import de.amr.easy.graph.api.GraphContent;
+import de.amr.easy.graph.api.VertexContent;
 import de.amr.easy.grid.api.ObservableGrid2D;
 
 /**
@@ -13,7 +13,7 @@ import de.amr.easy.grid.api.ObservableGrid2D;
  */
 public class ObservableGrid<Content> extends ObservableNakedGrid implements ObservableGrid2D<Content> {
 
-	private GraphContent<Integer, Content> gridContent;
+	private VertexContent<Integer, Content> gridContent;
 
 	public ObservableGrid(int numCols, int numRows, Content defaultContent, boolean sparse) {
 		super(numCols, numRows);
