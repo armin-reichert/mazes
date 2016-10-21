@@ -17,10 +17,4 @@ public interface ObservableGraph<V, E extends Edge<V>> extends Graph<V, E> {
 	public void removeGraphListener(GraphListener<V, E> listener);
 
 	public void setEventsEnabled(boolean enabled);
-
-	public void fireVertexChange(V v, Object oldValue, Object newValue);
-
-	public void fireEdgeChange(E edge, Object oldValue, Object newValue);
-
-	public void fireGraphChange(ObservableGraph<V, E> graph);
 }

@@ -76,8 +76,7 @@ public class ObservableNakedGrid extends NakedGrid implements ObservableNakedGri
 		eventsEnabled = enabled;
 	}
 
-	@Override
-	public void fireVertexChange(Integer vertex, Object oldValue, Object newValue) {
+	protected void fireVertexChange(Integer vertex, Object oldValue, Object newValue) {
 		if (eventsEnabled) {
 			for (GraphListener<Integer, WeightedEdge<Integer>> listener : listeners) {
 				listener.vertexChanged(new VertexChangeEvent<>(this, vertex, oldValue, newValue));
@@ -85,8 +84,7 @@ public class ObservableNakedGrid extends NakedGrid implements ObservableNakedGri
 		}
 	}
 
-	@Override
-	public void fireEdgeChange(WeightedEdge<Integer> edge, Object oldValue, Object newValue) {
+	protected void fireEdgeChange(WeightedEdge<Integer> edge, Object oldValue, Object newValue) {
 		if (eventsEnabled) {
 			for (GraphListener<Integer, WeightedEdge<Integer>> listener : listeners) {
 				listener.edgeChanged(new EdgeChangeEvent<>(this, edge, oldValue, newValue));
@@ -94,8 +92,7 @@ public class ObservableNakedGrid extends NakedGrid implements ObservableNakedGri
 		}
 	}
 
-	@Override
-	public void fireGraphChange(ObservableGraph<Integer, WeightedEdge<Integer>> graph) {
+	protected void fireGraphChange(ObservableGraph<Integer, WeightedEdge<Integer>> graph) {
 		if (eventsEnabled) {
 			for (GraphListener<Integer, WeightedEdge<Integer>> listener : listeners) {
 				listener.graphChanged(graph);

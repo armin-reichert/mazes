@@ -12,20 +12,20 @@ import java.util.Map;
 import java.util.Queue;
 
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.graph.api.ObservableGraph;
+import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.SingleSourcePathFinder;
 
 /**
- * Breadth-first-traversal of an observable, undirected graph from a given source vertex. After
- * being executed, the distance of each vertex from the source can be queried, additionally the
- * maximum distance from the source.
+ * Breadth-first-traversal of an undirected graph from a given source vertex. After being executed,
+ * the distance of each vertex from the source can be queried, additionally the maximum distance
+ * from the source.
  * <p>
  * Implements the {@link SingleSourcePathFinder} interface such that the traversal state of each
  * vertex can be queried and a path from the source to any target vertex can be asked for.
  * 
  * <p>
- * During the traversal, a number of graph events are fired which can be processed by a listener,
- * for example an animation.
+ * During the traversal, events are fired which can be processed by a listener, for example an
+ * animation.
  * 
  * @param <V>
  *          the vertex type
@@ -38,46 +38,52 @@ public class BreadthFirstTraversal<V, E extends Edge<V>> extends GraphTraversal<
 		implements SingleSourcePathFinder<V> {
 
 	private final V source;
-	private final Map<V, Integer> distanceFromSource = new HashMap<>();
+	private final Queue<V> q = new LinkedList<>();
+	private final Map<V, Integer> distances = new HashMap<>();
 	private int maxDistance = -1;
-	private V maxDistanceVertex;
+	private V farest;
 
-	public BreadthFirstTraversal(ObservableGraph<V, E> graph, V source) {
+	public BreadthFirstTraversal(Graph<V, E> graph, V source) {
 		super(graph);
 		this.source = source;
 	}
 
 	@Override
+	public void clear() {
+		super.clear();
+		q.clear();
+		distances.clear();
+		maxDistance = -1;
+		farest = null;
+	}
+
+	@Override
 	public void run() {
 		clear();
-		distanceFromSource.clear();
-		maxDistance = -1;
-		maxDistanceVertex = null;
-		Queue<V> queue = new LinkedList<>();
 		visit(source, null, 0);
-		queue.add(source);
-		while (!queue.isEmpty()) {
-			V vertex = queue.poll();
-			graph.adjVertices(vertex).forEach(neighbor -> {
-				if (getState(neighbor) == UNVISITED) {
-					visit(neighbor, vertex, getDistance(vertex) + 1);
-					queue.add(neighbor);
-				}
+		q.add(source);
+		while (!q.isEmpty()) {
+			V current = q.poll();
+			graph.adjVertices(current).filter(v -> getState(v) == UNVISITED).forEach(neighbor -> {
+				visit(neighbor, current, getDistance(current) + 1);
+				q.add(neighbor);
 			});
-			setState(vertex, COMPLETED);
+			setState(current, COMPLETED);
 		}
 	}
 
 	private void visit(V vertex, V parent, int distance) {
-		distanceFromSource.put(vertex, distance);
+		distances.put(vertex, distance);
 		if (distance > maxDistance) {
 			maxDistance = distance;
-			maxDistanceVertex = vertex;
+			farest = vertex;
 		}
 		setState(vertex, VISITED);
 		setParent(vertex, parent);
 		if (parent != null) {
-			graph.edge(parent, vertex).ifPresent(edge -> graph.fireEdgeChange(edge, UNVISITED, VISITED));
+			observers.forEach(observer -> {
+				observer.edgeTouched(parent, vertex);
+			});
 		}
 	}
 
@@ -89,7 +95,7 @@ public class BreadthFirstTraversal<V, E extends Edge<V>> extends GraphTraversal<
 	 * @return the distance from the source
 	 */
 	public int getDistance(V v) {
-		return distanceFromSource.containsKey(v) ? distanceFromSource.get(v) : -1;
+		return distances.containsKey(v) ? distances.get(v) : -1;
 	}
 
 	/**
@@ -105,7 +111,7 @@ public class BreadthFirstTraversal<V, E extends Edge<V>> extends GraphTraversal<
 	 * @return a vertex whose distance id maximal from the source
 	 */
 	public V getMaxDistanceVertex() {
-		return maxDistanceVertex;
+		return farest;
 	}
 
 	// PathFinder implementation

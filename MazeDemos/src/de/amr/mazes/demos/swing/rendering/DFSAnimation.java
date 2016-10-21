@@ -6,6 +6,8 @@ import java.awt.Color;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.graph.event.GraphTraversalListener;
 import de.amr.easy.graph.traversal.DepthFirstTraversal;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.ObservableNakedGrid2D;
@@ -17,7 +19,7 @@ import de.amr.easy.grid.rendering.swing.SwingGridCanvas;
  * 
  * @author Armin Reichert
  */
-public class DFSAnimation {
+public class DFSAnimation implements GraphTraversalListener<Integer> {
 
 	private final SwingGridCanvas canvas;
 	private final ObservableNakedGrid2D grid;
@@ -35,6 +37,7 @@ public class DFSAnimation {
 	}
 
 	public void runAnimation() {
+		dfs.addObserver(this);
 		canvas.pushRenderingModel(renderingModel);
 		path.clear();
 		for (Integer cell : dfs.findPath(dfs.getTarget())) {
@@ -44,6 +47,17 @@ public class DFSAnimation {
 			canvas.renderGridCell(cell);
 		}
 		canvas.popRenderingModel();
+		dfs.removeObserver(this);
+	}
+	
+	@Override
+	public void edgeTouched(Integer source, Integer target) {
+		canvas.renderGridPassage(grid.edge(source, target).get(), true);
+	}
+
+	@Override
+	public void vertexTouched(Integer vertex, TraversalState oldState, TraversalState newState) {
+		canvas.renderGridCell(vertex);
 	}
 
 	// -- Rendering model
@@ -77,7 +91,7 @@ public class DFSAnimation {
 			if (path.contains(cell)) {
 				return pathColor;
 			}
-			if (dfs.getState(cell) == VISITED || dfs.isOnStack(cell)) {
+			if (dfs.getState(cell) == VISITED || dfs.onStack(cell)) {
 				return visitColor;
 			}
 			return super.getCellBgColor(cell);

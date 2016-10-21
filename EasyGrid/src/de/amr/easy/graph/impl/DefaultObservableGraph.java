@@ -44,8 +44,7 @@ public class DefaultObservableGraph<V> extends DefaultGraph<V> implements Observ
 		listeningSuspended = enabled;
 	}
 
-	@Override
-	public void fireVertexChange(V vertex, Object oldValue, Object newValue) {
+	protected void fireVertexChange(V vertex, Object oldValue, Object newValue) {
 		if (!listeningSuspended) {
 			for (GraphListener<V, SimpleEdge<V>> listener : listeners) {
 				listener.vertexChanged(new VertexChangeEvent<>(this, vertex, oldValue, newValue));
@@ -53,8 +52,7 @@ public class DefaultObservableGraph<V> extends DefaultGraph<V> implements Observ
 		}
 	}
 
-	@Override
-	public void fireEdgeChange(SimpleEdge<V> edge, Object oldValue, Object newValue) {
+	protected void fireEdgeChange(SimpleEdge<V> edge, Object oldValue, Object newValue) {
 		if (!listeningSuspended) {
 			for (GraphListener<V, SimpleEdge<V>> listener : listeners) {
 				listener.edgeChanged(new EdgeChangeEvent<>(this, edge, oldValue, newValue));
@@ -62,8 +60,7 @@ public class DefaultObservableGraph<V> extends DefaultGraph<V> implements Observ
 		}
 	}
 
-	@Override
-	public void fireGraphChange(ObservableGraph<V, SimpleEdge<V>> graph) {
+	protected void fireGraphChange(ObservableGraph<V, SimpleEdge<V>> graph) {
 		if (!listeningSuspended) {
 			for (GraphListener<V, SimpleEdge<V>> listener : listeners) {
 				listener.graphChanged(graph);

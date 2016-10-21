@@ -11,8 +11,9 @@ import java.util.List;
 import java.util.Optional;
 
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.graph.api.ObservableGraph;
+import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.SingleSourcePathFinder;
+import de.amr.easy.graph.api.TraversalState;
 
 /**
  * Depth-first-traversal of an undirected graph.
@@ -21,8 +22,8 @@ import de.amr.easy.graph.api.SingleSourcePathFinder;
  * vertex can be queried and the path from the source to the target vertex can be asked for.
  * 
  * <p>
- * During the traversal, a number of graph events are fired which can be processed by a listener,
- * for example an animation.
+ * During the traversal events are fired which can be processed by a listener, for example an
+ * animation.
  * 
  * @author Armin Reichert
  */
@@ -31,7 +32,7 @@ public class DepthFirstTraversal<V, E extends Edge<V>> extends GraphTraversal<V,
 
 	private final V source;
 	private final V target;
-	private Deque<V> stack;
+	private final Deque<V> stack = new LinkedList<>();
 
 	/**
 	 * Constructs an instance without executing the traversal.
@@ -43,10 +44,16 @@ public class DepthFirstTraversal<V, E extends Edge<V>> extends GraphTraversal<V,
 	 * @param target
 	 *          the target vertex
 	 */
-	public DepthFirstTraversal(ObservableGraph<V, E> graph, V source, V target) {
+	public DepthFirstTraversal(Graph<V, E> graph, V source, V target) {
 		super(graph);
 		this.source = source;
 		this.target = target;
+	}
+
+	@Override
+	public void clear() {
+		super.clear();
+		stack.clear();
 	}
 
 	public V getSource() {
@@ -57,48 +64,50 @@ public class DepthFirstTraversal<V, E extends Edge<V>> extends GraphTraversal<V,
 		return target;
 	}
 
-	public boolean isOnStack(V v) {
+	public boolean onStack(V v) {
 		return stack.contains(v);
 	}
 
 	@Override
 	public void run() {
 		clear();
-		stack = new LinkedList<>();
-		V currentVertex = source;
-		stack.push(currentVertex);
-		visit(currentVertex, null);
-		while (!stack.isEmpty() && !foundTarget(currentVertex)) {
-			Optional<V> neighbor = findUnvisitedNeighbour(currentVertex);
+		V current = source;
+		stack.push(current);
+		visit(current, null);
+		while (!stack.isEmpty() && !isTarget(current)) {
+			Optional<V> neighbor = findUnvisitedNeighbour(current);
 			if (neighbor.isPresent()) {
-				visit(neighbor.get(), currentVertex);
+				visit(neighbor.get(), current);
 				if (findUnvisitedNeighbour(neighbor.get()).isPresent()) {
 					stack.push(neighbor.get());
 				}
-				currentVertex = neighbor.get();
+				current = neighbor.get();
 			} else {
-				setState(currentVertex, COMPLETED);
+				setState(current, COMPLETED);
 				if (!stack.isEmpty()) {
-					currentVertex = stack.pop();
+					current = stack.pop();
 				}
-				if (getState(currentVertex) == VISITED) {
-					stack.push(currentVertex);
-					setState(currentVertex, UNVISITED);
-					setState(currentVertex, VISITED); // "re-visited"
+				if (getState(current) == VISITED) {
+					stack.push(current);
+					setState(current, UNVISITED);
+					setState(current, VISITED); // "re-visited"
 				}
 			}
 		}
 	}
 
 	private void visit(V v, V parent) {
+		TraversalState oldState = getState(v);
 		setState(v, VISITED);
 		if (parent != null) {
-			graph.edge(parent, v).ifPresent(edge -> graph.fireEdgeChange(edge, UNVISITED, VISITED));
+			observers.forEach(observer -> observer.edgeTouched(parent, v));
+		} else {
+			observers.forEach(observer -> observer.vertexTouched(v, oldState, getState(v)));
 		}
 		setParent(v, parent);
 	}
 
-	private boolean foundTarget(V v) {
+	private boolean isTarget(V v) {
 		if (v.equals(target)) {
 			stack.push(v);
 			while (!stack.isEmpty()) {

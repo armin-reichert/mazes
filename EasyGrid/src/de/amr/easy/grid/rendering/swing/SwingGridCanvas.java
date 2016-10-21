@@ -180,4 +180,5 @@ public class SwingGridCanvas extends JComponent implements GraphListener<Integer
 	public void graphChanged(ObservableGraph<Integer, WeightedEdge<Integer>> graph) {
 		render();
 	}
+
 }
