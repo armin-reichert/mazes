@@ -173,10 +173,10 @@ public class GridTests {
 		grid.addEdge(b, c);
 		grid.addEdge(c, d);
 		assertTrue(grid.edgeCount() == 3);
-		assertFalse(new CycleFinderUnionFind<>(grid, 0).isCycleDetected());
+		assertFalse(new CycleFinderUnionFind<>(grid, 0).isCycleFound());
 
 		grid.addEdge(d, a);
 		assertTrue(grid.edgeCount() == 4);
-		assertTrue(new CycleFinderUnionFind<>(grid, 0).isCycleDetected());
+		assertTrue(new CycleFinderUnionFind<>(grid, 0).isCycleFound());
 	}
 }

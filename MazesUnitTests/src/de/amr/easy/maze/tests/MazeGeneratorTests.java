@@ -60,7 +60,7 @@ public class MazeGeneratorTests {
 	@After
 	public void tearDown() {
 		assertEquals(grid.edgeCount(), grid.vertexCount() - 1);
-		assertFalse(new CycleFinderUnionFind<>(grid, grid.cell(CENTER)).isCycleDetected());
+		assertFalse(new CycleFinderUnionFind<>(grid, grid.cell(CENTER)).isCycleFound());
 	}
 
 	@Test
