@@ -1,4 +1,4 @@
-package de.amr.easy.graph.event;
+package de.amr.easy.graph.api.event;
 
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;

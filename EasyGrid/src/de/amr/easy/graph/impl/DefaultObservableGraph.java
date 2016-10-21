@@ -5,9 +5,9 @@ import java.util.Set;
 
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.SimpleEdge;
-import de.amr.easy.graph.event.EdgeChangeEvent;
-import de.amr.easy.graph.event.GraphListener;
-import de.amr.easy.graph.event.VertexChangeEvent;
+import de.amr.easy.graph.api.event.EdgeChangeEvent;
+import de.amr.easy.graph.api.event.GraphListener;
+import de.amr.easy.graph.api.event.VertexChangeEvent;
 
 /**
  * Adjacency set based implementation of an undirected, observable graph.

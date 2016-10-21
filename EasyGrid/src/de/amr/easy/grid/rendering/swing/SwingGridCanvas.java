@@ -14,11 +14,11 @@ import javax.swing.JComponent;
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.WeightedEdge;
-import de.amr.easy.graph.event.EdgeAddedEvent;
-import de.amr.easy.graph.event.EdgeChangeEvent;
-import de.amr.easy.graph.event.EdgeRemovedEvent;
-import de.amr.easy.graph.event.GraphListener;
-import de.amr.easy.graph.event.VertexChangeEvent;
+import de.amr.easy.graph.api.event.EdgeAddedEvent;
+import de.amr.easy.graph.api.event.EdgeChangeEvent;
+import de.amr.easy.graph.api.event.EdgeRemovedEvent;
+import de.amr.easy.graph.api.event.GraphListener;
+import de.amr.easy.graph.api.event.VertexChangeEvent;
 import de.amr.easy.grid.api.ObservableNakedGrid2D;
 
 /**

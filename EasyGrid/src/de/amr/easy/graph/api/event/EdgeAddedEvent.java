@@ -1,10 +1,10 @@
-package de.amr.easy.graph.event;
+package de.amr.easy.graph.api.event;
 
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;
 
 /**
- * Event signaling removal of an edge.
+ * Event signaling adding of an edge.
  * 
  * @author Armin Reichert
  *
@@ -13,12 +13,12 @@ import de.amr.easy.graph.api.ObservableGraph;
  * @param <E>
  *          edge type
  */
-public class EdgeRemovedEvent<V, E extends Edge<V>> {
+public class EdgeAddedEvent<V, E extends Edge<V>> {
 
 	private final ObservableGraph<V, E> graph;
 	private final E edge;
 
-	public EdgeRemovedEvent(ObservableGraph<V, E> graph, E edge) {
+	public EdgeAddedEvent(ObservableGraph<V, E> graph, E edge) {
 		this.graph = graph;
 		this.edge = edge;
 	}

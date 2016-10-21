@@ -1,6 +1,6 @@
 package de.amr.easy.graph.api;
 
-import de.amr.easy.graph.event.GraphListener;
+import de.amr.easy.graph.api.event.GraphListener;
 
 /**
  * A graph whose vertex and edge state can be observed by listeners.

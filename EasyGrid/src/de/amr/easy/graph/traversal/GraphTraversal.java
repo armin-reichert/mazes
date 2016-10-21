@@ -10,7 +10,7 @@ import java.util.Set;
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.event.GraphTraversalListener;
+import de.amr.easy.graph.api.event.GraphTraversalListener;
 
 /**
  * Base class for graph traversals. Stores traversal state of vertices and allows to register

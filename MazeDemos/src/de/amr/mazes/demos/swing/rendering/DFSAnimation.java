@@ -7,7 +7,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.event.GraphTraversalListener;
+import de.amr.easy.graph.api.event.GraphTraversalListener;
 import de.amr.easy.graph.traversal.DepthFirstTraversal;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.ObservableNakedGrid2D;
