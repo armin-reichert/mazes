@@ -3,17 +3,21 @@ package de.amr.easy.grid.impl;
 import static de.amr.easy.grid.api.Direction.E;
 import static de.amr.easy.grid.api.Direction.S;
 
+import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Direction;
-import de.amr.easy.grid.api.NakedGrid2D;
 import de.amr.easy.grid.api.GridPosition;
+import de.amr.easy.grid.api.NakedGrid2D;
 
 /**
  * Implementation of the {@link NakedGrid2D} interface.
@@ -101,6 +105,24 @@ public class NakedGrid implements NakedGrid2D {
 			});
 		});
 		return edgeSet.stream();
+	}
+	
+	@Override
+	public Stream<WeightedEdge<Integer>> fullGridEdgesPermuted() {
+		List<WeightedEdge<Integer>> edges = new ArrayList<>();
+		Random rnd = new Random();
+		IntStream.range(0, numCols).forEach(col -> {
+			IntStream.range(0, numRows).forEach(row -> {
+				if (col + 1 < numCols) {
+					edges.add(new WeightedEdge<>(index(col, row), index(col + 1, row), rnd.nextDouble()));
+				}
+				if (row + 1 < numRows) {
+					edges.add(new WeightedEdge<>(index(col, row), index(col, row + 1), rnd.nextDouble()));
+				}
+			});
+		});
+	  Collections.shuffle(edges);
+	  return edges.stream();
 	}
 
 	@Override

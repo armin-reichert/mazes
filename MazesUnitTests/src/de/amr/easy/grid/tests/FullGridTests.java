@@ -118,4 +118,9 @@ public class FullGridTests {
 			}
 		}
 	}
+	
+	@Test
+	public void testEdgesPermuted() {
+		assertTrue(grid.fullGridEdgesPermuted().count() == grid.edgeStream().count());
+	}
 }

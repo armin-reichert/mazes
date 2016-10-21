@@ -2,14 +2,8 @@ package de.amr.easy.maze.algorithms;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import de.amr.easy.datastruct.Partition;
 import de.amr.easy.datastruct.Partition.EquivClass;
-import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 
@@ -31,7 +25,7 @@ public class KruskalMST extends MazeAlgorithm {
 
 	@Override
 	public void accept(Integer start) {
-		fullGridEdgesInRandomOrder().forEach(edge -> {
+		grid.fullGridEdgesPermuted().forEach(edge -> {
 			Integer either = edge.either(), other = edge.other(either);
 			EquivClass eitherTree = forest.find(either), otherTree = forest.find(other);
 			if (eitherTree != otherTree) {
@@ -41,13 +35,5 @@ public class KruskalMST extends MazeAlgorithm {
 				forest.union(eitherTree, otherTree);
 			}
 		});
-	}
-
-	private Stream<SimpleEdge<Integer>> fullGridEdgesInRandomOrder() {
-		grid.makeFullGrid();
-		List<SimpleEdge<Integer>> edges = grid.edgeStream().collect(Collectors.toList());
-		Collections.shuffle(edges); // takes linear time
-		grid.removeEdges();
-		return edges.stream();
 	}
 }
