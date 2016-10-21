@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ EmptyGridTests.class, FullGridTests.class, GridTests.class })
+@SuiteClasses({ EmptyGridTests.class, FullGridTests.class, GridTests.class, GridTraversalTests.class })
 public class GridTestSuite {
 
 }
