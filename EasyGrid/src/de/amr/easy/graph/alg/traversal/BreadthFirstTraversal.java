@@ -13,7 +13,6 @@ import java.util.Queue;
 
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
-import de.amr.easy.graph.api.GraphTraversal;
 import de.amr.easy.graph.api.SingleSourcePathFinder;
 
 /**
