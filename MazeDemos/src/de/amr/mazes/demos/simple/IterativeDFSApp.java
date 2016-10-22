@@ -4,7 +4,7 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.maze.algorithms.IterativeDFS;
+import de.amr.easy.maze.alg.IterativeDFS;
 import de.amr.mazes.demos.grid.GridSampleApp;
 import de.amr.mazes.demos.swing.rendering.BFSAnimation;
 

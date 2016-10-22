@@ -20,18 +20,18 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.ObservableGrid;
-import de.amr.easy.maze.algorithms.BinaryTree;
-import de.amr.easy.maze.algorithms.BinaryTreeRandom;
-import de.amr.easy.maze.algorithms.Eller;
-import de.amr.easy.maze.algorithms.EllerInsideOut;
-import de.amr.easy.maze.algorithms.HuntAndKill;
-import de.amr.easy.maze.algorithms.IterativeDFS;
-import de.amr.easy.maze.algorithms.KruskalMST;
-import de.amr.easy.maze.algorithms.PrimMST;
-import de.amr.easy.maze.algorithms.RandomBFS;
-import de.amr.easy.maze.algorithms.RecursiveDivision;
-import de.amr.easy.maze.algorithms.wilson.WilsonUSTHilbertCurve;
-import de.amr.easy.maze.algorithms.wilson.WilsonUSTNestedRectangles;
+import de.amr.easy.maze.alg.BinaryTree;
+import de.amr.easy.maze.alg.BinaryTreeRandom;
+import de.amr.easy.maze.alg.Eller;
+import de.amr.easy.maze.alg.EllerInsideOut;
+import de.amr.easy.maze.alg.HuntAndKill;
+import de.amr.easy.maze.alg.IterativeDFS;
+import de.amr.easy.maze.alg.KruskalMST;
+import de.amr.easy.maze.alg.PrimMST;
+import de.amr.easy.maze.alg.RandomBFS;
+import de.amr.easy.maze.alg.RecursiveDivision;
+import de.amr.easy.maze.alg.wilson.WilsonUSTHilbertCurve;
+import de.amr.easy.maze.alg.wilson.WilsonUSTNestedRectangles;
 
 public class MazeGeneration extends Scene<MazeDemo> {
 

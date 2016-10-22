@@ -3,7 +3,7 @@ package de.amr.mazes.demos.simple;
 import java.util.stream.IntStream;
 
 import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.maze.algorithms.Eller;
+import de.amr.easy.maze.alg.Eller;
 import de.amr.mazes.demos.grid.GridSampleApp;
 import de.amr.mazes.demos.swing.rendering.BFSAnimation;
 
