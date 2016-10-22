@@ -21,8 +21,8 @@ import java.util.stream.Stream;
 import de.amr.easy.datastruct.Partition;
 import de.amr.easy.datastruct.Partition.EquivClass;
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.Direction;
+import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.NakedGrid;
 import de.amr.easy.grid.iterators.shapes.Rectangle;
 import de.amr.easy.grid.iterators.shapes.Square;
@@ -59,10 +59,6 @@ public class EllerInsideOut extends MazeAlgorithm {
 		}
 		layer = new Rectangle(grid, grid.cell(TOP_LEFT), grid.numCols(), grid.numRows());
 		connectCellsInsideLayer(true);
-
-		if (grid.edgeCount() != grid.vertexCount() - 1) {
-			throw new IllegalStateException("#edges: " + grid.edgeCount() + ", #cells: " + grid.vertexCount());
-		}
 	}
 
 	private int nextLayer() {
@@ -105,7 +101,6 @@ public class EllerInsideOut extends MazeAlgorithm {
 		if (grid.adjacent(v, w)) {
 			return;
 		}
-		// System.out.println(coord(v) + "->" + coord(w));
 		grid.addEdge(v, w);
 		grid.set(v, COMPLETED);
 		grid.set(w, COMPLETED);
@@ -139,12 +134,12 @@ public class EllerInsideOut extends MazeAlgorithm {
 
 	private void connectCellsWithNextLayer() {
 		Set<EquivClass> connected = new HashSet<>();
-		// randomly select cells and connect with next layer unless another cell from the same
-		// equivalence class is already
-		// connected to the next layer
+		
+		// randomly select cells and connect with the next layer unless another cell from the same
+		// equivalence class is already connected to that layer
 		for (Integer cell : layer) {
 			if (rnd.nextBoolean() && !connected.contains(mazeParts.find(cell))) {
-				List<Integer> candidates = getNeighborsInNextLayer(cell);
+				List<Integer> candidates = collectNeighborsInNextLayer(cell);
 				if (!candidates.isEmpty()) {
 					Integer neighbor = candidates.get(rnd.nextInt(candidates.size()));
 					connectCells(cell, neighbor);
@@ -152,6 +147,7 @@ public class EllerInsideOut extends MazeAlgorithm {
 				}
 			}
 		}
+		
 		// collect cells of still unconnected maze parts and shuffle them to avoid biased maze
 		List<Integer> unconnectedCells = new ArrayList<>();
 		for (Integer cell : layer) {
@@ -160,10 +156,11 @@ public class EllerInsideOut extends MazeAlgorithm {
 			}
 		}
 		Collections.shuffle(unconnectedCells);
+		
 		// connect remaining cells and mark maze parts as connected
 		for (Integer cell : unconnectedCells) {
 			if (!connected.contains(mazeParts.find(cell))) {
-				List<Integer> candidates = getNeighborsInNextLayer(cell);
+				List<Integer> candidates = collectNeighborsInNextLayer(cell);
 				if (!candidates.isEmpty()) {
 					Integer neighbor = candidates.get(rnd.nextInt(candidates.size()));
 					connectCells(cell, neighbor);
@@ -173,7 +170,7 @@ public class EllerInsideOut extends MazeAlgorithm {
 		}
 	}
 
-	private List<Integer> getNeighborsInNextLayer(Integer cell) {
+	private List<Integer> collectNeighborsInNextLayer(Integer cell) {
 		List<Integer> result = new ArrayList<>(4);
 		int squareSize = square.getSize();
 		if (squareSize == 1) {
