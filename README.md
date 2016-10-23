@@ -21,19 +21,19 @@ Also included is a [Swing application](MazeDemos/src/de/amr/mazes/demos/swing/ap
 
 Implemented so far:
 
-- [Aldous-Broder](EasyMaze/src/de/amr/easy/maze/algorithms/AldousBroderUST.java)
-- Binary Tree ([top-down](EasyMaze/src/de/amr/easy/maze/algorithms/BinaryTree.java) and [random](EasyMaze/src/de/amr/easy/maze/algorithms/BinaryTreeRandom.java))
-- [Sidewinder algorithm](EasyMaze/src/de/amr/easy/maze/algorithms/Sidewinder.java)
-- [Eller's algorithm](EasyMaze/src/de/amr/easy/maze/algorithms/Eller.java)
-- My own [variation](EasyMaze/src/de/amr/easy/maze/algorithms/EllerInsideOut.java) of Eller's growing the maze inside-out
-- [Growing Tree](EasyMaze/src/de/amr/easy/maze/algorithms/GrowingTree.java)
-- Hunt-And-Kill ([top-down](EasyMaze/src/de/amr/easy/maze/algorithms/HuntAndKill.java) and [random](EasyMaze/src/de/amr/easy/maze/algorithms/HuntAndKillRandom.java))
-- [Kruskal Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/algorithms/KruskalMST.java)
-- [Prim Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/algorithms/PrimMST.java)
-- [Random Breadth-First-Search](EasyMaze/src/de/amr/easy/maze/algorithms/RandomBFS.java)
-- Random Depth-First-Search ([non-recursive](EasyMaze/src/de/amr/easy/maze/algorithms/IterativeDFS.java) and [recursive](EasyMaze/src/de/amr/easy/maze/algorithms/RecursiveDFS.java))
-- [Recursive division](EasyMaze/src/de/amr/easy/maze/algorithms/RecursiveDivision.java)
-- [Wilson's algorithm](EasyMaze/src/de/amr/easy/maze/algorithms/wilson) (14 different variants)
+- [Aldous-Broder](EasyMaze/src/de/amr/easy/maze/alg/AldousBroderUST.java)
+- Binary Tree ([top-down](EasyMaze/src/de/amr/easy/maze/alg/BinaryTree.java) and [random](EasyMaze/src/de/amr/easy/maze/alg/BinaryTreeRandom.java))
+- [Sidewinder algorithm](EasyMaze/src/de/amr/easy/maze/alg/Sidewinder.java)
+- [Eller's algorithm](EasyMaze/src/de/amr/easy/maze/alg/Eller.java)
+- My own [variation](EasyMaze/src/de/amr/easy/maze/alg/EllerInsideOut.java) of Eller's growing the maze inside-out
+- [Growing Tree](EasyMaze/src/de/amr/easy/maze/alg/GrowingTree.java)
+- Hunt-And-Kill ([top-down](EasyMaze/src/de/amr/easy/maze/alg/HuntAndKill.java) and [random](EasyMaze/src/de/amr/easy/maze/alg/HuntAndKillRandom.java))
+- [Kruskal Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/KruskalMST.java)
+- [Prim Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/PrimMST.java)
+- [Random Breadth-First-Search](EasyMaze/src/de/amr/easy/maze/alg/RandomBFS.java)
+- Random Depth-First-Search ([non-recursive](EasyMaze/src/de/amr/easy/maze/alg/IterativeDFS.java) and [recursive](EasyMaze/src/de/amr/easy/maze/alg/RecursiveDFS.java))
+- [Recursive division](EasyMaze/src/de/amr/easy/maze/alg/RecursiveDivision.java)
+- [Wilson's algorithm](EasyMaze/src/de/amr/easy/maze/alg/wilson) (14 different variants)
 
 Path finding algorithms:
 - The EasyGrid library contains a DFS and BFS-based path finding implementation.
