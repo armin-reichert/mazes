@@ -29,7 +29,7 @@ import de.amr.easy.grid.api.ObservableNakedGrid2D;
  * 
  * @author Armin Reichert
  */
-public class SwingGridCanvas extends JComponent implements GraphObserver<Integer, WeightedEdge<Integer>> {
+public class SwingGridCanvas extends JComponent {
 
 	private BufferedImage buffer;
 	private Graphics2D g;
@@ -38,6 +38,34 @@ public class SwingGridCanvas extends JComponent implements GraphObserver<Integer
 	private final Deque<SwingGridRenderingModel> renderStack = new LinkedList<>();
 	private SwingGridRenderer renderer;
 	private int delay;
+
+	private final GraphObserver<Integer, WeightedEdge<Integer>> observer = new GraphObserver<Integer, WeightedEdge<Integer>>() {
+
+		@Override
+		public void vertexChanged(VertexChangeEvent<Integer, WeightedEdge<Integer>> event) {
+			renderGridCell(event.getVertex());
+		}
+
+		@Override
+		public void edgeAdded(EdgeAddedEvent<Integer, WeightedEdge<Integer>> event) {
+			renderGridPassage(event.getEdge(), true);
+		}
+
+		@Override
+		public void edgeRemoved(EdgeRemovedEvent<Integer, WeightedEdge<Integer>> event) {
+			renderGridPassage(event.getEdge(), false);
+		}
+
+		@Override
+		public void edgeChanged(EdgeChangeEvent<Integer, WeightedEdge<Integer>> event) {
+			renderGridPassage(event.getEdge(), true);
+		}
+
+		@Override
+		public void graphChanged(ObservableGraph<Integer, WeightedEdge<Integer>> graph) {
+			render();
+		}
+	};
 
 	public SwingGridCanvas(ObservableNakedGrid2D grid, SwingGridRenderingModel renderingModel) {
 		setGrid(grid);
@@ -48,7 +76,7 @@ public class SwingGridCanvas extends JComponent implements GraphObserver<Integer
 
 	public void setGrid(ObservableNakedGrid2D grid) {
 		this.grid = grid;
-		grid.addGraphObserver(this);
+		grid.addGraphObserver(observer);
 	}
 
 	public void setRenderingModel(SwingGridRenderingModel renderingModel) {
@@ -110,12 +138,11 @@ public class SwingGridCanvas extends JComponent implements GraphObserver<Integer
 	}
 
 	public void startListening() {
-		grid.removeGraphObserver(this);
-		grid.addGraphObserver(this);
+		grid.addGraphObserver(observer);
 	}
 
 	public void stopListening() {
-		grid.removeGraphObserver(this);
+		grid.removeGraphObserver(observer);
 	}
 
 	private void sleep() {
@@ -152,33 +179,6 @@ public class SwingGridCanvas extends JComponent implements GraphObserver<Integer
 
 	public void render() {
 		doRender(g -> renderer.drawGrid(g, grid));
-	}
-
-	// GraphListener implementation
-
-	@Override
-	public void vertexChanged(VertexChangeEvent<Integer, WeightedEdge<Integer>> event) {
-		renderGridCell(event.getVertex());
-	}
-
-	@Override
-	public void edgeAdded(EdgeAddedEvent<Integer, WeightedEdge<Integer>> event) {
-		renderGridPassage(event.getEdge(), true);
-	}
-
-	@Override
-	public void edgeRemoved(EdgeRemovedEvent<Integer, WeightedEdge<Integer>> event) {
-		renderGridPassage(event.getEdge(), false);
-	}
-
-	@Override
-	public void edgeChanged(EdgeChangeEvent<Integer, WeightedEdge<Integer>> event) {
-		renderGridPassage(event.getEdge(), true);
-	}
-
-	@Override
-	public void graphChanged(ObservableGraph<Integer, WeightedEdge<Integer>> graph) {
-		render();
 	}
 
 }

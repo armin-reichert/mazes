@@ -1,4 +1,4 @@
-package de.amr.easy.maze.algorithms;
+package de.amr.easy.maze.alg;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 
@@ -6,11 +6,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.WeightedEdge;
-import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.grid.impl.ObservableGrid;
+import de.amr.easy.maze.misc.StopWatch;
 
 /**
  * 
@@ -29,19 +29,32 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 		List<WeightedEdge<Integer>> edges = fullGridEdges();
 		while (grid.edgeCount() > grid.vertexCount() - 1) {
 			WeightedEdge<Integer> edge = edges.remove(0);
-			System.out.println(edge);
+			// System.out.println(edge);
 			Integer either = edge.either(), other = edge.other(either);
 			grid.removeEdge(edge);
 			if (!connected(either, other)) {
 				grid.addEdge(either, other);
 			}
 		}
+		System.out.println("Reverse-Delete MST:");
+		System.out.println("#vertices: " + grid.vertexCount());
+		System.out.println("#edges: " + grid.edgeCount());
+		System.out.println(bfsCount + " BFS executions took " + bfsTotalTime + " seconds");
 	}
 
+	private int bfsCount;
+	private float bfsTotalTime;
+
+	// TODO needs a more efficient connectivity test
 	private boolean connected(Integer either, Integer other) {
-		BreadthFirstTraversal<Integer, WeightedEdge<Integer>> bfs = new BreadthFirstTraversal<>(
-				(ObservableGrid<TraversalState>) grid, either);
+		StopWatch watch = new StopWatch();
+		BreadthFirstTraversal<Integer, WeightedEdge<Integer>> bfs = new BreadthFirstTraversal<>(grid, either);
+		watch.start();
 		bfs.run();
+		watch.stop();
+		++bfsCount;
+		bfsTotalTime += watch.getDuration();
+		// System.out.println("BFS #" + bfsCount + " took " + watch.getDuration() + " seconds");
 		return bfs.getDistance(other) != -1;
 	}
 

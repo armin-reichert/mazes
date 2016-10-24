@@ -35,6 +35,7 @@ public class ObservableGrid<Content> extends ObservableNakedGrid implements Obse
 	@Override
 	public void setDefault(Content content) {
 		gridContent.setDefault(content);
+		fireGraphChange(this);
 	}
 
 	@Override

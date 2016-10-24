@@ -1,5 +1,6 @@
 package de.amr.easy.maze.tests;
 
+import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
@@ -28,6 +29,7 @@ import de.amr.easy.maze.alg.PrimMST;
 import de.amr.easy.maze.alg.RandomBFS;
 import de.amr.easy.maze.alg.RecursiveDFS;
 import de.amr.easy.maze.alg.RecursiveDivision;
+import de.amr.easy.maze.alg.ReverseDeleteMST;
 import de.amr.easy.maze.alg.Sidewinder;
 import de.amr.easy.maze.alg.wilson.WilsonUSTCollapsingCircle;
 import de.amr.easy.maze.alg.wilson.WilsonUSTCollapsingRectangle;
@@ -48,7 +50,7 @@ import de.amr.easy.maze.alg.wilson.WilsonUSTRowsTopDown;
 public class MazeGeneratorTests {
 
 	private static final int WIDTH = 100;
-	private static final int HEIGHT = 80;
+	private static final int HEIGHT = 100;
 
 	private ObservableGrid2D<TraversalState> grid;
 
@@ -132,6 +134,12 @@ public class MazeGeneratorTests {
 	@Test
 	public void testRecursiveDivision() {
 		new RecursiveDivision(grid).accept(grid.cell(CENTER));
+	}
+	
+	@Test
+	public void testReverseDeleteMST() {
+		grid = new ObservableGrid<>(30, 30, COMPLETED);
+		new ReverseDeleteMST(grid).accept(grid.cell(CENTER));
 	}
 
 	@Test
