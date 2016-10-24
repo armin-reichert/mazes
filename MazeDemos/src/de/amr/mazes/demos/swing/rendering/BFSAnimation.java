@@ -6,7 +6,9 @@ import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import de.amr.easy.graph.traversal.BreadthFirstTraversal;
+import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
+import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.graph.api.event.GraphTraversalListener;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.ObservableNakedGrid2D;
 import de.amr.easy.grid.rendering.swing.SwingDefaultGridRenderingModel;
@@ -18,7 +20,7 @@ import de.amr.easy.grid.rendering.swing.SwingGridCanvas;
  * 
  * @author Armin Reichert
  */
-public class BFSAnimation {
+public class BFSAnimation implements GraphTraversalListener<Integer> {
 
 	private final SwingGridCanvas canvas;
 	private final ObservableNakedGrid2D grid;
@@ -51,7 +53,9 @@ public class BFSAnimation {
 		// 2. run BFS with events enabled such that coloring and distances are
 		// rendered:
 		canvas.pushRenderingModel(renderingModel);
+		bfs.addObserver(this);
 		bfs.run();
+		bfs.removeObserver(this);
 		canvas.popRenderingModel();
 	}
 
@@ -77,6 +81,18 @@ public class BFSAnimation {
 
 	public void setDistancesVisible(boolean distancesVisible) {
 		this.distancesVisible = distancesVisible;
+	}
+
+	// GraphTraversalListener
+
+	@Override
+	public void edgeTouched(Integer source, Integer target) {
+		canvas.renderGridPassage(grid.edge(source, target).get(), true);
+	}
+
+	@Override
+	public void vertexTouched(Integer vertex, TraversalState oldState, TraversalState newState) {
+		canvas.renderGridCell(vertex);
 	}
 
 	// -- Rendering model

@@ -11,37 +11,36 @@ import java.util.stream.Stream;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.ObservableGrid;
-import de.amr.easy.maze.algorithms.AldousBroderUST;
-import de.amr.easy.maze.algorithms.BinaryTree;
-import de.amr.easy.maze.algorithms.BinaryTreeRandom;
-import de.amr.easy.maze.algorithms.Eller;
-import de.amr.easy.maze.algorithms.EllerInsideOut;
-import de.amr.easy.maze.algorithms.GrowingTree;
-import de.amr.easy.maze.algorithms.HuntAndKill;
-import de.amr.easy.maze.algorithms.HuntAndKillRandom;
-import de.amr.easy.maze.algorithms.IterativeDFS;
-import de.amr.easy.maze.algorithms.KruskalMST;
-import de.amr.easy.maze.algorithms.PrimMST;
-import de.amr.easy.maze.algorithms.RandomBFS;
-import de.amr.easy.maze.algorithms.RecursiveDFS;
-import de.amr.easy.maze.algorithms.RecursiveDivision;
-import de.amr.easy.maze.algorithms.ReverseDeleteMST;
-import de.amr.easy.maze.algorithms.Sidewinder;
-import de.amr.easy.maze.algorithms.wilson.WilsonUSTCollapsingCircle;
-import de.amr.easy.maze.algorithms.wilson.WilsonUSTCollapsingRectangle;
-import de.amr.easy.maze.algorithms.wilson.WilsonUSTCollapsingWalls;
-import de.amr.easy.maze.algorithms.wilson.WilsonUSTExpandingCircle;
-import de.amr.easy.maze.algorithms.wilson.WilsonUSTExpandingCircles;
-import de.amr.easy.maze.algorithms.wilson.WilsonUSTExpandingRectangle;
-import de.amr.easy.maze.algorithms.wilson.WilsonUSTExpandingSpiral;
-import de.amr.easy.maze.algorithms.wilson.WilsonUSTHilbertCurve;
-import de.amr.easy.maze.algorithms.wilson.WilsonUSTLeftToRightSweep;
-import de.amr.easy.maze.algorithms.wilson.WilsonUSTNestedRectangles;
-import de.amr.easy.maze.algorithms.wilson.WilsonUSTPeanoCurve;
-import de.amr.easy.maze.algorithms.wilson.WilsonUSTRandomCell;
-import de.amr.easy.maze.algorithms.wilson.WilsonUSTRecursiveCrosses;
-import de.amr.easy.maze.algorithms.wilson.WilsonUSTRightToLeftSweep;
-import de.amr.easy.maze.algorithms.wilson.WilsonUSTRowsTopDown;
+import de.amr.easy.maze.alg.AldousBroderUST;
+import de.amr.easy.maze.alg.BinaryTree;
+import de.amr.easy.maze.alg.BinaryTreeRandom;
+import de.amr.easy.maze.alg.Eller;
+import de.amr.easy.maze.alg.EllerInsideOut;
+import de.amr.easy.maze.alg.GrowingTree;
+import de.amr.easy.maze.alg.HuntAndKill;
+import de.amr.easy.maze.alg.HuntAndKillRandom;
+import de.amr.easy.maze.alg.IterativeDFS;
+import de.amr.easy.maze.alg.KruskalMST;
+import de.amr.easy.maze.alg.PrimMST;
+import de.amr.easy.maze.alg.RandomBFS;
+import de.amr.easy.maze.alg.RecursiveDFS;
+import de.amr.easy.maze.alg.RecursiveDivision;
+import de.amr.easy.maze.alg.Sidewinder;
+import de.amr.easy.maze.alg.wilson.WilsonUSTCollapsingCircle;
+import de.amr.easy.maze.alg.wilson.WilsonUSTCollapsingRectangle;
+import de.amr.easy.maze.alg.wilson.WilsonUSTCollapsingWalls;
+import de.amr.easy.maze.alg.wilson.WilsonUSTExpandingCircle;
+import de.amr.easy.maze.alg.wilson.WilsonUSTExpandingCircles;
+import de.amr.easy.maze.alg.wilson.WilsonUSTExpandingRectangle;
+import de.amr.easy.maze.alg.wilson.WilsonUSTExpandingSpiral;
+import de.amr.easy.maze.alg.wilson.WilsonUSTHilbertCurve;
+import de.amr.easy.maze.alg.wilson.WilsonUSTLeftToRightSweep;
+import de.amr.easy.maze.alg.wilson.WilsonUSTNestedRectangles;
+import de.amr.easy.maze.alg.wilson.WilsonUSTPeanoCurve;
+import de.amr.easy.maze.alg.wilson.WilsonUSTRandomCell;
+import de.amr.easy.maze.alg.wilson.WilsonUSTRecursiveCrosses;
+import de.amr.easy.maze.alg.wilson.WilsonUSTRightToLeftSweep;
+import de.amr.easy.maze.alg.wilson.WilsonUSTRowsTopDown;
 import de.amr.mazes.demos.swing.rendering.BFSAnimation;
 import de.amr.mazes.demos.swing.rendering.DFSAnimation;
 
@@ -58,31 +57,30 @@ public class MazeDemoModel {
 
 	private static final AlgorithmInfo<?>[] ALGORITHMS = {
 			/*@formatter:off*/
-			new AlgorithmInfo<>(IterativeDFS.class, "Depth-First-Traversal (iterative)", Traversal),
-			new AlgorithmInfo<>(RecursiveDFS.class, "Depth-First-Traversal (recursive), small grids only!)", Traversal, SmallGridOnly),
+			new AlgorithmInfo<>(RecursiveDFS.class, "Depth-First-Traversal (recursive, small grids only!)", Traversal, SmallGridOnly),
+			new AlgorithmInfo<>(IterativeDFS.class, "Depth-First-Traversal (non-recursive)", Traversal),
 			new AlgorithmInfo<>(RandomBFS.class, "Breadth-First-Traversal", Traversal),
 			new AlgorithmInfo<>(KruskalMST.class, "Kruskal MST", MST),
-			new AlgorithmInfo<>(ReverseDeleteMST.class, "Reverse-Delete MST", MST),
 			new AlgorithmInfo<>(PrimMST.class, "Prim MST", MST),
 			new AlgorithmInfo<>(AldousBroderUST.class, "Aldous-Broder UST (slow!)", UST, Slow),
 			new AlgorithmInfo<>(WilsonUSTRandomCell.class, "Wilson UST (random, slow!)", UST, Slow),
-			new AlgorithmInfo<>(WilsonUSTRowsTopDown.class, "Wilson UST (row-by-row)", UST),
-			new AlgorithmInfo<>(WilsonUSTLeftToRightSweep.class, "Wilson UST (left to right)", UST),
-			new AlgorithmInfo<>(WilsonUSTRightToLeftSweep.class, "Wilson UST (right to left)", UST),
-			new AlgorithmInfo<>(WilsonUSTCollapsingWalls.class, "Wilson UST (collapsing horizontally)", UST),
+			new AlgorithmInfo<>(WilsonUSTRowsTopDown.class, "Wilson UST (row-wise top-to-bottom)", UST),
+			new AlgorithmInfo<>(WilsonUSTLeftToRightSweep.class, "Wilson UST (column-wise left to right)", UST),
+			new AlgorithmInfo<>(WilsonUSTRightToLeftSweep.class, "Wilson UST (column-wise right to left)", UST),
+			new AlgorithmInfo<>(WilsonUSTCollapsingWalls.class, "Wilson UST (column-wise collapsing)", UST),
 			new AlgorithmInfo<>(WilsonUSTCollapsingRectangle.class, "Wilson UST (collapsing rectangle)", UST),
-			new AlgorithmInfo<>(WilsonUSTExpandingCircle.class, "Wilson UST (circle, expanding)", UST),
-			new AlgorithmInfo<>(WilsonUSTCollapsingCircle.class, "Wilson UST (circle, collapsing)", UST),
-			new AlgorithmInfo<>(WilsonUSTExpandingCircles.class, "Wilson UST (circles, expanding)", UST),
-			new AlgorithmInfo<>(WilsonUSTExpandingSpiral.class, "Wilson UST (spiral, expanding)", UST),
-			new AlgorithmInfo<>(WilsonUSTExpandingRectangle.class, "Wilson UST (rectangle, expanding)", UST),
-			new AlgorithmInfo<>(WilsonUSTNestedRectangles.class, "Wilson UST (rectangles, nested)", UST),
-			new AlgorithmInfo<>(WilsonUSTRecursiveCrosses.class, "Wilson UST (crosses, recursive)", UST),
+			new AlgorithmInfo<>(WilsonUSTExpandingCircle.class, "Wilson UST (expanding circle)", UST),
+			new AlgorithmInfo<>(WilsonUSTCollapsingCircle.class, "Wilson UST (collapsing circle)", UST),
+			new AlgorithmInfo<>(WilsonUSTExpandingCircles.class, "Wilson UST (expanding circles)", UST),
+			new AlgorithmInfo<>(WilsonUSTExpandingSpiral.class, "Wilson UST (expanding spiral)", UST),
+			new AlgorithmInfo<>(WilsonUSTExpandingRectangle.class, "Wilson UST (expanding rectangle)", UST),
+			new AlgorithmInfo<>(WilsonUSTNestedRectangles.class, "Wilson UST (nested rectangles)", UST),
+			new AlgorithmInfo<>(WilsonUSTRecursiveCrosses.class, "Wilson UST (recursive crosses)", UST),
 			new AlgorithmInfo<>(WilsonUSTHilbertCurve.class, "Wilson UST (Hilbert curve)", UST),
 			new AlgorithmInfo<>(WilsonUSTPeanoCurve.class, "Wilson UST (Peano curve)", UST),
-			new AlgorithmInfo<>(BinaryTree.class, "Binary Tree"),
+			new AlgorithmInfo<>(BinaryTree.class, "Binary Tree (row-wise, top-to-bottom"),
 			new AlgorithmInfo<>(BinaryTreeRandom.class, "Binary Tree (random)"), 
-			new AlgorithmInfo<>(Sidewinder.class, "SideWinder"),
+			new AlgorithmInfo<>(Sidewinder.class, "Sidewinder"),
 			new AlgorithmInfo<>(Eller.class, "Eller's Algorithm"), 
 			new AlgorithmInfo<>(EllerInsideOut.class, "Armin's Algorithm"), 
 			new AlgorithmInfo<>(HuntAndKill.class, "Hunt-And-Kill"),

@@ -165,4 +165,9 @@ public interface NakedGrid2D extends Graph<Integer, WeightedEdge<Integer>> {
 	 * Makes this grid a full grid.
 	 */
 	public void makeFullGrid();
+
+	/**
+	 * @return the edges of a full grid in randomly permuted order and random weights
+	 */
+	public Stream<WeightedEdge<Integer>> fullGridEdgesPermuted();
 }

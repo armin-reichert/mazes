@@ -4,7 +4,7 @@ import static de.amr.easy.grid.api.GridPosition.CENTER;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.maze.algorithms.wilson.WilsonUSTExpandingCircle;
+import de.amr.easy.maze.alg.wilson.WilsonUSTExpandingCircle;
 import de.amr.mazes.demos.grid.GridSampleApp;
 import de.amr.mazes.demos.swing.rendering.BFSAnimation;
 

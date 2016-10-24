@@ -14,11 +14,11 @@ import javax.swing.JComponent;
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.WeightedEdge;
-import de.amr.easy.graph.event.EdgeAddedEvent;
-import de.amr.easy.graph.event.EdgeChangeEvent;
-import de.amr.easy.graph.event.EdgeRemovedEvent;
-import de.amr.easy.graph.event.GraphListener;
-import de.amr.easy.graph.event.VertexChangeEvent;
+import de.amr.easy.graph.api.event.EdgeAddedEvent;
+import de.amr.easy.graph.api.event.EdgeChangeEvent;
+import de.amr.easy.graph.api.event.EdgeRemovedEvent;
+import de.amr.easy.graph.api.event.GraphObserver;
+import de.amr.easy.graph.api.event.VertexChangeEvent;
 import de.amr.easy.grid.api.ObservableNakedGrid2D;
 
 /**
@@ -29,7 +29,7 @@ import de.amr.easy.grid.api.ObservableNakedGrid2D;
  * 
  * @author Armin Reichert
  */
-public class SwingGridCanvas extends JComponent implements GraphListener<Integer, WeightedEdge<Integer>> {
+public class SwingGridCanvas extends JComponent implements GraphObserver<Integer, WeightedEdge<Integer>> {
 
 	private BufferedImage buffer;
 	private Graphics2D g;
@@ -48,7 +48,7 @@ public class SwingGridCanvas extends JComponent implements GraphListener<Integer
 
 	public void setGrid(ObservableNakedGrid2D grid) {
 		this.grid = grid;
-		grid.addGraphListener(this);
+		grid.addGraphObserver(this);
 	}
 
 	public void setRenderingModel(SwingGridRenderingModel renderingModel) {
@@ -110,12 +110,12 @@ public class SwingGridCanvas extends JComponent implements GraphListener<Integer
 	}
 
 	public void startListening() {
-		grid.removeGraphListener(this);
-		grid.addGraphListener(this);
+		grid.removeGraphObserver(this);
+		grid.addGraphObserver(this);
 	}
 
 	public void stopListening() {
-		grid.removeGraphListener(this);
+		grid.removeGraphObserver(this);
 	}
 
 	private void sleep() {
@@ -180,4 +180,5 @@ public class SwingGridCanvas extends JComponent implements GraphListener<Integer
 	public void graphChanged(ObservableGraph<Integer, WeightedEdge<Integer>> graph) {
 		render();
 	}
+
 }
