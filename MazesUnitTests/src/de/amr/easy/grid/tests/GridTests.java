@@ -9,15 +9,19 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Optional;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import de.amr.easy.graph.alg.CycleFinderUnionFind;
 import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.Grid;
 import de.amr.easy.grid.impl.NakedGrid;
+import de.amr.easy.maze.alg.RandomBFS;
 
 /**
  * Test case for {@link NakedGrid}
@@ -27,8 +31,8 @@ import de.amr.easy.grid.impl.NakedGrid;
  */
 public class GridTests {
 
-	private static final int WIDTH = 1000;
-	private static final int HEIGHT = 1000;
+	private static final int WIDTH = 100;
+	private static final int HEIGHT = 100;
 
 	private Grid2D<TraversalState> grid;
 
@@ -177,6 +181,31 @@ public class GridTests {
 
 		grid.addEdge(d, a);
 		assertTrue(grid.edgeCount() == 4);
+		assertTrue(new CycleFinderUnionFind<>(grid, 0).isCycleFound());
+	}
+	
+	@Test
+	public void testCycleFinder2() {
+		// create a spanning tree
+		new RandomBFS(grid).accept(grid.cell(0,0));
+		// must not have a cycle
+		assertFalse(new CycleFinderUnionFind<>(grid, 0).isCycleFound());
+		// add single edge
+		/*@formatter:off*/
+		grid.vertexStream()
+			.filter(cell -> grid.degree(cell) < grid.neighbors(cell).count())
+			.findFirst()
+			.ifPresent(cell -> {
+				for (Direction dir : Direction.values()) {
+					Optional<Integer> neighbor = grid.neighbor(cell, dir);
+					if (neighbor.isPresent() && !grid.adjacent(cell, neighbor.get())) {
+						grid.addEdge(cell, neighbor.get());
+						break;
+					}
+				}
+			});
+		/*@formatter:on*/
+		// now there must be a cycle
 		assertTrue(new CycleFinderUnionFind<>(grid, 0).isCycleFound());
 	}
 }
