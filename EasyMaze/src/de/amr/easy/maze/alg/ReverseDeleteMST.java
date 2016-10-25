@@ -49,9 +49,7 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 	private boolean connected(Integer either, Integer other) {
 		StopWatch watch = new StopWatch();
 		BreadthFirstTraversal<Integer, WeightedEdge<Integer>> bfs = new BreadthFirstTraversal<>(grid, either);
-		watch.start();
-		bfs.run();
-		watch.stop();
+		watch.runAndMeasure(bfs);
 		++bfsCount;
 		bfsTotalTime += watch.getSeconds();
 		// System.out.println("BFS #" + bfsCount + " took " + watch.getDuration() + " seconds");

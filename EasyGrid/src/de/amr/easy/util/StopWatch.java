@@ -21,14 +21,14 @@ public class StopWatch {
 	}
 
 	/**
-	 * Measures the execution of the given runnable.
+	 * Runs the given code and measure its execution time.
 	 * 
-	 * @param runnable
+	 * @param code
 	 *          code to be measured
 	 */
-	public void measure(Runnable runnable) {
+	public void runAndMeasure(Runnable code) {
 		start();
-		runnable.run();
+		code.run();
 		stop();
 	}
 
