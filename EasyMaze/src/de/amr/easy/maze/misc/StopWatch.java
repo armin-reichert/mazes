@@ -3,7 +3,7 @@ package de.amr.easy.maze.misc;
 public class StopWatch {
 
 	private long startMillis;
-	private float duration; // seconds
+	private float duration; // milliseconds
 
 	/**
 	 * Starts the watch.
@@ -17,14 +17,14 @@ public class StopWatch {
 	 * Stops the watch and stores the time elapsed since last start.
 	 */
 	public void stop() {
-		duration = (System.currentTimeMillis() - startMillis) / 1000f;
+		duration = System.currentTimeMillis() - startMillis;
 	}
 
 	/**
 	 * Measures the execution of the given runnable.
 	 * 
 	 * @param runnable
-	 *          some runnable
+	 *          code to be measured
 	 */
 	public void measure(Runnable runnable) {
 		start();
@@ -34,9 +34,16 @@ public class StopWatch {
 
 	/**
 	 * 
-	 * @return time in seconds between last start/stop sequence
+	 * @return measured time in seconds
 	 */
-	public float getDuration() {
+	public float getSeconds() {
+		return duration / 1000f;
+	}
+
+	/**
+	 * @return measured time in ms
+	 */
+	public float getMilliseconds() {
 		return duration;
 	}
 }

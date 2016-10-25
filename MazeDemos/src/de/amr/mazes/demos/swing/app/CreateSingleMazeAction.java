@@ -91,7 +91,7 @@ public class CreateSingleMazeAction extends AbstractAction {
 			app.canvas().stopListening();
 			StopWatch watch = new StopWatch();
 			watch.measure(() -> generator.accept(startCell));
-			app.showMessage(format("Done in %.6f seconds.", watch.getDuration()));
+			app.showMessage(format("Done in %.6f seconds.", watch.getSeconds()));
 			// Render maze
 			app.canvas().clear();
 			app.canvas().render();

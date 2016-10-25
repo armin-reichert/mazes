@@ -71,6 +71,6 @@ public class MazeGeneratorPerfTest {
 		watch.start();
 		alg.accept(startCell);
 		watch.stop();
-		System.out.println(alg.getClass().getSimpleName() + ": " + watch.getDuration());
+		System.out.println(alg.getClass().getSimpleName() + ": " + watch.getSeconds());
 	}
 }

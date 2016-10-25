@@ -53,7 +53,7 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 		bfs.run();
 		watch.stop();
 		++bfsCount;
-		bfsTotalTime += watch.getDuration();
+		bfsTotalTime += watch.getSeconds();
 		// System.out.println("BFS #" + bfsCount + " took " + watch.getDuration() + " seconds");
 		return bfs.getDistance(other) != -1;
 	}
