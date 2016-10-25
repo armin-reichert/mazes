@@ -10,7 +10,7 @@ import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.maze.misc.StopWatch;
+import de.amr.easy.util.StopWatch;
 
 /**
  * 

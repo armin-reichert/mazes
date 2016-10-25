@@ -1,4 +1,4 @@
-package de.amr.easy.maze.misc;
+package de.amr.easy.util;
 
 public class StopWatch {
 

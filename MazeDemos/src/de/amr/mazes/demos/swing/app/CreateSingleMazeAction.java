@@ -9,7 +9,7 @@ import javax.swing.AbstractAction;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.maze.misc.StopWatch;
+import de.amr.easy.util.StopWatch;
 import de.amr.mazes.demos.swing.model.AlgorithmInfo;
 import de.amr.mazes.demos.swing.rendering.BFSAnimation;
 import de.amr.mazes.demos.swing.rendering.DFSAnimation;

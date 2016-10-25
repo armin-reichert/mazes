@@ -24,7 +24,7 @@ import de.amr.easy.maze.alg.PrimMST;
 import de.amr.easy.maze.alg.RandomBFS;
 import de.amr.easy.maze.alg.RecursiveDivision;
 import de.amr.easy.maze.alg.Sidewinder;
-import de.amr.easy.maze.misc.StopWatch;
+import de.amr.easy.util.StopWatch;
 
 public class MazeGeneratorPerfTest {
 
