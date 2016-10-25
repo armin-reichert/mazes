@@ -42,12 +42,17 @@ public class BreadthFirstTraversal<V, E extends Edge<V>> extends GraphTraversal<
 	private final Map<V, Integer> distances = new HashMap<>();
 	private int maxDistance = -1;
 	private V farest;
+	private V stopAt;
 
 	public BreadthFirstTraversal(Graph<V, E> graph, V source) {
 		super(graph);
 		this.source = source;
 	}
-
+	
+	public void setStopAt(V vertex) {
+		this.stopAt = vertex;
+	}
+	
 	@Override
 	public void clear() {
 		super.clear();
@@ -69,6 +74,9 @@ public class BreadthFirstTraversal<V, E extends Edge<V>> extends GraphTraversal<
 				q.add(neighbor);
 			});
 			setState(current, COMPLETED);
+			if (current == stopAt) {
+				break;
+			}
 		}
 	}
 
