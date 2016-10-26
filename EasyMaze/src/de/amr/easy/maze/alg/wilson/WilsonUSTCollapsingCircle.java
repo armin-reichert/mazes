@@ -21,13 +21,9 @@ public class WilsonUSTCollapsingCircle extends WilsonUST {
 	@Override
 	public void accept(Integer start) {
 		start = grid.cell(CENTER);
-		addCellToTree(start);
+		addToTree(start);
 		for (int radius = max(grid.numRows(), grid.numCols()) - 1; radius >= 0; radius--) {
-			new Circle(grid, start, radius).forEach(walkStart -> {
-				if (isOutsideTree(walkStart)) {
-					loopErasedRandomWalk(walkStart);
-				}
-			});
+			new Circle(grid, start, radius).forEach(this::loopErasedRandomWalk);
 		}
 	}
 }

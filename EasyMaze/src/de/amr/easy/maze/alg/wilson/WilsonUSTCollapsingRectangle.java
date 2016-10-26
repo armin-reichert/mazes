@@ -24,14 +24,10 @@ public class WilsonUSTCollapsingRectangle extends WilsonUST {
 	@Override
 	public void accept(Integer start) {
 		start = grid.cell(CENTER);
-		addCellToTree(start);
+		addToTree(start);
 		int col = 0, row = 0;
 		while (width > 0 && height > 0) {
-			new Rectangle(grid, grid.cell(col, row), width, height).forEach(walkStart -> {
-				if (isOutsideTree(walkStart)) {
-					loopErasedRandomWalk(walkStart);
-				}
-			});
+			new Rectangle(grid, grid.cell(col, row), width, height).forEach(this::loopErasedRandomWalk);
 			width -= 2;
 			height -= 2;
 			++col;

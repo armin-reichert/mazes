@@ -18,13 +18,10 @@ public class WilsonUSTRowsTopDown extends WilsonUST {
 
 	@Override
 	public void accept(Integer start) {
-		addCellToTree(start);
+		addToTree(start);
 		range(0, grid.numRows()).forEach(row -> {
 			range(0, grid.numCols()).forEach(col -> {
-				Integer walkStart = grid.cell(col, row);
-				if (isOutsideTree(walkStart)) {
-					loopErasedRandomWalk(walkStart);
-				}
+				loopErasedRandomWalk(grid.cell(col, row));
 			});
 		});
 	}

@@ -22,15 +22,15 @@ public class WilsonUSTRandomCell extends WilsonUST {
 
 	@Override
 	public void accept(Integer start) {
-		addCellToTree(start);
+		addToTree(start);
 		while (!cellsOutsideTree.isEmpty()) {
 			loopErasedRandomWalk(cellsOutsideTree.get(rnd.nextInt(cellsOutsideTree.size())));
 		}
 	}
 
 	@Override
-	protected void addCellToTree(Integer v) {
-		super.addCellToTree(v);
+	protected void addToTree(Integer v) {
+		super.addToTree(v);
 		cellsOutsideTree.remove(v);
 	}
 }

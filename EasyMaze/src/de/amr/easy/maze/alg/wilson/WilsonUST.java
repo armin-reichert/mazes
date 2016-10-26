@@ -6,9 +6,9 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.maze.alg.MazeAlgorithm;
-import de.amr.easy.grid.api.Direction;
 
 /**
  * Wilson's algorithm.
@@ -42,25 +42,24 @@ public abstract class WilsonUST extends MazeAlgorithm {
 	@Override
 	public void accept(Integer start) {
 		start = customStartCell(start);
-		addCellToTree(start);
-		cellStream().forEach(walkStart -> {
-			if (isOutsideTree(walkStart)) {
-				loopErasedRandomWalk(walkStart);
-			}
-		});
+		addToTree(start);
+		cellStream().forEach(this::loopErasedRandomWalk);
 	}
 
 	/**
 	 * Performs a loop-erased random walk starting with the given cell and ending on the tree created
-	 * so far.
+	 * so far. If the start cell is already part of the tree, the method does nothing.
 	 * 
-	 * @param walkStart
+	 * @param start
 	 *          the start cell of the random walk
 	 */
-	protected void loopErasedRandomWalk(Integer walkStart) {
-		// do a random walk starting at walkStart until tree cell is reached
-		Integer v = walkStart;
-		while (isOutsideTree(v)) {
+	protected void loopErasedRandomWalk(Integer start) {
+		if (!outsideTree(start))
+			return;
+
+		// do a random walk starting at the start cell until the current tree is touched
+		Integer v = start;
+		while (outsideTree(v)) {
 			Direction dir = Direction.randomValue();
 			Optional<Integer> neighbor = grid.neighbor(v, dir);
 			if (neighbor.isPresent()) {
@@ -68,11 +67,11 @@ public abstract class WilsonUST extends MazeAlgorithm {
 				v = neighbor.get();
 			}
 		}
-		// add loop-erased path to tree
-		v = walkStart;
-		while (isOutsideTree(v)) {
+		// add the (loop-erased) walk path to the current tree
+		v = start;
+		while (outsideTree(v)) {
 			Integer neighbor = grid.neighbor(v, lastWalkDir[v]).get();
-			addCellToTree(v);
+			addToTree(v);
 			grid.addEdge(v, neighbor);
 			v = neighbor;
 		}
@@ -88,9 +87,9 @@ public abstract class WilsonUST extends MazeAlgorithm {
 	/**
 	 * @param cell
 	 *          a grid cell
-	 * @return <code>true</code> if the cell is outside of the current tree
+	 * @return <code>true</code> if the cell is outside of the tree created so far
 	 */
-	protected boolean isOutsideTree(Integer cell) {
+	protected boolean outsideTree(Integer cell) {
 		return grid.get(cell) != COMPLETED;
 	}
 
@@ -100,7 +99,7 @@ public abstract class WilsonUST extends MazeAlgorithm {
 	 * @param cell
 	 *          a grid cell
 	 */
-	protected void addCellToTree(Integer cell) {
+	protected void addToTree(Integer cell) {
 		grid.set(cell, COMPLETED);
 	}
 }
