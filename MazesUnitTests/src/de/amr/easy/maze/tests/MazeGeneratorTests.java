@@ -1,20 +1,27 @@
 package de.amr.easy.maze.tests;
 
-import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
-import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
+import static java.lang.String.format;
+import static java.lang.System.out;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import de.amr.easy.graph.alg.CycleFinderUnionFind;
+import de.amr.easy.graph.alg.CycleChecker;
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.ObservableGrid2D;
-import de.amr.easy.grid.impl.ObservableGrid;
+import de.amr.easy.graph.api.WeightedEdge;
+import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.impl.Grid;
 import de.amr.easy.maze.alg.AldousBroderUST;
 import de.amr.easy.maze.alg.BinaryTree;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
@@ -25,6 +32,7 @@ import de.amr.easy.maze.alg.HuntAndKill;
 import de.amr.easy.maze.alg.HuntAndKillRandom;
 import de.amr.easy.maze.alg.IterativeDFS;
 import de.amr.easy.maze.alg.KruskalMST;
+import de.amr.easy.maze.alg.MazeAlgorithm;
 import de.amr.easy.maze.alg.PrimMST;
 import de.amr.easy.maze.alg.RandomBFS;
 import de.amr.easy.maze.alg.RecursiveDFS;
@@ -46,179 +54,202 @@ import de.amr.easy.maze.alg.wilson.WilsonUSTRandomCell;
 import de.amr.easy.maze.alg.wilson.WilsonUSTRecursiveCrosses;
 import de.amr.easy.maze.alg.wilson.WilsonUSTRightToLeftSweep;
 import de.amr.easy.maze.alg.wilson.WilsonUSTRowsTopDown;
+import de.amr.easy.util.StopWatch;
 
 public class MazeGeneratorTests {
 
-	private static final int WIDTH = 100;
+	private static final int WIDTH = 500;
 	private static final int HEIGHT = 100;
 
-	private ObservableGrid2D<TraversalState> grid;
+	private Grid2D<TraversalState> grid;
+	private StopWatch watch;
+
+	private static List<String> results = new ArrayList<>();
+
+	@BeforeClass
+	public static void beforeAllTests() {
+		// warm-up
+		new RandomBFS(new Grid<>(WIDTH, HEIGHT, UNVISITED)).accept(0);
+	}
+
+	@AfterClass
+	public static void afterAllTests() {
+		Collections.sort(results);
+		results.forEach(out::println);
+	}
 
 	@Before
 	public void setUp() {
-		grid = new ObservableGrid<>(WIDTH, HEIGHT, UNVISITED);
+		grid = new Grid<>(WIDTH, HEIGHT, UNVISITED);
+		watch = new StopWatch();
 	}
 
 	@After
 	public void tearDown() {
 		assertEquals(grid.edgeCount(), grid.vertexCount() - 1);
-		assertFalse(new CycleFinderUnionFind<>(grid, grid.cell(CENTER)).isCycleFound());
+		assertFalse(new CycleChecker<Integer, WeightedEdge<Integer>>().test(grid));
+	}
+
+	private void exec(MazeAlgorithm algorithm) {
+		watch.runAndMeasure(() -> algorithm.accept(grid.cell(CENTER)));
+		results.add(format("%-30s (%6d cells): %.3f sec", algorithm.getClass().getSimpleName(), grid.numCells(),
+				watch.getSeconds()));
 	}
 
 	@Test
 	public void testAldousBroder() {
-		new AldousBroderUST(grid).accept(grid.cell(CENTER));
+		exec(new AldousBroderUST(grid));
 	}
 
 	@Test
 	public void testBinaryTree() {
-		new BinaryTree(grid).accept(grid.cell(CENTER));
+		exec(new BinaryTree(grid));
 	}
 
 	@Test
 	public void testBinaryTreeRandom() {
-		new BinaryTreeRandom(grid).accept(grid.cell(CENTER));
+		exec(new BinaryTreeRandom(grid));
 	}
 
 	@Test
 	public void testEller() {
-		new Eller(grid).accept(grid.cell(CENTER));
+		exec(new Eller(grid));
 	}
 
 	@Test
 	public void testEllerInsideOut() {
-		new EllerInsideOut(grid).accept(grid.cell(CENTER));
+		exec(new EllerInsideOut(grid));
 	}
 
 	@Test
 	public void testGrowingTree() {
-		new GrowingTree(grid).accept(grid.cell(CENTER));
+		exec(new GrowingTree(grid));
 	}
 
 	@Test
 	public void testHuntAndKill() {
-		new HuntAndKill(grid).accept(grid.cell(CENTER));
+		exec(new HuntAndKill(grid));
 	}
 
 	@Test
 	public void testHuntAndKillRandom() {
-		new HuntAndKillRandom(grid).accept(grid.cell(CENTER));
+		exec(new HuntAndKillRandom(grid));
 	}
 
 	@Test
 	public void testIterativeDFS() {
-		new IterativeDFS(grid).accept(grid.cell(CENTER));
+		exec(new IterativeDFS(grid));
 	}
 
 	@Test
 	public void testKruskal() {
-		new KruskalMST(grid).accept(null);
+		exec(new KruskalMST(grid));
 	}
 
 	@Test
 	public void testPrim() {
-		new PrimMST(grid).accept(grid.cell(CENTER));
+		exec(new PrimMST(grid));
 	}
 
 	@Test
 	public void testRandomBFS() {
-		new RandomBFS(grid).accept(grid.cell(CENTER));
+		exec(new RandomBFS(grid));
 	}
 
 	@Test
 	public void testRecursiveDFS() {
-		grid = new ObservableGrid<>(50, 40, UNVISITED);
-		new RecursiveDFS(grid).accept(grid.cell(CENTER));
+		grid = new Grid<>(40, 50, UNVISITED);
+		exec(new RecursiveDFS(grid));
 	}
 
 	@Test
 	public void testRecursiveDivision() {
-		new RecursiveDivision(grid).accept(grid.cell(CENTER));
+		exec(new RecursiveDivision(grid));
 	}
-	
+
 	@Test
 	public void testReverseDeleteMST() {
-		grid = new ObservableGrid<>(30, 30, COMPLETED);
-		new ReverseDeleteMST(grid).accept(grid.cell(CENTER));
+		grid = new Grid<>(40, 25, UNVISITED);
+		exec(new ReverseDeleteMST(grid));
 	}
 
 	@Test
 	public void testSideWinder() {
-		new Sidewinder(grid).accept(grid.cell(TOP_LEFT));
+		exec(new Sidewinder(grid));
 	}
 
 	@Test
 	public void testWilsonUSTCollapsingCircle() {
-		new WilsonUSTCollapsingCircle(grid).accept(grid.cell(CENTER));
+		exec(new WilsonUSTCollapsingCircle(grid));
 	}
 
 	@Test
 	public void testWilsonUSTCollapsingRectangle() {
-		new WilsonUSTCollapsingRectangle(grid).accept(grid.cell(CENTER));
+		exec(new WilsonUSTCollapsingRectangle(grid));
 	}
 
 	@Test
 	public void testWilsonUSTCollapsingWalls() {
-		new WilsonUSTCollapsingWalls(grid).accept(grid.cell(CENTER));
+		exec(new WilsonUSTCollapsingWalls(grid));
 	}
 
 	@Test
 	public void testWilsonUSTExpandingCircle() {
-		new WilsonUSTExpandingCircle(grid).accept(grid.cell(CENTER));
+		exec(new WilsonUSTExpandingCircle(grid));
 	}
 
 	@Test
 	public void testWilsonUSTExpandingCircles() {
-		new WilsonUSTExpandingCircles(grid).accept(grid.cell(CENTER));
+		exec(new WilsonUSTExpandingCircles(grid));
 	}
 
 	@Test
 	public void testWilsonUSTExpandingRectangle() {
-		new WilsonUSTExpandingRectangle(grid).accept(grid.cell(CENTER));
+		exec(new WilsonUSTExpandingRectangle(grid));
 	}
 
 	@Test
 	public void testWilsonUSTExpandingSpiral() {
-		new WilsonUSTExpandingSpiral(grid).accept(grid.cell(CENTER));
+		exec(new WilsonUSTExpandingSpiral(grid));
 	}
 
 	@Test
 	public void testWilsonUSTHilbertCurve() {
-		new WilsonUSTHilbertCurve(grid).accept(grid.cell(CENTER));
+		exec(new WilsonUSTHilbertCurve(grid));
 	}
 
 	@Test
 	public void testWilsonUSTLeftToRightSweep() {
-		new WilsonUSTLeftToRightSweep(grid).accept(grid.cell(CENTER));
+		exec(new WilsonUSTLeftToRightSweep(grid));
 	}
 
 	@Test
 	public void testWilsonUSTNestedRectangles() {
-		new WilsonUSTNestedRectangles(grid).accept(grid.cell(CENTER));
+		exec(new WilsonUSTNestedRectangles(grid));
 	}
 
 	@Test
 	public void testWilsonUSTPeanoCurve() {
-		new WilsonUSTPeanoCurve(grid).accept(grid.cell(CENTER));
+		exec(new WilsonUSTPeanoCurve(grid));
 	}
 
 	@Test
 	public void testWilsonUSTRandomCell() {
-		new WilsonUSTRandomCell(grid).accept(grid.cell(CENTER));
+		exec(new WilsonUSTRandomCell(grid));
 	}
 
 	@Test
 	public void testWilsonUSTRecursiveCrosses() {
-		new WilsonUSTRecursiveCrosses(grid).accept(grid.cell(CENTER));
+		exec(new WilsonUSTRecursiveCrosses(grid));
 	}
 
 	@Test
 	public void testWilsonUSTRightToLeftSweep() {
-		new WilsonUSTRightToLeftSweep(grid).accept(grid.cell(CENTER));
+		exec(new WilsonUSTRightToLeftSweep(grid));
 	}
 
 	@Test
 	public void testWilsonUSTRowsTopDown() {
-		new WilsonUSTRowsTopDown(grid).accept(grid.cell(CENTER));
+		exec(new WilsonUSTRowsTopDown(grid));
 	}
 }

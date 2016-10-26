@@ -15,8 +15,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.graph.alg.CycleFinderUnionFind;
+import de.amr.easy.graph.alg.CycleChecker;
 import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.Grid;
@@ -168,29 +169,29 @@ public class GridTests {
 	}
 
 	@Test
-	public void testCycleFinder() {
+	public void testCycleCheckerSquare() {
+		CycleChecker<Integer, WeightedEdge<Integer>> cycleChecker = new CycleChecker<>();
+		// create graph without cycle:
 		Integer a = grid.cell(0, 0);
 		Integer b = grid.cell(1, 0);
 		Integer c = grid.cell(1, 1);
 		Integer d = grid.cell(0, 1);
 		grid.addEdge(a, b);
 		grid.addEdge(b, c);
-		grid.addEdge(c, d);
-		assertTrue(grid.edgeCount() == 3);
-		assertFalse(new CycleFinderUnionFind<>(grid, 0).isCycleFound());
-
+		grid.addEdge(c,  d);
+		assertFalse(cycleChecker.test(grid));
+		// add edge to create cycle:
 		grid.addEdge(d, a);
-		assertTrue(grid.edgeCount() == 4);
-		assertTrue(new CycleFinderUnionFind<>(grid, 0).isCycleFound());
+		assertTrue(cycleChecker.test(grid));
 	}
-	
+
 	@Test
-	public void testCycleFinder2() {
+	public void testCycleCheckerSpanningTree() {
+		CycleChecker<Integer, WeightedEdge<Integer>> cycleChecker = new CycleChecker<>();
 		// create a spanning tree
-		new RandomBFS(grid).accept(grid.cell(0,0));
-		// must not have a cycle
-		assertFalse(new CycleFinderUnionFind<>(grid, 0).isCycleFound());
-		// add single edge
+		new RandomBFS(grid).accept(grid.cell(0, 0));
+		assertFalse(cycleChecker.test(grid));
+		// add edge at first vertex that has not full degree:
 		/*@formatter:off*/
 		grid.vertexStream()
 			.filter(cell -> grid.degree(cell) < grid.neighbors(cell).count())
@@ -206,6 +207,6 @@ public class GridTests {
 			});
 		/*@formatter:on*/
 		// now there must be a cycle
-		assertTrue(new CycleFinderUnionFind<>(grid, 0).isCycleFound());
+		assertTrue(cycleChecker.test(grid));
 	}
 }

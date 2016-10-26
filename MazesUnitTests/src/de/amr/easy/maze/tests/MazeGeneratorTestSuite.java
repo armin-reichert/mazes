@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ MazeGeneratorTests.class, MazeGeneratorPerfTest.class })
+@SuiteClasses({ MazeGeneratorTests.class })
 public class MazeGeneratorTestSuite {
 
 }

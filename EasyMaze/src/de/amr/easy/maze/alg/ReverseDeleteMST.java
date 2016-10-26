@@ -36,10 +36,10 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 				grid.addEdge(either, other);
 			}
 		}
-		System.out.println("Reverse-Delete MST:");
-		System.out.println("#vertices: " + grid.vertexCount());
-		System.out.println("#edges: " + grid.edgeCount());
-		System.out.println(bfsCount + " BFS executions took " + bfsTotalTime + " seconds");
+//		System.out.println("Reverse-Delete MST:");
+//		System.out.println("#vertices: " + grid.vertexCount());
+//		System.out.println("#edges: " + grid.edgeCount());
+//		System.out.println(bfsCount + " BFS executions took " + bfsTotalTime + " seconds");
 	}
 
 	private int bfsCount;
