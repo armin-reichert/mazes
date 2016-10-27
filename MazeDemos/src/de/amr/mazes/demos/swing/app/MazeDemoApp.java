@@ -40,8 +40,8 @@ public class MazeDemoApp {
 	public MazeDemoApp() {
 		model = new MazeDemoModel();
 		model.setGridCellSizes(128, 64, 32, 16, 8, 4, 2);
-		model.setGridCellSize(8);
-		model.setPassageThicknessPct(50);
+		model.setGridCellSize(32);
+		model.setPassageThicknessPct(25);
 		model.setGenerationStart(CENTER);
 		model.setPathFinderStart(TOP_LEFT);
 		model.setPathFinderTarget(BOTTOM_RIGHT);
