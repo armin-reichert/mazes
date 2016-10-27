@@ -30,7 +30,7 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 
 	@Override
 	public void accept(Integer cell) {
-		List<WeightedEdge<Integer>> edges = fullGridEdgesSortedDecending();
+		List<WeightedEdge<Integer>> edges = fullGridEdgesSortedDescending();
 		while (grid.edgeCount() > grid.vertexCount() - 1) {
 			WeightedEdge<Integer> maxEdge = edges.remove(0);
 			Integer either = maxEdge.either(), other = maxEdge.other(either);
@@ -57,7 +57,7 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 		return bfs.getDistance(other) != -1;
 	}
 
-	private List<WeightedEdge<Integer>> fullGridEdgesSortedDecending() {
+	private List<WeightedEdge<Integer>> fullGridEdgesSortedDescending() {
 		grid.makeFullGrid();
 		grid.setDefault(COMPLETED);
 		List<WeightedEdge<Integer>> edges = grid.edgeStream().map(edge -> {
