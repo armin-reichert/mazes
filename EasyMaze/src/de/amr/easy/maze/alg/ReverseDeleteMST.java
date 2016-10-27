@@ -13,6 +13,7 @@ import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.util.StopWatch;
 
 /**
+ * A naive implementation of the Reverse-Delete-algorithm.
  * 
  * @author Armin Reichert
  *
@@ -20,36 +21,35 @@ import de.amr.easy.util.StopWatch;
  */
 public class ReverseDeleteMST extends MazeAlgorithm {
 
+	private int bfsCount;
+	private float bfsTotalTime;
+
 	public ReverseDeleteMST(Grid2D<TraversalState> grid) {
 		super(grid);
 	}
 
 	@Override
 	public void accept(Integer cell) {
-		List<WeightedEdge<Integer>> edges = fullGridEdges();
+		List<WeightedEdge<Integer>> edges = fullGridEdgesSortedDecending();
 		while (grid.edgeCount() > grid.vertexCount() - 1) {
-			WeightedEdge<Integer> edge = edges.remove(0);
-			// System.out.println(edge);
-			Integer either = edge.either(), other = edge.other(either);
-			grid.removeEdge(edge);
+			WeightedEdge<Integer> maxEdge = edges.remove(0);
+			Integer either = maxEdge.either(), other = maxEdge.other(either);
+			grid.removeEdge(maxEdge);
 			if (!connected(either, other)) {
 				grid.addEdge(either, other);
 			}
 		}
-//		System.out.println("Reverse-Delete MST:");
-//		System.out.println("#vertices: " + grid.vertexCount());
-//		System.out.println("#edges: " + grid.edgeCount());
-//		System.out.println(bfsCount + " BFS executions took " + bfsTotalTime + " seconds");
+		// System.out.println("Reverse-Delete MST:");
+		// System.out.println("#vertices: " + grid.vertexCount());
+		// System.out.println("#edges: " + grid.edgeCount());
+		// System.out.println(bfsCount + " BFS executions took " + bfsTotalTime + " seconds");
 	}
 
-	private int bfsCount;
-	private float bfsTotalTime;
-
-	// TODO needs a more efficient connectivity test
+	// TODO a more efficient connectivity test
 	private boolean connected(Integer either, Integer other) {
-		StopWatch watch = new StopWatch();
 		BreadthFirstTraversal<Integer, WeightedEdge<Integer>> bfs = new BreadthFirstTraversal<>(grid, either);
 		bfs.setStopAt(other);
+		StopWatch watch = new StopWatch();
 		watch.runAndMeasure(bfs);
 		++bfsCount;
 		bfsTotalTime += watch.getSeconds();
@@ -57,11 +57,13 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 		return bfs.getDistance(other) != -1;
 	}
 
-	private List<WeightedEdge<Integer>> fullGridEdges() {
+	private List<WeightedEdge<Integer>> fullGridEdgesSortedDecending() {
 		grid.makeFullGrid();
 		grid.setDefault(COMPLETED);
-		List<WeightedEdge<Integer>> edges = grid.edgeStream().collect(Collectors.toList());
-		edges.stream().forEach(edge -> edge.setWeight(rnd.nextDouble()));
+		List<WeightedEdge<Integer>> edges = grid.edgeStream().map(edge -> {
+			edge.setWeight(rnd.nextDouble());
+			return edge;
+		}).collect(Collectors.toList());
 		Collections.sort(edges, (e1, e2) -> e2.compareTo(e1)); // descending
 		return edges;
 	}
