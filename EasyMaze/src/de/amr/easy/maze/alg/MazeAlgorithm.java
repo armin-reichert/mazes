@@ -8,6 +8,7 @@ import java.util.Random;
 import java.util.function.Consumer;
 
 import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Grid2D;
 
 public abstract class MazeAlgorithm implements Consumer<Integer> {
@@ -41,6 +42,11 @@ public abstract class MazeAlgorithm implements Consumer<Integer> {
 
 	protected boolean isCellCompleted(Integer cell) {
 		return grid.get(cell) == COMPLETED;
+	}
+
+	protected WeightedEdge<Integer> setRandomEdgeWeight(WeightedEdge<Integer> edge) {
+		edge.setWeight(rnd.nextDouble());
+		return edge;
 	}
 
 }

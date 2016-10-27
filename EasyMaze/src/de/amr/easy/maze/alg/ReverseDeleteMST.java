@@ -52,11 +52,6 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 		// System.out.println(bfsCount + " BFS executions took " + bfsTotalTime + " seconds");
 	}
 
-	private WeightedEdge<Integer> setRandomEdgeWeight(WeightedEdge<Integer> edge) {
-		edge.setWeight(rnd.nextDouble());
-		return edge;
-	}
-
 	// TODO more efficient connectivity test or data-structure
 	private boolean connected(Integer either, Integer other) {
 		BreadthFirstTraversal<Integer, WeightedEdge<Integer>> bfs = new BreadthFirstTraversal<>(grid, either);
