@@ -25,8 +25,7 @@ public class FullGridTests {
 
 	@Before
 	public void setUp() {
-		grid = new NakedGrid(WIDTH, HEIGHT);
-		grid.makeFullGrid();
+		grid = new NakedGrid(WIDTH, HEIGHT).makeFullGrid();
 	}
 
 	@After
