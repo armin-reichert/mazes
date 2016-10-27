@@ -26,17 +26,22 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 
 	public ReverseDeleteMST(Grid2D<TraversalState> grid) {
 		super(grid);
+		grid.makeFullGrid();
+		grid.setDefault(COMPLETED);
 	}
 
 	@Override
 	public void accept(Integer cell) {
-		grid.makeFullGrid();
-		grid.setDefault(COMPLETED);
-		List<WeightedEdge<Integer>> edges = fullGridEdgesSortedDescending();
-		while (grid.edgeCount() > grid.vertexCount() - 1) {
-			WeightedEdge<Integer> maxEdge = edges.remove(0);
-			Integer either = maxEdge.either(), other = maxEdge.other(either);
-			grid.removeEdge(maxEdge);
+		/*@formatter:off*/
+		List<WeightedEdge<Integer>> sortedEdgeList = grid.edgeStream()
+				.map(this::setRandomEdgeWeight)
+				.sorted()
+				.collect(toCollection(ArrayList::new));
+		/*@formatter:on*/
+		while (!sortedEdgeList.isEmpty()) {
+			WeightedEdge<Integer> maxWeightEdge = sortedEdgeList.remove(sortedEdgeList.size() - 1);
+			Integer either = maxWeightEdge.either(), other = maxWeightEdge.other(either);
+			grid.removeEdge(maxWeightEdge);
 			if (!connected(either, other)) {
 				grid.addEdge(either, other);
 			}
@@ -47,7 +52,12 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 		// System.out.println(bfsCount + " BFS executions took " + bfsTotalTime + " seconds");
 	}
 
-	// TODO a more efficient connectivity test
+	private WeightedEdge<Integer> setRandomEdgeWeight(WeightedEdge<Integer> edge) {
+		edge.setWeight(rnd.nextDouble());
+		return edge;
+	}
+
+	// TODO more efficient connectivity test or data-structure
 	private boolean connected(Integer either, Integer other) {
 		BreadthFirstTraversal<Integer, WeightedEdge<Integer>> bfs = new BreadthFirstTraversal<>(grid, either);
 		bfs.setStopAt(other);
@@ -57,17 +67,5 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 		bfsTotalTime += watch.getSeconds();
 		// System.out.println("BFS #" + bfsCount + " took " + watch.getDuration() + " seconds");
 		return bfs.getDistance(other) != -1;
-	}
-
-	private List<WeightedEdge<Integer>> fullGridEdgesSortedDescending() {
-		/*@formatter:off*/
-		return grid.makeFullGrid().edgeStream()
-			.map(edge -> {
-				edge.setWeight(rnd.nextDouble());
-				return edge;
-			})
-			.sorted((e1, e2) -> e2.compareTo(e1))
-			.collect(toCollection(ArrayList::new));
-		/*@formatter:on*/
 	}
 }
