@@ -75,8 +75,9 @@ public class NakedGrid implements NakedGrid2D {
 		return numCells;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void makeFullGrid() {
+	public NakedGrid makeFullGrid() {
 		removeEdges();
 		IntStream.range(0, numCols).forEach(col -> {
 			IntStream.range(0, numRows).forEach(row -> {
@@ -88,6 +89,7 @@ public class NakedGrid implements NakedGrid2D {
 				}
 			});
 		});
+		return this;
 	}
 
 	@Override
@@ -106,7 +108,7 @@ public class NakedGrid implements NakedGrid2D {
 		});
 		return edgeSet.stream();
 	}
-	
+
 	@Override
 	public Stream<WeightedEdge<Integer>> fullGridEdgesPermuted() {
 		List<WeightedEdge<Integer>> edges = new ArrayList<>();
@@ -121,8 +123,8 @@ public class NakedGrid implements NakedGrid2D {
 				}
 			});
 		});
-	  Collections.shuffle(edges);
-	  return edges.stream();
+		Collections.shuffle(edges);
+		return edges.stream();
 	}
 
 	@Override

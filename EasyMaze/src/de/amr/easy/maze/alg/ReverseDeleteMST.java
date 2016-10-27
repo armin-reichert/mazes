@@ -1,10 +1,10 @@
 package de.amr.easy.maze.alg;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
+import static java.util.stream.Collectors.toCollection;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.api.TraversalState;
@@ -30,6 +30,8 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 
 	@Override
 	public void accept(Integer cell) {
+		grid.makeFullGrid();
+		grid.setDefault(COMPLETED);
 		List<WeightedEdge<Integer>> edges = fullGridEdgesSortedDescending();
 		while (grid.edgeCount() > grid.vertexCount() - 1) {
 			WeightedEdge<Integer> maxEdge = edges.remove(0);
@@ -58,13 +60,14 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 	}
 
 	private List<WeightedEdge<Integer>> fullGridEdgesSortedDescending() {
-		grid.makeFullGrid();
-		grid.setDefault(COMPLETED);
-		List<WeightedEdge<Integer>> edges = grid.edgeStream().map(edge -> {
-			edge.setWeight(rnd.nextDouble());
-			return edge;
-		}).collect(Collectors.toList());
-		Collections.sort(edges, (e1, e2) -> e2.compareTo(e1)); // descending
-		return edges;
+		/*@formatter:off*/
+		return grid.makeFullGrid().edgeStream()
+			.map(edge -> {
+				edge.setWeight(rnd.nextDouble());
+				return edge;
+			})
+			.sorted((e1, e2) -> e2.compareTo(e1))
+			.collect(toCollection(ArrayList::new));
+		/*@formatter:on*/
 	}
 }
