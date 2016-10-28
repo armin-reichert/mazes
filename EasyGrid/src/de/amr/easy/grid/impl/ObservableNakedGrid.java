@@ -13,26 +13,26 @@ import de.amr.easy.graph.api.event.VertexChangeEvent;
 import de.amr.easy.grid.api.ObservableNakedGrid2D;
 
 /**
- * A grid which can be observed by graph listeners.
+ * A grid which can be observed.
  * 
  * @author Armin Reichert
  */
-public class ObservableNakedGrid extends NakedGrid implements ObservableNakedGrid2D, ObservableGraph<Integer, WeightedEdge<Integer>> {
+public class ObservableNakedGrid extends NakedGrid implements ObservableNakedGrid2D {
 
-	private final Set<GraphObserver<Integer, WeightedEdge<Integer>>> listeners = new HashSet<>();
-	private boolean eventsEnabled;
+	private final Set<GraphObserver<Integer, WeightedEdge<Integer>>> observers = new HashSet<>();
+	private boolean fireEvents;
 
 	public ObservableNakedGrid(int numCols, int numRows) {
 		super(numCols, numRows);
-		eventsEnabled = true;
+		fireEvents = true;
 	}
 
 	@Override
 	public void addEdge(Integer p, Integer q) {
 		super.addEdge(p, q);
-		if (eventsEnabled) {
-			for (GraphObserver<Integer, WeightedEdge<Integer>> listener : listeners) {
-				listener.edgeAdded(new EdgeAddedEvent<>(this, edge(p, q).get()));
+		if (fireEvents) {
+			for (GraphObserver<Integer, WeightedEdge<Integer>> obs : observers) {
+				obs.edgeAdded(new EdgeAddedEvent<>(this, edge(p, q).get()));
 			}
 		}
 	}
@@ -41,9 +41,9 @@ public class ObservableNakedGrid extends NakedGrid implements ObservableNakedGri
 	public void removeEdge(Integer p, Integer q) {
 		edge(p, q).ifPresent(edge -> {
 			super.removeEdge(p, q);
-			if (eventsEnabled) {
-				for (GraphObserver<Integer, WeightedEdge<Integer>> listener : listeners) {
-					listener.edgeRemoved(new EdgeRemovedEvent<>(this, edge));
+			if (fireEvents) {
+				for (GraphObserver<Integer, WeightedEdge<Integer>> obs : observers) {
+					obs.edgeRemoved(new EdgeRemovedEvent<>(this, edge));
 				}
 			}
 		});
@@ -52,50 +52,48 @@ public class ObservableNakedGrid extends NakedGrid implements ObservableNakedGri
 	@Override
 	public void removeEdges() {
 		super.removeEdges();
-		if (eventsEnabled) {
-			for (GraphObserver<Integer, WeightedEdge<Integer>> listener : listeners) {
-				listener.graphChanged(this);
-			}
-		}
+		fireGraphChange(this);
 	}
 
 	/* {@link ObservableGraph} interface */
 
 	@Override
-	public void addGraphObserver(GraphObserver<Integer, WeightedEdge<Integer>> listener) {
-		listeners.add(listener);
+	public void addGraphObserver(GraphObserver<Integer, WeightedEdge<Integer>> obs) {
+		observers.add(obs);
 	}
 
 	@Override
-	public void removeGraphObserver(GraphObserver<Integer, WeightedEdge<Integer>> listener) {
-		listeners.remove(listener);
+	public void removeGraphObserver(GraphObserver<Integer, WeightedEdge<Integer>> obs) {
+		observers.remove(obs);
 	}
 
 	@Override
 	public void setEventsEnabled(boolean enabled) {
-		eventsEnabled = enabled;
+		fireEvents = enabled;
 	}
 
+	// helper methods
+
 	protected void fireVertexChange(Integer vertex, Object oldValue, Object newValue) {
-		if (eventsEnabled) {
-			for (GraphObserver<Integer, WeightedEdge<Integer>> listener : listeners) {
-				listener.vertexChanged(new VertexChangeEvent<>(this, vertex, oldValue, newValue));
+		if (fireEvents) {
+			for (GraphObserver<Integer, WeightedEdge<Integer>> obs : observers) {
+				obs.vertexChanged(new VertexChangeEvent<>(this, vertex, oldValue, newValue));
 			}
 		}
 	}
 
 	protected void fireEdgeChange(WeightedEdge<Integer> edge, Object oldValue, Object newValue) {
-		if (eventsEnabled) {
-			for (GraphObserver<Integer, WeightedEdge<Integer>> listener : listeners) {
-				listener.edgeChanged(new EdgeChangeEvent<>(this, edge, oldValue, newValue));
+		if (fireEvents) {
+			for (GraphObserver<Integer, WeightedEdge<Integer>> obs : observers) {
+				obs.edgeChanged(new EdgeChangeEvent<>(this, edge, oldValue, newValue));
 			}
 		}
 	}
 
 	protected void fireGraphChange(ObservableGraph<Integer, WeightedEdge<Integer>> graph) {
-		if (eventsEnabled) {
-			for (GraphObserver<Integer, WeightedEdge<Integer>> listener : listeners) {
-				listener.graphChanged(graph);
+		if (fireEvents) {
+			for (GraphObserver<Integer, WeightedEdge<Integer>> obs : observers) {
+				obs.graphChanged(graph);
 			}
 		}
 	}
