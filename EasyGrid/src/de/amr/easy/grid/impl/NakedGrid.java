@@ -2,16 +2,16 @@ package de.amr.easy.grid.impl;
 
 import static de.amr.easy.grid.api.Direction.E;
 import static de.amr.easy.grid.api.Direction.S;
+import static java.util.Collections.shuffle;
+import static java.util.stream.IntStream.range;
 
 import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.WeightedEdge;
@@ -20,7 +20,7 @@ import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.api.NakedGrid2D;
 
 /**
- * Implementation of the {@link NakedGrid2D} interface.
+ * An implementation of the {@link NakedGrid2D} interface.
  * 
  * @author Armin Reichert
  */
@@ -28,19 +28,21 @@ public class NakedGrid implements NakedGrid2D {
 
 	private static final int DIRECTION_COUNT = Direction.values().length;
 
-	private final int numCols;
-	private final int numRows;
-	private final int numCells;
+	private final int nCols;
+	private final int nRows;
+	private final int nCells;
 	private final BitSet connections;
 
+	// helper methods
+
 	private void checkCell(Integer cell) {
-		if (cell == null || cell < 0 || cell >= numCells) {
+		if (cell == null || cell < 0 || cell >= nCells) {
 			throw new IllegalArgumentException("Invalid cell: " + cell);
 		}
 	}
 
 	private int index(int col, int row) {
-		return col + row * numCols;
+		return col + row * nCols;
 	}
 
 	private int bit(int cell, Direction dir) {
@@ -52,39 +54,47 @@ public class NakedGrid implements NakedGrid2D {
 		connections.set(bit(q, dir.inverse()), connected);
 	}
 
-	public NakedGrid(int numCols, int numRows) {
-		if (numCols < 0) {
-			throw new IllegalArgumentException("Invalid number of columns: " + numCols);
+	/**
+	 * Creates a grid of size {@code nCols x nRows} with an empty edge set.
+	 * 
+	 * @param nCols
+	 *          the number of columns of this grid
+	 * @param nRows
+	 *          the number of rows of this grid
+	 */
+	public NakedGrid(int nCols, int nRows) {
+		if (nCols < 0) {
+			throw new IllegalArgumentException("Illegal number of columns: " + nCols);
 		}
-		if (numRows < 0) {
-			throw new IllegalArgumentException("Invalid number of rows: " + numRows);
+		if (nRows < 0) {
+			throw new IllegalArgumentException("Illegal number of rows: " + nRows);
 		}
-		this.numCols = numCols;
-		this.numRows = numRows;
-		this.numCells = numCols * numRows;
-		connections = new BitSet(DIRECTION_COUNT * numCells);
+		this.nCols = nCols;
+		this.nRows = nRows;
+		this.nCells = nCols * nRows;
+		connections = new BitSet(DIRECTION_COUNT * nCells);
 	}
 
 	@Override
 	public Stream<Integer> vertexStream() {
-		return IntStream.range(0, numCells).boxed();
+		return range(0, nCells).boxed();
 	}
 
 	@Override
 	public int vertexCount() {
-		return numCells;
+		return nCells;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public NakedGrid makeFullGrid() {
 		removeEdges();
-		IntStream.range(0, numCols).forEach(col -> {
-			IntStream.range(0, numRows).forEach(row -> {
-				if (col + 1 < numCols) {
+		range(0, nCols).forEach(col -> {
+			range(0, nRows).forEach(row -> {
+				if (col + 1 < nCols) {
 					connect(index(col, row), index(col + 1, row), E, true);
 				}
-				if (row + 1 < numRows) {
+				if (row + 1 < nRows) {
 					connect(index(col, row), index(col, row + 1), S, true);
 				}
 			});
@@ -113,17 +123,17 @@ public class NakedGrid implements NakedGrid2D {
 	public Stream<WeightedEdge<Integer>> fullGridEdgesPermuted() {
 		List<WeightedEdge<Integer>> edges = new ArrayList<>();
 		Random rnd = new Random();
-		IntStream.range(0, numCols).forEach(col -> {
-			IntStream.range(0, numRows).forEach(row -> {
-				if (col + 1 < numCols) {
+		range(0, nCols).forEach(col -> {
+			range(0, nRows).forEach(row -> {
+				if (col + 1 < nCols) {
 					edges.add(new WeightedEdge<>(index(col, row), index(col + 1, row), rnd.nextDouble()));
 				}
-				if (row + 1 < numRows) {
+				if (row + 1 < nRows) {
 					edges.add(new WeightedEdge<>(index(col, row), index(col, row + 1), rnd.nextDouble()));
 				}
 			});
 		});
-		Collections.shuffle(edges);
+		shuffle(edges);
 		return edges.stream();
 	}
 
@@ -191,12 +201,12 @@ public class NakedGrid implements NakedGrid2D {
 
 	@Override
 	public int numCols() {
-		return numCols;
+		return nCols;
 	}
 
 	@Override
 	public int numRows() {
-		return numRows;
+		return nRows;
 	}
 
 	@Override
@@ -216,13 +226,13 @@ public class NakedGrid implements NakedGrid2D {
 		case TOP_LEFT:
 			return cell(0, 0);
 		case TOP_RIGHT:
-			return cell(numCols - 1, 0);
+			return cell(nCols - 1, 0);
 		case CENTER:
-			return cell(numCols / 2, numRows / 2);
+			return cell(nCols / 2, nRows / 2);
 		case BOTTOM_LEFT:
-			return cell(0, numRows - 1);
+			return cell(0, nRows - 1);
 		case BOTTOM_RIGHT:
-			return cell(numCols - 1, numRows - 1);
+			return cell(nCols - 1, nRows - 1);
 		default:
 			throw new IllegalArgumentException();
 		}
@@ -231,23 +241,23 @@ public class NakedGrid implements NakedGrid2D {
 	@Override
 	public int col(Integer cell) {
 		checkCell(cell);
-		return cell % numCols;
+		return cell % nCols;
 	}
 
 	@Override
 	public int row(Integer cell) {
 		checkCell(cell);
-		return cell / numCols;
+		return cell / nCols;
 	}
 
 	@Override
 	public boolean isValidCol(int col) {
-		return 0 <= col && col < numCols;
+		return 0 <= col && col < nCols;
 	}
 
 	@Override
 	public boolean isValidRow(int row) {
-		return 0 <= row && row < numRows;
+		return 0 <= row && row < nRows;
 	}
 
 	@Override
