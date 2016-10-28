@@ -45,8 +45,11 @@ public class SettingsWindow extends JFrame {
 		/*@formatter:off*/
 		controlPanel.getResolutionSelector().setModel(new DefaultComboBoxModel<>(
 			Arrays.stream(app.model.getGridCellSizes())
-				.mapToObj(Utils::maxGridDimensionForDisplay)
-				.map(dim -> String.format("%d cells (%d x %d)", dim.width * dim.height, dim.width, dim.height))
+				.mapToObj(cellSize -> {
+					Dimension dim = Utils.maxGridDimensionForDisplay(cellSize);
+					return String.format("%d cells (%d x %d @ %d)", 
+							dim.width * dim.height, dim.width, dim.height, cellSize);
+				})
 				.toArray(String[]::new))
 		);
 		/*@formatter:on*/
