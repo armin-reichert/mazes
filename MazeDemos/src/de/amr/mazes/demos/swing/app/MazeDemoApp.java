@@ -4,6 +4,7 @@ import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
+import static de.amr.mazes.demos.misc.Utils.maxGridDimensionForDisplay;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -49,7 +50,7 @@ public class MazeDemoApp {
 		model.setHidingControlsWhenRunning(false);
 		model.setLongestPathHighlighted(false);
 		model.setDelay(0);
-		Dimension size = Utils.maxGridDimensionForDisplay(model.getGridCellSize());
+		Dimension size = maxGridDimensionForDisplay(model.getGridCellSize());
 		model.setGrid(new ObservableGrid<>(size.width, size.height, UNVISITED));
 
 		settingsWindow = new SettingsWindow(this);
