@@ -1,4 +1,4 @@
-package de.amr.easy.datastruct;
+package de.amr.easy.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;

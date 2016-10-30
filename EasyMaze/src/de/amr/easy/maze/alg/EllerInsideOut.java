@@ -18,8 +18,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import de.amr.easy.datastruct.Partition;
-import de.amr.easy.datastruct.Partition.EquivClass;
+import de.amr.easy.data.Partition;
+import de.amr.easy.data.Partition.EquivClass;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.Grid2D;

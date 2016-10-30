@@ -2,7 +2,7 @@ package de.amr.easy.graph.alg;
 
 import java.util.function.Predicate;
 
-import de.amr.easy.datastruct.Partition;
+import de.amr.easy.data.Partition;
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
 
