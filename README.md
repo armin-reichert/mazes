@@ -43,29 +43,28 @@ As an example, here is the code for the generator based on Prim's minimum-spanni
 ```java
 public class PrimMST extends MazeAlgorithm {
 
-	private final PriorityQueue<WeightedEdge<Integer, Double>> cut = new PriorityQueue<>();
+	private final PriorityQueue<WeightedEdge<Integer, Integer>> cut = new PriorityQueue<>();
 
-	public PrimMST(Grid2D<TraversalState> grid) {
+	public PrimMST(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
 	}
 
 	@Override
 	public void accept(Integer start) {
-		extendMaze(start);
+		extendMazeAt(start);
 		while (!cut.isEmpty()) {
-			WeightedEdge<Integer, Double> edge = cut.poll();
+			WeightedEdge<Integer, Integer> edge = cut.poll();
 			Integer either = edge.either(), other = edge.other(either);
 			if (outsideMaze(either) || outsideMaze(other)) {
 				grid.addEdge(either, other);
-				extendMaze(outsideMaze(either) ? either : other);
+				extendMazeAt(outsideMaze(either) ? either : other);
 			}
 		}
 	}
 
-	private void extendMaze(Integer cell) {
+	private void extendMazeAt(Integer cell) {
 		grid.neighbors(cell).filter(this::outsideMaze).forEach(neighbor -> {
-			grid.set(neighbor, VISITED);
-			cut.add(new WeightedEdge<>(cell, neighbor, rnd.nextDouble()));
+			cut.add(new WeightedEdge<>(cell, neighbor, rnd.nextInt()));
 		});
 		grid.set(cell, COMPLETED);
 	}
