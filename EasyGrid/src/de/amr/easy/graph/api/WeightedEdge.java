@@ -1,14 +1,14 @@
 package de.amr.easy.graph.api;
 
 /**
- * Edge with weight of type {@code double}.
+ * Edge with weight of some comparable type.
  * 
  * @author Armin Reichert
  * 
  * @param <V>
  *          graph vertex type
  * @param <W>
- *          weight type
+ *          weight type (int, double, ...)
  */
 public class WeightedEdge<V, W extends Comparable<W>> extends SimpleEdge<V>
 		implements Edge<V>, Comparable<WeightedEdge<V, W>> {

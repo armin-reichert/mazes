@@ -1,7 +1,6 @@
 package de.amr.easy.maze.alg;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
-import static de.amr.easy.graph.api.TraversalState.VISITED;
 
 import java.util.PriorityQueue;
 
@@ -16,6 +15,7 @@ import de.amr.easy.grid.api.Grid2D;
  * 
  * @see <a href="http://weblog.jamisbuck.org/2011/1/10/maze-generation-prim-s-algorithm.html">Maze
  *      Generation: Prim's Algorithm</a>
+ * @see <a href="https://en.wikipedia.org/wiki/Prim%27s_algorithm">Wikipedia: Prim's Algorithm</a>
  */
 public class PrimMST extends MazeAlgorithm {
 
@@ -27,20 +27,19 @@ public class PrimMST extends MazeAlgorithm {
 
 	@Override
 	public void accept(Integer start) {
-		extendMaze(start);
+		extendMazeAt(start);
 		while (!cut.isEmpty()) {
 			WeightedEdge<Integer, Double> edge = cut.poll();
 			Integer either = edge.either(), other = edge.other(either);
 			if (outsideMaze(either) || outsideMaze(other)) {
 				grid.addEdge(either, other);
-				extendMaze(outsideMaze(either) ? either : other);
+				extendMazeAt(outsideMaze(either) ? either : other);
 			}
 		}
 	}
 
-	private void extendMaze(Integer cell) {
+	private void extendMazeAt(Integer cell) {
 		grid.neighbors(cell).filter(this::outsideMaze).forEach(neighbor -> {
-			grid.set(neighbor, VISITED);
 			cut.add(new WeightedEdge<>(cell, neighbor, rnd.nextDouble()));
 		});
 		grid.set(cell, COMPLETED);
