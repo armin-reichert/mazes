@@ -12,5 +12,5 @@ import de.amr.easy.graph.api.WeightedEdge;
  *          content type
  */
 public interface ObservableGrid2D<Content>
-		extends Grid2D<Content>, ObservableGraph<Integer, WeightedEdge<Integer>> {
+		extends Grid2D<Content>, ObservableGraph<Integer, WeightedEdge<Integer, Double>> {
 }

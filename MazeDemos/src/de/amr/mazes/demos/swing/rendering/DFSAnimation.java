@@ -49,7 +49,7 @@ public class DFSAnimation implements GraphTraversalListener<Integer> {
 		canvas.popRenderingModel();
 		dfs.removeObserver(this);
 	}
-	
+
 	@Override
 	public void edgeTouched(Integer source, Integer target) {
 		canvas.renderGridPassage(grid.edge(source, target).get(), true);

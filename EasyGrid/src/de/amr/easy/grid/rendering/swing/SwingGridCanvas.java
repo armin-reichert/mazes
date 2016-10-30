@@ -39,30 +39,30 @@ public class SwingGridCanvas extends JComponent {
 	private SwingGridRenderer renderer;
 	private int delay;
 
-	private final GraphObserver<Integer, WeightedEdge<Integer>> observer = new GraphObserver<Integer, WeightedEdge<Integer>>() {
+	private final GraphObserver<Integer, WeightedEdge<Integer, Double>> observer = new GraphObserver<Integer, WeightedEdge<Integer, Double>>() {
 
 		@Override
-		public void vertexChanged(VertexChangeEvent<Integer, WeightedEdge<Integer>> event) {
+		public void vertexChanged(VertexChangeEvent<Integer, WeightedEdge<Integer, Double>> event) {
 			renderGridCell(event.getVertex());
 		}
 
 		@Override
-		public void edgeAdded(EdgeAddedEvent<Integer, WeightedEdge<Integer>> event) {
+		public void edgeAdded(EdgeAddedEvent<Integer, WeightedEdge<Integer, Double>> event) {
 			renderGridPassage(event.getEdge(), true);
 		}
 
 		@Override
-		public void edgeRemoved(EdgeRemovedEvent<Integer, WeightedEdge<Integer>> event) {
+		public void edgeRemoved(EdgeRemovedEvent<Integer, WeightedEdge<Integer, Double>> event) {
 			renderGridPassage(event.getEdge(), false);
 		}
 
 		@Override
-		public void edgeChanged(EdgeChangeEvent<Integer, WeightedEdge<Integer>> event) {
+		public void edgeChanged(EdgeChangeEvent<Integer, WeightedEdge<Integer, Double>> event) {
 			renderGridPassage(event.getEdge(), true);
 		}
 
 		@Override
-		public void graphChanged(ObservableGraph<Integer, WeightedEdge<Integer>> graph) {
+		public void graphChanged(ObservableGraph<Integer, WeightedEdge<Integer, Double>> graph) {
 			render();
 		}
 	};

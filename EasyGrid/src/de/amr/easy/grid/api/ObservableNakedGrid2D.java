@@ -9,5 +9,5 @@ import de.amr.easy.graph.api.WeightedEdge;
  * @author Armin Reichert
  * 
  */
-public interface ObservableNakedGrid2D extends NakedGrid2D, ObservableGraph<Integer, WeightedEdge<Integer>> {
+public interface ObservableNakedGrid2D extends NakedGrid2D, ObservableGraph<Integer, WeightedEdge<Integer, Double>> {
 }

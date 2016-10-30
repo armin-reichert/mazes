@@ -35,7 +35,8 @@ public class GridTraversalTests {
 
 	@Test
 	public void testBFS() {
-		BreadthFirstTraversal<Integer, WeightedEdge<Integer>> bfs = new BreadthFirstTraversal<>(grid, grid.cell(CENTER));
+		BreadthFirstTraversal<Integer, WeightedEdge<Integer, Double>> bfs = new BreadthFirstTraversal<>(grid,
+				grid.cell(CENTER));
 		grid.vertexStream().forEach(cell -> {
 			assertTrue(bfs.getState(cell) == UNVISITED);
 		});
@@ -48,7 +49,7 @@ public class GridTraversalTests {
 	@Test
 	public void testDFS() {
 		Integer source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		DepthFirstTraversal<Integer, WeightedEdge<Integer>> dfs = new DepthFirstTraversal<>(grid, source, target);
+		DepthFirstTraversal<Integer, WeightedEdge<Integer, Double>> dfs = new DepthFirstTraversal<>(grid, source, target);
 		grid.vertexStream().forEach(cell -> {
 			assertTrue(dfs.getState(cell) == UNVISITED);
 		});

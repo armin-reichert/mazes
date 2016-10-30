@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.Direction;
+import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.NakedGrid;
 import de.amr.easy.grid.iterators.traversals.PeanoCurve;
 

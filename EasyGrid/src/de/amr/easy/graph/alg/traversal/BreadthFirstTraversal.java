@@ -20,8 +20,8 @@ import de.amr.easy.graph.api.PathFinder;
  * the distance of each vertex from the source can be queried, additionally the maximum distance
  * from the source.
  * <p>
- * Implements the {@link PathFinder} interface such that the traversal state of each
- * vertex can be queried and a path from the source to any target vertex can be asked for.
+ * Implements the {@link PathFinder} interface such that the traversal state of each vertex can be
+ * queried and a path from the source to any target vertex can be asked for.
  * 
  * <p>
  * During the traversal, events are fired which can be processed by a listener, for example an
@@ -34,8 +34,7 @@ import de.amr.easy.graph.api.PathFinder;
  * 
  * @author Armin Reichert
  */
-public class BreadthFirstTraversal<V, E extends Edge<V>> extends GraphTraversal<V, E>
-		implements PathFinder<V> {
+public class BreadthFirstTraversal<V, E extends Edge<V>> extends GraphTraversal<V, E> implements PathFinder<V> {
 
 	private final V source;
 	private final Queue<V> q = new LinkedList<>();
@@ -48,11 +47,11 @@ public class BreadthFirstTraversal<V, E extends Edge<V>> extends GraphTraversal<
 		super(graph);
 		this.source = source;
 	}
-	
+
 	public void setStopAt(V vertex) {
 		this.stopAt = vertex;
 	}
-	
+
 	@Override
 	public void clear() {
 		super.clear();

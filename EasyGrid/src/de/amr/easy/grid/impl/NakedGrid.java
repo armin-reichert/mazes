@@ -103,8 +103,8 @@ public class NakedGrid implements NakedGrid2D {
 	}
 
 	@Override
-	public Stream<WeightedEdge<Integer>> edgeStream() {
-		Set<WeightedEdge<Integer>> edgeSet = new HashSet<>();
+	public Stream<WeightedEdge<Integer, Double>> edgeStream() {
+		Set<WeightedEdge<Integer, Double>> edgeSet = new HashSet<>();
 		vertexStream().forEach(cell -> {
 			Stream.of(Direction.values()).forEach(dir -> {
 				if (isConnected(cell, dir)) {
@@ -120,8 +120,8 @@ public class NakedGrid implements NakedGrid2D {
 	}
 
 	@Override
-	public Stream<WeightedEdge<Integer>> fullGridEdgesPermuted() {
-		List<WeightedEdge<Integer>> edges = new ArrayList<>();
+	public Stream<WeightedEdge<Integer, Double>> fullGridEdgesPermuted() {
+		List<WeightedEdge<Integer, Double>> edges = new ArrayList<>();
 		Random rnd = new Random();
 		range(0, nCols).forEach(col -> {
 			range(0, nRows).forEach(row -> {
@@ -148,7 +148,7 @@ public class NakedGrid implements NakedGrid2D {
 	}
 
 	@Override
-	public Optional<WeightedEdge<Integer>> edge(Integer p, Integer q) {
+	public Optional<WeightedEdge<Integer, Double>> edge(Integer p, Integer q) {
 		checkCell(p);
 		checkCell(q);
 		return adjacent(p, q) ? Optional.of(new WeightedEdge<>(p, q)) : Optional.empty();

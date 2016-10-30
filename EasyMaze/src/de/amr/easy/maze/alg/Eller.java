@@ -19,7 +19,8 @@ import de.amr.easy.grid.api.Grid2D;
  * 
  * @author Armin Reichert
  * 
- * @see <a href= "http://weblog.jamisbuck.org/2010/12/29/maze-generation-eller-s-algorithm">Maze Generation: Eller's Algorithm</a>.
+ * @see <a href= "http://weblog.jamisbuck.org/2010/12/29/maze-generation-eller-s-algorithm">Maze
+ *      Generation: Eller's Algorithm</a>.
  * 
  */
 public class Eller extends MazeAlgorithm {

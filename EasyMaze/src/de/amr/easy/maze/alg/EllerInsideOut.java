@@ -134,7 +134,7 @@ public class EllerInsideOut extends MazeAlgorithm {
 
 	private void connectCellsWithNextLayer() {
 		Set<EquivClass> connected = new HashSet<>();
-		
+
 		// randomly select cells and connect with the next layer unless another cell from the same
 		// equivalence class is already connected to that layer
 		for (Integer cell : layer) {
@@ -147,7 +147,7 @@ public class EllerInsideOut extends MazeAlgorithm {
 				}
 			}
 		}
-		
+
 		// collect cells of still unconnected maze parts and shuffle them to avoid biased maze
 		List<Integer> unconnectedCells = new ArrayList<>();
 		for (Integer cell : layer) {
@@ -156,7 +156,7 @@ public class EllerInsideOut extends MazeAlgorithm {
 			}
 		}
 		Collections.shuffle(unconnectedCells);
-		
+
 		// connect remaining cells and mark maze parts as connected
 		for (Integer cell : unconnectedCells) {
 			if (!connected.contains(mazeParts.find(cell))) {

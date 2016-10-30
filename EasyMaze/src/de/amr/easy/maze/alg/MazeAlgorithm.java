@@ -44,7 +44,7 @@ public abstract class MazeAlgorithm implements Consumer<Integer> {
 		return grid.get(cell) == COMPLETED;
 	}
 
-	protected WeightedEdge<Integer> setRandomEdgeWeight(WeightedEdge<Integer> edge) {
+	protected WeightedEdge<Integer, Double> setRandomEdgeWeight(WeightedEdge<Integer, Double> edge) {
 		edge.setWeight(rnd.nextDouble());
 		return edge;
 	}

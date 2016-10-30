@@ -13,6 +13,6 @@ import de.amr.easy.graph.api.WeightedEdge;
  *          cell content type
  */
 public interface Grid2D<Content>
-		extends NakedGrid2D, VertexContent<Integer, Content>, DataGraph<Integer, WeightedEdge<Integer>, Content> {
+		extends NakedGrid2D, VertexContent<Integer, Content>, DataGraph<Integer, WeightedEdge<Integer, Double>, Content> {
 
 }

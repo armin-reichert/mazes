@@ -170,7 +170,7 @@ public class GridTests {
 
 	@Test
 	public void testCycleCheckerSquare() {
-		CycleChecker<Integer, WeightedEdge<Integer>> cycleChecker = new CycleChecker<>();
+		CycleChecker<Integer, WeightedEdge<Integer, Double>> cycleChecker = new CycleChecker<>();
 		// create graph without cycle:
 		Integer a = grid.cell(0, 0);
 		Integer b = grid.cell(1, 0);
@@ -178,7 +178,7 @@ public class GridTests {
 		Integer d = grid.cell(0, 1);
 		grid.addEdge(a, b);
 		grid.addEdge(b, c);
-		grid.addEdge(c,  d);
+		grid.addEdge(c, d);
 		assertFalse(cycleChecker.test(grid));
 		// add edge to create cycle:
 		grid.addEdge(d, a);
@@ -187,7 +187,7 @@ public class GridTests {
 
 	@Test
 	public void testCycleCheckerSpanningTree() {
-		CycleChecker<Integer, WeightedEdge<Integer>> cycleChecker = new CycleChecker<>();
+		CycleChecker<Integer, WeightedEdge<Integer, Double>> cycleChecker = new CycleChecker<>();
 		// create a spanning tree
 		new RandomBFS(grid).accept(grid.cell(0, 0));
 		assertFalse(cycleChecker.test(grid));

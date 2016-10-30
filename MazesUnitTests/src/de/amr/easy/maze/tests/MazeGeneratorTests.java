@@ -87,7 +87,7 @@ public class MazeGeneratorTests {
 	@After
 	public void tearDown() {
 		assertEquals(grid.edgeCount(), grid.vertexCount() - 1);
-		assertFalse(new CycleChecker<Integer, WeightedEdge<Integer>>().test(grid));
+		assertFalse(new CycleChecker<Integer, WeightedEdge<Integer, Double>>().test(grid));
 	}
 
 	private void exec(MazeAlgorithm algorithm) {

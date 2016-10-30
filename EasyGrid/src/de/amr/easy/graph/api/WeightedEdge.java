@@ -7,18 +7,21 @@ package de.amr.easy.graph.api;
  * 
  * @param <V>
  *          graph vertex type
+ * @param <W>
+ *          weight type
  */
-public class WeightedEdge<V> extends SimpleEdge<V> implements Edge<V>, Comparable<WeightedEdge<V>> {
+public class WeightedEdge<V, W extends Comparable<W>> extends SimpleEdge<V>
+		implements Edge<V>, Comparable<WeightedEdge<V, W>> {
 
-	private double weight;
+	private W weight;
 
-	public WeightedEdge(V u, V v, double weight) {
+	public WeightedEdge(V u, V v, W weight) {
 		super(u, v);
 		this.weight = weight;
 	}
 
 	public WeightedEdge(V head, V tail) {
-		this(head, tail, 0);
+		this(head, tail, null);
 	}
 
 	@Override
@@ -38,7 +41,7 @@ public class WeightedEdge<V> extends SimpleEdge<V> implements Edge<V>, Comparabl
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		WeightedEdge<?> other = (WeightedEdge<?>) obj;
+		WeightedEdge<?, ?> other = (WeightedEdge<?, ?>) obj;
 		if (u == null) {
 			if (other.u != null)
 				return false;
@@ -55,7 +58,7 @@ public class WeightedEdge<V> extends SimpleEdge<V> implements Edge<V>, Comparabl
 	/**
 	 * @return the weight of this edge
 	 */
-	public double getWeight() {
+	public W getWeight() {
 		return weight;
 	}
 
@@ -65,19 +68,13 @@ public class WeightedEdge<V> extends SimpleEdge<V> implements Edge<V>, Comparabl
 	 * @param weight
 	 *          the weight
 	 */
-	public void setWeight(double weight) {
+	public void setWeight(W weight) {
 		this.weight = weight;
 	}
 
 	@Override
-	public int compareTo(WeightedEdge<V> edge) {
-		if (weight < edge.getWeight()) {
-			return -1;
-		} else if (weight > edge.getWeight()) {
-			return 1;
-		} else {
-			return 0;
-		}
+	public int compareTo(WeightedEdge<V, W> other) {
+		return weight.compareTo(other.weight);
 	}
 
 	@Override

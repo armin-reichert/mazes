@@ -21,7 +21,7 @@ import de.amr.easy.graph.api.WeightedEdge;
  * 
  * @author Armin Reichert
  */
-public interface NakedGrid2D extends Graph<Integer, WeightedEdge<Integer>> {
+public interface NakedGrid2D extends Graph<Integer, WeightedEdge<Integer, Double>> {
 
 	/**
 	 * @return the number of columns (width) of the grid
@@ -171,5 +171,5 @@ public interface NakedGrid2D extends Graph<Integer, WeightedEdge<Integer>> {
 	/**
 	 * @return the edges of a full grid in randomly permuted order and random weights
 	 */
-	public Stream<WeightedEdge<Integer>> fullGridEdgesPermuted();
+	public Stream<WeightedEdge<Integer, Double>> fullGridEdgesPermuted();
 }

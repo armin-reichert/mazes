@@ -12,8 +12,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.amr.easy.grid.api.Direction;
-import de.amr.easy.grid.api.NakedGrid2D;
 import de.amr.easy.grid.api.GridPosition;
+import de.amr.easy.grid.api.NakedGrid2D;
 import de.amr.easy.grid.impl.NakedGrid;
 
 public class FullGridTests {
@@ -117,7 +117,7 @@ public class FullGridTests {
 			}
 		}
 	}
-	
+
 	@Test
 	public void testEdgesPermuted() {
 		assertTrue(grid.fullGridEdgesPermuted().count() == grid.edgeStream().count());
