@@ -22,11 +22,11 @@ public class GridTraversalTests {
 	private static final int WIDTH = 100;
 	private static final int HEIGHT = 100;
 
-	private NakedGrid2D grid;
+	private NakedGrid2D<Integer> grid;
 
 	@Before
 	public void setUp() {
-		grid = new NakedGrid(WIDTH, HEIGHT).makeFullGrid();
+		grid = new NakedGrid<Integer>(WIDTH, HEIGHT).makeFullGrid();
 	}
 
 	@After
@@ -35,7 +35,7 @@ public class GridTraversalTests {
 
 	@Test
 	public void testBFS() {
-		BreadthFirstTraversal<Integer, WeightedEdge<Integer, Double>> bfs = new BreadthFirstTraversal<>(grid,
+		BreadthFirstTraversal<Integer, WeightedEdge<Integer, Integer>> bfs = new BreadthFirstTraversal<>(grid,
 				grid.cell(CENTER));
 		grid.vertexStream().forEach(cell -> {
 			assertTrue(bfs.getState(cell) == UNVISITED);
@@ -49,7 +49,7 @@ public class GridTraversalTests {
 	@Test
 	public void testDFS() {
 		Integer source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		DepthFirstTraversal<Integer, WeightedEdge<Integer, Double>> dfs = new DepthFirstTraversal<>(grid, source, target);
+		DepthFirstTraversal<Integer, WeightedEdge<Integer, Integer>> dfs = new DepthFirstTraversal<>(grid, source, target);
 		grid.vertexStream().forEach(cell -> {
 			assertTrue(dfs.getState(cell) == UNVISITED);
 		});

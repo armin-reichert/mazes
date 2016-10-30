@@ -19,7 +19,7 @@ public class KruskalMST extends MazeAlgorithm {
 
 	private final Partition<Integer> forest = new Partition<>();
 
-	public KruskalMST(Grid2D<TraversalState> grid) {
+	public KruskalMST(Grid2D<TraversalState,Integer> grid) {
 		super(grid);
 	}
 

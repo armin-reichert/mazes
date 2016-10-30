@@ -61,7 +61,7 @@ public class MazeGeneratorTests {
 	private static final int WIDTH = 500;
 	private static final int HEIGHT = 100;
 
-	private Grid2D<TraversalState> grid;
+	private Grid2D<TraversalState,Integer> grid;
 	private StopWatch watch;
 
 	private static List<String> results = new ArrayList<>();
@@ -87,7 +87,7 @@ public class MazeGeneratorTests {
 	@After
 	public void tearDown() {
 		assertEquals(grid.edgeCount(), grid.vertexCount() - 1);
-		assertFalse(new CycleChecker<Integer, WeightedEdge<Integer, Double>>().test(grid));
+		assertFalse(new CycleChecker<Integer, WeightedEdge<Integer, Integer>>().test(grid));
 	}
 
 	private void exec(MazeAlgorithm algorithm) {

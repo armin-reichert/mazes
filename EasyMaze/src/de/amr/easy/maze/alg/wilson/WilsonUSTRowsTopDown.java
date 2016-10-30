@@ -12,7 +12,7 @@ import de.amr.easy.grid.api.Grid2D;
  */
 public class WilsonUSTRowsTopDown extends WilsonUST {
 
-	public WilsonUSTRowsTopDown(Grid2D<TraversalState> grid) {
+	public WilsonUSTRowsTopDown(Grid2D<TraversalState,Integer> grid) {
 		super(grid);
 	}
 

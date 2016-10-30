@@ -66,7 +66,7 @@ public class MazeDemoApp {
 		return mazeWindow.getCanvas();
 	}
 
-	public ObservableGrid<TraversalState> grid() {
+	public ObservableGrid<TraversalState,Integer> grid() {
 		return model.getGrid();
 	}
 

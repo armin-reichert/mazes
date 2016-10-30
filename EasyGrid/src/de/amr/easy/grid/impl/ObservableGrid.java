@@ -9,9 +9,13 @@ import de.amr.easy.grid.api.ObservableGrid2D;
  * @param <Content>
  *          cell content data type
  * 
+ * @param <PassageWeight>
+ *          passage weight type
+ * 
  * @author Armin Reichert
  */
-public class ObservableGrid<Content> extends ObservableNakedGrid implements ObservableGrid2D<Content> {
+public class ObservableGrid<Content, PassageWeight extends Comparable<PassageWeight>>
+		extends ObservableNakedGrid<PassageWeight> implements ObservableGrid2D<Content, PassageWeight> {
 
 	private VertexContent<Integer, Content> gridContent;
 

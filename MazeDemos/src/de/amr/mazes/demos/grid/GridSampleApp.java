@@ -36,7 +36,7 @@ public abstract class GridSampleApp implements Runnable {
 		EventQueue.invokeLater(app::showUI);
 	}
 
-	protected ObservableGrid<TraversalState> grid;
+	protected ObservableGrid<TraversalState,Integer> grid;
 	protected int cellSize;
 	protected String appName;
 	protected JFrame window;

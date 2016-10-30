@@ -13,10 +13,10 @@ import de.amr.easy.grid.api.Grid2D;
 
 public abstract class MazeAlgorithm implements Consumer<Integer> {
 
-	protected final Grid2D<TraversalState> grid;
+	protected final Grid2D<TraversalState, Integer> grid;
 	protected final Random rnd = new Random();
 
-	public MazeAlgorithm(Grid2D<TraversalState> grid) {
+	public MazeAlgorithm(Grid2D<TraversalState, Integer> grid) {
 		this.grid = grid;
 	}
 
@@ -44,8 +44,8 @@ public abstract class MazeAlgorithm implements Consumer<Integer> {
 		return grid.get(cell) == COMPLETED;
 	}
 
-	protected WeightedEdge<Integer, Double> setRandomEdgeWeight(WeightedEdge<Integer, Double> edge) {
-		edge.setWeight(rnd.nextDouble());
+	protected WeightedEdge<Integer, Integer> setRandomEdgeWeight(WeightedEdge<Integer, Integer> edge) {
+		edge.setWeight(rnd.nextInt());
 		return edge;
 	}
 

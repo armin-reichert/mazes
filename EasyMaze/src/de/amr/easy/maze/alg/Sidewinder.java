@@ -19,7 +19,7 @@ public class Sidewinder extends MazeAlgorithm {
 
 	private Integer runStart;
 
-	public Sidewinder(Grid2D<TraversalState> grid) {
+	public Sidewinder(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
 	}
 

@@ -12,9 +12,9 @@ import de.amr.easy.grid.api.NakedGrid2D;
  */
 public class CollapsingWalls implements Sequence<Integer> {
 
-	private final NakedGrid2D grid;
+	private final NakedGrid2D<?> grid;
 
-	public CollapsingWalls(NakedGrid2D grid) {
+	public CollapsingWalls(NakedGrid2D<?> grid) {
 		this.grid = grid;
 	}
 

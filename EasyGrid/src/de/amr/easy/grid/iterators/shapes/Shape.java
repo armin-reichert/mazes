@@ -19,11 +19,11 @@ import de.amr.easy.grid.iterators.traversals.Sequence;
  */
 public abstract class Shape implements Sequence<Integer> {
 
-	public final NakedGrid2D grid;
+	public final NakedGrid2D<?> grid;
 
 	protected final List<Integer> cells = new ArrayList<>();
 
-	protected Shape(NakedGrid2D grid) {
+	protected Shape(NakedGrid2D<?> grid) {
 		this.grid = grid;
 	}
 

@@ -14,9 +14,9 @@ import de.amr.easy.grid.api.NakedGrid2D;
  */
 public class LeftToRightSweep implements Sequence<Integer> {
 
-	private final NakedGrid2D grid;
+	private final NakedGrid2D<?> grid;
 
-	public LeftToRightSweep(NakedGrid2D grid) {
+	public LeftToRightSweep(NakedGrid2D<?> grid) {
 		this.grid = grid;
 	}
 

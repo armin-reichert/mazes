@@ -57,7 +57,7 @@ public class SimpleDemoFX extends Application {
 
 	private Canvas canvas;
 	private Timer timer;
-	private ObservableGrid<TraversalState> maze;
+	private ObservableGrid<TraversalState,?> maze;
 	private int cols;
 	private int rows;
 	private int cellSize;

@@ -27,7 +27,7 @@ public class Eller extends MazeAlgorithm {
 
 	private final Partition<Integer> partition = new Partition<>();
 
-	public Eller(Grid2D<TraversalState> grid) {
+	public Eller(Grid2D<TraversalState,Integer> grid) {
 		super(grid);
 	}
 

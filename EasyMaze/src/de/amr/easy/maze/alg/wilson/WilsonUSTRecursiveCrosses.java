@@ -13,7 +13,7 @@ import de.amr.easy.grid.iterators.traversals.RecursiveCrosses;
  */
 public class WilsonUSTRecursiveCrosses extends WilsonUST {
 
-	public WilsonUSTRecursiveCrosses(Grid2D<TraversalState> grid) {
+	public WilsonUSTRecursiveCrosses(Grid2D<TraversalState,Integer> grid) {
 		super(grid);
 	}
 

@@ -24,7 +24,7 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 
 	private final List<Integer> path = new ArrayList<>();
 
-	public WilsonUSTPeanoCurve(Grid2D<TraversalState> grid) {
+	public WilsonUSTPeanoCurve(Grid2D<TraversalState,Integer> grid) {
 		super(grid);
 	}
 
@@ -32,7 +32,7 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 	protected Stream<Integer> cellStream() {
 		int n = nextPow(3, max(grid.numCols(), grid.numRows()));
 		PeanoCurve peano = new PeanoCurve(log(3, n));
-		NakedGrid squareGrid = new NakedGrid(n, n);
+		NakedGrid<?> squareGrid = new NakedGrid<>(n, n);
 		Integer cell = squareGrid.cell(BOTTOM_LEFT);
 		addCellToPath(squareGrid.col(cell), squareGrid.row(cell));
 		for (Direction dir : peano) {

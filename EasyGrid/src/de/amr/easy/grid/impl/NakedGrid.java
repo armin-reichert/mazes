@@ -10,7 +10,6 @@ import java.util.BitSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -23,8 +22,11 @@ import de.amr.easy.grid.api.NakedGrid2D;
  * An implementation of the {@link NakedGrid2D} interface.
  * 
  * @author Armin Reichert
+ * 
+ * @param <PassageWeight>
+ *          passage weight type
  */
-public class NakedGrid implements NakedGrid2D {
+public class NakedGrid<PassageWeight extends Comparable<PassageWeight>> implements NakedGrid2D<PassageWeight> {
 
 	private static final int DIRECTION_COUNT = Direction.values().length;
 
@@ -87,7 +89,7 @@ public class NakedGrid implements NakedGrid2D {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public NakedGrid makeFullGrid() {
+	public NakedGrid<PassageWeight> makeFullGrid() {
 		removeEdges();
 		range(0, nCols).forEach(col -> {
 			range(0, nRows).forEach(row -> {
@@ -103,8 +105,8 @@ public class NakedGrid implements NakedGrid2D {
 	}
 
 	@Override
-	public Stream<WeightedEdge<Integer, Double>> edgeStream() {
-		Set<WeightedEdge<Integer, Double>> edgeSet = new HashSet<>();
+	public Stream<WeightedEdge<Integer, PassageWeight>> edgeStream() {
+		Set<WeightedEdge<Integer, PassageWeight>> edgeSet = new HashSet<>();
 		vertexStream().forEach(cell -> {
 			Stream.of(Direction.values()).forEach(dir -> {
 				if (isConnected(cell, dir)) {
@@ -120,16 +122,15 @@ public class NakedGrid implements NakedGrid2D {
 	}
 
 	@Override
-	public Stream<WeightedEdge<Integer, Double>> fullGridEdgesPermuted() {
-		List<WeightedEdge<Integer, Double>> edges = new ArrayList<>();
-		Random rnd = new Random();
+	public Stream<WeightedEdge<Integer, PassageWeight>> fullGridEdgesPermuted() {
+		List<WeightedEdge<Integer, PassageWeight>> edges = new ArrayList<>();
 		range(0, nCols).forEach(col -> {
 			range(0, nRows).forEach(row -> {
 				if (col + 1 < nCols) {
-					edges.add(new WeightedEdge<>(index(col, row), index(col + 1, row), rnd.nextDouble()));
+					edges.add(new WeightedEdge<>(index(col, row), index(col + 1, row)));
 				}
 				if (row + 1 < nRows) {
-					edges.add(new WeightedEdge<>(index(col, row), index(col, row + 1), rnd.nextDouble()));
+					edges.add(new WeightedEdge<>(index(col, row), index(col, row + 1)));
 				}
 			});
 		});
@@ -148,7 +149,7 @@ public class NakedGrid implements NakedGrid2D {
 	}
 
 	@Override
-	public Optional<WeightedEdge<Integer, Double>> edge(Integer p, Integer q) {
+	public Optional<WeightedEdge<Integer, PassageWeight>> edge(Integer p, Integer q) {
 		checkCell(p);
 		checkCell(q);
 		return adjacent(p, q) ? Optional.of(new WeightedEdge<>(p, q)) : Optional.empty();

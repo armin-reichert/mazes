@@ -15,10 +15,10 @@ import de.amr.easy.grid.api.NakedGrid2D;
  */
 public class RecursiveCrosses implements Sequence<Integer> {
 
-	private final NakedGrid2D grid;
+	private final NakedGrid2D<?> grid;
 	private final List<Integer> path = new ArrayList<>();
 
-	public RecursiveCrosses(NakedGrid2D grid) {
+	public RecursiveCrosses(NakedGrid2D<?> grid) {
 		this.grid = grid;
 		cross(grid.numCols(), grid.numRows(), 0, 0);
 	}

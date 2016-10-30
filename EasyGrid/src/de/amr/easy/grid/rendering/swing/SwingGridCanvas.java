@@ -34,47 +34,47 @@ public class SwingGridCanvas extends JComponent {
 	private BufferedImage buffer;
 	private Graphics2D g;
 
-	private ObservableNakedGrid2D grid;
+	private ObservableNakedGrid2D<Integer> grid;
 	private final Deque<SwingGridRenderingModel> renderStack = new LinkedList<>();
 	private SwingGridRenderer renderer;
 	private int delay;
 
-	private final GraphObserver<Integer, WeightedEdge<Integer, Double>> observer = new GraphObserver<Integer, WeightedEdge<Integer, Double>>() {
+	private final GraphObserver<Integer, WeightedEdge<Integer, Integer>> observer = new GraphObserver<Integer, WeightedEdge<Integer, Integer>>() {
 
 		@Override
-		public void vertexChanged(VertexChangeEvent<Integer, WeightedEdge<Integer, Double>> event) {
+		public void vertexChanged(VertexChangeEvent<Integer, WeightedEdge<Integer, Integer>> event) {
 			renderGridCell(event.getVertex());
 		}
 
 		@Override
-		public void edgeAdded(EdgeAddedEvent<Integer, WeightedEdge<Integer, Double>> event) {
+		public void edgeAdded(EdgeAddedEvent<Integer, WeightedEdge<Integer, Integer>> event) {
 			renderGridPassage(event.getEdge(), true);
 		}
 
 		@Override
-		public void edgeRemoved(EdgeRemovedEvent<Integer, WeightedEdge<Integer, Double>> event) {
+		public void edgeRemoved(EdgeRemovedEvent<Integer, WeightedEdge<Integer, Integer>> event) {
 			renderGridPassage(event.getEdge(), false);
 		}
 
 		@Override
-		public void edgeChanged(EdgeChangeEvent<Integer, WeightedEdge<Integer, Double>> event) {
+		public void edgeChanged(EdgeChangeEvent<Integer, WeightedEdge<Integer, Integer>> event) {
 			renderGridPassage(event.getEdge(), true);
 		}
 
 		@Override
-		public void graphChanged(ObservableGraph<Integer, WeightedEdge<Integer, Double>> graph) {
+		public void graphChanged(ObservableGraph<Integer, WeightedEdge<Integer, Integer>> graph) {
 			render();
 		}
 	};
 
-	public SwingGridCanvas(ObservableNakedGrid2D grid, SwingGridRenderingModel renderingModel) {
+	public SwingGridCanvas(ObservableNakedGrid2D<Integer> grid, SwingGridRenderingModel renderingModel) {
 		setGrid(grid);
 		renderStack.push(renderingModel);
 		setDoubleBuffered(false);
 		updateRenderingBuffer();
 	}
 
-	public void setGrid(ObservableNakedGrid2D grid) {
+	public void setGrid(ObservableNakedGrid2D<Integer> grid) {
 		this.grid = grid;
 		grid.addGraphObserver(observer);
 	}

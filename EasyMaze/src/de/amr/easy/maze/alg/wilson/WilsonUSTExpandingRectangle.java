@@ -16,7 +16,7 @@ import de.amr.easy.grid.iterators.traversals.ExpandingRectangle;
  */
 public class WilsonUSTExpandingRectangle extends WilsonUST {
 
-	public WilsonUSTExpandingRectangle(Grid2D<TraversalState> grid) {
+	public WilsonUSTExpandingRectangle(Grid2D<TraversalState,Integer> grid) {
 		super(grid);
 	}
 

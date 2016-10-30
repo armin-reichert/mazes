@@ -13,7 +13,7 @@ public class Circle extends Shape {
 	private final Integer center;
 	private final int radius;
 
-	public Circle(NakedGrid2D grid, Integer center, int radius) {
+	public Circle(NakedGrid2D<?> grid, Integer center, int radius) {
 		super(grid);
 		this.center = center;
 		this.radius = radius;

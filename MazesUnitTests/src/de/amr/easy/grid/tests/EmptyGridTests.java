@@ -12,11 +12,11 @@ import de.amr.easy.grid.impl.NakedGrid;
 
 public class EmptyGridTests {
 
-	private NakedGrid2D grid;
+	private NakedGrid2D<?> grid;
 
 	@Before
 	public void setUp() {
-		grid = new NakedGrid(0, 0);
+		grid = new NakedGrid<>(0, 0);
 	}
 
 	@After

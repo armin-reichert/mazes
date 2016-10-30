@@ -14,7 +14,7 @@ import de.amr.easy.grid.iterators.traversals.CollapsingWalls;
  */
 public class WilsonUSTCollapsingWalls extends WilsonUST {
 
-	public WilsonUSTCollapsingWalls(Grid2D<TraversalState> grid) {
+	public WilsonUSTCollapsingWalls(Grid2D<TraversalState,Integer> grid) {
 		super(grid);
 	}
 

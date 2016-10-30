@@ -16,10 +16,14 @@ import de.amr.easy.grid.api.ObservableNakedGrid2D;
  * A grid which can be observed.
  * 
  * @author Armin Reichert
+ * 
+ * @param <PassageWeight>
+ *          passage weight type
  */
-public class ObservableNakedGrid extends NakedGrid implements ObservableNakedGrid2D {
+public class ObservableNakedGrid<PassageWeight extends Comparable<PassageWeight>> extends NakedGrid<PassageWeight>
+		implements ObservableNakedGrid2D<PassageWeight> {
 
-	private final Set<GraphObserver<Integer, WeightedEdge<Integer, Double>>> observers = new HashSet<>();
+	private final Set<GraphObserver<Integer, WeightedEdge<Integer, PassageWeight>>> observers = new HashSet<>();
 	private boolean fireEvents;
 
 	public ObservableNakedGrid(int numCols, int numRows) {
@@ -31,7 +35,7 @@ public class ObservableNakedGrid extends NakedGrid implements ObservableNakedGri
 	public void addEdge(Integer p, Integer q) {
 		super.addEdge(p, q);
 		if (fireEvents) {
-			for (GraphObserver<Integer, WeightedEdge<Integer, Double>> obs : observers) {
+			for (GraphObserver<Integer, WeightedEdge<Integer, PassageWeight>> obs : observers) {
 				obs.edgeAdded(new EdgeAddedEvent<>(this, edge(p, q).get()));
 			}
 		}
@@ -42,7 +46,7 @@ public class ObservableNakedGrid extends NakedGrid implements ObservableNakedGri
 		edge(p, q).ifPresent(edge -> {
 			super.removeEdge(p, q);
 			if (fireEvents) {
-				for (GraphObserver<Integer, WeightedEdge<Integer, Double>> obs : observers) {
+				for (GraphObserver<Integer, WeightedEdge<Integer, PassageWeight>> obs : observers) {
 					obs.edgeRemoved(new EdgeRemovedEvent<>(this, edge));
 				}
 			}
@@ -58,12 +62,12 @@ public class ObservableNakedGrid extends NakedGrid implements ObservableNakedGri
 	/* {@link ObservableGraph} interface */
 
 	@Override
-	public void addGraphObserver(GraphObserver<Integer, WeightedEdge<Integer, Double>> obs) {
+	public void addGraphObserver(GraphObserver<Integer, WeightedEdge<Integer, PassageWeight>> obs) {
 		observers.add(obs);
 	}
 
 	@Override
-	public void removeGraphObserver(GraphObserver<Integer, WeightedEdge<Integer, Double>> obs) {
+	public void removeGraphObserver(GraphObserver<Integer, WeightedEdge<Integer, PassageWeight>> obs) {
 		observers.remove(obs);
 	}
 
@@ -76,23 +80,23 @@ public class ObservableNakedGrid extends NakedGrid implements ObservableNakedGri
 
 	protected void fireVertexChange(Integer vertex, Object oldValue, Object newValue) {
 		if (fireEvents) {
-			for (GraphObserver<Integer, WeightedEdge<Integer, Double>> obs : observers) {
+			for (GraphObserver<Integer, WeightedEdge<Integer, PassageWeight>> obs : observers) {
 				obs.vertexChanged(new VertexChangeEvent<>(this, vertex, oldValue, newValue));
 			}
 		}
 	}
 
-	protected void fireEdgeChange(WeightedEdge<Integer, Double> edge, Object oldValue, Object newValue) {
+	protected void fireEdgeChange(WeightedEdge<Integer, PassageWeight> edge, Object oldValue, Object newValue) {
 		if (fireEvents) {
-			for (GraphObserver<Integer, WeightedEdge<Integer, Double>> obs : observers) {
+			for (GraphObserver<Integer, WeightedEdge<Integer, PassageWeight>> obs : observers) {
 				obs.edgeChanged(new EdgeChangeEvent<>(this, edge, oldValue, newValue));
 			}
 		}
 	}
 
-	protected void fireGraphChange(ObservableGraph<Integer, WeightedEdge<Integer, Double>> graph) {
+	protected void fireGraphChange(ObservableGraph<Integer, WeightedEdge<Integer, PassageWeight>> graph) {
 		if (fireEvents) {
-			for (GraphObserver<Integer, WeightedEdge<Integer, Double>> obs : observers) {
+			for (GraphObserver<Integer, WeightedEdge<Integer, PassageWeight>> obs : observers) {
 				obs.graphChanged(graph);
 			}
 		}

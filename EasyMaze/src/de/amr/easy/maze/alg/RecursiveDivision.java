@@ -18,7 +18,7 @@ import de.amr.easy.grid.api.Grid2D;
  */
 public class RecursiveDivision extends MazeAlgorithm {
 
-	public RecursiveDivision(Grid2D<TraversalState> grid) {
+	public RecursiveDivision(Grid2D<TraversalState,Integer> grid) {
 		super(grid);
 		grid.makeFullGrid();
 		grid.setDefault(COMPLETED);

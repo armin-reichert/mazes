@@ -22,7 +22,7 @@ import de.amr.easy.grid.api.Grid2D;
  */
 public class BinaryTree extends MazeAlgorithm {
 
-	public BinaryTree(Grid2D<TraversalState> grid) {
+	public BinaryTree(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
 	}
 

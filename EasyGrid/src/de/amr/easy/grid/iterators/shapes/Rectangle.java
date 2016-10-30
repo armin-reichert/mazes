@@ -16,7 +16,7 @@ public class Rectangle extends Shape {
 	private final int width;
 	private final int height;
 
-	public Rectangle(NakedGrid2D grid, Integer leftUpperCorner, int width, int height) {
+	public Rectangle(NakedGrid2D<?> grid, Integer leftUpperCorner, int width, int height) {
 		super(grid);
 
 		this.leftUpperCorner = leftUpperCorner;

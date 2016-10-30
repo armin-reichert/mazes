@@ -8,9 +8,11 @@ import de.amr.easy.graph.api.WeightedEdge;
  * 
  * @author Armin Reichert
  * 
- * @param <Content>
- *          content type
+ * @param <CellContent>
+ *          cell content type
+ * @param <PassageWeight>
+ *          passage weight type
  */
-public interface ObservableGrid2D<Content>
-		extends Grid2D<Content>, ObservableGraph<Integer, WeightedEdge<Integer, Double>> {
+public interface ObservableGrid2D<CellContent, PassageWeight extends Comparable<PassageWeight>>
+		extends Grid2D<CellContent, PassageWeight>, ObservableGraph<Integer, WeightedEdge<Integer, PassageWeight>> {
 }

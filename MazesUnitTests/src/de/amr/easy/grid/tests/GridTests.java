@@ -35,7 +35,7 @@ public class GridTests {
 	private static final int WIDTH = 100;
 	private static final int HEIGHT = 100;
 
-	private Grid2D<TraversalState> grid;
+	private Grid2D<TraversalState,Integer> grid;
 
 	@Before
 	public void setUp() {
@@ -170,7 +170,7 @@ public class GridTests {
 
 	@Test
 	public void testCycleCheckerSquare() {
-		CycleChecker<Integer, WeightedEdge<Integer, Double>> cycleChecker = new CycleChecker<>();
+		CycleChecker<Integer, WeightedEdge<Integer, Integer>> cycleChecker = new CycleChecker<>();
 		// create graph without cycle:
 		Integer a = grid.cell(0, 0);
 		Integer b = grid.cell(1, 0);
@@ -187,7 +187,7 @@ public class GridTests {
 
 	@Test
 	public void testCycleCheckerSpanningTree() {
-		CycleChecker<Integer, WeightedEdge<Integer, Double>> cycleChecker = new CycleChecker<>();
+		CycleChecker<Integer, WeightedEdge<Integer, Integer>> cycleChecker = new CycleChecker<>();
 		// create a spanning tree
 		new RandomBFS(grid).accept(grid.cell(0, 0));
 		assertFalse(cycleChecker.test(grid));

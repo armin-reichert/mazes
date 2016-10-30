@@ -9,10 +9,13 @@ import de.amr.easy.graph.api.WeightedEdge;
  * 
  * @author Armin Reichert
  *
- * @param <Content>
+ * @param <CellContent>
  *          cell content type
+ * @param <PassageWeight>
+ *          passage weight type
  */
-public interface Grid2D<Content>
-		extends NakedGrid2D, VertexContent<Integer, Content>, DataGraph<Integer, WeightedEdge<Integer, Double>, Content> {
+public interface Grid2D<CellContent, PassageWeight extends Comparable<PassageWeight>>
+		extends NakedGrid2D<PassageWeight>, VertexContent<Integer, CellContent>,
+		DataGraph<Integer, WeightedEdge<Integer, PassageWeight>, CellContent> {
 
 }

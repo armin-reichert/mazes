@@ -12,9 +12,9 @@ import de.amr.easy.grid.api.NakedGrid2D;
  */
 public class RightToLeftSweep implements Sequence<Integer> {
 
-	private final NakedGrid2D grid;
+	private final NakedGrid2D<?> grid;
 
-	public RightToLeftSweep(NakedGrid2D grid) {
+	public RightToLeftSweep(NakedGrid2D<?> grid) {
 		this.grid = grid;
 	}
 

@@ -20,7 +20,7 @@ public class IterativeDFS extends MazeAlgorithm {
 	private final Deque<Integer> stack = new LinkedList<>();
 	private Optional<Integer> unvisitedNeighbor;
 
-	public IterativeDFS(Grid2D<TraversalState> grid) {
+	public IterativeDFS(Grid2D<TraversalState,Integer> grid) {
 		super(grid);
 	}
 

@@ -15,7 +15,7 @@ import de.amr.easy.grid.iterators.traversals.LeftToRightSweep;
  */
 public class WilsonUSTLeftToRightSweep extends WilsonUST {
 
-	public WilsonUSTLeftToRightSweep(Grid2D<TraversalState> grid) {
+	public WilsonUSTLeftToRightSweep(Grid2D<TraversalState,Integer> grid) {
 		super(grid);
 	}
 

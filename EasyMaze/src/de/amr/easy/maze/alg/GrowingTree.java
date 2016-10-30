@@ -21,7 +21,7 @@ public class GrowingTree extends MazeAlgorithm {
 
 	private final List<Integer> cells = new ArrayList<>();
 
-	public GrowingTree(Grid2D<TraversalState> grid) {
+	public GrowingTree(Grid2D<TraversalState,Integer> grid) {
 		super(grid);
 	}
 

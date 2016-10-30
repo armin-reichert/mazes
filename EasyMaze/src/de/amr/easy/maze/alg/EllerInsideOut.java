@@ -35,7 +35,7 @@ import de.amr.easy.grid.iterators.shapes.Square;
  */
 public class EllerInsideOut extends MazeAlgorithm {
 
-	private final NakedGrid squareGrid;
+	private final NakedGrid<?> squareGrid;
 	private final Partition<Integer> mazeParts = new Partition<>();
 	private Square square;
 	private Iterable<Integer> layer;
@@ -43,12 +43,12 @@ public class EllerInsideOut extends MazeAlgorithm {
 	private final int offsetX;
 	private final int offsetY;
 
-	public EllerInsideOut(Grid2D<TraversalState> grid) {
+	public EllerInsideOut(Grid2D<TraversalState,Integer> grid) {
 		super(grid);
 		int n = max(grid.numCols(), grid.numRows());
 		offsetX = (n - grid.numCols()) / 2;
 		offsetY = (n - grid.numRows()) / 2;
-		squareGrid = new NakedGrid(n, n);
+		squareGrid = new NakedGrid<>(n, n);
 	}
 
 	@Override

@@ -19,9 +19,13 @@ import de.amr.easy.graph.api.WeightedEdge;
  * This interface extends the {@link Graph} interface such that graph algorithms can be applied to
  * objects of this type.
  * 
+ * @param <PassageWeight>
+ *          type of passage weights
+ * 
  * @author Armin Reichert
  */
-public interface NakedGrid2D extends Graph<Integer, WeightedEdge<Integer, Double>> {
+public interface NakedGrid2D<PassageWeight extends Comparable<PassageWeight>>
+		extends Graph<Integer, WeightedEdge<Integer, PassageWeight>> {
 
 	/**
 	 * @return the number of columns (width) of the grid
@@ -166,10 +170,10 @@ public interface NakedGrid2D extends Graph<Integer, WeightedEdge<Integer, Double
 	 * 
 	 * @return the grid itself to allow method chaining
 	 */
-	public <T extends NakedGrid2D> T makeFullGrid();
+	public <T extends NakedGrid2D<PassageWeight>> T makeFullGrid();
 
 	/**
 	 * @return the edges of a full grid in randomly permuted order and random weights
 	 */
-	public Stream<WeightedEdge<Integer, Double>> fullGridEdgesPermuted();
+	public Stream<WeightedEdge<Integer, PassageWeight>> fullGridEdgesPermuted();
 }

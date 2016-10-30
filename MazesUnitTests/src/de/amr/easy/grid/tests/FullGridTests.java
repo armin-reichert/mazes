@@ -21,11 +21,11 @@ public class FullGridTests {
 	private static final int WIDTH = 15;
 	private static final int HEIGHT = 10;
 
-	private NakedGrid2D grid;
+	private NakedGrid2D<?> grid;
 
 	@Before
 	public void setUp() {
-		grid = new NakedGrid(WIDTH, HEIGHT).makeFullGrid();
+		grid = new NakedGrid<>(WIDTH, HEIGHT).makeFullGrid();
 	}
 
 	@After

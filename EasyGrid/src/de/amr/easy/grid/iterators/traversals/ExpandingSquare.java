@@ -13,12 +13,12 @@ import de.amr.easy.grid.iterators.shapes.Square;
  */
 public class ExpandingSquare implements Sequence<Integer> {
 
-	private final NakedGrid2D grid;
+	private final NakedGrid2D<?> grid;
 	private final Integer topLeft;
 	private final int minSize;
 	private final int maxSize;
 
-	public ExpandingSquare(NakedGrid2D grid, Integer topLeft, int minSize, int maxSize) {
+	public ExpandingSquare(NakedGrid2D<?> grid, Integer topLeft, int minSize, int maxSize) {
 		this.grid = grid;
 		this.topLeft = topLeft;
 		this.minSize = minSize;

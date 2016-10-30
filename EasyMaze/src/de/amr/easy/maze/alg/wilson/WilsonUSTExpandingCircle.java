@@ -16,7 +16,7 @@ import de.amr.easy.grid.iterators.traversals.ExpandingCircle;
  */
 public class WilsonUSTExpandingCircle extends WilsonUST {
 
-	public WilsonUSTExpandingCircle(Grid2D<TraversalState> grid) {
+	public WilsonUSTExpandingCircle(Grid2D<TraversalState,Integer> grid) {
 		super(grid);
 	}
 

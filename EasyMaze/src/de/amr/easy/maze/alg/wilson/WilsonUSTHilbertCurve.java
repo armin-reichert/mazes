@@ -28,7 +28,7 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 
 	private final List<Integer> path = new ArrayList<>();
 
-	public WilsonUSTHilbertCurve(Grid2D<TraversalState> grid) {
+	public WilsonUSTHilbertCurve(Grid2D<TraversalState,Integer> grid) {
 		super(grid);
 	}
 
@@ -37,7 +37,7 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 		// Hilbert curve need a square grid, so create one
 		int n = nextPow(2, max(grid.numCols(), grid.numRows()));
 		HilbertCurve hilbert = new HilbertCurve(log(2, n), W, N, E, S);
-		NakedGrid square = new NakedGrid(n, n);
+		NakedGrid<?> square = new NakedGrid<>(n, n);
 		// Traverse the intersection of the square grid cells with the original grid
 		Integer cell = square.cell(TOP_LEFT);
 		path.add(cell);

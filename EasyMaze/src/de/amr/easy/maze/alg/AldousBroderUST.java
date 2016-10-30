@@ -32,7 +32,7 @@ public class AldousBroderUST extends MazeAlgorithm {
 
 	private int mazeCellCount;
 
-	public AldousBroderUST(Grid2D<TraversalState> grid) {
+	public AldousBroderUST(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
 	}
 

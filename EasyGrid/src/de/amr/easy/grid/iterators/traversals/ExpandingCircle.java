@@ -13,13 +13,13 @@ import de.amr.easy.grid.iterators.shapes.Circle;
  */
 public class ExpandingCircle implements Sequence<Integer> {
 
-	private final NakedGrid2D grid;
+	private final NakedGrid2D<?> grid;
 	private final Integer center;
 	private final int minRadius;
 	private final int maxRadius;
 	private int expansionRate;
 
-	public ExpandingCircle(NakedGrid2D grid, Integer center, int minRadius, int maxRadius) {
+	public ExpandingCircle(NakedGrid2D<?> grid, Integer center, int minRadius, int maxRadius) {
 		this.grid = grid;
 		this.center = center;
 		this.minRadius = minRadius;

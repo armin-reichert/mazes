@@ -17,7 +17,7 @@ public class BinaryTreeRandom extends BinaryTree {
 
 	private final List<Integer> cellsInRandomOrder;
 
-	public BinaryTreeRandom(Grid2D<TraversalState> grid) {
+	public BinaryTreeRandom(Grid2D<TraversalState,Integer> grid) {
 		super(grid);
 		cellsInRandomOrder = grid.vertexStream().collect(Collectors.toList());
 		Collections.shuffle(cellsInRandomOrder);

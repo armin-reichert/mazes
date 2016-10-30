@@ -18,7 +18,7 @@ public class RandomBFS extends MazeAlgorithm {
 
 	private final List<Integer> frontier = new ArrayList<>();
 
-	public RandomBFS(Grid2D<TraversalState> grid) {
+	public RandomBFS(Grid2D<TraversalState,Integer> grid) {
 		super(grid);
 	}
 

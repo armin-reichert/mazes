@@ -15,7 +15,7 @@ public class WilsonUSTCollapsingRectangle extends WilsonUST {
 
 	private int width, height;
 
-	public WilsonUSTCollapsingRectangle(Grid2D<TraversalState> grid) {
+	public WilsonUSTCollapsingRectangle(Grid2D<TraversalState,Integer> grid) {
 		super(grid);
 		width = grid.numCols();
 		height = grid.numRows();

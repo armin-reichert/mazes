@@ -22,7 +22,7 @@ public class RecursiveDFS extends MazeAlgorithm {
 
 	private Optional<Integer> unvisitedNeighbor;
 
-	public RecursiveDFS(Grid2D<TraversalState> grid) {
+	public RecursiveDFS(Grid2D<TraversalState,Integer> grid) {
 		super(grid);
 	}
 

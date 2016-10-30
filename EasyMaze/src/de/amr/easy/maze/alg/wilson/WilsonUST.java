@@ -34,7 +34,7 @@ public abstract class WilsonUST extends MazeAlgorithm {
 
 	private final Direction[] lastWalkDir;
 
-	protected WilsonUST(Grid2D<TraversalState> grid) {
+	protected WilsonUST(Grid2D<TraversalState,Integer> grid) {
 		super(grid);
 		lastWalkDir = new Direction[grid.numCells()];
 	}

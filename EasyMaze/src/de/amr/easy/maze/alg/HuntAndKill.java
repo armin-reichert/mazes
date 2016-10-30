@@ -24,7 +24,7 @@ public class HuntAndKill extends MazeAlgorithm {
 	protected final Predicate<Integer> isDead = isAlive.negate();
 	protected final BitSet targets;
 
-	public HuntAndKill(Grid2D<TraversalState> grid) {
+	public HuntAndKill(Grid2D<TraversalState,Integer> grid) {
 		super(grid);
 		targets = new BitSet(grid.numCells());
 	}
