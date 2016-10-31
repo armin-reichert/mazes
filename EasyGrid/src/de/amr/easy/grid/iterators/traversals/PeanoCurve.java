@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import de.amr.easy.grid.api.Direction;
+import de.amr.easy.grid.iterators.Sequence;
 
 /**
  * Computes a Peano-curve.

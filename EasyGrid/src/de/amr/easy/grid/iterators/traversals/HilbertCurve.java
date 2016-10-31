@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import de.amr.easy.grid.api.Direction;
+import de.amr.easy.grid.iterators.Sequence;
 
 /**
  * Computes a Hilbert curve as a list of directions.

@@ -1,10 +1,10 @@
-package de.amr.easy.grid.iterators.traversals;
+package de.amr.easy.grid.iterators;
 
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 /**
- * A sequence providing the {@link Iterable} and {@link Stream} interface.
+ * Provides the {@link Iterable} and (sequential) {@link Stream} interface at the same time.
  * 
  * @author Armin Reichert
  *

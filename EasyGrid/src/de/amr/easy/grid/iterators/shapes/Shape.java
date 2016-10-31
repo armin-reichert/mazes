@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import de.amr.easy.grid.api.NakedGrid2D;
-import de.amr.easy.grid.iterators.traversals.Sequence;
+import de.amr.easy.grid.iterators.Sequence;
 
 /**
  * Base class for shapes (square, rectangle, ...) on a grid.

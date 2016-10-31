@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import de.amr.easy.grid.api.Direction;
+import de.amr.easy.grid.iterators.Sequence;
 
 /**
  * Computes a Hilbert-Moore curve as a list of directions. This curve must start at grid position

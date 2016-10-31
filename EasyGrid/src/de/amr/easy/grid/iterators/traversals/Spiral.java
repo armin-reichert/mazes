@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.api.NakedGrid2D;
 import de.amr.easy.grid.impl.NakedGrid;
+import de.amr.easy.grid.iterators.Sequence;
 import de.amr.easy.grid.iterators.shapes.Square;
 
 public class Spiral implements Sequence<Integer> {

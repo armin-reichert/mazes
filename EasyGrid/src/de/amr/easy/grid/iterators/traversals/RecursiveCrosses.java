@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import de.amr.easy.grid.api.NakedGrid2D;
+import de.amr.easy.grid.iterators.Sequence;
 
 /**
  * Recursively fills a grid with crosses.
