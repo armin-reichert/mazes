@@ -2,9 +2,9 @@
 
 ### Maze generation algorithms implemented in Java 8
 
-I got interested into maze algorithms by reading the [weblog of Jamis Buck](http://weblog.jamisbuck.org/archives.html). In his blog, Jamis Buck presents a number of maze algorithms together with a Ruby implementation.
+My interest into maze algorithms started by reading the [weblog of Jamis Buck](http://weblog.jamisbuck.org/archives.html). In his blog, Jamis Buck presents a number of maze algorithms together with a Ruby implementation.
 
-My initial goal was to implement these algorithms in Java and in more graph-like form. In the course I discovered new ways of maze generation, for example a modified version of Eller's algorithm which generates the maze from the center towards the borders, or variations on Wilson's algorithm which you get from different ways of selecting the sources of the random walks. For example you can select them from a Hilbert curve. Not of any practical use but fun to watch. 
+Initial goal was to implement these algorithms in Java and formulate them such that the underlying graph algorithm should be clearly visible. In the course I discovered new ways of maze generation, for example a modified version of Eller's algorithm which generates the maze from the center towards the borders, or variations on Wilson's algorithm which you get from different ways of selecting the sources of the random walks. For example, you can select the start cells in the order defined by a space-filling-curve (Hilbert, Peano, Moore). Probably of no practical use but fun to watch.
 
 The given implementation tries to focus on the underlying graph algorithm (creating a **spanning tree** of an undirected grid graph) and the code is free of rendering or data structure internals.
 
