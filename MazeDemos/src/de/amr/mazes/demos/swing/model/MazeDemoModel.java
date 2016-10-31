@@ -36,6 +36,7 @@ import de.amr.easy.maze.alg.wilson.WilsonUSTExpandingRectangle;
 import de.amr.easy.maze.alg.wilson.WilsonUSTExpandingSpiral;
 import de.amr.easy.maze.alg.wilson.WilsonUSTHilbertCurve;
 import de.amr.easy.maze.alg.wilson.WilsonUSTLeftToRightSweep;
+import de.amr.easy.maze.alg.wilson.WilsonUSTMooreCurve;
 import de.amr.easy.maze.alg.wilson.WilsonUSTNestedRectangles;
 import de.amr.easy.maze.alg.wilson.WilsonUSTPeanoCurve;
 import de.amr.easy.maze.alg.wilson.WilsonUSTRandomCell;
@@ -79,6 +80,7 @@ public class MazeDemoModel {
 		new AlgorithmInfo<>(WilsonUSTNestedRectangles.class, "Wilson UST (nested rectangles)", UST),
 		new AlgorithmInfo<>(WilsonUSTRecursiveCrosses.class, "Wilson UST (recursive crosses)", UST),
 		new AlgorithmInfo<>(WilsonUSTHilbertCurve.class, "Wilson UST (Hilbert curve)", UST),
+		new AlgorithmInfo<>(WilsonUSTMooreCurve.class, "Wilson UST (Moore curve)", UST),
 		new AlgorithmInfo<>(WilsonUSTPeanoCurve.class, "Wilson UST (Peano curve)", UST),
 		new AlgorithmInfo<>(BinaryTree.class, "Binary Tree (row-wise, top-to-bottom"),
 		new AlgorithmInfo<>(BinaryTreeRandom.class, "Binary Tree (random)"), 
