@@ -33,7 +33,7 @@ Implemented so far:
 - [Random Breadth-First-Search](EasyMaze/src/de/amr/easy/maze/alg/RandomBFS.java)
 - Random Depth-First-Search ([non-recursive](EasyMaze/src/de/amr/easy/maze/alg/IterativeDFS.java) and [recursive](EasyMaze/src/de/amr/easy/maze/alg/RecursiveDFS.java))
 - [Recursive division](EasyMaze/src/de/amr/easy/maze/alg/RecursiveDivision.java)
-- [Wilson's algorithm](EasyMaze/src/de/amr/easy/maze/alg/wilson) (14 different variants)
+- [Wilson's algorithm](EasyMaze/src/de/amr/easy/maze/alg/wilson) (16 different variants)
 
 Path finding algorithms:
 - The EasyGrid library contains a DFS and BFS-based path finding implementation.
