@@ -8,6 +8,7 @@ import static de.amr.easy.grid.api.Direction.W;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import de.amr.easy.grid.api.Direction;
@@ -53,10 +54,6 @@ public class HilbertCurve implements Sequence<Direction> {
 
 	@Override
 	public String toString() {
-		StringBuilder s = new StringBuilder();
-		for (Direction dir : curve) {
-			s.append(dir.name()).append(" ");
-		}
-		return s.toString();
+		return curve.stream().map(Direction::toString).collect(Collectors.joining());
 	}
 }

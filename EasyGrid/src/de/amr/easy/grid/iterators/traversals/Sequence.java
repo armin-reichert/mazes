@@ -16,5 +16,4 @@ public interface Sequence<Cell> extends Iterable<Cell> {
 	public default Stream<Cell> stream() {
 		return StreamSupport.stream(spliterator(), false);
 	}
-
 }
