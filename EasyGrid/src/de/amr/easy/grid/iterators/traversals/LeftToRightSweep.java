@@ -6,12 +6,9 @@ import de.amr.easy.grid.api.NakedGrid2D;
 import de.amr.easy.grid.iterators.Sequence;
 
 /**
- * Traverses the grid by sweeping a vertical line from left to right.
+ * A sequence of cells filling the grid by sweeping a vertical line from left to right.
  * 
  * @author Armin Reichert
- *
- * @param <Integer>
- *          the grid cell type
  */
 public class LeftToRightSweep implements Sequence<Integer> {
 

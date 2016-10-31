@@ -6,10 +6,10 @@ import de.amr.easy.grid.api.NakedGrid2D;
 import de.amr.easy.grid.iterators.Sequence;
 
 /**
- * A grid traversal where the left and right grid "walls" are "collapsing".
+ * A sequence of cells traversing the grid like "walls" which are growing from the sides towards the
+ * center.
  * 
  * @author Armin Reichert
- *
  */
 public class CollapsingWalls implements Sequence<Integer> {
 

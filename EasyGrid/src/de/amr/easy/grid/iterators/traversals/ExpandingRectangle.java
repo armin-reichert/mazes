@@ -6,10 +6,10 @@ import de.amr.easy.grid.iterators.Sequence;
 import de.amr.easy.grid.iterators.shapes.Rectangle;
 
 /**
- * Traverses the grid like an expanding rectangle.
+ * A sequence of cells filling the grid like an expanding rectangle with left-upper corner at the
+ * left-upper grid corner.
  * 
  * @author Armin Reichert
- *
  */
 public class ExpandingRectangle implements Sequence<Integer> {
 

@@ -10,7 +10,7 @@ import de.amr.easy.grid.api.NakedGrid2D;
 import de.amr.easy.grid.iterators.Sequence;
 
 /**
- * Recursively fills a grid with crosses.
+ * A sequence of cells filling the grid recursively with "crosses".
  * 
  * @author Armin Reichert
  */

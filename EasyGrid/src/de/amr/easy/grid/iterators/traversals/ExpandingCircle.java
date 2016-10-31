@@ -7,10 +7,9 @@ import de.amr.easy.grid.iterators.Sequence;
 import de.amr.easy.grid.iterators.shapes.Circle;
 
 /**
- * Traverses the grid like an expanding circle.
+ * A sequence of cells filling the grid like an expanding circle around the center.
  * 
  * @author Armin Reichert
- *
  */
 public class ExpandingCircle implements Sequence<Integer> {
 

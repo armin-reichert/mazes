@@ -14,7 +14,7 @@ import static de.amr.mazes.demos.grid.CurveUtil.followCurve;
 import java.util.stream.Stream;
 
 import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.grid.iterators.traversals.HilbertCurve;
+import de.amr.easy.grid.iterators.curves.HilbertCurve;
 import de.amr.mazes.demos.swing.rendering.BFSAnimation;
 
 /**

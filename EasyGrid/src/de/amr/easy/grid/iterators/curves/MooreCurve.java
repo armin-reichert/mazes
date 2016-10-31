@@ -1,4 +1,4 @@
-package de.amr.easy.grid.iterators.traversals;
+package de.amr.easy.grid.iterators.curves;
 
 import java.util.ArrayList;
 import java.util.Iterator;

@@ -1,4 +1,4 @@
-package de.amr.easy.grid.iterators.traversals;
+package de.amr.easy.grid.iterators.curves;
 
 import static de.amr.easy.grid.api.Direction.E;
 import static de.amr.easy.grid.api.Direction.N;

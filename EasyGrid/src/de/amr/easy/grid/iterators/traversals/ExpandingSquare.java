@@ -7,10 +7,9 @@ import de.amr.easy.grid.iterators.Sequence;
 import de.amr.easy.grid.iterators.shapes.Square;
 
 /**
- * Traverses the grid like an expanding square.
+ * A sequence of cells filling the grid like an expanding square.
  * 
  * @author Armin Reichert
- *
  */
 public class ExpandingSquare implements Sequence<Integer> {
 

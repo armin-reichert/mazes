@@ -5,7 +5,7 @@ import static de.amr.mazes.demos.grid.CurveUtil.followCurve;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.grid.iterators.traversals.MooreCurve;
+import de.amr.easy.grid.iterators.curves.MooreCurve;
 import de.amr.mazes.demos.swing.rendering.BFSAnimation;
 
 /**

@@ -4,7 +4,7 @@ import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
 import static de.amr.easy.maze.misc.Utils.log;
 import static de.amr.mazes.demos.grid.CurveUtil.followCurve;
 
-import de.amr.easy.grid.iterators.traversals.PeanoCurve;
+import de.amr.easy.grid.iterators.curves.PeanoCurve;
 import de.amr.mazes.demos.swing.rendering.BFSAnimation;
 
 public class PeanoCurveApp extends GridSampleApp {
