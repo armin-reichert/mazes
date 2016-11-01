@@ -23,7 +23,7 @@ public class RandomBFSApp extends GridSampleApp {
 	public void run() {
 		Integer startCell = grid.cell(TOP_LEFT);
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
-			changeCellSize(cellSize);
+			setCellSize(cellSize);
 			new RandomBFS(grid).accept(startCell);
 			new BFSAnimation(canvas, grid).runAnimation(startCell);
 			sleep(3000);

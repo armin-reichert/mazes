@@ -34,7 +34,7 @@ public class MooreCurveApp extends GridSampleApp {
 	public void run() {
 		IntStream.of(2, 4, 8, 16, 32, 64, 128, 256).forEach(n -> {
 			setDelay(n < 16 ? 3 : 0);
-			changeCellSize(1024 / n);
+			setCellSize(1024 / n);
 			int startCol = n / 2, startRow = n - 1;
 			Integer start = grid.cell(startCol, startRow);
 			MooreCurve moore = new MooreCurve(log(2, n));

@@ -23,7 +23,7 @@ public class RecursiveDFSApp extends GridSampleApp {
 	public void run() {
 		Integer startCell = grid.cell(TOP_LEFT);
 		IntStream.of(256, 128, 64, 32).forEach(cellSize -> {
-			changeCellSize(cellSize);
+			setCellSize(cellSize);
 			new RecursiveDFS(grid).accept(startCell);
 			new BFSAnimation(canvas, grid).runAnimation(startCell);
 			sleep(3000);

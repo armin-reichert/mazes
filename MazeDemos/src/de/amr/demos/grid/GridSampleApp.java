@@ -1,7 +1,8 @@
 package de.amr.demos.grid;
 
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
-import static java.awt.Frame.MAXIMIZED_BOTH;
+import static de.amr.easy.maze.misc.MazeUtils.getScreenResolution;
+import static java.lang.String.format;
 import static javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
@@ -21,7 +22,6 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.rendering.swing.SwingDefaultGridRenderingModel;
 import de.amr.easy.grid.rendering.swing.SwingGridCanvas;
-import de.amr.easy.grid.rendering.swing.SwingGridRenderingModel;
 import de.amr.easy.maze.misc.MazeUtils;
 
 /**
@@ -36,15 +36,41 @@ public abstract class GridSampleApp implements Runnable {
 		EventQueue.invokeLater(app::showUI);
 	}
 
+	private final String appName;
 	private int cellSize;
-	private String appName;
-	private boolean fullscreen;
 
 	protected ObservableGrid<TraversalState, Integer> grid;
 
+	private boolean fullscreen;
+	private Dimension screenRes = getScreenResolution();
 	protected JFrame window;
 	protected SwingGridCanvas canvas;
 	protected JSlider delaySlider;
+
+	private SwingDefaultGridRenderingModel renderingModel = new SwingDefaultGridRenderingModel() {
+
+		@Override
+		public Color getCellBgColor(Integer cell) {
+			switch (grid.get(cell)) {
+			case VISITED:
+				return Color.BLUE;
+			case COMPLETED:
+				return Color.WHITE;
+			case UNVISITED:
+				return getGridBgColor();
+			default:
+				return super.getCellBgColor(cell);
+			}
+		}
+	};
+
+	private Action exitAction = new AbstractAction() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.exit(0);
+		}
+	};
 
 	/**
 	 * Creates a sample app using all available screen space of the used display and a cell size of
@@ -60,8 +86,9 @@ public abstract class GridSampleApp implements Runnable {
 	protected GridSampleApp(String appName, int cellSize) {
 		this.appName = appName;
 		this.cellSize = cellSize;
-		Dimension gridDimension = MazeUtils.maxGridDimensionForDisplay(cellSize);
-		grid = new ObservableGrid<>(gridDimension.width, gridDimension.height, UNVISITED);
+		int numCols = screenRes.width / cellSize;
+		int numRows = (screenRes.height - 20) / cellSize; // subtract slider height
+		grid = new ObservableGrid<>(numCols, numRows, UNVISITED);
 	}
 
 	/**
@@ -82,34 +109,32 @@ public abstract class GridSampleApp implements Runnable {
 	}
 
 	/**
-	 * Changes the cell size of the displayed grid. Can only be called after the window has been
-	 * created.
+	 * Sets the cell size of the displayed grid. Can only be called after the window has been created.
 	 * 
 	 * @param cellSize
 	 *          new grid cell size
 	 */
-	public void changeCellSize(int cellSize) {
+	public void setCellSize(int cellSize) {
 		this.cellSize = cellSize;
 		grid = new ObservableGrid<>(window.getWidth() / cellSize, window.getHeight() / cellSize, UNVISITED);
 		canvas.setGrid(grid);
-		canvas.setRenderingModel(changeRenderingModel(cellSize));
+		renderingModel.setCellSize(cellSize);
+		canvas.setRenderingModel(renderingModel);
 		window.setTitle(composeTitle());
 		window.pack();
 	}
 
-	private Action exitAction = new AbstractAction() {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			System.exit(0);
-		}
-	};
+	public void setDelay(int delay) {
+		delaySlider.setValue(delay);
+		canvas.setDelay(delay);
+	}
 
 	private void showUI() {
 		window = new JFrame();
 		window.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		window.setTitle(composeTitle());
-		canvas = new SwingGridCanvas(grid, changeRenderingModel(cellSize));
+		renderingModel.setCellSize(cellSize);
+		canvas = new SwingGridCanvas(grid, renderingModel);
 		canvas.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "exit");
 		canvas.getActionMap().put("exit", exitAction);
 		canvas.setDelay(0);
@@ -122,11 +147,14 @@ public abstract class GridSampleApp implements Runnable {
 		});
 		window.add(delaySlider, BorderLayout.SOUTH);
 		if (fullscreen) {
-			window.setExtendedState(MAXIMIZED_BOTH);
 			window.setUndecorated(true);
+			window.setAlwaysOnTop(true);
+			canvas.setSize(screenRes.width, screenRes.height);
 		}
 		window.pack();
 		window.setVisible(true);
+
+		// start real work in new thread
 		new Thread(this).start();
 	}
 
@@ -138,13 +166,8 @@ public abstract class GridSampleApp implements Runnable {
 	}
 
 	protected String composeTitle() {
-		return String.format("%s [%d cols %d rows %d cells @%d px]", appName, grid.numCols(), grid.numRows(),
-				grid.numCells(), cellSize);
-	}
-
-	protected void setDelay(int delay) {
-		delaySlider.setValue(delay);
-		canvas.setDelay(delay);
+		return format("%s [%d cols %d rows %d cells @%d px]", appName, grid.numCols(), grid.numRows(), grid.numCells(),
+				cellSize);
 	}
 
 	protected void sleep(int millis) {
@@ -153,27 +176,5 @@ public abstract class GridSampleApp implements Runnable {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-	}
-
-	private SwingDefaultGridRenderingModel renderingModel = new SwingDefaultGridRenderingModel() {
-
-		@Override
-		public Color getCellBgColor(Integer cell) {
-			switch (grid.get(cell)) {
-			case VISITED:
-				return Color.BLUE;
-			case COMPLETED:
-				return Color.WHITE;
-			case UNVISITED:
-				return getGridBgColor();
-			default:
-				return super.getCellBgColor(cell);
-			}
-		}
-	};
-
-	protected SwingGridRenderingModel changeRenderingModel(int cellSize) {
-		renderingModel.setCellSize(cellSize);
-		return renderingModel;
 	}
 }

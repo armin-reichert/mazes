@@ -21,11 +21,12 @@ public class EllerInsideOutApp extends GridSampleApp {
 	@Override
 	public void run() {
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
-			changeCellSize(cellSize);
+			setCellSize(cellSize);
 			new EllerInsideOut(grid).accept(null);
 			new BFSAnimation(canvas, grid).runAnimation(grid.cell(GridPosition.TOP_LEFT));
 			sleep(1000);
 			clear();
 		});
+		System.exit(0);
 	}
 }

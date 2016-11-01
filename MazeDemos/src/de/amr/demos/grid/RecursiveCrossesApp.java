@@ -20,7 +20,7 @@ public class RecursiveCrossesApp extends GridSampleApp {
 	public void run() {
 		setDelay(4);
 		of(64, 32, 16, 8, 4, 2).forEach(cellSize -> {
-			changeCellSize(cellSize);
+			setCellSize(cellSize);
 			new RecursiveCrosses(grid).forEach(cell -> grid.set(cell, COMPLETED));
 			sleep(3000);
 			clear();

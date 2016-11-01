@@ -8,7 +8,7 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 public abstract class MazeUtils {
-	
+
 	public static void setLAF(String lafName) {
 		for (LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
 			if (laf.getName().equalsIgnoreCase(lafName)) {
@@ -32,9 +32,16 @@ public abstract class MazeUtils {
 	 * @return pair (width, height) for grid
 	 */
 	public static Dimension maxGridDimensionForDisplay(int cellSize) {
-		DisplayMode displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
-				.getDisplayMode();
-		return new Dimension(displayMode.getWidth() / cellSize, displayMode.getHeight() / cellSize);
+		DisplayMode mode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
+		return new Dimension(mode.getWidth() / cellSize, mode.getHeight() / cellSize);
+	}
+
+	/**
+	 * @return the current screen resolution
+	 */
+	public static Dimension getScreenResolution() {
+		DisplayMode mode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
+		return new Dimension(mode.getWidth(), mode.getHeight());
 	}
 
 	/**

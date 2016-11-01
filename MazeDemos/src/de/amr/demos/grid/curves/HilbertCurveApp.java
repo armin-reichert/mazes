@@ -63,7 +63,7 @@ public class HilbertCurveApp extends GridSampleApp {
 	public void run() {
 		Stream.of(TOP_RIGHT, TOP_LEFT, BOTTOM_LEFT, BOTTOM_RIGHT).forEach(startPosition -> {
 			for (int cellSize = MAX_CELLSIZE; cellSize >= MIN_CELLSIZE; cellSize /= 2) {
-				changeCellSize(cellSize);
+				setCellSize(cellSize);
 				setDelay(cellSize > 16 ? 5 : 2);
 				int depth = log(2, WIDTH / cellSize);
 				HilbertCurve hilbert = createCurve(startPosition, depth);
