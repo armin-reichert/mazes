@@ -1,6 +1,6 @@
 package de.amr.demos.grid.curves;
 
-import static de.amr.demos.grid.curves.CurveUtil.followCurve;
+import static de.amr.demos.grid.curves.CurveUtil.walkCurve;
 import static de.amr.easy.maze.misc.MazeUtils.log;
 
 import java.util.stream.IntStream;
@@ -17,15 +17,12 @@ import de.amr.easy.grid.rendering.swing.BFSAnimation;
  */
 public class MooreCurveApp extends GridSampleApp {
 
-	private static final int WIDTH = 1024;
-	private static final int HEIGHT = 1024;
-
 	public static void main(String[] args) {
-		launch(new MooreCurveApp());
+		launch(new MooreCurveApp(1024, 1024, 2));
 	}
 
-	private MooreCurveApp() {
-		super("Hilbert-Moore Curve", WIDTH / 64, HEIGHT / 64, 64);
+	public MooreCurveApp(int width, int height, int cellSize) {
+		super("Hilbert-Moore Curve", width / cellSize, height / cellSize, cellSize);
 	}
 
 	@Override
@@ -35,18 +32,16 @@ public class MooreCurveApp extends GridSampleApp {
 
 	@Override
 	public void run() {
-		setDelay(0);
 		IntStream.of(2, 4, 8, 16, 32, 64, 128, 256).forEach(n -> {
-			MooreCurve moore = new MooreCurve(log(2, n));
-			cellSize = WIDTH / n;
-			fitWindowSize(WIDTH, HEIGHT, cellSize);
+			setDelay(n < 16 ? 3 : 0);
+			changeCellSize(1024 / n);
 			int startCol = n / 2, startRow = n - 1;
-			// System.out.println("n=" + n + ",start at col:" + startRow + ",row:" + startRow);
-			Integer startCell = grid.cell(startCol, startRow);
-			followCurve(grid, moore, startCell, () -> window.setTitle(composeTitle()));
+			Integer start = grid.cell(startCol, startRow);
+			MooreCurve moore = new MooreCurve(log(2, n));
+			walkCurve(grid, moore, start, () -> window.setTitle(composeTitle()));
 			BFSAnimation bfs = new BFSAnimation(canvas, grid);
 			bfs.setDistancesVisible(false);
-			bfs.runAnimation(startCell);
+			bfs.runAnimation(start);
 		});
 	}
 }

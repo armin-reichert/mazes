@@ -1,6 +1,6 @@
 package de.amr.demos.grid.curves;
 
-import static de.amr.demos.grid.curves.CurveUtil.followCurve;
+import static de.amr.demos.grid.curves.CurveUtil.walkCurve;
 import static de.amr.easy.grid.api.Direction.E;
 import static de.amr.easy.grid.api.Direction.N;
 import static de.amr.easy.grid.api.Direction.S;
@@ -61,16 +61,16 @@ public class HilbertCurveApp extends GridSampleApp {
 
 	@Override
 	public void run() {
-		setDelay(5);
-		Stream.of(TOP_RIGHT, TOP_LEFT, BOTTOM_LEFT, BOTTOM_RIGHT).forEach(start -> {
-			for (int cellSize = MAX_CELLSIZE; cellSize >= MIN_CELLSIZE; cellSize /= 2, fitWindowSize(WIDTH, HEIGHT,
-					cellSize)) {
+		Stream.of(TOP_RIGHT, TOP_LEFT, BOTTOM_LEFT, BOTTOM_RIGHT).forEach(startPosition -> {
+			for (int cellSize = MAX_CELLSIZE; cellSize >= MIN_CELLSIZE; cellSize /= 2) {
+				changeCellSize(cellSize);
+				setDelay(cellSize > 16 ? 5 : 2);
 				int depth = log(2, WIDTH / cellSize);
-				HilbertCurve hilbert = createCurve(start, depth);
-				followCurve(grid, hilbert, grid.cell(start), () -> window.setTitle(composeTitle()));
+				HilbertCurve hilbert = createCurve(startPosition, depth);
+				walkCurve(grid, hilbert, grid.cell(startPosition), () -> window.setTitle(composeTitle()));
 				BFSAnimation bfs = new BFSAnimation(canvas, grid);
 				bfs.setDistancesVisible(false);
-				bfs.runAnimation(grid.cell(start));
+				bfs.runAnimation(grid.cell(startPosition));
 			}
 		});
 	}

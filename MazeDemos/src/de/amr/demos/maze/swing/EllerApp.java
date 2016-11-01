@@ -21,7 +21,7 @@ public class EllerApp extends GridSampleApp {
 	@Override
 	public void run() {
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
-			fitWindowSize(window.getWidth(), window.getHeight(), cellSize);
+			changeCellSize(cellSize);
 			new Eller(grid).accept(null);
 			new BFSAnimation(canvas, grid).runAnimation(grid.cell(GridPosition.TOP_LEFT));
 			sleep(1000);

@@ -36,40 +36,61 @@ public abstract class GridSampleApp implements Runnable {
 		EventQueue.invokeLater(app::showUI);
 	}
 
-	protected ObservableGrid<TraversalState,Integer> grid;
-	protected int cellSize;
-	protected String appName;
+	private int cellSize;
+	private String appName;
+	private boolean fullscreen;
+
+	protected ObservableGrid<TraversalState, Integer> grid;
+
 	protected JFrame window;
 	protected SwingGridCanvas canvas;
 	protected JSlider delaySlider;
-	private boolean fullscreen;
 
+	/**
+	 * Creates a sample app using all available screen space of the used display and a cell size of
+	 * 16.
+	 */
 	protected GridSampleApp(String appName) {
 		this(appName, 16);
 	}
 
+	/**
+	 * Creates a sample app using all available screen space of the used display.
+	 */
 	protected GridSampleApp(String appName, int cellSize) {
 		this.appName = appName;
+		this.cellSize = cellSize;
 		Dimension gridDimension = MazeUtils.maxGridDimensionForDisplay(cellSize);
-		init(gridDimension.width, gridDimension.height, cellSize);
+		grid = new ObservableGrid<>(gridDimension.width, gridDimension.height, UNVISITED);
 	}
 
-	protected GridSampleApp(String appName, int gridWidth, int gridHeight, int cellSize) {
+	/**
+	 * Creates a sample app large enough to display a grid with given dimensions.
+	 */
+	protected GridSampleApp(String appName, int gridColCount, int gridRowCount, int cellSize) {
 		this.appName = appName;
-		init(gridWidth, gridHeight, cellSize);
+		this.cellSize = cellSize;
+		grid = new ObservableGrid<>(gridColCount, gridRowCount, UNVISITED);
 	}
 
 	public void setFullscreen(boolean fullscreen) {
 		this.fullscreen = fullscreen;
 	}
 
-	private void init(int gridWidth, int gridHeight, int cellSize) {
-		grid = new ObservableGrid<>(gridWidth, gridHeight, UNVISITED);
-		this.cellSize = cellSize;
+	public int getCellSize() {
+		return cellSize;
 	}
 
-	protected void fitWindowSize(int windowWidth, int windowHeight, int cellSize) {
-		grid = new ObservableGrid<>(windowWidth / cellSize, windowHeight / cellSize, UNVISITED);
+	/**
+	 * Changes the cell size of the displayed grid. Can only be called after the window has been
+	 * created.
+	 * 
+	 * @param cellSize
+	 *          new grid cell size
+	 */
+	public void changeCellSize(int cellSize) {
+		this.cellSize = cellSize;
+		grid = new ObservableGrid<>(window.getWidth() / cellSize, window.getHeight() / cellSize, UNVISITED);
 		canvas.setGrid(grid);
 		canvas.setRenderingModel(changeRenderingModel(cellSize));
 		window.setTitle(composeTitle());
@@ -117,8 +138,8 @@ public abstract class GridSampleApp implements Runnable {
 	}
 
 	protected String composeTitle() {
-		return String.format("%s [%d x %d, %d cells]", appName, grid.numCols(), grid.numRows(),
-				grid.numRows() * grid.numCols());
+		return String.format("%s [%d cols %d rows %d cells @%d px]", appName, grid.numCols(), grid.numRows(),
+				grid.numCells(), cellSize);
 	}
 
 	protected void setDelay(int delay) {
