@@ -17,7 +17,7 @@ To achieve this,
 
 The implementation uses Java 8 features (streams and lambda expressions) for better readability and has no dependencies to any UI library (AWT, Swing, JavaFX).
 
-Also included is a [Swing application](MazeDemos/src/de/amr/mazes/demos/swing/app/MazeDemoApp.java) demonstrating all implemented maze generators with a control panel UI where you can select algorithms, path finders, change the grid size and the rendering type ("walls" vs. "passages").
+Also included is a Swing application demonstrating all implemented maze generators. Using a control panel you can select the generation algorithm, path finder algorithm, grid resolution and rendering style ("walls" vs. "passages") interactively.
 
 Implemented so far:
 
