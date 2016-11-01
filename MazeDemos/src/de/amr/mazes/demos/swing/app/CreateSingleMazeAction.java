@@ -1,12 +1,12 @@
 package de.amr.mazes.demos.swing.app;
 
+import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static java.lang.String.format;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.maze.alg.MazeAlgorithm;
 import de.amr.easy.util.StopWatch;
@@ -21,6 +21,7 @@ import de.amr.mazes.demos.swing.view.ControlPanel;
 public class CreateSingleMazeAction extends AbstractAction {
 
 	protected final MazeDemoApp app;
+	protected final StopWatch watch = new StopWatch();
 
 	public CreateSingleMazeAction(MazeDemoApp app) {
 		super("Create Maze");
@@ -63,36 +64,33 @@ public class CreateSingleMazeAction extends AbstractAction {
 	}
 
 	protected void generateMaze(AlgorithmInfo<?> generatorInfo) throws Exception {
-		// Prepare grid
+		app.showMessage(format("\n%s (%d cells)", generatorInfo.getDescription(), app.grid().numCells()));
+
+		// Reset grid
 		app.grid().setEventsEnabled(false);
 		app.grid().clearContent();
-		app.grid().setDefaultContent(TraversalState.UNVISITED);
+		app.grid().setDefaultContent(UNVISITED);
 		app.grid().removeEdges();
 		app.grid().setEventsEnabled(true);
 
-		app.showMessage(String.format("%d cells, %s", app.grid().numCells(), generatorInfo.getDescription()));
+		app.canvas().clear();
 
-		// Create generator object (must happen after grid preparation)
+		// Create generator instance
 		MazeAlgorithm generator = (MazeAlgorithm) generatorInfo.getAlgorithmClass().getConstructor(Grid2D.class)
 				.newInstance(app.model.getGrid());
 
-		app.canvas().resetRenderingModel();
-		if (app.grid().edgeCount() > 0) {
-			app.canvas().render();
-		}
-
+		// Create maze
 		Integer startCell = app.grid().cell(app.model.getGenerationStart());
 		if (app.model.isGenerationAnimated()) {
+			// event handlers do the rendering
 			generator.accept(startCell);
 		} else {
-			// Silent generation without animation
+			// no animation, must render explicitly
 			app.canvas().stopListening();
-			StopWatch watch = new StopWatch();
 			watch.runAndMeasure(() -> generator.accept(startCell));
-			app.showMessage(format("Done in %.6f seconds.", watch.getSeconds()));
-			// Render maze
-			app.canvas().clear();
-			app.canvas().render();
+			app.showMessage(format("Generation time: %.6f seconds.", watch.getSeconds()));
+			watch.runAndMeasure(() -> app.canvas().render());
+			app.showMessage(format("Rendering time:  %.6f seconds.", watch.getSeconds()));
 			app.canvas().startListening();
 		}
 	}
@@ -100,17 +98,19 @@ public class CreateSingleMazeAction extends AbstractAction {
 	protected void runPathFinder(AlgorithmInfo<?> pathFinder) {
 		final Integer source = app.grid().cell(app.model.getPathFinderSource());
 		final Integer target = app.grid().cell(app.model.getPathFinderTarget());
-
 		if (pathFinder.getAlgorithmClass() == BFSAnimation.class) {
 			final BFSAnimation bfs = new BFSAnimation(app.canvas(), app.grid());
-			bfs.runAnimation(source);
+			watch.runAndMeasure(() -> bfs.runAnimation(source));
+			app.showMessage(format("BFS time: %.6f seconds.", watch.getSeconds()));
+
 			if (app.model.isLongestPathHighlighted()) {
 				bfs.showPath(bfs.getMaxDistanceCell());
 			} else {
 				bfs.showPath(app.grid().cell(app.model.getPathFinderTarget()));
 			}
 		} else if (pathFinder.getAlgorithmClass() == DFSAnimation.class) {
-			new DFSAnimation(app.canvas(), app.grid(), source, target).runAnimation();
+			watch.runAndMeasure(() -> new DFSAnimation(app.canvas(), app.grid(), source, target).runAnimation());
+			app.showMessage(format("DFS time: %.6f seconds.", watch.getSeconds()));
 		}
 	}
 }
