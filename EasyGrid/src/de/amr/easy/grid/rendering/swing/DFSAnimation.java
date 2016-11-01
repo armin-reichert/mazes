@@ -1,4 +1,4 @@
-package de.amr.mazes.demos.swing.rendering;
+package de.amr.easy.grid.rendering.swing;
 
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
@@ -11,8 +11,6 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalListener;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.ObservableNakedGrid2D;
-import de.amr.easy.grid.rendering.swing.SwingDefaultGridRenderingModel;
-import de.amr.easy.grid.rendering.swing.SwingGridCanvas;
 
 /**
  * Animation of depth-first-search path finding.

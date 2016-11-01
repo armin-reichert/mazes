@@ -1,11 +1,11 @@
 package de.amr.mazes.demos.grid;
 
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
-import static de.amr.easy.maze.misc.Utils.log;
+import static de.amr.easy.maze.misc.MazeUtils.log;
 import static de.amr.mazes.demos.grid.CurveUtil.followCurve;
 
 import de.amr.easy.grid.iterators.curves.PeanoCurve;
-import de.amr.mazes.demos.swing.rendering.BFSAnimation;
+import de.amr.easy.grid.rendering.swing.BFSAnimation;
 
 public class PeanoCurveApp extends GridSampleApp {
 

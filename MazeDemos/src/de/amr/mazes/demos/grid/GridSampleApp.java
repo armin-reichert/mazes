@@ -22,7 +22,7 @@ import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.rendering.swing.SwingDefaultGridRenderingModel;
 import de.amr.easy.grid.rendering.swing.SwingGridCanvas;
 import de.amr.easy.grid.rendering.swing.SwingGridRenderingModel;
-import de.amr.mazes.demos.misc.Utils;
+import de.amr.easy.maze.misc.MazeUtils;
 
 /**
  * Base class for grid sample applications.
@@ -32,7 +32,7 @@ import de.amr.mazes.demos.misc.Utils;
 public abstract class GridSampleApp implements Runnable {
 
 	public static void launch(GridSampleApp app) {
-		Utils.setLAF("Nimbus");
+		MazeUtils.setLAF("Nimbus");
 		EventQueue.invokeLater(app::showUI);
 	}
 
@@ -50,7 +50,7 @@ public abstract class GridSampleApp implements Runnable {
 
 	protected GridSampleApp(String appName, int cellSize) {
 		this.appName = appName;
-		Dimension gridDimension = Utils.maxGridDimensionForDisplay(cellSize);
+		Dimension gridDimension = MazeUtils.maxGridDimensionForDisplay(cellSize);
 		init(gridDimension.width, gridDimension.height, cellSize);
 	}
 

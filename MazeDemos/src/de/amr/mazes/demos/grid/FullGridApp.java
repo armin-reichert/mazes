@@ -4,12 +4,12 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.mazes.demos.misc.Utils;
+import de.amr.easy.maze.misc.MazeUtils;
 
 public class FullGridApp extends GridSampleApp {
 
 	public static void main(String[] args) {
-		Dimension dim = Utils.maxGridDimensionForDisplay(2);
+		Dimension dim = MazeUtils.maxGridDimensionForDisplay(2);
 		launch(new FullGridApp(dim.width, dim.height, 2));
 	}
 

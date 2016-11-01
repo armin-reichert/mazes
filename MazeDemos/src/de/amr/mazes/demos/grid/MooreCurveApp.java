@@ -1,12 +1,12 @@
 package de.amr.mazes.demos.grid;
 
-import static de.amr.easy.maze.misc.Utils.log;
+import static de.amr.easy.maze.misc.MazeUtils.log;
 import static de.amr.mazes.demos.grid.CurveUtil.followCurve;
 
 import java.util.stream.IntStream;
 
 import de.amr.easy.grid.iterators.curves.MooreCurve;
-import de.amr.mazes.demos.swing.rendering.BFSAnimation;
+import de.amr.easy.grid.rendering.swing.BFSAnimation;
 
 /**
  * Creates Hilbert-Moore curves of different sizes and shows an animation of the creation and

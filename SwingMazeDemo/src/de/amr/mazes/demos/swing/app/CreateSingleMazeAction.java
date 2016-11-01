@@ -8,11 +8,11 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.rendering.swing.BFSAnimation;
+import de.amr.easy.grid.rendering.swing.DFSAnimation;
 import de.amr.easy.maze.alg.MazeAlgorithm;
 import de.amr.easy.util.StopWatch;
 import de.amr.mazes.demos.swing.model.AlgorithmInfo;
-import de.amr.mazes.demos.swing.rendering.BFSAnimation;
-import de.amr.mazes.demos.swing.rendering.DFSAnimation;
 import de.amr.mazes.demos.swing.view.ControlPanel;
 
 /**

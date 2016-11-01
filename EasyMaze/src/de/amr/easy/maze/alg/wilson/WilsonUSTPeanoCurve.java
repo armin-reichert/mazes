@@ -1,8 +1,8 @@
 package de.amr.easy.maze.alg.wilson;
 
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
-import static de.amr.easy.maze.misc.Utils.log;
-import static de.amr.easy.maze.misc.Utils.nextPow;
+import static de.amr.easy.maze.misc.MazeUtils.log;
+import static de.amr.easy.maze.misc.MazeUtils.nextPow;
 import static java.lang.Math.max;
 
 import java.util.ArrayList;

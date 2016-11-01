@@ -8,14 +8,14 @@ import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.grid.api.GridPosition.TOP_RIGHT;
-import static de.amr.easy.maze.misc.Utils.log;
+import static de.amr.easy.maze.misc.MazeUtils.log;
 import static de.amr.mazes.demos.grid.CurveUtil.followCurve;
 
 import java.util.stream.Stream;
 
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.iterators.curves.HilbertCurve;
-import de.amr.mazes.demos.swing.rendering.BFSAnimation;
+import de.amr.easy.grid.rendering.swing.BFSAnimation;
 
 /**
  * Creates Hilbert curves of different sizes and shows an animation of the creation and

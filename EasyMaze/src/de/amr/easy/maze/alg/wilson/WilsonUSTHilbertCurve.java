@@ -5,8 +5,8 @@ import static de.amr.easy.grid.api.Direction.N;
 import static de.amr.easy.grid.api.Direction.S;
 import static de.amr.easy.grid.api.Direction.W;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
-import static de.amr.easy.maze.misc.Utils.log;
-import static de.amr.easy.maze.misc.Utils.nextPow;
+import static de.amr.easy.maze.misc.MazeUtils.log;
+import static de.amr.easy.maze.misc.MazeUtils.nextPow;
 import static java.lang.Math.max;
 
 import java.util.ArrayList;

@@ -11,6 +11,8 @@ import java.util.stream.Stream;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.ObservableGrid;
+import de.amr.easy.grid.rendering.swing.BFSAnimation;
+import de.amr.easy.grid.rendering.swing.DFSAnimation;
 import de.amr.easy.maze.alg.AldousBroderUST;
 import de.amr.easy.maze.alg.BinaryTree;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
@@ -43,8 +45,6 @@ import de.amr.easy.maze.alg.wilson.WilsonUSTRandomCell;
 import de.amr.easy.maze.alg.wilson.WilsonUSTRecursiveCrosses;
 import de.amr.easy.maze.alg.wilson.WilsonUSTRightToLeftSweep;
 import de.amr.easy.maze.alg.wilson.WilsonUSTRowsTopDown;
-import de.amr.mazes.demos.swing.rendering.BFSAnimation;
-import de.amr.mazes.demos.swing.rendering.DFSAnimation;
 
 /**
  * Data model of the maze demo application.

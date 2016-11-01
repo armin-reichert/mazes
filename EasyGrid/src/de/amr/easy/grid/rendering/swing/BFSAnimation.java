@@ -1,4 +1,4 @@
-package de.amr.mazes.demos.swing.rendering;
+package de.amr.easy.grid.rendering.swing;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -11,8 +11,6 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalListener;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.ObservableNakedGrid2D;
-import de.amr.easy.grid.rendering.swing.SwingDefaultGridRenderingModel;
-import de.amr.easy.grid.rendering.swing.SwingGridCanvas;
 
 /**
  * Animation of breadth-first-search path finding. Shows the distances as the BFS traverses the

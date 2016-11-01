@@ -13,7 +13,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JSlider;
 
 import de.amr.easy.grid.impl.ObservableGrid;
-import de.amr.mazes.demos.misc.Utils;
+import de.amr.easy.maze.misc.MazeUtils;
+import de.amr.easy.util.GridUtils;
 import de.amr.mazes.demos.swing.app.CreateAllMazesAction;
 import de.amr.mazes.demos.swing.app.CreateSingleMazeAction;
 import de.amr.mazes.demos.swing.app.MazeDemoApp;
@@ -46,7 +47,7 @@ public class SettingsWindow extends JFrame {
 		controlPanel.getResolutionSelector().setModel(new DefaultComboBoxModel<>(
 			Arrays.stream(app.model.getGridCellSizes())
 				.mapToObj(cellSize -> {
-					Dimension dim = Utils.maxGridDimensionForDisplay(cellSize);
+					Dimension dim = MazeUtils.maxGridDimensionForDisplay(cellSize);
 					return String.format("%d cells (%d x %d @ %d)", 
 							dim.width * dim.height, dim.width, dim.height, cellSize);
 				})
@@ -57,13 +58,13 @@ public class SettingsWindow extends JFrame {
 		controlPanel.getAlgorithmLabel().setText(algorithmMenu.getSelectedAlgorithm().getDescription());
 
 		controlPanel.getResolutionSelector()
-				.setSelectedIndex(Utils.indexOf(app.model.getGridCellSize(), app.model.getGridCellSizes()));
+				.setSelectedIndex(GridUtils.indexOf(app.model.getGridCellSize(), app.model.getGridCellSizes()));
 
 		controlPanel.getResolutionSelector().addActionListener(e -> {
 			JComboBox<?> selector = (JComboBox<?>) e.getSource();
 			int cellSize = app.model.getGridCellSizes()[selector.getSelectedIndex()];
 			app.model.setGridCellSize(cellSize);
-			Dimension dim = Utils.maxGridDimensionForDisplay(cellSize);
+			Dimension dim = MazeUtils.maxGridDimensionForDisplay(cellSize);
 			app.model.setGrid(new ObservableGrid<>(dim.width, dim.height, UNVISITED));
 			app.updateCanvas();
 		});

@@ -4,9 +4,9 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
 import java.util.stream.IntStream;
 
+import de.amr.easy.grid.rendering.swing.BFSAnimation;
 import de.amr.easy.maze.alg.EllerInsideOut;
 import de.amr.mazes.demos.grid.GridSampleApp;
-import de.amr.mazes.demos.swing.rendering.BFSAnimation;
 
 public class ArminsApp extends GridSampleApp {
 

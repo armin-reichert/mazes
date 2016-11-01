@@ -4,7 +4,6 @@ import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
-import static de.amr.mazes.demos.misc.Utils.maxGridDimensionForDisplay;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -12,7 +11,7 @@ import java.awt.EventQueue;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.rendering.swing.SwingGridCanvas;
-import de.amr.mazes.demos.misc.Utils;
+import de.amr.easy.maze.misc.MazeUtils;
 import de.amr.mazes.demos.swing.model.MazeDemoModel;
 import de.amr.mazes.demos.swing.view.MazeWindow;
 import de.amr.mazes.demos.swing.view.SettingsWindow;
@@ -26,7 +25,7 @@ import de.amr.mazes.demos.swing.view.SettingsWindow;
 public class MazeDemoApp {
 
 	public static void main(String... args) {
-		Utils.setLAF("Nimbus");
+		MazeUtils.setLAF("Nimbus");
 		EventQueue.invokeLater(MazeDemoApp::new);
 	}
 
@@ -50,7 +49,7 @@ public class MazeDemoApp {
 		model.setHidingControlsWhenRunning(false);
 		model.setLongestPathHighlighted(false);
 		model.setDelay(0);
-		Dimension size = maxGridDimensionForDisplay(model.getGridCellSize());
+		Dimension size = MazeUtils.maxGridDimensionForDisplay(model.getGridCellSize());
 		model.setGrid(new ObservableGrid<>(size.width, size.height, UNVISITED));
 
 		settingsWindow = new SettingsWindow(this);
@@ -66,7 +65,7 @@ public class MazeDemoApp {
 		return mazeWindow.getCanvas();
 	}
 
-	public ObservableGrid<TraversalState,Integer> grid() {
+	public ObservableGrid<TraversalState, Integer> grid() {
 		return model.getGrid();
 	}
 
