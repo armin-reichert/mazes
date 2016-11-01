@@ -27,7 +27,7 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 	public ReverseDeleteMST(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
 		grid.makeFullGrid();
-		grid.setDefault(COMPLETED);
+		grid.setDefaultContent(COMPLETED);
 	}
 
 	@Override

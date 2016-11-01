@@ -30,7 +30,7 @@ public interface VertexContent<V, Content> {
 	/**
 	 * Clears the complete grid content.
 	 */
-	public void clear();
+	public void clearContent();
 
 	/**
 	 * Sets the default content for the cells
@@ -38,5 +38,5 @@ public interface VertexContent<V, Content> {
 	 * @param data
 	 *          the default content
 	 */
-	public void setDefault(Content data);
+	public void setDefaultContent(Content data);
 }

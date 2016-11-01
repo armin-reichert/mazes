@@ -32,12 +32,12 @@ class DenseGridContent<Content> implements VertexContent<Integer, Content> {
 	}
 
 	@Override
-	public void clear() {
+	public void clearContent() {
 		cellContent = new Object[cellContent.length];
 	}
 
 	@Override
-	public void setDefault(Content content) {
+	public void setDefaultContent(Content content) {
 		defaultCellContent = content;
 	}
 }

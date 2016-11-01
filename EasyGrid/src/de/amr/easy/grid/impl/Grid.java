@@ -21,7 +21,7 @@ public class Grid<Content, PassageWeight extends Comparable<PassageWeight>> exte
 	public Grid(int numCols, int numRows, Content defaultContent, boolean sparse) {
 		super(numCols, numRows);
 		gridContent = sparse ? new SparseGridContent<>() : new DenseGridContent<>(numCols * numRows);
-		gridContent.setDefault(defaultContent);
+		gridContent.setDefaultContent(defaultContent);
 	}
 
 	public Grid(int numCols, int numRows, Content defaultContent) {
@@ -31,13 +31,13 @@ public class Grid<Content, PassageWeight extends Comparable<PassageWeight>> exte
 	// --- {@link GridContent} interface ---
 
 	@Override
-	public void clear() {
-		gridContent.clear();
+	public void clearContent() {
+		gridContent.clearContent();
 	}
 
 	@Override
-	public void setDefault(Content cellContent) {
-		gridContent.setDefault(cellContent);
+	public void setDefaultContent(Content cellContent) {
+		gridContent.setDefaultContent(cellContent);
 	}
 
 	@Override

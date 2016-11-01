@@ -30,12 +30,12 @@ class SparseGridContent<Content> implements VertexContent<Integer, Content> {
 	}
 
 	@Override
-	public void clear() {
+	public void clearContent() {
 		gridContent.clear();
 	}
 
 	@Override
-	public void setDefault(Content cellContent) {
+	public void setDefaultContent(Content cellContent) {
 		defaultCellContent = cellContent;
 	}
 }

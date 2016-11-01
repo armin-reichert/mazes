@@ -3,12 +3,12 @@ package de.amr.mazes.demos.swing.app;
 import static java.lang.String.format;
 
 import java.awt.event.ActionEvent;
-import java.util.function.Consumer;
 
 import javax.swing.AbstractAction;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.maze.alg.MazeAlgorithm;
 import de.amr.easy.util.StopWatch;
 import de.amr.mazes.demos.swing.model.AlgorithmInfo;
 import de.amr.mazes.demos.swing.rendering.BFSAnimation;
@@ -29,7 +29,6 @@ public class CreateSingleMazeAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app.canvas().setDelay(app.model.getDelay());
 		app.canvas().resetRenderingModel();
 		app.canvas().clear();
 
@@ -66,16 +65,15 @@ public class CreateSingleMazeAction extends AbstractAction {
 	protected void generateMaze(AlgorithmInfo<?> generatorInfo) throws Exception {
 		// Prepare grid
 		app.grid().setEventsEnabled(false);
-		app.grid().clear();
-		app.grid().setDefault(TraversalState.UNVISITED);
+		app.grid().clearContent();
+		app.grid().setDefaultContent(TraversalState.UNVISITED);
 		app.grid().removeEdges();
 		app.grid().setEventsEnabled(true);
 
 		app.showMessage(String.format("%d cells, %s", app.grid().numCells(), generatorInfo.getDescription()));
 
 		// Create generator object (must happen after grid preparation)
-		@SuppressWarnings("unchecked")
-		Consumer<Integer> generator = (Consumer<Integer>) generatorInfo.getAlgorithmClass().getConstructor(Grid2D.class)
+		MazeAlgorithm generator = (MazeAlgorithm) generatorInfo.getAlgorithmClass().getConstructor(Grid2D.class)
 				.newInstance(app.model.getGrid());
 
 		app.canvas().resetRenderingModel();

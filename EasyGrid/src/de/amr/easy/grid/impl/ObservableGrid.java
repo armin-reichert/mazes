@@ -22,7 +22,7 @@ public class ObservableGrid<Content, PassageWeight extends Comparable<PassageWei
 	public ObservableGrid(int numCols, int numRows, Content defaultContent, boolean sparse) {
 		super(numCols, numRows);
 		gridContent = sparse ? new SparseGridContent<>() : new DenseGridContent<>(numCols * numRows);
-		gridContent.setDefault(defaultContent);
+		gridContent.setDefaultContent(defaultContent);
 	}
 
 	public ObservableGrid(int numCols, int numRows, Content defaultContent) {
@@ -32,13 +32,13 @@ public class ObservableGrid<Content, PassageWeight extends Comparable<PassageWei
 	// --- {@link GraphContent} interface ---
 
 	@Override
-	public void clear() {
-		gridContent.clear();
+	public void clearContent() {
+		gridContent.clearContent();
 	}
 
 	@Override
-	public void setDefault(Content content) {
-		gridContent.setDefault(content);
+	public void setDefaultContent(Content content) {
+		gridContent.setDefaultContent(content);
 		fireGraphChange(this);
 	}
 

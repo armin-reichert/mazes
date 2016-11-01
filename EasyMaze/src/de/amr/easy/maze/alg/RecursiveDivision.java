@@ -21,7 +21,7 @@ public class RecursiveDivision extends MazeAlgorithm {
 	public RecursiveDivision(Grid2D<TraversalState,Integer> grid) {
 		super(grid);
 		grid.makeFullGrid();
-		grid.setDefault(COMPLETED);
+		grid.setDefaultContent(COMPLETED);
 	}
 
 	@Override

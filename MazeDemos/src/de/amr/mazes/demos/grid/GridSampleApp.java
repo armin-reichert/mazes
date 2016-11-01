@@ -111,7 +111,7 @@ public abstract class GridSampleApp implements Runnable {
 
 	protected void clear() {
 		grid.removeEdges();
-		grid.clear();
+		grid.clearContent();
 		canvas.resetRenderingModel();
 		canvas.clear();
 	}
