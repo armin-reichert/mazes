@@ -6,7 +6,7 @@ import static de.amr.easy.maze.misc.MazeUtils.log;
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.GridSampleApp;
-import de.amr.easy.grid.iterators.curves.MooreCurve;
+import de.amr.easy.grid.iterators.curves.lsystem.MooreLCurve;
 import de.amr.easy.grid.rendering.swing.BFSAnimation;
 
 /**
@@ -37,7 +37,7 @@ public class MooreCurveApp extends GridSampleApp {
 			setCellSize(1024 / n);
 			int startCol = n / 2, startRow = n - 1;
 			Integer start = grid.cell(startCol, startRow);
-			MooreCurve moore = new MooreCurve(log(2, n));
+			MooreLCurve moore = new MooreLCurve(log(2, n));
 			walkCurve(grid, moore, start, () -> window.setTitle(composeTitle()));
 			BFSAnimation bfs = new BFSAnimation(canvas, grid);
 			bfs.setDistancesVisible(false);

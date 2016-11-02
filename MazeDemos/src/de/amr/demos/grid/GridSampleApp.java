@@ -149,7 +149,7 @@ public abstract class GridSampleApp implements Runnable {
 		if (fullscreen) {
 			window.setUndecorated(true);
 			window.setAlwaysOnTop(true);
-			canvas.setSize(screenRes.width, screenRes.height);
+			window.setSize(screenRes.width, screenRes.height);
 		}
 		window.pack();
 		window.setVisible(true);

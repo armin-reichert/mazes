@@ -1,12 +1,14 @@
-package de.amr.easy.grid.iterators.curves;
+package de.amr.easy.grid.iterators.curves.lsystem;
+
+import de.amr.easy.grid.iterators.curves.Curve;
 
 /**
  * Computes a Moore curve from the following L-system:
  * <p>
  * <code>
- * r1: S -> L f L + f + L f L <br/>
- * r2: L -> - R f + L f L + f R - <br/>
- * r3: R -> + L f - R f R - f L + </br>
+ * S -> L f L + f + L f L <br/>
+ * L -> - R f + L f L + f R - <br/>
+ * R -> + L f - R f R - f L + </br>
  * </code>
  * <p>
  * with non-terminals <code>{S, L, R}</code> and terminals <code>{f, +, -}</code>.
@@ -26,10 +28,10 @@ package de.amr.easy.grid.iterators.curves;
  * @see http://cph.phys.spbu.ru/ACOPhys/materials/bader/sfc.pdf
  * @see https://en.wikipedia.org/wiki/Moore_curve
  */
-public class MooreCurve extends Curve {
-	
-	public MooreCurve(int i) {
-		r1(i);
+public class MooreLCurve extends Curve {
+
+	public MooreLCurve(int i) {
+		S(i);
 	}
 
 	/**
@@ -38,10 +40,18 @@ public class MooreCurve extends Curve {
 	 * @param n
 	 *          recursion depth
 	 */
-	private void r1(int n) {
-		/*@formatter:off*/
-		if (n > 0) { r2(n - 1);forward();r2(n - 1);left();forward();left();r2(n - 1);forward();r2(n - 1); }
-		/*@formatter:on*/
+	private void S(int n) {
+		if (n > 0) {
+			L(n - 1);
+			forward();
+			L(n - 1);
+			left90();
+			forward();
+			left90();
+			L(n - 1);
+			forward();
+			L(n - 1);
+		}
 	}
 
 	/**
@@ -50,10 +60,20 @@ public class MooreCurve extends Curve {
 	 * @param n
 	 *          recursion depth
 	 */
-	private void r2(int n) {
-		/*@formatter:off*/
-		if (n > 0) { right();r3(n - 1);forward();left();r2(n - 1);forward();r2(n - 1);left();forward();r3(n - 1);right();	}
-		/*@formatter:on*/
+	private void L(int n) {
+		if (n > 0) {
+			right90();
+			R(n - 1);
+			forward();
+			left90();
+			L(n - 1);
+			forward();
+			L(n - 1);
+			left90();
+			forward();
+			R(n - 1);
+			right90();
+		}
 	}
 
 	/**
@@ -62,9 +82,19 @@ public class MooreCurve extends Curve {
 	 * @param n
 	 *          recursion depth
 	 */
-	private void r3(int n) {
-		/*@formatter:off*/
-		if (n > 0) { left();r2(n - 1);forward();right();r3(n - 1);forward();r3(n - 1);right();forward();r2(n - 1);left(); }
-		/*@formatter:on*/
+	private void R(int n) {
+		if (n > 0) {
+			left90();
+			L(n - 1);
+			forward();
+			right90();
+			R(n - 1);
+			forward();
+			R(n - 1);
+			right90();
+			forward();
+			L(n - 1);
+			left90();
+		}
 	}
 }
