@@ -26,11 +26,11 @@ public abstract class Curve implements Sequence<Direction> {
 	}
 
 	protected void left() {
-		compas = compas.turnLeft();
+		compas.turnLeft();
 	}
 
 	protected void right() {
-		compas = compas.turnRight();
+		compas.turnRight();
 	}
 
 	@Override
