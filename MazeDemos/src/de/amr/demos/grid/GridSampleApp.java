@@ -102,9 +102,13 @@ public abstract class GridSampleApp implements Runnable {
 		return height;
 	}
 
-	public String getTitle() {
-		return format("%s [%d cols %d rows %d cells @%d px]", appName, grid.numCols(), grid.numRows(), grid.numCells(),
-				cellSize);
+	private String createTitle() {
+		return format("%s [%d cols %d rows %d cells %d edges @%d px]", appName, grid.numCols(), grid.numRows(),
+				grid.numCells(), grid.edgeCount(), cellSize);
+	}
+	
+	public void updateTitle() {
+		window.setTitle(createTitle());
 	}
 
 	public int getCellSize() {
@@ -124,7 +128,7 @@ public abstract class GridSampleApp implements Runnable {
 		canvas.setGrid(grid);
 		renderingModel.setCellSize(cellSize);
 		canvas.setRenderingModel(renderingModel);
-		window.setTitle(getTitle());
+		window.setTitle(createTitle());
 	}
 
 	public void setDelay(int delay) {
@@ -142,7 +146,7 @@ public abstract class GridSampleApp implements Runnable {
 
 		window = new JFrame();
 		window.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		window.setTitle(getTitle());
+		window.setTitle(createTitle());
 		window.setBackground(Color.BLACK);
 		window.add(canvas, BorderLayout.CENTER);
 		if (fullscreen) {

@@ -23,7 +23,7 @@ public class PeanoCurveApp extends GridSampleApp {
 		setDelay(0);
 		int depth = log(3, grid.numCols());
 		while (true) {
-			walkCurve(grid, new PeanoCurve(depth), grid.cell(BOTTOM_LEFT), () -> window.setTitle(getTitle()));
+			walkCurve(grid, new PeanoCurve(depth), grid.cell(BOTTOM_LEFT), this::updateTitle);
 			new BFSAnimation(canvas, grid).runAnimation(grid.cell(BOTTOM_LEFT));
 			sleep(1000);
 			clear();

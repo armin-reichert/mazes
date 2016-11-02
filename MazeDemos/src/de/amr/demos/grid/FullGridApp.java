@@ -1,8 +1,10 @@
 package de.amr.demos.grid;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
+import static java.lang.String.format;
+import static java.lang.System.out;
 
-import java.awt.EventQueue;
+import de.amr.easy.util.StopWatch;
 
 public class FullGridApp extends GridSampleApp {
 
@@ -19,11 +21,8 @@ public class FullGridApp extends GridSampleApp {
 	@Override
 	public void run() {
 		setDelay(0);
-		EventQueue.invokeLater(() -> {
-			long start = System.nanoTime();
-			canvas.render();
-			long duration = (System.nanoTime() - start) / 1000000L;
-			System.err.println("Grid rendering took " + duration + " milliseconds");
-		});
+		StopWatch watch = new StopWatch();
+		watch.runAndMeasure(canvas::render);
+		out.println(format("Grid rendering took %.3f seconds", watch.getSeconds()));
 	}
 }

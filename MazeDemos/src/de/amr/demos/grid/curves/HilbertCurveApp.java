@@ -26,20 +26,12 @@ import de.amr.easy.grid.rendering.swing.BFSAnimation;
  */
 public class HilbertCurveApp extends GridSampleApp {
 
-	private static final int MIN_CELLSIZE = 2;
-	private static final int MAX_CELLSIZE = 256;
-
 	public static void main(String[] args) {
 		launch(new HilbertCurveApp());
 	}
 
 	private HilbertCurveApp() {
-		super("Hilbert Curve", 512, 512, MAX_CELLSIZE);
-	}
-
-	@Override
-	public String getTitle() {
-		return super.getTitle() + ", " + grid.edgeCount() + " edges";
+		super("Hilbert Curve", 512, 512, 256);
 	}
 
 	private HilbertCurve createCurve(GridPosition start, int depth) {
@@ -60,12 +52,12 @@ public class HilbertCurveApp extends GridSampleApp {
 	@Override
 	public void run() {
 		Stream.of(TOP_RIGHT, TOP_LEFT, BOTTOM_LEFT, BOTTOM_RIGHT).forEach(startPosition -> {
-			for (int cellSize = MAX_CELLSIZE; cellSize >= MIN_CELLSIZE; cellSize /= 2) {
+			for (int cellSize = 256; cellSize >= 2; cellSize /= 2) {
 				setCellSize(cellSize);
 				setDelay(cellSize > 16 ? 5 : 2);
 				int depth = log(2, getWidth() / cellSize);
 				HilbertCurve hilbert = createCurve(startPosition, depth);
-				walkCurve(grid, hilbert, grid.cell(startPosition), () -> window.setTitle(getTitle()));
+				walkCurve(grid, hilbert, grid.cell(startPosition), this::updateTitle);
 				BFSAnimation bfs = new BFSAnimation(canvas, grid);
 				bfs.setDistancesVisible(false);
 				bfs.runAnimation(grid.cell(startPosition));

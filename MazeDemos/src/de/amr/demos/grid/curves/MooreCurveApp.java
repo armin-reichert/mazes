@@ -26,11 +26,6 @@ public class MooreCurveApp extends GridSampleApp {
 	}
 
 	@Override
-	public String getTitle() {
-		return super.getTitle() + ", " + grid.edgeCount() + " edges";
-	}
-
-	@Override
 	public void run() {
 		IntStream.of(2, 4, 8, 16, 32, 64, 128, 256).forEach(n -> {
 			setDelay(n < 16 ? 3 : 0);
@@ -38,7 +33,7 @@ public class MooreCurveApp extends GridSampleApp {
 			int startCol = n / 2, startRow = n - 1;
 			Integer start = grid.cell(startCol, startRow);
 			MooreLCurve moore = new MooreLCurve(log(2, n));
-			walkCurve(grid, moore, start, () -> window.setTitle(getTitle()));
+			walkCurve(grid, moore, start, this::updateTitle);
 			BFSAnimation bfs = new BFSAnimation(canvas, grid);
 			bfs.setDistancesVisible(false);
 			bfs.runAnimation(start);
