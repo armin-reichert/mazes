@@ -38,8 +38,8 @@ public class HilbertCurveApp extends GridSampleApp {
 	}
 
 	@Override
-	public String composeTitle() {
-		return super.composeTitle() + ", " + grid.edgeCount() + " edges";
+	public String getTitle() {
+		return super.getTitle() + ", " + grid.edgeCount() + " edges";
 	}
 
 	private HilbertCurve createCurve(GridPosition start, int depth) {
@@ -65,7 +65,7 @@ public class HilbertCurveApp extends GridSampleApp {
 				setDelay(cellSize > 16 ? 5 : 2);
 				int depth = log(2, getWidth() / cellSize);
 				HilbertCurve hilbert = createCurve(startPosition, depth);
-				walkCurve(grid, hilbert, grid.cell(startPosition), () -> window.setTitle(composeTitle()));
+				walkCurve(grid, hilbert, grid.cell(startPosition), () -> window.setTitle(getTitle()));
 				BFSAnimation bfs = new BFSAnimation(canvas, grid);
 				bfs.setDistancesVisible(false);
 				bfs.runAnimation(grid.cell(startPosition));

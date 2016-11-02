@@ -26,8 +26,8 @@ public class MooreCurveApp extends GridSampleApp {
 	}
 
 	@Override
-	public String composeTitle() {
-		return super.composeTitle() + ", " + grid.edgeCount() + " edges";
+	public String getTitle() {
+		return super.getTitle() + ", " + grid.edgeCount() + " edges";
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class MooreCurveApp extends GridSampleApp {
 			int startCol = n / 2, startRow = n - 1;
 			Integer start = grid.cell(startCol, startRow);
 			MooreLCurve moore = new MooreLCurve(log(2, n));
-			walkCurve(grid, moore, start, () -> window.setTitle(composeTitle()));
+			walkCurve(grid, moore, start, () -> window.setTitle(getTitle()));
 			BFSAnimation bfs = new BFSAnimation(canvas, grid);
 			bfs.setDistancesVisible(false);
 			bfs.runAnimation(start);

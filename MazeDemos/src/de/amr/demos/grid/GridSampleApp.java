@@ -32,7 +32,7 @@ public abstract class GridSampleApp implements Runnable {
 
 	public static void launch(GridSampleApp app) {
 		setLAF("Nimbus");
-		invokeLater(app::showUI);
+		invokeLater(app::start);
 	}
 
 	private final String appName;
@@ -40,9 +40,7 @@ public abstract class GridSampleApp implements Runnable {
 	private final int height;
 	private final boolean fullscreen;
 	private int cellSize;
-
 	protected ObservableGrid<TraversalState, Integer> grid;
-
 	protected JFrame window;
 	protected SwingGridCanvas canvas;
 
@@ -104,6 +102,11 @@ public abstract class GridSampleApp implements Runnable {
 		return height;
 	}
 
+	public String getTitle() {
+		return format("%s [%d cols %d rows %d cells @%d px]", appName, grid.numCols(), grid.numRows(), grid.numCells(),
+				cellSize);
+	}
+
 	public int getCellSize() {
 		return cellSize;
 	}
@@ -121,24 +124,26 @@ public abstract class GridSampleApp implements Runnable {
 		canvas.setGrid(grid);
 		renderingModel.setCellSize(cellSize);
 		canvas.setRenderingModel(renderingModel);
-		window.setTitle(composeTitle());
+		window.setTitle(getTitle());
 	}
 
 	public void setDelay(int delay) {
 		canvas.setDelay(delay);
 	}
 
-	private void showUI() {
-		window = new JFrame();
-		window.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		window.setTitle(composeTitle());
-		window.setBackground(Color.BLACK);
+	private void start() {
 		renderingModel.setCellSize(cellSize);
+
 		canvas = new SwingGridCanvas(grid, renderingModel);
+		canvas.setBackground(Color.BLACK);
+		canvas.setDelay(0);
 		canvas.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "exit");
 		canvas.getActionMap().put("exit", exitAction);
-		canvas.setDelay(0);
-		canvas.setBackground(Color.BLACK);
+
+		window = new JFrame();
+		window.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		window.setTitle(getTitle());
+		window.setBackground(Color.BLACK);
 		window.add(canvas, BorderLayout.CENTER);
 		if (fullscreen) {
 			window.setPreferredSize(new Dimension(width, height));
@@ -160,11 +165,6 @@ public abstract class GridSampleApp implements Runnable {
 		grid.clearContent();
 		canvas.resetRenderingModel();
 		canvas.clear();
-	}
-
-	public String composeTitle() {
-		return format("%s [%d cols %d rows %d cells @%d px]", appName, grid.numCols(), grid.numRows(), grid.numCells(),
-				cellSize);
 	}
 
 	public void sleep(int millis) {
