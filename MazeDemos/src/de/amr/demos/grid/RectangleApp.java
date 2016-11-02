@@ -1,6 +1,7 @@
 package de.amr.demos.grid;
 
-import de.amr.easy.graph.api.TraversalState;
+import static de.amr.easy.graph.api.TraversalState.COMPLETED;
+
 import de.amr.easy.grid.iterators.shapes.Rectangle;
 import de.amr.easy.grid.iterators.traversals.ExpandingRectangle;
 
@@ -11,12 +12,12 @@ public class RectangleApp extends GridSampleApp {
 	}
 
 	public RectangleApp() {
-		super("Rectangles", 400, 300, 2);
+		super("Rectangles", 2);
 	}
 
 	@Override
 	public void run() {
-		canvas.setDelay(3);
+		canvas.setDelay(0);
 		Rectangle startRectangle = new Rectangle(grid, grid.cell(0, 0), 1, 1);
 		ExpandingRectangle expRect = new ExpandingRectangle(startRectangle);
 		expRect.setExpandHorizontally(true);
@@ -24,7 +25,7 @@ public class RectangleApp extends GridSampleApp {
 		expRect.setExpansionRate(1);
 		expRect.setMaxExpansion(grid.numCols());
 		for (Integer cell : expRect) {
-			grid.set(cell, TraversalState.COMPLETED);
+			grid.set(cell, COMPLETED);
 		}
 	}
 }

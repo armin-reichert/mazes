@@ -1,21 +1,18 @@
 package de.amr.demos.grid;
 
-import java.awt.Dimension;
-import java.awt.EventQueue;
+import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 
-import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.maze.misc.MazeUtils;
+import java.awt.EventQueue;
 
 public class FullGridApp extends GridSampleApp {
 
 	public static void main(String[] args) {
-		Dimension dim = MazeUtils.maxGridDimensionForDisplay(2);
-		launch(new FullGridApp(dim.width, dim.height, 2));
+		launch(new FullGridApp());
 	}
 
-	public FullGridApp(int gridWidth, int gridHeight, int cellSize) {
-		super("Full Grid", gridWidth, gridHeight, cellSize);
-		grid.setDefaultContent(TraversalState.COMPLETED);
+	public FullGridApp() {
+		super("Full Grid", 2);
+		grid.setDefaultContent(COMPLETED);
 		grid.makeFullGrid();
 	}
 

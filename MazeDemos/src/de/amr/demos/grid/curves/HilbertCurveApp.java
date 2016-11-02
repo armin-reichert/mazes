@@ -26,8 +26,6 @@ import de.amr.easy.grid.rendering.swing.BFSAnimation;
  */
 public class HilbertCurveApp extends GridSampleApp {
 
-	private static final int WIDTH = 512;
-	private static final int HEIGHT = 512;
 	private static final int MIN_CELLSIZE = 2;
 	private static final int MAX_CELLSIZE = 256;
 
@@ -36,11 +34,11 @@ public class HilbertCurveApp extends GridSampleApp {
 	}
 
 	private HilbertCurveApp() {
-		super("Hilbert Curve", WIDTH / MAX_CELLSIZE, HEIGHT / MAX_CELLSIZE, MAX_CELLSIZE);
+		super("Hilbert Curve", 512, 512, MAX_CELLSIZE);
 	}
 
 	@Override
-	protected String composeTitle() {
+	public String composeTitle() {
 		return super.composeTitle() + ", " + grid.edgeCount() + " edges";
 	}
 
@@ -65,12 +63,13 @@ public class HilbertCurveApp extends GridSampleApp {
 			for (int cellSize = MAX_CELLSIZE; cellSize >= MIN_CELLSIZE; cellSize /= 2) {
 				setCellSize(cellSize);
 				setDelay(cellSize > 16 ? 5 : 2);
-				int depth = log(2, WIDTH / cellSize);
+				int depth = log(2, getWidth() / cellSize);
 				HilbertCurve hilbert = createCurve(startPosition, depth);
 				walkCurve(grid, hilbert, grid.cell(startPosition), () -> window.setTitle(composeTitle()));
 				BFSAnimation bfs = new BFSAnimation(canvas, grid);
 				bfs.setDistancesVisible(false);
 				bfs.runAnimation(grid.cell(startPosition));
+				sleep(1000);
 			}
 		});
 	}

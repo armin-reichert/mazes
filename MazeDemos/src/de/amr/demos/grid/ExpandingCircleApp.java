@@ -12,7 +12,7 @@ public class ExpandingCircleApp extends GridSampleApp {
 	}
 
 	public ExpandingCircleApp() {
-		super("Expanding Circle", 300, 300, 2);
+		super("Expanding Circle", 600, 600, 2);
 	}
 
 	@Override

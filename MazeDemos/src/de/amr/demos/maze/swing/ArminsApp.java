@@ -16,7 +16,6 @@ public class ArminsApp extends GridSampleApp {
 
 	public ArminsApp() {
 		super("Armin's algorithm");
-		setFullscreen(true);
 	}
 
 	@Override
@@ -26,7 +25,7 @@ public class ArminsApp extends GridSampleApp {
 			setCellSize(cellSize);
 			new EllerInsideOut(grid).accept(null);
 			new BFSAnimation(canvas, grid).runAnimation(startCell);
-			sleep(3000);
+			sleep(1000);
 			clear();
 		});
 		System.exit(0);

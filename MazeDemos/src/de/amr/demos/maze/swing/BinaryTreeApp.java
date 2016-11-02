@@ -15,8 +15,7 @@ public class BinaryTreeApp extends GridSampleApp {
 	}
 
 	public BinaryTreeApp() {
-		super("Binary Tree Maze", 64);
-		setFullscreen(true);
+		super("Binary Tree Maze");
 	}
 
 	@Override
@@ -26,7 +25,7 @@ public class BinaryTreeApp extends GridSampleApp {
 			setCellSize(cellSize);
 			new BinaryTree(grid).accept(startCell);
 			new BFSAnimation(canvas, grid).runAnimation(startCell);
-			sleep(3000);
+			sleep(1000);
 			clear();
 		});
 		System.exit(0);

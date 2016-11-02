@@ -12,8 +12,7 @@ public class RecursiveCrossesApp extends GridSampleApp {
 	}
 
 	public RecursiveCrossesApp() {
-		super("Recursive Crosses", 21, 23, 16);
-		setFullscreen(true);
+		super("Recursive Crosses", 2);
 	}
 
 	@Override
@@ -22,7 +21,7 @@ public class RecursiveCrossesApp extends GridSampleApp {
 		of(64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			setCellSize(cellSize);
 			new RecursiveCrosses(grid).forEach(cell -> grid.set(cell, COMPLETED));
-			sleep(3000);
+			sleep(1000);
 			clear();
 		});
 		System.exit(0);

@@ -10,23 +10,23 @@ import de.amr.easy.grid.iterators.curves.lsystem.MooreLCurve;
 import de.amr.easy.grid.rendering.swing.BFSAnimation;
 
 /**
- * Creates Hilbert-Moore curves of different sizes and shows an animation of the creation and
- * BFS-traversal of the underlying graph.
+ * Creates Moore curves of different sizes and shows an animation of the creation and BFS-traversal
+ * of the underlying graph.
  * 
  * @author Armin Reichert
  */
 public class MooreCurveApp extends GridSampleApp {
 
 	public static void main(String[] args) {
-		launch(new MooreCurveApp(1024, 1024, 2));
+		launch(new MooreCurveApp());
 	}
 
-	public MooreCurveApp(int width, int height, int cellSize) {
-		super("Hilbert-Moore Curve", width / cellSize, height / cellSize, cellSize);
+	public MooreCurveApp() {
+		super("Moore Curve", 512, 512, 256);
 	}
 
 	@Override
-	protected String composeTitle() {
+	public String composeTitle() {
 		return super.composeTitle() + ", " + grid.edgeCount() + " edges";
 	}
 
@@ -34,7 +34,7 @@ public class MooreCurveApp extends GridSampleApp {
 	public void run() {
 		IntStream.of(2, 4, 8, 16, 32, 64, 128, 256).forEach(n -> {
 			setDelay(n < 16 ? 3 : 0);
-			setCellSize(1024 / n);
+			setCellSize(getWidth() / n);
 			int startCol = n / 2, startRow = n - 1;
 			Integer start = grid.cell(startCol, startRow);
 			MooreLCurve moore = new MooreLCurve(log(2, n));
@@ -42,6 +42,7 @@ public class MooreCurveApp extends GridSampleApp {
 			BFSAnimation bfs = new BFSAnimation(canvas, grid);
 			bfs.setDistancesVisible(false);
 			bfs.runAnimation(start);
+			sleep(1000);
 		});
 	}
 }

@@ -17,7 +17,6 @@ public class RecursiveDivisionApp extends GridSampleApp {
 
 	public RecursiveDivisionApp() {
 		super("Recursive Division Maze");
-		setFullscreen(true);
 	}
 
 	@Override
@@ -30,7 +29,7 @@ public class RecursiveDivisionApp extends GridSampleApp {
 			});
 			new RecursiveDivision(grid).accept(startCell);
 			new BFSAnimation(canvas, grid).runAnimation(startCell);
-			sleep(3000);
+			sleep(1000);
 			clear();
 		});
 		System.exit(0);

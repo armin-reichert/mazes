@@ -16,7 +16,6 @@ public class WilsonExpandingCircleApp extends GridSampleApp {
 
 	public WilsonExpandingCircleApp() {
 		super("Wilson UST / Expanding Circle");
-		setFullscreen(true);
 	}
 
 	@Override
@@ -26,7 +25,7 @@ public class WilsonExpandingCircleApp extends GridSampleApp {
 			setCellSize(cellSize);
 			new WilsonUSTExpandingCircle(grid).accept(startCell);
 			new BFSAnimation(canvas, grid).runAnimation(startCell);
-			sleep(3000);
+			sleep(1000);
 			clear();
 		});
 		System.exit(0);

@@ -14,7 +14,7 @@ public class SpiralApp extends GridSampleApp {
 	}
 
 	public SpiralApp() {
-		super("Spiral", 200, 150, 4);
+		super("Spiral", 2);
 	}
 
 	@Override
@@ -23,7 +23,7 @@ public class SpiralApp extends GridSampleApp {
 		grid.vertexStream().forEach(cell -> {
 			grid.set(cell, COMPLETED);
 		});
-		canvas.setDelay(4);
+		canvas.setDelay(0);
 		Spiral spiral = new Spiral(grid, grid.cell(CENTER));
 		Integer prevCell = null;
 		for (Integer cell : spiral) {

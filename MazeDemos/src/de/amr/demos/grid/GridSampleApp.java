@@ -2,6 +2,8 @@ package de.amr.demos.grid;
 
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.maze.misc.MazeUtils.getScreenResolution;
+import static de.amr.easy.maze.misc.MazeUtils.setLAF;
+import static java.awt.EventQueue.invokeLater;
 import static java.lang.String.format;
 import static javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
@@ -9,20 +11,17 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JFrame;
-import javax.swing.JSlider;
 import javax.swing.KeyStroke;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.rendering.swing.SwingDefaultGridRenderingModel;
 import de.amr.easy.grid.rendering.swing.SwingGridCanvas;
-import de.amr.easy.maze.misc.MazeUtils;
 
 /**
  * Base class for grid sample applications.
@@ -32,20 +31,20 @@ import de.amr.easy.maze.misc.MazeUtils;
 public abstract class GridSampleApp implements Runnable {
 
 	public static void launch(GridSampleApp app) {
-		MazeUtils.setLAF("Nimbus");
-		EventQueue.invokeLater(app::showUI);
+		setLAF("Nimbus");
+		invokeLater(app::showUI);
 	}
 
 	private final String appName;
+	private final int width;
+	private final int height;
+	private final boolean fullscreen;
 	private int cellSize;
 
 	protected ObservableGrid<TraversalState, Integer> grid;
 
-	private boolean fullscreen;
-	private Dimension screenRes = getScreenResolution();
 	protected JFrame window;
 	protected SwingGridCanvas canvas;
-	protected JSlider delaySlider;
 
 	private SwingDefaultGridRenderingModel renderingModel = new SwingDefaultGridRenderingModel() {
 
@@ -72,36 +71,37 @@ public abstract class GridSampleApp implements Runnable {
 		}
 	};
 
-	/**
-	 * Creates a sample app using all available screen space of the used display and a cell size of
-	 * 16.
-	 */
-	protected GridSampleApp(String appName) {
-		this(appName, 16);
-	}
-
-	/**
-	 * Creates a sample app using all available screen space of the used display.
-	 */
-	protected GridSampleApp(String appName, int cellSize) {
+	public GridSampleApp(String appName, int width, int height, int cellSize) {
 		this.appName = appName;
+		this.fullscreen = false;
+		this.width = width;
+		this.height = height;
 		this.cellSize = cellSize;
-		int numCols = screenRes.width / cellSize;
-		int numRows = (screenRes.height - 20) / cellSize; // subtract slider height
+		int numCols = width / cellSize, numRows = height / cellSize;
 		grid = new ObservableGrid<>(numCols, numRows, UNVISITED);
 	}
 
-	/**
-	 * Creates a sample app large enough to display a grid with given dimensions.
-	 */
-	protected GridSampleApp(String appName, int gridColCount, int gridRowCount, int cellSize) {
+	public GridSampleApp(String appName, int cellSize) {
 		this.appName = appName;
+		this.fullscreen = true;
+		Dimension resolution = getScreenResolution();
+		this.width = resolution.width;
+		this.height = resolution.height;
 		this.cellSize = cellSize;
-		grid = new ObservableGrid<>(gridColCount, gridRowCount, UNVISITED);
+		int numCols = width / cellSize, numRows = height / cellSize;
+		grid = new ObservableGrid<>(numCols, numRows, UNVISITED);
 	}
 
-	public void setFullscreen(boolean fullscreen) {
-		this.fullscreen = fullscreen;
+	public GridSampleApp(String appName) {
+		this(appName, 16);
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
 	}
 
 	public int getCellSize() {
@@ -109,23 +109,22 @@ public abstract class GridSampleApp implements Runnable {
 	}
 
 	/**
-	 * Sets the cell size of the displayed grid. Can only be called after the window has been created.
+	 * Sets the cell size which resizes the grid to fit the window size. Can only be called after the
+	 * window has been created.
 	 * 
 	 * @param cellSize
 	 *          new grid cell size
 	 */
 	public void setCellSize(int cellSize) {
 		this.cellSize = cellSize;
-		grid = new ObservableGrid<>(window.getWidth() / cellSize, window.getHeight() / cellSize, UNVISITED);
+		grid = new ObservableGrid<>(width / cellSize, height / cellSize, UNVISITED);
 		canvas.setGrid(grid);
 		renderingModel.setCellSize(cellSize);
 		canvas.setRenderingModel(renderingModel);
 		window.setTitle(composeTitle());
-		window.pack();
 	}
 
 	public void setDelay(int delay) {
-		delaySlider.setValue(delay);
 		canvas.setDelay(delay);
 	}
 
@@ -133,44 +132,42 @@ public abstract class GridSampleApp implements Runnable {
 		window = new JFrame();
 		window.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		window.setTitle(composeTitle());
+		window.setBackground(Color.BLACK);
 		renderingModel.setCellSize(cellSize);
 		canvas = new SwingGridCanvas(grid, renderingModel);
 		canvas.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "exit");
 		canvas.getActionMap().put("exit", exitAction);
 		canvas.setDelay(0);
+		canvas.setBackground(Color.BLACK);
 		window.add(canvas, BorderLayout.CENTER);
-		delaySlider = new JSlider(0, 50);
-		delaySlider.setValue(canvas.getDelay());
-		delaySlider.addChangeListener(event -> {
-			if (!delaySlider.getValueIsAdjusting())
-				canvas.setDelay(delaySlider.getValue());
-		});
-		window.add(delaySlider, BorderLayout.SOUTH);
 		if (fullscreen) {
+			window.setPreferredSize(new Dimension(width, height));
+			window.setSize(window.getPreferredSize());
 			window.setUndecorated(true);
 			window.setAlwaysOnTop(true);
-			window.setSize(screenRes.width, screenRes.height);
+		} else {
+			canvas.setPreferredSize(new Dimension(width, height));
+			window.pack();
 		}
-		window.pack();
 		window.setVisible(true);
 
 		// start real work in new thread
 		new Thread(this).start();
 	}
 
-	protected void clear() {
+	public void clear() {
 		grid.removeEdges();
 		grid.clearContent();
 		canvas.resetRenderingModel();
 		canvas.clear();
 	}
 
-	protected String composeTitle() {
+	public String composeTitle() {
 		return format("%s [%d cols %d rows %d cells @%d px]", appName, grid.numCols(), grid.numRows(), grid.numCells(),
 				cellSize);
 	}
 
-	protected void sleep(int millis) {
+	public void sleep(int millis) {
 		try {
 			Thread.sleep(millis);
 		} catch (InterruptedException e) {

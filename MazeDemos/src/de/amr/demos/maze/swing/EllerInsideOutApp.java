@@ -14,8 +14,7 @@ public class EllerInsideOutApp extends GridSampleApp {
 	}
 
 	public EllerInsideOutApp() {
-		super("Eller's Algorithm", 64);
-		setFullscreen(true);
+		super("Eller's Algorithm");
 	}
 
 	@Override

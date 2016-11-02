@@ -16,7 +16,6 @@ public class AldousBroderUSTApp extends GridSampleApp {
 
 	public AldousBroderUSTApp() {
 		super("Aldous-Broder UST Maze");
-		setFullscreen(true);
 	}
 
 	@Override
@@ -26,7 +25,7 @@ public class AldousBroderUSTApp extends GridSampleApp {
 			setCellSize(cellSize);
 			new AldousBroderUST(grid).accept(startCell);
 			new BFSAnimation(canvas, grid).runAnimation(startCell);
-			sleep(3000);
+			sleep(1000);
 			clear();
 		});
 		System.exit(0);

@@ -15,7 +15,7 @@ public class PeanoCurveApp extends GridSampleApp {
 	}
 
 	public PeanoCurveApp() {
-		super("Peano Curve", 243, 243, 2);
+		super("Peano Curve", 486, 486, 2);
 	}
 
 	@Override
@@ -25,7 +25,7 @@ public class PeanoCurveApp extends GridSampleApp {
 		while (true) {
 			walkCurve(grid, new PeanoCurve(depth), grid.cell(BOTTOM_LEFT), () -> window.setTitle(composeTitle()));
 			new BFSAnimation(canvas, grid).runAnimation(grid.cell(BOTTOM_LEFT));
-			sleep(3000);
+			sleep(1000);
 			clear();
 		}
 	}

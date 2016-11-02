@@ -16,7 +16,6 @@ public class RecursiveDFSApp extends GridSampleApp {
 
 	public RecursiveDFSApp() {
 		super("Randomized-DFS Maze");
-		setFullscreen(true);
 	}
 
 	@Override
@@ -26,7 +25,7 @@ public class RecursiveDFSApp extends GridSampleApp {
 			setCellSize(cellSize);
 			new RecursiveDFS(grid).accept(startCell);
 			new BFSAnimation(canvas, grid).runAnimation(startCell);
-			sleep(3000);
+			sleep(1000);
 			clear();
 		});
 		System.exit(0);

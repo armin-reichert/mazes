@@ -16,7 +16,6 @@ public class WilsonHilbertApp extends GridSampleApp {
 
 	public WilsonHilbertApp() {
 		super("Wilson UST / Hilbert Curve Maze");
-		setFullscreen(true);
 	}
 
 	@Override
@@ -26,7 +25,7 @@ public class WilsonHilbertApp extends GridSampleApp {
 			setCellSize(cellSize);
 			new WilsonUSTHilbertCurve(grid).accept(startCell);
 			new BFSAnimation(canvas, grid).runAnimation(startCell);
-			sleep(3000);
+			sleep(1000);
 			clear();
 		});
 		System.exit(0);

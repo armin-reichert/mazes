@@ -16,7 +16,6 @@ public class IterativeDFSApp extends GridSampleApp {
 
 	public IterativeDFSApp() {
 		super("Randomized-DFS Maze");
-		setFullscreen(true);
 	}
 
 	@Override
@@ -26,7 +25,7 @@ public class IterativeDFSApp extends GridSampleApp {
 			setCellSize(cellSize);
 			new IterativeDFS(grid).accept(startCell);
 			new BFSAnimation(canvas, grid).runAnimation(startCell);
-			sleep(3000);
+			sleep(1000);
 			clear();
 		});
 		System.exit(0);

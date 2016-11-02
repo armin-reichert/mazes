@@ -16,7 +16,6 @@ public class PrimMSTApp extends GridSampleApp {
 
 	public PrimMSTApp() {
 		super("Prim-MST Maze");
-		setFullscreen(true);
 	}
 
 	@Override
@@ -26,7 +25,7 @@ public class PrimMSTApp extends GridSampleApp {
 			setCellSize(cellSize);
 			new PrimMST(grid).accept(startCell);
 			new BFSAnimation(canvas, grid).runAnimation(startCell);
-			sleep(3000);
+			sleep(1000);
 			clear();
 		});
 		System.exit(0);

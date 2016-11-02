@@ -16,7 +16,6 @@ public class HuntAndKillApp extends GridSampleApp {
 
 	public HuntAndKillApp() {
 		super("Hunt And Kill");
-		setFullscreen(true);
 	}
 
 	@Override
@@ -26,7 +25,7 @@ public class HuntAndKillApp extends GridSampleApp {
 			setCellSize(cellSize);
 			new HuntAndKill(grid).accept(startCell);
 			new BFSAnimation(canvas, grid).runAnimation(startCell);
-			sleep(3000);
+			sleep(1000);
 			clear();
 		});
 		System.exit(0);

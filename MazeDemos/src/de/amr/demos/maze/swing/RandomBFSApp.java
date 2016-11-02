@@ -16,7 +16,6 @@ public class RandomBFSApp extends GridSampleApp {
 
 	public RandomBFSApp() {
 		super("Randomized Bread-First-Traversal Maze");
-		setFullscreen(true);
 	}
 
 	@Override
@@ -26,7 +25,7 @@ public class RandomBFSApp extends GridSampleApp {
 			setCellSize(cellSize);
 			new RandomBFS(grid).accept(startCell);
 			new BFSAnimation(canvas, grid).runAnimation(startCell);
-			sleep(3000);
+			sleep(1000);
 			clear();
 		});
 		System.exit(0);

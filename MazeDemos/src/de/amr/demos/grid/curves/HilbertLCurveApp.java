@@ -13,17 +13,15 @@ public class HilbertLCurveApp extends GridSampleApp {
 		launch(new HilbertLCurveApp());
 	}
 
-	private int windowSize = 1024;
-
 	public HilbertLCurveApp() {
-		super("Hilbert Curve (L-system)", 4, 4, 256);
+		super("Hilbert Curve (L-system)", 512, 512, 256);
 	}
 
 	@Override
 	public void run() {
 		IntStream.of(256, 128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			setCellSize(cellSize);
-			int depth = MazeUtils.log(2, windowSize / getCellSize());
+			int depth = MazeUtils.log(2, getWidth() / getCellSize());
 			HilbertLCurve curve = new HilbertLCurve(depth);
 			System.out.println(curve);
 			CurveUtil.walkCurve(grid, curve, grid.cell(GridPosition.BOTTOM_LEFT), () -> {
