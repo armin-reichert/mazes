@@ -5,56 +5,38 @@ import static de.amr.easy.grid.api.Direction.N;
 import static de.amr.easy.grid.api.Direction.S;
 import static de.amr.easy.grid.api.Direction.W;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Stream;
-
 import de.amr.easy.grid.api.Direction;
-import de.amr.easy.grid.iterators.Sequence;
 
 /**
  * Computes a Peano-curve.
  * 
  * @author Armin Reichert
  */
-public class PeanoCurve implements Sequence<Direction> {
+public class PeanoCurve extends Curve {
 
-	private final List<Direction> curve = new ArrayList<>();
-
-	public PeanoCurve(int depth) {
-		peano(depth, N, E, S, W);
+	public PeanoCurve(int i) {
+		peano(i, N, E, S, W);
 	}
 
-	private void peano(int n, Direction N, Direction E, Direction S, Direction W) {
-		if (n > 0) {
-			peano(n - 1, N, E, S, W);
-			curve.add(N);
-			peano(n - 1, N, W, S, E);
-			curve.add(N);
-			peano(n - 1, N, E, S, W);
-			curve.add(E);
-			peano(n - 1, S, E, N, W);
-			curve.add(S);
-			peano(n - 1, S, W, N, E);
-			curve.add(S);
-			peano(n - 1, S, E, N, W);
-			curve.add(E);
-			peano(n - 1, N, E, S, W);
-			curve.add(N);
-			peano(n - 1, N, W, S, E);
-			curve.add(N);
-			peano(n - 1, N, E, S, W);
+	private void peano(int i, Direction n, Direction e, Direction s, Direction w) {
+		if (i > 0) {
+			peano(i - 1, n, e, s, w);
+			curve.add(n);
+			peano(i - 1, n, w, s, e);
+			curve.add(n);
+			peano(i - 1, n, e, s, w);
+			curve.add(e);
+			peano(i - 1, s, e, n, w);
+			curve.add(s);
+			peano(i - 1, s, w, n, e);
+			curve.add(s);
+			peano(i - 1, s, e, n, w);
+			curve.add(e);
+			peano(i - 1, n, e, s, w);
+			curve.add(n);
+			peano(i - 1, n, w, s, e);
+			curve.add(n);
+			peano(i - 1, n, e, s, w);
 		}
-	}
-
-	@Override
-	public Iterator<Direction> iterator() {
-		return curve.iterator();
-	}
-
-	@Override
-	public Stream<Direction> stream() {
-		return curve.stream();
 	}
 }
