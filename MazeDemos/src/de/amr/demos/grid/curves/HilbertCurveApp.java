@@ -1,6 +1,6 @@
 package de.amr.demos.grid.curves;
 
-import static de.amr.demos.grid.curves.CurveUtil.walkCurve;
+import static de.amr.demos.grid.curves.CurveUtil.walk;
 import static de.amr.easy.grid.api.Direction.E;
 import static de.amr.easy.grid.api.Direction.N;
 import static de.amr.easy.grid.api.Direction.S;
@@ -57,7 +57,7 @@ public class HilbertCurveApp extends GridSampleApp {
 				setDelay(cellSize > 16 ? 5 : 2);
 				int depth = log(2, getWidth() / cellSize);
 				HilbertCurve hilbert = createCurve(startPosition, depth);
-				walkCurve(grid, hilbert, grid.cell(startPosition), this::updateTitle);
+				walk(hilbert, grid, grid.cell(startPosition), this::updateTitle);
 				BFSAnimation bfs = new BFSAnimation(canvas, grid);
 				bfs.setDistancesVisible(false);
 				bfs.runAnimation(grid.cell(startPosition));

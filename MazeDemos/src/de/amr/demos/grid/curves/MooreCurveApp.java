@@ -1,6 +1,6 @@
 package de.amr.demos.grid.curves;
 
-import static de.amr.demos.grid.curves.CurveUtil.walkCurve;
+import static de.amr.demos.grid.curves.CurveUtil.walk;
 import static de.amr.easy.maze.misc.MazeUtils.log;
 
 import java.util.stream.IntStream;
@@ -33,7 +33,7 @@ public class MooreCurveApp extends GridSampleApp {
 			int startCol = n / 2, startRow = n - 1;
 			Integer start = grid.cell(startCol, startRow);
 			MooreLCurve moore = new MooreLCurve(log(2, n));
-			walkCurve(grid, moore, start, this::updateTitle);
+			walk(moore, grid, start, this::updateTitle);
 			BFSAnimation bfs = new BFSAnimation(canvas, grid);
 			bfs.setDistancesVisible(false);
 			bfs.runAnimation(start);

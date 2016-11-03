@@ -11,7 +11,7 @@ import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.iterators.Sequence;
 
 /**
- * Base class for curves like the Hilbert-curve.
+ * Base class for curves like the Hilbert curve.
  * 
  * @author Armin Reichert
  */
@@ -45,6 +45,6 @@ public abstract class Curve implements Sequence<Direction> {
 
 	@Override
 	public String toString() {
-		return curve.stream().map(Direction::toString).collect(joining("-"));
+		return stream().map(Direction::toString).collect(joining("-"));
 	}
 }

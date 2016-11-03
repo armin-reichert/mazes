@@ -1,6 +1,6 @@
 package de.amr.demos.grid.curves;
 
-import static de.amr.demos.grid.curves.CurveUtil.walkCurve;
+import static de.amr.demos.grid.curves.CurveUtil.walk;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
 import static de.amr.easy.maze.misc.MazeUtils.log;
 
@@ -23,7 +23,7 @@ public class PeanoCurveApp extends GridSampleApp {
 		setDelay(0);
 		int depth = log(3, grid.numCols());
 		while (true) {
-			walkCurve(grid, new PeanoCurve(depth), grid.cell(BOTTOM_LEFT), this::updateTitle);
+			walk(new PeanoCurve(depth), grid, grid.cell(BOTTOM_LEFT), this::updateTitle);
 			new BFSAnimation(canvas, grid).runAnimation(grid.cell(BOTTOM_LEFT));
 			sleep(1000);
 			clear();
