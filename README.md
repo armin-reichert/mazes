@@ -2,18 +2,18 @@
 
 ### Maze generation algorithms implemented in Java 8
 
-My interest into maze algorithms started by reading the [weblog of Jamis Buck](http://weblog.jamisbuck.org/archives.html). In his blog, Jamis Buck presents a number of maze algorithms together with a Ruby implementation.
+My interest in maze generation started when reading the [weblog of Jamis Buck](http://weblog.jamisbuck.org/archives.html) where he presents a number of algorithms together with visualizations and implementation in Ruby.
 
-Initial goal was to implement these algorithms in Java and formulate them such that the underlying graph algorithm should be clearly visible. In the course I discovered new ways of maze generation, for example a modified version of Eller's algorithm which generates the maze from the center towards the borders, or variations on Wilson's algorithm which you get from different ways of selecting the sources of the random walks. For example, you can select the start cells in the order defined by a space-filling-curve (Hilbert, Peano, Moore). Probably of no practical use but fun to watch.
+Initially I just wanted to implement some of these algorithms in Java and formulate them such that the underlying graph algorithm should be clearly visible. In the course I discovered new ways of maze generation, for example a modified version of Eller's algorithm which generates the maze from the center towards the borders, or variations on Wilson's algorithm which you get from different ways of selecting the sources of the random walks. For example, you can select the start cells in the order defined by a space-filling-curve ([Hilbert](EasyGrid/src/de/amr/easy/grid/iterators/curves/HilbertCurve.java), [Peano](EasyGrid/src/de/amr/easy/grid/iterators/curves/PeanoCurve.java), [Moore](EasyGrid/src/de/amr/easy/grid/iterators/curves/lsystem/MooreLCurve.java)). Probably of no practical use but at least fun to watch.
 
-The given implementation tries to focus on the underlying graph algorithm (creating a **spanning tree** of an undirected grid graph) and the code is free of rendering or data structure internals.
+The given implementation emphasizes the underlying graph algorithm (creating a **spanning tree** of an undirected grid graph) and is free of rendering or data structure internals.
 
-To achieve this,
-- graph and grid interfaces are provided as the API on which the maze generators operate
-- A light implementation of the Grid API is provided
-- A publish-subscribe mechanism for observing graph operations is provided
-- All Maze generation algorithms work strictly against the Grid API
-- Renderers may be attached as graph or graph traversal listeners
+To achieve this, there is
+- A Graph and Grid API for the maze generators 
+- A light-weight implementation of the Grid API
+- A publish-subscribe mechanism for observing graph operations
+
+All Maze generation algorithms work strictly against the Grid API, renderers are attached as graph or graph traversal listeners.
 
 The implementation uses Java 8 features (streams and lambda expressions) for better readability and has no dependencies to any UI library (AWT, Swing, JavaFX).
 
@@ -38,7 +38,7 @@ Implemented so far:
 Path finding algorithms:
 - The EasyGrid library contains a DFS and BFS-based path finding implementation.
 
-As an example, here is the code for the generator based on Prim's minimum-spanning-tree algorithm:
+As an example, this is the generator based on Prim's minimum-spanning-tree algorithm:
 
 ```java
 public class PrimMST extends MazeAlgorithm {
