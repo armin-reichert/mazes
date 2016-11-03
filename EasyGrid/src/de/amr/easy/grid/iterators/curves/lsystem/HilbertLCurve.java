@@ -9,7 +9,7 @@ import de.amr.easy.grid.iterators.curves.Curve;
  * A → − B F + A F A + F B − <br/>
  * B → + A F − B F B − F A +
  * </code>
- * </p>
+ * <p>
  * As given, the Hilbert-curve starts at the lower left corner and ends at the upper right corner of
  * the grid.
  * 

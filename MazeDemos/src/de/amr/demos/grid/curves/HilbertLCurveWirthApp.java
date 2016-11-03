@@ -24,7 +24,6 @@ public class HilbertLCurveWirthApp extends GridSampleApp {
 			setCellSize(cellSize);
 			int depth = MazeUtils.log(2, getWidth() / getCellSize());
 			HilbertLCurveWirth curve = new HilbertLCurveWirth(depth);
-			System.out.println(curve);
 			CurveUtil.walk(curve, grid, grid.cell(TOP_RIGHT));
 			sleep(1000);
 		});
