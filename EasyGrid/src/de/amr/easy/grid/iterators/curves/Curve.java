@@ -20,6 +20,10 @@ public abstract class Curve implements Sequence<Direction> {
 	protected final List<Direction> curve = new ArrayList<>();
 
 	private Compas compas = new Compas();
+	
+	protected void walk(Direction dir) {
+		curve.add(dir);
+	}
 
 	protected void forward() {
 		curve.add(compas.ahead());
