@@ -11,6 +11,8 @@ import de.amr.easy.grid.api.Direction;
 
 /**
  * Computes a Hilbert curve as a list of directions.
+ * <p>
+ * The curve starts at the upper right corner and ends at the lower right corner.
  *
  * @author Armin Reichert
  */

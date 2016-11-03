@@ -5,6 +5,7 @@ import static de.amr.easy.grid.api.GridPosition.TOP_RIGHT;
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.GridSampleApp;
+import de.amr.easy.grid.iterators.curves.Curves;
 import de.amr.easy.grid.iterators.curves.lsystem.HilbertLCurveWirth;
 import de.amr.easy.maze.misc.MazeUtils;
 
@@ -24,7 +25,7 @@ public class HilbertLCurveWirthApp extends GridSampleApp {
 			setCellSize(cellSize);
 			int depth = MazeUtils.log(2, getWidth() / getCellSize());
 			HilbertLCurveWirth curve = new HilbertLCurveWirth(depth);
-			CurveUtil.walk(curve, grid, grid.cell(TOP_RIGHT));
+			Curves.walk(curve, grid, grid.cell(TOP_RIGHT));
 			sleep(1000);
 		});
 	}

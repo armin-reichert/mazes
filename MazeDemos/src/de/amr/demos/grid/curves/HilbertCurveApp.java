@@ -1,6 +1,5 @@
 package de.amr.demos.grid.curves;
 
-import static de.amr.demos.grid.curves.CurveUtil.walk;
 import static de.amr.easy.grid.api.Direction.E;
 import static de.amr.easy.grid.api.Direction.N;
 import static de.amr.easy.grid.api.Direction.S;
@@ -9,6 +8,7 @@ import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.grid.api.GridPosition.TOP_RIGHT;
+import static de.amr.easy.grid.iterators.curves.Curves.walk;
 import static de.amr.easy.maze.misc.MazeUtils.log;
 import static java.util.Arrays.asList;
 

@@ -1,7 +1,7 @@
 package de.amr.demos.grid.curves;
 
-import static de.amr.demos.grid.curves.CurveUtil.walk;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
+import static de.amr.easy.grid.iterators.curves.Curves.walk;
 import static de.amr.easy.maze.misc.MazeUtils.log;
 
 import de.amr.demos.grid.GridSampleApp;
