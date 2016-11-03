@@ -47,13 +47,12 @@ public class HilbertCurveApp extends GridSampleApp {
 
 	@Override
 	public void run() {
-		Stream.of(GridPosition.values()).forEach(startPos -> {
+		Stream.of(TOP_RIGHT, TOP_LEFT, BOTTOM_LEFT, BOTTOM_RIGHT).forEach(startPos -> {
 			IntStream.of(256, 128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 				setCellSize(cellSize);
-				setDelay(cellSize > 16 ? 5 : 2);
-				int i = log(2, getWidth() / cellSize);
-				HilbertCurve hilbert = new HilbertCurve(i, orientation.get(startPos));
-				walk(hilbert, grid, grid.cell(startPos), this::updateTitle);
+				setDelay(cellSize > 16 ? 3 : 1);
+				HilbertCurve hilbert = new HilbertCurve(log(2, getWidth() / cellSize), orientation.get(startPos));
+				walk(hilbert, grid, grid.cell(startPos));
 				BFSAnimation bfs = new BFSAnimation(canvas, grid);
 				bfs.setDistancesVisible(false);
 				bfs.runAnimation(grid.cell(startPos));

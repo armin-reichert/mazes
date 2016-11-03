@@ -4,6 +4,8 @@ import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
 import static de.amr.easy.grid.iterators.curves.Curves.walk;
 import static de.amr.easy.maze.misc.MazeUtils.log;
 
+import java.util.stream.IntStream;
+
 import de.amr.demos.grid.GridSampleApp;
 import de.amr.easy.grid.iterators.curves.PeanoCurve;
 import de.amr.easy.grid.rendering.swing.BFSAnimation;
@@ -15,18 +17,18 @@ public class PeanoCurveApp extends GridSampleApp {
 	}
 
 	public PeanoCurveApp() {
-		super("Peano Curve", 486, 486, 2);
+		super("Peano Curve", 243*4, 243*4, 4);
 	}
 
 	@Override
 	public void run() {
-		setDelay(0);
-		int depth = log(3, grid.numCols());
-		while (true) {
-			walk(new PeanoCurve(depth), grid, grid.cell(BOTTOM_LEFT), this::updateTitle);
-			new BFSAnimation(canvas, grid).runAnimation(grid.cell(BOTTOM_LEFT));
+		IntStream.of(3, 9, 81, 243).forEach(n -> {
+			setDelay(n < 9 ? 4 : 2);
+			setCellSize(getWidth() / n);
+			Integer start = grid.cell(BOTTOM_LEFT);
+			walk(new PeanoCurve(log(3, n)), grid, start);
+			new BFSAnimation(canvas, grid).runAnimation(start);
 			sleep(1000);
-			clear();
-		}
+		});
 	}
 }

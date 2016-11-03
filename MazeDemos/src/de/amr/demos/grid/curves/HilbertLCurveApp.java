@@ -1,12 +1,12 @@
 package de.amr.demos.grid.curves;
 
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
+import static de.amr.easy.grid.iterators.curves.Curves.walk;
 import static de.amr.easy.maze.misc.MazeUtils.log;
 
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.GridSampleApp;
-import de.amr.easy.grid.iterators.curves.Curves;
 import de.amr.easy.grid.iterators.curves.lsystem.HilbertLCurve;
 
 public class HilbertLCurveApp extends GridSampleApp {
@@ -23,8 +23,7 @@ public class HilbertLCurveApp extends GridSampleApp {
 	public void run() {
 		IntStream.of(256, 128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			setCellSize(cellSize);
-			HilbertLCurve curve = new HilbertLCurve(log(2, getWidth() / getCellSize()));
-			Curves.walk(curve, grid, grid.cell(BOTTOM_LEFT));
+			walk(new HilbertLCurve(log(2, getWidth() / cellSize)), grid, grid.cell(BOTTOM_LEFT));
 			sleep(1000);
 		});
 	}

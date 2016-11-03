@@ -28,12 +28,12 @@ public class MooreCurveApp extends GridSampleApp {
 	@Override
 	public void run() {
 		IntStream.of(2, 4, 8, 16, 32, 64, 128, 256).forEach(n -> {
-			setDelay(n < 16 ? 3 : 0);
+			setDelay(n < 16 ? 4 : n < 256 ? 2 : 1);
 			setCellSize(getWidth() / n);
 			int startCol = n / 2, startRow = n - 1;
 			Integer start = grid.cell(startCol, startRow);
 			MooreLCurve moore = new MooreLCurve(log(2, n));
-			walk(moore, grid, start, this::updateTitle);
+			walk(moore, grid, start);
 			BFSAnimation bfs = new BFSAnimation(canvas, grid);
 			bfs.setDistancesVisible(false);
 			bfs.runAnimation(start);

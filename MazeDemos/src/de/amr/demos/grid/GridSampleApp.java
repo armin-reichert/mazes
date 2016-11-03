@@ -103,10 +103,10 @@ public abstract class GridSampleApp implements Runnable {
 	}
 
 	private String createTitle() {
-		return format("%s [%d cols %d rows %d cells %d edges @%d px]", appName, grid.numCols(), grid.numRows(),
-				grid.numCells(), grid.edgeCount(), cellSize);
+		return format("%s [%d cols %d rows %d cells @%d px]", appName, grid.numCols(), grid.numRows(), grid.numCells(),
+				cellSize);
 	}
-	
+
 	public void updateTitle() {
 		window.setTitle(createTitle());
 	}
