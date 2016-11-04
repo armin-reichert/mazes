@@ -1,5 +1,6 @@
 package de.amr.demos.grid;
 
+import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.maze.misc.MazeUtils.getScreenResolution;
 import static de.amr.easy.maze.misc.MazeUtils.setLAF;
@@ -178,5 +179,11 @@ public abstract class GridSampleApp implements Runnable {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void addEdge(Integer u, Integer v) {
+		grid.set(u, COMPLETED);
+		grid.addEdge(u, v);
+		grid.set(v, COMPLETED);
 	}
 }

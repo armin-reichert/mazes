@@ -1,7 +1,7 @@
 package de.amr.demos.grid.curves;
 
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
-import static de.amr.easy.grid.iterators.curves.Curves.walk;
+import static de.amr.easy.grid.iterators.curves.Curves.traverse;
 import static de.amr.easy.maze.misc.MazeUtils.log;
 
 import java.util.stream.IntStream;
@@ -25,7 +25,7 @@ public class HilbertLCurveApp extends GridSampleApp {
 		IntStream.of(256, 128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			setCellSize(cellSize);
 			Integer start = grid.cell(BOTTOM_LEFT);
-			walk(new HilbertLCurve(log(2, getWidth() / cellSize)), grid, start);
+			traverse(new HilbertLCurve(log(2, getWidth() / cellSize)), grid, start, this::addEdge);
 			BFSAnimation bfs = new BFSAnimation(canvas, grid);
 			bfs.setDistancesVisible(false);
 			bfs.runAnimation(start);

@@ -8,7 +8,7 @@ import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.grid.api.GridPosition.TOP_RIGHT;
-import static de.amr.easy.grid.iterators.curves.Curves.walk;
+import static de.amr.easy.grid.iterators.curves.Curves.traverse;
 import static de.amr.easy.maze.misc.MazeUtils.log;
 import static java.util.Arrays.asList;
 
@@ -53,7 +53,7 @@ public class HilbertCurveApp extends GridSampleApp {
 				setDelay(cellSize > 16 ? 3 : 1);
 				Integer start = grid.cell(startPos);
 				HilbertCurve hilbert = new HilbertCurve(log(2, getWidth() / cellSize), orientation.get(startPos));
-				walk(hilbert, grid, start);
+				traverse(hilbert, grid, start, this::addEdge);
 				BFSAnimation bfs = new BFSAnimation(canvas, grid);
 				bfs.setDistancesVisible(false);
 				bfs.runAnimation(start);

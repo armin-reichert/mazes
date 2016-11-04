@@ -1,63 +1,30 @@
 package de.amr.easy.grid.iterators.curves;
 
-import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static java.lang.String.format;
 import static java.util.stream.Collectors.joining;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.stream.Stream;
 
-import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.api.NakedGrid2D;
-import de.amr.easy.grid.api.ObservableGrid2D;
 
 /**
- * Utility class for curves.
+ * Utility methods for curves.
  * 
  * @author Armin Reichert
  *
  */
 public class Curves {
 
-	/**
-	 * Walks the given curve on the given grid, starting at the given cell.
-	 * 
-	 * @param curve
-	 *          a curve
-	 * @param grid
-	 *          a grid
-	 * @param start
-	 *          the start cell of the walk
-	 */
-	public static void walk(Curve curve, ObservableGrid2D<TraversalState, ?> grid, Integer start) {
-		walk(curve, grid, start, () -> {
-		});
-	}
-
-	/**
-	 * Walks the given curve on the given grid, starting at the given cell and execute the given
-	 * action at each step.
-	 * 
-	 * @param curve
-	 *          a curve
-	 * @param grid
-	 *          a grid
-	 * @param start
-	 *          the start cell of the walk
-	 * @param action
-	 *          code to be executed at each step of the walk
-	 */
-	public static void walk(Curve curve, ObservableGrid2D<TraversalState, ?> grid, Integer start, Runnable action) {
+	public static void traverse(Curve curve, NakedGrid2D<?> grid, Integer start, BiConsumer<Integer, Integer> action) {
 		Integer current = start;
-		grid.set(current, COMPLETED);
 		for (Direction dir : curve) {
 			Integer next = grid.neighbor(current, dir).get();
-			grid.addEdge(current, next);
-			action.run();
+			action.accept(current, next);
 			current = next;
-			grid.set(current, COMPLETED);
 		}
 	}
 
