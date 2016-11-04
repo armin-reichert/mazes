@@ -1,10 +1,17 @@
 package de.amr.easy.grid.iterators.curves;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
+import static java.lang.String.format;
+import static java.util.stream.Collectors.joining;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Direction;
-import de.amr.easy.grid.impl.ObservableGrid;
+import de.amr.easy.grid.api.NakedGrid2D;
+import de.amr.easy.grid.api.ObservableGrid2D;
 
 /**
  * Utility class for curves.
@@ -24,7 +31,7 @@ public class Curves {
 	 * @param start
 	 *          the start cell of the walk
 	 */
-	public static void walk(Curve curve, ObservableGrid<TraversalState, ?> grid, Integer start) {
+	public static void walk(Curve curve, ObservableGrid2D<TraversalState, ?> grid, Integer start) {
 		walk(curve, grid, start, () -> {
 		});
 	}
@@ -42,7 +49,7 @@ public class Curves {
 	 * @param action
 	 *          code to be executed at each step of the walk
 	 */
-	public static void walk(Curve curve, ObservableGrid<TraversalState, ?> grid, Integer start, Runnable action) {
+	public static void walk(Curve curve, ObservableGrid2D<TraversalState, ?> grid, Integer start, Runnable action) {
 		Integer current = start;
 		grid.set(current, COMPLETED);
 		for (Direction dir : curve) {
@@ -52,5 +59,21 @@ public class Curves {
 			current = next;
 			grid.set(current, COMPLETED);
 		}
+	}
+
+	public static Stream<Integer> points(Curve curve, NakedGrid2D<?> grid, Integer start) {
+		List<Integer> points = new ArrayList<>();
+		Integer current = start;
+		points.add(current);
+		for (Direction dir : curve) {
+			Integer next = grid.neighbor(current, dir).get();
+			points.add(next);
+			current = next;
+		}
+		return points.stream();
+	}
+
+	public static String pointsAsString(Curve curve, NakedGrid2D<?> grid, Integer start) {
+		return points(curve, grid, start).map(cell -> format("(%d,%d)", grid.col(cell), grid.row(cell))).collect(joining());
 	}
 }
