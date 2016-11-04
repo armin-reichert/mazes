@@ -1,6 +1,6 @@
-package de.amr.mazes.demos.swing.view;
+package de.amr.demos.maze.swingapp.view;
 
-import static de.amr.mazes.demos.swing.model.MazeDemoModel.PATHFINDER_ALGORITHMS;
+import static de.amr.demos.maze.swingapp.model.MazeDemoModel.PATHFINDER_ALGORITHMS;
 
 import java.awt.event.ActionEvent;
 
@@ -8,7 +8,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
 
-import de.amr.mazes.demos.swing.model.AlgorithmInfo;
+import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 
 public class PathFinderMenu extends JMenu {
 

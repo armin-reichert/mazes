@@ -1,4 +1,4 @@
-package de.amr.mazes.demos.swing.view;
+package de.amr.demos.maze.swingapp.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
@@ -9,8 +9,8 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
 
+import de.amr.demos.maze.swingapp.app.MazeDemoApp;
 import de.amr.easy.grid.api.GridPosition;
-import de.amr.mazes.demos.swing.app.MazeDemoApp;
 
 public class OptionMenu extends JMenu {
 

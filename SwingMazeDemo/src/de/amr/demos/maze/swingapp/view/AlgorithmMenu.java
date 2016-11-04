@@ -1,8 +1,8 @@
-package de.amr.mazes.demos.swing.view;
+package de.amr.demos.maze.swingapp.view;
 
-import static de.amr.mazes.demos.swing.model.MazeDemoModel.Tag.MST;
-import static de.amr.mazes.demos.swing.model.MazeDemoModel.Tag.Traversal;
-import static de.amr.mazes.demos.swing.model.MazeDemoModel.Tag.UST;
+import static de.amr.demos.maze.swingapp.model.MazeDemoModel.Tag.MST;
+import static de.amr.demos.maze.swingapp.model.MazeDemoModel.Tag.Traversal;
+import static de.amr.demos.maze.swingapp.model.MazeDemoModel.Tag.UST;
 
 import java.util.Enumeration;
 import java.util.stream.Stream;
@@ -13,8 +13,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 
-import de.amr.mazes.demos.swing.model.AlgorithmInfo;
-import de.amr.mazes.demos.swing.model.MazeDemoModel;
+import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
+import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 
 public class AlgorithmMenu extends JMenu {
 

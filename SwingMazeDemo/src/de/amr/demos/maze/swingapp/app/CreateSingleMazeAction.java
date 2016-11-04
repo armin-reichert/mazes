@@ -1,4 +1,4 @@
-package de.amr.mazes.demos.swing.app;
+package de.amr.demos.maze.swingapp.app;
 
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static java.lang.String.format;
@@ -7,13 +7,13 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
+import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
+import de.amr.demos.maze.swingapp.view.ControlPanel;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.rendering.swing.BFSAnimation;
 import de.amr.easy.grid.rendering.swing.DFSAnimation;
 import de.amr.easy.maze.alg.MazeAlgorithm;
 import de.amr.easy.util.StopWatch;
-import de.amr.mazes.demos.swing.model.AlgorithmInfo;
-import de.amr.mazes.demos.swing.view.ControlPanel;
 
 /**
  * Action for creating a maze and optionally running a path finder.

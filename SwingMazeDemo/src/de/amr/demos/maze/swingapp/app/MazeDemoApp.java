@@ -1,4 +1,4 @@
-package de.amr.mazes.demos.swing.app;
+package de.amr.demos.maze.swingapp.app;
 
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
@@ -8,13 +8,13 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
+import de.amr.demos.maze.swingapp.model.MazeDemoModel;
+import de.amr.demos.maze.swingapp.view.MazeWindow;
+import de.amr.demos.maze.swingapp.view.SettingsWindow;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.rendering.swing.SwingGridCanvas;
 import de.amr.easy.maze.misc.MazeUtils;
-import de.amr.mazes.demos.swing.model.MazeDemoModel;
-import de.amr.mazes.demos.swing.view.MazeWindow;
-import de.amr.mazes.demos.swing.view.SettingsWindow;
 
 /**
  * This application visualizes different maze generation algorithms and path finders. The grid size

@@ -1,4 +1,4 @@
-package de.amr.mazes.demos.swing.model;
+package de.amr.demos.maze.swingapp.model;
 
 import java.util.Arrays;
 import java.util.HashSet;

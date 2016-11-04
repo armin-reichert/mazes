@@ -1,4 +1,4 @@
-package de.amr.mazes.demos.swing.app;
+package de.amr.demos.maze.swingapp.app;
 
 import java.awt.event.ActionEvent;
 

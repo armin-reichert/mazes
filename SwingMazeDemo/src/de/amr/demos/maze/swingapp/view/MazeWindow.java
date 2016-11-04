@@ -1,4 +1,4 @@
-package de.amr.mazes.demos.swing.view;
+package de.amr.demos.maze.swingapp.view;
 
 import java.awt.event.ActionEvent;
 
@@ -6,9 +6,9 @@ import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
+import de.amr.demos.maze.swingapp.app.MazeDemoApp;
+import de.amr.demos.maze.swingapp.rendering.GridColoring;
 import de.amr.easy.grid.rendering.swing.SwingGridCanvas;
-import de.amr.mazes.demos.swing.app.MazeDemoApp;
-import de.amr.mazes.demos.swing.rendering.GridColoring;
 
 /**
  * Display area for the grid/maze.

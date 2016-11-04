@@ -1,4 +1,4 @@
-package de.amr.mazes.demos.swing.view;
+package de.amr.demos.maze.swingapp.view;
 
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 
@@ -12,13 +12,13 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JSlider;
 
+import de.amr.demos.maze.swingapp.app.CreateAllMazesAction;
+import de.amr.demos.maze.swingapp.app.CreateSingleMazeAction;
+import de.amr.demos.maze.swingapp.app.MazeDemoApp;
+import de.amr.demos.maze.swingapp.app.StopTaskAction;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.maze.misc.MazeUtils;
 import de.amr.easy.util.GridUtils;
-import de.amr.mazes.demos.swing.app.CreateAllMazesAction;
-import de.amr.mazes.demos.swing.app.CreateSingleMazeAction;
-import de.amr.mazes.demos.swing.app.MazeDemoApp;
-import de.amr.mazes.demos.swing.app.StopTaskAction;
 
 /**
  * This view enables the user to select the maze generation and path finder algorithm and all the

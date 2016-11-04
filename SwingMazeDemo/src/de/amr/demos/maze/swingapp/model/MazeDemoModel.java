@@ -1,10 +1,10 @@
-package de.amr.mazes.demos.swing.model;
+package de.amr.demos.maze.swingapp.model;
 
-import static de.amr.mazes.demos.swing.model.MazeDemoModel.Tag.MST;
-import static de.amr.mazes.demos.swing.model.MazeDemoModel.Tag.Slow;
-import static de.amr.mazes.demos.swing.model.MazeDemoModel.Tag.SmallGridOnly;
-import static de.amr.mazes.demos.swing.model.MazeDemoModel.Tag.Traversal;
-import static de.amr.mazes.demos.swing.model.MazeDemoModel.Tag.UST;
+import static de.amr.demos.maze.swingapp.model.MazeDemoModel.Tag.MST;
+import static de.amr.demos.maze.swingapp.model.MazeDemoModel.Tag.Slow;
+import static de.amr.demos.maze.swingapp.model.MazeDemoModel.Tag.SmallGridOnly;
+import static de.amr.demos.maze.swingapp.model.MazeDemoModel.Tag.Traversal;
+import static de.amr.demos.maze.swingapp.model.MazeDemoModel.Tag.UST;
 
 import java.util.stream.Stream;
 
