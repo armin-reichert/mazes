@@ -158,6 +158,7 @@ public abstract class GridSampleApp implements Runnable {
 			canvas.setPreferredSize(new Dimension(width, height));
 			window.pack();
 		}
+		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 
 		// start real work in new thread

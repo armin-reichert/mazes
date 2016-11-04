@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 
 import de.amr.demos.grid.GridSampleApp;
 import de.amr.easy.grid.iterators.curves.lsystem.HilbertLCurveWirth;
+import de.amr.easy.grid.rendering.swing.BFSAnimation;
 
 public class HilbertLCurveWirthApp extends GridSampleApp {
 
@@ -23,7 +24,11 @@ public class HilbertLCurveWirthApp extends GridSampleApp {
 	public void run() {
 		IntStream.of(256, 128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			setCellSize(cellSize);
-			walk(new HilbertLCurveWirth(log(2, getWidth() / cellSize)), grid, grid.cell(TOP_RIGHT));
+			Integer start = grid.cell(TOP_RIGHT);
+			walk(new HilbertLCurveWirth(log(2, getWidth() / cellSize)), grid, start);
+			BFSAnimation bfs = new BFSAnimation(canvas, grid);
+			bfs.setDistancesVisible(false);
+			bfs.runAnimation(start);
 			sleep(1000);
 		});
 	}
