@@ -1,9 +1,9 @@
 package de.amr.easy.maze.alg.wilson;
 
-import static de.amr.easy.grid.api.Direction4.E;
-import static de.amr.easy.grid.api.Direction4.N;
-import static de.amr.easy.grid.api.Direction4.S;
-import static de.amr.easy.grid.api.Direction4.W;
+import static de.amr.easy.grid.api.Dir4.E;
+import static de.amr.easy.grid.api.Dir4.N;
+import static de.amr.easy.grid.api.Dir4.S;
+import static de.amr.easy.grid.api.Dir4.W;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.maze.misc.MazeUtils.log;
 import static de.amr.easy.maze.misc.MazeUtils.nextPow;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.Direction4;
+import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.NakedGrid;
 import de.amr.easy.grid.iterators.curves.HilbertCurve;
@@ -41,7 +41,7 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 		// Traverse the intersection of the square grid cells with the original grid
 		Integer cell = square.cell(TOP_LEFT);
 		path.add(cell);
-		for (Direction4 dir : hilbert) {
+		for (Dir4 dir : hilbert) {
 			// As the Hilbert curve never leaves the square grid, the neighbor always exist
 			cell = square.neighbor(cell, dir).get();
 			// Check if next cell on Hilbert curve is inside original grid:

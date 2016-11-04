@@ -1,6 +1,6 @@
 package de.amr.easy.grid.iterators.curves.lsystem;
 
-import de.amr.easy.grid.api.Direction4;
+import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.iterators.curves.Compas4;
 import de.amr.easy.grid.iterators.curves.Curve;
 
@@ -31,10 +31,11 @@ import de.amr.easy.grid.iterators.curves.Curve;
  * @see http://cph.phys.spbu.ru/ACOPhys/materials/bader/sfc.pdf
  * @see https://en.wikipedia.org/wiki/Moore_curve
  */
-public class MooreLCurve extends Curve<Direction4> {
+public class MooreLCurve extends Curve<Dir4> {
+
+	private final Compas4 compas = new Compas4();
 
 	public MooreLCurve(int i) {
-		super(new Compas4());
 		S(i);
 	}
 
@@ -47,13 +48,13 @@ public class MooreLCurve extends Curve<Direction4> {
 	private void S(int i) {
 		if (i > 0) {
 			L(i - 1);
-			forward();
+			curve.add(compas.ahead());
 			L(i - 1);
-			left90();
-			forward();
-			left90();
+			compas.turnLeft();
+			curve.add(compas.ahead());
+			compas.turnLeft();
 			L(i - 1);
-			forward();
+			curve.add(compas.ahead());
 			L(i - 1);
 		}
 	}
@@ -66,17 +67,17 @@ public class MooreLCurve extends Curve<Direction4> {
 	 */
 	private void L(int i) {
 		if (i > 0) {
-			right90();
+			compas.turnRight();
 			R(i - 1);
-			forward();
-			left90();
+			curve.add(compas.ahead());
+			compas.turnLeft();
 			L(i - 1);
-			forward();
+			curve.add(compas.ahead());
 			L(i - 1);
-			left90();
-			forward();
+			compas.turnLeft();
+			curve.add(compas.ahead());
 			R(i - 1);
-			right90();
+			compas.turnRight();
 		}
 	}
 
@@ -88,17 +89,17 @@ public class MooreLCurve extends Curve<Direction4> {
 	 */
 	private void R(int i) {
 		if (i > 0) {
-			left90();
+			compas.turnLeft();
 			L(i - 1);
-			forward();
-			right90();
+			curve.add(compas.ahead());
+			compas.turnRight();
 			R(i - 1);
-			forward();
+			curve.add(compas.ahead());
 			R(i - 1);
-			right90();
-			forward();
+			compas.turnRight();
+			curve.add(compas.ahead());
 			L(i - 1);
-			left90();
+			compas.turnLeft();
 		}
 	}
 }

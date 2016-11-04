@@ -1,7 +1,7 @@
 package de.amr.easy.grid.impl;
 
-import static de.amr.easy.grid.api.Direction4.E;
-import static de.amr.easy.grid.api.Direction4.S;
+import static de.amr.easy.grid.api.Dir4.E;
+import static de.amr.easy.grid.api.Dir4.S;
 import static java.util.Collections.shuffle;
 import static java.util.stream.IntStream.range;
 
@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.WeightedEdge;
-import de.amr.easy.grid.api.Direction4;
+import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.api.NakedGrid2D;
 
@@ -28,7 +28,7 @@ import de.amr.easy.grid.api.NakedGrid2D;
  */
 public class NakedGrid<PassageWeight extends Comparable<PassageWeight>> implements NakedGrid2D<PassageWeight> {
 
-	private static final int DIRECTION_COUNT = Direction4.values().length;
+	private static final int DIRECTION_COUNT = Dir4.values().length;
 
 	private final int nCols;
 	private final int nRows;
@@ -47,11 +47,11 @@ public class NakedGrid<PassageWeight extends Comparable<PassageWeight>> implemen
 		return col + row * nCols;
 	}
 
-	private int bit(int cell, Direction4 dir) {
+	private int bit(int cell, Dir4 dir) {
 		return cell * DIRECTION_COUNT + dir.ordinal();
 	}
 
-	private void connect(int p, int q, Direction4 dir, boolean connected) {
+	private void connect(int p, int q, Dir4 dir, boolean connected) {
 		connections.set(bit(p, dir), connected);
 		connections.set(bit(q, dir.inverse()), connected);
 	}
@@ -108,7 +108,7 @@ public class NakedGrid<PassageWeight extends Comparable<PassageWeight>> implemen
 	public Stream<WeightedEdge<Integer, PassageWeight>> edgeStream() {
 		Set<WeightedEdge<Integer, PassageWeight>> edgeSet = new HashSet<>();
 		vertexStream().forEach(cell -> {
-			Stream.of(Direction4.values()).forEach(dir -> {
+			Stream.of(Dir4.values()).forEach(dir -> {
 				if (isConnected(cell, dir)) {
 					neighbor(cell, dir).ifPresent(neighbor -> {
 						if (cell < neighbor) {
@@ -183,7 +183,7 @@ public class NakedGrid<PassageWeight extends Comparable<PassageWeight>> implemen
 	public Stream<Integer> adjVertices(Integer cell) {
 		checkCell(cell);
 		/*@formatter:off*/
-		return Stream.of(Direction4.values())
+		return Stream.of(Dir4.values())
 				.filter(dir -> isConnected(cell, dir))
 				.map(dir -> neighbor(cell, dir).get());
 		/*@formatter:on*/
@@ -262,15 +262,15 @@ public class NakedGrid<PassageWeight extends Comparable<PassageWeight>> implemen
 	}
 
 	@Override
-	public Stream<Integer> neighbors(Integer cell, Direction4... dirs) {
+	public Stream<Integer> neighbors(Integer cell, Dir4... dirs) {
 		if (dirs.length == 0) {
-			dirs = Direction4.values();
+			dirs = Dir4.values();
 		}
 		return Stream.of(dirs).map(dir -> neighbor(cell, dir)).filter(Optional::isPresent).map(Optional::get);
 	}
 
 	@Override
-	public Optional<Integer> neighbor(Integer cell, Direction4 dir) {
+	public Optional<Integer> neighbor(Integer cell, Dir4 dir) {
 		checkCell(cell);
 		int col = col(cell) + dir.dx;
 		int row = row(cell) + dir.dy;
@@ -281,17 +281,17 @@ public class NakedGrid<PassageWeight extends Comparable<PassageWeight>> implemen
 	}
 
 	@Override
-	public boolean isConnected(Integer cell, Direction4 dir) {
+	public boolean isConnected(Integer cell, Dir4 dir) {
 		checkCell(cell);
 		return connections.get(bit(cell, dir));
 	}
 
 	@Override
-	public Optional<Direction4> direction(Integer source, Integer target) {
+	public Optional<Dir4> direction(Integer source, Integer target) {
 		checkCell(source);
 		checkCell(target);
 		/*@formatter:off*/
-		return Stream.of(Direction4.values())
+		return Stream.of(Dir4.values())
 			.filter(dir -> neighbor(source, dir).isPresent())
 			.filter(dir -> target.equals(neighbor(source, dir).get()))
 			.findFirst();

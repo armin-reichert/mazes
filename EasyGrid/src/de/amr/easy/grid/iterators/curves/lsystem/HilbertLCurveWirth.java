@@ -1,16 +1,15 @@
 package de.amr.easy.grid.iterators.curves.lsystem;
 
-import static de.amr.easy.grid.api.Direction4.E;
-import static de.amr.easy.grid.api.Direction4.N;
-import static de.amr.easy.grid.api.Direction4.S;
-import static de.amr.easy.grid.api.Direction4.W;
+import static de.amr.easy.grid.api.Dir4.E;
+import static de.amr.easy.grid.api.Dir4.N;
+import static de.amr.easy.grid.api.Dir4.S;
+import static de.amr.easy.grid.api.Dir4.W;
 
-import de.amr.easy.grid.api.Direction4;
-import de.amr.easy.grid.iterators.curves.Compas4;
+import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.iterators.curves.Curve;
 
 /**
- * Implementation of a Hilbert curve using the follwing L-system (adapted from the book "Algorithmen
+ * Implementation of a Hilbert curve using the following L-system (adapted from the book "Algorithmen
  * und Datenstrukturen" by Niklaus Wirth, Teubner 1983):
  * <p>
  * <code>
@@ -28,10 +27,9 @@ import de.amr.easy.grid.iterators.curves.Curve;
  * 
  * @author Armin Reichert
  */
-public class HilbertLCurveWirth extends Curve<Direction4> {
+public class HilbertLCurveWirth extends Curve<Dir4> {
 
 	public HilbertLCurveWirth(int i) {
-		super(new Compas4());
 		A(i);
 	}
 
@@ -44,11 +42,11 @@ public class HilbertLCurveWirth extends Curve<Direction4> {
 	private void A(int i) {
 		if (i > 0) {
 			D(i - 1);
-			walk(W);
+			curve.add(W);
 			A(i - 1);
-			walk(S);
+			curve.add(S);
 			A(i - 1);
-			walk(E);
+			curve.add(E);
 			B(i - 1);
 		}
 	}
@@ -62,11 +60,11 @@ public class HilbertLCurveWirth extends Curve<Direction4> {
 	private void B(int i) {
 		if (i > 0) {
 			C(i - 1);
-			walk(N);
+			curve.add(N);
 			B(i - 1);
-			walk(E);
+			curve.add(E);
 			B(i - 1);
-			walk(S);
+			curve.add(S);
 			A(i - 1);
 		}
 	}
@@ -80,11 +78,11 @@ public class HilbertLCurveWirth extends Curve<Direction4> {
 	private void C(int i) {
 		if (i > 0) {
 			B(i - 1);
-			walk(E);
+			curve.add(E);
 			C(i - 1);
-			walk(N);
+			curve.add(N);
 			C(i - 1);
-			walk(W);
+			curve.add(W);
 			D(i - 1);
 		}
 	}
@@ -98,11 +96,11 @@ public class HilbertLCurveWirth extends Curve<Direction4> {
 	private void D(int i) {
 		if (i > 0) {
 			A(i - 1);
-			walk(S);
+			curve.add(S);
 			D(i - 1);
-			walk(W);
+			curve.add(W);
 			D(i - 1);
-			walk(N);
+			curve.add(N);
 			C(i - 1);
 		}
 	}

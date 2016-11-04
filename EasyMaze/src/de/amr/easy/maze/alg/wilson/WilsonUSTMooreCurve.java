@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.Direction4;
+import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.NakedGrid;
 import de.amr.easy.grid.iterators.curves.lsystem.MooreLCurve;
@@ -34,7 +34,7 @@ public class WilsonUSTMooreCurve extends WilsonUST {
 		NakedGrid<?> square = new NakedGrid<>(n, n);
 		Integer cell = square.cell(n / 2, n - 1);
 		addCellToPath(n / 2, n - 1);
-		for (Direction4 dir : moore) {
+		for (Dir4 dir : moore) {
 			cell = square.neighbor(cell, dir).get();
 			addCellToPath(square.col(cell), square.row(cell));
 		}

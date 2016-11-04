@@ -1,14 +1,14 @@
 package de.amr.easy.maze.alg;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
-import static de.amr.easy.grid.api.Direction4.E;
-import static de.amr.easy.grid.api.Direction4.S;
+import static de.amr.easy.grid.api.Dir4.E;
+import static de.amr.easy.grid.api.Dir4.S;
 
 import java.util.Optional;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.Direction4;
+import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
 
 /**
@@ -47,7 +47,7 @@ public class BinaryTree extends MazeAlgorithm {
 	 *          second direction of tree
 	 * @return a random neighbor towards one of the given directions or nothing
 	 */
-	private Optional<Integer> randomNeighbor(Integer cell, Direction4 firstDir, Direction4 secondDir) {
+	private Optional<Integer> randomNeighbor(Integer cell, Dir4 firstDir, Dir4 secondDir) {
 		boolean b = rnd.nextBoolean();
 		Optional<Integer> neighbor = grid.neighbor(cell, b ? firstDir : secondDir);
 		return neighbor.isPresent() ? neighbor : grid.neighbor(cell, b ? secondDir : firstDir);

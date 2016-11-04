@@ -1,6 +1,6 @@
 package de.amr.easy.grid.iterators.curves.lsystem;
 
-import de.amr.easy.grid.api.Direction4;
+import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.iterators.curves.Compas4;
 import de.amr.easy.grid.iterators.curves.Curve;
 
@@ -17,42 +17,43 @@ import de.amr.easy.grid.iterators.curves.Curve;
  * 
  * @author Armin Reichert
  */
-public class HilbertLCurve extends Curve<Direction4> {
+public class HilbertLCurve extends Curve<Dir4> {
+
+	private final Compas4 compas = new Compas4();
 
 	public HilbertLCurve(int i) {
-		super(new Compas4());
 		A(i);
 	}
 
 	private void A(int i) {
 		if (i > 0) {
-			right90();
+			compas.turnRight();
 			B(i - 1);
-			forward();
-			left90();
+			curve.add(compas.ahead());
+			compas.turnLeft();
 			A(i - 1);
-			forward();
+			curve.add(compas.ahead());
 			A(i - 1);
-			left90();
-			forward();
+			compas.turnLeft();
+			curve.add(compas.ahead());
 			B(i - 1);
-			right90();
+			compas.turnRight();
 		}
 	}
 
 	private void B(int i) {
 		if (i > 0) {
-			left90();
+			compas.turnLeft();
 			A(i - 1);
-			forward();
-			right90();
+			curve.add(compas.ahead());
+			compas.turnRight();
 			B(i - 1);
-			forward();
+			curve.add(compas.ahead());
 			B(i - 1);
-			right90();
-			forward();
+			compas.turnRight();
+			curve.add(compas.ahead());
 			A(i - 1);
-			left90();
+			compas.turnLeft();
 		}
 	}
 }

@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.Direction4;
+import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.maze.alg.MazeAlgorithm;
 
@@ -32,11 +32,11 @@ import de.amr.easy.maze.alg.MazeAlgorithm;
  */
 public abstract class WilsonUST extends MazeAlgorithm {
 
-	private final Direction4[] lastWalkDir;
+	private final Dir4[] lastWalkDir;
 
 	protected WilsonUST(Grid2D<TraversalState,Integer> grid) {
 		super(grid);
-		lastWalkDir = new Direction4[grid.numCells()];
+		lastWalkDir = new Dir4[grid.numCells()];
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public abstract class WilsonUST extends MazeAlgorithm {
 		// do a random walk starting at the start cell until the current tree is touched
 		Integer v = start;
 		while (outsideTree(v)) {
-			Direction4 dir = Direction4.randomValue();
+			Dir4 dir = Dir4.randomValue();
 			Optional<Integer> neighbor = grid.neighbor(v, dir);
 			if (neighbor.isPresent()) {
 				lastWalkDir[v] = dir;

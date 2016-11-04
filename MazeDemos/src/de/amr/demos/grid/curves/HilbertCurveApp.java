@@ -1,9 +1,9 @@
 package de.amr.demos.grid.curves;
 
-import static de.amr.easy.grid.api.Direction4.E;
-import static de.amr.easy.grid.api.Direction4.N;
-import static de.amr.easy.grid.api.Direction4.S;
-import static de.amr.easy.grid.api.Direction4.W;
+import static de.amr.easy.grid.api.Dir4.E;
+import static de.amr.easy.grid.api.Dir4.N;
+import static de.amr.easy.grid.api.Dir4.S;
+import static de.amr.easy.grid.api.Dir4.W;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
@@ -18,7 +18,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import de.amr.demos.grid.GridSampleApp;
-import de.amr.easy.grid.api.Direction4;
+import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.iterators.curves.HilbertCurve;
 import de.amr.easy.grid.rendering.swing.BFSAnimation;
@@ -31,7 +31,7 @@ import de.amr.easy.grid.rendering.swing.BFSAnimation;
  */
 public class HilbertCurveApp extends GridSampleApp {
 
-	private final EnumMap<GridPosition, List<Direction4>> orientation = new EnumMap<>(GridPosition.class);
+	private final EnumMap<GridPosition, List<Dir4>> orientation = new EnumMap<>(GridPosition.class);
 
 	public static void main(String[] args) {
 		launch(new HilbertCurveApp());

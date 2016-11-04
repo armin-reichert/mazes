@@ -20,31 +20,6 @@ import de.amr.easy.grid.iterators.Sequence;
 public abstract class Curve<D> implements Sequence<D> {
 
 	protected final List<D> curve = new ArrayList<>();
-	protected final Compas<D> compas;
-
-	protected Curve() {
-		this(null);
-	}
-
-	protected Curve(Compas<D> compas) {
-		this.compas = compas;
-	}
-
-	protected void walk(D dir) {
-		curve.add(dir);
-	}
-
-	protected void forward() {
-		curve.add(compas.ahead());
-	}
-
-	protected void left90() {
-		compas.turnLeft();
-	}
-
-	protected void right90() {
-		compas.turnRight();
-	}
 
 	@Override
 	public Iterator<D> iterator() {

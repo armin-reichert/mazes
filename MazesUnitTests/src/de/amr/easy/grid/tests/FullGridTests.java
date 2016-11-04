@@ -11,7 +11,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.grid.api.Direction4;
+import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.api.NakedGrid2D;
 import de.amr.easy.grid.impl.NakedGrid;
@@ -100,18 +100,18 @@ public class FullGridTests {
 				Integer cell = grid.cell(x, y);
 				if (grid.numCols() > 1) {
 					if (x == 0) {
-						assertTrue(grid.isConnected(cell, Direction4.E));
+						assertTrue(grid.isConnected(cell, Dir4.E));
 					}
 					if (x == grid.numCols() - 1) {
-						assertTrue(grid.isConnected(cell, Direction4.W));
+						assertTrue(grid.isConnected(cell, Dir4.W));
 					}
 				}
 				if (grid.numRows() > 1) {
 					if (y == 0) {
-						assertTrue(grid.isConnected(cell, Direction4.S));
+						assertTrue(grid.isConnected(cell, Dir4.S));
 					}
 					if (y == grid.numRows() - 1) {
-						assertTrue(grid.isConnected(cell, Direction4.N));
+						assertTrue(grid.isConnected(cell, Dir4.N));
 					}
 				}
 			}

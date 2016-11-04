@@ -1,10 +1,10 @@
 package de.amr.easy.grid.tests;
 
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
-import static de.amr.easy.grid.api.Direction4.E;
-import static de.amr.easy.grid.api.Direction4.N;
-import static de.amr.easy.grid.api.Direction4.S;
-import static de.amr.easy.grid.api.Direction4.W;
+import static de.amr.easy.grid.api.Dir4.E;
+import static de.amr.easy.grid.api.Dir4.N;
+import static de.amr.easy.grid.api.Dir4.S;
+import static de.amr.easy.grid.api.Dir4.W;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -18,7 +18,7 @@ import org.junit.Test;
 import de.amr.easy.graph.alg.CycleChecker;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.WeightedEdge;
-import de.amr.easy.grid.api.Direction4;
+import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.Grid;
 import de.amr.easy.grid.impl.NakedGrid;
@@ -197,7 +197,7 @@ public class GridTests {
 			.filter(cell -> grid.degree(cell) < grid.neighbors(cell).count())
 			.findFirst()
 			.ifPresent(cell -> {
-				for (Direction4 dir : Direction4.values()) {
+				for (Dir4 dir : Dir4.values()) {
 					Optional<Integer> neighbor = grid.neighbor(cell, dir);
 					if (neighbor.isPresent() && !grid.adjacent(cell, neighbor.get())) {
 						grid.addEdge(cell, neighbor.get());
