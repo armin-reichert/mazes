@@ -1,10 +1,12 @@
 package de.amr.easy.grid.iterators.curves.lsystem;
 
-import static de.amr.easy.grid.api.Direction.E;
-import static de.amr.easy.grid.api.Direction.N;
-import static de.amr.easy.grid.api.Direction.S;
-import static de.amr.easy.grid.api.Direction.W;
+import static de.amr.easy.grid.api.Direction4.E;
+import static de.amr.easy.grid.api.Direction4.N;
+import static de.amr.easy.grid.api.Direction4.S;
+import static de.amr.easy.grid.api.Direction4.W;
 
+import de.amr.easy.grid.api.Direction4;
+import de.amr.easy.grid.iterators.curves.Compas4;
 import de.amr.easy.grid.iterators.curves.Curve;
 
 /**
@@ -26,9 +28,10 @@ import de.amr.easy.grid.iterators.curves.Curve;
  * 
  * @author Armin Reichert
  */
-public class HilbertLCurveWirth extends Curve {
+public class HilbertLCurveWirth extends Curve<Direction4> {
 
 	public HilbertLCurveWirth(int i) {
+		super(new Compas4());
 		A(i);
 	}
 

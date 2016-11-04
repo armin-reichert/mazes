@@ -1,5 +1,7 @@
 package de.amr.easy.grid.iterators.curves.lsystem;
 
+import de.amr.easy.grid.api.Direction4;
+import de.amr.easy.grid.iterators.curves.Compas4;
 import de.amr.easy.grid.iterators.curves.Curve;
 
 /**
@@ -29,9 +31,10 @@ import de.amr.easy.grid.iterators.curves.Curve;
  * @see http://cph.phys.spbu.ru/ACOPhys/materials/bader/sfc.pdf
  * @see https://en.wikipedia.org/wiki/Moore_curve
  */
-public class MooreLCurve extends Curve {
+public class MooreLCurve extends Curve<Direction4> {
 
 	public MooreLCurve(int i) {
+		super(new Compas4());
 		S(i);
 	}
 

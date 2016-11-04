@@ -7,7 +7,7 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.grid.api.Direction;
+import de.amr.easy.grid.api.Direction4;
 import de.amr.easy.grid.api.NakedGrid2D;
 
 /**
@@ -43,7 +43,7 @@ public class SwingGridRenderer {
 
 	public void drawPassage(Graphics2D g, NakedGrid2D<?> grid, Edge<Integer> passage, boolean visible) {
 		Integer p = passage.either(), q = passage.other(p);
-		Direction dir = grid.direction(p, q).get();
+		Direction4 dir = grid.direction(p, q).get();
 		drawCellContent(g, grid, p);
 		drawHalfPassage(g, grid, p, dir, visible ? rm.getPassageColor(p, dir) : rm.getGridBgColor());
 		drawCellContent(g, grid, q);
@@ -52,14 +52,14 @@ public class SwingGridRenderer {
 
 	public void drawCell(Graphics2D g, NakedGrid2D<?> grid, Integer cell) {
 		drawCellContent(g, grid, cell);
-		for (Direction dir : Direction.values()) {
+		for (Direction4 dir : Direction4.values()) {
 			if (grid.isConnected(cell, dir)) {
 				drawHalfPassage(g, grid, cell, dir, rm.getPassageColor(cell, dir));
 			}
 		}
 	}
 
-	private void drawHalfPassage(Graphics2D g, NakedGrid2D<?> grid, Integer cell, Direction dir, Color passageColor) {
+	private void drawHalfPassage(Graphics2D g, NakedGrid2D<?> grid, Integer cell, Direction4 dir, Color passageColor) {
 		final int x = grid.col(cell) * cellSize;
 		final int y = grid.row(cell) * cellSize;
 		g.translate(x, y);

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.Direction;
+import de.amr.easy.grid.api.Direction4;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.NakedGrid;
 import de.amr.easy.grid.iterators.curves.PeanoCurve;
@@ -35,7 +35,7 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 		NakedGrid<?> square = new NakedGrid<>(n, n);
 		Integer cell = square.cell(BOTTOM_LEFT);
 		addCellToPath(square.col(cell), square.row(cell));
-		for (Direction dir : peano) {
+		for (Direction4 dir : peano) {
 			cell = square.neighbor(cell, dir).get();
 			addCellToPath(square.col(cell), square.row(cell));
 		}

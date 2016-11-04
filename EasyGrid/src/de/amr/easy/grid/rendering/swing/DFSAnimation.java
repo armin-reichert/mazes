@@ -9,7 +9,7 @@ import java.util.Set;
 import de.amr.easy.graph.alg.traversal.DepthFirstTraversal;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalListener;
-import de.amr.easy.grid.api.Direction;
+import de.amr.easy.grid.api.Direction4;
 import de.amr.easy.grid.api.ObservableNakedGrid2D;
 
 /**
@@ -96,7 +96,7 @@ public class DFSAnimation implements GraphTraversalListener<Integer> {
 		}
 
 		@Override
-		public Color getPassageColor(Integer cell, Direction dir) {
+		public Color getPassageColor(Integer cell, Direction4 dir) {
 			Integer neighbor = grid.neighbor(cell, dir).get();
 			if (path.contains(cell) && path.contains(neighbor)) {
 				return pathColor;

@@ -7,21 +7,30 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
-import de.amr.easy.grid.api.Direction;
 import de.amr.easy.grid.iterators.Sequence;
 
 /**
  * Base class for curves like the Hilbert curve.
  * 
  * @author Armin Reichert
+ * 
+ * @param D
+ *          direction type
  */
-public abstract class Curve implements Sequence<Direction> {
+public abstract class Curve<D> implements Sequence<D> {
 
-	protected final List<Direction> curve = new ArrayList<>();
+	protected final List<D> curve = new ArrayList<>();
+	protected final Compas<D> compas;
 
-	private Compas compas = new Compas();
-	
-	protected void walk(Direction dir) {
+	protected Curve() {
+		this(null);
+	}
+
+	protected Curve(Compas<D> compas) {
+		this.compas = compas;
+	}
+
+	protected void walk(D dir) {
 		curve.add(dir);
 	}
 
@@ -38,17 +47,17 @@ public abstract class Curve implements Sequence<Direction> {
 	}
 
 	@Override
-	public Iterator<Direction> iterator() {
+	public Iterator<D> iterator() {
 		return curve.iterator();
 	}
 
 	@Override
-	public Stream<Direction> stream() {
+	public Stream<D> stream() {
 		return curve.stream();
 	}
 
 	@Override
 	public String toString() {
-		return stream().map(Direction::toString).collect(joining("-"));
+		return stream().map(D::toString).collect(joining("-"));
 	}
 }

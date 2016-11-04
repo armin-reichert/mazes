@@ -1,5 +1,7 @@
 package de.amr.easy.grid.iterators.curves.lsystem;
 
+import de.amr.easy.grid.api.Direction4;
+import de.amr.easy.grid.iterators.curves.Compas4;
 import de.amr.easy.grid.iterators.curves.Curve;
 
 /**
@@ -15,9 +17,10 @@ import de.amr.easy.grid.iterators.curves.Curve;
  * 
  * @author Armin Reichert
  */
-public class HilbertLCurve extends Curve {
+public class HilbertLCurve extends Curve<Direction4> {
 
 	public HilbertLCurve(int i) {
+		super(new Compas4());
 		A(i);
 	}
 

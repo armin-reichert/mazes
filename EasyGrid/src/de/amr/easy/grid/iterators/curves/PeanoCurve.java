@@ -1,24 +1,24 @@
 package de.amr.easy.grid.iterators.curves;
 
-import static de.amr.easy.grid.api.Direction.E;
-import static de.amr.easy.grid.api.Direction.N;
-import static de.amr.easy.grid.api.Direction.S;
-import static de.amr.easy.grid.api.Direction.W;
+import static de.amr.easy.grid.api.Direction4.E;
+import static de.amr.easy.grid.api.Direction4.N;
+import static de.amr.easy.grid.api.Direction4.S;
+import static de.amr.easy.grid.api.Direction4.W;
 
-import de.amr.easy.grid.api.Direction;
+import de.amr.easy.grid.api.Direction4;
 
 /**
  * Computes a Peano-curve.
  * 
  * @author Armin Reichert
  */
-public class PeanoCurve extends Curve {
+public class PeanoCurve extends Curve<Direction4> {
 
 	public PeanoCurve(int i) {
 		peano(i, N, E, S, W);
 	}
 
-	private void peano(int i, Direction n, Direction e, Direction s, Direction w) {
+	private void peano(int i, Direction4 n, Direction4 e, Direction4 s, Direction4 w) {
 		if (i > 0) {
 			peano(i - 1, n, e, s, w);
 			curve.add(n);
