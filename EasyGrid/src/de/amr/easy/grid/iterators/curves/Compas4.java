@@ -7,7 +7,7 @@ import de.amr.easy.grid.api.Dir4;
  * 
  * @author Armin Reichert
  */
-public class Compas4 implements Compas<Dir4> {
+public class Compas4 {
 
 	private final Dir4[] dirs;
 
@@ -25,34 +25,28 @@ public class Compas4 implements Compas<Dir4> {
 		return new Compas4(dirs);
 	}
 
-	@Override
 	public Dir4 ahead() {
 		return dirs[0];
 	}
 
-	@Override
 	public Dir4 right() {
 		return dirs[1];
 	}
 
-	@Override
 	public Dir4 behind() {
 		return dirs[2];
 	}
 
-	@Override
 	public Dir4 left() {
 		return dirs[3];
 	}
 
-	@Override
 	public void turnLeft() {
 		for (int i = 0; i < dirs.length; ++i) {
 			dirs[i] = dirs[i].left();
 		}
 	}
 
-	@Override
 	public void turnRight() {
 		for (int i = 0; i < dirs.length; ++i) {
 			dirs[i] = dirs[i].right();
