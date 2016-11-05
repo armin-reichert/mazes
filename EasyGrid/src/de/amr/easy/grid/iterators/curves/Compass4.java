@@ -7,11 +7,11 @@ import de.amr.easy.grid.api.Dir4;
  * 
  * @author Armin Reichert
  */
-public class Compas4 {
+public class Compass4 {
 
 	private final Dir4[] dirs;
 
-	public Compas4(Dir4... dirs) {
+	public Compass4(Dir4... dirs) {
 		if (dirs.length != 0 && dirs.length != 4) {
 			throw new IllegalArgumentException("A compas must have 4 directions");
 		}
@@ -21,8 +21,8 @@ public class Compas4 {
 		this.dirs = dirs;
 	}
 
-	public Compas4 copy() {
-		return new Compas4(dirs);
+	public Compass4 copy() {
+		return new Compass4(dirs);
 	}
 
 	public Dir4 ahead() {

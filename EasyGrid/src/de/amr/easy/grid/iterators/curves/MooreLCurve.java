@@ -31,7 +31,7 @@ import de.amr.easy.grid.api.Dir4;
  */
 public class MooreLCurve extends Curve<Dir4> {
 
-	private final Compas4 compas = new Compas4();
+	private final Compass4 compass = new Compass4();
 
 	public MooreLCurve(int i) {
 		S(i);
@@ -46,13 +46,13 @@ public class MooreLCurve extends Curve<Dir4> {
 	private void S(int i) {
 		if (i > 0) {
 			L(i - 1);
-			curve.add(compas.ahead());
+			curve.add(compass.ahead());
 			L(i - 1);
-			compas.turnLeft();
-			curve.add(compas.ahead());
-			compas.turnLeft();
+			compass.turnLeft();
+			curve.add(compass.ahead());
+			compass.turnLeft();
 			L(i - 1);
-			curve.add(compas.ahead());
+			curve.add(compass.ahead());
 			L(i - 1);
 		}
 	}
@@ -65,17 +65,17 @@ public class MooreLCurve extends Curve<Dir4> {
 	 */
 	private void L(int i) {
 		if (i > 0) {
-			compas.turnRight();
+			compass.turnRight();
 			R(i - 1);
-			curve.add(compas.ahead());
-			compas.turnLeft();
+			curve.add(compass.ahead());
+			compass.turnLeft();
 			L(i - 1);
-			curve.add(compas.ahead());
+			curve.add(compass.ahead());
 			L(i - 1);
-			compas.turnLeft();
-			curve.add(compas.ahead());
+			compass.turnLeft();
+			curve.add(compass.ahead());
 			R(i - 1);
-			compas.turnRight();
+			compass.turnRight();
 		}
 	}
 
@@ -87,17 +87,17 @@ public class MooreLCurve extends Curve<Dir4> {
 	 */
 	private void R(int i) {
 		if (i > 0) {
-			compas.turnLeft();
+			compass.turnLeft();
 			L(i - 1);
-			curve.add(compas.ahead());
-			compas.turnRight();
+			curve.add(compass.ahead());
+			compass.turnRight();
 			R(i - 1);
-			curve.add(compas.ahead());
+			curve.add(compass.ahead());
 			R(i - 1);
-			compas.turnRight();
-			curve.add(compas.ahead());
+			compass.turnRight();
+			curve.add(compass.ahead());
 			L(i - 1);
-			compas.turnLeft();
+			compass.turnLeft();
 		}
 	}
 }

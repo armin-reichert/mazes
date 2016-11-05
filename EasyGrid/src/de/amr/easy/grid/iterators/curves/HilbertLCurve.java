@@ -17,7 +17,7 @@ import de.amr.easy.grid.api.Dir4;
  */
 public class HilbertLCurve extends Curve<Dir4> {
 
-	private final Compas4 compas = new Compas4();
+	private final Compass4 compass = new Compass4();
 
 	public HilbertLCurve(int i) {
 		A(i);
@@ -25,33 +25,33 @@ public class HilbertLCurve extends Curve<Dir4> {
 
 	private void A(int i) {
 		if (i > 0) {
-			compas.turnRight();
+			compass.turnRight();
 			B(i - 1);
-			curve.add(compas.ahead());
-			compas.turnLeft();
+			curve.add(compass.ahead());
+			compass.turnLeft();
 			A(i - 1);
-			curve.add(compas.ahead());
+			curve.add(compass.ahead());
 			A(i - 1);
-			compas.turnLeft();
-			curve.add(compas.ahead());
+			compass.turnLeft();
+			curve.add(compass.ahead());
 			B(i - 1);
-			compas.turnRight();
+			compass.turnRight();
 		}
 	}
 
 	private void B(int i) {
 		if (i > 0) {
-			compas.turnLeft();
+			compass.turnLeft();
 			A(i - 1);
-			curve.add(compas.ahead());
-			compas.turnRight();
+			curve.add(compass.ahead());
+			compass.turnRight();
 			B(i - 1);
-			curve.add(compas.ahead());
+			curve.add(compass.ahead());
 			B(i - 1);
-			compas.turnRight();
-			curve.add(compas.ahead());
+			compass.turnRight();
+			curve.add(compass.ahead());
 			A(i - 1);
-			compas.turnLeft();
+			compass.turnLeft();
 		}
 	}
 }
