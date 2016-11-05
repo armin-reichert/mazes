@@ -27,7 +27,7 @@ import de.amr.easy.grid.api.Dir4;
  * @author Armin Reichert
  */
 public class HilbertLCurveWirth extends Curve<Dir4> {
-
+	
 	public HilbertLCurveWirth(int i) {
 		A(i);
 	}

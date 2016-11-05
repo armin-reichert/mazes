@@ -5,8 +5,6 @@ import static de.amr.easy.grid.api.Dir4.N;
 import static de.amr.easy.grid.api.Dir4.S;
 import static de.amr.easy.grid.api.Dir4.W;
 
-import java.util.List;
-
 import de.amr.easy.grid.api.Dir4;
 
 /**
@@ -18,19 +16,12 @@ import de.amr.easy.grid.api.Dir4;
  */
 public class HilbertCurve extends Curve<Dir4> {
 
-	public HilbertCurve(int depth) {
-		hilbert(depth, N, E, S, W);
+	public HilbertCurve(int i) {
+		hilbert(i, N, E, S, W);
 	}
 
 	public HilbertCurve(int i, Dir4 n, Dir4 e, Dir4 s, Dir4 w) {
 		hilbert(i, n, e, s, w);
-	}
-
-	public HilbertCurve(int i, List<Dir4> dirs) {
-		if (dirs.size() != 4) {
-			throw new IllegalArgumentException();
-		}
-		hilbert(i, dirs.get(0), dirs.get(1), dirs.get(2), dirs.get(3));
 	}
 
 	private void hilbert(int i, Dir4 n, Dir4 e, Dir4 s, Dir4 w) {

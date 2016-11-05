@@ -50,10 +50,15 @@ public class HilbertCurveApp extends GridSampleApp {
 		Stream.of(TOP_RIGHT, TOP_LEFT, BOTTOM_LEFT, BOTTOM_RIGHT).forEach(startPos -> {
 			IntStream.of(256, 128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 				setCellSize(cellSize);
-				setDelay(cellSize > 16 ? 3 : 1);
+				setDelay(cellSize / 64);
+
+				int i = log(2, getWidth() / cellSize);
+				List<Dir4> dirs = orientation.get(startPos);
+				HilbertCurve hilbert = new HilbertCurve(i, dirs.get(0), dirs.get(1), dirs.get(2), dirs.get(3));
+
 				Integer start = grid.cell(startPos);
-				HilbertCurve hilbert = new HilbertCurve(log(2, getWidth() / cellSize), orientation.get(startPos));
 				traverse(hilbert, grid, start, this::addEdge);
+
 				BFSAnimation bfs = new BFSAnimation(canvas, grid);
 				bfs.setDistancesVisible(false);
 				bfs.runAnimation(start);
