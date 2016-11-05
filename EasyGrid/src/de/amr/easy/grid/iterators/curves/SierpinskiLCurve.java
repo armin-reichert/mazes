@@ -1,4 +1,4 @@
-package de.amr.easy.grid.iterators.curves.lsystem;
+package de.amr.easy.grid.iterators.curves;
 
 import static de.amr.easy.grid.api.Dir8.E;
 import static de.amr.easy.grid.api.Dir8.N;
@@ -10,8 +10,12 @@ import static de.amr.easy.grid.api.Dir8.SW;
 import static de.amr.easy.grid.api.Dir8.W;
 
 import de.amr.easy.grid.api.Dir8;
-import de.amr.easy.grid.iterators.curves.Curve;
 
+/**
+ * Sierpinski curve (as defined in Niklaus Wirth, "Algorithmen und Datenstrukturen").
+ * 
+ * @author Armin Reichert
+ */
 public class SierpinskiLCurve extends Curve<Dir8> {
 
 	public SierpinskiLCurve(int i) {

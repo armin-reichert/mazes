@@ -7,7 +7,7 @@ import static de.amr.easy.maze.misc.MazeUtils.log;
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.GridSampleApp;
-import de.amr.easy.grid.iterators.curves.lsystem.HilbertLCurveWirth;
+import de.amr.easy.grid.iterators.curves.HilbertLCurveWirth;
 import de.amr.easy.grid.rendering.swing.BFSAnimation;
 
 public class HilbertLCurveWirthApp extends GridSampleApp {

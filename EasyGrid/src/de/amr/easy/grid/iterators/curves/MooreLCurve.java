@@ -1,8 +1,6 @@
-package de.amr.easy.grid.iterators.curves.lsystem;
+package de.amr.easy.grid.iterators.curves;
 
 import de.amr.easy.grid.api.Dir4;
-import de.amr.easy.grid.iterators.curves.Compas4;
-import de.amr.easy.grid.iterators.curves.Curve;
 
 /**
  * Computes a Moore curve from the following L-system:

@@ -1,4 +1,4 @@
-package de.amr.easy.grid.iterators.curves.lsystem;
+package de.amr.easy.grid.iterators.curves;
 
 import static de.amr.easy.grid.api.Dir4.E;
 import static de.amr.easy.grid.api.Dir4.N;
@@ -6,7 +6,6 @@ import static de.amr.easy.grid.api.Dir4.S;
 import static de.amr.easy.grid.api.Dir4.W;
 
 import de.amr.easy.grid.api.Dir4;
-import de.amr.easy.grid.iterators.curves.Curve;
 
 /**
  * Implementation of a Hilbert curve using the following L-system (adapted from the book "Algorithmen

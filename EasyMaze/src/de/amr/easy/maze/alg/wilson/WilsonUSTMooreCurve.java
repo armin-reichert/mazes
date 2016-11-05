@@ -12,7 +12,7 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.NakedGrid;
-import de.amr.easy.grid.iterators.curves.lsystem.MooreLCurve;
+import de.amr.easy.grid.iterators.curves.MooreLCurve;
 
 /**
  * Wilson's algorithm where the vertices are selected from a Hilbert-Moore curve.
