@@ -8,7 +8,7 @@ import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.grid.api.GridPosition.TOP_RIGHT;
-import static de.amr.easy.grid.iterators.curves.Curves.traverse;
+import static de.amr.easy.grid.curves.Curves.traverse;
 import static de.amr.easy.maze.misc.MazeUtils.log;
 import static java.util.Arrays.asList;
 
@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 import de.amr.demos.grid.GridSampleApp;
 import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.grid.iterators.curves.HilbertCurve;
+import de.amr.easy.grid.curves.HilbertCurve;
 import de.amr.easy.grid.rendering.swing.BFSAnimation;
 
 /**

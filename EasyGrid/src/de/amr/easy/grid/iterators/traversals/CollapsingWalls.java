@@ -3,7 +3,7 @@ package de.amr.easy.grid.iterators.traversals;
 import java.util.Iterator;
 
 import de.amr.easy.grid.api.NakedGrid2D;
-import de.amr.easy.grid.iterators.Sequence;
+import de.amr.easy.grid.api.Sequence;
 
 /**
  * A sequence of cells traversing the grid like "walls" which are growing from the sides towards the

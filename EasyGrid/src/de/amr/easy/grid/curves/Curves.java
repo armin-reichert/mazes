@@ -1,4 +1,4 @@
-package de.amr.easy.grid.iterators.curves;
+package de.amr.easy.grid.curves;
 
 import static java.lang.String.format;
 import static java.util.stream.Collectors.joining;

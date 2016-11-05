@@ -6,7 +6,7 @@ import java.util.stream.IntStream;
 
 import de.amr.demos.grid.GridSampleApp;
 import de.amr.easy.grid.api.Dir8;
-import de.amr.easy.grid.iterators.curves.SierpinskiLCurve;
+import de.amr.easy.grid.curves.SierpinskiLCurve;
 
 public class SierpinskiLCurveApp extends GridSampleApp {
 

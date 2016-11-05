@@ -1,13 +1,13 @@
 package de.amr.demos.grid.curves;
 
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
-import static de.amr.easy.grid.iterators.curves.Curves.traverse;
+import static de.amr.easy.grid.curves.Curves.traverse;
 import static de.amr.easy.maze.misc.MazeUtils.log;
 
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.GridSampleApp;
-import de.amr.easy.grid.iterators.curves.PeanoCurve;
+import de.amr.easy.grid.curves.PeanoCurve;
 import de.amr.easy.grid.rendering.swing.BFSAnimation;
 
 public class PeanoCurveApp extends GridSampleApp {

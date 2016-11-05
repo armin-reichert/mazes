@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import de.amr.easy.grid.api.NakedGrid2D;
-import de.amr.easy.grid.iterators.Sequence;
+import de.amr.easy.grid.api.Sequence;
 
 /**
  * A sequence of cells filling the grid recursively with "crosses".

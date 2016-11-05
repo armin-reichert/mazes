@@ -1,4 +1,4 @@
-package de.amr.easy.grid.iterators;
+package de.amr.easy.grid.api;
 
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;

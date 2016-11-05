@@ -2,7 +2,7 @@ package de.amr.easy.grid.iterators.traversals;
 
 import java.util.Iterator;
 
-import de.amr.easy.grid.iterators.Sequence;
+import de.amr.easy.grid.api.Sequence;
 import de.amr.easy.grid.iterators.shapes.Rectangle;
 
 /**

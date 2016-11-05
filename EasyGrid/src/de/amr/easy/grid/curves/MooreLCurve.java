@@ -1,4 +1,4 @@
-package de.amr.easy.grid.iterators.curves;
+package de.amr.easy.grid.curves;
 
 import de.amr.easy.grid.api.Dir4;
 
@@ -16,7 +16,7 @@ import de.amr.easy.grid.api.Dir4;
  * <p>
  * The terminals are interpreted as follows:
  * <ul>
- * <li><code>f</code> = forward
+ * <li><code>f</code> = go forward
  * <li><code>+</code> = turn 90&deg; counter-clockwise
  * <li><code>-</code> = turn 90&deg; clockwise.
  * </ul>
@@ -33,6 +33,20 @@ public class MooreLCurve extends Curve<Dir4> {
 
 	private final Compass4 compass = new Compass4();
 
+	// non-terminal symbol interpretations:
+
+	private void minus() {
+		compass.turnRight();
+	}
+
+	private void plus() {
+		compass.turnLeft();
+	}
+
+	private void f() {
+		curve.add(compass.ahead());
+	}
+
 	public MooreLCurve(int i) {
 		S(i);
 	}
@@ -46,13 +60,13 @@ public class MooreLCurve extends Curve<Dir4> {
 	private void S(int i) {
 		if (i > 0) {
 			L(i - 1);
-			curve.add(compass.ahead());
+			f();
 			L(i - 1);
-			compass.turnLeft();
-			curve.add(compass.ahead());
-			compass.turnLeft();
+			plus();
+			f();
+			plus();
 			L(i - 1);
-			curve.add(compass.ahead());
+			f();
 			L(i - 1);
 		}
 	}
@@ -65,17 +79,17 @@ public class MooreLCurve extends Curve<Dir4> {
 	 */
 	private void L(int i) {
 		if (i > 0) {
-			compass.turnRight();
+			minus();
 			R(i - 1);
-			curve.add(compass.ahead());
-			compass.turnLeft();
+			f();
+			plus();
 			L(i - 1);
-			curve.add(compass.ahead());
+			f();
 			L(i - 1);
-			compass.turnLeft();
-			curve.add(compass.ahead());
+			plus();
+			f();
 			R(i - 1);
-			compass.turnRight();
+			minus();
 		}
 	}
 
@@ -87,17 +101,17 @@ public class MooreLCurve extends Curve<Dir4> {
 	 */
 	private void R(int i) {
 		if (i > 0) {
-			compass.turnLeft();
+			plus();
 			L(i - 1);
-			curve.add(compass.ahead());
-			compass.turnRight();
+			f();
+			minus();
 			R(i - 1);
-			curve.add(compass.ahead());
+			f();
 			R(i - 1);
-			compass.turnRight();
-			curve.add(compass.ahead());
+			minus();
+			f();
 			L(i - 1);
-			compass.turnLeft();
+			plus();
 		}
 	}
 }

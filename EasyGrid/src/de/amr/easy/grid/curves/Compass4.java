@@ -1,4 +1,4 @@
-package de.amr.easy.grid.iterators.curves;
+package de.amr.easy.grid.curves;
 
 import de.amr.easy.grid.api.Dir4;
 
