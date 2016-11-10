@@ -6,6 +6,7 @@ import static de.amr.easy.graph.api.TraversalState.VISITED;
 import java.util.Optional;
 
 import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
 
 /**
@@ -22,7 +23,7 @@ public class RecursiveDFS extends MazeAlgorithm {
 
 	private Optional<Integer> unvisitedNeighbor;
 
-	public RecursiveDFS(Grid2D<TraversalState,Integer> grid) {
+	public RecursiveDFS(Grid2D<Dir4,TraversalState, Integer> grid) {
 		super(grid);
 	}
 

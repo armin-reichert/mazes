@@ -20,6 +20,7 @@ import org.junit.Test;
 import de.amr.easy.graph.alg.CycleChecker;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.WeightedEdge;
+import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.Grid;
 import de.amr.easy.maze.alg.AldousBroderUST;
@@ -61,7 +62,7 @@ public class MazeGeneratorTests {
 	private static final int WIDTH = 500;
 	private static final int HEIGHT = 100;
 
-	private Grid2D<TraversalState,Integer> grid;
+	private Grid2D<Dir4,TraversalState, Integer> grid;
 	private StopWatch watch;
 
 	private static List<String> results = new ArrayList<>();

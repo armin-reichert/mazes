@@ -6,6 +6,7 @@ import java.util.PriorityQueue;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.WeightedEdge;
+import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
 
 /**
@@ -21,7 +22,7 @@ public class PrimMST extends MazeAlgorithm {
 
 	private final PriorityQueue<WeightedEdge<Integer, Integer>> cut = new PriorityQueue<>();
 
-	public PrimMST(Grid2D<TraversalState, Integer> grid) {
+	public PrimMST(Grid2D<Dir4,TraversalState, Integer> grid) {
 		super(grid);
 	}
 

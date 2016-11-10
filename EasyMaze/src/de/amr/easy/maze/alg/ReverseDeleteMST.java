@@ -9,6 +9,7 @@ import java.util.List;
 import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.WeightedEdge;
+import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.util.StopWatch;
 
@@ -24,7 +25,7 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 	private int bfsCount;
 	private float bfsTotalTime;
 
-	public ReverseDeleteMST(Grid2D<TraversalState, Integer> grid) {
+	public ReverseDeleteMST(Grid2D<Dir4,TraversalState, Integer> grid) {
 		super(grid);
 		grid.makeFullGrid();
 		grid.setDefaultContent(COMPLETED);

@@ -22,7 +22,7 @@ public class GridTraversalTests {
 	private static final int WIDTH = 100;
 	private static final int HEIGHT = 100;
 
-	private NakedGrid2D<Integer> grid;
+	private NakedGrid2D<?, Integer> grid;
 
 	@Before
 	public void setUp() {

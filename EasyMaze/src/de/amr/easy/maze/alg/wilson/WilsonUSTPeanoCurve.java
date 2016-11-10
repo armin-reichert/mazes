@@ -24,7 +24,7 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 
 	private final List<Integer> path = new ArrayList<>();
 
-	public WilsonUSTPeanoCurve(Grid2D<TraversalState,Integer> grid) {
+	public WilsonUSTPeanoCurve(Grid2D<Dir4,TraversalState, Integer> grid) {
 		super(grid);
 	}
 

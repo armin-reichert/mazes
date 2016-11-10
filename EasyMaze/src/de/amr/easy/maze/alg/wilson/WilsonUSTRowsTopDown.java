@@ -3,6 +3,7 @@ package de.amr.easy.maze.alg.wilson;
 import static java.util.stream.IntStream.range;
 
 import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
 
 /**
@@ -12,7 +13,7 @@ import de.amr.easy.grid.api.Grid2D;
  */
 public class WilsonUSTRowsTopDown extends WilsonUST {
 
-	public WilsonUSTRowsTopDown(Grid2D<TraversalState,Integer> grid) {
+	public WilsonUSTRowsTopDown(Grid2D<Dir4,TraversalState, Integer> grid) {
 		super(grid);
 	}
 

@@ -24,7 +24,7 @@ import de.amr.easy.graph.api.WeightedEdge;
  * 
  * @author Armin Reichert
  */
-public interface NakedGrid2D<PassageWeight extends Comparable<PassageWeight>>
+public interface NakedGrid2D<Dir, PassageWeight extends Comparable<PassageWeight>>
 		extends Graph<Integer, WeightedEdge<Integer, PassageWeight>> {
 
 	/**
@@ -94,11 +94,19 @@ public interface NakedGrid2D<PassageWeight extends Comparable<PassageWeight>>
 	 * @param cell
 	 *          a grid cell
 	 * @param dirs
-	 *          a list of directions, if empty, the neighbors in all 4 directions (N, E, S, W) are
-	 *          returned
+	 *          a list of directions
 	 * @return stream of the neighbor cells in the given directions
 	 */
-	public Stream<Integer> neighbors(Integer cell, Dir4... dirs);
+	public Stream<Integer> neighbors(Integer cell, Stream<Dir> dirs);
+
+	/**
+	 * Returns all neighbor cells of a cell.
+	 * 
+	 * @param cell
+	 *          a grid cell
+	 * @return stream of the neighbor cells in the given directions
+	 */
+	public Stream<Integer> neighbors(Integer cell);
 
 	/**
 	 * Returns all neighbors of a cell in a random order.
@@ -107,9 +115,7 @@ public interface NakedGrid2D<PassageWeight extends Comparable<PassageWeight>>
 	 *          a grid cell
 	 * @return stream of the neighbor cells in random order
 	 */
-	public default Stream<Integer> neighborsPermuted(Integer cell) {
-		return neighbors(cell, Dir4.valuesPermuted());
-	}
+	public Stream<Integer> neighborsPermuted(Integer cell);
 
 	/**
 	 * 
@@ -119,7 +125,7 @@ public interface NakedGrid2D<PassageWeight extends Comparable<PassageWeight>>
 	 *          a direction
 	 * @return the optional neighbor in the given direction
 	 */
-	public Optional<Integer> neighbor(Integer cell, Dir4 dir);
+	public Optional<Integer> neighbor(Integer cell, Dir dir);
 
 	/**
 	 * Tells if the given cells are "neighbors". Two cells are neighbors if you can reach one from the
@@ -131,9 +137,7 @@ public interface NakedGrid2D<PassageWeight extends Comparable<PassageWeight>>
 	 *          another cell
 	 * @return {@code true} if the cells are neighbors
 	 */
-	public default boolean areNeighbors(Integer either, Integer other) {
-		return neighbors(either).anyMatch(neighbor -> neighbor.equals(other));
-	}
+	public boolean areNeighbors(Integer either, Integer other);
 
 	/**
 	 * 
@@ -154,7 +158,7 @@ public interface NakedGrid2D<PassageWeight extends Comparable<PassageWeight>>
 	 * @return {@code true} if the cell is connected to the neighbor in the given direction
 	 *         ("passage", no "wall")
 	 */
-	public boolean isConnected(Integer cell, Dir4 dir);
+	public boolean isConnected(Integer cell, Dir dir);
 
 	/**
 	 * @param either
@@ -163,14 +167,14 @@ public interface NakedGrid2D<PassageWeight extends Comparable<PassageWeight>>
 	 *          other cell
 	 * @return the direction from either to other cell (if those cells are neighbors)
 	 */
-	public Optional<Dir4> direction(Integer either, Integer other);
+	public Optional<Dir> direction(Integer either, Integer other);
 
 	/**
 	 * Makes this grid a full grid.
 	 * 
 	 * @return the grid itself to allow method chaining
 	 */
-	public <T extends NakedGrid2D<PassageWeight>> T makeFullGrid();
+	public <T extends NakedGrid2D<Dir, PassageWeight>> T makeFullGrid();
 
 	/**
 	 * @return the edges of a full grid in randomly permuted order and random weights

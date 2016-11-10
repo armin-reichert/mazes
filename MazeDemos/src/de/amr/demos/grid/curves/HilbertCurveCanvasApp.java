@@ -1,12 +1,11 @@
 package de.amr.demos.grid.curves;
 
-import static java.lang.Math.pow;
-
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
@@ -16,36 +15,51 @@ import de.amr.easy.grid.curves.HilbertCurve;
 
 public class HilbertCurveCanvasApp extends Canvas {
 
-	private int size;
+	private int canvasSize;
 	private final Timer timer;
 
 	private int depth;
+	private int n;
 	private HilbertCurve curve;
+	private BufferedImage curveDrawing;
 	private int x;
 	private int y;
-	private double lineLen;
+	private int cellSize;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(() -> {
-			HilbertCurveCanvasApp canvas = new HilbertCurveCanvasApp(900);
-			JFrame window = new JFrame("Hilbert curves");
-			window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			window.add(canvas);
-			window.pack();
-			window.setSize(window.getWidth() + 20, window.getHeight() + 20);
-			window.setVisible(true);
+			HilbertCurveCanvasApp canvas = new HilbertCurveCanvasApp(1024);
+			createFrame(canvas).setVisible(true);
 			canvas.startAnimation();
 		});
 	}
+	
+	private static JFrame createFrame(HilbertCurveCanvasApp canvas) {
+		JFrame window = new JFrame("Hilbert curves");
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.add(canvas);
+		window.pack();
+		window.setSize(window.getWidth() + 20, window.getHeight() + 20);
+		window.setAlwaysOnTop(true);
+		return window;
+	}
 
-	public HilbertCurveCanvasApp(int size) {
-		this.size = size;
+	public HilbertCurveCanvasApp(int canvasSize) {
+		this.canvasSize = canvasSize;
 		depth = 0;
-		setBackground(Color.WHITE);
-		setPreferredSize(new Dimension(size, size));
+		n = 1;
+		setPreferredSize(new Dimension(canvasSize, canvasSize));
 		setSize(getPreferredSize());
 		setMaximumSize(getPreferredSize());
-		timer = new Timer(1500, e -> nextCurve());
+		timer = new Timer(1000, e -> nextCurve());
+	}
+
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+		if (curveDrawing != null) {
+			g.drawImage(curveDrawing, 0, 0, null);
+		}
 	}
 
 	public void startAnimation() {
@@ -54,33 +68,32 @@ public class HilbertCurveCanvasApp extends Canvas {
 
 	private void nextCurve() {
 		++depth;
-		double newLineLen = size / (pow(2, depth) - 1);
-		if (newLineLen >= 2.0) {
+		n *= 2;
+		cellSize = canvasSize / (2*n);
+		if (cellSize > 4) {
 			curve = new HilbertCurve(depth);
-			lineLen = newLineLen;
+			curveDrawing = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
+			drawCurve(curveDrawing.getGraphics());
 			repaint();
 		} else {
 			timer.stop();
+			System.out.println("Stopped at cell size " + cellSize);
 		}
 	}
 
-	@Override
-	public void paint(Graphics g) {
-		super.paint(g);
-		if (curve != null) {
-			g.translate(-10, 10);
-			System.out.println("paint: Line length: " + lineLen);
-			x = getWidth() - 1;
-			y = 0;
-			for (Dir4 dir : curve) {
-				int newX = x + dir.dx * (int) lineLen;
-				int newY = y + dir.dy * (int) lineLen;
-				g.setColor(Color.BLUE);
-				g.drawLine(x, y, newX, newY);
-				x = newX;
-				y = newY;
-			}
-			g.translate(10, -10);
+	private void drawCurve(Graphics g) {
+		System.out.println("drawCurve: Cell size: " + cellSize);
+		g.translate(-cellSize, cellSize);
+		x = getWidth() - 1;
+		y = 0;
+		for (Dir4 dir : curve) {
+			int newX = x + 2* dir.dx() * cellSize;
+			int newY = y + 2* dir.dy() * cellSize;
+			g.setColor(Color.BLUE);
+			g.drawLine(x, y, newX, newY);
+			x = newX;
+			y = newY;
 		}
+		g.translate(cellSize, -cellSize);
 	}
 }

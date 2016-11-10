@@ -14,11 +14,19 @@ public enum Dir4 {
 	private static final Dir4[] cachedValues = values();
 	private static final Random rnd = new Random();
 
-	public final int dx, dy;
+	private final int dx, dy;
 
 	private Dir4(int dx, int dy) {
 		this.dx = dx;
 		this.dy = dy;
+	}
+	
+	public int dx() {
+		return dx;
+	}
+	
+	public int dy() {
+		return dy;
 	}
 
 	public Dir4 right() {
@@ -43,7 +51,7 @@ public enum Dir4 {
 			throw new IllegalStateException();
 		}
 	}
-
+	
 	public static Dir4[] valuesPermuted() {
 		Dir4[] dirs = values(); // new copy needed
 		Collections.shuffle(Arrays.asList(dirs));

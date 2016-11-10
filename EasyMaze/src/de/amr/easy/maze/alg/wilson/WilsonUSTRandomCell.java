@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
 
 /**
@@ -15,7 +16,7 @@ public class WilsonUSTRandomCell extends WilsonUST {
 
 	private final List<Integer> cellsOutsideTree;
 
-	public WilsonUSTRandomCell(Grid2D<TraversalState,Integer> grid) {
+	public WilsonUSTRandomCell(Grid2D<Dir4,TraversalState, Integer> grid) {
 		super(grid);
 		cellsOutsideTree = grid.vertexStream().collect(Collectors.toList());
 	}

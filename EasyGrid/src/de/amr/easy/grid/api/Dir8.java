@@ -14,11 +14,19 @@ public enum Dir8 {
 	private static final Dir8[] cachedValues = values();
 	private static final Random rnd = new Random();
 
-	public final int dx, dy;
+	private final int dx, dy;
 
 	private Dir8(int dx, int dy) {
 		this.dx = dx;
 		this.dy = dy;
+	}
+	
+	public int dx() {
+		return dx;
+	}
+	
+	public int dy() {
+		return dy;
 	}
 
 	public Dir8 right() {

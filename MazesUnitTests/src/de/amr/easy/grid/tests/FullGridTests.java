@@ -21,7 +21,7 @@ public class FullGridTests {
 	private static final int WIDTH = 15;
 	private static final int HEIGHT = 10;
 
-	private NakedGrid2D<?> grid;
+	private NakedGrid2D<Dir4, ?> grid;
 
 	@Before
 	public void setUp() {

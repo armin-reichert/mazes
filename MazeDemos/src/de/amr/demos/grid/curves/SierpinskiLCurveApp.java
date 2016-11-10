@@ -29,7 +29,7 @@ public class SierpinskiLCurveApp extends GridSampleApp {
 			Integer current = grid.cell(1, 0);
 			grid.set(current, COMPLETED);
 			for (Dir8 dir : curve) {
-				current = grid.cell(grid.col(current) + dir.dx, grid.row(current) + dir.dy);
+				current = grid.cell(grid.col(current) + dir.dx(), grid.row(current) + dir.dy());
 				grid.set(current, COMPLETED);
 			}
 			sleep(1000);

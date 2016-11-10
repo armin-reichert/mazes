@@ -1,6 +1,7 @@
 package de.amr.easy.grid.impl;
 
 import de.amr.easy.graph.api.VertexContent;
+import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
 
 /**
@@ -14,7 +15,7 @@ import de.amr.easy.grid.api.Grid2D;
  *          passage weight type
  */
 public class Grid<Content, PassageWeight extends Comparable<PassageWeight>> extends NakedGrid<PassageWeight>
-		implements Grid2D<Content, PassageWeight> {
+		implements Grid2D<Dir4, Content, PassageWeight> {
 
 	private VertexContent<Integer, Content> gridContent;
 

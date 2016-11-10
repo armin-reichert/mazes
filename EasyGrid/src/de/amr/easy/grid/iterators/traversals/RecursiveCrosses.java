@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.NakedGrid2D;
 import de.amr.easy.grid.api.Sequence;
 
@@ -16,10 +17,10 @@ import de.amr.easy.grid.api.Sequence;
  */
 public class RecursiveCrosses implements Sequence<Integer> {
 
-	private final NakedGrid2D<?> grid;
+	private final NakedGrid2D<Dir4,?> grid;
 	private final List<Integer> path = new ArrayList<>();
 
-	public RecursiveCrosses(NakedGrid2D<?> grid) {
+	public RecursiveCrosses(NakedGrid2D<Dir4,?> grid) {
 		this.grid = grid;
 		cross(grid.numCols(), grid.numRows(), 0, 0);
 	}

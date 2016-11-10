@@ -6,6 +6,7 @@ import static java.util.Collections.shuffle;
 import static java.util.stream.IntStream.range;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.HashSet;
 import java.util.List;
@@ -26,7 +27,7 @@ import de.amr.easy.grid.api.NakedGrid2D;
  * @param <PassageWeight>
  *          passage weight type
  */
-public class NakedGrid<PassageWeight extends Comparable<PassageWeight>> implements NakedGrid2D<PassageWeight> {
+public class NakedGrid<PassageWeight extends Comparable<PassageWeight>> implements NakedGrid2D<Dir4, PassageWeight> {
 
 	private static final int DIRECTION_COUNT = Dir4.values().length;
 
@@ -262,18 +263,30 @@ public class NakedGrid<PassageWeight extends Comparable<PassageWeight>> implemen
 	}
 
 	@Override
-	public Stream<Integer> neighbors(Integer cell, Dir4... dirs) {
-		if (dirs.length == 0) {
-			dirs = Dir4.values();
-		}
-		return Stream.of(dirs).map(dir -> neighbor(cell, dir)).filter(Optional::isPresent).map(Optional::get);
+	public boolean areNeighbors(Integer either, Integer other) {
+		return neighbors(either).anyMatch(neighbor -> neighbor.equals(other));
+	}
+
+	@Override
+	public Stream<Integer> neighbors(Integer cell, Stream<Dir4> dirs) {
+		return dirs.map(dir -> neighbor(cell, dir)).filter(Optional::isPresent).map(Optional::get);
+	}
+
+	@Override
+	public Stream<Integer> neighbors(Integer cell) {
+		return neighbors(cell, Arrays.stream(Dir4.values()));
+	}
+
+	@Override
+	public Stream<Integer> neighborsPermuted(Integer cell) {
+		return neighbors(cell, Arrays.stream(Dir4.valuesPermuted()));
 	}
 
 	@Override
 	public Optional<Integer> neighbor(Integer cell, Dir4 dir) {
 		checkCell(cell);
-		int col = col(cell) + dir.dx;
-		int row = row(cell) + dir.dy;
+		int col = col(cell) + dir.dx();
+		int row = row(cell) + dir.dy();
 		if (isValidCol(col) && isValidRow(row)) {
 			return Optional.of(index(col, row));
 		}

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
 
 /**
@@ -18,7 +19,7 @@ public class RandomBFS extends MazeAlgorithm {
 
 	private final List<Integer> frontier = new ArrayList<>();
 
-	public RandomBFS(Grid2D<TraversalState,Integer> grid) {
+	public RandomBFS(Grid2D<Dir4,TraversalState, Integer> grid) {
 		super(grid);
 	}
 

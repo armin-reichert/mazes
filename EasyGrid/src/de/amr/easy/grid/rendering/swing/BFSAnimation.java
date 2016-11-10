@@ -21,7 +21,7 @@ import de.amr.easy.grid.api.ObservableNakedGrid2D;
 public class BFSAnimation implements GraphTraversalListener<Integer> {
 
 	private final SwingGridCanvas canvas;
-	private final ObservableNakedGrid2D<?> grid;
+	private final ObservableNakedGrid2D<Dir4,?> grid;
 	private final BFSRenderingModel renderingModel;
 	private final Set<Integer> path;
 	private BreadthFirstTraversal<Integer, ?> bfs;
@@ -29,7 +29,7 @@ public class BFSAnimation implements GraphTraversalListener<Integer> {
 	private Integer maxDistanceCell;
 	private boolean distancesVisible;
 
-	public BFSAnimation(SwingGridCanvas canvas, ObservableNakedGrid2D<?> grid) {
+	public BFSAnimation(SwingGridCanvas canvas, ObservableNakedGrid2D<Dir4,?> grid) {
 		this.canvas = canvas;
 		this.grid = grid;
 		renderingModel = new BFSRenderingModel(canvas.currentRenderingModel().getCellSize(),

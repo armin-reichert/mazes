@@ -4,6 +4,7 @@ import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
 import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
 
 /**
@@ -32,7 +33,7 @@ public class AldousBroderUST extends MazeAlgorithm {
 
 	private int mazeCellCount;
 
-	public AldousBroderUST(Grid2D<TraversalState, Integer> grid) {
+	public AldousBroderUST(Grid2D<Dir4,TraversalState, Integer> grid) {
 		super(grid);
 	}
 
