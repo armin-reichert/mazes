@@ -28,7 +28,7 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 
 	private final List<Integer> path = new ArrayList<>();
 
-	public WilsonUSTHilbertCurve(Grid2D<Dir4,TraversalState, Integer> grid) {
+	public WilsonUSTHilbertCurve(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
 	}
 

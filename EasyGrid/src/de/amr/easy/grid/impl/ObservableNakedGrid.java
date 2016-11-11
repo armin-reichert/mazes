@@ -11,7 +11,6 @@ import de.amr.easy.graph.api.event.EdgeRemovedEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.VertexChangeEvent;
 import de.amr.easy.grid.api.ObservableNakedGrid2D;
-import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * A grid which can be observed.
@@ -22,7 +21,7 @@ import de.amr.easy.grid.api.dir.Dir4;
  *          passage weight type
  */
 public class ObservableNakedGrid<PassageWeight extends Comparable<PassageWeight>> extends NakedGrid<PassageWeight>
-		implements ObservableNakedGrid2D<Dir4, PassageWeight> {
+		implements ObservableNakedGrid2D<PassageWeight> {
 
 	private final Set<GraphObserver<Integer, WeightedEdge<Integer, PassageWeight>>> observers = new HashSet<>();
 	private boolean fireEvents;

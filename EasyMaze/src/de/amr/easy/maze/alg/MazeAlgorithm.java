@@ -10,14 +10,13 @@ import java.util.function.Consumer;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.grid.api.dir.Dir4;
 
 public abstract class MazeAlgorithm implements Consumer<Integer> {
 
-	protected final Grid2D<Dir4, TraversalState, Integer> grid;
+	protected final Grid2D<TraversalState, Integer> grid;
 	protected final Random rnd = new Random();
 
-	public MazeAlgorithm(Grid2D<Dir4, TraversalState, Integer> grid) {
+	public MazeAlgorithm(Grid2D<TraversalState, Integer> grid) {
 		this.grid = grid;
 	}
 

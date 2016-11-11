@@ -21,7 +21,7 @@ public class Square extends Shape {
 	private final Integer topLeft;
 	private final int size;
 
-	public Square(NakedGrid2D<Dir4, ?> grid, Integer topLeft, int size) {
+	public Square(NakedGrid2D<?> grid, Integer topLeft, int size) {
 		super(grid);
 
 		this.topLeft = topLeft;

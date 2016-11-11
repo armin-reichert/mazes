@@ -10,7 +10,6 @@ import java.util.stream.StreamSupport;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.grid.api.dir.Dir4;
 import de.amr.easy.grid.iterators.IteratorFactory;
 import de.amr.easy.grid.iterators.shapes.Rectangle;
 import de.amr.easy.grid.iterators.traversals.ExpandingRectangle;
@@ -22,7 +21,7 @@ import de.amr.easy.grid.iterators.traversals.ExpandingRectangle;
  */
 public class WilsonUSTNestedRectangles extends WilsonUST {
 
-	public WilsonUSTNestedRectangles(Grid2D<Dir4,TraversalState, Integer> grid) {
+	public WilsonUSTNestedRectangles(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
 	}
 

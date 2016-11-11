@@ -4,7 +4,6 @@ import java.util.Iterator;
 
 import de.amr.easy.grid.api.NakedGrid2D;
 import de.amr.easy.grid.api.Sequence;
-import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * A sequence of cells traversing the grid like "walls" which are growing from the sides towards the
@@ -14,9 +13,9 @@ import de.amr.easy.grid.api.dir.Dir4;
  */
 public class CollapsingWalls implements Sequence<Integer> {
 
-	private final NakedGrid2D<Dir4, ?> grid;
+	private final NakedGrid2D<?> grid;
 
-	public CollapsingWalls(NakedGrid2D<Dir4, ?> grid) {
+	public CollapsingWalls(NakedGrid2D<?> grid) {
 		this.grid = grid;
 	}
 

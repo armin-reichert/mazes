@@ -8,7 +8,6 @@ import java.util.List;
 
 import de.amr.easy.grid.api.NakedGrid2D;
 import de.amr.easy.grid.api.Sequence;
-import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * A sequence of cells filling the grid recursively with "crosses".
@@ -17,10 +16,10 @@ import de.amr.easy.grid.api.dir.Dir4;
  */
 public class RecursiveCrosses implements Sequence<Integer> {
 
-	private final NakedGrid2D<Dir4,?> grid;
+	private final NakedGrid2D<?> grid;
 	private final List<Integer> path = new ArrayList<>();
 
-	public RecursiveCrosses(NakedGrid2D<Dir4,?> grid) {
+	public RecursiveCrosses(NakedGrid2D<?> grid) {
 		this.grid = grid;
 		cross(grid.numCols(), grid.numRows(), 0, 0);
 	}

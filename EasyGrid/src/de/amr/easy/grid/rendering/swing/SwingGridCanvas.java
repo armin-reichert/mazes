@@ -20,7 +20,6 @@ import de.amr.easy.graph.api.event.EdgeRemovedEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.VertexChangeEvent;
 import de.amr.easy.grid.api.ObservableNakedGrid2D;
-import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * Canvas that listens for grid events and repaints grid accordingly.
@@ -35,7 +34,7 @@ public class SwingGridCanvas extends JComponent {
 	private BufferedImage buffer;
 	private Graphics2D g;
 
-	private ObservableNakedGrid2D<Dir4, Integer> grid;
+	private ObservableNakedGrid2D<Integer> grid;
 	private final Deque<SwingGridRenderingModel> renderStack = new LinkedList<>();
 	private SwingGridRenderer renderer;
 	private int delay;
@@ -68,14 +67,14 @@ public class SwingGridCanvas extends JComponent {
 		}
 	};
 
-	public SwingGridCanvas(ObservableNakedGrid2D<Dir4, Integer> grid, SwingGridRenderingModel renderingModel) {
+	public SwingGridCanvas(ObservableNakedGrid2D<Integer> grid, SwingGridRenderingModel renderingModel) {
 		setGrid(grid);
 		renderStack.push(renderingModel);
 		setDoubleBuffered(false);
 		updateRenderingBuffer();
 	}
 
-	public void setGrid(ObservableNakedGrid2D<Dir4,Integer> grid) {
+	public void setGrid(ObservableNakedGrid2D<Integer> grid) {
 		this.grid = grid;
 		grid.addGraphObserver(observer);
 	}

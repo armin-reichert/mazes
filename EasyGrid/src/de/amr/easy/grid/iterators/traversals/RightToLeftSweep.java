@@ -4,7 +4,6 @@ import java.util.Iterator;
 
 import de.amr.easy.grid.api.NakedGrid2D;
 import de.amr.easy.grid.api.Sequence;
-import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * A sequence of cells filling the grid by sweeping a vertical line from right to left.
@@ -13,9 +12,9 @@ import de.amr.easy.grid.api.dir.Dir4;
  */
 public class RightToLeftSweep implements Sequence<Integer> {
 
-	private final NakedGrid2D<Dir4,?> grid;
+	private final NakedGrid2D<?> grid;
 
-	public RightToLeftSweep(NakedGrid2D<Dir4,?> grid) {
+	public RightToLeftSweep(NakedGrid2D<?> grid) {
 		this.grid = grid;
 	}
 

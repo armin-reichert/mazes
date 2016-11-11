@@ -27,7 +27,7 @@ import de.amr.easy.grid.api.dir.Dir4;
  * @param <PassageWeight>
  *          passage weight type
  */
-public class NakedGrid<PassageWeight extends Comparable<PassageWeight>> implements NakedGrid2D<Dir4, PassageWeight> {
+public class NakedGrid<PassageWeight extends Comparable<PassageWeight>> implements NakedGrid2D<PassageWeight> {
 
 	private static final int DIRECTION_COUNT = Dir4.values().length;
 

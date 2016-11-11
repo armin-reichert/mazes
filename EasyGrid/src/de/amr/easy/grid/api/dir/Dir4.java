@@ -20,11 +20,11 @@ public enum Dir4 {
 		this.dx = dx;
 		this.dy = dy;
 	}
-	
+
 	public int dx() {
 		return dx;
 	}
-	
+
 	public int dy() {
 		return dy;
 	}
@@ -51,7 +51,7 @@ public enum Dir4 {
 			throw new IllegalStateException();
 		}
 	}
-	
+
 	public static Dir4[] valuesPermuted() {
 		Dir4[] dirs = values(); // new copy needed
 		Collections.shuffle(Arrays.asList(dirs));

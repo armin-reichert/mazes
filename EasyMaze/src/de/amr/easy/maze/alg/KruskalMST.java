@@ -6,7 +6,6 @@ import de.amr.easy.data.Partition;
 import de.amr.easy.data.Partition.EquivClass;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * Maze generator derived from Kruskal's minimum spanning tree algorithm.
@@ -20,7 +19,7 @@ public class KruskalMST extends MazeAlgorithm {
 
 	private final Partition<Integer> forest = new Partition<>();
 
-	public KruskalMST(Grid2D<Dir4,TraversalState, Integer> grid) {
+	public KruskalMST(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
 	}
 

@@ -7,7 +7,7 @@ import org.junit.Test;
 import de.amr.easy.grid.api.dir.Dir;
 
 public class DirTests {
-	
+
 	@Test
 	public void testInverse() {
 		assertTrue(Dir.N.inverse().equals(Dir.S));
@@ -23,7 +23,7 @@ public class DirTests {
 		assertTrue(Dir.S.right().equals(Dir.W));
 		assertTrue(Dir.W.right().equals(Dir.N));
 	}
-	
+
 	@Test
 	public void testLeft() {
 		assertTrue(Dir.N.left().equals(Dir.W));

@@ -8,8 +8,8 @@ import static de.amr.easy.grid.api.dir.Dir4.W;
 import de.amr.easy.grid.api.dir.Dir4;
 
 /**
- * Implementation of a Hilbert curve using the following L-system (adapted from the book "Algorithmen
- * und Datenstrukturen" by Niklaus Wirth, Teubner 1983):
+ * Implementation of a Hilbert curve using the following L-system (adapted from the book
+ * "Algorithmen und Datenstrukturen" by Niklaus Wirth, Teubner 1983):
  * <p>
  * <code>
  * A -> D w A s A e B <br/>
@@ -27,7 +27,7 @@ import de.amr.easy.grid.api.dir.Dir4;
  * @author Armin Reichert
  */
 public class HilbertLCurveWirth extends Curve<Dir4> {
-	
+
 	public HilbertLCurveWirth(int i) {
 		A(i);
 	}

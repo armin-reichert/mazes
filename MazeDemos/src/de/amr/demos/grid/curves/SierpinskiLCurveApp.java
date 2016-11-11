@@ -15,7 +15,7 @@ public class SierpinskiLCurveApp extends GridSampleApp {
 	}
 
 	private static int CELL_SIZE = 4;
-	
+
 	public SierpinskiLCurveApp() {
 		super("Hilbert Curve (L-system)", 127 * CELL_SIZE, 127 * CELL_SIZE, CELL_SIZE);
 	}

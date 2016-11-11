@@ -1,7 +1,6 @@
 package de.amr.easy.grid.iterators.shapes;
 
 import de.amr.easy.grid.api.NakedGrid2D;
-import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * A rectangle with given cell as left upper corner.
@@ -17,7 +16,7 @@ public class Rectangle extends Shape {
 	private final int width;
 	private final int height;
 
-	public Rectangle(NakedGrid2D<Dir4, ?> grid, Integer leftUpperCorner, int width, int height) {
+	public Rectangle(NakedGrid2D<?> grid, Integer leftUpperCorner, int width, int height) {
 		super(grid);
 
 		this.leftUpperCorner = leftUpperCorner;

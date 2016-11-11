@@ -23,7 +23,7 @@ public class WilsonUSTMooreCurve extends WilsonUST {
 
 	private final List<Integer> path = new ArrayList<>();
 
-	public WilsonUSTMooreCurve(Grid2D<Dir4,TraversalState, Integer> grid) {
+	public WilsonUSTMooreCurve(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
 	}
 

@@ -102,7 +102,7 @@ public class MazeDemoModel {
 			new AlgorithmInfo<>(DFSAnimation.class, "Depth-First-Search"),
 			new AlgorithmInfo<>(BFSAnimation.class, "Breadth-First-Search"), };
 
-	private ObservableGrid<TraversalState,Integer> grid;
+	private ObservableGrid<TraversalState, Integer> grid;
 	private int[] gridCellSizes;
 	private int gridCellSize;
 	private int passageThicknessPct;
@@ -162,11 +162,11 @@ public class MazeDemoModel {
 		this.longestPathHighlighted = longestPathHighlighted;
 	}
 
-	public ObservableGrid<TraversalState,Integer> getGrid() {
+	public ObservableGrid<TraversalState, Integer> getGrid() {
 		return grid;
 	}
 
-	public void setGrid(ObservableGrid<TraversalState,Integer> grid) {
+	public void setGrid(ObservableGrid<TraversalState, Integer> grid) {
 		this.grid = grid;
 	}
 

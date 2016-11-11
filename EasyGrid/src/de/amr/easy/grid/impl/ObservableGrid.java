@@ -2,7 +2,6 @@ package de.amr.easy.grid.impl;
 
 import de.amr.easy.graph.api.VertexContent;
 import de.amr.easy.grid.api.ObservableGrid2D;
-import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * An observable grid with cell content.
@@ -16,7 +15,7 @@ import de.amr.easy.grid.api.dir.Dir4;
  * @author Armin Reichert
  */
 public class ObservableGrid<Content, PassageWeight extends Comparable<PassageWeight>>
-		extends ObservableNakedGrid<PassageWeight> implements ObservableGrid2D<Dir4, Content, PassageWeight> {
+		extends ObservableNakedGrid<PassageWeight> implements ObservableGrid2D<Content, PassageWeight> {
 
 	private VertexContent<Integer, Content> gridContent;
 

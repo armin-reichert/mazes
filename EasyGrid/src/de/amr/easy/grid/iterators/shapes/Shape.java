@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 
 import de.amr.easy.grid.api.NakedGrid2D;
 import de.amr.easy.grid.api.Sequence;
-import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * Base class for shapes (square, rectangle, ...) on a grid.
@@ -20,11 +19,11 @@ import de.amr.easy.grid.api.dir.Dir4;
  */
 public abstract class Shape implements Sequence<Integer> {
 
-	public final NakedGrid2D<Dir4, ?> grid;
+	public final NakedGrid2D<?> grid;
 
 	protected final List<Integer> cells = new ArrayList<>();
 
-	protected Shape(NakedGrid2D<Dir4, ?> grid) {
+	protected Shape(NakedGrid2D<?> grid) {
 		this.grid = grid;
 	}
 

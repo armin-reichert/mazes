@@ -5,6 +5,7 @@ import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.WeightedEdge;
+import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * A two-dimensional grid of "cells", i.e. a graph with vertex set
@@ -24,7 +25,7 @@ import de.amr.easy.graph.api.WeightedEdge;
  * 
  * @author Armin Reichert
  */
-public interface NakedGrid2D<Dir, PassageWeight extends Comparable<PassageWeight>>
+public interface NakedGrid2D<PassageWeight extends Comparable<PassageWeight>>
 		extends Graph<Integer, WeightedEdge<Integer, PassageWeight>> {
 
 	/**
@@ -97,7 +98,7 @@ public interface NakedGrid2D<Dir, PassageWeight extends Comparable<PassageWeight
 	 *          a list of directions
 	 * @return stream of the neighbor cells in the given directions
 	 */
-	public Stream<Integer> neighbors(Integer cell, Stream<Dir> dirs);
+	public Stream<Integer> neighbors(Integer cell, Stream<Dir4> dirs);
 
 	/**
 	 * Returns all neighbor cells of a cell.
@@ -125,7 +126,7 @@ public interface NakedGrid2D<Dir, PassageWeight extends Comparable<PassageWeight
 	 *          a direction
 	 * @return the optional neighbor in the given direction
 	 */
-	public Optional<Integer> neighbor(Integer cell, Dir dir);
+	public Optional<Integer> neighbor(Integer cell, Dir4 dir);
 
 	/**
 	 * Tells if the given cells are "neighbors". Two cells are neighbors if you can reach one from the
@@ -158,7 +159,7 @@ public interface NakedGrid2D<Dir, PassageWeight extends Comparable<PassageWeight
 	 * @return {@code true} if the cell is connected to the neighbor in the given direction
 	 *         ("passage", no "wall")
 	 */
-	public boolean isConnected(Integer cell, Dir dir);
+	public boolean isConnected(Integer cell, Dir4 dir);
 
 	/**
 	 * @param either
@@ -167,14 +168,14 @@ public interface NakedGrid2D<Dir, PassageWeight extends Comparable<PassageWeight
 	 *          other cell
 	 * @return the direction from either to other cell (if those cells are neighbors)
 	 */
-	public Optional<Dir> direction(Integer either, Integer other);
+	public Optional<Dir4> direction(Integer either, Integer other);
 
 	/**
 	 * Makes this grid a full grid.
 	 * 
 	 * @return the grid itself to allow method chaining
 	 */
-	public <T extends NakedGrid2D<Dir, PassageWeight>> T makeFullGrid();
+	public <T extends NakedGrid2D<PassageWeight>> T makeFullGrid();
 
 	/**
 	 * @return the edges of a full grid in randomly permuted order and random weights

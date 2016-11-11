@@ -33,7 +33,7 @@ public class HilbertCurveCanvasApp extends Canvas {
 			canvas.startAnimation();
 		});
 	}
-	
+
 	private static JFrame createFrame(HilbertCurveCanvasApp canvas) {
 		JFrame window = new JFrame("Hilbert curves");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,7 +69,7 @@ public class HilbertCurveCanvasApp extends Canvas {
 	private void nextCurve() {
 		++depth;
 		n *= 2;
-		cellSize = canvasSize / (2*n);
+		cellSize = canvasSize / (2 * n);
 		if (cellSize > 4) {
 			curve = new HilbertCurve(depth);
 			curveDrawing = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
@@ -87,8 +87,8 @@ public class HilbertCurveCanvasApp extends Canvas {
 		x = getWidth() - 1;
 		y = 0;
 		for (Dir4 dir : curve) {
-			int newX = x + 2* dir.dx() * cellSize;
-			int newY = y + 2* dir.dy() * cellSize;
+			int newX = x + 2 * dir.dx() * cellSize;
+			int newY = y + 2 * dir.dy() * cellSize;
 			g.setColor(Color.BLUE);
 			g.drawLine(x, y, newX, newY);
 			x = newX;

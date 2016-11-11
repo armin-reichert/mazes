@@ -20,12 +20,12 @@ import de.amr.easy.grid.api.dir.Dir4;
 public class DFSAnimation implements GraphTraversalListener<Integer> {
 
 	private final SwingGridCanvas canvas;
-	private final ObservableNakedGrid2D<Dir4,?> grid;
+	private final ObservableNakedGrid2D<?> grid;
 	private final DFSRenderingModel renderingModel;
 	private final DepthFirstTraversal<Integer, ?> dfs;
 	private final Set<Integer> path;
 
-	public DFSAnimation(SwingGridCanvas canvas, ObservableNakedGrid2D<Dir4,?> grid, Integer source, Integer target) {
+	public DFSAnimation(SwingGridCanvas canvas, ObservableNakedGrid2D<?> grid, Integer source, Integer target) {
 		this.canvas = canvas;
 		this.grid = grid;
 		this.renderingModel = new DFSRenderingModel(canvas.currentRenderingModel().getCellSize(),

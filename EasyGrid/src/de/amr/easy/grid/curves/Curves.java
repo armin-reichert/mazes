@@ -18,7 +18,7 @@ import de.amr.easy.grid.api.dir.Dir4;
  */
 public class Curves {
 
-	public static void traverse(Curve<Dir4> curve, NakedGrid2D<Dir4,?> grid, Integer start,
+	public static void traverse(Curve<Dir4> curve, NakedGrid2D<?> grid, Integer start,
 			BiConsumer<Integer, Integer> action) {
 		Integer current = start;
 		for (Dir4 dir : curve) {
@@ -28,7 +28,7 @@ public class Curves {
 		}
 	}
 
-	public static Stream<Integer> points(Curve<Dir4> curve, NakedGrid2D<Dir4,?> grid, Integer start) {
+	public static Stream<Integer> points(Curve<Dir4> curve, NakedGrid2D<?> grid, Integer start) {
 		List<Integer> points = new ArrayList<>();
 		Integer current = start;
 		points.add(current);
@@ -40,7 +40,7 @@ public class Curves {
 		return points.stream();
 	}
 
-	public static String pointsAsString(Curve<Dir4> curve, NakedGrid2D<Dir4,?> grid, Integer start) {
+	public static String pointsAsString(Curve<Dir4> curve, NakedGrid2D<?> grid, Integer start) {
 		return points(curve, grid, start).map(cell -> format("(%d,%d)", grid.col(cell), grid.row(cell))).collect(joining());
 	}
 }
