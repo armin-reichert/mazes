@@ -1,7 +1,7 @@
 package de.amr.easy.grid.impl;
 
-import static de.amr.easy.grid.api.Dir4.E;
-import static de.amr.easy.grid.api.Dir4.S;
+import static de.amr.easy.grid.api.dir.Dir4.E;
+import static de.amr.easy.grid.api.dir.Dir4.S;
 import static java.util.Collections.shuffle;
 import static java.util.stream.IntStream.range;
 
@@ -15,9 +15,9 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.WeightedEdge;
-import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.api.NakedGrid2D;
+import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * An implementation of the {@link NakedGrid2D} interface.

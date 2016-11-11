@@ -1,11 +1,11 @@
 package de.amr.easy.grid.curves;
 
-import static de.amr.easy.grid.api.Dir4.E;
-import static de.amr.easy.grid.api.Dir4.N;
-import static de.amr.easy.grid.api.Dir4.S;
-import static de.amr.easy.grid.api.Dir4.W;
+import static de.amr.easy.grid.api.dir.Dir4.E;
+import static de.amr.easy.grid.api.dir.Dir4.N;
+import static de.amr.easy.grid.api.dir.Dir4.S;
+import static de.amr.easy.grid.api.dir.Dir4.W;
 
-import de.amr.easy.grid.api.Dir4;
+import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * Computes a Peano-curve.

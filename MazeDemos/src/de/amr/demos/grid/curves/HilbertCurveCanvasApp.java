@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-import de.amr.easy.grid.api.Dir4;
+import de.amr.easy.grid.api.dir.Dir4;
 import de.amr.easy.grid.curves.HilbertCurve;
 
 public class HilbertCurveCanvasApp extends Canvas {

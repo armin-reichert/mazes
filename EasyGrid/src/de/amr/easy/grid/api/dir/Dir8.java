@@ -1,4 +1,4 @@
-package de.amr.easy.grid.api;
+package de.amr.easy.grid.api.dir;
 
 import java.util.Arrays;
 import java.util.Collections;

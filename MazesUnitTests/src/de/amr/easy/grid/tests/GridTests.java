@@ -1,10 +1,10 @@
 package de.amr.easy.grid.tests;
 
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
-import static de.amr.easy.grid.api.Dir4.E;
-import static de.amr.easy.grid.api.Dir4.N;
-import static de.amr.easy.grid.api.Dir4.S;
-import static de.amr.easy.grid.api.Dir4.W;
+import static de.amr.easy.grid.api.dir.Dir4.E;
+import static de.amr.easy.grid.api.dir.Dir4.N;
+import static de.amr.easy.grid.api.dir.Dir4.S;
+import static de.amr.easy.grid.api.dir.Dir4.W;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -18,8 +18,8 @@ import org.junit.Test;
 import de.amr.easy.graph.alg.CycleChecker;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.WeightedEdge;
-import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.dir.Dir4;
 import de.amr.easy.grid.impl.Grid;
 import de.amr.easy.grid.impl.NakedGrid;
 import de.amr.easy.maze.alg.RandomBFS;

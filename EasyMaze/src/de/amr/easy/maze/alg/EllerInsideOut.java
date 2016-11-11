@@ -1,12 +1,12 @@
 package de.amr.easy.maze.alg;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
-import static de.amr.easy.grid.api.Dir4.E;
-import static de.amr.easy.grid.api.Dir4.N;
-import static de.amr.easy.grid.api.Dir4.S;
-import static de.amr.easy.grid.api.Dir4.W;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
+import static de.amr.easy.grid.api.dir.Dir4.E;
+import static de.amr.easy.grid.api.dir.Dir4.N;
+import static de.amr.easy.grid.api.dir.Dir4.S;
+import static de.amr.easy.grid.api.dir.Dir4.W;
 import static java.lang.Math.max;
 
 import java.util.ArrayList;
@@ -21,8 +21,8 @@ import java.util.stream.Stream;
 import de.amr.easy.data.Partition;
 import de.amr.easy.data.Partition.EquivClass;
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.dir.Dir4;
 import de.amr.easy.grid.impl.NakedGrid;
 import de.amr.easy.grid.iterators.shapes.Rectangle;
 import de.amr.easy.grid.iterators.shapes.Square;

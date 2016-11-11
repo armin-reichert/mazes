@@ -9,8 +9,8 @@ import java.util.function.Consumer;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.WeightedEdge;
-import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.dir.Dir4;
 
 public abstract class MazeAlgorithm implements Consumer<Integer> {
 

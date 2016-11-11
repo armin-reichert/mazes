@@ -1,15 +1,15 @@
 package de.amr.easy.maze.alg;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
-import static de.amr.easy.grid.api.Dir4.E;
-import static de.amr.easy.grid.api.Dir4.S;
+import static de.amr.easy.grid.api.dir.Dir4.E;
+import static de.amr.easy.grid.api.dir.Dir4.S;
 
 import java.util.Optional;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * Creates a random binary spanning tree.

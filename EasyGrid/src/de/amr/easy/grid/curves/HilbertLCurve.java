@@ -1,6 +1,6 @@
 package de.amr.easy.grid.curves;
 
-import de.amr.easy.grid.api.Dir4;
+import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * Implementation of a Hilbert curve using the following L-system:

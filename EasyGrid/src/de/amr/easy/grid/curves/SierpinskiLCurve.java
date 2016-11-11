@@ -1,15 +1,15 @@
 package de.amr.easy.grid.curves;
 
-import static de.amr.easy.grid.api.Dir8.E;
-import static de.amr.easy.grid.api.Dir8.N;
-import static de.amr.easy.grid.api.Dir8.NE;
-import static de.amr.easy.grid.api.Dir8.NW;
-import static de.amr.easy.grid.api.Dir8.S;
-import static de.amr.easy.grid.api.Dir8.SE;
-import static de.amr.easy.grid.api.Dir8.SW;
-import static de.amr.easy.grid.api.Dir8.W;
+import static de.amr.easy.grid.api.dir.Dir8.E;
+import static de.amr.easy.grid.api.dir.Dir8.N;
+import static de.amr.easy.grid.api.dir.Dir8.NE;
+import static de.amr.easy.grid.api.dir.Dir8.NW;
+import static de.amr.easy.grid.api.dir.Dir8.S;
+import static de.amr.easy.grid.api.dir.Dir8.SE;
+import static de.amr.easy.grid.api.dir.Dir8.SW;
+import static de.amr.easy.grid.api.dir.Dir8.W;
 
-import de.amr.easy.grid.api.Dir8;
+import de.amr.easy.grid.api.dir.Dir8;
 
 /**
  * Sierpinski curve (as defined in Niklaus Wirth, "Algorithmen und Datenstrukturen").

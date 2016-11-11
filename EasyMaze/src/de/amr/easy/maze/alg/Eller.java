@@ -12,8 +12,8 @@ import java.util.Set;
 import de.amr.easy.data.Partition;
 import de.amr.easy.data.Partition.EquivClass;
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * Maze generator using Eller's algorithm.

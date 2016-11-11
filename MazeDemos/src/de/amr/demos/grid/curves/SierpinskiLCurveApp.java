@@ -5,7 +5,7 @@ import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.GridSampleApp;
-import de.amr.easy.grid.api.Dir8;
+import de.amr.easy.grid.api.dir.Dir8;
 import de.amr.easy.grid.curves.SierpinskiLCurve;
 
 public class SierpinskiLCurveApp extends GridSampleApp {

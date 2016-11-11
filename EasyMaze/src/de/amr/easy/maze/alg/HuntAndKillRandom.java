@@ -1,8 +1,8 @@
 package de.amr.easy.maze.alg;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * Variant of "hunt-and-kill" algorithm where the "hunt" picks cells randomly from the set of

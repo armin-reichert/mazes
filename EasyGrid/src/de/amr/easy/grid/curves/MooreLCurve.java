@@ -1,6 +1,6 @@
 package de.amr.easy.grid.curves;
 
-import de.amr.easy.grid.api.Dir4;
+import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * Computes a Moore curve from the following L-system:

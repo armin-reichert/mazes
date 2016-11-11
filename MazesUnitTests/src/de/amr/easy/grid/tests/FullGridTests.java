@@ -11,9 +11,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.api.NakedGrid2D;
+import de.amr.easy.grid.api.dir.Dir4;
 import de.amr.easy.grid.impl.NakedGrid;
 
 public class FullGridTests {

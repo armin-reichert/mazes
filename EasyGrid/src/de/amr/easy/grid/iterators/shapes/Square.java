@@ -1,14 +1,14 @@
 package de.amr.easy.grid.iterators.shapes;
 
-import static de.amr.easy.grid.api.Dir4.E;
-import static de.amr.easy.grid.api.Dir4.N;
-import static de.amr.easy.grid.api.Dir4.S;
-import static de.amr.easy.grid.api.Dir4.W;
+import static de.amr.easy.grid.api.dir.Dir4.E;
+import static de.amr.easy.grid.api.dir.Dir4.N;
+import static de.amr.easy.grid.api.dir.Dir4.S;
+import static de.amr.easy.grid.api.dir.Dir4.W;
 
 import java.util.Arrays;
 
-import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.NakedGrid2D;
+import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * Iterates grid cells clockwise as a square with given top left corner and size.

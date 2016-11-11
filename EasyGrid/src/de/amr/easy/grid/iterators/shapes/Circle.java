@@ -1,7 +1,7 @@
 package de.amr.easy.grid.iterators.shapes;
 
-import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.NakedGrid2D;
+import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * A "circle" of grid cells around a center cell.

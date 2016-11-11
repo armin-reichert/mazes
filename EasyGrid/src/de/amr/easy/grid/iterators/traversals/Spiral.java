@@ -7,9 +7,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
-import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.NakedGrid2D;
 import de.amr.easy.grid.api.Sequence;
+import de.amr.easy.grid.api.dir.Dir4;
 import de.amr.easy.grid.impl.NakedGrid;
 import de.amr.easy.grid.iterators.shapes.Square;
 

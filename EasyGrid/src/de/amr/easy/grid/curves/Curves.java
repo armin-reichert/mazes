@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.stream.Stream;
 
-import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.NakedGrid2D;
+import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * Utility methods for curves.

@@ -1,7 +1,7 @@
 package de.amr.easy.grid.iterators.shapes;
 
-import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.NakedGrid2D;
+import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * A rectangle with given cell as left upper corner.

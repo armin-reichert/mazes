@@ -7,8 +7,8 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.NakedGrid2D;
+import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * Renders a grid as "passages" or "cells with walls" depending on the selected passage thickness.

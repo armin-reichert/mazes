@@ -1,10 +1,10 @@
 package de.amr.easy.maze.alg.wilson;
 
-import static de.amr.easy.grid.api.Dir4.E;
-import static de.amr.easy.grid.api.Dir4.N;
-import static de.amr.easy.grid.api.Dir4.S;
-import static de.amr.easy.grid.api.Dir4.W;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
+import static de.amr.easy.grid.api.dir.Dir4.E;
+import static de.amr.easy.grid.api.dir.Dir4.N;
+import static de.amr.easy.grid.api.dir.Dir4.S;
+import static de.amr.easy.grid.api.dir.Dir4.W;
 import static de.amr.easy.maze.misc.MazeUtils.log;
 import static de.amr.easy.maze.misc.MazeUtils.nextPow;
 import static java.lang.Math.max;
@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.dir.Dir4;
 import de.amr.easy.grid.curves.HilbertCurve;
 import de.amr.easy.grid.impl.NakedGrid;
 

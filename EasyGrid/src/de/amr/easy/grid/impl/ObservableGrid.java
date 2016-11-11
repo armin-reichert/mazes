@@ -1,8 +1,8 @@
 package de.amr.easy.grid.impl;
 
 import de.amr.easy.graph.api.VertexContent;
-import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.ObservableGrid2D;
+import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * An observable grid with cell content.

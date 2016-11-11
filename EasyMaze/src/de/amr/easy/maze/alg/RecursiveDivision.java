@@ -5,8 +5,8 @@ import static java.lang.Math.min;
 import static java.util.stream.IntStream.range;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * Creates maze by recursive division.

@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * Wilson's algorithm with random vertex selection.

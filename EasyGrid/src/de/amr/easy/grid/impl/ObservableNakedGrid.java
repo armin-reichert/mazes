@@ -10,8 +10,8 @@ import de.amr.easy.graph.api.event.EdgeChangeEvent;
 import de.amr.easy.graph.api.event.EdgeRemovedEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.VertexChangeEvent;
-import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.ObservableNakedGrid2D;
+import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * A grid which can be observed.

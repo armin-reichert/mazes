@@ -1,8 +1,8 @@
 package de.amr.easy.grid.impl;
 
 import de.amr.easy.graph.api.VertexContent;
-import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * A grid with cell content.

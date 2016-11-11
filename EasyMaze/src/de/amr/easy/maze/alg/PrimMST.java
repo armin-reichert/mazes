@@ -6,8 +6,8 @@ import java.util.PriorityQueue;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.WeightedEdge;
-import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * Maze generator based on Prim's minimum spanning tree algorithm with random edge weights.

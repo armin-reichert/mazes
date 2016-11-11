@@ -8,8 +8,8 @@ import java.util.LinkedList;
 import java.util.Optional;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * Generates a maze by iterative random depth-first-traversal of a grid.

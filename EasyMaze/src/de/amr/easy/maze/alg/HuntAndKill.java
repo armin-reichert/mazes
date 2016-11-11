@@ -7,8 +7,8 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.api.Dir4;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * Generates a maze similar to the "hunt-and-kill" algorithm.

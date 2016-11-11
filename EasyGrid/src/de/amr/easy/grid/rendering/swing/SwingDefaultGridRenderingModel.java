@@ -3,7 +3,7 @@ package de.amr.easy.grid.rendering.swing;
 import java.awt.Color;
 import java.awt.Font;
 
-import de.amr.easy.grid.api.Dir4;
+import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * Grid rendering model providing sensible default values.
