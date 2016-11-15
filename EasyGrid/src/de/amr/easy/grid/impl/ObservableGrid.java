@@ -15,7 +15,7 @@ import de.amr.easy.grid.api.ObservableGrid2D;
  * @author Armin Reichert
  */
 public class ObservableGrid<Content, PassageWeight extends Comparable<PassageWeight>>
-		extends ObservableNakedGrid<PassageWeight> implements ObservableGrid2D<Content, PassageWeight> {
+		extends ObservableBareGrid<PassageWeight> implements ObservableGrid2D<Content, PassageWeight> {
 
 	private VertexContent<Integer, Content> gridContent;
 

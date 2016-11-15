@@ -15,7 +15,7 @@ import de.amr.easy.graph.api.WeightedEdge;
  *          passage weight type
  */
 public interface Grid2D<CellContent, PassageWeight extends Comparable<PassageWeight>>
-		extends NakedGrid2D<PassageWeight>, VertexContent<Integer, CellContent>,
+		extends BareGrid2D<PassageWeight>, VertexContent<Integer, CellContent>,
 		DataGraph<Integer, WeightedEdge<Integer, PassageWeight>, CellContent> {
 
 }

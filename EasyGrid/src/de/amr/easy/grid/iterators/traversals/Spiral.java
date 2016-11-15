@@ -7,9 +7,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
-import de.amr.easy.grid.api.NakedGrid2D;
+import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.api.Sequence;
-import de.amr.easy.grid.impl.NakedGrid;
+import de.amr.easy.grid.impl.BareGrid;
 import de.amr.easy.grid.iterators.shapes.Square;
 
 /**
@@ -22,10 +22,10 @@ public class Spiral implements Sequence<Integer> {
 
 	private final List<Integer> cells = new ArrayList<>();
 
-	public Spiral(NakedGrid2D<?> grid, Integer start) {
+	public Spiral(BareGrid2D<?> grid, Integer start) {
 		int size = Math.max(grid.numCols(), grid.numRows());
 		int offsetY = (size - grid.numRows()) / 2;
-		NakedGrid2D<?> squareGrid = new NakedGrid<>(size, size);
+		BareGrid2D<?> squareGrid = new BareGrid<>(size, size);
 		Integer leftUpperCorner = squareGrid.cell(CENTER);
 		for (int i = 0, n = size / 2 + 1; i < n; ++i) {
 			Square square = new Square(squareGrid, leftUpperCorner, 2 * i + 1);

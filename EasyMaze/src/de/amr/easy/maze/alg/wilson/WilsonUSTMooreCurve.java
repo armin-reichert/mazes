@@ -12,7 +12,7 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.dir.Dir4;
 import de.amr.easy.grid.curves.MooreLCurve;
-import de.amr.easy.grid.impl.NakedGrid;
+import de.amr.easy.grid.impl.BareGrid;
 
 /**
  * Wilson's algorithm where the vertices are selected from a Hilbert-Moore curve.
@@ -31,7 +31,7 @@ public class WilsonUSTMooreCurve extends WilsonUST {
 	protected Stream<Integer> cellStream() {
 		int n = nextPow(2, max(grid.numCols(), grid.numRows()));
 		MooreLCurve moore = new MooreLCurve(log(2, n));
-		NakedGrid<?> square = new NakedGrid<>(n, n);
+		BareGrid<?> square = new BareGrid<>(n, n);
 		Integer cell = square.cell(n / 2, n - 1);
 		addCellToPath(n / 2, n - 1);
 		for (Dir4 dir : moore) {

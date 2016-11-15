@@ -1,6 +1,6 @@
 package de.amr.easy.grid.iterators.shapes;
 
-import de.amr.easy.grid.api.NakedGrid2D;
+import de.amr.easy.grid.api.BareGrid2D;
 
 /**
  * A "circle" of grid cells around a center cell.
@@ -13,7 +13,7 @@ public class Circle extends Shape {
 	private final Integer center;
 	private final int radius;
 
-	public Circle(NakedGrid2D<?> grid, Integer center, int radius) {
+	public Circle(BareGrid2D<?> grid, Integer center, int radius) {
 		super(grid);
 		this.center = center;
 		this.radius = radius;

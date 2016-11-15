@@ -23,7 +23,7 @@ import de.amr.easy.data.Partition.EquivClass;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.dir.Dir4;
-import de.amr.easy.grid.impl.NakedGrid;
+import de.amr.easy.grid.impl.BareGrid;
 import de.amr.easy.grid.iterators.shapes.Rectangle;
 import de.amr.easy.grid.iterators.shapes.Square;
 
@@ -35,7 +35,7 @@ import de.amr.easy.grid.iterators.shapes.Square;
  */
 public class EllerInsideOut extends MazeAlgorithm {
 
-	private final NakedGrid<?> squareGrid;
+	private final BareGrid<?> squareGrid;
 	private final Partition<Integer> mazeParts = new Partition<>();
 	private Square square;
 	private Iterable<Integer> layer;
@@ -48,7 +48,7 @@ public class EllerInsideOut extends MazeAlgorithm {
 		int n = max(grid.numCols(), grid.numRows());
 		offsetX = (n - grid.numCols()) / 2;
 		offsetY = (n - grid.numRows()) / 2;
-		squareGrid = new NakedGrid<>(n, n);
+		squareGrid = new BareGrid<>(n, n);
 	}
 
 	@Override

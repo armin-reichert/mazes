@@ -4,32 +4,32 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import de.amr.easy.grid.api.dir.Dir;
+import de.amr.easy.grid.api.dir.DirExperimental;
 
 public class DirTests {
 
 	@Test
 	public void testInverse() {
-		assertTrue(Dir.N.inverse().equals(Dir.S));
-		assertTrue(Dir.E.inverse().equals(Dir.W));
-		assertTrue(Dir.S.inverse().equals(Dir.N));
-		assertTrue(Dir.W.inverse().equals(Dir.E));
+		assertTrue(DirExperimental.N.inverse().equals(DirExperimental.S));
+		assertTrue(DirExperimental.E.inverse().equals(DirExperimental.W));
+		assertTrue(DirExperimental.S.inverse().equals(DirExperimental.N));
+		assertTrue(DirExperimental.W.inverse().equals(DirExperimental.E));
 	}
 
 	@Test
 	public void testRight() {
-		assertTrue(Dir.N.right().equals(Dir.E));
-		assertTrue(Dir.E.right().equals(Dir.S));
-		assertTrue(Dir.S.right().equals(Dir.W));
-		assertTrue(Dir.W.right().equals(Dir.N));
+		assertTrue(DirExperimental.N.right().equals(DirExperimental.E));
+		assertTrue(DirExperimental.E.right().equals(DirExperimental.S));
+		assertTrue(DirExperimental.S.right().equals(DirExperimental.W));
+		assertTrue(DirExperimental.W.right().equals(DirExperimental.N));
 	}
 
 	@Test
 	public void testLeft() {
-		assertTrue(Dir.N.left().equals(Dir.W));
-		assertTrue(Dir.E.left().equals(Dir.N));
-		assertTrue(Dir.S.left().equals(Dir.E));
-		assertTrue(Dir.W.left().equals(Dir.S));
+		assertTrue(DirExperimental.N.left().equals(DirExperimental.W));
+		assertTrue(DirExperimental.E.left().equals(DirExperimental.N));
+		assertTrue(DirExperimental.S.left().equals(DirExperimental.E));
+		assertTrue(DirExperimental.W.left().equals(DirExperimental.S));
 	}
 
 }

@@ -11,6 +11,6 @@ import de.amr.easy.graph.api.WeightedEdge;
  * @param <PassageWeight>
  *          passage weight type
  */
-public interface ObservableNakedGrid2D<PassageWeight extends Comparable<PassageWeight>>
-		extends NakedGrid2D<PassageWeight>, ObservableGraph<Integer, WeightedEdge<Integer, PassageWeight>> {
+public interface ObservableBareGrid2D<PassageWeight extends Comparable<PassageWeight>>
+		extends BareGrid2D<PassageWeight>, ObservableGraph<Integer, WeightedEdge<Integer, PassageWeight>> {
 }

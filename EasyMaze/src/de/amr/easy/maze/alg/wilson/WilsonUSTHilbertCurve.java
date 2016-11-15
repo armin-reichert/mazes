@@ -17,7 +17,7 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.dir.Dir4;
 import de.amr.easy.grid.curves.HilbertCurve;
-import de.amr.easy.grid.impl.NakedGrid;
+import de.amr.easy.grid.impl.BareGrid;
 
 /**
  * Wilson's algorithm where the vertices are selected from a Hilbert curve.
@@ -37,7 +37,7 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 		// Hilbert curve need a square grid, so create one
 		int n = nextPow(2, max(grid.numCols(), grid.numRows()));
 		HilbertCurve hilbert = new HilbertCurve(log(2, n), W, N, E, S);
-		NakedGrid<?> square = new NakedGrid<>(n, n);
+		BareGrid<?> square = new BareGrid<>(n, n);
 		// Traverse the intersection of the square grid cells with the original grid
 		Integer cell = square.cell(TOP_LEFT);
 		path.add(cell);

@@ -25,7 +25,7 @@ import de.amr.easy.grid.api.dir.Dir4;
  * 
  * @author Armin Reichert
  */
-public interface NakedGrid2D<PassageWeight extends Comparable<PassageWeight>>
+public interface BareGrid2D<PassageWeight extends Comparable<PassageWeight>>
 		extends Graph<Integer, WeightedEdge<Integer, PassageWeight>> {
 
 	/**
@@ -175,7 +175,7 @@ public interface NakedGrid2D<PassageWeight extends Comparable<PassageWeight>>
 	 * 
 	 * @return the grid itself to allow method chaining
 	 */
-	public <T extends NakedGrid2D<PassageWeight>> T makeFullGrid();
+	public <T extends BareGrid2D<PassageWeight>> T makeFullGrid();
 
 	/**
 	 * @return the edges of a full grid in randomly permuted order and random weights

@@ -14,7 +14,7 @@ import de.amr.easy.grid.api.Sequence;
  * 
  * @author Armin Reichert
  * 
- * @param Dir
+ * @param DirExperimental
  *          direction type
  */
 public abstract class Curve<Dir> implements Sequence<Dir> {

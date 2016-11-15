@@ -13,7 +13,7 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.dir.Dir4;
 import de.amr.easy.grid.curves.PeanoCurve;
-import de.amr.easy.grid.impl.NakedGrid;
+import de.amr.easy.grid.impl.BareGrid;
 
 /**
  * Wilson's algorithm where the vertices are selected from a Peano-curve.
@@ -32,7 +32,7 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 	protected Stream<Integer> cellStream() {
 		int n = nextPow(3, max(grid.numCols(), grid.numRows()));
 		PeanoCurve peano = new PeanoCurve(log(3, n));
-		NakedGrid<?> square = new NakedGrid<>(n, n);
+		BareGrid<?> square = new BareGrid<>(n, n);
 		Integer cell = square.cell(BOTTOM_LEFT);
 		addCellToPath(square.col(cell), square.row(cell));
 		for (Dir4 dir : peano) {

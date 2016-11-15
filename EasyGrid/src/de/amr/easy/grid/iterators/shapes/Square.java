@@ -7,7 +7,7 @@ import static de.amr.easy.grid.api.dir.Dir4.W;
 
 import java.util.Arrays;
 
-import de.amr.easy.grid.api.NakedGrid2D;
+import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.api.dir.Dir4;
 
 /**
@@ -21,7 +21,7 @@ public class Square extends Shape {
 	private final Integer topLeft;
 	private final int size;
 
-	public Square(NakedGrid2D<?> grid, Integer topLeft, int size) {
+	public Square(BareGrid2D<?> grid, Integer topLeft, int size) {
 		super(grid);
 
 		this.topLeft = topLeft;

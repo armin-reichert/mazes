@@ -13,7 +13,7 @@ import de.amr.easy.grid.api.Grid2D;
  * @param <PassageWeight>
  *          passage weight type
  */
-public class Grid<Content, PassageWeight extends Comparable<PassageWeight>> extends NakedGrid<PassageWeight>
+public class Grid<Content, PassageWeight extends Comparable<PassageWeight>> extends BareGrid<PassageWeight>
 		implements Grid2D<Content, PassageWeight> {
 
 	private VertexContent<Integer, Content> gridContent;

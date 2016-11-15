@@ -14,19 +14,19 @@ import org.junit.Test;
 import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.alg.traversal.DepthFirstTraversal;
 import de.amr.easy.graph.api.WeightedEdge;
-import de.amr.easy.grid.api.NakedGrid2D;
-import de.amr.easy.grid.impl.NakedGrid;
+import de.amr.easy.grid.api.BareGrid2D;
+import de.amr.easy.grid.impl.BareGrid;
 
 public class GridTraversalTests {
 
 	private static final int WIDTH = 100;
 	private static final int HEIGHT = 100;
 
-	private NakedGrid2D<Integer> grid;
+	private BareGrid2D<Integer> grid;
 
 	@Before
 	public void setUp() {
-		grid = new NakedGrid<Integer>(WIDTH, HEIGHT).makeFullGrid();
+		grid = new BareGrid<Integer>(WIDTH, HEIGHT).makeFullGrid();
 	}
 
 	@After

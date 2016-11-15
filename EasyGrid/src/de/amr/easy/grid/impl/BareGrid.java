@@ -16,18 +16,18 @@ import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.grid.api.NakedGrid2D;
+import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.api.dir.Dir4;
 
 /**
- * An implementation of the {@link NakedGrid2D} interface.
+ * An implementation of the {@link BareGrid2D} interface.
  * 
  * @author Armin Reichert
  * 
  * @param <PassageWeight>
  *          passage weight type
  */
-public class NakedGrid<PassageWeight extends Comparable<PassageWeight>> implements NakedGrid2D<PassageWeight> {
+public class BareGrid<PassageWeight extends Comparable<PassageWeight>> implements BareGrid2D<PassageWeight> {
 
 	private static final int DIRECTION_COUNT = Dir4.values().length;
 
@@ -65,7 +65,7 @@ public class NakedGrid<PassageWeight extends Comparable<PassageWeight>> implemen
 	 * @param nRows
 	 *          the number of rows of this grid
 	 */
-	public NakedGrid(int nCols, int nRows) {
+	public BareGrid(int nCols, int nRows) {
 		if (nCols < 0) {
 			throw new IllegalArgumentException("Illegal number of columns: " + nCols);
 		}
@@ -90,7 +90,7 @@ public class NakedGrid<PassageWeight extends Comparable<PassageWeight>> implemen
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public NakedGrid<PassageWeight> makeFullGrid() {
+	public BareGrid<PassageWeight> makeFullGrid() {
 		removeEdges();
 		range(0, nCols).forEach(col -> {
 			range(0, nRows).forEach(row -> {

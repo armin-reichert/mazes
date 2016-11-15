@@ -21,11 +21,11 @@ import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.dir.Dir4;
 import de.amr.easy.grid.impl.Grid;
-import de.amr.easy.grid.impl.NakedGrid;
+import de.amr.easy.grid.impl.BareGrid;
 import de.amr.easy.maze.alg.RandomBFS;
 
 /**
- * Test case for {@link NakedGrid}
+ * Test case for {@link BareGrid}
  * 
  * @author Armin Reichert
  *
