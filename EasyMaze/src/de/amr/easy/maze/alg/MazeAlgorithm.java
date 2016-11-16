@@ -28,19 +28,19 @@ public abstract class MazeAlgorithm implements Consumer<Integer> {
 	 *          the original start cell passed to the algorithm
 	 * @return the possibly modified start cell
 	 */
-	protected Integer customStartCell(Integer originalStartCell) {
+	protected int customStartCell(int originalStartCell) {
 		return originalStartCell;
 	}
 
-	protected boolean isCellUnvisited(Integer cell) {
+	protected boolean isCellUnvisited(int cell) {
 		return grid.get(cell) == UNVISITED;
 	}
 
-	protected boolean isCellVisited(Integer cell) {
+	protected boolean isCellVisited(int cell) {
 		return grid.get(cell) == VISITED;
 	}
 
-	protected boolean isCellCompleted(Integer cell) {
+	protected boolean isCellCompleted(int cell) {
 		return grid.get(cell) == COMPLETED;
 	}
 
@@ -48,5 +48,4 @@ public abstract class MazeAlgorithm implements Consumer<Integer> {
 		edge.setWeight(rnd.nextInt());
 		return edge;
 	}
-
 }

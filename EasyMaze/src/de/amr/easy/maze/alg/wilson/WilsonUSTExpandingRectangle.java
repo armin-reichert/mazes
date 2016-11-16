@@ -31,7 +31,7 @@ public class WilsonUSTExpandingRectangle extends WilsonUST {
 	}
 
 	@Override
-	protected Integer customStartCell(Integer start) {
+	protected int customStartCell(int start) {
 		return grid.cell(TOP_LEFT);
 	}
 }
