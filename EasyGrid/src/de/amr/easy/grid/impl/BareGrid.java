@@ -56,12 +56,14 @@ public class BareGrid<Weight extends Comparable<Weight>> implements BareGrid2D<W
 	}
 
 	/**
-	 * Creates a grid of size {@code nCols x nRows} with an empty edge set.
+	 * Creates a grid of size {@code colCount x rowCount} with an empty edge set.
 	 * 
 	 * @param colCount
 	 *          the number of columns of this grid
 	 * @param rowCount
 	 *          the number of rows of this grid
+	 * @param top
+	 *          the topology of this grid
 	 */
 	public BareGrid(int colCount, int rowCount, Topology top) {
 		if (colCount < 0) {
@@ -78,7 +80,7 @@ public class BareGrid<Weight extends Comparable<Weight>> implements BareGrid2D<W
 	}
 
 	/**
-	 * Creates a grid of size {@code nCols x nRows} with an empty edge set and 4-direction topology.
+	 * Creates a grid of size {@code colCount x rowCount} with an empty edge set and 4-direction topology.
 	 * 
 	 * @param colCount
 	 *          the number of columns of this grid
@@ -137,11 +139,11 @@ public class BareGrid<Weight extends Comparable<Weight>> implements BareGrid2D<W
 
 	@Override
 	public void addEdge(Integer p, Integer q) {
-		if (adjacent(p, q)) {
-			throw new IllegalStateException("Cannot add edge (" + p + "," + q + ") twice");
-		}
 		if (!areNeighbors(p, q)) {
 			throw new IllegalStateException("Cannot add edge between cells which are not neighbors");
+		}
+		if (adjacent(p, q)) {
+			throw new IllegalStateException("Cannot add edge (" + p + "," + q + ") twice");
 		}
 		direction(p, q).ifPresent(dir -> connect(p, q, dir, true));
 	}

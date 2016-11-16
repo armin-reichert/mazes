@@ -10,13 +10,13 @@ import de.amr.easy.grid.api.Grid2D;
  * 
  * @param <Content>
  *          grid content type
- * @param <PassageWeight>
+ * @param <Weight>
  *          passage weight type
  */
-public class Grid<Content, PassageWeight extends Comparable<PassageWeight>> extends BareGrid<PassageWeight>
-		implements Grid2D<Content, PassageWeight> {
+public class Grid<Content, Weight extends Comparable<Weight>> extends BareGrid<Weight>
+		implements Grid2D<Content, Weight> {
 
-	private VertexContent<Integer, Content> gridContent;
+	private final VertexContent<Integer, Content> gridContent;
 
 	public Grid(int numCols, int numRows, Content defaultContent, boolean sparse) {
 		super(numCols, numRows);

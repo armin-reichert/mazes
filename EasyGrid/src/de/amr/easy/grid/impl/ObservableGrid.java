@@ -17,7 +17,7 @@ import de.amr.easy.grid.api.ObservableGrid2D;
 public class ObservableGrid<Content, PassageWeight extends Comparable<PassageWeight>>
 		extends ObservableBareGrid<PassageWeight> implements ObservableGrid2D<Content, PassageWeight> {
 
-	private VertexContent<Integer, Content> gridContent;
+	private final VertexContent<Integer, Content> gridContent;
 
 	public ObservableGrid(int numCols, int numRows, Content defaultContent, boolean sparse) {
 		super(numCols, numRows);
