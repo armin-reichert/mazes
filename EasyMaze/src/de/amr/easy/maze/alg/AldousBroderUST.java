@@ -3,8 +3,6 @@ package de.amr.easy.maze.alg;
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
-import java.util.OptionalInt;
-
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 
@@ -32,54 +30,44 @@ import de.amr.easy.grid.api.Grid2D;
  */
 public class AldousBroderUST extends MazeAlgorithm {
 
-	private int mazeCellCount;
+	private int visitCount;
+	private int v;
 
 	public AldousBroderUST(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
 	}
 
 	@Override
-	public void accept(Integer v) {
+	public void accept(Integer start) {
+		v = start;
 		grid.set(v, COMPLETED);
-		mazeCellCount = 1;
-		while (mazeCellCount < grid.numCells()) {
-			v = visitRandomNeighbor(v);
+		visitCount = 1;
+		while (visitCount < grid.numCells()) {
+			visitNeighbor();
+			showVisit();
 		}
 	}
 
 	/**
-	 * Visits a random neighbor cell and adds it to the maze if it is visited for the first time.
-	 * 
-	 * @param v
-	 *          a maze cell
-	 * @return the visited neighbor
+	 * Visits a random neighbor of the current cell and adds it to the maze if visited for the first
+	 * time.
 	 */
-	private Integer visitRandomNeighbor(Integer v) {
-		OptionalInt optNeighbor = grid.randomNeighbor(v);
-		if (optNeighbor.isPresent()) {
-			int u = optNeighbor.getAsInt();
-			animateCellVisit(u);
-			if (isCellUnvisited(u)) {
-				grid.set(u, COMPLETED);
-				++mazeCellCount;
-				grid.addEdge(u, v);
-			}
-			return u;
+	private void visitNeighbor() {
+		int u = grid.randomNeighbor(v).getAsInt();
+		if (isCellUnvisited(u)) {
+			grid.set(u, COMPLETED);
+			++visitCount;
+			grid.addEdge(u, v);
 		}
-		return v;
+		v = u;
 	}
 
 	/**
-	 * Set cell state temporarily to "visited" such that renderer is informed.
-	 * 
-	 * @param cell
-	 *          a grid cell
-	 * @return the same cell
+	 * Animates the visit of the current cell by temporarily changing its state to "visited".
 	 */
-	private Integer animateCellVisit(Integer cell) {
-		TraversalState state = grid.get(cell);
-		grid.set(cell, VISITED);
-		grid.set(cell, state);
-		return cell;
+	private void showVisit() {
+		TraversalState state = grid.get(v);
+		grid.set(v, VISITED);
+		grid.set(v, state);
 	}
 }
