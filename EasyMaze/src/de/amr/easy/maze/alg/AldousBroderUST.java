@@ -54,19 +54,21 @@ public class AldousBroderUST extends MazeAlgorithm {
 	 */
 	private Integer visitRandomNeighbor(Integer v) {
 		/*@formatter:off*/
-		return grid.randomNeighbor(v)
-			.map(u -> {
-				// if first time visit, add neighbor to maze
-				if (isCellUnvisited(u)) {
-					grid.set(u, COMPLETED);
-					++mazeCellCount;
-					grid.addEdge(u, v);
-				}
-				return u;
-			})
-			.map(this::animateCellVisit)
-			.get();
+//		return grid.randomNeighbor(v)
+//			.map(u -> {
+//				// if first time visit, add neighbor to maze
+//				if (isCellUnvisited(u)) {
+//					grid.set(u, COMPLETED);
+//					++mazeCellCount;
+//					grid.addEdge(u, v);
+//				}
+//				return u;
+//			})
+//			.map(this::animateCellVisit)
+//			.get();
 		/*@formatter:on*/
+		
+		return 0; //TODO implement using OptionalInt which has no map() method
 	}
 
 	/**

@@ -5,7 +5,7 @@ import static de.amr.easy.graph.api.TraversalState.VISITED;
 
 import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Optional;
+import java.util.OptionalInt;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
@@ -18,7 +18,7 @@ import de.amr.easy.grid.api.Grid2D;
 public class IterativeDFS extends MazeAlgorithm {
 
 	private final Deque<Integer> stack = new LinkedList<>();
-	private Optional<Integer> unvisitedNeighbor;
+	private OptionalInt unvisitedNeighbor;
 
 	public IterativeDFS(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
@@ -31,7 +31,7 @@ public class IterativeDFS extends MazeAlgorithm {
 		while (!stack.isEmpty()) {
 			unvisitedNeighbor = grid.neighborsPermuted(cell).filter(this::isCellUnvisited).findAny();
 			if (unvisitedNeighbor.isPresent()) {
-				Integer neighbor = unvisitedNeighbor.get();
+				int neighbor = unvisitedNeighbor.getAsInt();
 				if (grid.randomNeighbor(neighbor).isPresent()) {
 					stack.push(neighbor);
 				}

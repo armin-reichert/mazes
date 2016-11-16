@@ -10,14 +10,15 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-import de.amr.easy.grid.api.dir.Dir4;
+import de.amr.easy.grid.api.Topology;
 import de.amr.easy.grid.curves.HilbertCurve;
+import de.amr.easy.grid.impl.Top4;
 
 public class HilbertCurveCanvasApp extends Canvas {
 
 	private int canvasSize;
 	private final Timer timer;
-
+	private final Topology top = new Top4();
 	private int depth;
 	private int n;
 	private HilbertCurve curve;
@@ -86,9 +87,9 @@ public class HilbertCurveCanvasApp extends Canvas {
 		g.translate(-cellSize, cellSize);
 		x = getWidth() - 1;
 		y = 0;
-		for (Dir4 dir : curve) {
-			int newX = x + 2 * dir.dx() * cellSize;
-			int newY = y + 2 * dir.dy() * cellSize;
+		for (int dir : curve) {
+			int newX = x + 2 * top.dx(dir) * cellSize;
+			int newY = y + 2 * top.dy(dir) * cellSize;
 			g.setColor(Color.BLUE);
 			g.drawLine(x, y, newX, newY);
 			x = newX;

@@ -10,7 +10,6 @@ import de.amr.easy.graph.alg.traversal.DepthFirstTraversal;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalListener;
 import de.amr.easy.grid.api.ObservableBareGrid2D;
-import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * Animation of depth-first-search path finding.
@@ -85,7 +84,7 @@ public class DFSAnimation implements GraphTraversalListener<Integer> {
 		}
 
 		@Override
-		public Color getCellBgColor(Integer cell) {
+		public Color getCellBgColor(int cell) {
 			if (path.contains(cell)) {
 				return pathColor;
 			}
@@ -96,8 +95,8 @@ public class DFSAnimation implements GraphTraversalListener<Integer> {
 		}
 
 		@Override
-		public Color getPassageColor(Integer cell, Dir4 dir) {
-			Integer neighbor = grid.neighbor(cell, dir).get();
+		public Color getPassageColor(int cell, int dir) {
+			int neighbor = grid.neighbor(cell, dir).getAsInt();
 			if (path.contains(cell) && path.contains(neighbor)) {
 				return pathColor;
 			}

@@ -3,7 +3,7 @@ package de.amr.easy.maze.alg.wilson;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static java.lang.Math.max;
 
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
@@ -21,8 +21,9 @@ public class WilsonUSTExpandingCircle extends WilsonUST {
 	}
 
 	@Override
-	protected Stream<Integer> cellStream() {
-		return new ExpandingCircle(grid, grid.cell(CENTER), 1, max(grid.numCols(), grid.numRows())).stream();
+	protected IntStream cellStream() {
+		return new ExpandingCircle(grid, grid.cell(CENTER), 1, max(grid.numCols(), grid.numRows())).stream()
+				.mapToInt(Integer::intValue); //TODO
 	}
 
 	@Override

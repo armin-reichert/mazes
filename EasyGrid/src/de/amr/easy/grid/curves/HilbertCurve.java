@@ -1,11 +1,9 @@
 package de.amr.easy.grid.curves;
 
-import static de.amr.easy.grid.api.dir.Dir4.E;
-import static de.amr.easy.grid.api.dir.Dir4.N;
-import static de.amr.easy.grid.api.dir.Dir4.S;
-import static de.amr.easy.grid.api.dir.Dir4.W;
-
-import de.amr.easy.grid.api.dir.Dir4;
+import static de.amr.easy.grid.impl.Top4.E;
+import static de.amr.easy.grid.impl.Top4.N;
+import static de.amr.easy.grid.impl.Top4.S;
+import static de.amr.easy.grid.impl.Top4.W;
 
 /**
  * Computes a Hilbert curve as a list of directions.
@@ -14,17 +12,17 @@ import de.amr.easy.grid.api.dir.Dir4;
  *
  * @author Armin Reichert
  */
-public class HilbertCurve extends Curve<Dir4> {
+public class HilbertCurve extends Curve<Integer> {
 
 	public HilbertCurve(int i) {
 		hilbert(i, N, E, S, W);
 	}
 
-	public HilbertCurve(int i, Dir4 n, Dir4 e, Dir4 s, Dir4 w) {
+	public HilbertCurve(int i, int n, int e, int s, int w) {
 		hilbert(i, n, e, s, w);
 	}
 
-	private void hilbert(int i, Dir4 n, Dir4 e, Dir4 s, Dir4 w) {
+	private void hilbert(int i, int n, int e, int s, int w) {
 		if (i > 0) {
 			hilbert(i - 1, e, n, w, s);
 			curve.add(w);

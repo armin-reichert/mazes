@@ -3,8 +3,6 @@ package de.amr.easy.grid.rendering.swing;
 import java.awt.Color;
 import java.awt.Font;
 
-import de.amr.easy.grid.api.dir.Dir4;
-
 /**
  * Interface for classes providing grid rendering data.
  * 
@@ -18,11 +16,11 @@ public interface SwingGridRenderingModel {
 
 	public Color getGridBgColor();
 
-	public Color getPassageColor(Integer cell, Dir4 dir);
+	public Color getPassageColor(int cell, int dir);
 
-	public Color getCellBgColor(Integer cell);
+	public Color getCellBgColor(int cell);
 
-	public String getCellText(Integer cell);
+	public String getCellText(int cell);
 
 	public Font getCellTextFont();
 

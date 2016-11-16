@@ -6,7 +6,7 @@ import static de.amr.easy.grid.iterators.IteratorFactory.sequence;
 import static java.lang.Math.max;
 
 import java.util.Iterator;
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 
 import de.amr.easy.graph.api.TraversalState;
@@ -30,7 +30,7 @@ public class WilsonUSTExpandingCircles extends WilsonUST {
 	}
 
 	@Override
-	protected Stream<Integer> cellStream() {
+	protected IntStream cellStream() {
 		Iterable<Integer> it = new Iterable<Integer>() {
 
 			@Override
@@ -60,7 +60,7 @@ public class WilsonUSTExpandingCircles extends WilsonUST {
 				/*@formatter:on*/
 			}
 		};
-		return StreamSupport.stream(it.spliterator(), false);
+		return StreamSupport.stream(it.spliterator(), false).mapToInt(Integer::intValue); // TODO
 	}
 
 	private Iterator<Integer> expandingCircle(int centerX, int centerY, int rmin, int rmax) {

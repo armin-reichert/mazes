@@ -2,12 +2,13 @@ package de.amr.easy.maze.alg.wilson;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 
-import java.util.Optional;
-import java.util.stream.Stream;
+import java.util.OptionalInt;
+import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.grid.api.dir.Dir4;
+import de.amr.easy.grid.api.Topology;
+import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.maze.alg.MazeAlgorithm;
 
 /**
@@ -32,11 +33,12 @@ import de.amr.easy.maze.alg.MazeAlgorithm;
  */
 public abstract class WilsonUST extends MazeAlgorithm {
 
-	private final Dir4[] lastWalkDir;
+	private final int[] lastWalkDir;
+	private final Topology top = new Top4();
 
 	protected WilsonUST(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
-		lastWalkDir = new Dir4[grid.numCells()];
+		lastWalkDir = new int[grid.numCells()];
 	}
 
 	@Override
@@ -60,17 +62,17 @@ public abstract class WilsonUST extends MazeAlgorithm {
 		// do a random walk starting at the start cell until the current tree is touched
 		Integer v = start;
 		while (outsideTree(v)) {
-			Dir4 dir = Dir4.randomValue();
-			Optional<Integer> neighbor = grid.neighbor(v, dir);
+			int dir = top.dirsPermuted().findAny().getAsInt();
+			OptionalInt neighbor = grid.neighbor(v, dir);
 			if (neighbor.isPresent()) {
 				lastWalkDir[v] = dir;
-				v = neighbor.get();
+				v = neighbor.getAsInt();
 			}
 		}
 		// add the (loop-erased) walk path to the current tree
 		v = start;
 		while (outsideTree(v)) {
-			Integer neighbor = grid.neighbor(v, lastWalkDir[v]).get();
+			int neighbor = grid.neighbor(v, lastWalkDir[v]).getAsInt();
 			addToTree(v);
 			grid.addEdge(v, neighbor);
 			v = neighbor;
@@ -80,8 +82,8 @@ public abstract class WilsonUST extends MazeAlgorithm {
 	/**
 	 * @return iterator defining the cell order used by the maze generator
 	 */
-	protected Stream<Integer> cellStream() {
-		return grid.vertexStream();
+	protected IntStream cellStream() {
+		return grid.vertexStream().mapToInt(Integer::intValue);
 	}
 
 	/**

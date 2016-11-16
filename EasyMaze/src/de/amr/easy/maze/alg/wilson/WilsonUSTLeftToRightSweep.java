@@ -2,7 +2,7 @@ package de.amr.easy.maze.alg.wilson;
 
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
@@ -20,8 +20,8 @@ public class WilsonUSTLeftToRightSweep extends WilsonUST {
 	}
 
 	@Override
-	protected Stream<Integer> cellStream() {
-		return new LeftToRightSweep(grid).stream();
+	protected IntStream cellStream() {
+		return new LeftToRightSweep(grid).stream().mapToInt(Integer::intValue); // TODO
 	}
 
 	@Override

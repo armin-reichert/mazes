@@ -3,7 +3,7 @@ package de.amr.easy.maze.alg;
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
-import java.util.Optional;
+import java.util.OptionalInt;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
@@ -20,7 +20,7 @@ import de.amr.easy.grid.api.Grid2D;
  */
 public class RecursiveDFS extends MazeAlgorithm {
 
-	private Optional<Integer> unvisitedNeighbor;
+	private OptionalInt unvisitedNeighbor;
 
 	public RecursiveDFS(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
@@ -30,8 +30,8 @@ public class RecursiveDFS extends MazeAlgorithm {
 	public void accept(Integer cell) {
 		grid.set(cell, VISITED);
 		while ((unvisitedNeighbor = grid.neighborsPermuted(cell).filter(this::isCellUnvisited).findAny()).isPresent()) {
-			grid.addEdge(cell, unvisitedNeighbor.get());
-			accept(unvisitedNeighbor.get());
+			grid.addEdge(cell, unvisitedNeighbor.getAsInt());
+			accept(unvisitedNeighbor.getAsInt());
 		}
 		grid.set(cell, COMPLETED);
 	}

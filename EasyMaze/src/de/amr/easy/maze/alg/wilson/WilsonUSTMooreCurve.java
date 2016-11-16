@@ -6,11 +6,10 @@ import static java.lang.Math.max;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.grid.api.dir.Dir4;
 import de.amr.easy.grid.curves.MooreLCurve;
 import de.amr.easy.grid.impl.BareGrid;
 
@@ -28,17 +27,17 @@ public class WilsonUSTMooreCurve extends WilsonUST {
 	}
 
 	@Override
-	protected Stream<Integer> cellStream() {
+	protected IntStream cellStream() {
 		int n = nextPow(2, max(grid.numCols(), grid.numRows()));
 		MooreLCurve moore = new MooreLCurve(log(2, n));
 		BareGrid<?> square = new BareGrid<>(n, n);
 		Integer cell = square.cell(n / 2, n - 1);
 		addCellToPath(n / 2, n - 1);
-		for (Dir4 dir : moore) {
-			cell = square.neighbor(cell, dir).get();
+		for (int dir : moore) {
+			cell = square.neighbor(cell, dir).getAsInt();
 			addCellToPath(square.col(cell), square.row(cell));
 		}
-		return path.stream();
+		return path.stream().mapToInt(Integer::intValue); // TODO
 	}
 
 	private void addCellToPath(int col, int row) {

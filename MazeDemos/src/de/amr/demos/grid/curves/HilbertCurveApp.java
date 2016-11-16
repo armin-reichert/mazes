@@ -4,22 +4,22 @@ import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.grid.api.GridPosition.TOP_RIGHT;
-import static de.amr.easy.grid.api.dir.Dir4.E;
-import static de.amr.easy.grid.api.dir.Dir4.N;
-import static de.amr.easy.grid.api.dir.Dir4.S;
-import static de.amr.easy.grid.api.dir.Dir4.W;
 import static de.amr.easy.grid.curves.Curves.traverse;
+import static de.amr.easy.grid.impl.Top4.E;
+import static de.amr.easy.grid.impl.Top4.N;
+import static de.amr.easy.grid.impl.Top4.S;
+import static de.amr.easy.grid.impl.Top4.W;
 import static de.amr.easy.maze.misc.MazeUtils.log;
 import static java.util.Arrays.asList;
 
-import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import de.amr.demos.grid.GridSampleApp;
 import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.grid.api.dir.Dir4;
 import de.amr.easy.grid.curves.HilbertCurve;
 import de.amr.easy.grid.rendering.swing.BFSAnimation;
 
@@ -31,7 +31,7 @@ import de.amr.easy.grid.rendering.swing.BFSAnimation;
  */
 public class HilbertCurveApp extends GridSampleApp {
 
-	private final EnumMap<GridPosition, List<Dir4>> orientation = new EnumMap<>(GridPosition.class);
+	private final Map<GridPosition, List<Integer>> orientation = new HashMap<>();
 
 	public static void main(String[] args) {
 		launch(new HilbertCurveApp());
@@ -53,7 +53,7 @@ public class HilbertCurveApp extends GridSampleApp {
 				setDelay(cellSize / 64);
 
 				int i = log(2, getWidth() / cellSize);
-				List<Dir4> dirs = orientation.get(startPos);
+				List<Integer> dirs = orientation.get(startPos);
 				HilbertCurve hilbert = new HilbertCurve(i, dirs.get(0), dirs.get(1), dirs.get(2), dirs.get(3));
 
 				Integer start = grid.cell(startPos);

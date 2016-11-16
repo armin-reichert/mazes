@@ -2,7 +2,7 @@ package de.amr.easy.maze.alg.wilson;
 
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
@@ -21,13 +21,13 @@ public class WilsonUSTExpandingRectangle extends WilsonUST {
 	}
 
 	@Override
-	protected Stream<Integer> cellStream() {
+	protected IntStream cellStream() {
 		Rectangle startRectangle = new Rectangle(grid, grid.cell(TOP_LEFT), 1, 1);
 		ExpandingRectangle expRect = new ExpandingRectangle(startRectangle);
 		expRect.setExpandHorizontally(true);
 		expRect.setExpandVertically(true);
 		expRect.setMaxExpansion(grid.numCols() - 1);
-		return expRect.stream();
+		return expRect.stream().mapToInt(Integer::intValue); // TODO
 	}
 
 	@Override

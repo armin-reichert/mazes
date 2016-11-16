@@ -1,6 +1,5 @@
 package de.amr.easy.grid.curves;
 
-import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * Computes a Moore curve from the following L-system:
@@ -29,7 +28,7 @@ import de.amr.easy.grid.api.dir.Dir4;
  * @see http://cph.phys.spbu.ru/ACOPhys/materials/bader/sfc.pdf
  * @see https://en.wikipedia.org/wiki/Moore_curve
  */
-public class MooreLCurve extends Curve<Dir4> {
+public class MooreLCurve extends Curve<Integer> {
 
 	private final Compass4 compass = new Compass4();
 

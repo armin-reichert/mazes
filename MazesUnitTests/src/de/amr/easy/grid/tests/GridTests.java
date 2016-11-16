@@ -1,15 +1,14 @@
 package de.amr.easy.grid.tests;
 
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
-import static de.amr.easy.grid.api.dir.Dir4.E;
-import static de.amr.easy.grid.api.dir.Dir4.N;
-import static de.amr.easy.grid.api.dir.Dir4.S;
-import static de.amr.easy.grid.api.dir.Dir4.W;
+import static de.amr.easy.grid.api.GridPosition.CENTER;
+import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Optional;
+import java.util.List;
+import java.util.OptionalInt;
 
 import org.junit.After;
 import org.junit.Before;
@@ -19,9 +18,9 @@ import de.amr.easy.graph.alg.CycleChecker;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.grid.api.dir.Dir4;
-import de.amr.easy.grid.impl.Grid;
 import de.amr.easy.grid.impl.BareGrid;
+import de.amr.easy.grid.impl.Grid;
+import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.maze.alg.RandomBFS;
 
 /**
@@ -91,6 +90,18 @@ public class GridTests {
 	}
 
 	@Test
+	public void testAreNeighbors() {
+		int center = grid.cell(CENTER);
+		assertTrue(grid.areNeighbors(center, center + 1));
+		assertTrue(grid.areNeighbors(center, center - 1));
+		assertTrue(grid.areNeighbors(center, center - grid.numCols()));
+		assertTrue(grid.areNeighbors(center, center + grid.numCols()));
+		assertTrue(!grid.areNeighbors(center, center));
+		assertTrue(!grid.areNeighbors(center, center - 2));
+		assertTrue(!grid.areNeighbors(center, center + 2));
+	}
+
+	@Test
 	public void testFillAllEdges() {
 		assertEquals(grid.edgeCount(), 0);
 		grid.makeFullGrid();
@@ -126,10 +137,16 @@ public class GridTests {
 	@Test
 	public void testAdjVertices() {
 		assertFalse(grid.adjacent(0, 1));
+		assertFalse(grid.adjacent(1, 0));
 		grid.addEdge(0, 1);
 		assertTrue(grid.adjacent(0, 1));
+		assertTrue(grid.adjacent(1, 0));
 		grid.removeEdge(0, 1);
 		assertFalse(grid.adjacent(0, 1));
+		assertFalse(grid.adjacent(1, 0));
+		grid.addEdge(1, 0);
+		assertTrue(grid.adjacent(1, 0));
+		assertTrue(grid.adjacent(0, 1));
 	}
 
 	@Test
@@ -149,19 +166,19 @@ public class GridTests {
 			for (int y = 0; y < grid.numRows(); ++y) {
 				Integer cell = grid.cell(x, y);
 				if (y > 0) {
-					Integer n = grid.neighbor(cell, N).get();
+					int n = grid.neighbor(cell, Top4.N).getAsInt();
 					assertEquals(n, grid.cell(x, y - 1));
 				}
 				if (x < grid.numCols() - 1) {
-					Integer e = grid.neighbor(cell, E).get();
+					int e = grid.neighbor(cell, Top4.E).getAsInt();
 					assertEquals(e, grid.cell(x + 1, y));
 				}
 				if (y < grid.numRows() - 1) {
-					Integer s = grid.neighbor(cell, S).get();
+					int s = grid.neighbor(cell, Top4.S).getAsInt();
 					assertEquals(s, grid.cell(x, y + 1));
 				}
 				if (x > 0) {
-					Integer w = grid.neighbor(cell, W).get();
+					int w = grid.neighbor(cell, Top4.W).getAsInt();
 					assertEquals(w, grid.cell(x - 1, y));
 				}
 			}
@@ -187,6 +204,7 @@ public class GridTests {
 
 	@Test
 	public void testCycleCheckerSpanningTree() {
+		Top4 top = new Top4();
 		CycleChecker<Integer, WeightedEdge<Integer, Integer>> cycleChecker = new CycleChecker<>();
 		// create a spanning tree
 		new RandomBFS(grid).accept(grid.cell(0, 0));
@@ -197,10 +215,11 @@ public class GridTests {
 			.filter(cell -> grid.degree(cell) < grid.neighbors(cell).count())
 			.findFirst()
 			.ifPresent(cell -> {
-				for (Dir4 dir : Dir4.values()) {
-					Optional<Integer> neighbor = grid.neighbor(cell, dir);
-					if (neighbor.isPresent() && !grid.adjacent(cell, neighbor.get())) {
-						grid.addEdge(cell, neighbor.get());
+				List<Integer> dirs = top.dirs().boxed().collect(toList());
+				for (int dir : dirs) {
+					OptionalInt neighbor = grid.neighbor(cell, dir);
+					if (neighbor.isPresent() && !grid.adjacent(cell, neighbor.getAsInt())) {
+						grid.addEdge(cell, neighbor.getAsInt());
 						break;
 					}
 				}

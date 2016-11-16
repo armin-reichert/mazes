@@ -37,7 +37,7 @@ public class GridColoring extends SwingDefaultGridRenderingModel {
 	}
 
 	@Override
-	public Color getCellBgColor(Integer cell) {
+	public Color getCellBgColor(int cell) {
 		switch (model.getGrid().get(cell)) {
 		case COMPLETED:
 			return super.getCellBgColor(cell);

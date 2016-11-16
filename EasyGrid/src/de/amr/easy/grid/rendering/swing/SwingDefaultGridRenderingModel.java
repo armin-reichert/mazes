@@ -3,8 +3,6 @@ package de.amr.easy.grid.rendering.swing;
 import java.awt.Color;
 import java.awt.Font;
 
-import de.amr.easy.grid.api.dir.Dir4;
-
 /**
  * Grid rendering model providing sensible default values.
  * 
@@ -44,7 +42,7 @@ public class SwingDefaultGridRenderingModel implements SwingGridRenderingModel {
 	}
 
 	@Override
-	public Color getPassageColor(Integer cell, Dir4 dir) {
+	public Color getPassageColor(int cell, int dir) {
 		return getCellBgColor(cell);
 	}
 
@@ -54,12 +52,12 @@ public class SwingDefaultGridRenderingModel implements SwingGridRenderingModel {
 	}
 
 	@Override
-	public Color getCellBgColor(Integer cell) {
+	public Color getCellBgColor(int cell) {
 		return Color.WHITE;
 	}
 
 	@Override
-	public String getCellText(Integer cell) {
+	public String getCellText(int cell) {
 		return "";
 	}
 

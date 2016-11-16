@@ -5,7 +5,7 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 
 import de.amr.easy.graph.api.TraversalState;
@@ -31,7 +31,7 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 	}
 
 	@Override
-	protected Stream<Integer> cellStream() {
+	protected IntStream cellStream() {
 		Iterable<Integer> it = new Iterable<Integer>() {
 
 			@Override
@@ -56,7 +56,7 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 				return IteratorFactory.sequence(IteratorFactory.sequence(expRectsArray), sweep.iterator());
 			}
 		};
-		return StreamSupport.stream(it.spliterator(), false);
+		return StreamSupport.stream(it.spliterator(), false).mapToInt(Integer::intValue); // TODO
 	}
 
 	private ExpandingRectangle expandingRectangle(Rectangle startRectangle, int rate) {

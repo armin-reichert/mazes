@@ -3,7 +3,7 @@ package de.amr.easy.maze.alg;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
@@ -24,7 +24,7 @@ public class BinaryTreeRandom extends BinaryTree {
 	}
 
 	@Override
-	protected Stream<Integer> cellStream() {
-		return cellsInRandomOrder.stream();
+	protected IntStream cellStream() {
+		return cellsInRandomOrder.stream().mapToInt(Integer::intValue);
 	}
 }

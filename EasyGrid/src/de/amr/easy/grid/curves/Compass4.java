@@ -1,6 +1,6 @@
 package de.amr.easy.grid.curves;
 
-import de.amr.easy.grid.api.dir.Dir4;
+import de.amr.easy.grid.impl.Top4;
 
 /**
  * A compas with 4 directions.
@@ -9,14 +9,15 @@ import de.amr.easy.grid.api.dir.Dir4;
  */
 public class Compass4 {
 
-	private final Dir4[] dirs;
+	private final Top4 top = new Top4();
+	private final int[] dirs;
 
-	public Compass4(Dir4... dirs) {
+	public Compass4(int... dirs) {
 		if (dirs.length != 0 && dirs.length != 4) {
 			throw new IllegalArgumentException("A compas must have 4 directions");
 		}
 		if (dirs.length == 0) {
-			dirs = Dir4.values(); // N,E,S,W
+			dirs = top.dirs().toArray(); // N,E,S,W
 		}
 		this.dirs = dirs;
 	}
@@ -25,31 +26,31 @@ public class Compass4 {
 		return new Compass4(dirs);
 	}
 
-	public Dir4 ahead() {
+	public int ahead() {
 		return dirs[0];
 	}
 
-	public Dir4 right() {
+	public int right() {
 		return dirs[1];
 	}
 
-	public Dir4 behind() {
+	public int behind() {
 		return dirs[2];
 	}
 
-	public Dir4 left() {
+	public int left() {
 		return dirs[3];
 	}
 
 	public void turnLeft() {
 		for (int i = 0; i < dirs.length; ++i) {
-			dirs[i] = dirs[i].left();
+			dirs[i] = top.left(dirs[i]);
 		}
 	}
 
 	public void turnRight() {
 		for (int i = 0; i < dirs.length; ++i) {
-			dirs[i] = dirs[i].right();
+			dirs[i] = top.right(dirs[i]);
 		}
 	}
 }

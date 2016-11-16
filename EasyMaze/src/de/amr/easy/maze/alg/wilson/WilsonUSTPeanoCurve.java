@@ -7,11 +7,10 @@ import static java.lang.Math.max;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.grid.api.dir.Dir4;
 import de.amr.easy.grid.curves.PeanoCurve;
 import de.amr.easy.grid.impl.BareGrid;
 
@@ -29,17 +28,17 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 	}
 
 	@Override
-	protected Stream<Integer> cellStream() {
+	protected IntStream cellStream() {
 		int n = nextPow(3, max(grid.numCols(), grid.numRows()));
 		PeanoCurve peano = new PeanoCurve(log(3, n));
 		BareGrid<?> square = new BareGrid<>(n, n);
 		Integer cell = square.cell(BOTTOM_LEFT);
 		addCellToPath(square.col(cell), square.row(cell));
-		for (Dir4 dir : peano) {
-			cell = square.neighbor(cell, dir).get();
+		for (int dir : peano) {
+			cell = square.neighbor(cell, dir).getAsInt();
 			addCellToPath(square.col(cell), square.row(cell));
 		}
-		return path.stream();
+		return path.stream().mapToInt(Integer::intValue);
 	}
 
 	private void addCellToPath(int col, int row) {

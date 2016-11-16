@@ -1,15 +1,14 @@
 package de.amr.easy.maze.alg;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
-import static de.amr.easy.grid.api.dir.Dir4.E;
-import static de.amr.easy.grid.api.dir.Dir4.S;
+import static de.amr.easy.grid.impl.Top4.E;
+import static de.amr.easy.grid.impl.Top4.S;
 
-import java.util.Optional;
-import java.util.stream.Stream;
+import java.util.OptionalInt;
+import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * Creates a random binary spanning tree.
@@ -47,16 +46,16 @@ public class BinaryTree extends MazeAlgorithm {
 	 *          second direction of tree
 	 * @return a random neighbor towards one of the given directions or nothing
 	 */
-	private Optional<Integer> randomNeighbor(Integer cell, Dir4 firstDir, Dir4 secondDir) {
-		boolean b = rnd.nextBoolean();
-		Optional<Integer> neighbor = grid.neighbor(cell, b ? firstDir : secondDir);
-		return neighbor.isPresent() ? neighbor : grid.neighbor(cell, b ? secondDir : firstDir);
+	private OptionalInt randomNeighbor(int cell, int firstDir, int secondDir) {
+		boolean choice = rnd.nextBoolean();
+		OptionalInt neighbor = grid.neighbor(cell, choice ? firstDir : secondDir);
+		return neighbor.isPresent() ? neighbor : grid.neighbor(cell, choice ? secondDir : firstDir);
 	}
 
 	/*
 	 * @return stream of all grid cells in the order used for maze creation
 	 */
-	protected Stream<Integer> cellStream() {
-		return grid.vertexStream();
+	protected IntStream cellStream() {
+		return grid.vertexStream().mapToInt(Integer::intValue);
 	}
 }

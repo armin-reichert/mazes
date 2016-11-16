@@ -48,7 +48,7 @@ public abstract class GridSampleApp implements Runnable {
 	private SwingDefaultGridRenderingModel renderingModel = new SwingDefaultGridRenderingModel() {
 
 		@Override
-		public Color getCellBgColor(Integer cell) {
+		public Color getCellBgColor(int cell) {
 			switch (grid.get(cell)) {
 			case VISITED:
 				return Color.BLUE;

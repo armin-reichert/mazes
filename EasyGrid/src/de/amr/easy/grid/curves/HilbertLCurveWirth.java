@@ -1,11 +1,9 @@
 package de.amr.easy.grid.curves;
 
-import static de.amr.easy.grid.api.dir.Dir4.E;
-import static de.amr.easy.grid.api.dir.Dir4.N;
-import static de.amr.easy.grid.api.dir.Dir4.S;
-import static de.amr.easy.grid.api.dir.Dir4.W;
-
-import de.amr.easy.grid.api.dir.Dir4;
+import static de.amr.easy.grid.impl.Top4.E;
+import static de.amr.easy.grid.impl.Top4.N;
+import static de.amr.easy.grid.impl.Top4.S;
+import static de.amr.easy.grid.impl.Top4.W;
 
 /**
  * Implementation of a Hilbert curve using the following L-system (adapted from the book
@@ -26,7 +24,7 @@ import de.amr.easy.grid.api.dir.Dir4;
  * 
  * @author Armin Reichert
  */
-public class HilbertLCurveWirth extends Curve<Dir4> {
+public class HilbertLCurveWirth extends Curve<Integer> {
 
 	public HilbertLCurveWirth(int i) {
 		A(i);

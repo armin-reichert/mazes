@@ -9,7 +9,6 @@ import java.util.function.BiConsumer;
 import java.util.stream.Stream;
 
 import de.amr.easy.grid.api.BareGrid2D;
-import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * Utility methods for curves.
@@ -18,29 +17,29 @@ import de.amr.easy.grid.api.dir.Dir4;
  */
 public class Curves {
 
-	public static void traverse(Curve<Dir4> curve, BareGrid2D<?> grid, Integer start,
+	public static void traverse(Curve<Integer> curve, BareGrid2D<?> grid, Integer start,
 			BiConsumer<Integer, Integer> action) {
 		Integer current = start;
-		for (Dir4 dir : curve) {
-			Integer next = grid.neighbor(current, dir).get();
+		for (int dir : curve) {
+			int next = grid.neighbor(current, dir).getAsInt();
 			action.accept(current, next);
 			current = next;
 		}
 	}
 
-	public static Stream<Integer> points(Curve<Dir4> curve, BareGrid2D<?> grid, Integer start) {
+	public static Stream<Integer> points(Curve<Integer> curve, BareGrid2D<?> grid, Integer start) {
 		List<Integer> points = new ArrayList<>();
 		Integer current = start;
 		points.add(current);
-		for (Dir4 dir : curve) {
-			Integer next = grid.neighbor(current, dir).get();
+		for (int dir : curve) {
+			int next = grid.neighbor(current, dir).getAsInt();
 			points.add(next);
 			current = next;
 		}
 		return points.stream();
 	}
 
-	public static String pointsAsString(Curve<Dir4> curve, BareGrid2D<?> grid, Integer start) {
+	public static String pointsAsString(Curve<Integer> curve, BareGrid2D<?> grid, Integer start) {
 		return points(curve, grid, start).map(cell -> format("(%d,%d)", grid.col(cell), grid.row(cell))).collect(joining());
 	}
 }

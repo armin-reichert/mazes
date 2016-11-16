@@ -1,6 +1,6 @@
 package de.amr.easy.maze.alg.wilson;
 
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
@@ -18,7 +18,7 @@ public class WilsonUSTRecursiveCrosses extends WilsonUST {
 	}
 
 	@Override
-	protected Stream<Integer> cellStream() {
-		return new RecursiveCrosses(grid).stream();
+	protected IntStream cellStream() {
+		return new RecursiveCrosses(grid).stream().mapToInt(Integer::intValue);
 	}
 }

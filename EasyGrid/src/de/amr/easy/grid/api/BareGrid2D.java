@@ -1,11 +1,11 @@
 package de.amr.easy.grid.api;
 
-import java.util.Optional;
+import java.util.OptionalInt;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.WeightedEdge;
-import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * A two-dimensional grid of "cells", i.e. a graph with vertex set
@@ -20,13 +20,12 @@ import de.amr.easy.grid.api.dir.Dir4;
  * This interface extends the {@link Graph} interface such that graph algorithms can be applied to
  * objects of this type.
  * 
- * @param <PassageWeight>
+ * @param <Weight>
  *          type of passage weights
  * 
  * @author Armin Reichert
  */
-public interface BareGrid2D<PassageWeight extends Comparable<PassageWeight>>
-		extends Graph<Integer, WeightedEdge<Integer, PassageWeight>> {
+public interface BareGrid2D<Weight extends Comparable<Weight>> extends Graph<Integer, WeightedEdge<Integer, Weight>> {
 
 	/**
 	 * @return the number of columns (width) of the grid
@@ -44,6 +43,11 @@ public interface BareGrid2D<PassageWeight extends Comparable<PassageWeight>>
 	default public int numCells() {
 		return numCols() * numRows();
 	}
+	
+	/**
+	 * @return the topology of this grid
+	 */
+	public Topology getTopology();
 
 	/**
 	 * @param col
@@ -52,28 +56,28 @@ public interface BareGrid2D<PassageWeight extends Comparable<PassageWeight>>
 	 *          a row index
 	 * @return the cell index ("cell") for coordinate (col, row)
 	 */
-	public Integer cell(int col, int row);
+	public int cell(int col, int row);
 
 	/**
 	 * @param position
 	 *          a symbolic grid position like TOP_LEFT
 	 * @return the cell index at the given position
 	 */
-	public Integer cell(GridPosition position);
+	public int cell(GridPosition position);
 
 	/**
 	 * @param cell
 	 *          a cell index
 	 * @return the column index of the given cell
 	 */
-	public int col(Integer cell);
+	public int col(int cell);
 
 	/**
 	 * @param cell
 	 *          a cell index
 	 * @return the row index of the given cell
 	 */
-	public int row(Integer cell);
+	public int row(int cell);
 
 	/**
 	 * @param col
@@ -98,7 +102,7 @@ public interface BareGrid2D<PassageWeight extends Comparable<PassageWeight>>
 	 *          a list of directions
 	 * @return stream of the neighbor cells in the given directions
 	 */
-	public Stream<Integer> neighbors(Integer cell, Stream<Dir4> dirs);
+	public IntStream neighbors(int cell, IntStream dirs);
 
 	/**
 	 * Returns all neighbor cells of a cell.
@@ -107,7 +111,7 @@ public interface BareGrid2D<PassageWeight extends Comparable<PassageWeight>>
 	 *          a grid cell
 	 * @return stream of the neighbor cells in the given directions
 	 */
-	public Stream<Integer> neighbors(Integer cell);
+	public IntStream neighbors(int cell);
 
 	/**
 	 * Returns all neighbors of a cell in a random order.
@@ -116,7 +120,7 @@ public interface BareGrid2D<PassageWeight extends Comparable<PassageWeight>>
 	 *          a grid cell
 	 * @return stream of the neighbor cells in random order
 	 */
-	public Stream<Integer> neighborsPermuted(Integer cell);
+	public IntStream neighborsPermuted(int cell);
 
 	/**
 	 * 
@@ -126,7 +130,7 @@ public interface BareGrid2D<PassageWeight extends Comparable<PassageWeight>>
 	 *          a direction
 	 * @return the optional neighbor in the given direction
 	 */
-	public Optional<Integer> neighbor(Integer cell, Dir4 dir);
+	public OptionalInt neighbor(int cell, int dir);
 
 	/**
 	 * Tells if the given cells are "neighbors". Two cells are neighbors if you can reach one from the
@@ -138,7 +142,7 @@ public interface BareGrid2D<PassageWeight extends Comparable<PassageWeight>>
 	 *          another cell
 	 * @return {@code true} if the cells are neighbors
 	 */
-	public boolean areNeighbors(Integer either, Integer other);
+	public boolean areNeighbors(int either, int other);
 
 	/**
 	 * 
@@ -146,7 +150,7 @@ public interface BareGrid2D<PassageWeight extends Comparable<PassageWeight>>
 	 *          a grid cell
 	 * @return a random neighbor cell
 	 */
-	public default Optional<Integer> randomNeighbor(Integer cell) {
+	public default OptionalInt randomNeighbor(int cell) {
 		return neighborsPermuted(cell).findFirst();
 	}
 
@@ -159,7 +163,7 @@ public interface BareGrid2D<PassageWeight extends Comparable<PassageWeight>>
 	 * @return {@code true} if the cell is connected to the neighbor in the given direction
 	 *         ("passage", no "wall")
 	 */
-	public boolean isConnected(Integer cell, Dir4 dir);
+	public boolean isConnected(int cell, int dir);
 
 	/**
 	 * @param either
@@ -168,17 +172,17 @@ public interface BareGrid2D<PassageWeight extends Comparable<PassageWeight>>
 	 *          other cell
 	 * @return the direction from either to other cell (if those cells are neighbors)
 	 */
-	public Optional<Dir4> direction(Integer either, Integer other);
+	public OptionalInt direction(int either, int other);
 
 	/**
 	 * Makes this grid a full grid.
 	 * 
 	 * @return the grid itself to allow method chaining
 	 */
-	public <T extends BareGrid2D<PassageWeight>> T makeFullGrid();
+	public <T extends BareGrid2D<Weight>> T makeFullGrid();
 
 	/**
 	 * @return the edges of a full grid in randomly permuted order and random weights
 	 */
-	public Stream<WeightedEdge<Integer, PassageWeight>> fullGridEdgesPermuted();
+	public Stream<WeightedEdge<Integer, Weight>> fullGridEdgesPermuted();
 }

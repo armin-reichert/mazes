@@ -3,14 +3,13 @@ package de.amr.easy.grid.rendering.swing;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.LinkedHashSet;
-import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.Set;
 
 import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalListener;
 import de.amr.easy.grid.api.ObservableBareGrid2D;
-import de.amr.easy.grid.api.dir.Dir4;
 
 /**
  * Animation of breadth-first-search path finding. Shows the distances as the BFS traverses the
@@ -26,7 +25,7 @@ public class BFSAnimation implements GraphTraversalListener<Integer> {
 	private final Set<Integer> path;
 	private BreadthFirstTraversal<Integer, ?> bfs;
 	private int maxDistance;
-	private Integer maxDistanceCell;
+	private int maxDistanceCell;
 	private boolean distancesVisible;
 
 	public BFSAnimation(SwingGridCanvas canvas, ObservableBareGrid2D<?> grid) {
@@ -39,7 +38,7 @@ public class BFSAnimation implements GraphTraversalListener<Integer> {
 		distancesVisible = true;
 	}
 
-	public void runAnimation(Integer source) {
+	public void runAnimation(int source) {
 		// 1. run BFS silently to compute maximum distance from source:
 		canvas.stopListening();
 		bfs = new BreadthFirstTraversal<>(grid, source);
@@ -57,19 +56,19 @@ public class BFSAnimation implements GraphTraversalListener<Integer> {
 		canvas.popRenderingModel();
 	}
 
-	public void showPath(Integer target) {
+	public void showPath(int target) {
 		path.clear();
-		for (Integer cell : bfs.findPath(target)) {
+		for (int cell : bfs.findPath(target)) {
 			path.add(cell);
 		}
 		canvas.pushRenderingModel(renderingModel);
-		for (Integer cell : path) {
+		for (int cell : path) {
 			canvas.renderGridCell(cell);
 		}
 		canvas.popRenderingModel();
 	}
 
-	public Integer getMaxDistanceCell() {
+	public int getMaxDistanceCell() {
 		return maxDistanceCell;
 	}
 
@@ -114,12 +113,12 @@ public class BFSAnimation implements GraphTraversalListener<Integer> {
 		}
 
 		@Override
-		public String getCellText(Integer cell) {
+		public String getCellText(int cell) {
 			return distancesVisible && bfs.getDistance(cell) != -1 ? String.valueOf(bfs.getDistance(cell)) : "";
 		}
 
 		@Override
-		public Color getCellBgColor(Integer cell) {
+		public Color getCellBgColor(int cell) {
 			return path.contains(cell) ? pathColor : cellColor(cell);
 		}
 
@@ -129,11 +128,11 @@ public class BFSAnimation implements GraphTraversalListener<Integer> {
 		}
 
 		@Override
-		public Color getPassageColor(Integer cell, Dir4 dir) {
+		public Color getPassageColor(int cell, int dir) {
 			if (path.contains(cell)) {
-				Optional<Integer> neighbor = grid.neighbor(cell, dir);
+				OptionalInt neighbor = grid.neighbor(cell, dir);
 				if (neighbor.isPresent()) {
-					if (path.contains(neighbor.get())) {
+					if (path.contains(neighbor.getAsInt())) {
 						return pathColor;
 					}
 				}
@@ -149,7 +148,7 @@ public class BFSAnimation implements GraphTraversalListener<Integer> {
 			return textFont;
 		}
 
-		private Color cellColor(Integer cell) {
+		private Color cellColor(int cell) {
 			if (maxDistance == -1) {
 				return renderingModel.getCellBgColor(cell);
 			}

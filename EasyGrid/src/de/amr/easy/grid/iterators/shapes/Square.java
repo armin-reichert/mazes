@@ -1,14 +1,15 @@
 package de.amr.easy.grid.iterators.shapes;
 
-import static de.amr.easy.grid.api.dir.Dir4.E;
-import static de.amr.easy.grid.api.dir.Dir4.N;
-import static de.amr.easy.grid.api.dir.Dir4.S;
-import static de.amr.easy.grid.api.dir.Dir4.W;
+import static de.amr.easy.grid.impl.Top4.E;
+import static de.amr.easy.grid.impl.Top4.N;
+import static de.amr.easy.grid.impl.Top4.S;
+import static de.amr.easy.grid.impl.Top4.W;
 
 import java.util.Arrays;
+import java.util.List;
 
 import de.amr.easy.grid.api.BareGrid2D;
-import de.amr.easy.grid.api.dir.Dir4;
+import de.amr.easy.grid.impl.Top4;
 
 /**
  * Iterates grid cells clockwise as a square with given top left corner and size.
@@ -18,6 +19,7 @@ import de.amr.easy.grid.api.dir.Dir4;
  */
 public class Square extends Shape {
 
+	private final Top4 top = new Top4();
 	private final Integer topLeft;
 	private final int size;
 
@@ -36,11 +38,12 @@ public class Square extends Shape {
 			return;
 		}
 
-		for (Dir4 dir : Arrays.asList(E, S, W, N)) {
+		List<Integer> dirs = Arrays.asList(E, S, W, N);
+		for (int dir : dirs) {
 			for (int i = 0; i < size - 1; ++i) {
 				addCell(x, y);
-				x += dir.dx();
-				y += dir.dy();
+				x += top.dx(dir);
+				y += top.dy(dir);
 			}
 		}
 	}

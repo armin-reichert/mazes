@@ -1,7 +1,5 @@
 package de.amr.easy.grid.curves;
 
-import de.amr.easy.grid.api.dir.Dir4;
-
 /**
  * Implementation of a Hilbert curve using the following L-system:
  * <p>
@@ -23,7 +21,7 @@ import de.amr.easy.grid.api.dir.Dir4;
  * 
  * @author Armin Reichert
  */
-public class HilbertLCurve extends Curve<Dir4> {
+public class HilbertLCurve extends Curve<Integer> {
 
 	private final Compass4 compass = new Compass4();
 
