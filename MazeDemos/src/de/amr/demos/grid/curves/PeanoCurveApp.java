@@ -1,7 +1,6 @@
 package de.amr.demos.grid.curves;
 
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
-import static de.amr.easy.grid.curves.Curves.traverse;
 import static de.amr.easy.maze.misc.MazeUtils.log;
 
 import java.util.stream.IntStream;
@@ -25,8 +24,9 @@ public class PeanoCurveApp extends GridSampleApp {
 		IntStream.of(3, 9, 81, 243).forEach(n -> {
 			setDelay(n < 9 ? 4 : 2);
 			setCellSize(getWidth() / n);
-			Integer start = grid.cell(BOTTOM_LEFT);
-			traverse(new PeanoCurve(log(3, n)), grid, start, this::addEdge);
+			int start = grid.cell(BOTTOM_LEFT);
+			PeanoCurve peanoCurve = new PeanoCurve(log(3, n));
+			peanoCurve.traverse(grid, start, this::addEdge);
 			BFSAnimation bfs = new BFSAnimation(canvas, grid);
 			bfs.setDistancesVisible(false);
 			bfs.runAnimation(start);

@@ -4,7 +4,6 @@ import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.grid.api.GridPosition.TOP_RIGHT;
-import static de.amr.easy.grid.curves.Curves.traverse;
 import static de.amr.easy.grid.impl.Top4.E;
 import static de.amr.easy.grid.impl.Top4.N;
 import static de.amr.easy.grid.impl.Top4.S;
@@ -51,14 +50,11 @@ public class HilbertCurveApp extends GridSampleApp {
 			IntStream.of(256, 128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 				setCellSize(cellSize);
 				setDelay(cellSize / 64);
-
 				int i = log(2, getWidth() / cellSize);
 				List<Integer> dirs = orientation.get(startPos);
 				HilbertCurve hilbert = new HilbertCurve(i, dirs.get(0), dirs.get(1), dirs.get(2), dirs.get(3));
-
-				Integer start = grid.cell(startPos);
-				traverse(hilbert, grid, start, this::addEdge);
-
+				int start = grid.cell(startPos);
+				hilbert.traverse(grid, start, this::addEdge);
 				BFSAnimation bfs = new BFSAnimation(canvas, grid);
 				bfs.setDistancesVisible(false);
 				bfs.runAnimation(start);

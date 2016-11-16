@@ -1,6 +1,5 @@
 package de.amr.demos.grid.curves;
 
-import static de.amr.easy.grid.curves.Curves.traverse;
 import static de.amr.easy.maze.misc.MazeUtils.log;
 
 import java.util.stream.IntStream;
@@ -31,9 +30,9 @@ public class MooreCurveApp extends GridSampleApp {
 			setDelay(n < 16 ? 4 : n < 256 ? 2 : 1);
 			setCellSize(getWidth() / n);
 			int startCol = n / 2, startRow = n - 1;
-			Integer start = grid.cell(startCol, startRow);
+			int start = grid.cell(startCol, startRow);
 			MooreLCurve moore = new MooreLCurve(log(2, n));
-			traverse(moore, grid, start, this::addEdge);
+			moore.traverse(grid, start, this::addEdge);
 			BFSAnimation bfs = new BFSAnimation(canvas, grid);
 			bfs.setDistancesVisible(false);
 			bfs.runAnimation(start);
