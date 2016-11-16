@@ -96,7 +96,7 @@ public class MazeGeneratorTests {
 				watch.getSeconds()));
 	}
 
-//	@Test
+	@Test
 	public void testAldousBroder() {
 		exec(new AldousBroderUST(grid));
 	}

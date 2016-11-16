@@ -3,6 +3,8 @@ package de.amr.easy.maze.alg;
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
+import java.util.OptionalInt;
+
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 
@@ -53,22 +55,18 @@ public class AldousBroderUST extends MazeAlgorithm {
 	 * @return the visited neighbor
 	 */
 	private Integer visitRandomNeighbor(Integer v) {
-		/*@formatter:off*/
-//		return grid.randomNeighbor(v)
-//			.map(u -> {
-//				// if first time visit, add neighbor to maze
-//				if (isCellUnvisited(u)) {
-//					grid.set(u, COMPLETED);
-//					++mazeCellCount;
-//					grid.addEdge(u, v);
-//				}
-//				return u;
-//			})
-//			.map(this::animateCellVisit)
-//			.get();
-		/*@formatter:on*/
-		
-		return 0; //TODO implement using OptionalInt which has no map() method
+		OptionalInt optNeighbor = grid.randomNeighbor(v);
+		if (optNeighbor.isPresent()) {
+			int u = optNeighbor.getAsInt();
+			animateCellVisit(u);
+			if (isCellUnvisited(u)) {
+				grid.set(u, COMPLETED);
+				++mazeCellCount;
+				grid.addEdge(u, v);
+			}
+			return u;
+		}
+		return v;
 	}
 
 	/**
