@@ -4,6 +4,11 @@ import java.util.stream.IntStream;
 
 import de.amr.easy.grid.api.Topology;
 
+/**
+ * 8-direction topology for orthogonal grid.
+ * 
+ * @author Armin Reichert
+ */
 public class Top8 implements Topology {
 
 	private static final int DX[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
