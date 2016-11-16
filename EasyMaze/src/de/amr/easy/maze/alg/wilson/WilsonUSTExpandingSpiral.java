@@ -21,7 +21,7 @@ public class WilsonUSTExpandingSpiral extends WilsonUST {
 
 	@Override
 	protected IntStream cellStream() {
-		return new Spiral(grid, grid.cell(CENTER)).stream().mapToInt(Integer::intValue);
+		return new Spiral(grid, grid.cell(CENTER)).stream();
 	}
 
 	@Override

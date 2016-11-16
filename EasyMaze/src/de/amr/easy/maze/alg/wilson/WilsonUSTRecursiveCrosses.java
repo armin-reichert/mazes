@@ -19,6 +19,6 @@ public class WilsonUSTRecursiveCrosses extends WilsonUST {
 
 	@Override
 	protected IntStream cellStream() {
-		return new RecursiveCrosses(grid).stream().mapToInt(Integer::intValue);
+		return new RecursiveCrosses(grid).stream();
 	}
 }

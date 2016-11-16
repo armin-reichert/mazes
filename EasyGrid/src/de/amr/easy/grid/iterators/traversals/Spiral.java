@@ -5,10 +5,9 @@ import static de.amr.easy.grid.api.GridPosition.CENTER;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Stream;
 
 import de.amr.easy.grid.api.BareGrid2D;
-import de.amr.easy.grid.api.Sequence;
+import de.amr.easy.grid.api.CellSequence;
 import de.amr.easy.grid.impl.BareGrid;
 import de.amr.easy.grid.iterators.shapes.Square;
 
@@ -18,7 +17,7 @@ import de.amr.easy.grid.iterators.shapes.Square;
  * 
  * @author Armin Reichert
  */
-public class Spiral implements Sequence<Integer> {
+public class Spiral implements CellSequence {
 
 	private final List<Integer> cells = new ArrayList<>();
 
@@ -45,10 +44,5 @@ public class Spiral implements Sequence<Integer> {
 	@Override
 	public Iterator<Integer> iterator() {
 		return cells.iterator();
-	}
-
-	@Override
-	public Stream<Integer> stream() {
-		return cells.stream();
 	}
 }

@@ -3,7 +3,7 @@ package de.amr.easy.grid.iterators.traversals;
 import java.util.Iterator;
 
 import de.amr.easy.grid.api.BareGrid2D;
-import de.amr.easy.grid.api.Sequence;
+import de.amr.easy.grid.api.CellSequence;
 import de.amr.easy.grid.iterators.shapes.Circle;
 
 /**
@@ -11,7 +11,7 @@ import de.amr.easy.grid.iterators.shapes.Circle;
  * 
  * @author Armin Reichert
  */
-public class ExpandingCircle implements Sequence<Integer> {
+public class ExpandingCircle implements CellSequence {
 
 	private final BareGrid2D<?> grid;
 	private final Integer center;

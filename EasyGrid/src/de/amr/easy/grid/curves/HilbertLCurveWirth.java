@@ -24,7 +24,7 @@ import static de.amr.easy.grid.impl.Top4.W;
  * 
  * @author Armin Reichert
  */
-public class HilbertLCurveWirth extends Curve<Integer> {
+public class HilbertLCurveWirth extends Curve {
 
 	public HilbertLCurveWirth(int i) {
 		A(i);
@@ -39,11 +39,11 @@ public class HilbertLCurveWirth extends Curve<Integer> {
 	private void A(int i) {
 		if (i > 0) {
 			D(i - 1);
-			curve.add(W);
+			dirs.add(W);
 			A(i - 1);
-			curve.add(S);
+			dirs.add(S);
 			A(i - 1);
-			curve.add(E);
+			dirs.add(E);
 			B(i - 1);
 		}
 	}
@@ -57,11 +57,11 @@ public class HilbertLCurveWirth extends Curve<Integer> {
 	private void B(int i) {
 		if (i > 0) {
 			C(i - 1);
-			curve.add(N);
+			dirs.add(N);
 			B(i - 1);
-			curve.add(E);
+			dirs.add(E);
 			B(i - 1);
-			curve.add(S);
+			dirs.add(S);
 			A(i - 1);
 		}
 	}
@@ -75,11 +75,11 @@ public class HilbertLCurveWirth extends Curve<Integer> {
 	private void C(int i) {
 		if (i > 0) {
 			B(i - 1);
-			curve.add(E);
+			dirs.add(E);
 			C(i - 1);
-			curve.add(N);
+			dirs.add(N);
 			C(i - 1);
-			curve.add(W);
+			dirs.add(W);
 			D(i - 1);
 		}
 	}
@@ -93,11 +93,11 @@ public class HilbertLCurveWirth extends Curve<Integer> {
 	private void D(int i) {
 		if (i > 0) {
 			A(i - 1);
-			curve.add(S);
+			dirs.add(S);
 			D(i - 1);
-			curve.add(W);
+			dirs.add(W);
 			D(i - 1);
-			curve.add(N);
+			dirs.add(N);
 			C(i - 1);
 		}
 	}

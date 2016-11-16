@@ -1,49 +1,50 @@
 package de.amr.easy.grid.curves;
 
-import static de.amr.easy.grid.api.dir.Dir8.E;
-import static de.amr.easy.grid.api.dir.Dir8.N;
-import static de.amr.easy.grid.api.dir.Dir8.NE;
-import static de.amr.easy.grid.api.dir.Dir8.NW;
-import static de.amr.easy.grid.api.dir.Dir8.S;
-import static de.amr.easy.grid.api.dir.Dir8.SE;
-import static de.amr.easy.grid.api.dir.Dir8.SW;
-import static de.amr.easy.grid.api.dir.Dir8.W;
+import static de.amr.easy.grid.impl.Top8.E;
+import static de.amr.easy.grid.impl.Top8.N;
+import static de.amr.easy.grid.impl.Top8.NE;
+import static de.amr.easy.grid.impl.Top8.NW;
+import static de.amr.easy.grid.impl.Top8.S;
+import static de.amr.easy.grid.impl.Top8.SE;
+import static de.amr.easy.grid.impl.Top8.SW;
+import static de.amr.easy.grid.impl.Top8.W;
 
-import de.amr.easy.grid.api.dir.Dir8;
+import de.amr.easy.grid.impl.Top8;
 
 /**
  * Sierpinski curve (as defined in Niklaus Wirth, "Algorithmen und Datenstrukturen").
  * 
  * @author Armin Reichert
  */
-public class SierpinskiLCurve extends Curve<Dir8> {
+public class SierpinskiLCurve extends Curve {
 
 	public SierpinskiLCurve(int i) {
+		super(new Top8());
 		S(i);
 	}
 
 	private void S(int i) {
 		if (i > 0) {
 			A(i - 1);
-			curve.add(SE);
+			dirs.add(SE);
 			B(i - 1);
-			curve.add(SW);
+			dirs.add(SW);
 			C(i - 1);
-			curve.add(NW);
+			dirs.add(NW);
 			D(i - 1);
-			curve.add(NE);
+			dirs.add(NE);
 		}
 	}
 
 	private void A(int i) {
 		if (i > 0) {
 			A(i - 1);
-			curve.add(SE);
+			dirs.add(SE);
 			B(i - 1);
-			curve.add(E);
-			curve.add(E);
+			dirs.add(E);
+			dirs.add(E);
 			D(i - 1);
-			curve.add(NE);
+			dirs.add(NE);
 			A(i - 1);
 		}
 	}
@@ -51,12 +52,12 @@ public class SierpinskiLCurve extends Curve<Dir8> {
 	private void B(int i) {
 		if (i > 0) {
 			B(i - 1);
-			curve.add(SW);
+			dirs.add(SW);
 			C(i - 1);
-			curve.add(S);
-			curve.add(S);
+			dirs.add(S);
+			dirs.add(S);
 			A(i - 1);
-			curve.add(SE);
+			dirs.add(SE);
 			B(i - 1);
 		}
 	}
@@ -64,12 +65,12 @@ public class SierpinskiLCurve extends Curve<Dir8> {
 	private void C(int i) {
 		if (i > 0) {
 			C(i - 1);
-			curve.add(NW);
+			dirs.add(NW);
 			D(i - 1);
-			curve.add(W);
-			curve.add(W);
+			dirs.add(W);
+			dirs.add(W);
 			B(i - 1);
-			curve.add(SW);
+			dirs.add(SW);
 			C(i - 1);
 		}
 	}
@@ -77,12 +78,12 @@ public class SierpinskiLCurve extends Curve<Dir8> {
 	private void D(int i) {
 		if (i > 0) {
 			D(i - 1);
-			curve.add(NE);
+			dirs.add(NE);
 			A(i - 1);
-			curve.add(N);
-			curve.add(N);
+			dirs.add(N);
+			dirs.add(N);
 			C(i - 1);
-			curve.add(NW);
+			dirs.add(NW);
 			D(i - 1);
 		}
 	}

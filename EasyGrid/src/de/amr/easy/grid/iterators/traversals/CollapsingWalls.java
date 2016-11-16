@@ -3,7 +3,7 @@ package de.amr.easy.grid.iterators.traversals;
 import java.util.Iterator;
 
 import de.amr.easy.grid.api.BareGrid2D;
-import de.amr.easy.grid.api.Sequence;
+import de.amr.easy.grid.api.CellSequence;
 
 /**
  * A sequence of cells traversing the grid like "walls" which are growing from the sides towards the
@@ -11,7 +11,7 @@ import de.amr.easy.grid.api.Sequence;
  * 
  * @author Armin Reichert
  */
-public class CollapsingWalls implements Sequence<Integer> {
+public class CollapsingWalls implements CellSequence {
 
 	private final BareGrid2D<?> grid;
 

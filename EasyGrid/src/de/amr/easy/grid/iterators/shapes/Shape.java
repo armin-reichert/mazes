@@ -3,21 +3,20 @@ package de.amr.easy.grid.iterators.shapes;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Stream;
 
 import de.amr.easy.grid.api.BareGrid2D;
-import de.amr.easy.grid.api.Sequence;
+import de.amr.easy.grid.api.CellSequence;
 
 /**
  * Base class for shapes (square, rectangle, ...) on a grid.
  * <p>
- * Implements the {@link Sequence} interface such that a shape can be used as an Iterator or a
+ * Implements the {@link CellSequence} interface such that a shape can be used as an Iterator or a
  * Stream of cells.
  * 
  * @author Armin Reichert
  *
  */
-public abstract class Shape implements Sequence<Integer> {
+public abstract class Shape implements CellSequence {
 
 	public final BareGrid2D<?> grid;
 
@@ -36,10 +35,5 @@ public abstract class Shape implements Sequence<Integer> {
 	@Override
 	public Iterator<Integer> iterator() {
 		return cells.iterator();
-	}
-
-	@Override
-	public Stream<Integer> stream() {
-		return cells.stream();
 	}
 }

@@ -28,11 +28,11 @@ import de.amr.easy.grid.api.Topology;
  */
 public class BareGrid<Weight extends Comparable<Weight>> implements BareGrid2D<Weight> {
 
-	private final Topology top;
+	private Topology top;
+	private BitSet bits;
 	private final int colCount;
 	private final int rowCount;
 	private final int cellCount;
-	private final BitSet bits;
 
 	// helper methods
 
@@ -186,6 +186,12 @@ public class BareGrid<Weight extends Comparable<Weight>> implements BareGrid2D<W
 	@Override
 	public Topology getTopology() {
 		return top;
+	}
+
+	@Override
+	public void setTopology(Topology top) {
+		this.top = top;
+		this.bits = new BitSet(top.dirCount() * cellCount);
 	}
 
 	@Override

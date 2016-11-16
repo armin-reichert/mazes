@@ -21,7 +21,7 @@ package de.amr.easy.grid.curves;
  * 
  * @author Armin Reichert
  */
-public class HilbertLCurve extends Curve<Integer> {
+public class HilbertLCurve extends Curve {
 
 	private final Compass4 compass = new Compass4();
 
@@ -36,7 +36,7 @@ public class HilbertLCurve extends Curve<Integer> {
 	}
 
 	private void f() {
-		curve.add(compass.ahead());
+		dirs.add(compass.ahead());
 	}
 
 	public HilbertLCurve(int i) {

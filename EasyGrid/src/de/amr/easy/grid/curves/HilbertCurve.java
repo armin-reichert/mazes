@@ -12,7 +12,7 @@ import static de.amr.easy.grid.impl.Top4.W;
  *
  * @author Armin Reichert
  */
-public class HilbertCurve extends Curve<Integer> {
+public class HilbertCurve extends Curve {
 
 	public HilbertCurve(int i) {
 		hilbert(i, N, E, S, W);
@@ -25,11 +25,11 @@ public class HilbertCurve extends Curve<Integer> {
 	private void hilbert(int i, int n, int e, int s, int w) {
 		if (i > 0) {
 			hilbert(i - 1, e, n, w, s);
-			curve.add(w);
+			dirs.add(w);
 			hilbert(i - 1, n, e, s, w);
-			curve.add(s);
+			dirs.add(s);
 			hilbert(i - 1, n, e, s, w);
-			curve.add(e);
+			dirs.add(e);
 			hilbert(i - 1, w, s, e, n);
 		}
 	}

@@ -7,14 +7,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import de.amr.easy.grid.api.BareGrid2D;
-import de.amr.easy.grid.api.Sequence;
+import de.amr.easy.grid.api.CellSequence;
 
 /**
  * A sequence of cells filling the grid recursively with "crosses".
  * 
  * @author Armin Reichert
  */
-public class RecursiveCrosses implements Sequence<Integer> {
+public class RecursiveCrosses implements CellSequence {
 
 	private final BareGrid2D<?> grid;
 	private final List<Integer> path = new ArrayList<>();

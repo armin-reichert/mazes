@@ -21,7 +21,7 @@ public class WilsonUSTRightToLeftSweep extends WilsonUST {
 
 	@Override
 	protected IntStream cellStream() {
-		return new RightToLeftSweep(grid).stream().mapToInt(Integer::intValue);
+		return new RightToLeftSweep(grid).stream();
 	}
 
 	@Override

@@ -20,6 +20,6 @@ public class WilsonUSTCollapsingWalls extends WilsonUST {
 
 	@Override
 	protected IntStream cellStream() {
-		return new CollapsingWalls(grid).stream().mapToInt(Integer::intValue);//TODO
+		return new CollapsingWalls(grid).stream();
 	}
 }

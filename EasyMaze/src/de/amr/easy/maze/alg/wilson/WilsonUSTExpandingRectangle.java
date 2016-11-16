@@ -27,7 +27,7 @@ public class WilsonUSTExpandingRectangle extends WilsonUST {
 		expRect.setExpandHorizontally(true);
 		expRect.setExpandVertically(true);
 		expRect.setMaxExpansion(grid.numCols() - 1);
-		return expRect.stream().mapToInt(Integer::intValue); // TODO
+		return expRect.stream();
 	}
 
 	@Override

@@ -43,11 +43,19 @@ public interface BareGrid2D<Weight extends Comparable<Weight>> extends Graph<Int
 	default public int numCells() {
 		return numCols() * numRows();
 	}
-	
+
 	/**
 	 * @return the topology of this grid
 	 */
 	public Topology getTopology();
+
+	/**
+	 * Sets a new topology for this grid. This deletes all edges!
+	 * 
+	 * @param top
+	 *          new topology
+	 */
+	public void setTopology(Topology top);
 
 	/**
 	 * @param col

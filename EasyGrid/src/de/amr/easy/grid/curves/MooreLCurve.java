@@ -1,6 +1,5 @@
 package de.amr.easy.grid.curves;
 
-
 /**
  * Computes a Moore curve from the following L-system:
  * <p>
@@ -28,7 +27,7 @@ package de.amr.easy.grid.curves;
  * @see http://cph.phys.spbu.ru/ACOPhys/materials/bader/sfc.pdf
  * @see https://en.wikipedia.org/wiki/Moore_curve
  */
-public class MooreLCurve extends Curve<Integer> {
+public class MooreLCurve extends Curve {
 
 	private final Compass4 compass = new Compass4();
 
@@ -43,7 +42,7 @@ public class MooreLCurve extends Curve<Integer> {
 	}
 
 	private void f() {
-		curve.add(compass.ahead());
+		dirs.add(compass.ahead());
 	}
 
 	public MooreLCurve(int i) {

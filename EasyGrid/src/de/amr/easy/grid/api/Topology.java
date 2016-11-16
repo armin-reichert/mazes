@@ -16,6 +16,8 @@ public interface Topology {
 		return result.stream().mapToInt(Integer::intValue);
 	}
 
+	public String getName(int dir);
+	
 	public int dirCount();
 
 	public int ord(int dir);

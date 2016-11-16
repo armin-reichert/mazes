@@ -22,8 +22,7 @@ public class WilsonUSTExpandingCircle extends WilsonUST {
 
 	@Override
 	protected IntStream cellStream() {
-		return new ExpandingCircle(grid, grid.cell(CENTER), 1, max(grid.numCols(), grid.numRows())).stream()
-				.mapToInt(Integer::intValue); //TODO
+		return new ExpandingCircle(grid, grid.cell(CENTER), 1, max(grid.numCols(), grid.numRows())).stream();
 	}
 
 	@Override

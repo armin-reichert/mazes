@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
 import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.grid.api.Topology;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.rendering.swing.SwingDefaultGridRenderingModel;
 import de.amr.easy.grid.rendering.swing.SwingGridCanvas;
@@ -125,7 +126,9 @@ public abstract class GridSampleApp implements Runnable {
 	 */
 	public void setCellSize(int cellSize) {
 		this.cellSize = cellSize;
+		Topology top = grid.getTopology();
 		grid = new ObservableGrid<>(width / cellSize, height / cellSize, UNVISITED);
+		grid.setTopology(top);
 		canvas.setGrid(grid);
 		renderingModel.setCellSize(cellSize);
 		canvas.setRenderingModel(renderingModel);

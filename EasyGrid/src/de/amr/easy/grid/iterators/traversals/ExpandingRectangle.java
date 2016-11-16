@@ -2,7 +2,7 @@ package de.amr.easy.grid.iterators.traversals;
 
 import java.util.Iterator;
 
-import de.amr.easy.grid.api.Sequence;
+import de.amr.easy.grid.api.CellSequence;
 import de.amr.easy.grid.iterators.shapes.Rectangle;
 
 /**
@@ -11,18 +11,18 @@ import de.amr.easy.grid.iterators.shapes.Rectangle;
  * 
  * @author Armin Reichert
  */
-public class ExpandingRectangle implements Sequence<Integer> {
+public class ExpandingRectangle implements CellSequence {
 
-	private final Rectangle startRectangle;
-	private boolean expandHorizontally;
-	private boolean expandVertically;
+	private final Rectangle startRect;
+	private boolean expandHoriz;
+	private boolean expandVert;
 	private int maxExpansion;
 	private int expansionRate;
 
-	public ExpandingRectangle(Rectangle startRectangle) {
-		this.startRectangle = startRectangle;
-		this.expandHorizontally = true;
-		this.expandVertically = true;
+	public ExpandingRectangle(Rectangle startRect) {
+		this.startRect = startRect;
+		this.expandHoriz = true;
+		this.expandVert = true;
 		this.maxExpansion = 0;
 		this.expansionRate = 1;
 	}
@@ -31,12 +31,12 @@ public class ExpandingRectangle implements Sequence<Integer> {
 		this.maxExpansion = maxExpansion;
 	}
 
-	public void setExpandHorizontally(boolean expandHorizontally) {
-		this.expandHorizontally = expandHorizontally;
+	public void setExpandHorizontally(boolean expandHoriz) {
+		this.expandHoriz = expandHoriz;
 	}
 
-	public void setExpandVertically(boolean expandVertically) {
-		this.expandVertically = expandVertically;
+	public void setExpandVertically(boolean expandVert) {
+		this.expandVert = expandVert;
 	}
 
 	public void setExpansionRate(int expansionRate) {
@@ -47,8 +47,8 @@ public class ExpandingRectangle implements Sequence<Integer> {
 	public Iterator<Integer> iterator() {
 		return new Iterator<Integer>() {
 
-			private Rectangle currentRectangle = startRectangle;
-			private Iterator<Integer> iterator = currentRectangle.iterator();
+			private Rectangle currentRect = startRect;
+			private Iterator<Integer> iterator = currentRect.iterator();
 			private int expansion;
 
 			@Override
@@ -59,11 +59,11 @@ public class ExpandingRectangle implements Sequence<Integer> {
 			@Override
 			public Integer next() {
 				if (!iterator.hasNext()) {
-					int width = currentRectangle.getWidth() + (expandHorizontally ? expansionRate : 0);
-					int height = currentRectangle.getHeight() + (expandVertically ? expansionRate : 0);
+					int width = currentRect.getWidth() + (expandHoriz ? expansionRate : 0);
+					int height = currentRect.getHeight() + (expandVert ? expansionRate : 0);
 					expansion += expansionRate;
-					currentRectangle = new Rectangle(currentRectangle.grid, currentRectangle.getLeftUpperCorner(), width, height);
-					iterator = currentRectangle.iterator();
+					currentRect = new Rectangle(currentRect.grid, currentRect.getLeftUpperCorner(), width, height);
+					iterator = currentRect.iterator();
 				}
 				return iterator.next();
 			}

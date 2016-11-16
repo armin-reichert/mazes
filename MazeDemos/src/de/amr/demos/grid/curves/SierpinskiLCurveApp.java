@@ -5,8 +5,8 @@ import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.GridSampleApp;
-import de.amr.easy.grid.api.dir.Dir8;
 import de.amr.easy.grid.curves.SierpinskiLCurve;
+import de.amr.easy.grid.impl.Top8;
 
 public class SierpinskiLCurveApp extends GridSampleApp {
 
@@ -17,7 +17,8 @@ public class SierpinskiLCurveApp extends GridSampleApp {
 	private static int CELL_SIZE = 4;
 
 	public SierpinskiLCurveApp() {
-		super("Hilbert Curve (L-system)", 127 * CELL_SIZE, 127 * CELL_SIZE, CELL_SIZE);
+		super("Sierpinski Curve (L-system)", 127 * CELL_SIZE, 127 * CELL_SIZE, CELL_SIZE);
+		grid.setTopology(new Top8());
 	}
 
 	@Override
@@ -28,8 +29,9 @@ public class SierpinskiLCurveApp extends GridSampleApp {
 			System.out.println(curve);
 			Integer current = grid.cell(1, 0);
 			grid.set(current, COMPLETED);
-			for (Dir8 dir : curve) {
-				current = grid.cell(grid.col(current) + dir.dx(), grid.row(current) + dir.dy());
+			for (int dir : curve) {
+				current = grid.cell(grid.col(current) + grid.getTopology().dx(dir),
+						grid.row(current) + grid.getTopology().dy(dir));
 				grid.set(current, COMPLETED);
 			}
 			sleep(1000);

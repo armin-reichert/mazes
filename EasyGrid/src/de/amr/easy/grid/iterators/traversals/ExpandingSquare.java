@@ -3,7 +3,7 @@ package de.amr.easy.grid.iterators.traversals;
 import java.util.Iterator;
 
 import de.amr.easy.grid.api.BareGrid2D;
-import de.amr.easy.grid.api.Sequence;
+import de.amr.easy.grid.api.CellSequence;
 import de.amr.easy.grid.iterators.shapes.Square;
 
 /**
@@ -11,7 +11,7 @@ import de.amr.easy.grid.iterators.shapes.Square;
  * 
  * @author Armin Reichert
  */
-public class ExpandingSquare implements Sequence<Integer> {
+public class ExpandingSquare implements CellSequence {
 
 	private final BareGrid2D<?> grid;
 	private final Integer topLeft;

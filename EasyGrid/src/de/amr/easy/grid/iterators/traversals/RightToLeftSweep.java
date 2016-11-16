@@ -3,14 +3,14 @@ package de.amr.easy.grid.iterators.traversals;
 import java.util.Iterator;
 
 import de.amr.easy.grid.api.BareGrid2D;
-import de.amr.easy.grid.api.Sequence;
+import de.amr.easy.grid.api.CellSequence;
 
 /**
  * A sequence of cells filling the grid by sweeping a vertical line from right to left.
  * 
  * @author Armin Reichert
  */
-public class RightToLeftSweep implements Sequence<Integer> {
+public class RightToLeftSweep implements CellSequence {
 
 	private final BareGrid2D<?> grid;
 
