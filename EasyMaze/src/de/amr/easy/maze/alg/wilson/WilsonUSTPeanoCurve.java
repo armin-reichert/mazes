@@ -5,8 +5,7 @@ import static de.amr.easy.maze.misc.MazeUtils.log;
 import static de.amr.easy.maze.misc.MazeUtils.nextPow;
 import static java.lang.Math.max;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
@@ -21,10 +20,12 @@ import de.amr.easy.grid.impl.BareGrid;
  */
 public class WilsonUSTPeanoCurve extends WilsonUST {
 
-	private final List<Integer> path = new ArrayList<>();
+	private final int[] path;
+	private int i;
 
 	public WilsonUSTPeanoCurve(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
+		path = new int[grid.numCells()];
 	}
 
 	@Override
@@ -38,12 +39,12 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 			cell = square.neighbor(cell, dir).getAsInt();
 			addCellToPath(square.col(cell), square.row(cell));
 		}
-		return path.stream().mapToInt(Integer::intValue);
+		return Arrays.stream(path);
 	}
 
 	private void addCellToPath(int col, int row) {
 		if (grid.isValidCol(col) && grid.isValidRow(row)) {
-			path.add(grid.cell(col, row));
+			path[i++] = grid.cell(col, row);
 		}
 	}
 }
