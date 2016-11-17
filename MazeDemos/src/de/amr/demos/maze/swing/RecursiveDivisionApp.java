@@ -24,7 +24,8 @@ public class RecursiveDivisionApp extends GridSampleApp {
 		Integer startCell = grid.cell(TOP_LEFT);
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			setCellSize(cellSize);
-			grid.makeFullGrid().vertexStream().forEach(cell -> {
+			grid.fill();
+			grid.vertexStream().forEach(cell -> {
 				grid.set(cell, COMPLETED);
 			});
 			new RecursiveDivision(grid).accept(startCell);

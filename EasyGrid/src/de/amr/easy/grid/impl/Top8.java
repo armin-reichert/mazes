@@ -40,18 +40,13 @@ public class Top8 implements Topology {
 	}
 
 	@Override
-	public int ord(int dir) {
-		return dir;
-	}
-
-	@Override
 	public int inv(int dir) {
-		return (dir + 2) % 8;
+		return (dir + 4) % 8;
 	}
 
 	@Override
 	public int left(int dir) {
-		return (dir + 3) % 8;
+		return (dir + 7) % 8;
 	}
 
 	@Override

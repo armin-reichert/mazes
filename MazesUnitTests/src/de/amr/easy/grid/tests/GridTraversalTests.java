@@ -26,7 +26,8 @@ public class GridTraversalTests {
 
 	@Before
 	public void setUp() {
-		grid = new BareGrid<Integer>(WIDTH, HEIGHT).makeFullGrid();
+		grid = new BareGrid<>(WIDTH, HEIGHT);
+		grid.fill();
 	}
 
 	@After

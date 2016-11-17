@@ -15,7 +15,7 @@ public class FullGridApp extends GridSampleApp {
 	public FullGridApp() {
 		super("Full Grid", 2);
 		grid.setDefaultContent(COMPLETED);
-		grid.makeFullGrid();
+		grid.fill();
 	}
 
 	@Override

@@ -44,14 +44,6 @@ public interface Topology {
 	 * 
 	 * @param dir
 	 *          direction
-	 * @return ordinal number of given direction
-	 */
-	public int ord(int dir);
-
-	/**
-	 * 
-	 * @param dir
-	 *          direction
 	 * @return opposite of given direction
 	 */
 	public int inv(int dir);

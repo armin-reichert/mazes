@@ -47,7 +47,7 @@ public class BareGrid<Weight extends Comparable<Weight>> implements BareGrid2D<W
 	}
 
 	private int bit(int cell, int dir) {
-		return cell * top.dirCount() + top.ord(dir);
+		return cell * top.dirCount() + dir;
 	}
 
 	private void connect(int p, int q, int dir, boolean connected) {
@@ -80,7 +80,8 @@ public class BareGrid<Weight extends Comparable<Weight>> implements BareGrid2D<W
 	}
 
 	/**
-	 * Creates a grid of size {@code colCount x rowCount} with an empty edge set and 4-direction topology.
+	 * Creates a grid of size {@code colCount x rowCount} with an empty edge set and 4-direction
+	 * topology.
 	 * 
 	 * @param colCount
 	 *          the number of columns of this grid
@@ -247,36 +248,44 @@ public class BareGrid<Weight extends Comparable<Weight>> implements BareGrid2D<W
 		return cell / colCount;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	// TODO make this work for all topologies
-	public BareGrid<Weight> makeFullGrid() {
+	public void fill() {
 		removeEdges();
 		range(0, colCount).forEach(col -> {
 			range(0, rowCount).forEach(row -> {
-				if (col + 1 < colCount) {
-					connect(index(col, row), index(col + 1, row), Top4.E, true); // TODO
-				}
-				if (row + 1 < rowCount) {
-					connect(index(col, row), index(col, row + 1), Top4.S, true); // TODO
-				}
+				int source = index(col, row);
+				BitSet used = new BitSet(top.dirCount());
+				top.dirs().forEach(dir -> {
+					if (!used.get(dir)) {
+						used.set(dir);
+						used.set(top.inv(dir));
+						int targetCol = col + top.dx(dir), targetRow = row + top.dy(dir);
+						if (isValidCol(targetCol) && isValidRow(targetRow)) {
+							connect(source, index(targetCol, targetRow), dir, true);
+						}
+					}
+				});
 			});
 		});
-		return this;
 	}
 
 	@Override
-	// TODO make this work for all topologies
 	public Stream<WeightedEdge<Integer, Weight>> fullGridEdgesPermuted() {
 		List<WeightedEdge<Integer, Weight>> edges = new ArrayList<>();
 		range(0, colCount).forEach(col -> {
 			range(0, rowCount).forEach(row -> {
-				if (col + 1 < colCount) {
-					edges.add(new WeightedEdge<>(index(col, row), index(col + 1, row))); // TODO
-				}
-				if (row + 1 < rowCount) {
-					edges.add(new WeightedEdge<>(index(col, row), index(col, row + 1))); // TODO
-				}
+				int source = index(col, row);
+				BitSet used = new BitSet(top.dirCount());
+				top.dirs().forEach(dir -> {
+					if (!used.get(dir)) {
+						used.set(dir);
+						used.set(top.inv(dir));
+						int targetCol = col + top.dx(dir), targetRow = row + top.dy(dir);
+						if (isValidCol(targetCol) && isValidRow(targetRow)) {
+							edges.add(new WeightedEdge<>(source, index(targetCol, targetRow)));
+						}
+					}
+				});
 			});
 		});
 		shuffle(edges);

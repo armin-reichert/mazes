@@ -15,17 +15,19 @@ import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.BareGrid;
 import de.amr.easy.grid.impl.Top4;
+import de.amr.easy.grid.impl.Top8;
 
 public class FullGridTests {
 
 	private static final int WIDTH = 15;
 	private static final int HEIGHT = 10;
 
-	private BareGrid2D<?> grid;
+	private BareGrid2D<Integer> grid;
 
 	@Before
 	public void setUp() {
-		grid = new BareGrid<>(WIDTH, HEIGHT).makeFullGrid();
+		grid = new BareGrid<>(WIDTH, HEIGHT);
+		grid.fill();
 	}
 
 	@After
@@ -121,5 +123,23 @@ public class FullGridTests {
 	@Test
 	public void testEdgesPermuted() {
 		assertTrue(grid.fullGridEdgesPermuted().count() == grid.edgeStream().count());
+		grid.fullGridEdgesPermuted().forEach(edge -> {
+			grid.removeEdge(edge);
+		});
+		assertTrue(grid.edgeCount() == 0);
+	}
+
+	@Test
+	public void testFullGrid4() {
+		int c = grid.numCols(), r = grid.numRows();
+		assertEquals(r * (c - 1) + c * (r - 1), grid.edgeCount());
+	}
+
+	@Test
+	public void testFullGrid8() {
+		grid = new BareGrid<>(WIDTH, HEIGHT, new Top8());
+		grid.fill();
+		int c = grid.numCols(), r = grid.numRows();
+		assertEquals(4 * c * r - 3 * c - 3 * r + 2, grid.edgeCount());
 	}
 }

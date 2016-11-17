@@ -184,10 +184,8 @@ public interface BareGrid2D<Weight extends Comparable<Weight>> extends Graph<Int
 
 	/**
 	 * Makes this grid a full grid.
-	 * 
-	 * @return the grid itself to allow method chaining
 	 */
-	public <T extends BareGrid2D<Weight>> T makeFullGrid();
+	public void fill();
 
 	/**
 	 * @return the edges of a full grid in randomly permuted order and random weights

@@ -36,11 +36,6 @@ public class Top4 implements Topology {
 	}
 
 	@Override
-	public int ord(int dir) {
-		return dir;
-	}
-
-	@Override
 	public int inv(int dir) {
 		return (dir + 2) % 4;
 	}
