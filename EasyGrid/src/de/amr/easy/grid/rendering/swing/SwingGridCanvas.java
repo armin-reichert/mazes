@@ -1,5 +1,8 @@
 package de.amr.easy.grid.rendering.swing;
 
+import static java.lang.Math.log;
+import static java.lang.Math.sqrt;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -146,16 +149,16 @@ public class SwingGridCanvas extends JComponent {
 	}
 
 	private void sleep() {
-		if (delay == 0)
-			return;
-		int vertexFactor = Math.max(1, (int) Math.log10(grid.vertexCount()));
-		long sleepTime = (delay * (int) Math.sqrt(delay)) / vertexFactor;
-		if (sleepTime == 0)
-			return;
-		try {
-			Thread.sleep(sleepTime);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		if (delay > 0) {
+			long sizeFactor = (long) log(grid.numCells());
+			long sleepTime = delay / sizeFactor;
+			if (sleepTime > 0) {
+				try {
+					Thread.sleep(sleepTime);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 

@@ -20,7 +20,6 @@ public class SwingGridRenderer {
 
 	private static final int MIN_FONT_SIZE = 7;
 
-	private final Topology top;
 	private SwingGridRenderingModel rm;
 	private int thickness;
 	private int cellSize;
@@ -28,7 +27,6 @@ public class SwingGridRenderer {
 	private int b;
 
 	public SwingGridRenderer() {
-		top = new Top4();
 	}
 
 	public SwingGridRenderingModel getRenderingModel() {
@@ -48,16 +46,17 @@ public class SwingGridRenderer {
 	}
 
 	public void drawPassage(Graphics2D g, BareGrid2D<?> grid, Edge<Integer> passage, boolean visible) {
+		Topology top = grid.getTopology();
 		Integer p = passage.either(), q = passage.other(p);
 		int dir = grid.direction(p, q).getAsInt();
 		drawCellContent(g, grid, p);
 		drawHalfPassage(g, grid, p, dir, visible ? rm.getPassageColor(p, dir) : rm.getGridBgColor());
 		drawCellContent(g, grid, q);
-		drawHalfPassage(g, grid, q, top.inv(dir),
-				visible ? rm.getPassageColor(q, top.inv(dir)) : rm.getGridBgColor());
+		drawHalfPassage(g, grid, q, top.inv(dir), visible ? rm.getPassageColor(q, top.inv(dir)) : rm.getGridBgColor());
 	}
 
 	public void drawCell(Graphics2D g, BareGrid2D<?> grid, int cell) {
+		Topology top = grid.getTopology();
 		drawCellContent(g, grid, cell);
 		top.dirs().forEach(dir -> {
 			if (grid.isConnected(cell, dir)) {
