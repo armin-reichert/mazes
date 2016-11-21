@@ -61,6 +61,11 @@ public abstract class GridSampleApp implements Runnable {
 				return super.getCellBgColor(cell);
 			}
 		}
+		
+		@Override
+		public int getPassageThickness() {
+			return getCellSize() / 4;
+		};
 	};
 
 	private Action exitAction = new AbstractAction() {

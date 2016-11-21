@@ -1,5 +1,8 @@
 package de.amr.easy.grid.rendering.swing;
 
+import static java.lang.Math.PI;
+import static java.lang.Math.ceil;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -9,7 +12,6 @@ import java.awt.RenderingHints;
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.api.Topology;
-import de.amr.easy.grid.impl.Top4;
 
 /**
  * Renders a grid as "passages" or "cells with walls" depending on the selected passage thickness.
@@ -23,8 +25,7 @@ public class SwingGridRenderer {
 	private SwingGridRenderingModel rm;
 	private int thickness;
 	private int cellSize;
-	private int a;
-	private int b;
+	private int cellOffset;
 
 	public SwingGridRenderer() {
 	}
@@ -37,8 +38,7 @@ public class SwingGridRenderer {
 		this.rm = renderingModel;
 		thickness = renderingModel.getPassageThickness();
 		cellSize = renderingModel.getCellSize();
-		a = (int) Math.ceil((cellSize / 2 - thickness / 2));
-		b = a + thickness;
+		cellOffset = (int) ceil((cellSize / 2 - thickness / 2));
 	}
 
 	public void drawGrid(Graphics2D g, BareGrid2D<?> grid) {
@@ -66,27 +66,15 @@ public class SwingGridRenderer {
 	}
 
 	private void drawHalfPassage(Graphics2D g, BareGrid2D<?> grid, int cell, int dir, Color passageColor) {
-		final int x = grid.col(cell) * cellSize;
-		final int y = grid.row(cell) * cellSize;
+		final int x = grid.col(cell) * cellSize + cellSize / 2;
+		final int y = grid.row(cell) * cellSize + cellSize / 2;
+		final double theta = -PI / 2 + dir * (2 * PI / grid.getTopology().dirCount());
+		g.rotate(theta, x, y);
 		g.translate(x, y);
 		g.setColor(passageColor);
-		switch (dir) {
-		case Top4.N:
-			g.fillRect(a, 0, thickness, a);
-			break;
-		case Top4.E:
-			g.fillRect(b, a, a, thickness);
-			break;
-		case Top4.S:
-			g.fillRect(a, b, thickness, a);
-			break;
-		case Top4.W:
-			g.fillRect(0, a, a, thickness);
-			break;
-		default:
-			throw new IllegalStateException();
-		}
+		g.fillRect(-thickness / 2, -thickness / 2, cellSize, thickness);
 		g.translate(-x, -y);
+		g.rotate(-theta, x, y);
 	}
 
 	private void drawCellContent(Graphics2D g, BareGrid2D<?> grid, int cell) {
@@ -94,7 +82,7 @@ public class SwingGridRenderer {
 		final int dy = grid.row(cell) * cellSize;
 		g.translate(dx, dy);
 		g.setColor(rm.getCellBgColor(cell));
-		g.fillRect(a, a, thickness, thickness);
+		g.fillRect(cellOffset, cellOffset, thickness, thickness);
 		drawCellText(g, grid, cell);
 		g.translate(-dx, -dy);
 	}
