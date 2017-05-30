@@ -137,7 +137,7 @@ public class FullGridTests {
 
 	@Test
 	public void testFullGrid8() {
-		grid = new BareGrid<>(WIDTH, HEIGHT, new Top8());
+		grid = new BareGrid<>(WIDTH, HEIGHT, Top8.INSTANCE);
 		grid.fill();
 		int c = grid.numCols(), r = grid.numRows();
 		assertEquals(4 * c * r - 3 * c - 3 * r + 2, grid.edgeCount());

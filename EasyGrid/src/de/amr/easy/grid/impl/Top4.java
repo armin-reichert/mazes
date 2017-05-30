@@ -11,6 +11,8 @@ import de.amr.easy.grid.api.Topology;
  */
 public class Top4 implements Topology {
 
+	public static final Top4 INSTANCE = new Top4();
+	
 	private static final int DX[] = { 0, 1, 0, -1 };
 	private static final int DY[] = { -1, 0, 1, 0 };
 	private static final String NAMES[] = { "N", "E", "S", "W" };
@@ -19,6 +21,10 @@ public class Top4 implements Topology {
 	public static final int E = 1;
 	public static final int S = 2;
 	public static final int W = 3;
+	
+	private Top4() {
+		
+	}
 
 	@Override
 	public IntStream dirs() {

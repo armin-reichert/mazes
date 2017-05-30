@@ -15,7 +15,7 @@ public class GridRenderingTestApp extends GridSampleApp {
 
 	public GridRenderingTestApp() {
 		super("Full Grid", 512,512,128);
-		grid.setTopology(new Top8());
+		grid.setTopology(Top8.INSTANCE);
 		grid.setDefaultContent(COMPLETED);
 		grid.fill();
 	}

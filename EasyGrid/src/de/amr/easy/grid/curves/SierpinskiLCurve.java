@@ -19,7 +19,7 @@ import de.amr.easy.grid.impl.Top8;
 public class SierpinskiLCurve extends Curve {
 
 	public SierpinskiLCurve(int i) {
-		super(new Top8());
+		super(Top8.INSTANCE);
 		S(i);
 	}
 

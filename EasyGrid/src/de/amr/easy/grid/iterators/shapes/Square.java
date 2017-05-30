@@ -19,7 +19,6 @@ import de.amr.easy.grid.impl.Top4;
  */
 public class Square extends Shape {
 
-	private final Top4 top = new Top4();
 	private final Integer topLeft;
 	private final int size;
 
@@ -42,8 +41,8 @@ public class Square extends Shape {
 		for (int dir : dirs) {
 			for (int i = 0; i < size - 1; ++i) {
 				addCell(x, y);
-				x += top.dx(dir);
-				y += top.dy(dir);
+				x += Top4.INSTANCE.dx(dir);
+				y += Top4.INSTANCE.dy(dir);
 			}
 		}
 	}

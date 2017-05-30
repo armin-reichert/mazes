@@ -29,7 +29,7 @@ public abstract class Curve implements CellSequence {
 	}
 
 	public Curve() {
-		this(new Top4());
+		this(Top4.INSTANCE);
 	}
 
 	@Override

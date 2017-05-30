@@ -11,6 +11,8 @@ import de.amr.easy.grid.api.Topology;
  */
 public class Top8 implements Topology {
 
+	public static final Top8 INSTANCE = new Top8();
+
 	private static final int DX[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
 	private static final int DY[] = { -1, -1, 0, 1, 1, 1, 0, -1 };
 	private static final String NAMES[] = { "N", "NE", "E", "SE", "S", "SW", "W", "NW" };
@@ -23,6 +25,10 @@ public class Top8 implements Topology {
 	public static final int SW = 5;
 	public static final int W = 6;
 	public static final int NW = 7;
+
+	private Top8() {
+
+	}
 
 	@Override
 	public IntStream dirs() {

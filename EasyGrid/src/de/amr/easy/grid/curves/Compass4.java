@@ -9,7 +9,6 @@ import de.amr.easy.grid.impl.Top4;
  */
 public class Compass4 {
 
-	private final Top4 top = new Top4();
 	private final int[] dirs;
 
 	public Compass4(int... dirs) {
@@ -17,7 +16,7 @@ public class Compass4 {
 			throw new IllegalArgumentException("A compas must have 4 directions");
 		}
 		if (dirs.length == 0) {
-			dirs = top.dirs().toArray(); // N,E,S,W
+			dirs = Top4.INSTANCE.dirs().toArray(); // N,E,S,W
 		}
 		this.dirs = dirs;
 	}
@@ -44,13 +43,13 @@ public class Compass4 {
 
 	public void turnLeft() {
 		for (int i = 0; i < dirs.length; ++i) {
-			dirs[i] = top.left(dirs[i]);
+			dirs[i] = Top4.INSTANCE.left(dirs[i]);
 		}
 	}
 
 	public void turnRight() {
 		for (int i = 0; i < dirs.length; ++i) {
-			dirs[i] = top.right(dirs[i]);
+			dirs[i] = Top4.INSTANCE.right(dirs[i]);
 		}
 	}
 }

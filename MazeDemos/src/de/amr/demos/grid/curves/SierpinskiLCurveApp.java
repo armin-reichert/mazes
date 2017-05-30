@@ -18,7 +18,7 @@ public class SierpinskiLCurveApp extends GridSampleApp {
 
 	public SierpinskiLCurveApp() {
 		super("Sierpinski Curve (L-system)", 127 * CELL_SIZE, 127 * CELL_SIZE, CELL_SIZE);
-		grid.setTopology(new Top8());
+		grid.setTopology(Top8.INSTANCE);
 	}
 
 	@Override

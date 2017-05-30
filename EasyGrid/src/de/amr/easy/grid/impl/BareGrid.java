@@ -89,7 +89,7 @@ public class BareGrid<Weight extends Comparable<Weight>> implements BareGrid2D<W
 	 *          the number of rows of this grid
 	 */
 	public BareGrid(int colCount, int rowCount) {
-		this(colCount, rowCount, new Top4());
+		this(colCount, rowCount, Top4.INSTANCE);
 	}
 
 	// Implement {@link Graph} interface
@@ -210,10 +210,10 @@ public class BareGrid<Weight extends Comparable<Weight>> implements BareGrid2D<W
 	@Override
 	public int cell(int col, int row) {
 		if (!isValidCol(col)) {
-			throw new IllegalArgumentException(String.format("Invalid col: (%d, %d)", col, row));
+			throw new IllegalArgumentException(String.format("Invalid col: %d", col));
 		}
 		if (!isValidRow(row)) {
-			throw new IllegalArgumentException(String.format("Invalid row: (%d, %d)", col, row));
+			throw new IllegalArgumentException(String.format("Invalid row: %d", row));
 		}
 		return index(col, row);
 	}

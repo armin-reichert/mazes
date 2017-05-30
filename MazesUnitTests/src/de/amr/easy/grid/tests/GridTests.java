@@ -204,7 +204,6 @@ public class GridTests {
 
 	@Test
 	public void testCycleCheckerSpanningTree() {
-		Top4 top = new Top4();
 		CycleChecker<Integer, WeightedEdge<Integer, Integer>> cycleChecker = new CycleChecker<>();
 		// create a spanning tree
 		new RandomBFS(grid).accept(grid.cell(0, 0));
@@ -215,7 +214,7 @@ public class GridTests {
 			.filter(cell -> grid.degree(cell) < grid.neighbors(cell).count())
 			.findFirst()
 			.ifPresent(cell -> {
-				List<Integer> dirs = top.dirs().boxed().collect(toList());
+				List<Integer> dirs = Top4.INSTANCE.dirs().boxed().collect(toList());
 				for (int dir : dirs) {
 					OptionalInt neighbor = grid.neighbor(cell, dir);
 					if (neighbor.isPresent() && !grid.adjacent(cell, neighbor.getAsInt())) {
