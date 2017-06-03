@@ -11,7 +11,7 @@ import de.amr.easy.grid.api.Topology;
  */
 public class Top8 implements Topology {
 
-	public static final Top8 INSTANCE = new Top8();
+	public static final Top8 Top8 = new Top8();
 
 	private static final int DX[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
 	private static final int DY[] = { -1, -1, 0, 1, 1, 1, 0, -1 };

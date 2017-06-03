@@ -2,6 +2,11 @@ package de.amr.easy.grid.tests;
 
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
+import static de.amr.easy.grid.impl.Top4.E;
+import static de.amr.easy.grid.impl.Top4.N;
+import static de.amr.easy.grid.impl.Top4.S;
+import static de.amr.easy.grid.impl.Top4.Top4;
+import static de.amr.easy.grid.impl.Top4.W;
 import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -20,7 +25,6 @@ import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.BareGrid;
 import de.amr.easy.grid.impl.Grid;
-import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.maze.alg.RandomBFS;
 
 /**
@@ -166,19 +170,19 @@ public class GridTests {
 			for (int y = 0; y < grid.numRows(); ++y) {
 				Integer cell = grid.cell(x, y);
 				if (y > 0) {
-					int n = grid.neighbor(cell, Top4.N).getAsInt();
+					int n = grid.neighbor(cell, N).getAsInt();
 					assertEquals(n, grid.cell(x, y - 1));
 				}
 				if (x < grid.numCols() - 1) {
-					int e = grid.neighbor(cell, Top4.E).getAsInt();
+					int e = grid.neighbor(cell, E).getAsInt();
 					assertEquals(e, grid.cell(x + 1, y));
 				}
 				if (y < grid.numRows() - 1) {
-					int s = grid.neighbor(cell, Top4.S).getAsInt();
+					int s = grid.neighbor(cell, S).getAsInt();
 					assertEquals(s, grid.cell(x, y + 1));
 				}
 				if (x > 0) {
-					int w = grid.neighbor(cell, Top4.W).getAsInt();
+					int w = grid.neighbor(cell, W).getAsInt();
 					assertEquals(w, grid.cell(x - 1, y));
 				}
 			}
@@ -214,7 +218,7 @@ public class GridTests {
 			.filter(cell -> grid.degree(cell) < grid.neighbors(cell).count())
 			.findFirst()
 			.ifPresent(cell -> {
-				List<Integer> dirs = Top4.INSTANCE.dirs().boxed().collect(toList());
+				List<Integer> dirs = Top4.dirs().boxed().collect(toList());
 				for (int dir : dirs) {
 					OptionalInt neighbor = grid.neighbor(cell, dir);
 					if (neighbor.isPresent() && !grid.adjacent(cell, neighbor.getAsInt())) {

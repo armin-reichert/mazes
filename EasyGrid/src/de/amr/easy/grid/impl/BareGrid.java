@@ -1,5 +1,6 @@
 package de.amr.easy.grid.impl;
 
+import static de.amr.easy.grid.impl.Top4.Top4;
 import static java.util.Collections.shuffle;
 import static java.util.stream.IntStream.range;
 
@@ -89,7 +90,7 @@ public class BareGrid<Weight extends Comparable<Weight>> implements BareGrid2D<W
 	 *          the number of rows of this grid
 	 */
 	public BareGrid(int colCount, int rowCount) {
-		this(colCount, rowCount, Top4.INSTANCE);
+		this(colCount, rowCount, Top4);
 	}
 
 	// Implement {@link Graph} interface

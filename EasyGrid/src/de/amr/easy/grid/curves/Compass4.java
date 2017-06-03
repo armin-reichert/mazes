@@ -1,6 +1,6 @@
 package de.amr.easy.grid.curves;
 
-import de.amr.easy.grid.impl.Top4;
+import static de.amr.easy.grid.impl.Top4.Top4;
 
 /**
  * A compas with 4 directions.
@@ -16,7 +16,7 @@ public class Compass4 {
 			throw new IllegalArgumentException("A compas must have 4 directions");
 		}
 		if (dirs.length == 0) {
-			dirs = Top4.INSTANCE.dirs().toArray(); // N,E,S,W
+			dirs = Top4.dirs().toArray(); // N,E,S,W
 		}
 		this.dirs = dirs;
 	}
@@ -43,13 +43,13 @@ public class Compass4 {
 
 	public void turnLeft() {
 		for (int i = 0; i < dirs.length; ++i) {
-			dirs[i] = Top4.INSTANCE.left(dirs[i]);
+			dirs[i] = Top4.left(dirs[i]);
 		}
 	}
 
 	public void turnRight() {
 		for (int i = 0; i < dirs.length; ++i) {
-			dirs[i] = Top4.INSTANCE.right(dirs[i]);
+			dirs[i] = Top4.right(dirs[i]);
 		}
 	}
 }

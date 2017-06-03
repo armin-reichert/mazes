@@ -1,7 +1,6 @@
 package de.amr.easy.grid.rendering.swing;
 
 import static java.lang.Math.log;
-import static java.lang.Math.sqrt;
 
 import java.awt.Dimension;
 import java.awt.Graphics;

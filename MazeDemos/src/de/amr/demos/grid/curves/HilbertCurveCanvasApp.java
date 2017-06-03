@@ -1,5 +1,7 @@
 package de.amr.demos.grid.curves;
 
+import static de.amr.easy.grid.impl.Top4.Top4;
+
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,7 +13,6 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 
 import de.amr.easy.grid.curves.HilbertCurve;
-import de.amr.easy.grid.impl.Top4;
 
 public class HilbertCurveCanvasApp extends Canvas {
 
@@ -86,8 +87,8 @@ public class HilbertCurveCanvasApp extends Canvas {
 		x = getWidth() - 1;
 		y = 0;
 		for (int dir : curve) {
-			int newX = x + 2 * Top4.INSTANCE.dx(dir) * cellSize;
-			int newY = y + 2 * Top4.INSTANCE.dy(dir) * cellSize;
+			int newX = x + 2 * Top4.dx(dir) * cellSize;
+			int newY = y + 2 * Top4.dy(dir) * cellSize;
 			g.setColor(Color.BLUE);
 			g.drawLine(x, y, newX, newY);
 			x = newX;

@@ -1,5 +1,6 @@
 package de.amr.easy.grid.curves;
 
+import static de.amr.easy.grid.impl.Top4.Top4;
 import static java.util.stream.Collectors.joining;
 
 import java.util.ArrayList;
@@ -12,7 +13,6 @@ import java.util.stream.IntStream;
 import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.api.CellSequence;
 import de.amr.easy.grid.api.Topology;
-import de.amr.easy.grid.impl.Top4;
 
 /**
  * Base class for curves like the Hilbert curve.
@@ -29,7 +29,7 @@ public abstract class Curve implements CellSequence {
 	}
 
 	public Curve() {
-		this(Top4.INSTANCE);
+		this(Top4);
 	}
 
 	@Override

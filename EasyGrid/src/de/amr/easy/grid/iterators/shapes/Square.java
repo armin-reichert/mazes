@@ -3,13 +3,13 @@ package de.amr.easy.grid.iterators.shapes;
 import static de.amr.easy.grid.impl.Top4.E;
 import static de.amr.easy.grid.impl.Top4.N;
 import static de.amr.easy.grid.impl.Top4.S;
+import static de.amr.easy.grid.impl.Top4.Top4;
 import static de.amr.easy.grid.impl.Top4.W;
 
 import java.util.Arrays;
 import java.util.List;
 
 import de.amr.easy.grid.api.BareGrid2D;
-import de.amr.easy.grid.impl.Top4;
 
 /**
  * Iterates grid cells clockwise as a square with given top left corner and size.
@@ -41,8 +41,8 @@ public class Square extends Shape {
 		for (int dir : dirs) {
 			for (int i = 0; i < size - 1; ++i) {
 				addCell(x, y);
-				x += Top4.INSTANCE.dx(dir);
-				y += Top4.INSTANCE.dy(dir);
+				x += Top4.dx(dir);
+				y += Top4.dy(dir);
 			}
 		}
 	}
