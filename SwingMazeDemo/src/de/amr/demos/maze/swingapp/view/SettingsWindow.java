@@ -18,7 +18,7 @@ import de.amr.demos.maze.swingapp.app.MazeDemoApp;
 import de.amr.demos.maze.swingapp.app.StopTaskAction;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.maze.misc.MazeUtils;
-import de.amr.easy.util.GridUtils;
+import de.amr.easy.util.Utils;
 
 /**
  * This view enables the user to select the maze generation and path finder algorithm and all the
@@ -58,7 +58,7 @@ public class SettingsWindow extends JFrame {
 		controlPanel.getAlgorithmLabel().setText(algorithmMenu.getSelectedAlgorithm().getDescription());
 
 		controlPanel.getResolutionSelector()
-				.setSelectedIndex(GridUtils.indexOf(app.model.getGridCellSize(), app.model.getGridCellSizes()));
+				.setSelectedIndex(Utils.indexOf(app.model.getGridCellSize(), app.model.getGridCellSizes()));
 
 		controlPanel.getResolutionSelector().addActionListener(e -> {
 			JComboBox<?> selector = (JComboBox<?>) e.getSource();
