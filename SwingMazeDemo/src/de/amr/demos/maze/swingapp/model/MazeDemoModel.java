@@ -8,11 +8,11 @@ import static de.amr.demos.maze.swingapp.model.MazeDemoModel.Tag.UST;
 
 import java.util.stream.Stream;
 
+import de.amr.demos.grid.swing.core.SwingBFSAnimation;
+import de.amr.demos.grid.swing.core.SwingDFSAnimation;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.ObservableGrid;
-import de.amr.easy.grid.rendering.swing.BFSAnimation;
-import de.amr.easy.grid.rendering.swing.DFSAnimation;
 import de.amr.easy.maze.alg.AldousBroderUST;
 import de.amr.easy.maze.alg.BinaryTree;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
@@ -99,8 +99,8 @@ public class MazeDemoModel {
 	}
 
 	public static final AlgorithmInfo<?>[] PATHFINDER_ALGORITHMS = {
-			new AlgorithmInfo<>(DFSAnimation.class, "Depth-First-Search"),
-			new AlgorithmInfo<>(BFSAnimation.class, "Breadth-First-Search"), };
+			new AlgorithmInfo<>(SwingDFSAnimation.class, "Depth-First-Search"),
+			new AlgorithmInfo<>(SwingBFSAnimation.class, "Breadth-First-Search"), };
 
 	private ObservableGrid<TraversalState, Integer> grid;
 	private int[] gridCellSizes;

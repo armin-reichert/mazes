@@ -7,11 +7,11 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
+import de.amr.demos.grid.swing.core.SwingBFSAnimation;
+import de.amr.demos.grid.swing.core.SwingDFSAnimation;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.view.ControlPanel;
 import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.grid.rendering.swing.BFSAnimation;
-import de.amr.easy.grid.rendering.swing.DFSAnimation;
 import de.amr.easy.maze.alg.MazeAlgorithm;
 import de.amr.easy.util.StopWatch;
 
@@ -40,7 +40,8 @@ public class CreateSingleMazeAction extends AbstractAction {
 			try {
 				enableControls(false);
 				generateMaze(app.settingsWindow.getAlgorithmMenu().getSelectedAlgorithm());
-				AlgorithmInfo<?> pathFinder = app.settingsWindow.getPathFinderMenu().getSelectedPathFinder();
+				AlgorithmInfo<?> pathFinder = app.settingsWindow.getPathFinderMenu()
+						.getSelectedPathFinder();
 				if (pathFinder != null) {
 					runPathFinder(pathFinder);
 				}
@@ -64,7 +65,8 @@ public class CreateSingleMazeAction extends AbstractAction {
 	}
 
 	protected void generateMaze(AlgorithmInfo<?> generatorInfo) throws Exception {
-		app.showMessage(format("\n%s (%d cells)", generatorInfo.getDescription(), app.grid().numCells()));
+		app.showMessage(
+				format("\n%s (%d cells)", generatorInfo.getDescription(), app.grid().numCells()));
 
 		// Reset grid
 		app.grid().setEventsEnabled(false);
@@ -76,8 +78,8 @@ public class CreateSingleMazeAction extends AbstractAction {
 		app.canvas().clear();
 
 		// Create generator instance
-		MazeAlgorithm generator = (MazeAlgorithm) generatorInfo.getAlgorithmClass().getConstructor(Grid2D.class)
-				.newInstance(app.model.getGrid());
+		MazeAlgorithm generator = (MazeAlgorithm) generatorInfo.getAlgorithmClass()
+				.getConstructor(Grid2D.class).newInstance(app.model.getGrid());
 
 		// Create maze
 		Integer startCell = app.grid().cell(app.model.getGenerationStart());
@@ -98,8 +100,8 @@ public class CreateSingleMazeAction extends AbstractAction {
 	protected void runPathFinder(AlgorithmInfo<?> pathFinder) {
 		final Integer source = app.grid().cell(app.model.getPathFinderSource());
 		final Integer target = app.grid().cell(app.model.getPathFinderTarget());
-		if (pathFinder.getAlgorithmClass() == BFSAnimation.class) {
-			final BFSAnimation bfs = new BFSAnimation(app.canvas(), app.grid());
+		if (pathFinder.getAlgorithmClass() == SwingBFSAnimation.class) {
+			final SwingBFSAnimation bfs = new SwingBFSAnimation(app.canvas(), app.grid());
 			watch.runAndMeasure(() -> bfs.runAnimation(source));
 			app.showMessage(format("BFS time: %.6f seconds.", watch.getSeconds()));
 
@@ -108,8 +110,9 @@ public class CreateSingleMazeAction extends AbstractAction {
 			} else {
 				bfs.showPath(app.grid().cell(app.model.getPathFinderTarget()));
 			}
-		} else if (pathFinder.getAlgorithmClass() == DFSAnimation.class) {
-			watch.runAndMeasure(() -> new DFSAnimation(app.canvas(), app.grid(), source, target).runAnimation());
+		} else if (pathFinder.getAlgorithmClass() == SwingDFSAnimation.class) {
+			watch.runAndMeasure(
+					() -> new SwingDFSAnimation(app.canvas(), app.grid(), source, target).runAnimation());
 			app.showMessage(format("DFS time: %.6f seconds.", watch.getSeconds()));
 		}
 	}

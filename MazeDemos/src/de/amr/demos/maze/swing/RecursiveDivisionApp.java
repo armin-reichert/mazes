@@ -5,11 +5,11 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
 import java.util.stream.IntStream;
 
-import de.amr.demos.grid.GridSampleApp;
-import de.amr.easy.grid.rendering.swing.BFSAnimation;
+import de.amr.demos.grid.swing.core.SwingBFSAnimation;
+import de.amr.demos.grid.swing.core.SwingGridSampleApp;
 import de.amr.easy.maze.alg.RecursiveDivision;
 
-public class RecursiveDivisionApp extends GridSampleApp {
+public class RecursiveDivisionApp extends SwingGridSampleApp {
 
 	public static void main(String[] args) {
 		launch(new RecursiveDivisionApp());
@@ -29,7 +29,7 @@ public class RecursiveDivisionApp extends GridSampleApp {
 				grid.set(cell, COMPLETED);
 			});
 			new RecursiveDivision(grid).accept(startCell);
-			new BFSAnimation(canvas, grid).runAnimation(startCell);
+			new SwingBFSAnimation(canvas, grid).runAnimation(startCell);
 			sleep(1000);
 			clear();
 		});

@@ -2,12 +2,12 @@ package de.amr.demos.maze.swing;
 
 import java.util.stream.IntStream;
 
-import de.amr.demos.grid.GridSampleApp;
+import de.amr.demos.grid.swing.core.SwingBFSAnimation;
+import de.amr.demos.grid.swing.core.SwingGridSampleApp;
 import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.grid.rendering.swing.BFSAnimation;
 import de.amr.easy.maze.alg.EllerInsideOut;
 
-public class EllerInsideOutApp extends GridSampleApp {
+public class EllerInsideOutApp extends SwingGridSampleApp {
 
 	public static void main(String[] args) {
 		launch(new EllerInsideOutApp());
@@ -22,7 +22,7 @@ public class EllerInsideOutApp extends GridSampleApp {
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			setCellSize(cellSize);
 			new EllerInsideOut(grid).accept(null);
-			new BFSAnimation(canvas, grid).runAnimation(grid.cell(GridPosition.TOP_LEFT));
+			new SwingBFSAnimation(canvas, grid).runAnimation(grid.cell(GridPosition.TOP_LEFT));
 			sleep(1000);
 			clear();
 		});

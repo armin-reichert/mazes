@@ -2,8 +2,8 @@ package de.amr.demos.maze.swingapp.rendering;
 
 import java.awt.Color;
 
+import de.amr.demos.grid.swing.core.SwingDefaultGridRenderingModel;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
-import de.amr.easy.grid.rendering.swing.SwingDefaultGridRenderingModel;
 
 /**
  * Rendering model for grid taking settings from demo model.

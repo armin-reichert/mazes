@@ -8,12 +8,12 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
+import de.amr.demos.grid.swing.core.SwingGridCanvas;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.demos.maze.swingapp.view.MazeWindow;
 import de.amr.demos.maze.swingapp.view.SettingsWindow;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.impl.ObservableGrid;
-import de.amr.easy.grid.rendering.swing.SwingGridCanvas;
 import de.amr.easy.maze.misc.MazeUtils;
 
 /**
