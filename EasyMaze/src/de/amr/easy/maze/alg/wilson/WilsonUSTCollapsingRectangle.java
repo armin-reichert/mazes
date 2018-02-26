@@ -22,7 +22,7 @@ public class WilsonUSTCollapsingRectangle extends WilsonUST {
 	}
 
 	@Override
-	public void accept(Integer start) {
+	public void run(Integer start) {
 		start = grid.cell(CENTER);
 		addToTree(start);
 		int col = 0, row = 0;

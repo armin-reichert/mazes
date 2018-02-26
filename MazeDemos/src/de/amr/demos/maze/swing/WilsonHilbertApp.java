@@ -23,7 +23,7 @@ public class WilsonHilbertApp extends SwingGridSampleApp {
 		Integer startCell = grid.cell(TOP_LEFT);
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			setCellSize(cellSize);
-			new WilsonUSTHilbertCurve(grid).accept(startCell);
+			new WilsonUSTHilbertCurve(grid).run(startCell);
 			new SwingBFSAnimation(canvas, grid).runAnimation(startCell);
 			sleep(1000);
 			clear();

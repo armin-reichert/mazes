@@ -24,7 +24,7 @@ public class Sidewinder extends MazeAlgorithm {
 	}
 
 	@Override
-	public void accept(Integer start) {
+	public void run(Integer start) {
 		range(0, grid.numRows()).forEach(row -> {
 			runStart = 0;
 			range(0, grid.numCols()).forEach(col -> {

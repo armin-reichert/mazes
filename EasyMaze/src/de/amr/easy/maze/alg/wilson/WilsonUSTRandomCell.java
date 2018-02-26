@@ -21,7 +21,7 @@ public class WilsonUSTRandomCell extends WilsonUST {
 	}
 
 	@Override
-	public void accept(Integer start) {
+	public void run(Integer start) {
 		addToTree(start);
 		while (!cellsOutsideTree.isEmpty()) {
 			loopErasedRandomWalk(cellsOutsideTree.get(rnd.nextInt(cellsOutsideTree.size())));

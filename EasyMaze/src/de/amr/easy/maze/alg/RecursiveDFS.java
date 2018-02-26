@@ -27,11 +27,11 @@ public class RecursiveDFS extends MazeAlgorithm {
 	}
 
 	@Override
-	public void accept(Integer cell) {
+	public void run(Integer cell) {
 		grid.set(cell, VISITED);
 		while ((unvisitedNeighbor = grid.neighborsPermuted(cell).filter(this::isCellUnvisited).findAny()).isPresent()) {
 			grid.addEdge(cell, unvisitedNeighbor.getAsInt());
-			accept(unvisitedNeighbor.getAsInt());
+			run(unvisitedNeighbor.getAsInt());
 		}
 		grid.set(cell, COMPLETED);
 	}

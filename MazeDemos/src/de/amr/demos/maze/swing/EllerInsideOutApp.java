@@ -21,7 +21,7 @@ public class EllerInsideOutApp extends SwingGridSampleApp {
 	public void run() {
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			setCellSize(cellSize);
-			new EllerInsideOut(grid).accept(null);
+			new EllerInsideOut(grid).run(null);
 			new SwingBFSAnimation(canvas, grid).runAnimation(grid.cell(GridPosition.TOP_LEFT));
 			sleep(1000);
 			clear();

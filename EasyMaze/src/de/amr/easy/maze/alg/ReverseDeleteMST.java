@@ -31,7 +31,7 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 	}
 
 	@Override
-	public void accept(Integer cell) {
+	public void run(Integer cell) {
 		/*@formatter:off*/
 		List<WeightedEdge<Integer,Integer>> sortedEdgeList = grid.edgeStream()
 				.map(this::setRandomEdgeWeight)

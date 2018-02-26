@@ -5,13 +5,12 @@ import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
 import java.util.Random;
-import java.util.function.Consumer;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Grid2D;
 
-public abstract class MazeAlgorithm implements Consumer<Integer> {
+public abstract class MazeAlgorithm {
 
 	protected final Grid2D<TraversalState, Integer> grid;
 	protected final Random rnd = new Random();
@@ -19,6 +18,8 @@ public abstract class MazeAlgorithm implements Consumer<Integer> {
 	public MazeAlgorithm(Grid2D<TraversalState, Integer> grid) {
 		this.grid = grid;
 	}
+	
+	public abstract void run(Integer startCell);
 
 	/**
 	 * Can be overridden by subclasses of a maze generation algorithm to specify a different start

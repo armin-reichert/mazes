@@ -23,7 +23,7 @@ public class RandomBFSApp extends SwingGridSampleApp {
 		Integer startCell = grid.cell(TOP_LEFT);
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			setCellSize(cellSize);
-			new RandomBFS(grid).accept(startCell);
+			new RandomBFS(grid).run(startCell);
 			new SwingBFSAnimation(canvas, grid).runAnimation(startCell);
 			sleep(1000);
 			clear();

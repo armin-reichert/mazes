@@ -26,7 +26,7 @@ public class BinaryTree extends MazeAlgorithm {
 	}
 
 	@Override
-	public void accept(Integer start) {
+	public void run(Integer start) {
 		cellStream().forEach(cell -> {
 			randomNeighbor(cell, S, E).ifPresent(neighbor -> {
 				grid.addEdge(cell, neighbor);

@@ -25,7 +25,7 @@ public class IterativeDFS extends MazeAlgorithm {
 	}
 
 	@Override
-	public void accept(Integer cell) {
+	public void run(Integer cell) {
 		stack.push(cell);
 		grid.set(cell, VISITED);
 		while (!stack.isEmpty()) {

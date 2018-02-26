@@ -32,7 +32,7 @@ public class Eller extends MazeAlgorithm {
 	}
 
 	@Override
-	public void accept(Integer start) {
+	public void run(Integer start) {
 		range(0, grid.numRows() - 1).forEach(row -> {
 			connectCellsInsideRow(row, false);
 			connectCellsWithNextRow(row);

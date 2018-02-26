@@ -24,7 +24,7 @@ public class KruskalMST extends MazeAlgorithm {
 	}
 
 	@Override
-	public void accept(Integer start) {
+	public void run(Integer start) {
 		grid.fullGridEdgesPermuted().forEach(edge -> {
 			Integer either = edge.either(), other = edge.other(either);
 			EquivClass eitherTree = forest.find(either), otherTree = forest.find(other);

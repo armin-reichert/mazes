@@ -210,7 +210,7 @@ public class GridTests {
 	public void testCycleCheckerSpanningTree() {
 		CycleChecker<Integer, WeightedEdge<Integer, Integer>> cycleChecker = new CycleChecker<>();
 		// create a spanning tree
-		new RandomBFS(grid).accept(grid.cell(0, 0));
+		new RandomBFS(grid).run(grid.cell(0, 0));
 		assertFalse(cycleChecker.test(grid));
 		// add edge at first vertex that has not full degree:
 		/*@formatter:off*/

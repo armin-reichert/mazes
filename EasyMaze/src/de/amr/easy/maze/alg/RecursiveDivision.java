@@ -25,7 +25,7 @@ public class RecursiveDivision extends MazeAlgorithm {
 	}
 
 	@Override
-	public void accept(Integer start) {
+	public void run(Integer start) {
 		divide(0, 0, grid.numCols(), grid.numRows());
 	}
 

@@ -51,7 +51,7 @@ public class EllerInsideOut extends MazeAlgorithm {
 	}
 
 	@Override
-	public void accept(Integer start) {
+	public void run(Integer start) {
 		while (nextLayer() <= squareGrid.numCols()) {
 			connectCellsInsideLayer(false);
 			connectCellsWithNextLayer();

@@ -85,11 +85,11 @@ public class CreateSingleMazeAction extends AbstractAction {
 		Integer startCell = app.grid().cell(app.model.getGenerationStart());
 		if (app.model.isGenerationAnimated()) {
 			// event handlers do the rendering
-			generator.accept(startCell);
+			generator.run(startCell);
 		} else {
 			// no animation, must render explicitly
 			app.canvas().stopListening();
-			watch.runAndMeasure(() -> generator.accept(startCell));
+			watch.runAndMeasure(() -> generator.run(startCell));
 			app.showMessage(format("Generation time: %.6f seconds.", watch.getSeconds()));
 			watch.runAndMeasure(() -> app.canvas().render());
 			app.showMessage(format("Rendering time:  %.6f seconds.", watch.getSeconds()));

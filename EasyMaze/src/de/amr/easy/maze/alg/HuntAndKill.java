@@ -30,7 +30,7 @@ public class HuntAndKill extends MazeAlgorithm {
 	}
 
 	@Override
-	public void accept(Integer animal) {
+	public void run(Integer animal) {
 		do {
 			kill(animal);
 			OptionalInt livingNeighbor = grid.neighborsPermuted(animal).filter(isAlive).findAny();

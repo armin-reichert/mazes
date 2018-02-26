@@ -26,7 +26,7 @@ public class GrowingTree extends MazeAlgorithm {
 	}
 
 	@Override
-	public void accept(Integer start) {
+	public void run(Integer start) {
 		cells.add(start);
 		do {
 			Integer cell = selectCell();

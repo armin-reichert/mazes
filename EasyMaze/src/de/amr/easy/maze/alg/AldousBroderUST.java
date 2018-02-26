@@ -38,7 +38,7 @@ public class AldousBroderUST extends MazeAlgorithm {
 	}
 
 	@Override
-	public void accept(Integer start) {
+	public void run(Integer start) {
 		v = start;
 		grid.set(v, COMPLETED);
 		visitCount = 1;

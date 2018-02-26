@@ -69,7 +69,7 @@ public class MazeGeneratorTests {
 	@BeforeClass
 	public static void beforeAllTests() {
 		// warm-up
-		new RandomBFS(new Grid<>(WIDTH, HEIGHT, UNVISITED)).accept(0);
+		new RandomBFS(new Grid<>(WIDTH, HEIGHT, UNVISITED)).run(0);
 	}
 
 	@AfterClass
@@ -91,7 +91,7 @@ public class MazeGeneratorTests {
 	}
 
 	private void exec(MazeAlgorithm algorithm) {
-		watch.runAndMeasure(() -> algorithm.accept(grid.cell(CENTER)));
+		watch.runAndMeasure(() -> algorithm.run(grid.cell(CENTER)));
 		results.add(format("%-30s (%6d cells): %.3f sec", algorithm.getClass().getSimpleName(), grid.numCells(),
 				watch.getSeconds()));
 	}

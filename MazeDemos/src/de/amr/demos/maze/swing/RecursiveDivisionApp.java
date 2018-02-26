@@ -28,7 +28,7 @@ public class RecursiveDivisionApp extends SwingGridSampleApp {
 			grid.vertexStream().forEach(cell -> {
 				grid.set(cell, COMPLETED);
 			});
-			new RecursiveDivision(grid).accept(startCell);
+			new RecursiveDivision(grid).run(startCell);
 			new SwingBFSAnimation(canvas, grid).runAnimation(startCell);
 			sleep(1000);
 			clear();
