@@ -21,6 +21,7 @@ public class RecursiveDivisionApp extends SwingGridSampleApp {
 
 	@Override
 	public void run() {
+		setDelay(6);
 		Integer startCell = grid.cell(TOP_LEFT);
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			setCellSize(cellSize);
