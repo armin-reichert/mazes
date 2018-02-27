@@ -6,7 +6,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
-import de.amr.demos.grid.swing.core.SwingGridCanvas;
+import de.amr.demos.grid.swing.core.GridCanvas;
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.rendering.GridColoring;
 
@@ -18,7 +18,7 @@ import de.amr.demos.maze.swingapp.rendering.GridColoring;
 public class MazeWindow extends JFrame {
 
 	private final MazeDemoApp app;
-	private SwingGridCanvas canvas;
+	private GridCanvas canvas;
 
 	public MazeWindow(MazeDemoApp app) {
 		this.app = app;
@@ -31,9 +31,9 @@ public class MazeWindow extends JFrame {
 		canvas = null;
 	}
 
-	public SwingGridCanvas getCanvas() {
+	public GridCanvas getCanvas() {
 		if (canvas == null) {
-			canvas = new SwingGridCanvas(app.grid(), new GridColoring(app.model));
+			canvas = new GridCanvas(app.grid(), new GridColoring(app.model));
 			canvas.setDelay(app.model.getDelay());
 			canvas.getActionMap().put("showControlsView", new AbstractAction() {
 

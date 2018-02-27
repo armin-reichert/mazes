@@ -26,7 +26,7 @@ public class GridColoring extends SwingDefaultGridRenderingModel {
 	}
 
 	@Override
-	public int getPassageThickness() {
+	public int getPassageWidth() {
 		int thickness = model.getGridCellSize() * model.getPassageThicknessPct() / 100;
 		if (thickness < 1) {
 			thickness = 1;

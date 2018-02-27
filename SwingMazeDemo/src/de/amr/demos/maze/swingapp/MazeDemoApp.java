@@ -8,7 +8,7 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
-import de.amr.demos.grid.swing.core.SwingGridCanvas;
+import de.amr.demos.grid.swing.core.GridCanvas;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.demos.maze.swingapp.view.MazeWindow;
 import de.amr.demos.maze.swingapp.view.SettingsWindow;
@@ -61,7 +61,7 @@ public class MazeDemoApp {
 		mazeWindow.setVisible(true);
 	}
 
-	public SwingGridCanvas canvas() {
+	public GridCanvas canvas() {
 		return mazeWindow.getCanvas();
 	}
 
