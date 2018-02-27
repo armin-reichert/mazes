@@ -1,4 +1,4 @@
-package de.amr.demos.maze.swingapp.app;
+package de.amr.demos.maze.swingapp;
 
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
@@ -31,8 +31,8 @@ public class MazeDemoApp {
 
 	public final MazeDemoModel model;
 
-	final SettingsWindow settingsWindow;
-	final MazeWindow mazeWindow;
+	public final SettingsWindow settingsWindow;
+	public final MazeWindow mazeWindow;
 
 	private Thread taskThread;
 	private volatile boolean taskStopped;
@@ -94,13 +94,13 @@ public class MazeDemoApp {
 		canvas().setDelay(delay);
 	}
 
-	void startTask(Runnable task) {
+	public void startTask(Runnable task) {
 		taskStopped = false;
 		taskThread = new Thread(task);
 		taskThread.start();
 	}
 
-	void stopTask() {
+	public void stopTask() {
 		taskStopped = true;
 		try {
 			taskThread.join();
@@ -109,11 +109,11 @@ public class MazeDemoApp {
 		}
 	}
 
-	boolean isTaskRunning() {
+	public boolean isTaskRunning() {
 		return taskThread != null && taskThread.isAlive();
 	}
 
-	boolean isTaskStopped() {
+	public boolean isTaskStopped() {
 		return taskStopped;
 	}
 }

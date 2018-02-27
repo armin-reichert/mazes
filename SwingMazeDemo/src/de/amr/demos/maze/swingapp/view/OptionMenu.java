@@ -9,7 +9,7 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
 
-import de.amr.demos.maze.swingapp.app.MazeDemoApp;
+import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.easy.grid.api.GridPosition;
 
 public class OptionMenu extends JMenu {

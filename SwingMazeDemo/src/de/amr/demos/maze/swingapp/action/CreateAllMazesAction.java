@@ -1,10 +1,11 @@
-package de.amr.demos.maze.swingapp.app;
+package de.amr.demos.maze.swingapp.action;
 
 import static de.amr.demos.maze.swingapp.model.MazeDemoModel.Tag.Slow;
 import static de.amr.demos.maze.swingapp.model.MazeDemoModel.Tag.SmallGridOnly;
 
 import java.awt.event.ActionEvent;
 
+import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 
 public class CreateAllMazesAction extends CreateSingleMazeAction {

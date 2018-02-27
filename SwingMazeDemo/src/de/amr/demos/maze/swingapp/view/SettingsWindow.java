@@ -12,10 +12,10 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JSlider;
 
-import de.amr.demos.maze.swingapp.app.CreateAllMazesAction;
-import de.amr.demos.maze.swingapp.app.CreateSingleMazeAction;
-import de.amr.demos.maze.swingapp.app.MazeDemoApp;
-import de.amr.demos.maze.swingapp.app.StopTaskAction;
+import de.amr.demos.maze.swingapp.MazeDemoApp;
+import de.amr.demos.maze.swingapp.action.CreateAllMazesAction;
+import de.amr.demos.maze.swingapp.action.CreateSingleMazeAction;
+import de.amr.demos.maze.swingapp.action.StopTaskAction;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.maze.misc.MazeUtils;
 import de.amr.easy.util.Utils;

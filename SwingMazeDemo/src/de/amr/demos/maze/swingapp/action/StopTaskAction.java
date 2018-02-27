@@ -1,8 +1,10 @@
-package de.amr.demos.maze.swingapp.app;
+package de.amr.demos.maze.swingapp.action;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+
+import de.amr.demos.maze.swingapp.MazeDemoApp;
 
 public class StopTaskAction extends AbstractAction {
 
