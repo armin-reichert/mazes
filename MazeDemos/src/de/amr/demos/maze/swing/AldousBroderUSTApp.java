@@ -20,11 +20,10 @@ public class AldousBroderUSTApp extends SwingGridSampleApp {
 
 	@Override
 	public void run() {
-		Integer startCell = grid.cell(TOP_LEFT);
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			setCellSize(cellSize);
-			new AldousBroderUST(grid).run(startCell);
-			new SwingBFSAnimation(canvas, grid).runAnimation(startCell);
+			new AldousBroderUST(grid).run(grid.cell(TOP_LEFT));
+			new SwingBFSAnimation(canvas, grid).runAnimation(grid.cell(TOP_LEFT));
 			sleep(1000);
 			clear();
 		});

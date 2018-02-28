@@ -20,11 +20,10 @@ public class WilsonExpandingCircleApp extends SwingGridSampleApp {
 
 	@Override
 	public void run() {
-		Integer startCell = grid.cell(CENTER);
 		IntStream.of(64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			setCellSize(cellSize);
-			new WilsonUSTExpandingCircle(grid).run(startCell);
-			new SwingBFSAnimation(canvas, grid).runAnimation(startCell);
+			new WilsonUSTExpandingCircle(grid).run(grid.cell(CENTER));
+			new SwingBFSAnimation(canvas, grid).runAnimation(grid.cell(CENTER));
 			sleep(1000);
 			clear();
 		});
