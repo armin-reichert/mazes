@@ -2,7 +2,7 @@ package de.amr.demos.maze.swingapp.rendering;
 
 import java.awt.Color;
 
-import de.amr.demos.grid.swing.core.SwingDefaultGridRenderingModel;
+import de.amr.demos.grid.swing.core.DefaultGridRenderingModel;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 
 /**
@@ -10,7 +10,7 @@ import de.amr.demos.maze.swingapp.model.MazeDemoModel;
  * 
  * @author Armin Reichert
  */
-public class GridColoring extends SwingDefaultGridRenderingModel {
+public class GridColoring extends DefaultGridRenderingModel {
 
 	private static final Color VISITED_COLOR = Color.BLUE;
 
