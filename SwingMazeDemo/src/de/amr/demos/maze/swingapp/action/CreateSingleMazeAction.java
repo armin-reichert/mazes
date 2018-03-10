@@ -92,7 +92,7 @@ public class CreateSingleMazeAction extends AbstractAction {
 			app.canvas().stopListening();
 			watch.runAndMeasure(() -> generator.run(startCell));
 			app.showMessage(format("Generation time: %.6f seconds.", watch.getSeconds()));
-			watch.runAndMeasure(() -> app.canvas().render());
+			watch.runAndMeasure(() -> app.canvas().drawGrid());
 			app.showMessage(format("Rendering time:  %.6f seconds.", watch.getSeconds()));
 			app.canvas().startListening();
 		}
