@@ -23,7 +23,6 @@ public class CreateAllMazesAction extends CreateSingleMazeAction {
 			app.settingsWindow.setVisible(false);
 		}
 		app.canvas().setDelay(app.model.getDelay());
-		app.canvas().resetRenderingModel();
 		app.mazeWindow.setVisible(true);
 		app.startTask(() -> {
 			enableControls(false);

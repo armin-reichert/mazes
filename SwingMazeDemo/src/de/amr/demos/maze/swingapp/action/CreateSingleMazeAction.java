@@ -31,7 +31,6 @@ public class CreateSingleMazeAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app.canvas().resetRenderingModel();
 		app.canvas().clear();
 
 		app.settingsWindow.setVisible(!app.model.isHidingControlsWhenRunning());
