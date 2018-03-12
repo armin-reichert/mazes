@@ -23,7 +23,7 @@ public class RecursiveDivisionApp extends SwingGridSampleApp {
 	public void run() {
 		canvas.setDelay(0);
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
-			setCellSize(cellSize);
+			resizeGrid(cellSize);
 			grid.fill();
 			grid.vertexStream().forEach(cell -> grid.set(cell, COMPLETED));
 			new RecursiveDivision(grid).run(grid.cell(TOP_LEFT));

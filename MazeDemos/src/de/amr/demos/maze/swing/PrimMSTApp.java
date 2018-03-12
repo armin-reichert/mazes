@@ -21,7 +21,7 @@ public class PrimMSTApp extends SwingGridSampleApp {
 	@Override
 	public void run() {
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
-			setCellSize(cellSize);
+			resizeGrid(cellSize);
 			new PrimMST(grid).run(grid.cell(TOP_LEFT));
 			new SwingBFSAnimation(canvas, grid).runAnimation(grid.cell(TOP_LEFT));
 			sleep(1000);
