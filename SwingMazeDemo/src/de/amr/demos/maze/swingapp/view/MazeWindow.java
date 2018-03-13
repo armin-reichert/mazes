@@ -1,5 +1,6 @@
 package de.amr.demos.maze.swingapp.view;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -22,30 +23,28 @@ public class MazeWindow extends JFrame {
 
 	public MazeWindow(MazeDemoApp app) {
 		this.app = app;
+		setBackground(Color.BLACK);
 		setExtendedState(MAXIMIZED_BOTH);
 		setUndecorated(true);
-		getCanvas().clear();
+		createCanvas();
 	}
 
-	public void invalidateCanvas() {
-		canvas = null;
+	public void createCanvas() {
+		canvas = new GridCanvas(app.grid(), new GridColoring(app.model));
+		canvas.setDelay(app.model.getDelay());
+		canvas.getActionMap().put("showControlsView", new AbstractAction() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				app.showSettingsWindow();
+			}
+		});
+		canvas.getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showControlsView");
+		setContentPane(canvas);
+		repaint();
 	}
 
 	public GridCanvas getCanvas() {
-		if (canvas == null) {
-			canvas = new GridCanvas(app.grid(), new GridColoring(app.model));
-			canvas.setDelay(app.model.getDelay());
-			canvas.getActionMap().put("showControlsView", new AbstractAction() {
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					app.showSettingsWindow();
-				}
-			});
-			canvas.getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showControlsView");
-			setContentPane(canvas);
-		}
 		return canvas;
 	}
-
 }

@@ -79,7 +79,7 @@ public class MazeDemoApp {
 	}
 
 	public void updateCanvas() {
-		mazeWindow.invalidateCanvas();
+		mazeWindow.createCanvas();
 	}
 
 	public void setGridPassageThickness(int percent) {
