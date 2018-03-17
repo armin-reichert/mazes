@@ -25,7 +25,6 @@ public class AldousBroderUSTApp extends SwingGridSampleApp {
 			new AldousBroderUST(grid).run(grid.cell(TOP_LEFT));
 			new SwingBFSAnimation(canvas, grid).runAnimation(grid.cell(TOP_LEFT));
 			sleep(1000);
-			clear();
 		});
 		System.exit(0);
 	}

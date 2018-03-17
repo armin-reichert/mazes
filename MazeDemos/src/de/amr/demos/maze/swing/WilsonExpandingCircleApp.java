@@ -25,7 +25,6 @@ public class WilsonExpandingCircleApp extends SwingGridSampleApp {
 			new WilsonUSTExpandingCircle(grid).run(grid.cell(CENTER));
 			new SwingBFSAnimation(canvas, grid).runAnimation(grid.cell(CENTER));
 			sleep(1000);
-			clear();
 		});
 		System.exit(0);
 	}

@@ -25,7 +25,6 @@ public class EllerApp extends SwingGridSampleApp {
 			new Eller(grid).run(null);
 			new SwingBFSAnimation(canvas, grid).runAnimation(grid.cell(TOP_LEFT));
 			sleep(1000);
-			clear();
 		});
 		System.exit(0);
 	}
