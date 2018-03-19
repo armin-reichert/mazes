@@ -112,7 +112,7 @@ public class CreateSingleMazeAction extends AbstractAction {
 			}
 		} else if (pathFinder.getAlgorithmClass() == SwingDFSAnimation.class) {
 			watch.runAndMeasure(
-					() -> new SwingDFSAnimation(app.canvas(), app.grid(), source, target).runAnimation());
+					() -> new SwingDFSAnimation(app.canvas(), app.grid(), source, target).run());
 			app.showMessage(format("DFS time: %.6f seconds.", watch.getSeconds()));
 		}
 	}
