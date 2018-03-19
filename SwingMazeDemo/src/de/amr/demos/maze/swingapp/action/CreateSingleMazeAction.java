@@ -102,7 +102,7 @@ public class CreateSingleMazeAction extends AbstractAction {
 		final Integer target = app.grid().cell(app.model.getPathFinderTarget());
 		if (pathFinder.getAlgorithmClass() == SwingBFSAnimation.class) {
 			final SwingBFSAnimation bfs = new SwingBFSAnimation(app.canvas(), app.grid());
-			watch.runAndMeasure(() -> bfs.runAnimation(source));
+			watch.runAndMeasure(() -> bfs.runFrom(source));
 			app.showMessage(format("BFS time: %.6f seconds.", watch.getSeconds()));
 
 			if (app.model.isLongestPathHighlighted()) {

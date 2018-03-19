@@ -27,7 +27,7 @@ public class RecursiveDivisionApp extends SwingGridSampleApp {
 			grid.fill();
 			grid.setDefaultContent(COMPLETED);
 			new RecursiveDivision(grid).run(grid.cell(TOP_LEFT));
-			new SwingBFSAnimation(canvas, grid).runAnimation(grid.cell(TOP_LEFT));
+			new SwingBFSAnimation(canvas, grid).runFrom(grid.cell(TOP_LEFT));
 			sleep(1000);
 		});
 		System.exit(0);
