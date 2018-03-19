@@ -15,7 +15,8 @@ public class ArminsApp extends SwingGridSampleApp {
 	}
 
 	public ArminsApp() {
-		super("Armin's algorithm");
+		super(128);
+		setAppName("Armin's algorithm"); 
 	}
 
 	@Override

@@ -15,7 +15,8 @@ public class WilsonExpandingCircleApp extends SwingGridSampleApp {
 	}
 
 	public WilsonExpandingCircleApp() {
-		super("Wilson UST / Expanding Circle");
+		super(64);
+		setAppName("Wilson UST / Expanding Circle"); 
 	}
 
 	@Override

@@ -15,7 +15,8 @@ public class SidewinderApp extends SwingGridSampleApp {
 	}
 
 	public SidewinderApp() {
-		super("Armin's algorithm");
+		super(128);
+		setAppName("Armin's algorithm"); 
 	}
 
 	@Override

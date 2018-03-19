@@ -15,7 +15,8 @@ public class EllerApp extends SwingGridSampleApp {
 	}
 
 	public EllerApp() {
-		super("Eller's Algorithm");
+		super(128);
+		setAppName("Eller's Algorithm");
 	}
 
 	@Override

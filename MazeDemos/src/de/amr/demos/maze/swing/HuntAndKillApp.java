@@ -15,7 +15,8 @@ public class HuntAndKillApp extends SwingGridSampleApp {
 	}
 
 	public HuntAndKillApp() {
-		super("Hunt And Kill");
+		super(128);
+		setAppName("Hunt And Kill"); 
 	}
 
 	@Override

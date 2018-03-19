@@ -15,7 +15,8 @@ public class BinaryTreeApp extends SwingGridSampleApp {
 	}
 
 	public BinaryTreeApp() {
-		super("Binary Tree Maze");
+		super(128);
+		setAppName("Binary Tree Maze"); 
 	}
 
 	@Override

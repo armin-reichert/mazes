@@ -15,7 +15,8 @@ public class IterativeDFSApp extends SwingGridSampleApp {
 	}
 
 	public IterativeDFSApp() {
-		super("Randomized-DFS Maze");
+		super(128);
+		setAppName("Randomized-DFS Maze"); 
 	}
 
 	@Override

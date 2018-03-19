@@ -15,7 +15,8 @@ public class PrimMSTApp extends SwingGridSampleApp {
 	}
 
 	public PrimMSTApp() {
-		super("Prim-MST Maze");
+		super(128);
+		setAppName("Prim-MST Maze"); 
 	}
 
 	@Override

@@ -16,7 +16,8 @@ public class RecursiveDivisionApp extends SwingGridSampleApp {
 	}
 
 	public RecursiveDivisionApp() {
-		super("Recursive Division Maze");
+		super(128);
+		setAppName("Recursive Division Maze");
 	}
 
 	@Override

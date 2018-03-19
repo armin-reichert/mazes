@@ -15,7 +15,8 @@ public class AldousBroderUSTApp extends SwingGridSampleApp {
 	}
 
 	public AldousBroderUSTApp() {
-		super("Aldous-Broder UST Maze");
+		super(128);
+		setAppName("Aldous-Broder UST Maze"); 
 	}
 
 	@Override

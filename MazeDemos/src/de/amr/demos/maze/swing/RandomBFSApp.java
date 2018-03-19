@@ -15,7 +15,8 @@ public class RandomBFSApp extends SwingGridSampleApp {
 	}
 
 	public RandomBFSApp() {
-		super("Randomized Bread-First-Traversal Maze");
+		super(128);
+		setAppName("Randomized Bread-First-Traversal Maze"); 
 	}
 
 	@Override

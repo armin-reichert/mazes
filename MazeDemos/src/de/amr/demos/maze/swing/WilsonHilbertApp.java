@@ -15,7 +15,8 @@ public class WilsonHilbertApp extends SwingGridSampleApp {
 	}
 
 	public WilsonHilbertApp() {
-		super("Wilson UST / Hilbert Curve Maze");
+		super(128);
+		setAppName("Wilson UST / Hilbert Curve Maze");
 	}
 
 	@Override

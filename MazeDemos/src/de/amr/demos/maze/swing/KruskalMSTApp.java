@@ -15,7 +15,8 @@ public class KruskalMSTApp extends SwingGridSampleApp {
 	}
 
 	public KruskalMSTApp() {
-		super("Kruskal-MST Maze");
+		super(128);
+		setAppName("Kruskal-MST Maze"); 
 	}
 
 	@Override
