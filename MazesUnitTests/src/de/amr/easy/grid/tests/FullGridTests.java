@@ -15,7 +15,7 @@ import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.BareGrid;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.impl.Top8;
+import de.amr.easy.grid.impl.Topologies;
 
 public class FullGridTests {
 
@@ -137,7 +137,7 @@ public class FullGridTests {
 
 	@Test
 	public void testFullGrid8() {
-		grid = new BareGrid<>(WIDTH, HEIGHT, Top8.Top8);
+		grid = new BareGrid<>(WIDTH, HEIGHT, Topologies.TOP8);
 		grid.fill();
 		int c = grid.numCols(), r = grid.numRows();
 		assertEquals(4 * c * r - 3 * c - 3 * r + 2, grid.edgeCount());

@@ -5,7 +5,6 @@ import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static de.amr.easy.grid.impl.Top4.E;
 import static de.amr.easy.grid.impl.Top4.N;
 import static de.amr.easy.grid.impl.Top4.S;
-import static de.amr.easy.grid.impl.Top4.Top4;
 import static de.amr.easy.grid.impl.Top4.W;
 import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.assertEquals;
@@ -25,6 +24,7 @@ import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.BareGrid;
 import de.amr.easy.grid.impl.Grid;
+import de.amr.easy.grid.impl.Topologies;
 import de.amr.easy.maze.alg.RandomBFS;
 
 /**
@@ -218,7 +218,7 @@ public class GridTests {
 			.filter(cell -> grid.degree(cell) < grid.neighbors(cell).count())
 			.findFirst()
 			.ifPresent(cell -> {
-				List<Integer> dirs = Top4.dirs().boxed().collect(toList());
+				List<Integer> dirs = Topologies.TOP4.dirs().boxed().collect(toList());
 				for (int dir : dirs) {
 					OptionalInt neighbor = grid.neighbor(cell, dir);
 					if (neighbor.isPresent() && !grid.adjacent(cell, neighbor.getAsInt())) {
