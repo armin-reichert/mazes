@@ -24,7 +24,7 @@ public class HuntAndKillApp extends SwingGridSampleApp {
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			resizeGrid(cellSize);
 			new HuntAndKill(grid).run(grid.cell(TOP_LEFT));
-			new SwingBFSAnimation(canvas, grid).runFrom(grid.cell(TOP_LEFT));
+			new SwingBFSAnimation(canvas, grid).run(grid.cell(TOP_LEFT));
 			sleep(1000);
 		});
 		System.exit(0);
