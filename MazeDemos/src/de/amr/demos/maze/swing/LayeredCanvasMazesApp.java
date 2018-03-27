@@ -3,6 +3,7 @@ package de.amr.demos.maze.swing;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
+import java.util.function.BiConsumer;
 
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
@@ -19,11 +20,12 @@ import de.amr.demos.grid.swing.core.GridRenderer;
 import de.amr.demos.grid.swing.ui.LayeredCanvas;
 import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.maze.alg.KruskalMST;
 
-public class LayeredCanvasApp {
+public class LayeredCanvasMazesApp extends JFrame {
 
 	public static void main(String[] args) {
 		try {
@@ -32,94 +34,39 @@ public class LayeredCanvasApp {
 				| UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-		EventQueue.invokeLater(LayeredCanvasApp::new);
+		LayeredCanvasMazesApp app = new LayeredCanvasMazesApp();
+		EventQueue.invokeLater(() -> app.setVisible(true));
 	}
 
-	private int canvasWidth = 800;
-	private int canvasHeight = 800;
-	private int cellSize = 40;
+	private int canvasWidth = 1024;
+	private int canvasHeight = 768;
+	private int cellSize = 32;
 	private LayeredCanvas canvas;
-	private ObservableGrid<TraversalState, Integer> grid;
+	private Grid2D<TraversalState, Integer> grid;
 	private BreadthFirstTraversal<Integer, ?> bfs;
 	private Iterable<Integer> path;
-	private JFrame frame;
+	private BiConsumer<Grid2D<TraversalState, Integer>, Integer> mazeGenerator;
 
-	public LayeredCanvasApp() {
+	public LayeredCanvasMazesApp() {
+
 		int rows = canvasHeight / cellSize, cols = canvasWidth / cellSize;
 		grid = new ObservableGrid<>(cols, rows, TraversalState.UNVISITED);
+		mazeGenerator = (grid, startCell) -> new KruskalMST(grid).run(startCell);
 		canvas = new LayeredCanvas(cols * cellSize, rows * cellSize);
 		addGridLayer();
 		addDistanceLayer();
 		addPathLayer();
-		createFrame();
-		frame.pack();
-		frame.setVisible(true);
+		setTitle("Mazes");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
+		add(canvas);
+		addMenus();
+		pack();
 		startTimer();
 	}
 
-	private void createFrame() {
-		frame = new JFrame("Layered Canvas App");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.add(canvas);
-		addMenus(frame);
-	}
-
-	private void addMenus(JFrame frame) {
-		JMenuBar bar = new JMenuBar();
-		frame.setJMenuBar(bar);
-
-		JMenu menuLayers = new JMenu("Layers");
-		bar.add(menuLayers);
-
-		JCheckBoxMenuItem cbShowPath = addShowPathMenuItem(menuLayers);
-		menuLayers.add(cbShowPath);
-
-		JCheckBoxMenuItem cbShowDistances = addShowDistancesMenuItem(menuLayers);
-		menuLayers.add(cbShowDistances);
-	}
-
-	private JCheckBoxMenuItem addShowDistancesMenuItem(JMenu menu) {
-		JCheckBoxMenuItem checkBox = new JCheckBoxMenuItem();
-		checkBox.setSelected(true);
-		checkBox.setAction(new AbstractAction() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				canvas.getLayer("distancesLayer").ifPresent(layer -> layer.setVisible(checkBox.isSelected()));
-				canvas.repaint();
-			}
-		});
-		checkBox.setText("Show Distances");
-		return checkBox;
-	}
-
-	private JCheckBoxMenuItem addShowPathMenuItem(JMenu menu) {
-		JCheckBoxMenuItem checkBox = new JCheckBoxMenuItem();
-		checkBox.setSelected(true);
-		checkBox.setAction(new AbstractAction() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				canvas.getLayer("pathLayer").ifPresent(layer -> layer.setVisible(checkBox.isSelected()));
-				canvas.repaint();
-			}
-		});
-		checkBox.setText("Show Path");
-		return checkBox;
-	}
-
-	private void startTimer() {
-		Timer timer = new Timer(5000, event -> {
-			grid.clearContent();
-			grid.removeEdges();
-			canvas.clear();
-			new KruskalMST(grid).run(0);
-			bfs = new BreadthFirstTraversal<>(grid, grid.cell(GridPosition.TOP_LEFT));
-			bfs.run();
-			path = bfs.findPath(grid.cell(GridPosition.BOTTOM_RIGHT));
-			canvas.repaint();
-		});
-		timer.start();
+	public void setMazeGenerator(BiConsumer<Grid2D<TraversalState, Integer>, Integer> mazeGenerator) {
+		this.mazeGenerator = mazeGenerator;
 	}
 
 	private void addGridLayer() {
@@ -195,6 +142,64 @@ public class LayeredCanvasApp {
 				}
 			}
 		});
+	}
+
+	private void addMenus() {
+		JMenuBar bar = new JMenuBar();
+		setJMenuBar(bar);
+
+		JMenu menuLayers = new JMenu("View");
+		bar.add(menuLayers);
+
+		JCheckBoxMenuItem cbShowPath = addShowPathMenuItem(menuLayers);
+		menuLayers.add(cbShowPath);
+
+		JCheckBoxMenuItem cbShowDistances = addShowDistancesMenuItem(menuLayers);
+		menuLayers.add(cbShowDistances);
+	}
+
+	private JCheckBoxMenuItem addShowDistancesMenuItem(JMenu menu) {
+		JCheckBoxMenuItem checkBox = new JCheckBoxMenuItem();
+		checkBox.setSelected(true);
+		checkBox.setAction(new AbstractAction() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				canvas.getLayer("distancesLayer").ifPresent(layer -> layer.setVisible(checkBox.isSelected()));
+				canvas.repaint();
+			}
+		});
+		checkBox.setText("Show Distances");
+		return checkBox;
+	}
+
+	private JCheckBoxMenuItem addShowPathMenuItem(JMenu menu) {
+		JCheckBoxMenuItem checkBox = new JCheckBoxMenuItem();
+		checkBox.setSelected(true);
+		checkBox.setAction(new AbstractAction() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				canvas.getLayer("pathLayer").ifPresent(layer -> layer.setVisible(checkBox.isSelected()));
+				canvas.repaint();
+			}
+		});
+		checkBox.setText("Show Path");
+		return checkBox;
+	}
+
+	private void startTimer() {
+		Timer timer = new Timer(5000, event -> {
+			grid.clearContent();
+			grid.removeEdges();
+			canvas.clear();
+			mazeGenerator.accept(grid, grid.cell(GridPosition.CENTER));
+			bfs = new BreadthFirstTraversal<>(grid, grid.cell(GridPosition.TOP_LEFT));
+			bfs.run();
+			path = bfs.findPath(grid.cell(GridPosition.BOTTOM_RIGHT));
+			canvas.repaint();
+		});
+		timer.start();
 	}
 
 }
