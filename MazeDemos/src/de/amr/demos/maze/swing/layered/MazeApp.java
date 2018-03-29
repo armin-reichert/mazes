@@ -12,19 +12,22 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import de.amr.demos.grid.swing.ui.GridCanvas;
-import de.amr.demos.grid.swing.ui.GridWindow;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.maze.alg.wilson.WilsonUSTRandomCell;
+import de.amr.easy.maze.alg.PrimMST;
 
 public class MazeApp {
 
@@ -37,22 +40,26 @@ public class MazeApp {
 		EventQueue.invokeLater(MazeApp::new);
 	}
 
+	private final JFrame window;
 	private final GridCanvas canvas;
 	private GridPosition pathStart;
 	private GridPosition pathTarget;
 
 	public MazeApp() {
-		canvas = new GridCanvas(1200, 900, 30);
 		pathStart = TOP_LEFT;
 		pathTarget = BOTTOM_RIGHT;
 
-		GridWindow window = new GridWindow(canvas);
-		addMenuPath(window);
-		window.pack();
-		window.setVisible(true);
-
+		canvas = new GridCanvas(1200, 800, 40);
 		canvas.getInputMap().put(KeyStroke.getKeyStroke("SPACE"), "nextMaze");
 		canvas.getActionMap().put("nextMaze", nextMazeAction);
+
+		window = new JFrame("Mazes");
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setResizable(false);
+		buildMenu();
+		window.add(canvas);
+		window.pack();
+		window.setVisible(true);
 	}
 
 	private Action nextMazeAction = new AbstractAction() {
@@ -62,16 +69,61 @@ public class MazeApp {
 			final Grid2D<TraversalState, Integer> grid = canvas.getGrid();
 			grid.clearContent();
 			grid.removeEdges();
-			new WilsonUSTRandomCell(grid).run(grid.cell(CENTER));
+			new PrimMST(grid).run(grid.cell(CENTER));
 			canvas.clear();
 			canvas.runPathFinder(grid.cell(pathStart), grid.cell(pathTarget));
 			canvas.repaint();
 		}
 	};
 
-	private void addMenuPath(GridWindow window) {
+	private void buildMenu() {
+		JMenuBar menubar = new JMenuBar();
+		window.setJMenuBar(menubar);
+
+		JMenu menuOptions = new JMenu("Options");
+		menubar.add(menuOptions);
+
+		addMenuItem_ShowHideDistances(menuOptions);
+		addMenuItem_ShowHidePath(menuOptions);
+		addMenu_SetPathBorders(menuOptions);
+		addMenuItem_SetGridCellSize(menuOptions);
+	}
+
+	private void addMenuItem_ShowHideDistances(JMenu parent) {
+		JCheckBoxMenuItem checkBox = new JCheckBoxMenuItem();
+		checkBox.setSelected(canvas.isDistancesDisplayed());
+		checkBox.setAction(new AbstractAction() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				canvas.setDistancesDisplayed(checkBox.isSelected());
+				canvas.getLayer("distancesLayer").ifPresent(layer -> layer.setVisible(checkBox.isSelected()));
+				canvas.repaint();
+			}
+		});
+		checkBox.setText("Show Distances");
+		parent.add(checkBox);
+	}
+
+	private void addMenuItem_ShowHidePath(JMenu parent) {
+		JCheckBoxMenuItem checkBox = new JCheckBoxMenuItem();
+		checkBox.setSelected(canvas.isPathDisplayed());
+		checkBox.setAction(new AbstractAction() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				canvas.setPathDisplayed(checkBox.isSelected());
+				canvas.getLayer("pathLayer").ifPresent(layer -> layer.setVisible(checkBox.isSelected()));
+				canvas.repaint();
+			}
+		});
+		checkBox.setText("Show Path");
+		parent.add(checkBox);
+	}
+
+	private void addMenu_SetPathBorders(JMenu parent) {
 		JMenu menuPathStart = new JMenu("Path Start");
-		window.getMenuOptions().add(menuPathStart);
+		parent.add(menuPathStart);
 		addMenuGridPositions(menuPathStart, pathStart, new AbstractAction() {
 
 			@Override
@@ -86,7 +138,7 @@ public class MazeApp {
 		});
 
 		JMenu menuPathTarget = new JMenu("Path Target");
-		window.getMenuOptions().add(menuPathTarget);
+		parent.add(menuPathTarget);
 		addMenuGridPositions(menuPathTarget, pathTarget, new AbstractAction() {
 
 			@Override
@@ -101,7 +153,7 @@ public class MazeApp {
 		});
 	}
 
-	private void addMenuGridPositions(JMenu menu, GridPosition selection, Action action) {
+	private void addMenuGridPositions(JMenu parent, GridPosition selection, Action action) {
 		final String[] texts = { "Top Left", "Top Right", "Bottom Left", "Bottom Right", "Center" };
 		final GridPosition[] positions = { TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, CENTER };
 		final ButtonGroup bg = new ButtonGroup();
@@ -110,8 +162,25 @@ public class MazeApp {
 			mi.setText(texts[i]);
 			mi.putClientProperty("position", positions[i]);
 			mi.setSelected(positions[i] == selection);
-			menu.add(mi);
+			parent.add(mi);
 			bg.add(mi);
 		}
+	}
+
+	private void addMenuItem_SetGridCellSize(JMenu parent) {
+		JMenuItem mi = new JMenuItem(new AbstractAction() {
+
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				String input = JOptionPane.showInputDialog(window, "Enter New Cell Size", canvas.getCellSize());
+				try {
+					canvas.setCellSize(Integer.parseInt(input));
+				} catch (NumberFormatException e) {
+					// ignore
+				}
+			}
+		});
+		mi.setText("Change Grid Cell Size...");
+		parent.add(mi);
 	}
 }
