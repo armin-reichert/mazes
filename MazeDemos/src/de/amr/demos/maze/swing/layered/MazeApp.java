@@ -5,6 +5,7 @@ import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.grid.api.GridPosition.TOP_RIGHT;
+import static java.lang.String.format;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -55,16 +56,17 @@ public class MazeApp {
 		pathStart = TOP_LEFT;
 		pathTarget = BOTTOM_RIGHT;
 
-		canvas = new GridCanvas(800, 800, 20);
+		canvas = new GridCanvas(1024, 768, 8);
 		canvas.getInputMap().put(KeyStroke.getKeyStroke("SPACE"), "nextMaze");
 		canvas.getActionMap().put("nextMaze", nextMazeAction);
 
 		window = new JFrame("Mazes");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setResizable(false);
-		buildMenu();
 		window.add(canvas);
+		buildMenu();
 		window.pack();
+		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 	}
 
@@ -89,42 +91,45 @@ public class MazeApp {
 		int startCell = grid.cell(TOP_LEFT);
 		switch (index) {
 		case 0:
-			generator =  new PrimMST(grid);
+			generator = new PrimMST(grid);
 			break;
 		case 1:
-			generator =  new RandomBFS(grid);
+			generator = new RandomBFS(grid);
 			startCell = grid.cell(CENTER);
 			break;
 		case 2:
-			generator =  new IterativeDFS(grid);
+			generator = new IterativeDFS(grid);
 			break;
 		case 3:
-			generator =  new RecursiveDivision(grid);
+			generator = new RecursiveDivision(grid);
 			grid.fill();
 			grid.setDefaultContent(TraversalState.COMPLETED);
 			break;
 		case 4:
-			generator =  new KruskalMST(grid);
+			generator = new KruskalMST(grid);
 			break;
 		default:
-			generator =  new IterativeDFS(grid);
+			generator = new IterativeDFS(grid);
 			break;
 		}
-		System.out.println("Running " + generator.getClass().getSimpleName());
+		System.out
+				.println(format("Generating maze (%d cells) using ", grid.numCells(), generator.getClass().getSimpleName()));
+		long time = System.nanoTime();
 		generator.run(startCell);
+		System.out.println(format("Maze generation took %.2f seconds", (System.nanoTime() - time) / 1000000000f));
 	}
 
 	private void buildMenu() {
-		JMenuBar menubar = new JMenuBar();
-		window.setJMenuBar(menubar);
+		JMenuBar menuBar = new JMenuBar();
+		window.setJMenuBar(menuBar);
 
-		JMenu menuOptions = new JMenu("Options");
-		menubar.add(menuOptions);
+		JMenu menu_Options = new JMenu("Options");
+		menuBar.add(menu_Options);
 
-		addMenuItem_ShowHideDistances(menuOptions);
-		addMenuItem_ShowHidePath(menuOptions);
-		addMenu_SetPathBorders(menuOptions);
-		addMenuItem_SetGridCellSize(menuOptions);
+		addMenuItem_ShowHideDistances(menu_Options);
+		addMenuItem_ShowHidePath(menu_Options);
+		addMenu_SetPathBorders(menu_Options);
+		addMenuItem_SetGridCellSize(menu_Options);
 	}
 
 	private void addMenuItem_ShowHideDistances(JMenu parent) {
@@ -162,7 +167,7 @@ public class MazeApp {
 	private void addMenu_SetPathBorders(JMenu parent) {
 		JMenu menuPathStart = new JMenu("Path Start");
 		parent.add(menuPathStart);
-		addItemsForGridPositions(menuPathStart, pathStart, new AbstractAction() {
+		addMenuItems_GridPositions(menuPathStart, pathStart, new AbstractAction() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -177,7 +182,7 @@ public class MazeApp {
 
 		JMenu menuPathTarget = new JMenu("Path Target");
 		parent.add(menuPathTarget);
-		addItemsForGridPositions(menuPathTarget, pathTarget, new AbstractAction() {
+		addMenuItems_GridPositions(menuPathTarget, pathTarget, new AbstractAction() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -191,7 +196,7 @@ public class MazeApp {
 		});
 	}
 
-	private void addItemsForGridPositions(JMenu parent, GridPosition selection, Action action) {
+	private void addMenuItems_GridPositions(JMenu parent, GridPosition selection, Action action) {
 		final String[] texts = { "Top Left", "Top Right", "Bottom Left", "Bottom Right", "Center" };
 		final GridPosition[] positions = { TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, CENTER };
 		final ButtonGroup bg = new ButtonGroup();
