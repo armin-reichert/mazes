@@ -8,6 +8,7 @@ import static de.amr.easy.grid.api.GridPosition.TOP_RIGHT;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
+import java.util.Random;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -27,7 +28,12 @@ import de.amr.demos.grid.swing.ui.GridCanvas;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.GridPosition;
+import de.amr.easy.maze.alg.IterativeDFS;
+import de.amr.easy.maze.alg.KruskalMST;
+import de.amr.easy.maze.alg.MazeAlgorithm;
 import de.amr.easy.maze.alg.PrimMST;
+import de.amr.easy.maze.alg.RandomBFS;
+import de.amr.easy.maze.alg.RecursiveDivision;
 
 public class MazeApp {
 
@@ -49,7 +55,7 @@ public class MazeApp {
 		pathStart = TOP_LEFT;
 		pathTarget = BOTTOM_RIGHT;
 
-		canvas = new GridCanvas(1200, 800, 40);
+		canvas = new GridCanvas(800, 800, 20);
 		canvas.getInputMap().put(KeyStroke.getKeyStroke("SPACE"), "nextMaze");
 		canvas.getActionMap().put("nextMaze", nextMazeAction);
 
@@ -67,14 +73,46 @@ public class MazeApp {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			final Grid2D<TraversalState, Integer> grid = canvas.getGrid();
-			grid.clearContent();
-			grid.removeEdges();
-			new PrimMST(grid).run(grid.cell(CENTER));
+			runRandomMazeAlgorithm(grid);
 			canvas.clear();
 			canvas.runPathFinder(grid.cell(pathStart), grid.cell(pathTarget));
 			canvas.repaint();
 		}
 	};
+
+	private void runRandomMazeAlgorithm(Grid2D<TraversalState, Integer> grid) {
+		int index = new Random().nextInt(5);
+		MazeAlgorithm generator = null;
+		grid.clearContent();
+		grid.removeEdges();
+		grid.setDefaultContent(TraversalState.UNVISITED);
+		int startCell = grid.cell(TOP_LEFT);
+		switch (index) {
+		case 0:
+			generator =  new PrimMST(grid);
+			break;
+		case 1:
+			generator =  new RandomBFS(grid);
+			startCell = grid.cell(CENTER);
+			break;
+		case 2:
+			generator =  new IterativeDFS(grid);
+			break;
+		case 3:
+			generator =  new RecursiveDivision(grid);
+			grid.fill();
+			grid.setDefaultContent(TraversalState.COMPLETED);
+			break;
+		case 4:
+			generator =  new KruskalMST(grid);
+			break;
+		default:
+			generator =  new IterativeDFS(grid);
+			break;
+		}
+		System.out.println("Running " + generator.getClass().getSimpleName());
+		generator.run(startCell);
+	}
 
 	private void buildMenu() {
 		JMenuBar menubar = new JMenuBar();
@@ -124,7 +162,7 @@ public class MazeApp {
 	private void addMenu_SetPathBorders(JMenu parent) {
 		JMenu menuPathStart = new JMenu("Path Start");
 		parent.add(menuPathStart);
-		addMenuGridPositions(menuPathStart, pathStart, new AbstractAction() {
+		addItemsForGridPositions(menuPathStart, pathStart, new AbstractAction() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -139,7 +177,7 @@ public class MazeApp {
 
 		JMenu menuPathTarget = new JMenu("Path Target");
 		parent.add(menuPathTarget);
-		addMenuGridPositions(menuPathTarget, pathTarget, new AbstractAction() {
+		addItemsForGridPositions(menuPathTarget, pathTarget, new AbstractAction() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -153,7 +191,7 @@ public class MazeApp {
 		});
 	}
 
-	private void addMenuGridPositions(JMenu parent, GridPosition selection, Action action) {
+	private void addItemsForGridPositions(JMenu parent, GridPosition selection, Action action) {
 		final String[] texts = { "Top Left", "Top Right", "Bottom Left", "Bottom Right", "Center" };
 		final GridPosition[] positions = { TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, CENTER };
 		final ButtonGroup bg = new ButtonGroup();
