@@ -47,36 +47,16 @@ public class MazeApp {
 
 	private static final List<Consumer<Grid2D<TraversalState, Integer>>> GENERATORS = Arrays.asList(
 	/*@formatter:off*/	
-		grid -> {
-			new BinaryTreeRandom(grid).run(grid.cell(CENTER));
-		},
-		grid -> {
-			new EllerInsideOut(grid).run(grid.cell(CENTER));
-		},
-		grid -> {
-			new HuntAndKillRandom(grid).run(grid.cell(CENTER));
-		},
-		grid -> {
-			new IterativeDFS(grid).run(grid.cell(CENTER));
-		},
-		grid -> {
-			new KruskalMST(grid).run(grid.cell(CENTER));
-		},
-		grid -> {
-			new PrimMST(grid).run(grid.cell(CENTER));
-		},
-		grid -> {
-			new RandomBFS(grid).run(grid.cell(CENTER));
-		},
-		grid -> {
-			new RecursiveDivision(grid).run(null);
-		},
-		grid -> {
-			new Sidewinder(grid).run(null);
-		},
-		grid -> {
-			new WilsonUSTHilbertCurve(grid).run(grid.cell(TOP_LEFT));
-		}
+		grid -> new BinaryTreeRandom(grid).run(grid.cell(CENTER)),
+		grid -> new EllerInsideOut(grid).run(grid.cell(CENTER)),
+		grid -> new HuntAndKillRandom(grid).run(grid.cell(CENTER)),
+		grid -> new IterativeDFS(grid).run(grid.cell(CENTER)),
+		grid -> new KruskalMST(grid).run(grid.cell(CENTER)),
+		grid -> new PrimMST(grid).run(grid.cell(CENTER)),
+		grid -> new RandomBFS(grid).run(grid.cell(CENTER)),
+		grid -> new RecursiveDivision(grid).run(null),
+		grid -> new Sidewinder(grid).run(null),
+		grid -> new WilsonUSTHilbertCurve(grid).run(grid.cell(TOP_LEFT))
 	/*@formatter:on*/
 	);
 
@@ -94,7 +74,7 @@ public class MazeApp {
 	private GridPosition pathStart;
 	private GridPosition pathTarget;
 	private Timer timer;
-	
+
 	public MazeApp() {
 		pathStart = TOP_LEFT;
 		pathTarget = BOTTOM_RIGHT;
@@ -104,7 +84,7 @@ public class MazeApp {
 		canvas.getActionMap().put("stopStartTimer", stopStartTimer);
 
 		timer = new Timer(2000, nextMazeAction);
-		
+
 		window = new JFrame("Mazes");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setResizable(false);
@@ -113,12 +93,12 @@ public class MazeApp {
 		window.pack();
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
-		
+
 		timer.start();
 	}
-	
+
 	private Action stopStartTimer = new AbstractAction() {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (timer.isRunning()) {
