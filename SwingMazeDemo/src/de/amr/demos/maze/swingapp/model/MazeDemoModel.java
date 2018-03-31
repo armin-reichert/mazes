@@ -16,6 +16,7 @@ import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.maze.alg.AldousBroderUST;
 import de.amr.easy.maze.alg.BinaryTree;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
+import de.amr.easy.maze.alg.BoruvkaMST;
 import de.amr.easy.maze.alg.Eller;
 import de.amr.easy.maze.alg.EllerInsideOut;
 import de.amr.easy.maze.alg.GrowingTree;
@@ -63,8 +64,9 @@ public class MazeDemoModel {
 		new AlgorithmInfo<>(IterativeDFS.class, "Depth-First-Traversal (non-recursive)", Traversal),
 		new AlgorithmInfo<>(RandomBFS.class, "Breadth-First-Traversal", Traversal),
 		new AlgorithmInfo<>(KruskalMST.class, "Kruskal MST", MST),
-		new AlgorithmInfo<>(ReverseDeleteMST.class, "Reverse-Delete MST (experimental, slow!)", MST, SmallGridOnly),
 		new AlgorithmInfo<>(PrimMST.class, "Prim MST", MST),
+		new AlgorithmInfo<>(BoruvkaMST.class, "Boruvka MST (experimental, slow!)", MST, SmallGridOnly),
+		new AlgorithmInfo<>(ReverseDeleteMST.class, "Reverse-Delete MST (experimental, slow!)", MST, SmallGridOnly),
 		new AlgorithmInfo<>(AldousBroderUST.class, "Aldous-Broder UST (slow!)", UST, Slow),
 		new AlgorithmInfo<>(WilsonUSTRandomCell.class, "Wilson UST (random, slow!)", UST, Slow),
 		new AlgorithmInfo<>(WilsonUSTRowsTopDown.class, "Wilson UST (row-wise top-to-bottom)", UST),
@@ -84,7 +86,7 @@ public class MazeDemoModel {
 		new AlgorithmInfo<>(WilsonUSTPeanoCurve.class, "Wilson UST (Peano curve)", UST),
 		new AlgorithmInfo<>(BinaryTree.class, "Binary Tree (row-wise, top-to-bottom"),
 		new AlgorithmInfo<>(BinaryTreeRandom.class, "Binary Tree (random)"), 
-		new AlgorithmInfo<>(Sidewinder.class, "Sidewinder"),
+		new AlgorithmInfo<>(Sidewinder.class, "Sidewinder (Slow!)", SmallGridOnly),
 		new AlgorithmInfo<>(Eller.class, "Eller's Algorithm"), 
 		new AlgorithmInfo<>(EllerInsideOut.class, "Armin's Algorithm"), 
 		new AlgorithmInfo<>(HuntAndKill.class, "Hunt-And-Kill"),

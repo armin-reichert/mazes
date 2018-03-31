@@ -46,16 +46,16 @@ public class BoruvkaMST extends MazeAlgorithm {
 		grid.vertexStream().forEach(cell -> forest.find(cell));
 		while (forest.size() > 1) {
 			componentsPermuted(forest).forEach(tree -> {
-				// TODO: provide stream over just the elements of a component
+				// TODO: we need a method returning a stream over just the elements of a component
 				cellsPermuted().filter(cell -> forest.find(cell) == tree).forEach(cell -> {
 					grid.neighborsPermuted(cell).filter(neighbor -> forest.find(neighbor) != tree).findFirst()
 							.ifPresent(neighbor -> {
-								// (cell, neighbor) is an edge from current tree to another component
+								// add (cell, neighbor) as an edge from the current tree to another component
 								grid.set(cell, COMPLETED);
 								grid.set(neighbor, COMPLETED);
 								grid.addEdge(cell, neighbor);
+								// merge the components
 								forest.union(forest.find(cell), forest.find(neighbor));
-								// System.out.println(String.format("Added edge (%d,%d)", cell, neighbor));
 							});
 				});
 			});
