@@ -25,6 +25,7 @@ import de.amr.easy.grid.impl.Grid;
 import de.amr.easy.maze.alg.AldousBroderUST;
 import de.amr.easy.maze.alg.BinaryTree;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
+import de.amr.easy.maze.alg.BoruvkaMST;
 import de.amr.easy.maze.alg.Eller;
 import de.amr.easy.maze.alg.EllerInsideOut;
 import de.amr.easy.maze.alg.GrowingTree;
@@ -58,8 +59,8 @@ import de.amr.easy.util.StopWatch;
 
 public class MazeGeneratorTests {
 
-	private static final int WIDTH = 500;
-	private static final int HEIGHT = 100;
+	private static final int WIDTH = 250;
+	private static final int HEIGHT = 200;
 
 	private Grid2D<TraversalState, Integer> grid;
 	private StopWatch watch;
@@ -111,6 +112,12 @@ public class MazeGeneratorTests {
 		exec(new BinaryTreeRandom(grid));
 	}
 
+	@Test
+	public void testBoruvka() {
+		grid = new Grid<>(40, 50, UNVISITED);
+		exec(new BoruvkaMST(grid));
+	}
+	
 	@Test
 	public void testEller() {
 		exec(new Eller(grid));
