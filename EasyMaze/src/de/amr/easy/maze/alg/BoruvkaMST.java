@@ -1,11 +1,12 @@
 package de.amr.easy.maze.alg;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
+import static java.util.stream.Collectors.toList;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import de.amr.easy.data.Partition;
@@ -27,33 +28,36 @@ public class BoruvkaMST extends MazeAlgorithm {
 		super(grid);
 	}
 
-	private IntStream cellsPermuted() {
-		List<Integer> cells = grid.vertexStream().collect(Collectors.toList());
-		Collections.shuffle(cells);
-		return cells.stream().mapToInt(Integer::intValue);
+	private static <T> Collector<T, ?, List<T>> toShuffledList() {
+		return Collectors.collectingAndThen(toList(), list -> {
+			Collections.shuffle(list);
+			return list;
+		});
 	}
 
-	private Stream<Partition.EquivClass> componentsPermuted(Partition<Integer> forest) {
-		List<Partition.EquivClass> components = forest.components().collect(Collectors.toList());
-		Collections.shuffle(components);
-		return components.stream();
+	private static Stream<Partition.EquivClass> componentsPermuted(Partition<Integer> forest) {
+		return forest.components().collect(toShuffledList()).stream();
+	}
+
+	private static Stream<Integer> cellsPermuted(Grid2D<TraversalState, Integer> grid) {
+		return grid.vertexStream().collect(toShuffledList()).stream();
 	}
 
 	@Override
 	public void run(Integer start) {
 		// initialize forest with single tree for each cell:
-		forest = new Partition<>();
-		grid.vertexStream().forEach(cell -> forest.find(cell));
+		forest = new Partition<>(grid.vertexStream()::iterator);
+		// while there are different components, merge using the cheapest (here: any) edge
 		while (forest.size() > 1) {
-			componentsPermuted(forest).forEach(tree -> {
-				// TODO: we need a method returning a stream over just the elements of a component
-				cellsPermuted().filter(cell -> forest.find(cell) == tree).forEach(cell -> {
-					grid.neighborsPermuted(cell).filter(neighbor -> forest.find(neighbor) != tree).findFirst()
+			componentsPermuted(forest).forEach(component -> {
+				// TODO: we need a method returning a stream of exactly the elements of a given component
+				cellsPermuted(grid).filter(cell -> forest.find(cell) == component).forEach(cell -> {
+					grid.neighborsPermuted(cell).filter(neighbor -> forest.find(neighbor) != component).findFirst()
 							.ifPresent(neighbor -> {
-								// add (cell, neighbor) as an edge from the current tree to another component
+								// add edge {cell, neighbor} to spanning tree
+								grid.addEdge(cell, neighbor);
 								grid.set(cell, COMPLETED);
 								grid.set(neighbor, COMPLETED);
-								grid.addEdge(cell, neighbor);
 								// merge the components
 								forest.union(forest.find(cell), forest.find(neighbor));
 							});
