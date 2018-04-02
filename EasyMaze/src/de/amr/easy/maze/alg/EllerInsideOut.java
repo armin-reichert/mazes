@@ -103,7 +103,7 @@ public class EllerInsideOut extends MazeAlgorithm {
 		grid.addEdge(v, w);
 		grid.set(v, COMPLETED);
 		grid.set(w, COMPLETED);
-		mazeParts.union(mazeParts.find(v), mazeParts.find(w));
+		mazeParts.union(v, w);
 	}
 
 	private void connectCellsInsideLayer(boolean all) {
@@ -132,7 +132,7 @@ public class EllerInsideOut extends MazeAlgorithm {
 	}
 
 	private void connectCellsWithNextLayer() {
-		Set<EquivClass> connected = new HashSet<>();
+		Set<EquivClass<Integer>> connected = new HashSet<>();
 
 		// randomly select cells and connect with the next layer unless another cell from the same
 		// equivalence class is already connected to that layer

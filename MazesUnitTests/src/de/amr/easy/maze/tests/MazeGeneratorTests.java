@@ -114,7 +114,7 @@ public class MazeGeneratorTests {
 
 	@Test
 	public void testBoruvka() {
-		grid = new Grid<>(40, 50, UNVISITED);
+		grid = new Grid<>(10, 10, UNVISITED);
 		exec(new BoruvkaMST(grid));
 	}
 	

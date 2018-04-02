@@ -1,8 +1,15 @@
 package de.amr.easy.maze.misc;
 
+import static java.util.stream.Collectors.toList;
+
 import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.awt.GraphicsEnvironment;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -74,6 +81,17 @@ public abstract class MazeUtils {
 			pow *= base;
 		}
 		return pow;
+	}
+
+	private static <T> Collector<T, ?, List<T>> toShuffledList() {
+		return Collectors.collectingAndThen(toList(), list -> {
+			Collections.shuffle(list);
+			return list;
+		});
+	}
+
+	public static <T> Stream<T> streamPermuted(Stream<T> source) {
+		return source.collect(toShuffledList()).stream();
 	}
 
 }
