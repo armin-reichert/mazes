@@ -65,7 +65,7 @@ public class MazeDemoModel {
 		new AlgorithmInfo<>(RandomBFS.class, "Breadth-First-Traversal", Traversal),
 		new AlgorithmInfo<>(KruskalMST.class, "Kruskal MST", MST),
 		new AlgorithmInfo<>(PrimMST.class, "Prim MST", MST),
-		new AlgorithmInfo<>(BoruvkaMST.class, "Boruvka MST (experimental, slow!)", MST, SmallGridOnly),
+		new AlgorithmInfo<>(BoruvkaMST.class, "Boruvka MST", MST),
 		new AlgorithmInfo<>(ReverseDeleteMST.class, "Reverse-Delete MST (experimental, slow!)", MST, SmallGridOnly),
 		new AlgorithmInfo<>(AldousBroderUST.class, "Aldous-Broder UST (slow!)", UST, Slow),
 		new AlgorithmInfo<>(WilsonUSTRandomCell.class, "Wilson UST (random, slow!)", UST, Slow),

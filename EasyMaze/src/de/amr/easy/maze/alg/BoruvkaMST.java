@@ -34,8 +34,8 @@ public class BoruvkaMST extends MazeAlgorithm {
 	public void run(Integer start) {
 		forest = new Partition<>(grid.vertexStream()::iterator);
 		while (forest.size() > 1) {
-			Iterable<Partition.EquivClass<Integer>> forestPermuted = streamPermuted(forest.components())::iterator;
-			for (Partition.EquivClass<Integer> tree : forestPermuted) {
+			Iterable<Partition.EquivClass<Integer>> treesPermuted = streamPermuted(forest.components())::iterator;
+			for (Partition.EquivClass<Integer> tree : treesPermuted) {
 				findMinOutgoingEdge(tree).ifPresent(minEdge -> {
 					Integer u = minEdge.either(), v = minEdge.other(u);
 					grid.addEdge(u, v);
@@ -48,7 +48,7 @@ public class BoruvkaMST extends MazeAlgorithm {
 	}
 
 	private Optional<Edge<Integer>> findMinOutgoingEdge(EquivClass<Integer> tree) {
-		List<Integer> cells = streamPermuted(tree.elements()).collect(Collectors.toList());
+		Iterable<Integer> cells = streamPermuted(tree.elements())::iterator;
 		for (Integer cell : cells) {
 			Iterable<Integer> neighbors = (Iterable<Integer>) grid.neighborsPermuted(cell)::iterator;
 			for (Integer neighbor : neighbors) {

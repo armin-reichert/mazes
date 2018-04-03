@@ -90,6 +90,13 @@ public abstract class MazeUtils {
 		});
 	}
 
+	/**
+	 * Permutes the content of a stream.
+	 * 
+	 * @param source
+	 *          some stream
+	 * @return the stream content in some random order
+	 */
 	public static <T> Stream<T> streamPermuted(Stream<T> source) {
 		return source.collect(toShuffledList()).stream();
 	}
