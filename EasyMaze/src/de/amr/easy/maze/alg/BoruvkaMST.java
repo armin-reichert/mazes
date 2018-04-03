@@ -3,9 +3,14 @@ package de.amr.easy.maze.alg;
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.maze.misc.MazeUtils.streamPermuted;
 
-import java.util.stream.Stream;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import de.amr.easy.data.Partition;
+import de.amr.easy.data.Partition.EquivClass;
+import de.amr.easy.graph.api.Edge;
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 
@@ -19,35 +24,39 @@ import de.amr.easy.grid.api.Grid2D;
  */
 public class BoruvkaMST extends MazeAlgorithm {
 
+	private Partition<Integer> forest;
+
 	public BoruvkaMST(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
 	}
 
-	private Stream<Integer> componentCellsPermuted(Partition<Integer> partition,
-			Partition.EquivClass<Integer> component) {
-		return streamPermuted(grid.vertexStream()).filter(cell -> partition.find(cell) == component);
-		// return streamPermuted(component.elements());
-	}
-
 	@Override
 	public void run(Integer start) {
-		// initialize forest with single tree for each cell:
-		Partition<Integer> forest = new Partition<>(grid.vertexStream()::iterator);
-		// while there are different components, merge using the cheapest (here: any) edge
+		forest = new Partition<>(grid.vertexStream()::iterator);
 		while (forest.size() > 1) {
-			streamPermuted(forest.components()).forEach(component -> {
-				componentCellsPermuted(forest, component).forEach(cell -> {
-					grid.neighborsPermuted(cell).filter(neighbor -> forest.find(neighbor) != component).findFirst()
-							.ifPresent(neighbor -> {
-								// add edge {cell, neighbor} to spanning tree
-								grid.addEdge(cell, neighbor);
-								grid.set(cell, COMPLETED);
-								grid.set(neighbor, COMPLETED);
-								// merge the components
-								forest.union(cell, neighbor);
-							});
+			Iterable<Partition.EquivClass<Integer>> forestPermuted = streamPermuted(forest.components())::iterator;
+			for (Partition.EquivClass<Integer> tree : forestPermuted) {
+				findMinOutgoingEdge(tree).ifPresent(minEdge -> {
+					Integer u = minEdge.either(), v = minEdge.other(u);
+					grid.addEdge(u, v);
+					grid.set(u, COMPLETED);
+					grid.set(v, COMPLETED);
+					forest.union(u, v);
 				});
-			});
+			}
 		}
+	}
+
+	private Optional<Edge<Integer>> findMinOutgoingEdge(EquivClass<Integer> tree) {
+		List<Integer> cells = streamPermuted(tree.elements()).collect(Collectors.toList());
+		for (Integer cell : cells) {
+			Iterable<Integer> neighbors = (Iterable<Integer>) grid.neighborsPermuted(cell)::iterator;
+			for (Integer neighbor : neighbors) {
+				if (forest.find(cell) != forest.find(neighbor)) {
+					return Optional.of(new SimpleEdge<>(cell, neighbor));
+				}
+			}
+		}
+		return Optional.empty();
 	}
 }
