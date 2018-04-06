@@ -2,6 +2,8 @@ package de.amr.demos.maze.swing;
 
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
+import java.util.stream.IntStream;
+
 import de.amr.demos.grid.swing.core.SwingBFSAnimation;
 import de.amr.demos.grid.swing.core.SwingGridSampleApp;
 import de.amr.easy.maze.alg.BoruvkaMST;
@@ -13,14 +15,17 @@ public class BoruvkaMSTApp extends SwingGridSampleApp {
 	}
 
 	public BoruvkaMSTApp() {
-		super(32);
+		super(64);
 		setAppName("Boruvka-MST Maze");
 	}
 
 	@Override
 	public void run() {
-		new BoruvkaMST(grid).run(null);
-		new SwingBFSAnimation(canvas, grid).run(grid.cell(TOP_LEFT));
-		sleep(1000);
+		IntStream.of(64, 32, 16, 8, 4, 2).forEach(cellSize -> {
+			resizeGrid(cellSize);
+			new BoruvkaMST(grid).run(null);
+			new SwingBFSAnimation(canvas, grid).run(grid.cell(TOP_LEFT));
+			sleep(1000);
+		});
 	}
 }
