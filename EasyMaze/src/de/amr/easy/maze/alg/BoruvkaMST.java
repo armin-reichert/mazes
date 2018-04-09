@@ -35,7 +35,7 @@ public class BoruvkaMST extends MazeAlgorithm {
 			streamPermuted(forest.components()).map(this::findMinCrossingEdge).filter(Optional::isPresent).map(Optional::get)
 					.forEach(edge -> {
 						Integer u = edge.either(), v = edge.other(u);
-						if (forest.find(u) != forest.find(v)) {
+						if (!forest.sameComponent(u, v)) {
 							forest.union(u, v);
 							grid.addEdge(u, v);
 							grid.set(u, COMPLETED);
@@ -50,7 +50,7 @@ public class BoruvkaMST extends MazeAlgorithm {
 	}
 
 	private Stream<SimpleEdge<Integer>> crossingEdges(Integer node) {
-		return grid.neighborsPermuted(node).boxed().filter(neighbor -> forest.find(node) != forest.find(neighbor))
+		return grid.neighborsPermuted(node).boxed().filter(neighbor -> forest.sameComponent(node, neighbor))
 				.map(neighbor -> new SimpleEdge<>(node, neighbor));
 	}
 }

@@ -52,7 +52,7 @@ public class Eller extends MazeAlgorithm {
 			if (all || rnd.nextBoolean()) {
 				Integer left = grid.cell(col, row);
 				Integer right = grid.cell(col + 1, row);
-				if (partition.find(left) != partition.find(right)) {
+				if (!partition.sameComponent(left, right)) {
 					connectCells(left, right);
 				}
 			}

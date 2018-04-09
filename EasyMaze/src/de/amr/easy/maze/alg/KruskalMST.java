@@ -25,7 +25,7 @@ public class KruskalMST extends MazeAlgorithm {
 		final Partition<Integer> forest = new Partition<>();
 		grid.fullGridEdgesPermuted().forEach(edge -> {
 			Integer u = edge.either(), v = edge.other(u);
-			if (forest.find(u) != forest.find(v)) {
+			if (!forest.sameComponent(u, v)) {
 				grid.set(u, COMPLETED);
 				grid.set(v, COMPLETED);
 				grid.addEdge(u, v);
