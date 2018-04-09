@@ -9,6 +9,7 @@ import java.util.stream.IntStream;
 
 import org.junit.Test;
 
+import de.amr.easy.data.PartitionComp;
 import de.amr.easy.data.Partition;
 
 public class TestUnionFind {
@@ -31,7 +32,7 @@ public class TestUnionFind {
 		assertEquals(3, p1.size());
 		p1.union(1, 2);
 		assertEquals(2, p1.size());
-		Partition.EquivClass<Integer> c1 = p1.find(1);
+		PartitionComp<Integer> c1 = p1.find(1);
 		assertEquals(2, c1.size());
 		assertEquals(new HashSet<>(Arrays.asList(1, 2)), c1.elements().collect(toSet()));
 	}

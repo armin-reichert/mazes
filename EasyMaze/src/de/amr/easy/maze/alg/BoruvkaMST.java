@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import de.amr.easy.data.Partition;
-import de.amr.easy.data.Partition.EquivClass;
+import de.amr.easy.data.PartitionComp;
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
@@ -45,7 +45,7 @@ public class BoruvkaMST extends MazeAlgorithm {
 		}
 	}
 
-	private Optional<SimpleEdge<Integer>> findMinCrossingEdge(EquivClass<Integer> tree) {
+	private Optional<SimpleEdge<Integer>> findMinCrossingEdge(PartitionComp<Integer> tree) {
 		return streamPermuted(tree.elements()).flatMap(this::crossingEdges).findFirst();
 	}
 

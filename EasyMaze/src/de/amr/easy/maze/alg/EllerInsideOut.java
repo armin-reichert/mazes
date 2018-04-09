@@ -18,8 +18,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import de.amr.easy.data.PartitionComp;
 import de.amr.easy.data.Partition;
-import de.amr.easy.data.Partition.EquivClass;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.BareGrid;
@@ -132,7 +132,7 @@ public class EllerInsideOut extends MazeAlgorithm {
 	}
 
 	private void connectCellsWithNextLayer() {
-		Set<EquivClass<Integer>> connected = new HashSet<>();
+		Set<PartitionComp<Integer>> connected = new HashSet<>();
 
 		// randomly select cells and connect with the next layer unless another cell from the same
 		// equivalence class is already connected to that layer
