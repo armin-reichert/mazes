@@ -4,10 +4,10 @@ import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.maze.misc.MazeUtils.streamPermuted;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import de.amr.easy.data.Partition;
 import de.amr.easy.data.Partition.EquivClass;
-import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
@@ -32,28 +32,25 @@ public class BoruvkaMST extends MazeAlgorithm {
 	public void run(Integer start) {
 		forest = new Partition<>(grid.vertexStream()::iterator);
 		while (forest.size() > 1) {
-			streamPermuted(forest.components()).forEach(tree -> {
-				findMinOutgoingEdge(tree).ifPresent(minEdge -> {
-					Integer u = minEdge.either(), v = minEdge.other(u);
-					grid.addEdge(u, v);
-					grid.set(u, COMPLETED);
-					grid.set(v, COMPLETED);
-					forest.union(u, v);
-				});
-			});
+			streamPermuted(forest.components()).map(this::findMinCrossingEdge).filter(Optional::isPresent).map(Optional::get)
+					.forEach(edge -> {
+						Integer u = edge.either(), v = edge.other(u);
+						if (forest.find(u) != forest.find(v)) {
+							forest.union(u, v);
+							grid.addEdge(u, v);
+							grid.set(u, COMPLETED);
+							grid.set(v, COMPLETED);
+						}
+					});
 		}
 	}
 
-	private Optional<Edge<Integer>> findMinOutgoingEdge(EquivClass<Integer> tree) {
-		Iterable<Integer> cells = streamPermuted(tree.elements())::iterator;
-		for (Integer cell : cells) {
-			Iterable<Integer> neighbors = grid.neighborsPermuted(cell)::iterator;
-			for (Integer neighbor : neighbors) {
-				if (forest.find(cell) != forest.find(neighbor)) {
-					return Optional.of(new SimpleEdge<>(cell, neighbor));
-				}
-			}
-		}
-		return Optional.empty();
+	private Optional<SimpleEdge<Integer>> findMinCrossingEdge(EquivClass<Integer> tree) {
+		return streamPermuted(tree.elements()).flatMap(this::crossingEdges).findFirst();
+	}
+
+	private Stream<SimpleEdge<Integer>> crossingEdges(Integer node) {
+		return grid.neighborsPermuted(node).boxed().filter(neighbor -> forest.find(node) != forest.find(neighbor))
+				.map(neighbor -> new SimpleEdge<>(node, neighbor));
 	}
 }

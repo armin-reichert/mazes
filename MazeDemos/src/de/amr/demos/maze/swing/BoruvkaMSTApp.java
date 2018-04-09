@@ -17,6 +17,7 @@ public class BoruvkaMSTApp extends SwingGridSampleApp {
 	public BoruvkaMSTApp() {
 		super(64);
 		setAppName("Boruvka-MST Maze");
+		fullscreen = false;
 	}
 
 	@Override
