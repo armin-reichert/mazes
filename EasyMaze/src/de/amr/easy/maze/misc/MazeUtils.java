@@ -95,21 +95,9 @@ public abstract class MazeUtils {
 	 * 
 	 * @param source
 	 *          some stream
-	 * @return the stream content in some random order
+	 * @return the stream content in randomly permuted order
 	 */
-	public static <T> Stream<T> streamPermuted(Stream<T> source) {
+	public static <T> Stream<T> permute(Stream<T> source) {
 		return source.collect(toShuffledList()).stream();
 	}
-	
-	/**
-	 * Returns a parallel permutation of a stream.
-	 * 
-	 * @param source
-	 *          some stream
-	 * @return the stream content in some random order
-	 */
-	public static <T> Stream<T> streamParallelPermuted(Stream<T> source) {
-		return source.collect(toShuffledList()).parallelStream();
-	}
-
 }

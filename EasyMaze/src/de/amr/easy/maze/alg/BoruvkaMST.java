@@ -1,7 +1,7 @@
 package de.amr.easy.maze.alg;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
-import static de.amr.easy.maze.misc.MazeUtils.streamPermuted;
+import static de.amr.easy.maze.misc.MazeUtils.permute;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -32,7 +32,7 @@ public class BoruvkaMST extends MazeAlgorithm {
 	public void run(Integer start) {
 		forest = new Partition<>(grid.vertexStream()::iterator);
 		while (forest.size() > 1) {
-			streamPermuted(forest.components()).map(this::findMinCrossingEdge).filter(Optional::isPresent).map(Optional::get)
+			permute(forest.components()).map(this::randomCombiningEdge).filter(Optional::isPresent).map(Optional::get)
 					.forEach(edge -> {
 						Integer u = edge.either(), v = edge.other(u);
 						if (!forest.sameComponent(u, v)) {
@@ -45,11 +45,11 @@ public class BoruvkaMST extends MazeAlgorithm {
 		}
 	}
 
-	private Optional<SimpleEdge<Integer>> findMinCrossingEdge(PartitionComp<Integer> tree) {
-		return streamPermuted(tree.elements()).flatMap(this::crossingEdges).findFirst();
+	private Optional<SimpleEdge<Integer>> randomCombiningEdge(PartitionComp<Integer> tree) {
+		return permute(tree.elements()).flatMap(this::combiningEdges).findFirst();
 	}
 
-	private Stream<SimpleEdge<Integer>> crossingEdges(Integer node) {
+	private Stream<SimpleEdge<Integer>> combiningEdges(Integer node) {
 		return grid.neighborsPermuted(node).boxed().filter(neighbor -> !forest.sameComponent(node, neighbor))
 				.map(neighbor -> new SimpleEdge<>(node, neighbor));
 	}
