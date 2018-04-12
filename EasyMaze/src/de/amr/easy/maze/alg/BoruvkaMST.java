@@ -32,20 +32,22 @@ public class BoruvkaMST extends MazeAlgorithm {
 	public void run(Integer start) {
 		forest = new Partition<>(grid.vertexStream()::iterator);
 		while (forest.size() > 1) {
-			permute(forest.components()).map(this::randomCombiningEdge).filter(Optional::isPresent).map(Optional::get)
-					.forEach(edge -> {
-						Integer u = edge.either(), v = edge.other(u);
-						if (!forest.sameComponent(u, v)) {
-							forest.union(u, v);
-							grid.addEdge(u, v);
-							grid.set(u, COMPLETED);
-							grid.set(v, COMPLETED);
-						}
-					});
+			permute(forest.components()).map(this::findCombiningEdge).filter(Optional::isPresent).map(Optional::get)
+					.forEach(this::addEdgeToMaze);
 		}
 	}
 
-	private Optional<SimpleEdge<Integer>> randomCombiningEdge(PartitionComp<Integer> tree) {
+	private void addEdgeToMaze(SimpleEdge<Integer> edge) {
+		Integer u = edge.either(), v = edge.other(u);
+		if (!forest.sameComponent(u, v)) {
+			grid.addEdge(u, v);
+			grid.set(u, COMPLETED);
+			grid.set(v, COMPLETED);
+			forest.union(u, v);
+		}
+	}
+
+	private Optional<SimpleEdge<Integer>> findCombiningEdge(PartitionComp<Integer> tree) {
 		return permute(tree.elements()).flatMap(this::combiningEdges).findFirst();
 	}
 
