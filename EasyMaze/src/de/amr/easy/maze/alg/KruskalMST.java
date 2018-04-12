@@ -3,6 +3,7 @@ package de.amr.easy.maze.alg;
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 
 import de.amr.easy.data.Partition;
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 
@@ -16,21 +17,25 @@ import de.amr.easy.grid.api.Grid2D;
  */
 public class KruskalMST extends MazeAlgorithm {
 
+	private Partition<Integer> forest;
+
 	public KruskalMST(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
 	}
 
 	@Override
 	public void run(Integer start) {
-		final Partition<Integer> forest = new Partition<>();
-		grid.fullGridEdgesPermuted().forEach(edge -> {
-			Integer u = edge.either(), v = edge.other(u);
-			if (!forest.sameComponent(u, v)) {
-				grid.set(u, COMPLETED);
-				grid.set(v, COMPLETED);
-				grid.addEdge(u, v);
-				forest.union(u, v);
-			}
-		});
+		forest = new Partition<>();
+		grid.fullGridEdgesPermuted().forEach(this::addEdgeToMaze);
+	}
+
+	private void addEdgeToMaze(SimpleEdge<Integer> edge) {
+		Integer u = edge.either(), v = edge.other(u);
+		if (!forest.sameComponent(u, v)) {
+			grid.addEdge(u, v);
+			grid.set(u, COMPLETED);
+			grid.set(v, COMPLETED);
+			forest.union(u, v);
+		}
 	}
 }

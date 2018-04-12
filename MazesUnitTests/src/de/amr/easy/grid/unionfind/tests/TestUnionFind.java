@@ -5,12 +5,11 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.stream.IntStream;
 
 import org.junit.Test;
 
-import de.amr.easy.data.PartitionComp;
 import de.amr.easy.data.Partition;
+import de.amr.easy.data.PartitionComp;
 
 public class TestUnionFind {
 
@@ -22,13 +21,13 @@ public class TestUnionFind {
 
 	@Test
 	public void testSingletonsPartition() {
-		Partition<Integer> p = new Partition<>(IntStream.of(1, 2, 3)::iterator);
+		Partition<Integer> p = new Partition<>(1, 2, 3);
 		assertEquals(3, p.size());
 	}
 
 	@Test
 	public void testUnion() {
-		Partition<Integer> p1 = new Partition<>(IntStream.of(1, 2, 3)::iterator);
+		Partition<Integer> p1 = new Partition<>(1, 2, 3);
 		assertEquals(3, p1.size());
 		p1.union(1, 2);
 		assertEquals(2, p1.size());

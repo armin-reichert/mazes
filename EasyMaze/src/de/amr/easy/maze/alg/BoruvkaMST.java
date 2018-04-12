@@ -30,7 +30,7 @@ public class BoruvkaMST extends MazeAlgorithm {
 
 	@Override
 	public void run(Integer start) {
-		forest = new Partition<>(grid.vertexStream()::iterator);
+		forest = new Partition<>(grid.vertexStream());
 		while (forest.size() > 1) {
 			permute(forest.components()).map(this::findCombiningEdge).filter(Optional::isPresent).map(Optional::get)
 					.forEach(this::addEdgeToMaze);
