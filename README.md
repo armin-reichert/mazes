@@ -26,14 +26,17 @@ Graph Traversal:
 - [Random Depth-First-Search, recursive](EasyMaze/src/de/amr/easy/maze/alg/IterativeDFS.java)
 - [Random Depth-First-Search, non-recursive](EasyMaze/src/de/amr/easy/maze/alg/RecursiveDFS.java)
 - [Recursive division](EasyMaze/src/de/amr/easy/maze/alg/RecursiveDivision.java)
+
 Minimum Spanning Tree: 
 - [Boruvka Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/mst/BoruvkaMST.java)
 - [Kruskal Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/mst/KruskalMST.java)
 - [Prim Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/mst/PrimMST.java)
 - [Reverse-Delete Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteMST.java)
+
 Uniform Spanning Tree:
 - [Aldous-Broder](EasyMaze/src/de/amr/easy/maze/alg/AldousBroderUST.java)
 - [Wilson's algorithm](EasyMaze/src/de/amr/easy/maze/alg/wilson) (16 different variants)
+
 Other algorithms:
 - [Binary Tree, top-to-bottom](EasyMaze/src/de/amr/easy/maze/alg/BinaryTree.java)
 - [Binary Tree, random](EasyMaze/src/de/amr/easy/maze/alg/BinaryTreeRandom.java)
