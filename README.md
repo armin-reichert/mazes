@@ -2,18 +2,18 @@
 
 ### Maze generation algorithms implemented in Java 8
 
-My interest in maze generation started when reading the [weblog of Jamis Buck](http://weblog.jamisbuck.org/archives.html) where he presents a number of algorithms together with visualizations and implementation in Ruby.
+My interest in maze generation started after reading the [weblog of Jamis Buck](http://weblog.jamisbuck.org/archives.html) where he presents a number of maze generating algorithms implemented in Ruby.
 
-Initially I just wanted to implement some of these algorithms in Java and formulate them such that the underlying graph algorithm should be clearly visible. In the course I discovered new ways of maze generation, for example a modified version of Eller's algorithm which generates the maze from the center towards the borders, or variations on Wilson's algorithm which you get from different ways of selecting the sources of the random walks. For example, you can select the start cells in the order defined by a space-filling-curve ([Hilbert](EasyGrid/src/de/amr/easy/grid/curves/HilbertCurve.java), [Peano](EasyGrid/src/de/amr/easy/grid/curves/PeanoCurve.java), [Moore](EasyGrid/src/de/amr/easy/grid/curves/MooreLCurve.java)). Probably of no practical use but at least fun to watch.
+Initially, I just wanted to implement some of these algorithms myself using Java, especially in such a way that the underlying graph algorithm should be clearly visible. In the course of doing that I discovered new ways of maze generation, for example a modified version of Eller's algorithm which generates the maze from the center towards the borders, or variations on Wilson's algorithm by using different kinds of selecting the sources of the random walks. For example, one can select the start cells of the random walks in the order defined by some space-filling-curve ([Hilbert](EasyGrid/src/de/amr/easy/grid/curves/HilbertCurve.java), [Peano](EasyGrid/src/de/amr/easy/grid/curves/PeanoCurve.java), [Moore](EasyGrid/src/de/amr/easy/grid/curves/MooreLCurve.java)). Probably of no practical use, but at least fun to watch!
 
-The given implementation emphasizes the underlying graph algorithm (creating a **spanning tree** of an undirected grid graph) and is free of rendering or data structure internals.
+This implementation emphasizes the underlying graph algorithm (creating a **spanning tree** of an undirected grid graph) and the maze generator code is free of rendering details or ad-hoc data structure implementations.
 
-To achieve this, there is
-- A Graph and Grid API for the maze generators 
-- A light-weight implementation of the Grid API
-- A publish-subscribe mechanism for observing graph operations
+To achieve that, there is
+- an API for Graph and Grid data structures 
+- an efficient implementation of a 2D-Grid
+- a publish-subscribe mechanism for observing graph operations used for example to animate the generation process visually
 
-All Maze generation algorithms work strictly against the Grid API, renderers are attached as graph or graph traversal listeners.
+All Maze generation algorithms work only against the Grid API, renderers are attached as graph or graph traversal listeners.
 
 The implementation uses Java 8 features (streams and lambda expressions) for better readability and has no dependencies to any UI library (AWT, Swing, JavaFX).
 
@@ -39,39 +39,31 @@ Implemented so far:
 Path finding algorithms:
 - The EasyGrid library contains a DFS and BFS-based path finding implementation.
 
-As an example, this is the generator based on Prim's minimum-spanning-tree algorithm:
+As an example, this is the generator based on the Kruskal minimum-spanning-tree algorithm:
 
 ```java
-public class PrimMST extends MazeAlgorithm {
+public class KruskalMST extends MazeAlgorithm {
 
-	private final PriorityQueue<WeightedEdge<Integer, Integer>> cut = new PriorityQueue<>();
+	private Partition<Integer> forest;
 
-	public PrimMST(Grid2D<TraversalState, Integer> grid) {
+	public KruskalMST(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
 	}
 
 	@Override
-	public void accept(Integer start) {
-		extendMazeAt(start);
-		while (!cut.isEmpty()) {
-			WeightedEdge<Integer, Integer> edge = cut.poll();
-			Integer either = edge.either(), other = edge.other(either);
-			if (outsideMaze(either) || outsideMaze(other)) {
-				grid.addEdge(either, other);
-				extendMazeAt(outsideMaze(either) ? either : other);
-			}
+	public void run(Integer start) {
+		forest = new Partition<>(grid.vertexStream());
+		grid.fullGridEdgesPermuted().forEach(this::addEdgeToMaze);
+	}
+
+	private void addEdgeToMaze(Edge<Integer> edge) {
+		Integer u = edge.either(), v = edge.other(u);
+		if (!forest.sameComponent(u, v)) {
+			grid.addEdge(u, v);
+			grid.set(u, COMPLETED);
+			grid.set(v, COMPLETED);
+			forest.union(u, v);
 		}
-	}
-
-	private void extendMazeAt(Integer cell) {
-		grid.neighbors(cell).filter(this::outsideMaze).forEach(neighbor -> {
-			cut.add(new WeightedEdge<>(cell, neighbor, rnd.nextInt()));
-		});
-		grid.set(cell, COMPLETED);
-	}
-
-	private boolean outsideMaze(Integer cell) {
-		return grid.get(cell) != COMPLETED;
 	}
 }
 ```
