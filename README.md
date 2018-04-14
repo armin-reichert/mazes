@@ -23,8 +23,8 @@ Implemented so far:
 
 Graph Traversal:
 - [Random Breadth-First-Search](EasyMaze/src/de/amr/easy/maze/alg/RandomBFS.java)
-- [Random Depth-First-Search, recursive](EasyMaze/src/de/amr/easy/maze/alg/IterativeDFS.java)
-- [Random Depth-First-Search, non-recursive](EasyMaze/src/de/amr/easy/maze/alg/RecursiveDFS.java)
+- [Random Depth-First-Search, iterative](EasyMaze/src/de/amr/easy/maze/alg/IterativeDFS.java)
+- [Random Depth-First-Search, recursive](EasyMaze/src/de/amr/easy/maze/alg/RecursiveDFS.java)
 
 Minimum Spanning Tree: 
 - [Boruvka](EasyMaze/src/de/amr/easy/maze/alg/mst/BoruvkaMST.java)
