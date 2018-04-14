@@ -3,7 +3,7 @@ package de.amr.easy.maze.alg;
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 
 import de.amr.easy.data.Partition;
-import de.amr.easy.graph.api.SimpleEdge;
+import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 
@@ -25,11 +25,11 @@ public class KruskalMST extends MazeAlgorithm {
 
 	@Override
 	public void run(Integer start) {
-		forest = new Partition<>();
+		forest = new Partition<>(grid.vertexStream());
 		grid.fullGridEdgesPermuted().forEach(this::addEdgeToMaze);
 	}
 
-	private void addEdgeToMaze(SimpleEdge<Integer> edge) {
+	private void addEdgeToMaze(Edge<Integer> edge) {
 		Integer u = edge.either(), v = edge.other(u);
 		if (!forest.sameComponent(u, v)) {
 			grid.addEdge(u, v);
