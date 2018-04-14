@@ -1,4 +1,4 @@
-package de.amr.easy.maze.alg;
+package de.amr.easy.maze.alg.mst;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 
@@ -6,6 +6,7 @@ import de.amr.easy.data.Partition;
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.maze.alg.MazeAlgorithm;
 
 /**
  * Maze generator derived from Kruskal's minimum spanning tree algorithm.

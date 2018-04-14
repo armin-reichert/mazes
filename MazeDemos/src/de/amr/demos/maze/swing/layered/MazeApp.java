@@ -36,11 +36,11 @@ import de.amr.easy.maze.alg.BinaryTreeRandom;
 import de.amr.easy.maze.alg.EllerInsideOut;
 import de.amr.easy.maze.alg.HuntAndKillRandom;
 import de.amr.easy.maze.alg.IterativeDFS;
-import de.amr.easy.maze.alg.KruskalMST;
-import de.amr.easy.maze.alg.PrimMST;
 import de.amr.easy.maze.alg.RandomBFS;
 import de.amr.easy.maze.alg.RecursiveDivision;
 import de.amr.easy.maze.alg.Sidewinder;
+import de.amr.easy.maze.alg.mst.KruskalMST;
+import de.amr.easy.maze.alg.mst.PrimMST;
 import de.amr.easy.maze.alg.wilson.WilsonUSTHilbertCurve;
 
 public class MazeApp {

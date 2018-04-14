@@ -5,7 +5,7 @@ import org.junit.Test;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.Grid;
-import de.amr.easy.maze.alg.KruskalMST;
+import de.amr.easy.maze.alg.mst.KruskalMST;
 
 public class LargeMazesTests {
 

@@ -6,7 +6,7 @@ import java.util.stream.IntStream;
 
 import de.amr.demos.grid.swing.core.SwingBFSAnimation;
 import de.amr.demos.grid.swing.core.SwingGridSampleApp;
-import de.amr.easy.maze.alg.BoruvkaMST;
+import de.amr.easy.maze.alg.mst.BoruvkaMST;
 
 public class BoruvkaMSTApp extends SwingGridSampleApp {
 

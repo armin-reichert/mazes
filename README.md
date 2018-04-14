@@ -28,9 +28,10 @@ Implemented so far:
 - My own [variation](EasyMaze/src/de/amr/easy/maze/alg/EllerInsideOut.java) of Eller's growing the maze inside-out
 - [Growing Tree](EasyMaze/src/de/amr/easy/maze/alg/GrowingTree.java)
 - Hunt-And-Kill ([top-down](EasyMaze/src/de/amr/easy/maze/alg/HuntAndKill.java) and [random](EasyMaze/src/de/amr/easy/maze/alg/HuntAndKillRandom.java))
-- [Kruskal Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/KruskalMST.java)
-- [Prim Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/PrimMST.java)
-- [Boruvka Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/BoruvkaMST.java)
+- [Kruskal Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/mst/KruskalMST.java)
+- [Prim Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/mst/PrimMST.java)
+- [Boruvka Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/mst/BoruvkaMST.java)
+- [Reverse-Delete Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteMST.java)
 - [Random Breadth-First-Search](EasyMaze/src/de/amr/easy/maze/alg/RandomBFS.java)
 - Random Depth-First-Search ([non-recursive](EasyMaze/src/de/amr/easy/maze/alg/IterativeDFS.java) and [recursive](EasyMaze/src/de/amr/easy/maze/alg/RecursiveDFS.java))
 - [Recursive division](EasyMaze/src/de/amr/easy/maze/alg/RecursiveDivision.java)

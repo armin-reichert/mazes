@@ -1,4 +1,4 @@
-package de.amr.easy.maze.alg;
+package de.amr.easy.maze.alg.mst;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.maze.misc.MazeUtils.permute;
@@ -11,6 +11,7 @@ import de.amr.easy.data.PartitionComp;
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.maze.alg.MazeAlgorithm;
 
 /**
  * Maze generator derived from Boruvka's minimum spanning tree algorithm.
