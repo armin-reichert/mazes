@@ -25,13 +25,12 @@ Graph Traversal:
 - [Random Breadth-First-Search](EasyMaze/src/de/amr/easy/maze/alg/RandomBFS.java)
 - [Random Depth-First-Search, recursive](EasyMaze/src/de/amr/easy/maze/alg/IterativeDFS.java)
 - [Random Depth-First-Search, non-recursive](EasyMaze/src/de/amr/easy/maze/alg/RecursiveDFS.java)
-- [Recursive division](EasyMaze/src/de/amr/easy/maze/alg/RecursiveDivision.java)
 
 Minimum Spanning Tree: 
-- [Boruvka Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/mst/BoruvkaMST.java)
-- [Kruskal Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/mst/KruskalMST.java)
-- [Prim Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/mst/PrimMST.java)
-- [Reverse-Delete Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteMST.java)
+- [Boruvka](EasyMaze/src/de/amr/easy/maze/alg/mst/BoruvkaMST.java)
+- [Kruskal](EasyMaze/src/de/amr/easy/maze/alg/mst/KruskalMST.java)
+- [Prim](EasyMaze/src/de/amr/easy/maze/alg/mst/PrimMST.java)
+- [Reverse-Delete, naive](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteMST.java)
 
 Uniform Spanning Tree:
 - [Aldous-Broder](EasyMaze/src/de/amr/easy/maze/alg/AldousBroderUST.java)
@@ -46,6 +45,7 @@ Other algorithms:
 - [Growing Tree](EasyMaze/src/de/amr/easy/maze/alg/GrowingTree.java)
 - [Hunt-And-Kill, top-to-bottom](EasyMaze/src/de/amr/easy/maze/alg/HuntAndKill.java)
 - [Hunt-And-Kill, random](EasyMaze/src/de/amr/easy/maze/alg/HuntAndKillRandom.java)
+- [Recursive division](EasyMaze/src/de/amr/easy/maze/alg/RecursiveDivision.java)
 
 Path finding algorithms:
 - The EasyGrid library contains a DFS and BFS-based path finding implementation.
