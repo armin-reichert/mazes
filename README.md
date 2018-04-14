@@ -21,24 +21,28 @@ Also included is a Swing application demonstrating all implemented maze generato
 
 Implemented so far:
 
-- Binary Tree ([top-down](EasyMaze/src/de/amr/easy/maze/alg/BinaryTree.java) and [random](EasyMaze/src/de/amr/easy/maze/alg/BinaryTreeRandom.java))
-- [Sidewinder algorithm](EasyMaze/src/de/amr/easy/maze/alg/Sidewinder.java)
-- [Eller's algorithm](EasyMaze/src/de/amr/easy/maze/alg/Eller.java)
-- My own [variation](EasyMaze/src/de/amr/easy/maze/alg/EllerInsideOut.java) of Eller's growing the maze inside-out
-- [Growing Tree](EasyMaze/src/de/amr/easy/maze/alg/GrowingTree.java)
-- Hunt-And-Kill ([top-down](EasyMaze/src/de/amr/easy/maze/alg/HuntAndKill.java) and [random](EasyMaze/src/de/amr/easy/maze/alg/HuntAndKillRandom.java))
-- Minimum Spanning Tree: 
--- [Kruskal Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/mst/KruskalMST.java)
--- [Prim Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/mst/PrimMST.java)
--- [Boruvka Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/mst/BoruvkaMST.java)
--- [Reverse-Delete Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteMST.java)
-- Graph traversal:
--- [Random Breadth-First-Search](EasyMaze/src/de/amr/easy/maze/alg/RandomBFS.java)
--- Random Depth-First-Search ([non-recursive](EasyMaze/src/de/amr/easy/maze/alg/IterativeDFS.java) and [recursive](EasyMaze/src/de/amr/easy/maze/alg/RecursiveDFS.java))
+Graph Traversal:
+- [Random Breadth-First-Search](EasyMaze/src/de/amr/easy/maze/alg/RandomBFS.java)
+- [Random Depth-First-Search, recursive](EasyMaze/src/de/amr/easy/maze/alg/IterativeDFS.java)
+- [Random Depth-First-Search, non-recursive](EasyMaze/src/de/amr/easy/maze/alg/RecursiveDFS.java)
 - [Recursive division](EasyMaze/src/de/amr/easy/maze/alg/RecursiveDivision.java)
-- Uniform Spanning Tree:
--- [Aldous-Broder](EasyMaze/src/de/amr/easy/maze/alg/AldousBroderUST.java)
--- [Wilson's algorithm](EasyMaze/src/de/amr/easy/maze/alg/wilson) (16 different variants)
+Minimum Spanning Tree: 
+- [Boruvka Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/mst/BoruvkaMST.java)
+- [Kruskal Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/mst/KruskalMST.java)
+- [Prim Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/mst/PrimMST.java)
+- [Reverse-Delete Minimum Spanning Tree](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteMST.java)
+Uniform Spanning Tree:
+- [Aldous-Broder](EasyMaze/src/de/amr/easy/maze/alg/AldousBroderUST.java)
+- [Wilson's algorithm](EasyMaze/src/de/amr/easy/maze/alg/wilson) (16 different variants)
+Other algorithms:
+- [Binary Tree, top-to-bottom](EasyMaze/src/de/amr/easy/maze/alg/BinaryTree.java)
+- [Binary Tree, random](EasyMaze/src/de/amr/easy/maze/alg/BinaryTreeRandom.java)
+- [Eller's algorithm](EasyMaze/src/de/amr/easy/maze/alg/Eller.java)
+- [Armin's algorithm](EasyMaze/src/de/amr/easy/maze/alg/EllerInsideOut.java) (like Eller's but growing the maze inside-out)
+- [Sidewinder](EasyMaze/src/de/amr/easy/maze/alg/Sidewinder.java)
+- [Growing Tree](EasyMaze/src/de/amr/easy/maze/alg/GrowingTree.java)
+- [Hunt-And-Kill, top-to-bottom](EasyMaze/src/de/amr/easy/maze/alg/HuntAndKill.java)
+- [Hunt-And-Kill, random](EasyMaze/src/de/amr/easy/maze/alg/HuntAndKillRandom.java)
 
 Path finding algorithms:
 - The EasyGrid library contains a DFS and BFS-based path finding implementation.
