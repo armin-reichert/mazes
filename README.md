@@ -2,7 +2,7 @@
 
 ### Maze generation algorithms implemented in Java 8
 
-<img src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_EllerInsideOut.gif" width="300">
+<img src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_EllerInsideOut_300x200.gif">
 
 My interest in maze generation started after reading the [weblog of Jamis Buck](http://weblog.jamisbuck.org/archives.html) where he presents a number of maze generating algorithms implemented in Ruby.
 
