@@ -21,9 +21,6 @@ import de.amr.easy.maze.alg.MazeAlgorithm;
  */
 public class ReverseDeleteMST extends MazeAlgorithm {
 
-	// private int bfsCount;
-	// private float bfsTotalTime;
-
 	public ReverseDeleteMST(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
 	}
@@ -38,7 +35,7 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 				.sorted()
 				.collect(toCollection(ArrayList::new));
 		/*@formatter:on*/
-		while (!sortedEdges.isEmpty() && grid.edgeCount() != grid.numCells() - 1) {
+		while (grid.edgeCount() < grid.vertexCount() - 1 || !sortedEdges.isEmpty()) {
 			WeightedEdge<Integer, Integer> edge = sortedEdges.remove(sortedEdges.size() - 1);
 			Integer u = edge.either(), v = edge.other(u);
 			grid.removeEdge(edge);
@@ -46,21 +43,13 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 				grid.addEdge(u, v);
 			}
 		}
-		// System.out.println("Reverse-Delete MST:");
-		// System.out.println("#vertices: " + grid.vertexCount());
-		// System.out.println("#edges: " + grid.edgeCount());
-		// System.out.println(bfsCount + " BFS executions took " + bfsTotalTime + " seconds");
 	}
 
 	// TODO more efficient connectivity test or data-structure
 	private boolean connected(Integer either, Integer other) {
 		BreadthFirstTraversal<Integer, WeightedEdge<Integer, Integer>> bfs = new BreadthFirstTraversal<>(grid, either);
 		bfs.setStopAt(other);
-		// StopWatch watch = new StopWatch();
-		// watch.runAndMeasure(bfs);
-		// ++bfsCount;
-		// bfsTotalTime += watch.getSeconds();
-		// System.out.println("BFS #" + bfsCount + " took " + watch.getDuration() + " seconds");
+		bfs.run();
 		return bfs.getDistance(other) != -1;
 	}
 }
