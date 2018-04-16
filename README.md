@@ -2,6 +2,8 @@
 
 ### Maze generation algorithms implemented in Java 8
 
+<img src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_EllerInsideOut.gif" width="300">
+
 My interest in maze generation started after reading the [weblog of Jamis Buck](http://weblog.jamisbuck.org/archives.html) where he presents a number of maze generating algorithms implemented in Ruby.
 
 Initially, I just wanted to implement some of these algorithms myself using Java, especially in such a way that the underlying graph algorithm should be clearly visible. In the course of doing that I discovered new ways of maze generation, for example a modified version of Eller's algorithm which generates the maze from the center towards the borders, or variations on Wilson's algorithm by using different kinds of selecting the sources of the random walks. For example, one can select the start cells of the random walks in the order defined by some space-filling-curve ([Hilbert](EasyGrid/src/de/amr/easy/grid/curves/HilbertCurve.java), [Peano](EasyGrid/src/de/amr/easy/grid/curves/PeanoCurve.java), [Moore](EasyGrid/src/de/amr/easy/grid/curves/MooreLCurve.java)). Probably of no practical use, but at least fun to watch!
