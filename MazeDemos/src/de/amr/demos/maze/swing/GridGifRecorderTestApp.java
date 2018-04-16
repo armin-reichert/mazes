@@ -62,12 +62,13 @@ public class GridGifRecorderTestApp {
 	public void run() {
 		for (Class<? extends MazeAlgorithm> generatorClass : generatorClasses) {
 			grid = new ObservableGrid<>(30, 20, TraversalState.UNVISITED);
+			renderModel.setCellSize(10);
+			renderModel.setPassageWidth(6);
 			canvas = new GridCanvas(grid, renderModel);
-			renderModel.setCellSize(2);
-			renderModel.setPassageWidth(1);
 			try {
 				MazeAlgorithm generator = generatorClass.getConstructor(Grid2D.class).newInstance(grid);
-				String outputPath = "images/maze_" + generatorClass.getSimpleName() + ".gif";
+				String outputPath = String.format("images/maze_%s_%dx%d.gif", generatorClass.getSimpleName(), canvas.getWidth(),
+						canvas.getHeight());
 				gif = new GridGifRecorder(canvas, outputPath, 1, false);
 				gif.beginRecording();
 				generator.run(0);

@@ -14,7 +14,6 @@ import de.amr.easy.graph.api.event.EdgeChangeEvent;
 import de.amr.easy.graph.api.event.EdgeRemovedEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.VertexChangeEvent;
-import de.amr.easy.util.GifSequenceWriter;
 
 public class GridGifRecorder {
 
@@ -23,14 +22,17 @@ public class GridGifRecorder {
 	private String outputPath;
 	private ImageOutputStream imageOut;
 	private int frames;
+	private int skipFactor = 4;
 
 	private void writeFrame() {
 		try {
-			gif.writeFrame(canvas.getGridImage());
-			++frames;
-			if (frames % 100 == 0) {
-				System.out.print(" " + frames);
+			if (frames % skipFactor == 0) {
+				gif.writeFrame(canvas.getGridImage());
+				if (frames % 100 == 0) {
+					System.out.print(" " + frames);
+				}
 			}
+			++frames;
 		} catch (IOException x) {
 			x.printStackTrace();
 		}
