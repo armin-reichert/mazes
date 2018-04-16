@@ -5,7 +5,7 @@ import static de.amr.easy.grid.impl.Top4.E;
 import static de.amr.easy.grid.impl.Top4.S;
 
 import java.util.OptionalInt;
-import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
@@ -55,7 +55,7 @@ public class BinaryTree extends MazeAlgorithm {
 	/*
 	 * @return stream of all grid cells in the order used for maze creation
 	 */
-	protected IntStream cellStream() {
-		return grid.vertexStream().mapToInt(Integer::intValue);
+	protected Stream<Integer> cellStream() {
+		return grid.vertexStream();
 	}
 }

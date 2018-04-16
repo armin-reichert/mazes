@@ -1,9 +1,8 @@
 package de.amr.easy.maze.alg;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import static de.amr.easy.maze.misc.MazeUtils.permute;
+
+import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
@@ -15,16 +14,12 @@ import de.amr.easy.grid.api.Grid2D;
  */
 public class BinaryTreeRandom extends BinaryTree {
 
-	private final List<Integer> cellsInRandomOrder;
-
 	public BinaryTreeRandom(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
-		cellsInRandomOrder = grid.vertexStream().collect(Collectors.toList());
-		Collections.shuffle(cellsInRandomOrder);
 	}
 
 	@Override
-	protected IntStream cellStream() {
-		return cellsInRandomOrder.stream().mapToInt(Integer::intValue);
+	protected Stream<Integer> cellStream() {
+		return permute(grid.vertexStream());
 	}
 }
