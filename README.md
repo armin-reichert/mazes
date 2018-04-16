@@ -30,7 +30,7 @@ Graph Traversal:
 
 Minimum Spanning Tree: 
 - [Boruvka](EasyMaze/src/de/amr/easy/maze/alg/mst/BoruvkaMST.java)
-- [Kruskal](Kruskal.md)
+- [Kruskal](EasyMaze/src/de/amr/easy/maze/alg/mst/KruskalMST.java)
 - [Prim](EasyMaze/src/de/amr/easy/maze/alg/mst/PrimMST.java)
 - [Reverse-Delete, naive](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteMST.java)
 
