@@ -28,7 +28,7 @@ import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
-import de.amr.demos.grid.swing.ui.GridCanvas;
+import de.amr.demos.grid.swing.ui.LayeredGridCanvas;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.GridPosition;
@@ -70,7 +70,7 @@ public class MazeApp {
 	}
 
 	private final JFrame window;
-	private final GridCanvas canvas;
+	private final LayeredGridCanvas canvas;
 	private GridPosition pathStart;
 	private GridPosition pathTarget;
 	private Timer timer;
@@ -79,7 +79,7 @@ public class MazeApp {
 		pathStart = TOP_LEFT;
 		pathTarget = BOTTOM_RIGHT;
 
-		canvas = new GridCanvas(1024, 768, 8);
+		canvas = new LayeredGridCanvas(1024, 768, 8);
 		canvas.getInputMap().put(KeyStroke.getKeyStroke("SPACE"), "stopStartTimer");
 		canvas.getActionMap().put("stopStartTimer", stopStartTimer);
 

@@ -11,7 +11,6 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.maze.alg.MazeAlgorithm;
-import de.amr.easy.util.StopWatch;
 
 /**
  * A naive implementation of the Reverse-Delete-algorithm.
@@ -22,29 +21,29 @@ import de.amr.easy.util.StopWatch;
  */
 public class ReverseDeleteMST extends MazeAlgorithm {
 
-	private int bfsCount;
-	private float bfsTotalTime;
+	// private int bfsCount;
+	// private float bfsTotalTime;
 
 	public ReverseDeleteMST(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
-		grid.fill();
-		grid.setDefaultContent(COMPLETED);
 	}
 
 	@Override
 	public void run(Integer cell) {
+		grid.setDefaultContent(COMPLETED);
+		grid.fill();
 		/*@formatter:off*/
-		List<WeightedEdge<Integer,Integer>> sortedEdgeList = grid.edgeStream()
+		List<WeightedEdge<Integer,Integer>> sortedEdges = grid.edgeStream()
 				.map(this::setRandomEdgeWeight)
 				.sorted()
 				.collect(toCollection(ArrayList::new));
 		/*@formatter:on*/
-		while (!sortedEdgeList.isEmpty()) {
-			WeightedEdge<Integer, Integer> maxWeightEdge = sortedEdgeList.remove(sortedEdgeList.size() - 1);
-			Integer either = maxWeightEdge.either(), other = maxWeightEdge.other(either);
-			grid.removeEdge(maxWeightEdge);
-			if (!connected(either, other)) {
-				grid.addEdge(either, other);
+		while (!sortedEdges.isEmpty() && grid.edgeCount() != grid.numCells() - 1) {
+			WeightedEdge<Integer, Integer> edge = sortedEdges.remove(sortedEdges.size() - 1);
+			Integer u = edge.either(), v = edge.other(u);
+			grid.removeEdge(edge);
+			if (!connected(u, v)) {
+				grid.addEdge(u, v);
 			}
 		}
 		// System.out.println("Reverse-Delete MST:");
@@ -57,10 +56,10 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 	private boolean connected(Integer either, Integer other) {
 		BreadthFirstTraversal<Integer, WeightedEdge<Integer, Integer>> bfs = new BreadthFirstTraversal<>(grid, either);
 		bfs.setStopAt(other);
-		StopWatch watch = new StopWatch();
-		watch.runAndMeasure(bfs);
-		++bfsCount;
-		bfsTotalTime += watch.getSeconds();
+		// StopWatch watch = new StopWatch();
+		// watch.runAndMeasure(bfs);
+		// ++bfsCount;
+		// bfsTotalTime += watch.getSeconds();
 		// System.out.println("BFS #" + bfsCount + " took " + watch.getDuration() + " seconds");
 		return bfs.getDistance(other) != -1;
 	}
