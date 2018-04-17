@@ -20,8 +20,6 @@ import de.amr.easy.grid.api.Grid2D;
  */
 public class RecursiveDFS extends MazeAlgorithm {
 
-	private OptionalInt unvisitedNeighbor;
-
 	public RecursiveDFS(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
 	}
@@ -29,10 +27,14 @@ public class RecursiveDFS extends MazeAlgorithm {
 	@Override
 	public void run(Integer cell) {
 		grid.set(cell, VISITED);
-		while ((unvisitedNeighbor = grid.neighborsPermuted(cell).filter(this::isCellUnvisited).findAny()).isPresent()) {
-			grid.addEdge(cell, unvisitedNeighbor.getAsInt());
-			run(unvisitedNeighbor.getAsInt());
+		for (OptionalInt neighbor = randomNeighbor(cell); neighbor.isPresent(); neighbor = randomNeighbor(cell)) {
+			grid.addEdge(cell, neighbor.getAsInt());
+			run(neighbor.getAsInt());
 		}
 		grid.set(cell, COMPLETED);
+	}
+
+	private OptionalInt randomNeighbor(Integer cell) {
+		return grid.neighborsPermuted(cell).filter(this::isCellUnvisited).findAny();
 	}
 }
