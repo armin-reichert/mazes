@@ -4,9 +4,11 @@
 
 <img src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_EllerInsideOut_300x200.gif">
 
-My interest in maze generation started after reading the [weblog of Jamis Buck](http://weblog.jamisbuck.org/archives.html) where he presents a number of maze generating algorithms implemented in Ruby.
+My interest in maze generation started after reading this [weblog](http://weblog.jamisbuck.org/2011/2/7/maze-generation-algorithm-recap) where the author presents different maze generating algorithms with a Ruby implementation.
 
-Initially, I just wanted to implement some of these algorithms myself using Java, especially in such a way that the underlying graph algorithm should be clearly visible. In the course of doing that I discovered new ways of maze generation, for example a modified version of Eller's algorithm which generates the maze from the center towards the borders, or variations on Wilson's algorithm by using different kinds of selecting the sources of the random walks. For example, one can select the start cells of the random walks in the order defined by some space-filling-curve ([Hilbert](EasyGrid/src/de/amr/easy/grid/curves/HilbertCurve.java), [Peano](EasyGrid/src/de/amr/easy/grid/curves/PeanoCurve.java), [Moore](EasyGrid/src/de/amr/easy/grid/curves/MooreLCurve.java)). Probably of no practical use, but at least fun to watch!
+Originally I just wanted to rewrite some of these algorithms by myself in Java, especially in such a way, that the underlying graph algorithm would be more clearly visible. 
+
+In the course of doing that I discovered new ways for maze generation, for example a modified version of Eller's algorithm ( generating the maze from the center towards the borders), or variations on Wilson's algorithm which you get by different ways of selecting the sources of the random walks. For example, you can select the start cells of the random walks in the order defined by a space-filling-curve ([Hilbert](EasyGrid/src/de/amr/easy/grid/curves/HilbertCurve.java), [Peano](EasyGrid/src/de/amr/easy/grid/curves/PeanoCurve.java), [Moore](EasyGrid/src/de/amr/easy/grid/curves/MooreLCurve.java)). Probably of no practical use, but at least fun to watch!
 
 This implementation emphasizes the underlying graph algorithm (creating a **spanning tree** of an undirected grid graph) and the maze generator code is free of rendering details or ad-hoc data structure implementations.
 
