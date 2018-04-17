@@ -28,9 +28,21 @@ import de.amr.easy.maze.alg.mst.BoruvkaMST;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 import de.amr.easy.maze.alg.mst.PrimMST;
 import de.amr.easy.maze.alg.mst.ReverseDeleteMST;
-import de.amr.easy.maze.alg.wilson.WilsonUSTCollapsingRectangle;
+import de.amr.easy.maze.alg.wilson.WilsonUSTCollapsingCircle;
+import de.amr.easy.maze.alg.wilson.WilsonUSTCollapsingWalls;
+import de.amr.easy.maze.alg.wilson.WilsonUSTExpandingCircle;
+import de.amr.easy.maze.alg.wilson.WilsonUSTExpandingCircles;
+import de.amr.easy.maze.alg.wilson.WilsonUSTExpandingRectangle;
+import de.amr.easy.maze.alg.wilson.WilsonUSTExpandingSpiral;
 import de.amr.easy.maze.alg.wilson.WilsonUSTHilbertCurve;
+import de.amr.easy.maze.alg.wilson.WilsonUSTLeftToRightSweep;
+import de.amr.easy.maze.alg.wilson.WilsonUSTMooreCurve;
+import de.amr.easy.maze.alg.wilson.WilsonUSTNestedRectangles;
+import de.amr.easy.maze.alg.wilson.WilsonUSTPeanoCurve;
 import de.amr.easy.maze.alg.wilson.WilsonUSTRandomCell;
+import de.amr.easy.maze.alg.wilson.WilsonUSTRecursiveCrosses;
+import de.amr.easy.maze.alg.wilson.WilsonUSTRightToLeftSweep;
+import de.amr.easy.maze.alg.wilson.WilsonUSTRowsTopDown;
 
 public class MazeGenerationRecordingApp {
 
@@ -40,13 +52,38 @@ public class MazeGenerationRecordingApp {
 
 	private final Class<?>[] generatorClasses = {
 	/*@formatter:off*/
-		IterativeDFS.class,	RandomBFS.class, 
-		BoruvkaMST.class, KruskalMST.class, PrimMST.class, ReverseDeleteMST.class,
+		BoruvkaMST.class, 
+		KruskalMST.class, 
+		PrimMST.class, 
+		ReverseDeleteMST.class,
 //		AldousBroderUST.class, 
-		BinaryTree.class,  BinaryTreeRandom.class, Eller.class, EllerInsideOut.class, 
-		GrowingTree.class, HuntAndKill.class, HuntAndKillRandom.class,
-		IterativeDFS.class, RandomBFS.class, RecursiveDFS.class, RecursiveDivision.class, Sidewinder.class,
-		WilsonUSTRandomCell.class, WilsonUSTCollapsingRectangle.class, WilsonUSTHilbertCurve.class
+		BinaryTree.class,
+		BinaryTreeRandom.class, 
+		Eller.class,
+		EllerInsideOut.class, 
+		GrowingTree.class, 
+		HuntAndKill.class, 
+		HuntAndKillRandom.class,
+		IterativeDFS.class, 
+		RandomBFS.class, 
+		RecursiveDFS.class, 
+		RecursiveDivision.class, 
+		Sidewinder.class,
+		WilsonUSTCollapsingCircle.class, 
+		WilsonUSTCollapsingWalls.class,
+		WilsonUSTExpandingCircle.class, 
+		WilsonUSTExpandingCircles.class, 
+		WilsonUSTExpandingRectangle.class, 
+		WilsonUSTExpandingSpiral.class, 
+		WilsonUSTHilbertCurve.class, 
+		WilsonUSTLeftToRightSweep.class, 
+		WilsonUSTMooreCurve.class, 
+		WilsonUSTNestedRectangles.class, 
+		WilsonUSTPeanoCurve.class, 
+		WilsonUSTRandomCell.class,
+		WilsonUSTRecursiveCrosses.class, 
+		WilsonUSTRightToLeftSweep.class, 
+		WilsonUSTRowsTopDown.class, 
 	/*@formatter:on*/
 	};
 
