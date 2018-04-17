@@ -25,7 +25,7 @@ public class WilsonUSTExpandingSpiral extends WilsonUST {
 	}
 
 	@Override
-	protected int customStartCell(int start) {
+	protected int customizedStartCell(int start) {
 		return grid.cell(CENTER);
 	}
 }

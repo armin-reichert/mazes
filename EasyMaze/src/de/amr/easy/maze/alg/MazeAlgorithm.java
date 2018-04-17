@@ -10,6 +10,11 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Grid2D;
 
+/**
+ * Abstract base class for maze generation algorithms.
+ * 
+ * @author Armin Reichert
+ */
 public abstract class MazeAlgorithm {
 
 	protected final Grid2D<TraversalState, Integer> grid;
@@ -18,34 +23,41 @@ public abstract class MazeAlgorithm {
 	public MazeAlgorithm(Grid2D<TraversalState, Integer> grid) {
 		this.grid = grid;
 	}
-	
+
+	/**
+	 * Runs the maze generation starting from the given cell. The maze algorithm of course can ignore
+	 * this and select another cell.
+	 * 
+	 * @param startCell
+	 *          the grid cell where the generation starts
+	 */
 	public abstract void run(Integer startCell);
 
 	/**
 	 * Can be overridden by subclasses of a maze generation algorithm to specify a different start
 	 * cell.
 	 * 
-	 * @param originalStartCell
+	 * @param startCell
 	 *          the original start cell passed to the algorithm
 	 * @return the possibly modified start cell
 	 */
-	protected int customStartCell(int originalStartCell) {
-		return originalStartCell;
+	protected int customizedStartCell(int startCell) {
+		return startCell;
 	}
 
-	protected boolean isCellUnvisited(int cell) {
+	protected final boolean isCellUnvisited(int cell) {
 		return grid.get(cell) == UNVISITED;
 	}
 
-	protected boolean isCellVisited(int cell) {
+	protected final boolean isCellVisited(int cell) {
 		return grid.get(cell) == VISITED;
 	}
 
-	protected boolean isCellCompleted(int cell) {
+	protected final boolean isCellCompleted(int cell) {
 		return grid.get(cell) == COMPLETED;
 	}
 
-	protected WeightedEdge<Integer, Integer> setRandomEdgeWeight(WeightedEdge<Integer, Integer> edge) {
+	protected final WeightedEdge<Integer, Integer> setRandomEdgeWeight(WeightedEdge<Integer, Integer> edge) {
 		edge.setWeight(rnd.nextInt());
 		return edge;
 	}
