@@ -28,14 +28,16 @@ public class GridGifRecorder {
 	private String outputPath;
 	private ImageOutputStream imageOut;
 	private int ticks;
+	private int framesWritten;
 	private int scanRate;
 
 	private void writeFrame() {
 		try {
 			if (ticks % scanRate == 0) {
 				gif.writeFrame(canvas.getGridImage());
-				if (ticks % 100 == 0) {
-					System.out.print(" " + ticks);
+				++framesWritten;
+				if (framesWritten % 100 == 0) {
+					System.out.print(" " + framesWritten);
 				}
 			}
 			++ticks;
@@ -90,8 +92,9 @@ public class GridGifRecorder {
 
 	public void beginRecording() {
 		ticks = 0;
+		framesWritten = 0;
 		System.out.println("Writing to: " + outputPath);
-		System.out.print("Frames written: ");
+		System.out.print("Frames: ");
 		try {
 			gif.beginWriting(imageOut);
 		} catch (IOException e) {
@@ -100,7 +103,7 @@ public class GridGifRecorder {
 	}
 
 	public void endRecording() {
-		System.out.println("\nTotal frames written: " + ticks);
+		System.out.println("\nTotal frames written: " + framesWritten);
 		try {
 			gif.endWriting();
 			imageOut.close();
