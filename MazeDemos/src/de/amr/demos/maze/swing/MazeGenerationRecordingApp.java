@@ -1,5 +1,7 @@
 package de.amr.demos.maze.swing;
 
+import static java.lang.String.format;
+
 import java.awt.Color;
 
 import de.amr.demos.grid.swing.core.DefaultGridRenderingModel;
@@ -33,7 +35,7 @@ import de.amr.easy.maze.alg.wilson.WilsonUSTRandomCell;
 public class MazeGenerationRecordingApp {
 
 	public static void main(String[] args) {
-		new MazeGenerationRecordingApp().run();
+		new MazeGenerationRecordingApp().run(40, 25, 8);
 	}
 
 	private final Class<?>[] generatorClasses = {
@@ -69,17 +71,18 @@ public class MazeGenerationRecordingApp {
 		};
 	}
 
-	public void run() {
+	public void run(int numCols, int numRows, int cellSize) {
+		renderModel.setCellSize(cellSize);
+		renderModel.setPassageWidth(cellSize / 2);
 		for (Class<?> generatorClass : generatorClasses) {
-			grid = new ObservableGrid<>(30, 20, TraversalState.UNVISITED);
-			renderModel.setCellSize(10);
-			renderModel.setPassageWidth(6);
+			grid = new ObservableGrid<>(numCols, numRows, TraversalState.UNVISITED);
 			canvas = new GridCanvas(grid, renderModel);
 			try {
 				MazeAlgorithm generator = (MazeAlgorithm) generatorClass.getConstructor(Grid2D.class).newInstance(grid);
-				String outputPath = String.format("images/maze_%s_%dx%d.gif", generatorClass.getSimpleName(), canvas.getWidth(),
-						canvas.getHeight());
+				String outputPath = format("images/maze_%dx%d_%s.gif", grid.numCols(), grid.numRows(),
+						generatorClass.getSimpleName());
 				gif = new GridGifRecorder(canvas, outputPath, 1, false);
+				gif.setScanRate(10);
 				gif.beginRecording();
 				generator.run(0);
 				gif.endRecording();
@@ -87,6 +90,5 @@ public class MazeGenerationRecordingApp {
 				e.printStackTrace();
 			}
 		}
-		System.exit(0);
 	}
 }
