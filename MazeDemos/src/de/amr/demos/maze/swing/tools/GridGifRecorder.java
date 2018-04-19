@@ -53,30 +53,30 @@ public class GridGifRecorder {
 		this.gif = new GifSequenceWriter(canvas.getDrawingBuffer().getType(), delayMillis, loop);
 		FileOutputStream out = new FileOutputStream(outputPath);
 		this.imageOut = new MemoryCacheImageOutputStream(out);
-		canvas.getGrid().addGraphObserver(new GraphObserver<Integer, WeightedEdge<Integer, Integer>>() {
+		canvas.getGrid().addGraphObserver(new GraphObserver<WeightedEdge<Integer>>() {
 
 			@Override
-			public void vertexChanged(VertexChangeEvent<Integer, WeightedEdge<Integer, Integer>> event) {
+			public void vertexChanged(VertexChangeEvent event) {
 				writeFrame();
 			}
 
 			@Override
-			public void graphChanged(ObservableGraph<Integer, WeightedEdge<Integer, Integer>> graph) {
+			public void graphChanged(ObservableGraph<WeightedEdge<Integer>> graph) {
 				writeFrame();
 			}
 
 			@Override
-			public void edgeRemoved(EdgeRemovedEvent<Integer, WeightedEdge<Integer, Integer>> event) {
+			public void edgeRemoved(EdgeRemovedEvent<WeightedEdge<Integer>> event) {
 				writeFrame();
 			}
 
 			@Override
-			public void edgeChanged(EdgeChangeEvent<Integer, WeightedEdge<Integer, Integer>> event) {
+			public void edgeChanged(EdgeChangeEvent<WeightedEdge<Integer>> event) {
 				writeFrame();
 			}
 
 			@Override
-			public void edgeAdded(EdgeAddedEvent<Integer, WeightedEdge<Integer, Integer>> event) {
+			public void edgeAdded(EdgeAddedEvent<WeightedEdge<Integer>> event) {
 				writeFrame();
 			}
 		});

@@ -1,14 +1,11 @@
 package de.amr.easy.maze.alg;
 
-import static de.amr.easy.graph.api.TraversalState.COMPLETED;
-import static de.amr.easy.grid.impl.Top4.E;
-import static de.amr.easy.grid.impl.Top4.S;
-
 import java.util.OptionalInt;
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.impl.Top4;
 
 /**
  * Creates a random binary spanning tree.
@@ -28,10 +25,10 @@ public class BinaryTree extends MazeAlgorithm {
 	@Override
 	public void run(Integer start) {
 		cellStream().forEach(cell -> {
-			randomNeighbor(cell, S, E).ifPresent(neighbor -> {
+			randomNeighbor(cell, Top4.S, Top4.E).ifPresent(neighbor -> {
 				grid.addEdge(cell, neighbor);
-				grid.set(cell, COMPLETED);
-				grid.set(neighbor, COMPLETED);
+				grid.set(cell, TraversalState.COMPLETED);
+				grid.set(neighbor, TraversalState.COMPLETED);
 			});
 		});
 	}
@@ -55,7 +52,7 @@ public class BinaryTree extends MazeAlgorithm {
 	/*
 	 * @return stream of all grid cells in the order used for maze creation
 	 */
-	protected Stream<Integer> cellStream() {
+	protected IntStream cellStream() {
 		return grid.vertexStream();
 	}
 }

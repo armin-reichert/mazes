@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
 import org.junit.After;
 import org.junit.Before;
@@ -48,11 +48,9 @@ public class FullGridTests {
 		assertTrue(grid.edgeStream().count() == 2 * WIDTH * HEIGHT - (WIDTH + HEIGHT));
 	}
 
-	private void assertContainsExactly(Stream<Integer> stream, Integer... cells) {
+	private void assertContainsExactly(IntStream numbers, Integer... cells) {
 		Set<Integer> set = new HashSet<>();
-		stream.forEach(cell -> {
-			set.add(cell);
-		});
+		numbers.forEach(set::add);
 		for (Integer cell : cells) {
 			assertTrue(set.contains(cell));
 		}

@@ -30,14 +30,14 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 		grid.setDefaultContent(COMPLETED);
 		grid.fill();
 		/*@formatter:off*/
-		List<WeightedEdge<Integer,Integer>> sortedEdges = grid.edgeStream()
+		List<WeightedEdge<Integer>> sortedEdges = grid.edgeStream()
 				.map(this::setRandomEdgeWeight)
 				.sorted()
 				.collect(toCollection(ArrayList::new));
 		/*@formatter:on*/
 		while (grid.edgeCount() < grid.vertexCount() - 1 || !sortedEdges.isEmpty()) {
-			WeightedEdge<Integer, Integer> edge = sortedEdges.remove(sortedEdges.size() - 1);
-			Integer u = edge.either(), v = edge.other(u);
+			WeightedEdge<Integer> edge = sortedEdges.remove(sortedEdges.size() - 1);
+			int u = edge.either(), v = edge.other(u);
 			grid.removeEdge(edge);
 			if (!connected(u, v)) {
 				grid.addEdge(u, v);
@@ -46,8 +46,8 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 	}
 
 	// TODO more efficient connectivity test or data-structure
-	private boolean connected(Integer either, Integer other) {
-		BreadthFirstTraversal<Integer, WeightedEdge<Integer, Integer>> bfs = new BreadthFirstTraversal<>(grid, either);
+	private boolean connected(int either, int other) {
+		BreadthFirstTraversal<WeightedEdge<Integer>> bfs = new BreadthFirstTraversal<>(grid, either);
 		bfs.setStopAt(other);
 		bfs.run();
 		return bfs.getDistance(other) != -1;

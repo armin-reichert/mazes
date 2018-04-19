@@ -57,7 +57,7 @@ public abstract class MazeAlgorithm {
 		return grid.get(cell) == COMPLETED;
 	}
 
-	protected final WeightedEdge<Integer, Integer> setRandomEdgeWeight(WeightedEdge<Integer, Integer> edge) {
+	protected final WeightedEdge<Integer> setRandomEdgeWeight(WeightedEdge<Integer> edge) {
 		edge.setWeight(rnd.nextInt());
 		return edge;
 	}

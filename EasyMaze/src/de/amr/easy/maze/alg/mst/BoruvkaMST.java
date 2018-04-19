@@ -31,14 +31,14 @@ public class BoruvkaMST extends MazeAlgorithm {
 
 	@Override
 	public void run(Integer start) {
-		forest = new Partition<>(grid.vertexStream());
+		forest = new Partition<>(grid.vertexStream().boxed());
 		while (forest.size() > 1) {
 			permute(forest.components()).map(this::findCombiningEdge).filter(Optional::isPresent).map(Optional::get)
 					.forEach(this::addEdgeToMaze);
 		}
 	}
 
-	private void addEdgeToMaze(SimpleEdge<Integer> edge) {
+	private void addEdgeToMaze(SimpleEdge edge) {
 		Integer u = edge.either(), v = edge.other(u);
 		if (!forest.sameComponent(u, v)) {
 			grid.addEdge(u, v);
@@ -48,12 +48,12 @@ public class BoruvkaMST extends MazeAlgorithm {
 		}
 	}
 
-	private Optional<SimpleEdge<Integer>> findCombiningEdge(PartitionComp<Integer> tree) {
+	private Optional<SimpleEdge> findCombiningEdge(PartitionComp<Integer> tree) {
 		return permute(tree.elements()).flatMap(this::combiningEdges).findFirst();
 	}
 
-	private Stream<SimpleEdge<Integer>> combiningEdges(Integer node) {
+	private Stream<SimpleEdge> combiningEdges(Integer node) {
 		return grid.neighborsPermuted(node).boxed().filter(neighbor -> !forest.sameComponent(node, neighbor))
-				.map(neighbor -> new SimpleEdge<>(node, neighbor));
+				.map(neighbor -> new SimpleEdge(node, neighbor));
 	}
 }

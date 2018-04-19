@@ -20,7 +20,7 @@ import de.amr.easy.maze.alg.MazeAlgorithm;
  */
 public class PrimMST extends MazeAlgorithm {
 
-	private final PriorityQueue<WeightedEdge<Integer, Integer>> cut = new PriorityQueue<>();
+	private final PriorityQueue<WeightedEdge<Integer>> cut = new PriorityQueue<>();
 
 	public PrimMST(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
@@ -30,8 +30,8 @@ public class PrimMST extends MazeAlgorithm {
 	public void run(Integer start) {
 		extendMazeAt(start);
 		while (!cut.isEmpty()) {
-			WeightedEdge<Integer, Integer> edge = cut.poll();
-			Integer either = edge.either(), other = edge.other(either);
+			WeightedEdge<Integer> edge = cut.poll();
+			int either = edge.either(), other = edge.other(either);
 			if (outsideMaze(either) || outsideMaze(other)) {
 				grid.addEdge(either, other);
 				extendMazeAt(outsideMaze(either) ? either : other);
@@ -39,14 +39,14 @@ public class PrimMST extends MazeAlgorithm {
 		}
 	}
 
-	private void extendMazeAt(Integer cell) {
+	private void extendMazeAt(int cell) {
 		grid.neighbors(cell).filter(this::outsideMaze).forEach(neighbor -> {
 			cut.add(new WeightedEdge<>(cell, neighbor, rnd.nextInt()));
 		});
 		grid.set(cell, COMPLETED);
 	}
 
-	private boolean outsideMaze(Integer cell) {
+	private boolean outsideMaze(int cell) {
 		return grid.get(cell) != COMPLETED;
 	}
 }

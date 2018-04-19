@@ -88,7 +88,7 @@ public class MazeGeneratorTests {
 	@After
 	public void tearDown() {
 		assertEquals(grid.edgeCount(), grid.vertexCount() - 1);
-		assertFalse(new CycleChecker<Integer, WeightedEdge<Integer, Integer>>().test(grid));
+		assertFalse(new CycleChecker<WeightedEdge<Integer>>().test(grid));
 	}
 
 	private void exec(MazeAlgorithm algorithm) {
@@ -117,7 +117,7 @@ public class MazeGeneratorTests {
 		grid = new Grid<>(100, 100, UNVISITED);
 		exec(new BoruvkaMST(grid));
 	}
-	
+
 	@Test
 	public void testEller() {
 		exec(new Eller(grid));

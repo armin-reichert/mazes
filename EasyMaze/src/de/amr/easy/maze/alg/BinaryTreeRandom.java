@@ -2,7 +2,7 @@ package de.amr.easy.maze.alg;
 
 import static de.amr.easy.maze.misc.MazeUtils.permute;
 
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
@@ -19,7 +19,7 @@ public class BinaryTreeRandom extends BinaryTree {
 	}
 
 	@Override
-	protected Stream<Integer> cellStream() {
-		return permute(grid.vertexStream());
+	protected IntStream cellStream() {
+		return permute(grid.vertexStream().boxed()).mapToInt(Integer::intValue);
 	}
 }
