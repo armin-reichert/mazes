@@ -7,12 +7,12 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import de.amr.demos.grid.swing.core.SwingBFSAnimation;
-import de.amr.demos.grid.swing.core.SwingDFSAnimation;
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.view.ControlPanel;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
+import de.amr.easy.grid.ui.swing.SwingDFSAnimation;
 import de.amr.easy.maze.alg.MazeAlgorithm;
 import de.amr.easy.util.StopWatch;
 

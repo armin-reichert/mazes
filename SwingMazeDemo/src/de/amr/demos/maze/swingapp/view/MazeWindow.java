@@ -7,9 +7,9 @@ import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
-import de.amr.demos.grid.swing.core.GridCanvas;
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.rendering.GridColoring;
+import de.amr.easy.grid.ui.swing.GridCanvas;
 
 /**
  * Display area for the grid/maze.

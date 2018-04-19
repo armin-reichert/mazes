@@ -4,13 +4,13 @@ import static java.lang.String.format;
 
 import java.awt.Color;
 
-import de.amr.demos.grid.swing.core.DefaultGridRenderingModel;
-import de.amr.demos.grid.swing.core.GridCanvas;
 import de.amr.demos.maze.swing.tools.GridGifRecorder;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.ObservableGrid2D;
 import de.amr.easy.grid.impl.ObservableGrid;
+import de.amr.easy.grid.ui.swing.DefaultGridRenderingModel;
+import de.amr.easy.grid.ui.swing.GridCanvas;
 import de.amr.easy.maze.alg.BinaryTree;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
 import de.amr.easy.maze.alg.Eller;

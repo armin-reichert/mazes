@@ -6,7 +6,6 @@ import java.io.IOException;
 import javax.imageio.stream.ImageOutputStream;
 import javax.imageio.stream.MemoryCacheImageOutputStream;
 
-import de.amr.demos.grid.swing.core.GridCanvas;
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.graph.api.event.EdgeAddedEvent;
@@ -14,6 +13,7 @@ import de.amr.easy.graph.api.event.EdgeChangeEvent;
 import de.amr.easy.graph.api.event.EdgeRemovedEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.VertexChangeEvent;
+import de.amr.easy.grid.ui.swing.GridCanvas;
 
 /**
  * Tool for recording an algorithm running in a GridCanvas and storing the output in an animated

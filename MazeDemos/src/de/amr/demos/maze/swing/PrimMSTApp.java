@@ -4,8 +4,8 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
 import java.util.stream.IntStream;
 
-import de.amr.demos.grid.swing.core.SwingBFSAnimation;
-import de.amr.demos.grid.swing.core.SwingGridSampleApp;
+import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
+import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 import de.amr.easy.maze.alg.mst.PrimMST;
 
 public class PrimMSTApp extends SwingGridSampleApp {

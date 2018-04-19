@@ -8,11 +8,11 @@ import static de.amr.demos.maze.swingapp.model.MazeDemoModel.Tag.UST;
 
 import java.util.stream.Stream;
 
-import de.amr.demos.grid.swing.core.SwingBFSAnimation;
-import de.amr.demos.grid.swing.core.SwingDFSAnimation;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.ObservableGrid;
+import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
+import de.amr.easy.grid.ui.swing.SwingDFSAnimation;
 import de.amr.easy.maze.alg.AldousBroderUST;
 import de.amr.easy.maze.alg.BinaryTree;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
