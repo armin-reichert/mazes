@@ -34,7 +34,7 @@ public class GridGifRecorder {
 	private void writeFrame() {
 		try {
 			if (ticks % scanRate == 0) {
-				gif.writeFrame(canvas.getGridImage());
+				gif.writeFrame(canvas.getDrawingBuffer());
 				++framesWritten;
 				if (framesWritten % 100 == 0) {
 					System.out.print(" " + framesWritten);
@@ -50,7 +50,7 @@ public class GridGifRecorder {
 		this.scanRate = 1;
 		this.canvas = canvas;
 		this.outputPath = outputPath;
-		this.gif = new GifSequenceWriter(canvas.getGridImage().getType(), delayMillis, loop);
+		this.gif = new GifSequenceWriter(canvas.getDrawingBuffer().getType(), delayMillis, loop);
 		FileOutputStream out = new FileOutputStream(outputPath);
 		this.imageOut = new MemoryCacheImageOutputStream(out);
 		canvas.getGrid().addGraphObserver(new GraphObserver<Integer, WeightedEdge<Integer, Integer>>() {
