@@ -26,7 +26,7 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 	}
 
 	@Override
-	public void run(Integer cell) {
+	public void run(int cell) {
 		grid.setDefaultContent(COMPLETED);
 		grid.fill();
 		/*@formatter:off*/

@@ -24,19 +24,19 @@ public class Sidewinder extends MazeAlgorithm {
 	}
 
 	@Override
-	public void run(Integer start) {
+	public void run(int start) {
 		range(0, grid.numRows()).forEach(row -> {
 			runStart = 0;
 			range(0, grid.numCols()).forEach(col -> {
 				if (row > 0 && (col == grid.numCols() - 1 || rnd.nextBoolean())) {
-					Integer passageCol = runStart + rnd.nextInt(col - runStart + 1);
-					Integer north = grid.cell(passageCol, row - 1), south = grid.cell(passageCol, row);
+					int passageCol = runStart + rnd.nextInt(col - runStart + 1);
+					int north = grid.cell(passageCol, row - 1), south = grid.cell(passageCol, row);
 					grid.addEdge(north, south);
 					grid.set(north, COMPLETED);
 					grid.set(south, COMPLETED);
 					runStart = col + 1;
 				} else if (col + 1 < grid.numCols()) {
-					Integer west = grid.cell(col, row), east = grid.cell(col + 1, row);
+					int west = grid.cell(col, row), east = grid.cell(col + 1, row);
 					grid.addEdge(west, east);
 					grid.set(west, COMPLETED);
 					grid.set(east, COMPLETED);

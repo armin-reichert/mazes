@@ -30,7 +30,7 @@ public class HuntAndKill extends MazeAlgorithm {
 	}
 
 	@Override
-	public void run(Integer animal) {
+	public void run(int animal) {
 		do {
 			kill(animal);
 			OptionalInt livingNeighbor = grid.neighborsPermuted(animal).filter(isAlive).findAny();
@@ -45,11 +45,11 @@ public class HuntAndKill extends MazeAlgorithm {
 		} while (!targets.isEmpty());
 	}
 
-	protected Integer hunt() {
+	protected int hunt() {
 		return targets.nextSetBit(0);
 	}
 
-	protected void kill(Integer animal) {
+	protected void kill(int animal) {
 		grid.set(animal, COMPLETED);
 		targets.clear(animal);
 	}

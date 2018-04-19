@@ -19,7 +19,7 @@ public class WilsonUSTCollapsingCircle extends WilsonUST {
 	}
 
 	@Override
-	public void run(Integer start) {
+	public void run(int start) {
 		start = grid.cell(CENTER);
 		addToTree(start);
 		for (int radius = max(grid.numRows(), grid.numCols()) - 1; radius >= 0; radius--) {

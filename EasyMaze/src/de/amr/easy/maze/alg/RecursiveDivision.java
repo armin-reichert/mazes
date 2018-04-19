@@ -23,7 +23,7 @@ public class RecursiveDivision extends MazeAlgorithm {
 	}
 
 	@Override
-	public void run(Integer start) {
+	public void run(int start) {
 		grid.fill();
 		grid.setDefaultContent(COMPLETED);
 		divide(0, 0, grid.numCols(), grid.numRows());
@@ -53,7 +53,7 @@ public class RecursiveDivision extends MazeAlgorithm {
 			int passage = rnd.nextInt(width);
 			range(0, width).forEach(col -> {
 				if (col != passage && grid.isValidCol(left + col) && grid.isValidRow(cut - 1)) {
-					Integer u = grid.cell(left + col, cut), v = grid.cell(left + col, cut - 1);
+					int u = grid.cell(left + col, cut), v = grid.cell(left + col, cut - 1);
 					grid.edge(u, v).ifPresent(grid::removeEdge);
 				}
 			});
@@ -65,7 +65,7 @@ public class RecursiveDivision extends MazeAlgorithm {
 			int passage = rnd.nextInt(height);
 			range(0, height).forEach(row -> {
 				if (row != passage && grid.isValidCol(cut - 1) && grid.isValidRow(top + row)) {
-					Integer u = grid.cell(cut, top + row), v = grid.cell(cut - 1, top + row);
+					int u = grid.cell(cut, top + row), v = grid.cell(cut - 1, top + row);
 					grid.edge(u, v).ifPresent(grid::removeEdge);
 				}
 			});

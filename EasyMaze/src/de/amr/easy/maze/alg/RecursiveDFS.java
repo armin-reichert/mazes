@@ -25,7 +25,7 @@ public class RecursiveDFS extends MazeAlgorithm {
 	}
 
 	@Override
-	public void run(Integer cell) {
+	public void run(int cell) {
 		grid.set(cell, VISITED);
 		for (OptionalInt neighbor = randomNeighbor(cell); neighbor.isPresent(); neighbor = randomNeighbor(cell)) {
 			grid.addEdge(cell, neighbor.getAsInt());
@@ -34,7 +34,7 @@ public class RecursiveDFS extends MazeAlgorithm {
 		grid.set(cell, COMPLETED);
 	}
 
-	private OptionalInt randomNeighbor(Integer cell) {
+	private OptionalInt randomNeighbor(int cell) {
 		return grid.neighborsPermuted(cell).filter(this::isCellUnvisited).findAny();
 	}
 }

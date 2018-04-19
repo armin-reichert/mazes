@@ -54,8 +54,8 @@ public class MazeApp {
 		grid -> new KruskalMST(grid).run(grid.cell(CENTER)),
 		grid -> new PrimMST(grid).run(grid.cell(CENTER)),
 		grid -> new RandomBFS(grid).run(grid.cell(CENTER)),
-		grid -> new RecursiveDivision(grid).run(null),
-		grid -> new Sidewinder(grid).run(null),
+		grid -> new RecursiveDivision(grid).run(-1),
+		grid -> new Sidewinder(grid).run(-1),
 		grid -> new WilsonUSTHilbertCurve(grid).run(grid.cell(TOP_LEFT))
 	/*@formatter:on*/
 	);

@@ -22,7 +22,7 @@ public class IterativeDFS extends MazeAlgorithm {
 	}
 
 	@Override
-	public void run(Integer cell) {
+	public void run(int cell) {
 		final Deque<Integer> stack = new LinkedList<>();
 		stack.push(cell);
 		grid.set(cell, VISITED);

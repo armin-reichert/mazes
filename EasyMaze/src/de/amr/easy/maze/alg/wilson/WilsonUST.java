@@ -40,7 +40,7 @@ public abstract class WilsonUST extends MazeAlgorithm {
 	}
 
 	@Override
-	public void run(Integer start) {
+	public void run(int start) {
 		start = customizedStartCell(start);
 		addToTree(start);
 		cellStream().forEach(this::loopErasedRandomWalk);
@@ -53,12 +53,12 @@ public abstract class WilsonUST extends MazeAlgorithm {
 	 * @param start
 	 *          the start cell of the random walk
 	 */
-	protected void loopErasedRandomWalk(Integer start) {
+	protected void loopErasedRandomWalk(int start) {
 		if (!outsideTree(start))
 			return;
 
 		// do a random walk starting at the start cell until the current tree is touched
-		Integer v = start;
+		int v = start;
 		while (outsideTree(v)) {
 			int dir = Topologies.TOP4.dirsPermuted().findAny().getAsInt();
 			OptionalInt neighbor = grid.neighbor(v, dir);
@@ -89,7 +89,7 @@ public abstract class WilsonUST extends MazeAlgorithm {
 	 *          a grid cell
 	 * @return <code>true</code> if the cell is outside of the tree created so far
 	 */
-	protected boolean outsideTree(Integer cell) {
+	protected boolean outsideTree(int cell) {
 		return grid.get(cell) != COMPLETED;
 	}
 
@@ -99,7 +99,7 @@ public abstract class WilsonUST extends MazeAlgorithm {
 	 * @param cell
 	 *          a grid cell
 	 */
-	protected void addToTree(Integer cell) {
+	protected void addToTree(int cell) {
 		grid.set(cell, COMPLETED);
 	}
 }

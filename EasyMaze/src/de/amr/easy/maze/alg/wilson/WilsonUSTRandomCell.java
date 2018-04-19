@@ -21,7 +21,7 @@ public class WilsonUSTRandomCell extends WilsonUST {
 	}
 
 	@Override
-	public void run(Integer start) {
+	public void run(int start) {
 		addToTree(start);
 		while (!cellsOutsideTree.isEmpty()) {
 			loopErasedRandomWalk(cellsOutsideTree.get(rnd.nextInt(cellsOutsideTree.size())));
@@ -29,8 +29,8 @@ public class WilsonUSTRandomCell extends WilsonUST {
 	}
 
 	@Override
-	protected void addToTree(Integer v) {
+	protected void addToTree(int v) {
 		super.addToTree(v);
-		cellsOutsideTree.remove(v);
+		cellsOutsideTree.remove((Object) v); // remove(int) is the wrong method!
 	}
 }

@@ -26,24 +26,24 @@ public class GrowingTree extends MazeAlgorithm {
 	}
 
 	@Override
-	public void run(Integer start) {
+	public void run(int start) {
 		cells.add(start);
 		do {
-			Integer cell = selectCell();
+			int cell = selectCell();
 			grid.neighborsPermuted(cell).filter(this::isCellUnvisited).forEach(neighbor -> {
 				grid.addEdge(cell, neighbor);
 				grid.set(cell, COMPLETED);
 				grid.set(neighbor, COMPLETED);
 				cells.add(neighbor);
 			});
-			cells.remove(cell);
+			cells.remove((Object) cell); // remove(int) is the wrong method!
 		} while (!cells.isEmpty());
 	}
 
 	/**
 	 * Subclasses might provide another selection strategy.
 	 */
-	protected Integer selectCell() {
+	protected int selectCell() {
 		return rnd.nextBoolean() ? cells.get(cells.size() - 1) : cells.get(rnd.nextInt(cells.size()));
 	}
 }

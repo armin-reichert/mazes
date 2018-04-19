@@ -16,7 +16,7 @@ public class HuntAndKillRandom extends HuntAndKill {
 	}
 
 	@Override
-	protected Integer hunt() {
+	protected int hunt() {
 		int randomIndex = rnd.nextInt(targets.size());
 		int target1 = targets.nextSetBit(randomIndex);
 		int target2 = targets.previousSetBit(randomIndex);

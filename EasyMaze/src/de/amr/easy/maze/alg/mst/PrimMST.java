@@ -27,7 +27,7 @@ public class PrimMST extends MazeAlgorithm {
 	}
 
 	@Override
-	public void run(Integer start) {
+	public void run(int start) {
 		extendMazeAt(start);
 		while (!cut.isEmpty()) {
 			WeightedEdge<Integer> edge = cut.poll();

@@ -23,7 +23,7 @@ public class SidewinderApp extends SwingGridSampleApp {
 	public void run() {
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			resizeGrid(cellSize);
-			new Sidewinder(grid).run(null);
+			new Sidewinder(grid).run(-1);
 			new SwingBFSAnimation(canvas, grid).run(grid.cell(TOP_LEFT));
 			sleep(1000);
 		});

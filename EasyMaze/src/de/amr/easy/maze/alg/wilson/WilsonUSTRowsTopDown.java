@@ -17,7 +17,7 @@ public class WilsonUSTRowsTopDown extends WilsonUST {
 	}
 
 	@Override
-	public void run(Integer start) {
+	public void run(int start) {
 		addToTree(start);
 		range(0, grid.numRows()).forEach(row -> {
 			range(0, grid.numCols()).forEach(col -> {

@@ -9,8 +9,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import de.amr.easy.data.PartitionComp;
 import de.amr.easy.data.Partition;
+import de.amr.easy.data.PartitionComp;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 
@@ -32,7 +32,7 @@ public class Eller extends MazeAlgorithm {
 	}
 
 	@Override
-	public void run(Integer start) {
+	public void run(int start) {
 		range(0, grid.numRows() - 1).forEach(row -> {
 			connectCellsInsideRow(row, false);
 			connectCellsWithNextRow(row);
@@ -40,11 +40,11 @@ public class Eller extends MazeAlgorithm {
 		connectCellsInsideRow(grid.numRows() - 1, true);
 	}
 
-	private void connectCells(Integer v, Integer w) {
-		grid.addEdge(v, w);
+	private void connectCells(int u, int v) {
+		grid.addEdge(u, v);
+		grid.set(u, COMPLETED);
 		grid.set(v, COMPLETED);
-		grid.set(w, COMPLETED);
-		partition.union(v, w);
+		partition.union(u, v);
 	}
 
 	private void connectCellsInsideRow(int row, boolean all) {

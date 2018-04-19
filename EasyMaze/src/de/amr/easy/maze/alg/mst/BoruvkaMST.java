@@ -30,7 +30,7 @@ public class BoruvkaMST extends MazeAlgorithm {
 	}
 
 	@Override
-	public void run(Integer start) {
+	public void run(int start) {
 		forest = new Partition<>(grid.vertexStream().boxed());
 		while (forest.size() > 1) {
 			permute(forest.components()).map(this::findCombiningEdge).filter(Optional::isPresent).map(Optional::get)
@@ -39,7 +39,7 @@ public class BoruvkaMST extends MazeAlgorithm {
 	}
 
 	private void addEdgeToMaze(SimpleEdge edge) {
-		Integer u = edge.either(), v = edge.other(u);
+		int u = edge.either(), v = edge.other(u);
 		if (!forest.sameComponent(u, v)) {
 			grid.addEdge(u, v);
 			grid.set(u, COMPLETED);

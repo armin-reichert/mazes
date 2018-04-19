@@ -25,13 +25,13 @@ public class KruskalMST extends MazeAlgorithm {
 	}
 
 	@Override
-	public void run(Integer start) {
+	public void run(int start) {
 		forest = new Partition<>(grid.vertexStream().boxed());
 		grid.fullGridEdgesPermuted().forEach(this::addEdgeToMaze);
 	}
 
 	private void addEdgeToMaze(Edge edge) {
-		Integer u = edge.either(), v = edge.other(u);
+		int u = edge.either(), v = edge.other(u);
 		if (!forest.sameComponent(u, v)) {
 			grid.addEdge(u, v);
 			grid.set(u, COMPLETED);

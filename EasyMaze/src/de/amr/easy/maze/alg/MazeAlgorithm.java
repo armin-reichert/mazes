@@ -31,7 +31,7 @@ public abstract class MazeAlgorithm {
 	 * @param startCell
 	 *          the grid cell where the generation starts
 	 */
-	public abstract void run(Integer startCell);
+	public abstract void run(int startCell);
 
 	/**
 	 * Can be overridden by subclasses of a maze generation algorithm to specify a different start

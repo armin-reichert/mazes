@@ -23,7 +23,7 @@ public class RandomBFS extends MazeAlgorithm {
 	}
 
 	@Override
-	public void run(Integer start) {
+	public void run(int start) {
 		extendMaze(start);
 		while (!frontier.isEmpty()) {
 			Integer cell = frontier.remove(rnd.nextInt(frontier.size()));
@@ -35,7 +35,7 @@ public class RandomBFS extends MazeAlgorithm {
 		}
 	}
 
-	private void extendMaze(Integer cell) {
+	private void extendMaze(int cell) {
 		grid.set(cell, VISITED);
 		frontier.add(cell);
 	}
