@@ -23,36 +23,18 @@ import de.amr.easy.grid.ui.swing.AnimatedGridCanvas;
  */
 public class GridGifRecorder {
 
+	private final AnimatedGridCanvas canvas;
+	private int scanRate;
+	private int delayMillis;
+	private boolean loop;
 	private GifSequenceWriter gif;
-	private AnimatedGridCanvas canvas;
-	private String outputPath;
 	private ImageOutputStream imageOut;
+
 	private int ticks;
 	private int framesWritten;
-	private int scanRate;
 
-	private void writeFrame() {
-		try {
-			if (ticks % scanRate == 0) {
-				gif.writeFrame(canvas.getDrawingBuffer());
-				++framesWritten;
-				if (framesWritten % 100 == 0) {
-					System.out.print(" " + framesWritten);
-				}
-			}
-			++ticks;
-		} catch (IOException x) {
-			x.printStackTrace();
-		}
-	}
-
-	public GridGifRecorder(AnimatedGridCanvas canvas, String outputPath, int delayMillis, boolean loop) throws IOException {
-		this.scanRate = 1;
+	public GridGifRecorder(AnimatedGridCanvas canvas) throws IOException {
 		this.canvas = canvas;
-		this.outputPath = outputPath;
-		this.gif = new GifSequenceWriter(canvas.getDrawingBuffer().getType(), delayMillis, loop);
-		FileOutputStream out = new FileOutputStream(outputPath);
-		this.imageOut = new MemoryCacheImageOutputStream(out);
 		canvas.getGrid().addGraphObserver(new GraphObserver<WeightedEdge<Integer>>() {
 
 			@Override
@@ -80,24 +62,34 @@ public class GridGifRecorder {
 				writeFrame();
 			}
 		});
+		scanRate = 1;
+		delayMillis = 0;
+		loop = false;
 	}
 
-	public int getScanRate() {
-		return scanRate;
+	public void setLoop(boolean loop) {
+		this.loop = loop;
+	}
+
+	public void setDelayMillis(int delayMillis) {
+		this.delayMillis = delayMillis;
 	}
 
 	public void setScanRate(int scanRate) {
 		this.scanRate = scanRate;
 	}
 
-	public void beginRecording() {
+	public void beginRecording(String outputPath) {
 		ticks = 0;
 		framesWritten = 0;
 		System.out.println("Writing to: " + outputPath);
 		System.out.print("Frames: ");
 		try {
+			imageOut = new MemoryCacheImageOutputStream(new FileOutputStream(outputPath));
+			gif = new GifSequenceWriter(canvas.getDrawingBuffer().getType(), delayMillis, loop);
 			gif.beginWriting(imageOut);
 		} catch (IOException e) {
+			System.out.println("Could not start recording");
 			e.printStackTrace();
 		}
 	}
@@ -106,9 +98,25 @@ public class GridGifRecorder {
 		System.out.println("\nTotal frames written: " + framesWritten);
 		try {
 			gif.endWriting();
+			gif = null;
 			imageOut.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	private void writeFrame() {
+		try {
+			if (ticks % scanRate == 0) {
+				gif.writeFrame(canvas.getDrawingBuffer());
+				++framesWritten;
+				if (framesWritten % 100 == 0) {
+					System.out.print(" " + framesWritten);
+				}
+			}
+			++ticks;
+		} catch (Exception x) {
+			x.printStackTrace();
 		}
 	}
 }

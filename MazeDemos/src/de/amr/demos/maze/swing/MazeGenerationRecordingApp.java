@@ -9,8 +9,8 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.ObservableGrid2D;
 import de.amr.easy.grid.impl.ObservableGrid;
-import de.amr.easy.grid.ui.swing.DefaultGridRenderingModel;
 import de.amr.easy.grid.ui.swing.AnimatedGridCanvas;
+import de.amr.easy.grid.ui.swing.DefaultGridRenderingModel;
 import de.amr.easy.maze.alg.BinaryTree;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
 import de.amr.easy.maze.alg.Eller;
@@ -118,9 +118,11 @@ public class MazeGenerationRecordingApp {
 				MazeAlgorithm generator = (MazeAlgorithm) generatorClass.getConstructor(Grid2D.class).newInstance(grid);
 				String outputPath = format("images/maze_%dx%d_%s.gif", grid.numCols(), grid.numRows(),
 						generatorClass.getSimpleName());
-				gif = new GridGifRecorder(canvas, outputPath, 1, false);
+				gif = new GridGifRecorder(canvas);
+				gif.setDelayMillis(1);
+				gif.setLoop(false);
 				gif.setScanRate(10);
-				gif.beginRecording();
+				gif.beginRecording(outputPath);
 				generator.run(0);
 				gif.endRecording();
 			} catch (Exception e) {
