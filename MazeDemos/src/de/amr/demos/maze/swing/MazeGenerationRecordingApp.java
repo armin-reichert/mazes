@@ -5,7 +5,14 @@ import static java.lang.String.format;
 import java.awt.Color;
 
 import de.amr.demos.maze.swing.tools.GridGifRecorder;
+import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.graph.api.WeightedEdge;
+import de.amr.easy.graph.api.event.EdgeAddedEvent;
+import de.amr.easy.graph.api.event.EdgeChangeEvent;
+import de.amr.easy.graph.api.event.EdgeRemovedEvent;
+import de.amr.easy.graph.api.event.GraphObserver;
+import de.amr.easy.graph.api.event.VertexChangeEvent;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.ObservableGrid2D;
 import de.amr.easy.grid.impl.ObservableGrid;
@@ -90,7 +97,7 @@ public class MazeGenerationRecordingApp {
 	private ObservableGrid2D<TraversalState, Integer> grid;
 	private AnimatedGridCanvas canvas;
 	private DefaultGridRenderingModel renderModel;
-	private GridGifRecorder gif;
+	private GridGifRecorder recorder;
 
 	public MazeGenerationRecordingApp() {
 		renderModel = new DefaultGridRenderingModel() {
@@ -118,16 +125,48 @@ public class MazeGenerationRecordingApp {
 				MazeAlgorithm generator = (MazeAlgorithm) generatorClass.getConstructor(Grid2D.class).newInstance(grid);
 				String outputPath = format("images/maze_%dx%d_%s.gif", grid.numCols(), grid.numRows(),
 						generatorClass.getSimpleName());
-				gif = new GridGifRecorder(canvas);
-				gif.setDelayMillis(1);
-				gif.setLoop(false);
-				gif.setScanRate(10);
-				gif.beginRecording(outputPath);
+				recorder = new GridGifRecorder(canvas);
+				recorder.setDelayMillis(1);
+				recorder.setLoop(false);
+				recorder.setScanRate(10);
+				attachRecorder(recorder);
+				recorder.beginRecording(outputPath);
 				generator.run(0);
-				gif.endRecording();
+				recorder.endRecording();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	private void attachRecorder(GridGifRecorder recorder) {
+		canvas.getGrid().addGraphObserver(new GraphObserver<WeightedEdge<Integer>>() {
+
+			@Override
+			public void vertexChanged(VertexChangeEvent event) {
+				recorder.writeFrame();
+			}
+
+			@Override
+			public void graphChanged(ObservableGraph<WeightedEdge<Integer>> graph) {
+				recorder.writeFrame();
+			}
+
+			@Override
+			public void edgeRemoved(EdgeRemovedEvent<WeightedEdge<Integer>> event) {
+				recorder.writeFrame();
+			}
+
+			@Override
+			public void edgeChanged(EdgeChangeEvent<WeightedEdge<Integer>> event) {
+				recorder.writeFrame();
+			}
+
+			@Override
+			public void edgeAdded(EdgeAddedEvent<WeightedEdge<Integer>> event) {
+				recorder.writeFrame();
+			}
+		});
+
 	}
 }
