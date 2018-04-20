@@ -1,22 +1,20 @@
 package de.amr.demos.maze.swing.tools;
 
+import java.awt.image.BufferedImage;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.imageio.stream.ImageOutputStream;
 import javax.imageio.stream.MemoryCacheImageOutputStream;
 
-import de.amr.easy.grid.ui.swing.AnimatedGridCanvas;
-
 /**
- * Tool for recording an algorithm running in a GridCanvas and storing the output in an animated
- * GIF.
+ * Records a sequence of frames from a buffered image and stores it as an animated GIF file.
  * 
  * @author Armin Reichert
  */
-public class GridGifRecorder {
+public class GifRecorder {
 
-	private final AnimatedGridCanvas canvas;
+	private final BufferedImage source;
 	private int scanRate;
 	private int delayMillis;
 	private boolean loop;
@@ -26,8 +24,8 @@ public class GridGifRecorder {
 	private int ticks;
 	private int framesWritten;
 
-	public GridGifRecorder(AnimatedGridCanvas canvas) throws IOException {
-		this.canvas = canvas;
+	public GifRecorder(BufferedImage source) throws IOException {
+		this.source = source;
 		scanRate = 1;
 		delayMillis = 0;
 		loop = false;
@@ -52,7 +50,7 @@ public class GridGifRecorder {
 		System.out.print("Frames: ");
 		try {
 			imageOut = new MemoryCacheImageOutputStream(new FileOutputStream(outputPath));
-			gif = new GifSequenceWriter(canvas.getDrawingBuffer().getType(), delayMillis, loop);
+			gif = new GifSequenceWriter(source.getType(), delayMillis, loop);
 			gif.beginWriting(imageOut);
 		} catch (IOException e) {
 			System.out.println("Could not start recording");
@@ -74,7 +72,7 @@ public class GridGifRecorder {
 	public void writeFrame() {
 		try {
 			if (ticks % scanRate == 0) {
-				gif.writeFrame(canvas.getDrawingBuffer());
+				gif.writeFrame(source);
 				++framesWritten;
 				if (framesWritten % 100 == 0) {
 					System.out.print(" " + framesWritten);

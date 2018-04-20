@@ -4,7 +4,7 @@ import static java.lang.String.format;
 
 import java.awt.Color;
 
-import de.amr.demos.maze.swing.tools.GridGifRecorder;
+import de.amr.demos.maze.swing.tools.GifRecorder;
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.WeightedEdge;
@@ -97,7 +97,7 @@ public class MazeGenerationRecordingApp {
 	private ObservableGrid2D<TraversalState, Integer> grid;
 	private AnimatedGridCanvas canvas;
 	private DefaultGridRenderingModel renderModel;
-	private GridGifRecorder recorder;
+	private GifRecorder recorder;
 
 	public MazeGenerationRecordingApp() {
 		renderModel = new DefaultGridRenderingModel() {
@@ -125,7 +125,7 @@ public class MazeGenerationRecordingApp {
 				MazeAlgorithm generator = (MazeAlgorithm) generatorClass.getConstructor(Grid2D.class).newInstance(grid);
 				String outputPath = format("images/maze_%dx%d_%s.gif", grid.numCols(), grid.numRows(),
 						generatorClass.getSimpleName());
-				recorder = new GridGifRecorder(canvas);
+				recorder = new GifRecorder(canvas.getDrawingBuffer());
 				recorder.setDelayMillis(1);
 				recorder.setLoop(false);
 				recorder.setScanRate(10);
@@ -138,8 +138,8 @@ public class MazeGenerationRecordingApp {
 			}
 		}
 	}
-	
-	private void attachRecorder(GridGifRecorder recorder) {
+
+	private void attachRecorder(GifRecorder recorder) {
 		canvas.getGrid().addGraphObserver(new GraphObserver<WeightedEdge<Integer>>() {
 
 			@Override
