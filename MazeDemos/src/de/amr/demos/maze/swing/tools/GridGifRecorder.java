@@ -13,7 +13,7 @@ import de.amr.easy.graph.api.event.EdgeChangeEvent;
 import de.amr.easy.graph.api.event.EdgeRemovedEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.VertexChangeEvent;
-import de.amr.easy.grid.ui.swing.GridCanvas;
+import de.amr.easy.grid.ui.swing.AnimatedGridCanvas;
 
 /**
  * Tool for recording an algorithm running in a GridCanvas and storing the output in an animated
@@ -24,7 +24,7 @@ import de.amr.easy.grid.ui.swing.GridCanvas;
 public class GridGifRecorder {
 
 	private GifSequenceWriter gif;
-	private GridCanvas canvas;
+	private AnimatedGridCanvas canvas;
 	private String outputPath;
 	private ImageOutputStream imageOut;
 	private int ticks;
@@ -46,7 +46,7 @@ public class GridGifRecorder {
 		}
 	}
 
-	public GridGifRecorder(GridCanvas canvas, String outputPath, int delayMillis, boolean loop) throws IOException {
+	public GridGifRecorder(AnimatedGridCanvas canvas, String outputPath, int delayMillis, boolean loop) throws IOException {
 		this.scanRate = 1;
 		this.canvas = canvas;
 		this.outputPath = outputPath;

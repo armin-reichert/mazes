@@ -9,7 +9,7 @@ import javax.swing.KeyStroke;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.rendering.GridColoring;
-import de.amr.easy.grid.ui.swing.GridCanvas;
+import de.amr.easy.grid.ui.swing.AnimatedGridCanvas;
 
 /**
  * Display area for the grid/maze.
@@ -19,7 +19,7 @@ import de.amr.easy.grid.ui.swing.GridCanvas;
 public class MazeWindow extends JFrame {
 
 	private final MazeDemoApp app;
-	private GridCanvas canvas;
+	private AnimatedGridCanvas canvas;
 
 	public MazeWindow(MazeDemoApp app) {
 		this.app = app;
@@ -30,7 +30,7 @@ public class MazeWindow extends JFrame {
 	}
 
 	public void createCanvas() {
-		canvas = new GridCanvas(app.grid(), new GridColoring(app.model));
+		canvas = new AnimatedGridCanvas(app.grid(), new GridColoring(app.model));
 		canvas.setDelay(app.model.getDelay());
 		canvas.getActionMap().put("showControlsView", new AbstractAction() {
 
@@ -44,7 +44,7 @@ public class MazeWindow extends JFrame {
 		repaint();
 	}
 
-	public GridCanvas getCanvas() {
+	public AnimatedGridCanvas getCanvas() {
 		return canvas;
 	}
 }
