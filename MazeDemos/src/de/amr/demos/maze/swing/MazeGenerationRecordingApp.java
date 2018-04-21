@@ -125,46 +125,46 @@ public class MazeGenerationRecordingApp {
 				MazeAlgorithm generator = (MazeAlgorithm) generatorClass.getConstructor(Grid2D.class).newInstance(grid);
 				String outputPath = format("images/maze_%dx%d_%s.gif", grid.numCols(), grid.numRows(),
 						generatorClass.getSimpleName());
-				recorder = new GifRecorder(canvas.getDrawingBuffer());
+				recorder = new GifRecorder(canvas.getDrawingBuffer().getType());
 				recorder.setDelayMillis(1);
 				recorder.setLoop(false);
 				recorder.setScanRate(10);
-				attachRecorder(recorder);
-				recorder.beginRecording(outputPath);
+				attachRecorderToGrid(recorder);
+				recorder.start(outputPath);
 				generator.run(0);
-				recorder.endRecording();
+				recorder.stop();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
-	private void attachRecorder(GifRecorder recorder) {
+	private void attachRecorderToGrid(GifRecorder recorder) {
 		canvas.getGrid().addGraphObserver(new GraphObserver<WeightedEdge<Integer>>() {
 
 			@Override
 			public void vertexChanged(VertexChangeEvent event) {
-				recorder.writeFrame();
+				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
 			public void graphChanged(ObservableGraph<WeightedEdge<Integer>> graph) {
-				recorder.writeFrame();
+				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
 			public void edgeRemoved(EdgeRemovedEvent<WeightedEdge<Integer>> event) {
-				recorder.writeFrame();
+				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
 			public void edgeChanged(EdgeChangeEvent<WeightedEdge<Integer>> event) {
-				recorder.writeFrame();
+				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
 			public void edgeAdded(EdgeAddedEvent<WeightedEdge<Integer>> event) {
-				recorder.writeFrame();
+				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 		});
 
