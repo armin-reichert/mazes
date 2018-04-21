@@ -167,6 +167,5 @@ public class MazeGenerationRecordingApp {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 		});
-
 	}
 }

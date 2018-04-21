@@ -17,7 +17,7 @@ import javax.imageio.stream.ImageOutputStream;
 /**
  * Records a sequence of frames from a buffered image and stores it as an animated GIF file.
  * 
- * @author Armin Reichert
+ * @author Armin Reichert (original author: Elliot Kroo (elliot[at]kroo[dot]net))
  */
 public class GifRecorder {
 
@@ -26,6 +26,7 @@ public class GifRecorder {
 	private IIOMetadata metadata;
 	private ImageOutputStream out;
 
+	private int imageType;
 	private int scanRate;
 	private int delayMillis;
 	private boolean loop;
@@ -34,15 +35,15 @@ public class GifRecorder {
 	private int frameCount;
 
 	public GifRecorder(int imageType) throws IOException {
+		this.imageType = imageType;
 		writer = ImageIO.getImageWritersByFormatName("gif").next(); // assuming this always exists
 		param = writer.getDefaultWriteParam();
-		buildMetadata(imageType);
 		scanRate = 1;
 		delayMillis = 0;
 		loop = false;
 	}
 
-	private void buildMetadata(int imageType) throws IIOInvalidTreeException {
+	private void buildMetadata() throws IIOInvalidTreeException {
 		metadata = writer.getDefaultImageMetadata(ImageTypeSpecifier.createFromBufferedImageType(imageType), param);
 		final IIOMetadataNode root = (IIOMetadataNode) metadata.getAsTree(metadata.getNativeMetadataFormatName());
 
@@ -65,10 +66,19 @@ public class GifRecorder {
 			IIOMetadataNode appExt = getOrCreateChild(appExts, "ApplicationExtension");
 			appExt.setAttribute("applicationID", "NETSCAPE");
 			appExt.setAttribute("authenticationCode", "2.0");
-			// TODO get loop flag working
-			appExt.setUserObject(new byte[] { 0x1, (byte) (0xFF), (byte) ((1 >> 8) & 0xFF) });
+			int loopBits = loop ? 0 : 1;
+			appExt.setUserObject(new byte[]{ 0x1, (byte) (loopBits & 0xFF), (byte) ((loopBits >> 8) & 0xFF)});
 		}
 		metadata.setFromTree(metadata.getNativeMetadataFormatName(), root);
+	}
+
+	private static IIOMetadataNode getOrCreateChild(IIOMetadataNode node, String childName) {
+		for (int i = 0; i < node.getLength(); i++) {
+			if (node.item(i).getNodeName().equalsIgnoreCase(childName)) {
+				return (IIOMetadataNode) node.item(i);
+			}
+		}
+		return (IIOMetadataNode) node.appendChild(new IIOMetadataNode(childName));
 	}
 
 	public void setLoop(boolean loop) {
@@ -85,6 +95,7 @@ public class GifRecorder {
 
 	public void start(String outputPath) {
 		try {
+			buildMetadata();
 			out = ImageIO.createImageOutputStream(new File(outputPath));
 			writer.setOutput(out);
 			writer.prepareWriteSequence(null);
@@ -117,21 +128,13 @@ public class GifRecorder {
 	}
 
 	public void stop() {
-		System.out.println("\nTotal frames written: " + frameCount);
+		System.out.println(frameCount);
 		try {
 			writer.endWriteSequence();
 			out.close();
 		} catch (IOException e) {
+			System.out.println("Could not stop recording");
 			e.printStackTrace();
 		}
-	}
-
-	private static IIOMetadataNode getOrCreateChild(IIOMetadataNode node, String childName) {
-		for (int i = 0; i < node.getLength(); i++) {
-			if (node.item(i).getNodeName().equalsIgnoreCase(childName)) {
-				return (IIOMetadataNode) node.item(i);
-			}
-		}
-		return (IIOMetadataNode) node.appendChild(new IIOMetadataNode(childName));
 	}
 }
