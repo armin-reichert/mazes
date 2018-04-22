@@ -54,7 +54,7 @@ public class GifRecorder implements AutoCloseable {
 			gifWriter.prepareWriteSequence(null);
 			requests = 0;
 			framesWritten = 0;
-			System.out.println("Writing to: " + gifFilePath);
+			System.out.println("File: " + gifFilePath);
 			System.out.print("Frames: ");
 		} catch (IOException e) {
 			System.out.println("Could not start recording");
