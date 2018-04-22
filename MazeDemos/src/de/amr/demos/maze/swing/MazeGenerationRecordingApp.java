@@ -4,7 +4,6 @@ import static java.lang.String.format;
 
 import java.awt.Color;
 
-import de.amr.demos.maze.swing.tools.GifRecorder;
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.WeightedEdge;
@@ -51,6 +50,7 @@ import de.amr.easy.maze.alg.wilson.WilsonUSTRandomCell;
 import de.amr.easy.maze.alg.wilson.WilsonUSTRecursiveCrosses;
 import de.amr.easy.maze.alg.wilson.WilsonUSTRightToLeftSweep;
 import de.amr.easy.maze.alg.wilson.WilsonUSTRowsTopDown;
+import de.amr.easy.util.GifRecorder;
 
 public class MazeGenerationRecordingApp {
 
