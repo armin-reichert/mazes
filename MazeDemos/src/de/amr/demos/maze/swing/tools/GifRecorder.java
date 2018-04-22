@@ -19,7 +19,7 @@ import javax.imageio.stream.ImageOutputStream;
  * 
  * @author Armin Reichert (original author: Elliot Kroo (elliot[at]kroo[dot]net))
  */
-public class GifRecorder {
+public class GifRecorder implements AutoCloseable {
 
 	private ImageWriter writer;
 	private ImageWriteParam param;
@@ -67,7 +67,7 @@ public class GifRecorder {
 			appExt.setAttribute("applicationID", "NETSCAPE");
 			appExt.setAttribute("authenticationCode", "2.0");
 			int loopBits = loop ? 0 : 1;
-			appExt.setUserObject(new byte[]{ 0x1, (byte) (loopBits & 0xFF), (byte) ((loopBits >> 8) & 0xFF)});
+			appExt.setUserObject(new byte[] { 0x1, (byte) (loopBits & 0xFF), (byte) ((loopBits >> 8) & 0xFF) });
 		}
 		metadata.setFromTree(metadata.getNativeMetadataFormatName(), root);
 	}
@@ -127,7 +127,8 @@ public class GifRecorder {
 		++calls;
 	}
 
-	public void stop() {
+	@Override
+	public void close() {
 		System.out.println(frameCount);
 		try {
 			writer.endWriteSequence();

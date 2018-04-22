@@ -97,7 +97,6 @@ public class MazeGenerationRecordingApp {
 	private ObservableGrid2D<TraversalState, Integer> grid;
 	private AnimatedGridCanvas canvas;
 	private DefaultGridRenderingModel renderModel;
-	private GifRecorder recorder;
 
 	public MazeGenerationRecordingApp() {
 		renderModel = new DefaultGridRenderingModel() {
@@ -123,20 +122,22 @@ public class MazeGenerationRecordingApp {
 			canvas = new AnimatedGridCanvas(grid, renderModel);
 			try {
 				MazeAlgorithm generator = (MazeAlgorithm) generatorClass.getConstructor(Grid2D.class).newInstance(grid);
-				String outputPath = format("images/maze_%dx%d_%s.gif", grid.numCols(), grid.numRows(),
-						generatorClass.getSimpleName());
-				recorder = new GifRecorder(canvas.getDrawingBuffer().getType());
-				recorder.setDelayMillis(1);
-				recorder.setLoop(false);
-				recorder.setScanRate(10);
-				attachRecorderToGrid(recorder);
-				recorder.start(outputPath);
-				generator.run(0);
-				recorder.stop();
+				try (GifRecorder recorder = new GifRecorder(canvas.getDrawingBuffer().getType())) {
+					attachRecorderToGrid(recorder);
+					recorder.setDelayMillis(1);
+					recorder.setLoop(false);
+					recorder.setScanRate(10);
+					recorder.start(createFileName(generatorClass));
+					generator.run(0);
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	private String createFileName(Class<?> generatorClass) {
+		return format("images/maze_%dx%d_%s.gif", grid.numCols(), grid.numRows(), generatorClass.getSimpleName());
 	}
 
 	private void attachRecorderToGrid(GifRecorder recorder) {
