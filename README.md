@@ -23,12 +23,12 @@ The implementation uses Java 8 features (streams and lambda expressions) for bet
 
 Also included is a Swing application demonstrating all implemented maze generators. Using a control panel you can select the generation algorithm, path finder algorithm, grid resolution and rendering style ("walls" vs. "passages") interactively.
 
-Implemented so far:
+Implemented algorithms:
 
 Graph Traversal:
 - [Random Breadth-First-Search](EasyMaze/src/de/amr/easy/maze/alg/RandomBFS.java)
 
-<img src="https://github.com/armin-reichert/mazes/tree/master/MazeDemos/images/maze_40x25_RandomBFS.gif">
+<img width="320" height="200" src="https://github.com/armin-reichert/mazes/tree/master/MazeDemos/images/maze_40x25_RandomBFS.gif">
 
 - [Random Depth-First-Search, iterative](EasyMaze/src/de/amr/easy/maze/alg/IterativeDFS.java)
 - [Random Depth-First-Search, recursive](EasyMaze/src/de/amr/easy/maze/alg/RecursiveDFS.java)
