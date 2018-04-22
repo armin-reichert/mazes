@@ -17,6 +17,35 @@ To achieve this goal, there is
 
 The generation algorithms work strictly on the Grid API, drawing code is attached as graph change and traversal listeners.
 
+As an example, here is the generator based on the Kruskal minimum-spanning-tree algorithm:
+
+```java
+public class KruskalMST extends MazeAlgorithm {
+
+	private Partition<Integer> forest;
+
+	public KruskalMST(Grid2D<TraversalState, Integer> grid) {
+		super(grid);
+	}
+
+	@Override
+	public void run(int start) {
+		forest = new Partition<>(grid.vertexStream().boxed());
+		grid.fullGridEdgesPermuted().forEach(this::addEdgeToMaze);
+	}
+
+	private void addEdgeToMaze(Edge edge) {
+		int u = edge.either(), v = edge.other(u);
+		if (!forest.sameComponent(u, v)) {
+			grid.addEdge(u, v);
+			grid.set(u, COMPLETED);
+			grid.set(v, COMPLETED);
+			forest.union(u, v);
+		}
+	}
+}
+```
+
 The implementation uses Java 8 language features (streams, lambda expressions) for better readability. There are no dependencies to UI frameworks (AWT, Swing, JavaFX).
 
 Also included is a Swing application demonstrating all implemented maze generators. Using a control panel you can select the generation algorithm, path finder algorithm, grid resolution and rendering style ("walls" vs. "passages") interactively.
@@ -71,31 +100,3 @@ Other algorithms:
 Path finding algorithms:
 - The EasyGrid library contains a DFS and BFS-based path finding implementation.
 
-As an example, this is the generator based on the Kruskal minimum-spanning-tree algorithm:
-
-```java
-public class KruskalMST extends MazeAlgorithm {
-
-	private Partition<Integer> forest;
-
-	public KruskalMST(Grid2D<TraversalState, Integer> grid) {
-		super(grid);
-	}
-
-	@Override
-	public void run(int start) {
-		forest = new Partition<>(grid.vertexStream().boxed());
-		grid.fullGridEdgesPermuted().forEach(this::addEdgeToMaze);
-	}
-
-	private void addEdgeToMaze(Edge edge) {
-		int u = edge.either(), v = edge.other(u);
-		if (!forest.sameComponent(u, v)) {
-			grid.addEdge(u, v);
-			grid.set(u, COMPLETED);
-			grid.set(v, COMPLETED);
-			forest.union(u, v);
-		}
-	}
-}
-```
