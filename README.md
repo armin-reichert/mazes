@@ -1,6 +1,6 @@
 ## Maze generation algorithms in Java 8
 
-I got interested in maze generation by this [weblog](http://weblog.jamisbuck.org/2011/2/7/maze-generation-algorithm-recap) where the author presents some maze generating algorithms together with an implementation in the Ruby language.
+I got interested in maze generation algorithms by reading this [weblog](http://weblog.jamisbuck.org/2011/2/7/maze-generation-algorithm-recap) where the author presents the most commonly known algorithms together with a Ruby implementation.
 
 Originally, I just wanted to reimplement some of these algorithms in Java and reformulate them such that the underlying graph algorithms would become more clearly visible.
 
