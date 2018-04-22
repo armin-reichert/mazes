@@ -38,9 +38,20 @@ Graph Traversal:
 
 Minimum Spanning Tree: 
 - [Boruvka](EasyMaze/src/de/amr/easy/maze/alg/mst/BoruvkaMST.java)
+
+<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_BoruvkaMST.gif">
+
 - [Kruskal](EasyMaze/src/de/amr/easy/maze/alg/mst/KruskalMST.java)
+
+<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_KruskalMST.gif">
+
 - [Prim](EasyMaze/src/de/amr/easy/maze/alg/mst/PrimMST.java)
+
+<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_PrimMST.gif">
+
 - [Reverse-Delete, naive](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteMST.java)
+
+<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_ReverseDeleteMST.gif">
 
 Uniform Spanning Tree:
 - [Aldous-Broder](EasyMaze/src/de/amr/easy/maze/alg/AldousBroderUST.java)
