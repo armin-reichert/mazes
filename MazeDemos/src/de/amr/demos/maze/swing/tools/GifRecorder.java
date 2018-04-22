@@ -15,70 +15,89 @@ import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.ImageOutputStream;
 
 /**
- * Records a sequence of frames from a buffered image and stores it as an animated GIF file.
+ * Records a sequence of buffered images in an animated GIF file.
  * 
  * @author Armin Reichert (original author: Elliot Kroo (elliot[at]kroo[dot]net))
  */
 public class GifRecorder implements AutoCloseable {
 
-	private ImageWriter writer;
+	private ImageWriter gifWriter;
 	private ImageWriteParam param;
 	private IIOMetadata metadata;
-	private ImageOutputStream out;
 
-	private int imageType;
+	private final int imageType;
 	private int scanRate;
 	private int delayMillis;
 	private boolean loop;
 
-	private int calls;
-	private int frameCount;
+	private int requests;
+	private int framesWritten;
 
 	public GifRecorder(int imageType) throws IOException {
 		this.imageType = imageType;
-		writer = ImageIO.getImageWritersByFormatName("gif").next(); // assuming this always exists
-		param = writer.getDefaultWriteParam();
 		scanRate = 1;
 		delayMillis = 0;
 		loop = false;
 	}
 
-	private void buildMetadata() throws IIOInvalidTreeException {
-		metadata = writer.getDefaultImageMetadata(ImageTypeSpecifier.createFromBufferedImageType(imageType), param);
-		final IIOMetadataNode root = (IIOMetadataNode) metadata.getAsTree(metadata.getNativeMetadataFormatName());
-
-		{ // root -> GraphicControlExtension
-			IIOMetadataNode gcExt = getOrCreateChild(root, "GraphicControlExtension");
-			gcExt.setAttribute("disposalMethod", "restoreToBackgroundColor");
-			gcExt.setAttribute("userInputFlag", Boolean.FALSE.toString());
-			gcExt.setAttribute("transparentColorFlag", Boolean.FALSE.toString());
-			gcExt.setAttribute("delayTime", Integer.toString(delayMillis / 10)); // 1/100 sec!
-			gcExt.setAttribute("transparentColorIndex", "0");
+	/**
+	 * Starts the recording.
+	 * 
+	 * @param gifFilePath
+	 *          path to the GIF file where the recording will be stored
+	 */
+	public void start(String gifFilePath) {
+		try {
+			gifWriter = ImageIO.getImageWritersByFormatName("gif").next(); // assuming this always exists
+			configureMetadata();
+			gifWriter.setOutput(ImageIO.createImageOutputStream(new File(gifFilePath)));
+			gifWriter.prepareWriteSequence(null);
+			requests = 0;
+			framesWritten = 0;
+			System.out.println("Writing to: " + gifFilePath);
+			System.out.print("Frames: ");
+		} catch (IOException e) {
+			System.out.println("Could not start recording");
+			e.printStackTrace();
 		}
-
-		{ // root -> CommentExtensions
-			IIOMetadataNode cmtExt = getOrCreateChild(root, "CommentExtensions");
-			cmtExt.setAttribute("CommentExtension", "Created by MAH"); // TODO what good for?
-		}
-
-		{ // root -> ApplicationExtensions -> ApplicationExtension
-			IIOMetadataNode appExts = getOrCreateChild(root, "ApplicationExtensions");
-			IIOMetadataNode appExt = getOrCreateChild(appExts, "ApplicationExtension");
-			appExt.setAttribute("applicationID", "NETSCAPE");
-			appExt.setAttribute("authenticationCode", "2.0");
-			int loopBits = loop ? 0 : 1;
-			appExt.setUserObject(new byte[] { 0x1, (byte) (loopBits & 0xFF), (byte) ((loopBits >> 8) & 0xFF) });
-		}
-		metadata.setFromTree(metadata.getNativeMetadataFormatName(), root);
 	}
 
-	private static IIOMetadataNode getOrCreateChild(IIOMetadataNode node, String childName) {
-		for (int i = 0; i < node.getLength(); i++) {
-			if (node.item(i).getNodeName().equalsIgnoreCase(childName)) {
-				return (IIOMetadataNode) node.item(i);
+	/**
+	 * Adds a frame to the GIF file. The scan rate determines if this frame will be contained in the
+	 * resulting file.
+	 * 
+	 * @param frame
+	 *          the frame to be added
+	 */
+	public void addFrame(RenderedImage frame) {
+		if (requests % scanRate == 0) {
+			try {
+				gifWriter.writeToSequence(new IIOImage(frame, null, metadata), param);
+				++framesWritten;
+				if (framesWritten % 100 == 0) {
+					System.out.print(framesWritten);
+				} else if (framesWritten % 10 == 0) {
+					System.out.print(".");
+				}
+			} catch (IOException e) {
+				System.out.println("Frame could not be written");
+				e.printStackTrace();
 			}
 		}
-		return (IIOMetadataNode) node.appendChild(new IIOMetadataNode(childName));
+		++requests;
+	}
+
+	@Override
+	public void close() {
+		System.out.println(" (total: " + framesWritten + ")");
+		try {
+			gifWriter.endWriteSequence();
+			((ImageOutputStream) gifWriter.getOutput()).close();
+			gifWriter.dispose();
+		} catch (IOException e) {
+			System.out.println("Could not stop recording");
+			e.printStackTrace();
+		}
 	}
 
 	public void setLoop(boolean loop) {
@@ -93,49 +112,41 @@ public class GifRecorder implements AutoCloseable {
 		this.scanRate = scanRate;
 	}
 
-	public void start(String outputPath) {
-		try {
-			buildMetadata();
-			out = ImageIO.createImageOutputStream(new File(outputPath));
-			writer.setOutput(out);
-			writer.prepareWriteSequence(null);
-			calls = 0;
-			frameCount = 0;
-			System.out.println("Writing to: " + outputPath);
-			System.out.print("Frames: ");
-		} catch (IOException e) {
-			System.out.println("Could not start recording");
-			e.printStackTrace();
+	private void configureMetadata() throws IIOInvalidTreeException {
+		param = gifWriter.getDefaultWriteParam();
+		metadata = gifWriter.getDefaultImageMetadata(ImageTypeSpecifier.createFromBufferedImageType(imageType), param);
+		final IIOMetadataNode root = (IIOMetadataNode) metadata.getAsTree(metadata.getNativeMetadataFormatName());
+
+		{ // root -> GraphicControlExtension
+			IIOMetadataNode gcExt = child(root, "GraphicControlExtension");
+			gcExt.setAttribute("disposalMethod", "restoreToBackgroundColor");
+			gcExt.setAttribute("userInputFlag", Boolean.FALSE.toString());
+			gcExt.setAttribute("transparentColorFlag", Boolean.FALSE.toString());
+			gcExt.setAttribute("delayTime", Integer.toString(delayMillis / 10)); // 1/100 sec!
+			gcExt.setAttribute("transparentColorIndex", "0");
 		}
+
+		{ // root -> CommentExtensions
+			IIOMetadataNode cmtExt = child(root, "CommentExtensions");
+			cmtExt.setAttribute("CommentExtension", "Created by MAH"); // TODO what good for?
+		}
+
+		{ // root -> ApplicationExtensions -> ApplicationExtension
+			IIOMetadataNode appExt = child(child(root, "ApplicationExtensions"), "ApplicationExtension");
+			appExt.setAttribute("applicationID", "NETSCAPE");
+			appExt.setAttribute("authenticationCode", "2.0");
+			int loopBits = loop ? 0 : 1;
+			appExt.setUserObject(new byte[] { 0x1, (byte) (loopBits & 0xFF), (byte) ((loopBits >> 8) & 0xFF) });
+		}
+		metadata.setFromTree(metadata.getNativeMetadataFormatName(), root);
 	}
 
-	public void addFrame(RenderedImage frame) {
-		if (calls % scanRate == 0) {
-			try {
-				writer.writeToSequence(new IIOImage(frame, null, metadata), param);
-				if (frameCount % 100 == 0) {
-					System.out.print(frameCount);
-				} else if (frameCount % 10 == 0) {
-					System.out.print(".");
-				}
-				++frameCount;
-			} catch (IOException e) {
-				System.out.println("Frame could not be written");
-				e.printStackTrace();
+	private static IIOMetadataNode child(IIOMetadataNode node, String childName) {
+		for (int i = 0; i < node.getLength(); i++) {
+			if (node.item(i).getNodeName().equalsIgnoreCase(childName)) {
+				return (IIOMetadataNode) node.item(i);
 			}
 		}
-		++calls;
-	}
-
-	@Override
-	public void close() {
-		System.out.println(frameCount);
-		try {
-			writer.endWriteSequence();
-			out.close();
-		} catch (IOException e) {
-			System.out.println("Could not stop recording");
-			e.printStackTrace();
-		}
+		return (IIOMetadataNode) node.appendChild(new IIOMetadataNode(childName));
 	}
 }
