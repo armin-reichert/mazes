@@ -27,6 +27,9 @@ Implemented so far:
 
 Graph Traversal:
 - [Random Breadth-First-Search](EasyMaze/src/de/amr/easy/maze/alg/RandomBFS.java)
+
+<img src="https://github.com/armin-reichert/mazes/tree/master/MazeDemos/images/maze_40x25_RandomBFS.gif">
+
 - [Random Depth-First-Search, iterative](EasyMaze/src/de/amr/easy/maze/alg/IterativeDFS.java)
 - [Random Depth-First-Search, recursive](EasyMaze/src/de/amr/easy/maze/alg/RecursiveDFS.java)
 
