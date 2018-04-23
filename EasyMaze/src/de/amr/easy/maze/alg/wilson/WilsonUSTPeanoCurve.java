@@ -1,8 +1,7 @@
 package de.amr.easy.maze.alg.wilson;
 
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
-import static de.amr.easy.maze.misc.MazeUtils.log;
-import static de.amr.easy.maze.misc.MazeUtils.nextPow;
+import static de.amr.easy.util.GridUtils.nextPow;
 import static java.lang.Math.max;
 
 import java.util.Arrays;
@@ -12,6 +11,7 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.curves.PeanoCurve;
 import de.amr.easy.grid.impl.BareGrid;
+import de.amr.easy.util.GridUtils;
 
 /**
  * Wilson's algorithm where the vertices are selected from a Peano-curve.
@@ -31,7 +31,7 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 	@Override
 	protected IntStream cellStream() {
 		int n = nextPow(3, max(grid.numCols(), grid.numRows()));
-		PeanoCurve peano = new PeanoCurve(log(3, n));
+		PeanoCurve peano = new PeanoCurve(GridUtils.log(3, n));
 		BareGrid<?> square = new BareGrid<>(n, n);
 		Integer cell = square.cell(BOTTOM_LEFT);
 		addCellToPath(square.col(cell), square.row(cell));

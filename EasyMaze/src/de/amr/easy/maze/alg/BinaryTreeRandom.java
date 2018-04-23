@@ -1,6 +1,7 @@
 package de.amr.easy.maze.alg;
 
-import static de.amr.easy.maze.misc.MazeUtils.permute;
+
+import static de.amr.easy.util.GridUtils.permute;
 
 import java.util.stream.IntStream;
 

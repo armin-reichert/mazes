@@ -5,8 +5,8 @@ import static de.amr.easy.grid.impl.Top4.E;
 import static de.amr.easy.grid.impl.Top4.N;
 import static de.amr.easy.grid.impl.Top4.S;
 import static de.amr.easy.grid.impl.Top4.W;
-import static de.amr.easy.maze.misc.MazeUtils.log;
-import static de.amr.easy.maze.misc.MazeUtils.nextPow;
+import static de.amr.easy.util.GridUtils.log;
+import static de.amr.easy.util.GridUtils.nextPow;
 import static java.lang.Math.max;
 
 import java.util.Arrays;

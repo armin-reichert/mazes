@@ -1,7 +1,7 @@
 package de.amr.easy.maze.alg.mst;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
-import static de.amr.easy.maze.misc.MazeUtils.permute;
+import static de.amr.easy.util.GridUtils.permute;
 
 import java.util.Optional;
 import java.util.stream.Stream;

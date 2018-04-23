@@ -14,7 +14,7 @@ import de.amr.demos.maze.swingapp.view.SettingsWindow;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.ui.swing.AnimatedGridCanvas;
-import de.amr.easy.maze.misc.MazeUtils;
+import de.amr.easy.grid.ui.swing.UserInterfaceUtils;
 
 /**
  * This application visualizes different maze generation algorithms and path finders. The grid size
@@ -25,7 +25,7 @@ import de.amr.easy.maze.misc.MazeUtils;
 public class MazeDemoApp {
 
 	public static void main(String... args) {
-		MazeUtils.setLAF("Nimbus");
+		UserInterfaceUtils.setLAF("Nimbus");
 		EventQueue.invokeLater(MazeDemoApp::new);
 	}
 
@@ -49,7 +49,7 @@ public class MazeDemoApp {
 		model.setHidingControlsWhenRunning(false);
 		model.setLongestPathHighlighted(false);
 		model.setDelay(0);
-		Dimension size = MazeUtils.maxGridDimensionForDisplay(model.getGridCellSize());
+		Dimension size = UserInterfaceUtils.maxGridDimensionForDisplay(model.getGridCellSize());
 		model.setGrid(new ObservableGrid<>(size.width, size.height, UNVISITED));
 
 		settingsWindow = new SettingsWindow(this);

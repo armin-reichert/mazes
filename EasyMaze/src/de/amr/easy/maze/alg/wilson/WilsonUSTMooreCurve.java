@@ -1,7 +1,7 @@
 package de.amr.easy.maze.alg.wilson;
 
-import static de.amr.easy.maze.misc.MazeUtils.log;
-import static de.amr.easy.maze.misc.MazeUtils.nextPow;
+import static de.amr.easy.util.GridUtils.log;
+import static de.amr.easy.util.GridUtils.nextPow;
 import static java.lang.Math.max;
 
 import java.util.Arrays;
