@@ -8,6 +8,9 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
+import javax.swing.UIManager;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.demos.maze.swingapp.view.MazeWindow;
 import de.amr.demos.maze.swingapp.view.SettingsWindow;
@@ -25,7 +28,11 @@ import de.amr.easy.grid.ui.swing.UserInterfaceUtils;
 public class MazeDemoApp {
 
 	public static void main(String... args) {
-		UserInterfaceUtils.setLAF("Nimbus");
+		try {
+			UIManager.setLookAndFeel(NimbusLookAndFeel.class.getName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		EventQueue.invokeLater(MazeDemoApp::new);
 	}
 
