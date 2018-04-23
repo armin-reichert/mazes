@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 
 import de.amr.easy.data.Partition;
 import de.amr.easy.data.PartitionComp;
+import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
@@ -38,7 +39,7 @@ public class BoruvkaMST extends MazeAlgorithm {
 		}
 	}
 
-	private void addEdgeToMaze(SimpleEdge edge) {
+	private void addEdgeToMaze(Edge edge) {
 		int u = edge.either(), v = edge.other(u);
 		if (!forest.sameComponent(u, v)) {
 			grid.addEdge(u, v);
@@ -48,11 +49,11 @@ public class BoruvkaMST extends MazeAlgorithm {
 		}
 	}
 
-	private Optional<SimpleEdge> findCombiningEdge(PartitionComp<Integer> tree) {
+	private Optional<Edge> findCombiningEdge(PartitionComp<Integer> tree) {
 		return permute(tree.elements()).flatMap(this::combiningEdges).findFirst();
 	}
 
-	private Stream<SimpleEdge> combiningEdges(Integer node) {
+	private Stream<Edge> combiningEdges(Integer node) {
 		return grid.neighborsPermuted(node).boxed().filter(neighbor -> !forest.sameComponent(node, neighbor))
 				.map(neighbor -> new SimpleEdge(node, neighbor));
 	}
