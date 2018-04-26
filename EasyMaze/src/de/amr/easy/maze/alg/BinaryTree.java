@@ -26,9 +26,7 @@ public class BinaryTree extends MazeAlgorithm {
 	public void run(int start) {
 		cellStream().forEach(cell -> {
 			randomNeighbor(cell, Top4.S, Top4.E).ifPresent(neighbor -> {
-				grid.addEdge(cell, neighbor);
-				grid.set(cell, TraversalState.COMPLETED);
-				grid.set(neighbor, TraversalState.COMPLETED);
+				addEdge(cell, neighbor);
 			});
 		});
 	}

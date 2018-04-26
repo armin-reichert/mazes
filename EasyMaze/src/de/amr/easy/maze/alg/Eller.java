@@ -1,6 +1,5 @@
 package de.amr.easy.maze.alg;
 
-import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static java.util.stream.IntStream.range;
 
 import java.util.ArrayList;
@@ -41,9 +40,7 @@ public class Eller extends MazeAlgorithm {
 	}
 
 	private void connectCells(int u, int v) {
-		grid.addEdge(u, v);
-		grid.set(u, COMPLETED);
-		grid.set(v, COMPLETED);
+		addEdge(u, v);
 		partition.union(u, v);
 	}
 

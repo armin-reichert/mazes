@@ -55,7 +55,7 @@ import de.amr.easy.util.GifRecorder;
 public class MazeGenerationRecordingApp {
 
 	public static void main(String[] args) {
-		new MazeGenerationRecordingApp().run(40, 25, 8);
+		new MazeGenerationRecordingApp().run(20, 20, 4, 4, 200);
 	}
 
 	private final Class<?>[] generatorClasses = {
@@ -98,7 +98,7 @@ public class MazeGenerationRecordingApp {
 	private ObservableGrid2D<TraversalState, Integer> grid;
 	private AnimatedGridCanvas canvas;
 
-	public void run(int numCols, int numRows, int cellSize) {
+	public void run(int numCols, int numRows, int cellSize, int scanRate, int delayMillis) {
 		for (Class<?> generatorClass : generatorClasses) {
 			grid = new ObservableGrid<>(numCols, numRows, TraversalState.UNVISITED);
 			canvas = new AnimatedGridCanvas(grid, createRenderingModel(cellSize));
@@ -106,9 +106,9 @@ public class MazeGenerationRecordingApp {
 				MazeAlgorithm generator = (MazeAlgorithm) generatorClass.getConstructor(Grid2D.class).newInstance(grid);
 				try (GifRecorder recorder = new GifRecorder(canvas.getDrawingBuffer().getType())) {
 					attachRecorderToGrid(recorder);
-					recorder.setDelayMillis(1);
-					recorder.setLoop(false);
-					recorder.setScanRate(10);
+					recorder.setDelayMillis(delayMillis);
+					recorder.setLoop(true);
+					recorder.setScanRate(scanRate);
 					recorder.start(createFileName(generatorClass));
 					generator.run(0);
 				}

@@ -1,6 +1,5 @@
 package de.amr.easy.maze.alg;
 
-import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.grid.impl.Top4.E;
@@ -96,14 +95,12 @@ public class EllerInsideOut extends MazeAlgorithm {
 		return result;
 	}
 
-	private void connectCells(int v, int w) {
-		if (grid.adjacent(v, w)) {
+	private void connectCells(int u, int v) {
+		if (grid.adjacent(u, v)) {
 			return;
 		}
-		grid.addEdge(v, w);
-		grid.set(v, COMPLETED);
-		grid.set(w, COMPLETED);
-		mazeParts.union(v, w);
+		addEdge(u, v);
+		mazeParts.union(u, v);
 	}
 
 	private void connectCellsInsideLayer(boolean all) {

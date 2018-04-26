@@ -1,6 +1,5 @@
 package de.amr.easy.maze.alg;
 
-import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static java.util.stream.IntStream.range;
 
 import de.amr.easy.graph.api.TraversalState;
@@ -31,15 +30,11 @@ public class Sidewinder extends MazeAlgorithm {
 				if (row > 0 && (col == grid.numCols() - 1 || rnd.nextBoolean())) {
 					int passageCol = runStart + rnd.nextInt(col - runStart + 1);
 					int north = grid.cell(passageCol, row - 1), south = grid.cell(passageCol, row);
-					grid.addEdge(north, south);
-					grid.set(north, COMPLETED);
-					grid.set(south, COMPLETED);
+					addEdge(north, south);
 					runStart = col + 1;
 				} else if (col + 1 < grid.numCols()) {
 					int west = grid.cell(col, row), east = grid.cell(col + 1, row);
-					grid.addEdge(west, east);
-					grid.set(west, COMPLETED);
-					grid.set(east, COMPLETED);
+					addEdge(west, east);
 				}
 			});
 		});

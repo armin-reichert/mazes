@@ -1,6 +1,5 @@
 package de.amr.easy.maze.alg.mst;
 
-import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.util.GridUtils.permute;
 
 import java.util.Optional;
@@ -42,9 +41,7 @@ public class BoruvkaMST extends MazeAlgorithm {
 	private void addEdgeToMaze(Edge edge) {
 		int u = edge.either(), v = edge.other(u);
 		if (!forest.sameComponent(u, v)) {
-			grid.addEdge(u, v);
-			grid.set(u, COMPLETED);
-			grid.set(v, COMPLETED);
+			addEdge(u, v);
 			forest.union(u, v);
 		}
 	}

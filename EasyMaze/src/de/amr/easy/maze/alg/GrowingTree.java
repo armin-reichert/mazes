@@ -1,7 +1,5 @@
 package de.amr.easy.maze.alg;
 
-import static de.amr.easy.graph.api.TraversalState.COMPLETED;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,9 +29,7 @@ public class GrowingTree extends MazeAlgorithm {
 		do {
 			int cell = selectCell();
 			grid.neighborsPermuted(cell).filter(this::isCellUnvisited).forEach(neighbor -> {
-				grid.addEdge(cell, neighbor);
-				grid.set(cell, COMPLETED);
-				grid.set(neighbor, COMPLETED);
+				addEdge(cell, neighbor);
 				cells.add(neighbor);
 			});
 			cells.remove((Object) cell); // remove(int) is the wrong method!
