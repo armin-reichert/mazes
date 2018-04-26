@@ -37,9 +37,7 @@ public class KruskalMST extends MazeAlgorithm {
 	private void addEdgeToMaze(Edge edge) {
 		int u = edge.either(), v = edge.other(u);
 		if (!forest.sameComponent(u, v)) {
-			grid.addEdge(u, v);
-			grid.set(u, COMPLETED);
-			grid.set(v, COMPLETED);
+			addEdge(u, v);
 			forest.union(u, v);
 		}
 	}
