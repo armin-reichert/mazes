@@ -9,13 +9,13 @@ import static de.amr.easy.grid.impl.Top4.W;
 import static java.lang.Math.max;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import de.amr.easy.data.Partition;
 import de.amr.easy.data.PartitionComp;
@@ -62,7 +62,7 @@ public class EllerInsideOut extends MazeAlgorithm {
 	private int nextLayer() {
 		int x, y, size;
 		if (square == null) {
-			Integer center = grid.cell(CENTER);
+			int center = grid.cell(CENTER);
 			x = grid.col(center) + offsetX;
 			y = grid.row(center) + offsetY;
 			size = 1;
@@ -104,12 +104,12 @@ public class EllerInsideOut extends MazeAlgorithm {
 	}
 
 	private void connectCellsInsideLayer(boolean all) {
-		Integer prevCell = null, firstCell = null;
-		for (Integer cell : layer) {
-			if (firstCell == null) {
+		int prevCell = -1, firstCell = -1;
+		for (int cell : layer) {
+			if (firstCell == -1) {
 				firstCell = cell;
 			}
-			if (prevCell != null && grid.areNeighbors(prevCell, cell)) {
+			if (prevCell != -1 && grid.areNeighbors(prevCell, cell)) {
 				if (all || rnd.nextBoolean()) {
 					if (!mazeParts.sameComponent(prevCell, cell)) {
 						connectCells(prevCell, cell);
@@ -118,7 +118,7 @@ public class EllerInsideOut extends MazeAlgorithm {
 			}
 			prevCell = cell;
 		}
-		if (prevCell != null && firstCell != null && prevCell != firstCell && grid.areNeighbors(prevCell, firstCell)
+		if (prevCell != -1 && firstCell != -1 && prevCell != firstCell && grid.areNeighbors(prevCell, firstCell)
 				&& !grid.adjacent(prevCell, firstCell)) {
 			if (all || rnd.nextBoolean()) {
 				if (!mazeParts.sameComponent(prevCell, firstCell)) {
@@ -130,14 +130,13 @@ public class EllerInsideOut extends MazeAlgorithm {
 
 	private void connectCellsWithNextLayer() {
 		Set<PartitionComp<Integer>> connected = new HashSet<>();
-
 		// randomly select cells and connect with the next layer unless another cell from the same
 		// equivalence class is already connected to that layer
-		for (Integer cell : layer) {
+		for (int cell : layer) {
 			if (rnd.nextBoolean() && !connected.contains(mazeParts.find(cell))) {
 				List<Integer> candidates = collectNeighborsInNextLayer(cell);
 				if (!candidates.isEmpty()) {
-					Integer neighbor = candidates.get(rnd.nextInt(candidates.size()));
+					int neighbor = candidates.get(rnd.nextInt(candidates.size()));
 					connectCells(cell, neighbor);
 					connected.add(mazeParts.find(cell));
 				}
@@ -194,7 +193,7 @@ public class EllerInsideOut extends MazeAlgorithm {
 		return result;
 	}
 
-	private void addNeighborsIfAny(List<Integer> list, int cell, Integer... dirs) {
-		Stream.of(dirs).forEach(dir -> grid.neighbor(cell, dir).ifPresent(list::add));
+	private void addNeighborsIfAny(List<Integer> list, int cell, int... dirs) {
+		Arrays.stream(dirs).forEach(dir -> grid.neighbor(cell, dir).ifPresent(list::add));
 	}
 }
