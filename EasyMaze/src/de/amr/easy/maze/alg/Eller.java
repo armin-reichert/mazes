@@ -47,8 +47,7 @@ public class Eller extends MazeAlgorithm {
 	private void connectCellsInsideRow(int row, boolean all) {
 		range(0, grid.numCols() - 1).forEach(col -> {
 			if (all || rnd.nextBoolean()) {
-				Integer left = grid.cell(col, row);
-				Integer right = grid.cell(col + 1, row);
+				int left = grid.cell(col, row), right = grid.cell(col + 1, row);
 				if (!partition.sameComponent(left, right)) {
 					connectCells(left, right);
 				}
@@ -60,8 +59,7 @@ public class Eller extends MazeAlgorithm {
 		Set<PartitionComp<Integer>> connected = new HashSet<>();
 		range(0, grid.numCols()).forEach(col -> {
 			if (rnd.nextBoolean()) {
-				Integer above = grid.cell(col, row);
-				Integer below = grid.cell(col, row + 1);
+				int above = grid.cell(col, row), below = grid.cell(col, row + 1);
 				connectCells(above, below);
 				connected.add(partition.find(above));
 			}
@@ -69,7 +67,7 @@ public class Eller extends MazeAlgorithm {
 		// collect cells of still unconnected components
 		List<Integer> unconnected = new ArrayList<>();
 		range(0, grid.numCols()).forEach(col -> {
-			Integer cell = grid.cell(col, row);
+			int cell = grid.cell(col, row);
 			PartitionComp<Integer> component = partition.find(cell);
 			if (!connected.contains(component)) {
 				unconnected.add(cell);
@@ -81,7 +79,7 @@ public class Eller extends MazeAlgorithm {
 		unconnected.forEach(above -> {
 			PartitionComp<Integer> component = partition.find(above);
 			if (!connected.contains(component)) {
-				Integer below = grid.cell(grid.col(above), row + 1);
+				int below = grid.cell(grid.col(above), row + 1);
 				connectCells(above, below);
 				connected.add(component);
 			}
