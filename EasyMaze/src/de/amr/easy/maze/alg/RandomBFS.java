@@ -16,27 +16,23 @@ import de.amr.easy.grid.api.Grid2D;
  */
 public class RandomBFS extends MazeAlgorithm {
 
-	private final List<Integer> frontier = new ArrayList<>();
-
 	public RandomBFS(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
 	}
 
 	@Override
 	public void run(int start) {
-		extendMaze(start);
+		List<Integer> frontier = new ArrayList<>();
+		grid.set(start, VISITED);
+		frontier.add(start);
 		while (!frontier.isEmpty()) {
-			Integer cell = frontier.remove(rnd.nextInt(frontier.size()));
+			int cell = frontier.remove(rnd.nextInt(frontier.size()));
 			grid.neighborsPermuted(cell).filter(this::isCellUnvisited).forEach(neighbor -> {
-				extendMaze(neighbor);
 				grid.addEdge(cell, neighbor);
+				grid.set(neighbor, VISITED);
+				frontier.add(neighbor);
 			});
 			grid.set(cell, COMPLETED);
 		}
-	}
-
-	private void extendMaze(int cell) {
-		grid.set(cell, VISITED);
-		frontier.add(cell);
 	}
 }
