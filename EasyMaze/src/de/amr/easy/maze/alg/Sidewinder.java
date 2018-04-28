@@ -16,22 +16,22 @@ import de.amr.easy.grid.api.Grid2D;
  */
 public class Sidewinder extends MazeAlgorithm {
 
-	private Integer runStart;
+	private int start;
 
 	public Sidewinder(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
 	}
 
 	@Override
-	public void run(int start) {
+	public void run(int ignore) {
 		range(0, grid.numRows()).forEach(row -> {
-			runStart = 0;
+			start = 0;
 			range(0, grid.numCols()).forEach(col -> {
 				if (row > 0 && (col == grid.numCols() - 1 || rnd.nextBoolean())) {
-					int passageCol = runStart + rnd.nextInt(col - runStart + 1);
+					int passageCol = start + rnd.nextInt(col - start + 1);
 					int north = grid.cell(passageCol, row - 1), south = grid.cell(passageCol, row);
 					addEdge(north, south);
-					runStart = col + 1;
+					start = col + 1;
 				} else if (col + 1 < grid.numCols()) {
 					int west = grid.cell(col, row), east = grid.cell(col + 1, row);
 					addEdge(west, east);
