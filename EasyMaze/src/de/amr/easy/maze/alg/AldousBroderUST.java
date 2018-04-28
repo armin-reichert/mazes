@@ -30,8 +30,8 @@ import de.amr.easy.grid.api.Grid2D;
  */
 public class AldousBroderUST extends MazeAlgorithm {
 
-	private int visitCount;
-	private int v;
+	private int numVisitedCells;
+	private int currentCell;
 
 	public AldousBroderUST(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
@@ -39,12 +39,11 @@ public class AldousBroderUST extends MazeAlgorithm {
 
 	@Override
 	public void run(int start) {
-		v = start;
-		grid.set(v, COMPLETED);
-		visitCount = 1;
-		while (visitCount < grid.numCells()) {
-			visitNeighbor();
-			showVisit();
+		currentCell = start;
+		grid.set(currentCell, COMPLETED);
+		numVisitedCells = 1;
+		while (numVisitedCells < grid.numCells()) {
+			visitRandomNeighbor();
 		}
 	}
 
@@ -52,22 +51,17 @@ public class AldousBroderUST extends MazeAlgorithm {
 	 * Visits a random neighbor of the current cell and adds it to the maze if visited for the first
 	 * time.
 	 */
-	private void visitNeighbor() {
-		int u = grid.randomNeighbor(v).getAsInt();
-		if (isCellUnvisited(u)) {
-			grid.set(u, COMPLETED);
-			++visitCount;
-			grid.addEdge(u, v);
+	private void visitRandomNeighbor() {
+		int neighbor = grid.randomNeighbor(currentCell).getAsInt();
+		if (isCellUnvisited(neighbor)) {
+			grid.addEdge(currentCell, neighbor);
+			grid.set(neighbor, COMPLETED);
+			++numVisitedCells;
 		}
-		v = u;
-	}
-
-	/**
-	 * Animates the visit of the current cell by temporarily changing its state to "visited".
-	 */
-	private void showVisit() {
-		TraversalState state = grid.get(v);
-		grid.set(v, VISITED);
-		grid.set(v, state);
+		currentCell = neighbor;
+		// for animation only:
+		TraversalState state = grid.get(currentCell);
+		grid.set(currentCell, VISITED);
+		grid.set(currentCell, state);
 	}
 }
