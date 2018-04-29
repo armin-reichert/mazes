@@ -7,8 +7,8 @@ import java.util.Set;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Multigraph;
-import de.amr.easy.graph.api.SimpleEdge;
 
 /**
  * Edge list based implementation of an undirected multigraph.
@@ -18,10 +18,10 @@ import de.amr.easy.graph.api.SimpleEdge;
  * @param <E>
  *          edge type
  */
-public class DefaultMultigraph implements Multigraph<SimpleEdge> {
+public class DefaultMultigraph<E extends Edge> implements Multigraph<E> {
 
 	private final Set<Integer> vertexSet = new HashSet<>();
-	private final List<SimpleEdge> edgeList = new ArrayList<>();
+	private final List<E> edgeList = new ArrayList<>();
 
 	public DefaultMultigraph() {
 	}
@@ -32,14 +32,15 @@ public class DefaultMultigraph implements Multigraph<SimpleEdge> {
 	}
 
 	@Override
-	public void addEdge(int v, int w) {
+	public void addEdge(E edge) {
+		int u = edge.either(), v = edge.other(u);
+		assertVertexExists(u);
 		assertVertexExists(v);
-		assertVertexExists(w);
-		edgeList.add(new SimpleEdge(v, w));
+		edgeList.add(edge);
 	}
 
 	@Override
-	public Stream<SimpleEdge> edges(int v, int w) {
+	public Stream<E> edges(int v, int w) {
 		assertVertexExists(v);
 		assertVertexExists(w);
 		return edgeList.stream().filter(edge -> {
@@ -76,7 +77,7 @@ public class DefaultMultigraph implements Multigraph<SimpleEdge> {
 	}
 
 	@Override
-	public Stream<SimpleEdge> edgeStream() {
+	public Stream<E> edgeStream() {
 		return edgeList.stream();
 	}
 
@@ -114,7 +115,7 @@ public class DefaultMultigraph implements Multigraph<SimpleEdge> {
 		for (int v : vertexSet) {
 			s.append(v).append("\n");
 		}
-		for (SimpleEdge e : edgeList) {
+		for (E e : edgeList) {
 			int v = e.either();
 			int w = e.other(v);
 			s.append(v).append(" ").append(w).append("\n");

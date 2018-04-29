@@ -11,6 +11,11 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import de.amr.easy.graph.api.Multigraph;
+import de.amr.easy.graph.api.WeightedEdge;
+import de.amr.easy.graph.impl.DefaultMultigraph;
+import de.amr.easy.grid.api.BareGrid2D;
+
 public class GridUtils {
 
 	/**
@@ -112,4 +117,9 @@ public class GridUtils {
 		return source.collect(toShuffledList()).stream();
 	}
 
+	
+	public Multigraph<WeightedEdge<Integer>> dualGraph(BareGrid2D<Integer> grid) {
+		return new DefaultMultigraph<>();
+	}
+	
 }

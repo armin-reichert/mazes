@@ -44,12 +44,10 @@ public interface Multigraph<E extends Edge> {
 	/**
 	 * Connects the given vertices.
 	 * 
-	 * @param v
-	 *          a vertex
-	 * @param w
-	 *          a vertex
+	 * @param edge
+	 *          an edge
 	 */
-	public void addEdge(int v, int w);
+	public void addEdge(E edge);
 
 	/**
 	 * @param v
