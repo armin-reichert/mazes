@@ -1,7 +1,8 @@
 package de.amr.easy.maze.alg.wilson;
 
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toCollection;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.amr.easy.graph.api.TraversalState;
@@ -14,24 +15,17 @@ import de.amr.easy.grid.api.Grid2D;
  */
 public class WilsonUSTRandomCell extends WilsonUST {
 
-	private List<Integer> startCells;
-
 	public WilsonUSTRandomCell(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
 	}
 
 	@Override
 	public void run(int start) {
-		startCells = grid.vertexStream().boxed().collect(toList());
+		List<Integer> startCells = grid.vertexStream().boxed().collect(toCollection(ArrayList<Integer>::new));
+		startCells.remove((Object) start);
 		addToTree(start);
 		while (!startCells.isEmpty()) {
-			loopErasedRandomWalk(startCells.get(rnd.nextInt(startCells.size())));
+			loopErasedRandomWalk(startCells.remove(rnd.nextInt(startCells.size())));
 		}
-	}
-
-	@Override
-	protected void addToTree(int cell) {
-		super.addToTree(cell);
-		startCells.remove((Object) cell); // remove(int) is the wrong method!
 	}
 }
