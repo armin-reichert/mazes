@@ -19,29 +19,21 @@ import de.amr.easy.grid.api.Grid2D;
  */
 public class GrowingTree extends MazeAlgorithm {
 
-	private final List<Integer> cells = new ArrayList<>();
-
 	public GrowingTree(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
 	}
 
 	@Override
 	public void run(int start) {
+		List<Integer> cells = new ArrayList<>();
 		cells.add(start);
 		do {
-			int cell = selectCell();
+			int index = rnd.nextBoolean() ? cells.size() - 1 : rnd.nextInt(cells.size());
+			int cell = cells.remove(index);
 			permute(grid.neighbors(cell)).filter(this::isCellUnvisited).forEach(neighbor -> {
 				addEdge(cell, neighbor);
 				cells.add(neighbor);
 			});
-			cells.remove((Object) cell); // remove(int) is the wrong method!
 		} while (!cells.isEmpty());
-	}
-
-	/**
-	 * Subclasses might provide another selection strategy.
-	 */
-	protected int selectCell() {
-		return rnd.nextBoolean() ? cells.get(cells.size() - 1) : cells.get(rnd.nextInt(cells.size()));
 	}
 }
