@@ -2,6 +2,7 @@ package de.amr.easy.maze.alg;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
+import static de.amr.easy.util.GridUtils.randomElement;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
@@ -52,7 +53,7 @@ public class AldousBroderUST extends MazeAlgorithm {
 	 * time.
 	 */
 	private void visitRandomNeighbor() {
-		int neighbor = grid.randomNeighbor(currentCell).getAsInt();
+		int neighbor = randomElement(grid.neighbors(currentCell)).getAsInt();
 		if (isCellUnvisited(neighbor)) {
 			grid.addEdge(currentCell, neighbor);
 			grid.set(neighbor, COMPLETED);

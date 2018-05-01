@@ -319,11 +319,6 @@ public class BareGrid<W extends Comparable<W>> implements BareGrid2D<W> {
 	}
 
 	@Override
-	public IntStream neighborsPermuted(int cell) {
-		return neighbors(cell, top.dirsPermuted());
-	}
-
-	@Override
 	public OptionalInt neighbor(int cell, int dir) {
 		checkCell(cell);
 		int col = col(cell) + top.dx(dir);

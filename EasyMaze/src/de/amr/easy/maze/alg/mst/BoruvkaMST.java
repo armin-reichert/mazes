@@ -51,7 +51,7 @@ public class BoruvkaMST extends MazeAlgorithm {
 	}
 
 	private Stream<Edge> combiningEdges(Integer node) {
-		return grid.neighborsPermuted(node).filter(neighbor -> !forest.sameComponent(node, neighbor))
+		return permute(grid.neighbors(node)).filter(neighbor -> !forest.sameComponent(node, neighbor))
 				.mapToObj(neighbor -> new SimpleEdge(node, neighbor));
 	}
 }

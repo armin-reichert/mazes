@@ -116,15 +116,6 @@ public interface BareGrid2D<W extends Comparable<W>> extends Graph<WeightedEdge<
 	public IntStream neighbors(int cell);
 
 	/**
-	 * Returns all neighbors of a cell in a random order.
-	 * 
-	 * @param cell
-	 *          a grid cell
-	 * @return stream of the neighbor cells in random order
-	 */
-	public IntStream neighborsPermuted(int cell);
-
-	/**
 	 * 
 	 * @param cell
 	 *          a grid position
@@ -145,16 +136,6 @@ public interface BareGrid2D<W extends Comparable<W>> extends Graph<WeightedEdge<
 	 * @return {@code true} if the cells are neighbors
 	 */
 	public boolean areNeighbors(int either, int other);
-
-	/**
-	 * 
-	 * @param cell
-	 *          a grid cell
-	 * @return a random neighbor cell
-	 */
-	public default OptionalInt randomNeighbor(int cell) {
-		return neighborsPermuted(cell).findFirst();
-	}
 
 	/**
 	 * 

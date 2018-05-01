@@ -2,6 +2,7 @@ package de.amr.easy.maze.alg;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
+import static de.amr.easy.util.GridUtils.permute;
 
 import java.util.Deque;
 import java.util.LinkedList;
@@ -9,6 +10,7 @@ import java.util.OptionalInt;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.util.GridUtils;
 
 /**
  * Generates a maze by iterative random depth-first-traversal of a grid.
@@ -27,10 +29,10 @@ public class IterativeDFS extends MazeAlgorithm {
 		stack.push(cell);
 		grid.set(cell, VISITED);
 		while (!stack.isEmpty()) {
-			OptionalInt unvisitedNeighbor = grid.neighborsPermuted(cell).filter(this::isCellUnvisited).findAny();
+			OptionalInt unvisitedNeighbor = permute(grid.neighbors(cell)).filter(this::isCellUnvisited).findAny();
 			if (unvisitedNeighbor.isPresent()) {
 				int neighbor = unvisitedNeighbor.getAsInt();
-				if (grid.randomNeighbor(neighbor).isPresent()) {
+				if (GridUtils.randomElement(grid.neighbors(neighbor)).isPresent()) {
 					stack.push(neighbor);
 				}
 				grid.addEdge(cell, neighbor);

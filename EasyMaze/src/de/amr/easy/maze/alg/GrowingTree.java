@@ -1,5 +1,7 @@
 package de.amr.easy.maze.alg;
 
+import static de.amr.easy.util.GridUtils.permute;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class GrowingTree extends MazeAlgorithm {
 		cells.add(start);
 		do {
 			int cell = selectCell();
-			grid.neighborsPermuted(cell).filter(this::isCellUnvisited).forEach(neighbor -> {
+			permute(grid.neighbors(cell)).filter(this::isCellUnvisited).forEach(neighbor -> {
 				addEdge(cell, neighbor);
 				cells.add(neighbor);
 			});

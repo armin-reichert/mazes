@@ -59,8 +59,8 @@ import de.amr.easy.util.StopWatch;
 
 public class MazeGeneratorTests {
 
-	private static final int WIDTH = 250;
-	private static final int HEIGHT = 200;
+	private static final int WIDTH = 400;
+	private static final int HEIGHT = 250;
 
 	private Grid2D<TraversalState, Integer> grid;
 	private StopWatch watch;
@@ -114,7 +114,6 @@ public class MazeGeneratorTests {
 
 	@Test
 	public void testBoruvka() {
-		grid = new Grid<>(100, 100, UNVISITED);
 		exec(new BoruvkaMST(grid));
 	}
 

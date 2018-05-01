@@ -1,6 +1,7 @@
 package de.amr.easy.maze.alg;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
+import static de.amr.easy.util.GridUtils.permute;
 
 import java.util.BitSet;
 import java.util.OptionalInt;
@@ -33,14 +34,14 @@ public class HuntAndKill extends MazeAlgorithm {
 	public void run(int animal) {
 		do {
 			kill(animal);
-			OptionalInt livingNeighbor = grid.neighborsPermuted(animal).filter(isAlive).findAny();
+			OptionalInt livingNeighbor = permute(grid.neighbors(animal)).filter(isAlive).findAny();
 			if (livingNeighbor.isPresent()) {
 				grid.neighbors(animal).filter(isAlive).forEach(targets::set);
 				grid.addEdge(animal, livingNeighbor.getAsInt());
 				animal = livingNeighbor.getAsInt();
 			} else if (!targets.isEmpty()) {
 				animal = hunt();
-				grid.addEdge(animal, grid.neighborsPermuted(animal).filter(isDead).findAny().getAsInt());
+				grid.addEdge(animal, permute(grid.neighbors(animal)).filter(isDead).findAny().getAsInt());
 			}
 		} while (!targets.isEmpty());
 	}
