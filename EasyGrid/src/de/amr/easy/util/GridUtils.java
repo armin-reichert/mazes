@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.Multigraph;
@@ -114,6 +115,28 @@ public class GridUtils {
 	 */
 	public static <T> Stream<T> permute(Stream<T> source) {
 		return source.collect(toShuffledList()).stream();
+	}
+
+	/**
+	 * Returns a permutation of a stream of integer values.
+	 * 
+	 * @param source
+	 *          some stream
+	 * @return the stream content in randomly permuted order
+	 */
+	public static IntStream permute(IntStream source) {
+		return permute(source.boxed()).mapToInt(Integer::intValue);
+	}
+
+	/**
+	 * Returns a random element from a stream of integer values.
+	 * 
+	 * @param source
+	 *          some stream
+	 * @return a random element from the stream
+	 */
+	public static int randomElement(IntStream source) {
+		return permute(source).findFirst().getAsInt();
 	}
 
 	public static Multigraph<WeightedEdge<Integer>> dualGraphOfGrid(int cols, int rows) {
