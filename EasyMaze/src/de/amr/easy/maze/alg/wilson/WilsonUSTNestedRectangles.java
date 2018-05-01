@@ -60,11 +60,11 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 	}
 
 	private ExpandingRectangle expandingRectangle(Rectangle startRectangle, int rate) {
-		ExpandingRectangle r = new ExpandingRectangle(startRectangle);
-		r.setExpandHorizontally(true);
-		r.setExpandVertically(true);
-		r.setExpansionRate(rate);
-		r.setMaxExpansion(grid.numCols() - startRectangle.getWidth());
-		return r;
+		ExpandingRectangle expRect = new ExpandingRectangle(startRectangle);
+		expRect.setExpandHorizontally(true);
+		expRect.setExpandVertically(true);
+		expRect.setExpansionRate(rate);
+		expRect.setMaxExpansion(grid.numCols() - startRectangle.getWidth());
+		return expRect;
 	}
 }

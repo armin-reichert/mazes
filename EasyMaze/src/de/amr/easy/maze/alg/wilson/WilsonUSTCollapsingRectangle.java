@@ -13,12 +13,8 @@ import de.amr.easy.grid.iterators.shapes.Rectangle;
  */
 public class WilsonUSTCollapsingRectangle extends WilsonUST {
 
-	private int width, height;
-
 	public WilsonUSTCollapsingRectangle(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
-		width = grid.numCols();
-		height = grid.numRows();
 	}
 
 	@Override
@@ -26,12 +22,13 @@ public class WilsonUSTCollapsingRectangle extends WilsonUST {
 		start = grid.cell(CENTER);
 		addToTree(start);
 		int col = 0, row = 0;
+		int width = grid.numCols(), height = grid.numRows();
 		while (width > 0 && height > 0) {
 			new Rectangle(grid, grid.cell(col, row), width, height).forEach(this::loopErasedRandomWalk);
 			width -= 2;
 			height -= 2;
-			++col;
-			++row;
+			col += 1;
+			row += 1;
 		}
 	}
 }

@@ -10,7 +10,7 @@ import de.amr.easy.grid.iterators.shapes.Rectangle;
 import de.amr.easy.grid.iterators.traversals.ExpandingRectangle;
 
 /**
- * Wilson's algorithm where the vertices are selected from several circles in turn.
+ * Wilson's algorithm where the vertices are selected from an expanding rectangle.
  * 
  * @author Armin Reichert
  */
@@ -22,8 +22,8 @@ public class WilsonUSTExpandingRectangle extends WilsonUST {
 
 	@Override
 	protected IntStream cellStream() {
-		Rectangle startRectangle = new Rectangle(grid, grid.cell(TOP_LEFT), 1, 1);
-		ExpandingRectangle expRect = new ExpandingRectangle(startRectangle);
+		Rectangle startRect = new Rectangle(grid, grid.cell(TOP_LEFT), 1, 1);
+		ExpandingRectangle expRect = new ExpandingRectangle(startRect);
 		expRect.setExpandHorizontally(true);
 		expRect.setExpandVertically(true);
 		expRect.setMaxExpansion(grid.numCols() - 1);
