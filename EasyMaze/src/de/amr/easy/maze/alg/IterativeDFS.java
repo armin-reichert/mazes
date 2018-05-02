@@ -2,8 +2,8 @@ package de.amr.easy.maze.alg;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
-import static de.amr.easy.util.GridUtils.permute;
-import static de.amr.easy.util.GridUtils.randomElement;
+import static de.amr.easy.util.StreamUtil.permute;
+import static de.amr.easy.util.StreamUtil.randomElement;
 
 import java.util.Deque;
 import java.util.LinkedList;

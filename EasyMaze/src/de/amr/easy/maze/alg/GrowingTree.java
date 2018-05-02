@@ -1,6 +1,6 @@
 package de.amr.easy.maze.alg;
 
-import static de.amr.easy.util.GridUtils.permute;
+import static de.amr.easy.util.StreamUtil.permute;
 
 import java.util.ArrayList;
 import java.util.List;
