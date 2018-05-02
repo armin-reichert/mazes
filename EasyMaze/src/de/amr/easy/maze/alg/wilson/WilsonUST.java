@@ -1,13 +1,14 @@
 package de.amr.easy.maze.alg.wilson;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
+import static de.amr.easy.grid.impl.Topologies.TOP4;
+import static de.amr.easy.util.StreamUtil.randomElement;
 
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.grid.impl.Topologies;
 import de.amr.easy.maze.alg.MazeAlgorithm;
 
 /**
@@ -60,10 +61,10 @@ public abstract class WilsonUST extends MazeAlgorithm {
 		// do a random walk starting at the start cell until the current tree is touched
 		int v = start;
 		while (outsideTree(v)) {
-			int dir = Topologies.TOP4.dirsPermuted().findAny().getAsInt();
-			OptionalInt neighbor = grid.neighbor(v, dir);
+			int randomDir = randomElement(TOP4.dirs()).getAsInt();
+			OptionalInt neighbor = grid.neighbor(v, randomDir);
 			if (neighbor.isPresent()) {
-				lastWalkDir[v] = dir;
+				lastWalkDir[v] = randomDir;
 				v = neighbor.getAsInt();
 			}
 		}
