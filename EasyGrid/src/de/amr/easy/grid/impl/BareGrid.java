@@ -310,7 +310,7 @@ public class BareGrid<W extends Comparable<W>> implements BareGrid2D<W> {
 
 	@Override
 	public IntStream neighbors(int cell, IntStream dirs) {
-		return dirs.filter(dir -> neighbor(cell, dir).isPresent()).map(dir -> neighbor(cell, dir).getAsInt());
+		return dirs.mapToObj(dir -> neighbor(cell, dir)).filter(OptionalInt::isPresent).mapToInt(OptionalInt::getAsInt);
 	}
 
 	@Override
