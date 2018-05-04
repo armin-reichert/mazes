@@ -7,7 +7,6 @@ import static de.amr.easy.graph.api.TraversalState.VISITED;
 import java.util.Random;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Grid2D;
 
 /**
@@ -63,8 +62,4 @@ public abstract class MazeAlgorithm {
 		grid.set(v, COMPLETED);
 	}
 
-	protected final WeightedEdge<Integer> setRandomEdgeWeight(WeightedEdge<Integer> edge) {
-		edge.setWeight(rnd.nextInt());
-		return edge;
-	}
 }

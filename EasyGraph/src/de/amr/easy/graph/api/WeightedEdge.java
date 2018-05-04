@@ -45,7 +45,7 @@ public class WeightedEdge<W extends Comparable<W>> extends SimpleEdge implements
 
 	@Override
 	public String toString() {
-		return String.format("[%d,%d,%g]", u, v, weight);
+		return String.format("[%d,%d,%s]", u, v, String.valueOf(weight));
 	}
 
 	@Override

@@ -175,7 +175,7 @@ public class MazeGeneratorTests {
 
 	@Test
 	public void testReverseDeleteMST() {
-		grid = new Grid<>(40, 25, UNVISITED);
+		grid = new Grid<>(40, 50, UNVISITED);
 		exec(new ReverseDeleteMST(grid));
 	}
 

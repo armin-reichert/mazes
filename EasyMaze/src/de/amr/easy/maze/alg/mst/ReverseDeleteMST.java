@@ -3,8 +3,8 @@ package de.amr.easy.maze.alg.mst;
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static java.util.stream.Collectors.toCollection;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.LinkedList;
 
 import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.api.TraversalState;
@@ -13,7 +13,7 @@ import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.maze.alg.MazeAlgorithm;
 
 /**
- * A naive implementation of the Reverse-Delete-algorithm.
+ * A (naive?) implementation of the Reverse-Delete-MST algorithm.
  * 
  * @author Armin Reichert
  *
@@ -26,30 +26,26 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 	}
 
 	@Override
-	public void run(int cell) {
+	public void run(int start) {
 		grid.setDefaultContent(COMPLETED);
 		grid.fill();
-		/*@formatter:off*/
-		List<WeightedEdge<Integer>> sortedEdges = grid.edgeStream()
-				.map(this::setRandomEdgeWeight)
-				.sorted()
-				.collect(toCollection(ArrayList::new));
-		/*@formatter:on*/
+		LinkedList<WeightedEdge<Integer>> edgeList = grid.edgeStream().collect(toCollection(LinkedList::new));
+		edgeList.forEach(edge -> edge.setWeight(rnd.nextInt()));
+		Collections.sort(edgeList);
 		while (grid.edgeCount() > grid.vertexCount() - 1) {
-			WeightedEdge<Integer> edge = sortedEdges.remove(sortedEdges.size() - 1);
-			int u = edge.either(), v = edge.other(u);
-			grid.removeEdge(edge);
-			if (!connected(u, v)) {
+			WeightedEdge<Integer> maxEdge = edgeList.pollLast();
+			grid.removeEdge(maxEdge);
+			int u = maxEdge.either(), v = maxEdge.other(u);
+			if (disconnected(u, v)) {
 				grid.addEdge(u, v);
 			}
 		}
 	}
 
-	// TODO more efficient connectivity test or data-structure
-	private boolean connected(int either, int other) {
-		BreadthFirstTraversal<WeightedEdge<Integer>> bfs = new BreadthFirstTraversal<>(grid, either);
-		bfs.setStopAt(other);
+	private boolean disconnected(int u, int v) {
+		BreadthFirstTraversal<?> bfs = new BreadthFirstTraversal<>(grid, u);
+		bfs.setStopAt(v);
 		bfs.run();
-		return bfs.getDistance(other) != -1;
+		return bfs.getDistance(v) == -1;
 	}
 }
