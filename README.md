@@ -124,5 +124,5 @@ Other algorithms:
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_RecursiveDivision.gif">
 
 Path finding algorithms:
-- The [EasyGrid](EasyGrid) library contains a DFS and BFS-based path finding implementation.
+- The [EasyGraph](EasyGraph) library contains a DFS and BFS-based path finding implementation.
 
