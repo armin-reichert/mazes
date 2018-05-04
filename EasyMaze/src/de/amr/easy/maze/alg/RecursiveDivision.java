@@ -51,8 +51,8 @@ public class RecursiveDivision extends MazeAlgorithm {
 			// cut horizontally at random row from interval [top + 1, top + height - 1]
 			int cut = min(grid.numRows() - 1, (top + 1) + rnd.nextInt(height - 1));
 			int passage = rnd.nextInt(width);
-			range(0, width).forEach(col -> {
-				if (col != passage && grid.isValidCol(left + col) && grid.isValidRow(cut - 1)) {
+			range(0, width).filter(col -> col != passage).forEach(col -> {
+				if (grid.isValidCol(left + col) && grid.isValidRow(cut - 1)) {
 					int u = grid.cell(left + col, cut), v = grid.cell(left + col, cut - 1);
 					grid.edge(u, v).ifPresent(grid::removeEdge);
 				}
@@ -63,8 +63,8 @@ public class RecursiveDivision extends MazeAlgorithm {
 			// cut vertically at random column from interval [left + 1, left + width - 1]
 			int cut = min(grid.numCols() - 1, (left + 1) + rnd.nextInt(width - 1));
 			int passage = rnd.nextInt(height);
-			range(0, height).forEach(row -> {
-				if (row != passage && grid.isValidCol(cut - 1) && grid.isValidRow(top + row)) {
+			range(0, height).filter(row -> row != passage).forEach(row -> {
+				if (grid.isValidCol(cut - 1) && grid.isValidRow(top + row)) {
 					int u = grid.cell(cut, top + row), v = grid.cell(cut - 1, top + row);
 					grid.edge(u, v).ifPresent(grid::removeEdge);
 				}
