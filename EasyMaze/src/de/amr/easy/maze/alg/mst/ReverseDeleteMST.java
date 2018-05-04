@@ -35,7 +35,7 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 				.sorted()
 				.collect(toCollection(ArrayList::new));
 		/*@formatter:on*/
-		while (grid.edgeCount() < grid.vertexCount() - 1 || !sortedEdges.isEmpty()) {
+		while (grid.edgeCount() > grid.vertexCount() - 1) {
 			WeightedEdge<Integer> edge = sortedEdges.remove(sortedEdges.size() - 1);
 			int u = edge.either(), v = edge.other(u);
 			grid.removeEdge(edge);
