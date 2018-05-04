@@ -22,20 +22,18 @@ As an example, here is the generator based on the Kruskal minimum-spanning-tree 
 ```java
 public class KruskalMST extends MazeAlgorithm {
 
-	private Partition<Integer> forest;
-
 	public KruskalMST(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
 	}
 
 	@Override
 	public void run(int start) {
-		forest = new Partition<>(grid.vertexStream().boxed());
+		Partition<Integer> forest = new Partition<>(grid.vertexStream().boxed());
 		permute(grid.fullGridEdges()).forEach(edge -> {
 			int u = edge.either(), v = edge.other(u);
-			if (!forest.sameComponent(u, v)) {
-				addEdge(u, v);
+			if (forest.find(u) != forest.find(v)) {
 				forest.union(u, v);
+				addEdge(u, v);
 			}
 		});
 	}
