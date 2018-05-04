@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class StreamUtil {
+public class StreamUtils {
 
 	/**
 	 * @return a collector into a shuffled list

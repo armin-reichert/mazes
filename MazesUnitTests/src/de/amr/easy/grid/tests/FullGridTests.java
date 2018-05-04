@@ -6,11 +6,13 @@ import static org.junit.Assert.assertTrue;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.BareGrid;
@@ -119,14 +121,12 @@ public class FullGridTests {
 	}
 
 	@Test
-	public void testEdgesPermuted() {
-		assertTrue(grid.fullGridEdgesPermuted().count() == grid.edgeStream().count());
-		grid.fullGridEdgesPermuted().forEach(edge -> {
-			grid.removeEdge(edge);
-		});
-		assertTrue(grid.edgeCount() == 0);
+	public void testFullGridEdges() {
+		Stream<WeightedEdge<Integer>> fullGridEdges = grid.fullGridEdges();
+		assertEquals(grid.edgeCount(), fullGridEdges.count());
 	}
-
+	
+	
 	@Test
 	public void testFullGrid4() {
 		int c = grid.numCols(), r = grid.numRows();

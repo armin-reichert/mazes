@@ -2,7 +2,7 @@ package de.amr.easy.maze.alg.wilson;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.grid.impl.Topologies.TOP4;
-import static de.amr.easy.util.StreamUtil.randomElement;
+import static de.amr.easy.util.StreamUtils.randomElement;
 
 import java.util.OptionalInt;
 import java.util.stream.IntStream;

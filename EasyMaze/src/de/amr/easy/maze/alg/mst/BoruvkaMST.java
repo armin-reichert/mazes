@@ -1,6 +1,6 @@
 package de.amr.easy.maze.alg.mst;
 
-import static de.amr.easy.util.StreamUtil.permute;
+import static de.amr.easy.util.StreamUtils.permute;
 
 import java.util.Optional;
 import java.util.stream.Stream;

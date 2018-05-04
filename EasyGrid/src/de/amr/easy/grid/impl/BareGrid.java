@@ -1,15 +1,12 @@
 package de.amr.easy.grid.impl;
 
-import static java.util.Collections.shuffle;
 import static java.util.stream.IntStream.range;
 
 import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
-import java.util.Set;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -106,19 +103,19 @@ public class BareGrid<W extends Comparable<W>> implements BareGrid2D<W> {
 
 	@Override
 	public Stream<WeightedEdge<W>> edgeStream() {
-		Set<WeightedEdge<W>> edgeSet = new HashSet<>();
+		List<WeightedEdge<W>> edgeList = new ArrayList<>();
+		///*@formatter:off*/
 		vertexStream().forEach(cell -> {
-			top.dirs().forEach(dir -> {
-				if (isConnected(cell, dir)) {
-					neighbor(cell, dir).ifPresent(neighbor -> {
-						if (cell < neighbor) {
-							edgeSet.add(new WeightedEdge<>(cell, neighbor));
-						}
-					});
-				}
-			});
+			top.dirs()
+				.filter(dir -> isConnected(cell, dir))
+				.mapToObj(dir -> neighbor(cell, dir))
+				.filter(OptionalInt::isPresent)
+				.map(OptionalInt::getAsInt)
+				.filter(neighbor -> cell < neighbor)
+				.forEach(neighbor -> edgeList.add(new WeightedEdge<>(cell, neighbor)));
 		});
-		return edgeSet.stream();
+		///*@formatter:on*/
+		return edgeList.stream();
 	}
 
 	@Override
@@ -271,26 +268,10 @@ public class BareGrid<W extends Comparable<W>> implements BareGrid2D<W> {
 	}
 
 	@Override
-	public Stream<WeightedEdge<W>> fullGridEdgesPermuted() {
-		List<WeightedEdge<W>> edges = new ArrayList<>();
-		range(0, colCount).forEach(col -> {
-			range(0, rowCount).forEach(row -> {
-				int source = index(col, row);
-				BitSet used = new BitSet(top.dirCount());
-				top.dirs().forEach(dir -> {
-					if (!used.get(dir)) {
-						used.set(dir);
-						used.set(top.inv(dir));
-						int targetCol = col + top.dx(dir), targetRow = row + top.dy(dir);
-						if (isValidCol(targetCol) && isValidRow(targetRow)) {
-							edges.add(new WeightedEdge<>(source, index(targetCol, targetRow)));
-						}
-					}
-				});
-			});
-		});
-		shuffle(edges);
-		return edges.stream();
+	public Stream<WeightedEdge<W>> fullGridEdges() {
+		BareGrid<W> fullGrid = new BareGrid<>(colCount, rowCount, top);
+		fullGrid.fill();
+		return fullGrid.edgeStream();
 	}
 
 	@Override

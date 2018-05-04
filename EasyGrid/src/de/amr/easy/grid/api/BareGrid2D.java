@@ -163,7 +163,7 @@ public interface BareGrid2D<W extends Comparable<W>> extends Graph<WeightedEdge<
 	public void fill();
 
 	/**
-	 * @return the edges of a full grid in randomly permuted order and random weights
+	 * @return a stream of the edges for a full grid. The edge weights are undefined.
 	 */
-	public Stream<WeightedEdge<W>> fullGridEdgesPermuted();
+	public Stream<WeightedEdge<W>> fullGridEdges();
 }
