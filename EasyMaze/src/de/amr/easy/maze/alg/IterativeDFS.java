@@ -2,7 +2,6 @@ package de.amr.easy.maze.alg;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
-import static de.amr.easy.util.StreamUtils.permute;
 import static de.amr.easy.util.StreamUtils.randomElement;
 
 import java.util.Deque;
@@ -25,11 +24,11 @@ public class IterativeDFS extends MazeAlgorithm {
 
 	@Override
 	public void run(int cell) {
-		final Deque<Integer> stack = new LinkedList<>();
+		Deque<Integer> stack = new LinkedList<>();
 		stack.push(cell);
 		grid.set(cell, VISITED);
 		while (!stack.isEmpty()) {
-			OptionalInt unvisitedNeighbor = permute(grid.neighbors(cell)).filter(this::isCellUnvisited).findAny();
+			OptionalInt unvisitedNeighbor = randomElement(grid.neighbors(cell).filter(this::isCellUnvisited));
 			if (unvisitedNeighbor.isPresent()) {
 				int neighbor = unvisitedNeighbor.getAsInt();
 				if (randomElement(grid.neighbors(neighbor)).isPresent()) {
