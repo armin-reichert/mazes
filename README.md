@@ -42,7 +42,7 @@ public class KruskalMST extends MazeAlgorithm {
 
 The implementation uses Java 8 language features (streams, lambda expressions) for better readability. There are no dependencies to UI frameworks (AWT, Swing, JavaFX).
 
-Also included is a [Swing application](https://github.com/armin-reichert/mazes/releases/download/v1.0/mazedemoapp.jar) demonstrating all implemented maze generators. Using a control panel you can select the generation algorithm, path finder algorithm, grid resolution and rendering style ("walls" vs. "passages") interactively.
+Also included is a [Swing application](https://github.com/armin-reichert/mazes/releases/download/mai2018/mazedemoapp.jar) demonstrating all implemented maze generators. Using a control panel you can select the generation algorithm, path finder algorithm, grid resolution and rendering style ("walls" vs. "passages") interactively.
 
 Implemented algorithms:
 
