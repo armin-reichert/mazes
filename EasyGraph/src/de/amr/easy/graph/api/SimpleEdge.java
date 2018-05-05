@@ -4,7 +4,6 @@ package de.amr.easy.graph.api;
  * Simple edge implementation.
  * 
  * @author Armin Reichert
- *
  */
 public class SimpleEdge implements Edge {
 
@@ -22,11 +21,11 @@ public class SimpleEdge implements Edge {
 	}
 
 	@Override
-	public int other(int x) {
-		if (x != u && x != v) {
+	public int other(int either) {
+		if (either != u && either != v) {
 			throw new IllegalStateException();
 		}
-		return x == u ? v : u;
+		return either == u ? v : u;
 	}
 
 	@Override

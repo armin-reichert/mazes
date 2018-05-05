@@ -2,7 +2,6 @@ package de.amr.easy.graph.api;
 
 /**
  * An undirected graph edge.
- *
  */
 public interface Edge {
 
@@ -12,9 +11,9 @@ public interface Edge {
 	public int either();
 
 	/**
-	 * @param v
+	 * @param either
 	 *          one vertex of this edge
-	 * @return the other vertex of this edge
+	 * @return the vertex opposite to the given vertex
 	 */
 	public int other(int either);
 }
