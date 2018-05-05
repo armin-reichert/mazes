@@ -30,17 +30,17 @@ public class RecursiveDivision extends MazeAlgorithm {
 	}
 
 	/**
-	 * Applies the division step to the subgrid defined by the given left column, top row, width and
+	 * Applies the division step to the sub-grid defined by the given left column, top row, width and
 	 * height.
 	 * 
 	 * @param left
-	 *          left column of subgrid
+	 *          left column of sub-grid
 	 * @param top
-	 *          top row of subgrid
+	 *          top row of sub-grid
 	 * @param width
-	 *          number of columns of subgrid
+	 *          number of columns of sub-grid
 	 * @param height
-	 *          number of rows of subgrid
+	 *          number of rows of sub-grid
 	 */
 	private void divide(int left, int top, int width, int height) {
 		if (width <= 1 && height <= 1) {
