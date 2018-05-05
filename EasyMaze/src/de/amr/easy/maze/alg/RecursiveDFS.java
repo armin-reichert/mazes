@@ -2,7 +2,7 @@ package de.amr.easy.maze.alg;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
-import static de.amr.easy.util.StreamUtils.permute;
+import static de.amr.easy.util.StreamUtils.randomElement;
 
 import java.util.OptionalInt;
 
@@ -36,6 +36,6 @@ public class RecursiveDFS extends MazeAlgorithm {
 	}
 
 	private OptionalInt unvisitedNeighbor(int cell) {
-		return permute(grid.neighbors(cell)).filter(this::isCellUnvisited).findAny();
+		return randomElement(grid.neighbors(cell).filter(this::isCellUnvisited));
 	}
 }

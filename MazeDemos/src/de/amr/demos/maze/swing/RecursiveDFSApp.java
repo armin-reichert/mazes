@@ -16,7 +16,7 @@ public class RecursiveDFSApp extends SwingGridSampleApp {
 
 	public RecursiveDFSApp() {
 		super(256);
-		setAppName("Randomized-DFS Maze"); 
+		setAppName("Recursive-DFS Maze"); 
 	}
 
 	@Override
