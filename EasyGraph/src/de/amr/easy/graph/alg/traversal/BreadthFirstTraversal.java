@@ -45,7 +45,7 @@ public class BreadthFirstTraversal<E extends Edge> extends AbstractGraphTraversa
 		super(graph);
 		this.source = source;
 	}
-
+	
 	public void setStopAt(int vertex) {
 		this.stopAt = vertex;
 	}
@@ -60,7 +60,7 @@ public class BreadthFirstTraversal<E extends Edge> extends AbstractGraphTraversa
 	}
 
 	@Override
-	public void run() {
+	public void traverseGraph() {
 		clear();
 		visit(source, -1, 0);
 		q.add(source);

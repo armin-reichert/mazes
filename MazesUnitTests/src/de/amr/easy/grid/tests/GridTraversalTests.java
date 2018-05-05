@@ -40,7 +40,7 @@ public class GridTraversalTests {
 		grid.vertexStream().forEach(cell -> {
 			assertTrue(bfs.getState(cell) == UNVISITED);
 		});
-		bfs.run();
+		bfs.traverseGraph();
 		grid.vertexStream().forEach(cell -> {
 			assertTrue(bfs.getState(cell) == COMPLETED);
 		});
@@ -53,7 +53,7 @@ public class GridTraversalTests {
 		grid.vertexStream().forEach(cell -> {
 			assertTrue(dfs.getState(cell) == UNVISITED);
 		});
-		dfs.run();
+		dfs.traverseGraph();
 		assertTrue(dfs.getState(source) == COMPLETED || dfs.getState(target) == COMPLETED);
 		for (Integer cell : dfs.findPath(target)) {
 			assertTrue(dfs.getState(cell) == COMPLETED);

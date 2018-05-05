@@ -68,7 +68,7 @@ public class DepthFirstTraversal<E extends Edge> extends AbstractGraphTraversal<
 	}
 
 	@Override
-	public void run() {
+	public void traverseGraph() {
 		clear();
 		int current = source;
 		stack.push(current);
@@ -125,7 +125,7 @@ public class DepthFirstTraversal<E extends Edge> extends AbstractGraphTraversal<
 
 	@Override
 	public Iterable<Integer> findPath(int target) {
-		run();
+		traverseGraph();
 		if (getState(target) == UNVISITED) {
 			return Collections.emptyList();
 		}

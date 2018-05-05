@@ -5,7 +5,7 @@ package de.amr.easy.graph.api;
  * 
  * @author Armin Reichert
  */
-public interface PathFinder extends Runnable {
+public interface PathFinder {
 
 	/**
 	 * Returns the path to the given target.

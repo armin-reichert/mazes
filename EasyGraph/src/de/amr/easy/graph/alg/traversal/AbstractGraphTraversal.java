@@ -21,7 +21,7 @@ import de.amr.easy.graph.api.event.GraphTraversalListener;
  * @param <E>
  *          edge type
  */
-public abstract class AbstractGraphTraversal<E extends Edge> implements Runnable {
+public abstract class AbstractGraphTraversal<E extends Edge> {
 
 	protected final Graph<E> graph;
 	protected final Map<Integer, Integer> parentMap = new HashMap<>();
@@ -31,6 +31,8 @@ public abstract class AbstractGraphTraversal<E extends Edge> implements Runnable
 	public AbstractGraphTraversal(Graph<E> graph) {
 		this.graph = graph;
 	}
+	
+	public abstract void traverseGraph();
 
 	public void clear() {
 		parentMap.clear();

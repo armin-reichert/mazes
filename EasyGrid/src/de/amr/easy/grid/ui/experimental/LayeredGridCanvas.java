@@ -84,7 +84,7 @@ public class LayeredGridCanvas extends LayeredCanvas {
 
 	public void runPathFinder(int pathStartCell, int pathTargetCell) {
 		bfs = new BreadthFirstTraversal<>(grid, pathStartCell);
-		bfs.run();
+		bfs.traverseGraph();
 		path = bfs.findPath(pathTargetCell);
 	}
 

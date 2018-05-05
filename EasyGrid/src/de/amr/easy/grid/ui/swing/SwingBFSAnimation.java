@@ -44,7 +44,7 @@ public class SwingBFSAnimation implements GraphTraversalListener {
 		// 1. run silently for computing maximum distance from start cell:
 		canvas.stopListening();
 		bfs = new BreadthFirstTraversal<>(grid, startCell);
-		bfs.run();
+		bfs.traverseGraph();
 		maxDistance = bfs.getMaxDistance();
 		maxDistanceCell = bfs.getMaxDistanceVertex();
 
@@ -52,7 +52,7 @@ public class SwingBFSAnimation implements GraphTraversalListener {
 		canvas.startListening();
 		canvas.pushRenderingModel(bfsRenderingModel);
 		bfs.addObserver(this);
-		bfs.run();
+		bfs.traverseGraph();
 		bfs.removeObserver(this);
 		canvas.popRenderingModel();
 	}
