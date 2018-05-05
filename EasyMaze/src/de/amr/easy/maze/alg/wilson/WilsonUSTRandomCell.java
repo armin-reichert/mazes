@@ -21,11 +21,12 @@ public class WilsonUSTRandomCell extends WilsonUST {
 
 	@Override
 	public void run(int start) {
-		List<Integer> startCells = grid.vertexStream().boxed().collect(toCollection(ArrayList<Integer>::new));
-		startCells.remove((Object) start);
 		addToTree(start);
-		while (!startCells.isEmpty()) {
-			loopErasedRandomWalk(startCells.remove(rnd.nextInt(startCells.size())));
+		List<Integer> walkStarts = grid.vertexStream().filter(v -> v != start).boxed()
+				.collect(toCollection(ArrayList::new));
+		while (!walkStarts.isEmpty()) {
+			int walkStart = walkStarts.remove(rnd.nextInt(walkStarts.size()));
+			loopErasedRandomWalk(walkStart);
 		}
 	}
 }
