@@ -4,6 +4,7 @@ import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
+import java.util.ArrayDeque;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -32,7 +33,7 @@ public class DepthFirstTraversal<E extends Edge> extends AbstractGraphTraversal<
 	private final Graph<E> graph;
 	private final int source;
 	private final int target;
-	private final Deque<Integer> stack = new LinkedList<>();
+	private final Deque<Integer> stack;
 
 	/**
 	 * Constructs an instance without executing the traversal.
@@ -48,6 +49,7 @@ public class DepthFirstTraversal<E extends Edge> extends AbstractGraphTraversal<
 		this.graph = graph;
 		this.source = source;
 		this.target = target;
+		this.stack = new ArrayDeque<>();
 	}
 
 	@Override

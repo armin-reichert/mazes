@@ -1,12 +1,12 @@
 package de.amr.easy.grid.iterators;
 
+import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
-import java.util.LinkedList;
 
 public class ParallelIterator<C> implements Iterator<C> {
 
-	private final Deque<Iterator<C>> q = new LinkedList<>();
+	private final Deque<Iterator<C>> q = new ArrayDeque<>();
 
 	@SafeVarargs
 	public ParallelIterator(Iterator<C>... sources) {

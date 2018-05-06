@@ -6,8 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
+import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.LinkedList;
 
 import javax.swing.JComponent;
 
@@ -23,7 +23,7 @@ import de.amr.easy.grid.api.BareGrid2D;
  */
 public class GridCanvas<G extends BareGrid2D<?>> extends JComponent {
 
-	private final Deque<GridRenderingModel> renderModelStack = new LinkedList<>();
+	private final Deque<GridRenderingModel> renderModelStack = new ArrayDeque<>();
 	protected final GridRenderer renderer;
 	private BufferedImage drawingBuffer;
 	protected Graphics2D g2;
