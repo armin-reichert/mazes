@@ -8,8 +8,6 @@ import static de.amr.easy.grid.api.GridPosition.TOP_RIGHT;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 import javax.swing.AbstractAction;
@@ -45,7 +43,7 @@ import de.amr.easy.maze.alg.wilson.WilsonUSTHilbertCurve;
 
 public class MazeApp {
 
-	private static final List<Class<? extends MazeAlgorithm>> GENERATORS = Arrays.asList(
+	private static final Class<?> GENERATORS[] = {
 	/*@formatter:off*/	
 		BinaryTreeRandom.class,
 		EllerInsideOut.class,
@@ -58,7 +56,7 @@ public class MazeApp {
 		Sidewinder.class,
 		WilsonUSTHilbertCurve.class
 	/*@formatter:on*/
-	);
+	};
 
 	public static void main(String[] args) {
 		try {
@@ -113,22 +111,23 @@ public class MazeApp {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			final Grid2D<TraversalState, Integer> grid = canvas.getGrid();
-			runRandomMazeAlgorithm(grid);
+			canvas.getGrid().clearContent();
+			canvas.getGrid().removeEdges();
 			canvas.clear();
-			canvas.runPathFinder(grid.cell(pathStart), grid.cell(pathTarget));
+			runRandomMazeAlgorithm(canvas.getGrid());
+			canvas.runPathFinder(canvas.getGrid().cell(pathStart), canvas.getGrid().cell(pathTarget));
 			canvas.repaint();
 		}
 	};
 
 	private void runRandomMazeAlgorithm(Grid2D<TraversalState, Integer> grid) {
-		grid.clearContent();
-		grid.removeEdges();
 		grid.setDefaultContent(TraversalState.UNVISITED);
-		int index = new Random().nextInt(GENERATORS.size());
+		int index = new Random().nextInt(GENERATORS.length);
 		try {
-			MazeAlgorithm generator = GENERATORS.get(index).getConstructor(Grid2D.class).newInstance(grid);
-			window.setTitle(generator.getClass().getSimpleName());
+			@SuppressWarnings("unchecked")
+			Class<? extends MazeAlgorithm> generatorClass = (Class<? extends MazeAlgorithm>) GENERATORS[index];
+			MazeAlgorithm generator = generatorClass.getConstructor(Grid2D.class).newInstance(grid);
+			window.setTitle(generatorClass.getSimpleName());
 			generator.run(grid.cell(CENTER));
 		} catch (Exception e) {
 			e.printStackTrace();

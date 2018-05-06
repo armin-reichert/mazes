@@ -42,6 +42,7 @@ public class LayeredCanvas extends JComponent {
 	public void clear() {
 		gfx.setColor(getBackground());
 		gfx.fillRect(0, 0, getWidth(), getHeight());
+		repaint();
 	}
 
 	public Optional<Layer> getLayer(String name) {
