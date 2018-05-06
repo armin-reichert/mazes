@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.function.BiConsumer;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -36,6 +35,7 @@ import de.amr.easy.maze.alg.BinaryTreeRandom;
 import de.amr.easy.maze.alg.EllerInsideOut;
 import de.amr.easy.maze.alg.HuntAndKillRandom;
 import de.amr.easy.maze.alg.IterativeDFS;
+import de.amr.easy.maze.alg.MazeAlgorithm;
 import de.amr.easy.maze.alg.RandomBFS;
 import de.amr.easy.maze.alg.RecursiveDivision;
 import de.amr.easy.maze.alg.Sidewinder;
@@ -45,18 +45,18 @@ import de.amr.easy.maze.alg.wilson.WilsonUSTHilbertCurve;
 
 public class MazeApp {
 
-	private static final List<BiConsumer<Grid2D<TraversalState, Integer>, Integer>> GENERATORS = Arrays.asList(
+	private static final List<Class<? extends MazeAlgorithm>> GENERATORS = Arrays.asList(
 	/*@formatter:off*/	
-		(grid, start) -> new BinaryTreeRandom(grid).run(start),
-		(grid, start) -> new EllerInsideOut(grid).run(-1),
-		(grid, start) -> new HuntAndKillRandom(grid).run(start),
-		(grid, start) -> new IterativeDFS(grid).run(start),
-		(grid, start) -> new KruskalMST(grid).run(start),
-		(grid, start) -> new PrimMST(grid).run(start),
-		(grid, start) -> new RandomBFS(grid).run(start),
-		(grid, start) -> new RecursiveDivision(grid).run(-1),
-		(grid, start) -> new Sidewinder(grid).run(-1),
-		(grid, start) -> new WilsonUSTHilbertCurve(grid).run(-1)
+		BinaryTreeRandom.class,
+		EllerInsideOut.class,
+		HuntAndKillRandom.class,
+		IterativeDFS.class,
+		KruskalMST.class,
+		PrimMST.class,
+		RandomBFS.class,
+		RecursiveDivision.class,
+		Sidewinder.class,
+		WilsonUSTHilbertCurve.class
 	/*@formatter:on*/
 	);
 
@@ -126,7 +126,13 @@ public class MazeApp {
 		grid.removeEdges();
 		grid.setDefaultContent(TraversalState.UNVISITED);
 		int index = new Random().nextInt(GENERATORS.size());
-		GENERATORS.get(index).accept(grid, grid.cell(CENTER));
+		try {
+			MazeAlgorithm generator = GENERATORS.get(index).getConstructor(Grid2D.class).newInstance(grid);
+			window.setTitle(generator.getClass().getSimpleName());
+			generator.run(grid.cell(CENTER));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void buildMenu() {
