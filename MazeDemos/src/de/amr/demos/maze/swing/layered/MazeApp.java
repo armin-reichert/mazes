@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -45,18 +45,18 @@ import de.amr.easy.maze.alg.wilson.WilsonUSTHilbertCurve;
 
 public class MazeApp {
 
-	private static final List<Consumer<Grid2D<TraversalState, Integer>>> GENERATORS = Arrays.asList(
+	private static final List<BiConsumer<Grid2D<TraversalState, Integer>, Integer>> GENERATORS = Arrays.asList(
 	/*@formatter:off*/	
-		grid -> new BinaryTreeRandom(grid).run(grid.cell(CENTER)),
-		grid -> new EllerInsideOut(grid).run(grid.cell(CENTER)),
-		grid -> new HuntAndKillRandom(grid).run(grid.cell(CENTER)),
-		grid -> new IterativeDFS(grid).run(grid.cell(CENTER)),
-		grid -> new KruskalMST(grid).run(grid.cell(CENTER)),
-		grid -> new PrimMST(grid).run(grid.cell(CENTER)),
-		grid -> new RandomBFS(grid).run(grid.cell(CENTER)),
-		grid -> new RecursiveDivision(grid).run(-1),
-		grid -> new Sidewinder(grid).run(-1),
-		grid -> new WilsonUSTHilbertCurve(grid).run(grid.cell(TOP_LEFT))
+		(grid, start) -> new BinaryTreeRandom(grid).run(start),
+		(grid, start) -> new EllerInsideOut(grid).run(-1),
+		(grid, start) -> new HuntAndKillRandom(grid).run(start),
+		(grid, start) -> new IterativeDFS(grid).run(start),
+		(grid, start) -> new KruskalMST(grid).run(start),
+		(grid, start) -> new PrimMST(grid).run(start),
+		(grid, start) -> new RandomBFS(grid).run(start),
+		(grid, start) -> new RecursiveDivision(grid).run(-1),
+		(grid, start) -> new Sidewinder(grid).run(-1),
+		(grid, start) -> new WilsonUSTHilbertCurve(grid).run(-1)
 	/*@formatter:on*/
 	);
 
@@ -125,7 +125,8 @@ public class MazeApp {
 		grid.clearContent();
 		grid.removeEdges();
 		grid.setDefaultContent(TraversalState.UNVISITED);
-		GENERATORS.get(new Random().nextInt(GENERATORS.size())).accept(grid);
+		int index = new Random().nextInt(GENERATORS.size());
+		GENERATORS.get(index).accept(grid, grid.cell(CENTER));
 	}
 
 	private void buildMenu() {
