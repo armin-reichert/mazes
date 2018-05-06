@@ -30,7 +30,7 @@ public class GrowingTree extends MazeAlgorithm {
 		do {
 			int index = rnd.nextBoolean() ? cells.size() - 1 : rnd.nextInt(cells.size());
 			int cell = cells.remove(index);
-			permute(grid.neighbors(cell)).filter(this::isCellUnvisited).forEach(neighbor -> {
+			permute(grid.neighbors(cell)).filter(isCellUnvisited).forEach(neighbor -> {
 				addEdge(cell, neighbor);
 				cells.add(neighbor);
 			});

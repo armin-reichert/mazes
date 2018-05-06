@@ -54,7 +54,7 @@ public class AldousBroderUST extends MazeAlgorithm {
 	 */
 	private void visitRandomNeighbor() {
 		int neighbor = randomElement(grid.neighbors(currentCell)).getAsInt();
-		if (isCellUnvisited(neighbor)) {
+		if (isCellUnvisited.test(neighbor)) {
 			grid.addEdge(currentCell, neighbor);
 			grid.set(neighbor, COMPLETED);
 			++numVisitedCells;

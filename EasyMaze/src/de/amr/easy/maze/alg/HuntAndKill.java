@@ -21,7 +21,7 @@ import de.amr.easy.grid.api.Grid2D;
  */
 public class HuntAndKill extends MazeAlgorithm {
 
-	protected final IntPredicate isAlive = this::isCellUnvisited;
+	protected final IntPredicate isAlive = isCellUnvisited;
 	protected final IntPredicate isDead = isAlive.negate();
 	protected final BitSet targets;
 

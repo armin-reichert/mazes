@@ -1,10 +1,9 @@
 package de.amr.easy.maze.alg;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
-import static de.amr.easy.graph.api.TraversalState.UNVISITED;
-import static de.amr.easy.graph.api.TraversalState.VISITED;
 
 import java.util.Random;
+import java.util.function.IntPredicate;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
@@ -17,10 +16,17 @@ import de.amr.easy.grid.api.Grid2D;
 public abstract class MazeAlgorithm {
 
 	protected final Grid2D<TraversalState, Integer> grid;
-	protected final Random rnd = new Random();
+	protected final Random rnd;
+	protected final IntPredicate isCellUnvisited;
+	protected final IntPredicate isCellVisited;
+	protected final IntPredicate isCellCompleted;
 
 	public MazeAlgorithm(Grid2D<TraversalState, Integer> grid) {
 		this.grid = grid;
+		this.rnd = new Random();
+		this.isCellUnvisited = cell -> grid.get(cell) == TraversalState.UNVISITED;
+		this.isCellVisited = cell -> grid.get(cell) == TraversalState.VISITED;
+		this.isCellCompleted = cell -> grid.get(cell) == TraversalState.COMPLETED;
 	}
 
 	/**
@@ -44,22 +50,17 @@ public abstract class MazeAlgorithm {
 		return startCell;
 	}
 
-	protected final boolean isCellUnvisited(int cell) {
-		return grid.get(cell) == UNVISITED;
-	}
-
-	protected final boolean isCellVisited(int cell) {
-		return grid.get(cell) == VISITED;
-	}
-
-	protected final boolean isCellCompleted(int cell) {
-		return grid.get(cell) == COMPLETED;
-	}
-
+	/**
+	 * Adds a grid edge between the given vertices and marks them as completed.
+	 * 
+	 * @param u
+	 *          a grid vertex (cell)
+	 * @param v
+	 *          a grid vertex (cell)
+	 */
 	protected final void addEdge(int u, int v) {
 		grid.addEdge(u, v);
 		grid.set(u, COMPLETED);
 		grid.set(v, COMPLETED);
 	}
-
 }

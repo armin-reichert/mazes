@@ -36,6 +36,6 @@ public class RecursiveDFS extends MazeAlgorithm {
 	}
 
 	private OptionalInt unvisitedNeighbor(int cell) {
-		return randomElement(grid.neighbors(cell).filter(this::isCellUnvisited));
+		return randomElement(grid.neighbors(cell).filter(isCellUnvisited));
 	}
 }

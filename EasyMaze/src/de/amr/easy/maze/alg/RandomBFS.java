@@ -28,7 +28,7 @@ public class RandomBFS extends MazeAlgorithm {
 		frontier.add(start);
 		while (!frontier.isEmpty()) {
 			int cell = frontier.remove(rnd.nextInt(frontier.size()));
-			permute(grid.neighbors(cell)).filter(this::isCellUnvisited).forEach(neighbor -> {
+			permute(grid.neighbors(cell)).filter(isCellUnvisited).forEach(neighbor -> {
 				grid.addEdge(cell, neighbor);
 				grid.set(neighbor, VISITED);
 				frontier.add(neighbor);
