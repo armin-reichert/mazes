@@ -38,6 +38,7 @@ public class SwingDFSAnimation implements GraphTraversalListener {
 		dfs.addObserver(this);
 		canvas.pushRenderingModel(renderingModel);
 		path.clear();
+		dfs.traverseGraph();
 		dfs.findPath(dfs.getTarget()).forEach(path::add);
 		path.forEach(cell -> canvas.drawGridCell(cell));
 		canvas.popRenderingModel();

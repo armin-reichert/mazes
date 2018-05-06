@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Set;
 
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalListener;
 
@@ -23,15 +22,10 @@ import de.amr.easy.graph.api.event.GraphTraversalListener;
  */
 public abstract class AbstractGraphTraversal<E extends Edge> {
 
-	protected final Graph<E> graph;
 	protected final Map<Integer, Integer> parentMap = new HashMap<>();
 	protected final Map<Integer, TraversalState> stateMap = new HashMap<>();
 	protected final Set<GraphTraversalListener> observers = new HashSet<>(3);
 
-	public AbstractGraphTraversal(Graph<E> graph) {
-		this.graph = graph;
-	}
-	
 	public abstract void traverseGraph();
 
 	public void clear() {

@@ -34,6 +34,7 @@ import de.amr.easy.graph.api.PathFinder;
  */
 public class BreadthFirstTraversal<E extends Edge> extends AbstractGraphTraversal<E> implements PathFinder {
 
+	private final Graph<E> graph;
 	private final int source;
 	private final Queue<Integer> q = new LinkedList<>();
 	private final Map<Integer, Integer> distances = new HashMap<>();
@@ -42,7 +43,7 @@ public class BreadthFirstTraversal<E extends Edge> extends AbstractGraphTraversa
 	private int stopAt = -1;
 
 	public BreadthFirstTraversal(Graph<E> graph, int source) {
-		super(graph);
+	  this.graph = graph;
 		this.source = source;
 	}
 	
