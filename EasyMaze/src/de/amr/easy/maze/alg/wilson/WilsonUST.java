@@ -1,10 +1,8 @@
 package de.amr.easy.maze.alg.wilson;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
-import static de.amr.easy.grid.impl.Topologies.TOP4;
 import static de.amr.easy.util.StreamUtils.randomElement;
 
-import java.util.OptionalInt;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
@@ -33,7 +31,8 @@ import de.amr.easy.maze.alg.MazeAlgorithm;
  */
 public abstract class WilsonUST extends MazeAlgorithm {
 
-	private final int[] lastWalkDir;
+	private int current;
+	private int[] lastWalkDir;
 
 	protected WilsonUST(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
@@ -48,33 +47,30 @@ public abstract class WilsonUST extends MazeAlgorithm {
 	}
 
 	/**
-	 * Performs a loop-erased random walk starting with the given cell and ending on the tree created
-	 * so far. If the start cell is already part of the tree, the method does nothing.
+	 * Performs a loop-erased random walk that starts with the given cell and ends when it touches the
+	 * tree created so far. If the start cell is already in the tree, the method does nothing.
 	 * 
-	 * @param start
+	 * @param walkStart
 	 *          the start cell of the random walk
 	 */
-	protected void loopErasedRandomWalk(int start) {
-		if (!outsideTree(start))
-			return;
-
-		// do a random walk starting at the start cell until the current tree is touched
-		int v = start;
-		while (outsideTree(v)) {
-			int randomDir = randomElement(TOP4.dirs()).getAsInt();
-			OptionalInt neighbor = grid.neighbor(v, randomDir);
-			if (neighbor.isPresent()) {
-				lastWalkDir[v] = randomDir;
-				v = neighbor.getAsInt();
-			}
+	protected void loopErasedRandomWalk(int walkStart) {
+		// do random walk until tree is touched
+		current = walkStart;
+		while (!inTree(current)) {
+			int walkDir = randomElement(grid.getTopology().dirs()).getAsInt();
+			grid.neighbor(current, walkDir).ifPresent(neighbor -> {
+				lastWalkDir[current] = walkDir;
+				current = neighbor;
+			});
 		}
-		// add the (loop-erased) walk path to the current tree
-		v = start;
-		while (outsideTree(v)) {
-			int neighbor = grid.neighbor(v, lastWalkDir[v]).getAsInt();
-			addToTree(v);
-			grid.addEdge(v, neighbor);
-			v = neighbor;
+		// add the (loop-erased) walk to the tree
+		current = walkStart;
+		while (!inTree(current)) {
+			grid.neighbor(current, lastWalkDir[current]).ifPresent(neighbor -> {
+				addToTree(current);
+				grid.addEdge(current, neighbor);
+				current = neighbor;
+			});
 		}
 	}
 
@@ -88,10 +84,10 @@ public abstract class WilsonUST extends MazeAlgorithm {
 	/**
 	 * @param cell
 	 *          a grid cell
-	 * @return <code>true</code> if the cell is outside of the tree created so far
+	 * @return <code>true</code> if the cell belongs to the tree
 	 */
-	protected boolean outsideTree(int cell) {
-		return grid.get(cell) != COMPLETED;
+	private boolean inTree(int cell) {
+		return grid.get(cell) == COMPLETED;
 	}
 
 	/**
