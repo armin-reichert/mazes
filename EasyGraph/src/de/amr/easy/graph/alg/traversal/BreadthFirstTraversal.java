@@ -4,11 +4,11 @@ import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
+import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Queue;
 
 import de.amr.easy.graph.api.Edge;
@@ -36,17 +36,20 @@ public class BreadthFirstTraversal<E extends Edge> extends AbstractGraphTraversa
 
 	private final Graph<E> graph;
 	private final int source;
-	private final Queue<Integer> q = new LinkedList<>();
-	private final Map<Integer, Integer> distances = new HashMap<>();
+	private final Queue<Integer> q;
+	private final int[] distances;
 	private int maxDistance = -1;
 	private int farest = -1;
 	private int stopAt = -1;
 
 	public BreadthFirstTraversal(Graph<E> graph, int source) {
-	  this.graph = graph;
+		this.graph = graph;
 		this.source = source;
+		q = new ArrayDeque<>();
+		distances = new int[graph.vertexCount()];
+		Arrays.fill(distances, -1);
 	}
-	
+
 	public void setStopAt(int vertex) {
 		this.stopAt = vertex;
 	}
@@ -55,7 +58,7 @@ public class BreadthFirstTraversal<E extends Edge> extends AbstractGraphTraversa
 	public void clear() {
 		super.clear();
 		q.clear();
-		distances.clear();
+		Arrays.fill(distances, -1);
 		maxDistance = -1;
 		farest = -1;
 	}
@@ -78,16 +81,16 @@ public class BreadthFirstTraversal<E extends Edge> extends AbstractGraphTraversa
 		}
 	}
 
-	private void visit(int vertex, int parent, int distance) {
-		distances.put(vertex, distance);
+	private void visit(int v, int parent, int distance) {
+		distances[v] = distance;
 		if (distance > maxDistance) {
 			maxDistance = distance;
-			farest = vertex;
+			farest = v;
 		}
-		setState(vertex, VISITED);
-		setParent(vertex, parent);
+		setState(v, VISITED);
+		setParent(v, parent);
 		if (parent != -1) {
-			observers.forEach(observer -> observer.edgeTouched(parent, vertex));
+			observers.forEach(observer -> observer.edgeTouched(parent, v));
 		}
 	}
 
@@ -99,7 +102,7 @@ public class BreadthFirstTraversal<E extends Edge> extends AbstractGraphTraversa
 	 * @return the distance from the source
 	 */
 	public int getDistance(int v) {
-		return distances.containsKey(v) ? distances.get(v) : -1;
+		return distances[v];
 	}
 
 	/**
