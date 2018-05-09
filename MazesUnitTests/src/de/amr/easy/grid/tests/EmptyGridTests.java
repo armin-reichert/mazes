@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.impl.BareGrid;
+import de.amr.easy.grid.impl.Topologies;
 
 public class EmptyGridTests {
 
@@ -16,7 +17,7 @@ public class EmptyGridTests {
 
 	@Before
 	public void setUp() {
-		grid = new BareGrid<>(0, 0);
+		grid = new BareGrid<>(0, 0, Topologies.TOP4);
 	}
 
 	@After

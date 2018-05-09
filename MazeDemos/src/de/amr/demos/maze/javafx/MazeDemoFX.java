@@ -12,6 +12,7 @@ import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.ObservableGrid;
+import de.amr.easy.grid.impl.Topologies;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
 import de.amr.easy.maze.alg.Eller;
 import de.amr.easy.maze.alg.EllerInsideOut;
@@ -110,7 +111,7 @@ public class MazeDemoFX extends Application {
 	}
 
 	private void nextMaze() {
-		maze = new ObservableGrid<>(cols, rows, UNVISITED);
+		maze = new ObservableGrid<>(cols, rows, Topologies.TOP4, UNVISITED);
 		canvas.resize((cols + 1) * cellSize, (rows + 1) * cellSize);
 		Consumer<Integer> generator = randomMazeGenerator();
 		generator.accept(maze.cell(0, 0));

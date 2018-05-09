@@ -15,9 +15,8 @@ public class SierpinskiLCurveApp extends SwingGridSampleApp {
 	private static int CELL_SIZE = 8;
 
 	public SierpinskiLCurveApp() {
-		super(CELL_SIZE);
+		super(CELL_SIZE, Topologies.TOP8);
 		setAppName("Sierpinski Curve (L-system)");
-		grid.setTopology(Topologies.TOP8);
 	}
 
 	@Override

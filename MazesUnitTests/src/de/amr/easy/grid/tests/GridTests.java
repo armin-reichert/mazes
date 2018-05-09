@@ -42,7 +42,7 @@ public class GridTests {
 
 	@Before
 	public void setUp() {
-		grid = new Grid<>(WIDTH, HEIGHT, UNVISITED);
+		grid = new Grid<>(WIDTH, HEIGHT, Topologies.TOP4, UNVISITED);
 	}
 
 	@After

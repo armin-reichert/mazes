@@ -4,6 +4,7 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
 import java.util.stream.IntStream;
 
+import de.amr.easy.grid.impl.Topologies;
 import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 import de.amr.easy.maze.alg.IterativeDFS;
@@ -15,8 +16,8 @@ public class IterativeDFSApp extends SwingGridSampleApp {
 	}
 
 	public IterativeDFSApp() {
-		super(128);
-		setAppName("Randomized-DFS Maze"); 
+		super(128, Topologies.TOP4);
+		setAppName("Randomized-DFS Maze");
 	}
 
 	@Override

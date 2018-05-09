@@ -16,6 +16,7 @@ import de.amr.easy.graph.alg.traversal.DepthFirstTraversal;
 import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.impl.BareGrid;
+import de.amr.easy.grid.impl.Topologies;
 
 public class GridTraversalTests {
 
@@ -26,7 +27,7 @@ public class GridTraversalTests {
 
 	@Before
 	public void setUp() {
-		grid = new BareGrid<>(WIDTH, HEIGHT);
+		grid = new BareGrid<>(WIDTH, HEIGHT, Topologies.TOP4);
 		grid.fill();
 	}
 

@@ -5,6 +5,7 @@ import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 
+import de.amr.easy.grid.impl.Topologies;
 import de.amr.easy.grid.iterators.traversals.Spiral;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 
@@ -15,8 +16,8 @@ public class SpiralApp extends SwingGridSampleApp {
 	}
 
 	public SpiralApp() {
-		super(2);
-		setAppName("Spiral"); 
+		super(2, Topologies.TOP4);
+		setAppName("Spiral");
 	}
 
 	@Override

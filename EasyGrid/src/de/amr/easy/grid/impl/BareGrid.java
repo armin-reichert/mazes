@@ -76,19 +76,6 @@ public class BareGrid<W extends Comparable<W>> implements BareGrid2D<W> {
 		this.bits = new BitSet(top.dirCount() * cellCount);
 	}
 
-	/**
-	 * Creates a grid of size {@code colCount x rowCount} with an empty edge set and 4-direction
-	 * topology.
-	 * 
-	 * @param colCount
-	 *          the number of columns of this grid
-	 * @param rowCount
-	 *          the number of rows of this grid
-	 */
-	public BareGrid(int colCount, int rowCount) {
-		this(colCount, rowCount, Topologies.TOP4);
-	}
-
 	// Implement {@link Graph} interface
 
 	@Override
@@ -185,14 +172,6 @@ public class BareGrid<W extends Comparable<W>> implements BareGrid2D<W> {
 	@Override
 	public Topology getTopology() {
 		return top;
-	}
-
-	@Override
-	public void setTopology(Topology top) {
-		if (this.top != top) {
-			this.top = top;
-			this.bits = new BitSet(top.dirCount() * cellCount);
-		}
 	}
 
 	@Override

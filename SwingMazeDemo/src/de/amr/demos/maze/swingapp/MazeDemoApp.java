@@ -16,6 +16,7 @@ import de.amr.demos.maze.swingapp.view.MazeWindow;
 import de.amr.demos.maze.swingapp.view.SettingsWindow;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.impl.ObservableGrid;
+import de.amr.easy.grid.impl.Topologies;
 import de.amr.easy.grid.ui.swing.AnimatedGridCanvas;
 import de.amr.easy.grid.ui.swing.UserInterfaceUtils;
 
@@ -57,7 +58,7 @@ public class MazeDemoApp {
 		model.setLongestPathHighlighted(false);
 		model.setDelay(0);
 		Dimension size = UserInterfaceUtils.maxGridDimensionForDisplay(model.getGridCellSize());
-		model.setGrid(new ObservableGrid<>(size.width, size.height, UNVISITED));
+		model.setGrid(new ObservableGrid<>(size.width, size.height, Topologies.TOP4, UNVISITED));
 
 		settingsWindow = new SettingsWindow(this);
 		settingsWindow.setAlwaysOnTop(true);

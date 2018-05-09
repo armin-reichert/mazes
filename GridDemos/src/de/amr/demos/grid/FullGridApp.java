@@ -9,6 +9,7 @@ import static java.lang.System.out;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import de.amr.easy.grid.impl.Topologies;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 import de.amr.easy.util.StopWatch;
 
@@ -19,7 +20,7 @@ public class FullGridApp extends SwingGridSampleApp {
 	}
 
 	public FullGridApp() {
-		super(512);
+		super(512, Topologies.TOP4);
 		setAppName("Full Grid");
 	}
 
@@ -31,7 +32,6 @@ public class FullGridApp extends SwingGridSampleApp {
 		Stream.of(TOP4, TOP8).forEach(topology -> {
 			IntStream.of(512, 256, 128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 				resizeGrid(cellSize);
-				grid.setTopology(topology);
 				grid.setDefaultContent(COMPLETED);
 				grid.fill();
 				watch.runAndMeasure(canvas::drawGrid);

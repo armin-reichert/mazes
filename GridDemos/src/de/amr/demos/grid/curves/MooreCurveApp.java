@@ -5,12 +5,13 @@ import static de.amr.easy.util.GridUtils.log;
 import java.util.stream.IntStream;
 
 import de.amr.easy.grid.curves.MooreLCurve;
+import de.amr.easy.grid.impl.Topologies;
 import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 
 /**
- * Creates Moore curves of different sizes and shows an animation of the creation and BFS-traversal of the underlying
- * graph.
+ * Creates Moore curves of different sizes and shows an animation of the creation and BFS-traversal
+ * of the underlying graph.
  * 
  * @author Armin Reichert
  */
@@ -21,8 +22,8 @@ public class MooreCurveApp extends SwingGridSampleApp {
 	}
 
 	public MooreCurveApp() {
-		super(512, 512, 512);
-		setAppName("Moore Curve"); 
+		super(512, 512, 512, Topologies.TOP4);
+		setAppName("Moore Curve");
 	}
 
 	@Override

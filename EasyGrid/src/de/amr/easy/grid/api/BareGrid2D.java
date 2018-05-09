@@ -44,14 +44,6 @@ public interface BareGrid2D<W extends Comparable<W>> extends Graph<WeightedEdge<
 	public Topology getTopology();
 
 	/**
-	 * Sets a new topology for this grid. This deletes all edges!
-	 * 
-	 * @param top
-	 *          new topology
-	 */
-	public void setTopology(Topology top);
-
-	/**
 	 * @param col
 	 *          a column index
 	 * @param row

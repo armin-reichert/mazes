@@ -2,6 +2,7 @@ package de.amr.easy.grid.impl;
 
 import de.amr.easy.graph.api.VertexContent;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.Topology;
 
 /**
  * A grid with cell content.
@@ -18,14 +19,14 @@ public class Grid<Content, Weight extends Comparable<Weight>> extends BareGrid<W
 
 	private final VertexContent<Content> gridContent;
 
-	public Grid(int numCols, int numRows, Content defaultContent, boolean sparse) {
-		super(numCols, numRows);
+	public Grid(int numCols, int numRows, Topology top, Content defaultContent, boolean sparse) {
+		super(numCols, numRows, top);
 		gridContent = sparse ? new SparseGridContent<>() : new DenseGridContent<>(numCols * numRows);
 		gridContent.setDefaultContent(defaultContent);
 	}
 
-	public Grid(int numCols, int numRows, Content defaultContent) {
-		this(numCols, numRows, defaultContent, true);
+	public Grid(int numCols, int numRows, Topology top, Content defaultContent) {
+		this(numCols, numRows, top, defaultContent, true);
 	}
 
 	// --- {@link GridContent} interface ---

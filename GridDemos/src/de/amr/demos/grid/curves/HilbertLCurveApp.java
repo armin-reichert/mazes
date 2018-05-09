@@ -6,6 +6,7 @@ import static de.amr.easy.util.GridUtils.log;
 import java.util.stream.IntStream;
 
 import de.amr.easy.grid.curves.HilbertLCurve;
+import de.amr.easy.grid.impl.Topologies;
 import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 
@@ -16,7 +17,7 @@ public class HilbertLCurveApp extends SwingGridSampleApp {
 	}
 
 	public HilbertLCurveApp() {
-		super(512, 512, 256);
+		super(512, 512, 256, Topologies.TOP4);
 		setAppName("Hilbert Curve (L-system)"); 
 	}
 

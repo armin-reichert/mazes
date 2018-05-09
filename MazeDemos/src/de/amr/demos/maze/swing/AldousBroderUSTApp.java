@@ -4,6 +4,7 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
 import java.util.stream.IntStream;
 
+import de.amr.easy.grid.impl.Topologies;
 import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 import de.amr.easy.maze.alg.AldousBroderUST;
@@ -15,7 +16,7 @@ public class AldousBroderUSTApp extends SwingGridSampleApp {
 	}
 
 	public AldousBroderUSTApp() {
-		super(128);
+		super(128, Topologies.TOP4);
 		setAppName("Aldous-Broder UST Maze"); 
 	}
 

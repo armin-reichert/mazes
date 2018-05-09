@@ -11,6 +11,7 @@ import de.amr.easy.graph.api.event.EdgeRemovedEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.VertexChangeEvent;
 import de.amr.easy.grid.api.ObservableBareGrid2D;
+import de.amr.easy.grid.api.Topology;
 
 /**
  * A grid which can be observed.
@@ -25,8 +26,8 @@ public class ObservableBareGrid<W extends Comparable<W>> extends BareGrid<W> imp
 	private final Set<GraphObserver<WeightedEdge<W>>> observers = new HashSet<>();
 	private boolean fireEvents;
 
-	public ObservableBareGrid(int numCols, int numRows) {
-		super(numCols, numRows);
+	public ObservableBareGrid(int numCols, int numRows, Topology top) {
+		super(numCols, numRows, top);
 		fireEvents = true;
 	}
 

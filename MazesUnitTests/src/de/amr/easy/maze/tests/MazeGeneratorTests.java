@@ -22,6 +22,7 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.Grid;
+import de.amr.easy.grid.impl.Topologies;
 import de.amr.easy.maze.alg.AldousBroderUST;
 import de.amr.easy.maze.alg.BinaryTree;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
@@ -59,8 +60,8 @@ import de.amr.easy.util.StopWatch;
 
 public class MazeGeneratorTests {
 
-	private static final int WIDTH = 400;
-	private static final int HEIGHT = 250;
+	private static final int WIDTH = 100;
+	private static final int HEIGHT = 100;
 
 	private Grid2D<TraversalState, Integer> grid;
 	private StopWatch watch;
@@ -70,7 +71,7 @@ public class MazeGeneratorTests {
 	@BeforeClass
 	public static void beforeAllTests() {
 		// warm-up
-		new RandomBFS(new Grid<>(WIDTH, HEIGHT, UNVISITED)).run(0);
+		new RandomBFS(new Grid<>(WIDTH, HEIGHT, Topologies.TOP4, UNVISITED)).run(0);
 	}
 
 	@AfterClass
@@ -81,7 +82,7 @@ public class MazeGeneratorTests {
 
 	@Before
 	public void setUp() {
-		grid = new Grid<>(WIDTH, HEIGHT, UNVISITED);
+		grid = new Grid<>(WIDTH, HEIGHT, Topologies.TOP4, UNVISITED);
 		watch = new StopWatch();
 	}
 
@@ -91,7 +92,7 @@ public class MazeGeneratorTests {
 		assertFalse(new CycleChecker<WeightedEdge<Integer>>().test(grid));
 	}
 
-	private void exec(MazeAlgorithm algorithm) {
+	private void runTest(MazeAlgorithm algorithm) {
 		watch.runAndMeasure(() -> algorithm.run(grid.cell(CENTER)));
 		results.add(format("%-30s (%6d cells): %.3f sec", algorithm.getClass().getSimpleName(), grid.numCells(),
 				watch.getSeconds()));
@@ -99,163 +100,163 @@ public class MazeGeneratorTests {
 
 	@Test
 	public void testAldousBroder() {
-		exec(new AldousBroderUST(grid));
+		runTest(new AldousBroderUST(grid));
 	}
 
 	@Test
 	public void testBinaryTree() {
-		exec(new BinaryTree(grid));
+		runTest(new BinaryTree(grid));
 	}
 
 	@Test
 	public void testBinaryTreeRandom() {
-		exec(new BinaryTreeRandom(grid));
+		runTest(new BinaryTreeRandom(grid));
 	}
 
 	@Test
 	public void testBoruvka() {
-		exec(new BoruvkaMST(grid));
+		runTest(new BoruvkaMST(grid));
 	}
 
 	@Test
 	public void testEller() {
-		exec(new Eller(grid));
+		runTest(new Eller(grid));
 	}
 
 	@Test
 	public void testEllerInsideOut() {
-		exec(new EllerInsideOut(grid));
+		runTest(new EllerInsideOut(grid));
 	}
 
 	@Test
 	public void testGrowingTree() {
-		exec(new GrowingTree(grid));
+		runTest(new GrowingTree(grid));
 	}
 
 	@Test
 	public void testHuntAndKill() {
-		exec(new HuntAndKill(grid));
+		runTest(new HuntAndKill(grid));
 	}
 
 	@Test
 	public void testHuntAndKillRandom() {
-		exec(new HuntAndKillRandom(grid));
+		runTest(new HuntAndKillRandom(grid));
 	}
 
 	@Test
 	public void testIterativeDFS() {
-		exec(new IterativeDFS(grid));
+		runTest(new IterativeDFS(grid));
 	}
 
 	@Test
 	public void testKruskal() {
-		exec(new KruskalMST(grid));
+		runTest(new KruskalMST(grid));
 	}
 
 	@Test
 	public void testPrim() {
-		exec(new PrimMST(grid));
+		runTest(new PrimMST(grid));
 	}
 
 	@Test
 	public void testRandomBFS() {
-		exec(new RandomBFS(grid));
+		runTest(new RandomBFS(grid));
 	}
 
 	@Test
 	public void testRecursiveDFS() {
-		grid = new Grid<>(40, 50, UNVISITED);
-		exec(new RecursiveDFS(grid));
+		grid = new Grid<>(32, 32, Topologies.TOP4, UNVISITED);
+		runTest(new RecursiveDFS(grid));
 	}
 
 	@Test
 	public void testRecursiveDivision() {
-		exec(new RecursiveDivision(grid));
+		runTest(new RecursiveDivision(grid));
 	}
 
 	@Test
 	public void testReverseDeleteMST() {
-		grid = new Grid<>(40, 50, UNVISITED);
-		exec(new ReverseDeleteMST(grid));
+		grid = new Grid<>(32, 32, Topologies.TOP4, UNVISITED);
+		runTest(new ReverseDeleteMST(grid));
 	}
 
 	@Test
 	public void testSideWinder() {
-		exec(new Sidewinder(grid));
+		runTest(new Sidewinder(grid));
 	}
 
 	@Test
 	public void testWilsonUSTCollapsingCircle() {
-		exec(new WilsonUSTCollapsingCircle(grid));
+		runTest(new WilsonUSTCollapsingCircle(grid));
 	}
 
 	@Test
 	public void testWilsonUSTCollapsingRectangle() {
-		exec(new WilsonUSTCollapsingRectangle(grid));
+		runTest(new WilsonUSTCollapsingRectangle(grid));
 	}
 
 	@Test
 	public void testWilsonUSTCollapsingWalls() {
-		exec(new WilsonUSTCollapsingWalls(grid));
+		runTest(new WilsonUSTCollapsingWalls(grid));
 	}
 
 	@Test
 	public void testWilsonUSTExpandingCircle() {
-		exec(new WilsonUSTExpandingCircle(grid));
+		runTest(new WilsonUSTExpandingCircle(grid));
 	}
 
 	@Test
 	public void testWilsonUSTExpandingCircles() {
-		exec(new WilsonUSTExpandingCircles(grid));
+		runTest(new WilsonUSTExpandingCircles(grid));
 	}
 
 	@Test
 	public void testWilsonUSTExpandingRectangle() {
-		exec(new WilsonUSTExpandingRectangle(grid));
+		runTest(new WilsonUSTExpandingRectangle(grid));
 	}
 
 	@Test
 	public void testWilsonUSTExpandingSpiral() {
-		exec(new WilsonUSTExpandingSpiral(grid));
+		runTest(new WilsonUSTExpandingSpiral(grid));
 	}
 
 	@Test
 	public void testWilsonUSTHilbertCurve() {
-		exec(new WilsonUSTHilbertCurve(grid));
+		runTest(new WilsonUSTHilbertCurve(grid));
 	}
 
 	@Test
 	public void testWilsonUSTLeftToRightSweep() {
-		exec(new WilsonUSTLeftToRightSweep(grid));
+		runTest(new WilsonUSTLeftToRightSweep(grid));
 	}
 
 	@Test
 	public void testWilsonUSTNestedRectangles() {
-		exec(new WilsonUSTNestedRectangles(grid));
+		runTest(new WilsonUSTNestedRectangles(grid));
 	}
 
 	@Test
 	public void testWilsonUSTPeanoCurve() {
-		exec(new WilsonUSTPeanoCurve(grid));
+		runTest(new WilsonUSTPeanoCurve(grid));
 	}
 
 	@Test
 	public void testWilsonUSTRandomCell() {
-		exec(new WilsonUSTRandomCell(grid));
+		runTest(new WilsonUSTRandomCell(grid));
 	}
 
 	@Test
 	public void testWilsonUSTRecursiveCrosses() {
-		exec(new WilsonUSTRecursiveCrosses(grid));
+		runTest(new WilsonUSTRecursiveCrosses(grid));
 	}
 
 	@Test
 	public void testWilsonUSTRightToLeftSweep() {
-		exec(new WilsonUSTRightToLeftSweep(grid));
+		runTest(new WilsonUSTRightToLeftSweep(grid));
 	}
 
 	@Test
 	public void testWilsonUSTRowsTopDown() {
-		exec(new WilsonUSTRowsTopDown(grid));
+		runTest(new WilsonUSTRowsTopDown(grid));
 	}
 }

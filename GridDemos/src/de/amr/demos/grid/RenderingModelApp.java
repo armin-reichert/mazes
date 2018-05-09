@@ -52,7 +52,7 @@ public class RenderingModelApp extends SwingGridSampleApp {
 	}
 
 	public RenderingModelApp() {
-		super(8);
+		super(8, Topologies.TOP4);
 		setAppName("Rendering Model Demo");
 	}
 
@@ -61,13 +61,12 @@ public class RenderingModelApp extends SwingGridSampleApp {
 		canvas.setDelay(0);
 		IntStream.of(8, 16, 32, 64, 128, 256, 512).forEach(cellSize -> {
 			resizeGrid(cellSize);
-			grid.setTopology(Topologies.TOP8);
 			grid.fill();
 			canvas.pushRenderingModel(new DemoRenderingModel(cellSize));
 			canvas.drawGrid();
 			canvas.popRenderingModel();
 			sleep(2000);
 		});
-//		System.exit(0);
+		// System.exit(0);
 	}
 }

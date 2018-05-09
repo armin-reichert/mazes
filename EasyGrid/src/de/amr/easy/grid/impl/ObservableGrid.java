@@ -2,6 +2,7 @@ package de.amr.easy.grid.impl;
 
 import de.amr.easy.graph.api.VertexContent;
 import de.amr.easy.grid.api.ObservableGrid2D;
+import de.amr.easy.grid.api.Topology;
 
 /**
  * An observable grid with cell content.
@@ -18,14 +19,14 @@ public class ObservableGrid<C, W extends Comparable<W>> extends ObservableBareGr
 
 	private final VertexContent<C> gridContent;
 
-	public ObservableGrid(int numCols, int numRows, C defaultContent, boolean sparse) {
-		super(numCols, numRows);
+	public ObservableGrid(int numCols, int numRows, Topology top, C defaultContent, boolean sparse) {
+		super(numCols, numRows, top);
 		gridContent = sparse ? new SparseGridContent<>() : new DenseGridContent<>(numCols * numRows);
 		gridContent.setDefaultContent(defaultContent);
 	}
 
-	public ObservableGrid(int numCols, int numRows, C defaultContent) {
-		this(numCols, numRows, defaultContent, true);
+	public ObservableGrid(int numCols, int numRows, Topology top, C defaultContent) {
+		this(numCols, numRows, top, defaultContent, true);
 	}
 
 	// --- {@link VertexContent} interface ---

@@ -4,6 +4,7 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
 import java.util.stream.IntStream;
 
+import de.amr.easy.grid.impl.Topologies;
 import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 import de.amr.easy.maze.alg.HuntAndKillRandom;
@@ -15,8 +16,8 @@ public class HuntAndKillRandomApp extends SwingGridSampleApp {
 	}
 
 	public HuntAndKillRandomApp() {
-		super(128);
-		setAppName("Hunt And Kill"); 
+		super(128, Topologies.TOP4);
+		setAppName("Hunt And Kill");
 	}
 
 	@Override

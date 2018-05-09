@@ -11,6 +11,7 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.curves.PeanoCurve;
 import de.amr.easy.grid.impl.BareGrid;
+import de.amr.easy.grid.impl.Topologies;
 import de.amr.easy.util.GridUtils;
 
 /**
@@ -32,7 +33,7 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 	protected IntStream cellStream() {
 		int n = nextPow(3, max(grid.numCols(), grid.numRows()));
 		PeanoCurve peano = new PeanoCurve(GridUtils.log(3, n));
-		BareGrid<?> square = new BareGrid<>(n, n);
+		BareGrid<?> square = new BareGrid<>(n, n, Topologies.TOP4);
 		Integer cell = square.cell(BOTTOM_LEFT);
 		addCellToPath(square.col(cell), square.row(cell));
 		for (int dir : peano) {

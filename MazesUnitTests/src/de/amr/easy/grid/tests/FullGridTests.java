@@ -28,7 +28,7 @@ public class FullGridTests {
 
 	@Before
 	public void setUp() {
-		grid = new BareGrid<>(WIDTH, HEIGHT);
+		grid = new BareGrid<>(WIDTH, HEIGHT, Topologies.TOP4);
 		grid.fill();
 	}
 
