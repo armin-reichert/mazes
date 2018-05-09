@@ -1,14 +1,10 @@
 ## Maze generation algorithms in Java 8
 
-I got interested in maze generation algorithms by reading this [weblog](http://weblog.jamisbuck.org/2011/2/7/maze-generation-algorithm-recap) where the author presents the most commonly known algorithms together with a Ruby implementation.
+My interest in maze generation algorithms started when reading a [weblog](http://weblog.jamisbuck.org/2011/2/7/maze-generation-algorithm-recap) where the author presents the most commonly known algorithms together with a Ruby implementation.
 
-Originally, I just wanted to reimplement some of these algorithms in Java and reformulate them such that the underlying graph algorithms would become more clearly visible.
+At first, I wanted to reimplement some of these algorithms in Java and reformulate them such that the underlying graph algorithms would become more clearly visible. In the course of doing that I discovered new possibilities for maze generation, for example, a modified version of Eller's algorithm which generates the maze from the center of the grid graph towards the borders, or variations of Wilson's algorithm which are achieved by different strategies of selecting the sources for the random walks. One can for example select the start vertices of the random walks in the order defined by space-filling-curves like ([Hilbert](EasyGrid/src/de/amr/easy/grid/curves/HilbertCurve.java), [Peano](EasyGrid/src/de/amr/easy/grid/curves/PeanoCurve.java) or [Moore](EasyGrid/src/de/amr/easy/grid/curves/MooreLCurve.java)) curves. Probably this has no practical use, but at least it's fun to watch!
 
-In the course of doing that I discovered new possibilities for maze generation: for example, a modified version of Eller's algorithm which generates the maze from the center of the grid graph towards the borders, or variations of Wilson's algorithm which are achieved by different strategies of selecting the sources for the random walks. 
-
-For example, one can select the start vertices of the random walks in the order defined by space-filling-curves ([Hilbert](EasyGrid/src/de/amr/easy/grid/curves/HilbertCurve.java), [Peano](EasyGrid/src/de/amr/easy/grid/curves/PeanoCurve.java), [Moore](EasyGrid/src/de/amr/easy/grid/curves/MooreLCurve.java)). Probably of no practical use, but at least fun to watch!
-
-The implementation given here makes the underlying graph algorithm (creating a spanning tree of an undirected grid graph) more explicit, the generator code is free of rendering details or ad-hoc data structure implementations.
+The implementations given here make the underlying graph algorithm (spanning tree creation for an undirected grid graph) more explicit, the generator code itself is free of rendering details or ad-hoc data structure implementations.
 
 To achieve this goal, there is
 - an API for Graph and Grid data structures 
@@ -17,7 +13,7 @@ To achieve this goal, there is
 
 The generation algorithms work strictly on the Grid API, drawing code is attached as graph change and traversal listeners.
 
-As an example, here is the generator based on the Kruskal minimum-spanning-tree algorithm:
+As an example, the generator based on the Kruskal minimum-spanning-tree algorithm look like this:
 
 ```java
 public class KruskalMST extends MazeAlgorithm {
@@ -40,7 +36,9 @@ public class KruskalMST extends MazeAlgorithm {
 }
 ```
 
-The implementation uses Java 8 language features (streams, lambda expressions) for better readability. There are no dependencies to UI frameworks (AWT, Swing, JavaFX).
+Everybody who ever dealt with the Kruskal MST algorithm should immediately recognize it in this code.
+
+The implementation uses Java 8 specific language features (streams, lambda expressions) for better readability. There are no dependencies to UI frameworks (AWT, Swing, JavaFX).
 
 Also included is a [Swing application](https://github.com/armin-reichert/mazes/releases/download/mai2018/mazedemoapp.jar) demonstrating all implemented maze generators. Using a control panel you can select the generation algorithm, path finder algorithm, grid resolution and rendering style ("walls" vs. "passages") interactively.
 
