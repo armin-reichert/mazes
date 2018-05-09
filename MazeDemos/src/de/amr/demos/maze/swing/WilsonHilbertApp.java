@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 import de.amr.easy.grid.impl.Topologies;
 import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
-import de.amr.easy.maze.alg.wilson.WilsonUSTHilbertCurve;
+import de.amr.easy.maze.alg.ust.WilsonUSTHilbertCurve;
 
 public class WilsonHilbertApp extends SwingGridSampleApp {
 

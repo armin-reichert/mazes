@@ -32,14 +32,14 @@ import de.amr.easy.grid.ui.experimental.LayeredGridCanvas;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
 import de.amr.easy.maze.alg.EllerInsideOut;
 import de.amr.easy.maze.alg.HuntAndKillRandom;
-import de.amr.easy.maze.alg.IterativeDFS;
 import de.amr.easy.maze.alg.MazeAlgorithm;
-import de.amr.easy.maze.alg.RandomBFS;
 import de.amr.easy.maze.alg.RecursiveDivision;
 import de.amr.easy.maze.alg.Sidewinder;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 import de.amr.easy.maze.alg.mst.PrimMST;
-import de.amr.easy.maze.alg.wilson.WilsonUSTHilbertCurve;
+import de.amr.easy.maze.alg.traversal.IterativeDFS;
+import de.amr.easy.maze.alg.traversal.RandomBFS;
+import de.amr.easy.maze.alg.ust.WilsonUSTHilbertCurve;
 
 public class MazeApp {
 

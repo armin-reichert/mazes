@@ -1,4 +1,4 @@
-package de.amr.easy.maze.alg;
+package de.amr.easy.maze.alg.traversal;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
@@ -9,6 +9,7 @@ import java.util.List;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.maze.alg.MazeAlgorithm;
 
 /**
  * Maze generator using a randomized breadth-first-traversal.

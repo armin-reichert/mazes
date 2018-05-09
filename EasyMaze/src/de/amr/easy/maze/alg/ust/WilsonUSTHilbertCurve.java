@@ -1,4 +1,4 @@
-package de.amr.easy.maze.alg.wilson;
+package de.amr.easy.maze.alg.ust;
 
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.grid.impl.Top4.E;

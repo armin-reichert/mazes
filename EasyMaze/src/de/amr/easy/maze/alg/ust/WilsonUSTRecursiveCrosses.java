@@ -1,4 +1,4 @@
-package de.amr.easy.maze.alg.wilson;
+package de.amr.easy.maze.alg.ust;
 
 import java.util.stream.IntStream;
 

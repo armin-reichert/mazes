@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 import de.amr.easy.grid.impl.Topologies;
 import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
-import de.amr.easy.maze.alg.RecursiveDFS;
+import de.amr.easy.maze.alg.traversal.RecursiveDFS;
 
 public class RecursiveDFSApp extends SwingGridSampleApp {
 
