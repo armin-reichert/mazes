@@ -1,8 +1,8 @@
 ## Maze generation algorithms in Java 8
 
-My interest in maze generation algorithms started when reading a [weblog](http://weblog.jamisbuck.org/2011/2/7/maze-generation-algorithm-recap) where the author presents the most commonly known algorithms together with a Ruby implementation.
+My interest in maze generation algorithms started when reading a [weblog](http://weblog.jamisbuck.org/2011/2/7/maze-generation-algorithm-recap) where the author Jamis Buck presents the most commonly known algorithms together with a Ruby implementation.
 
-At first, I wanted to reimplement some of these algorithms in Java and reformulate them such that the underlying graph algorithms would become more clearly visible. In the course of doing that I discovered new possibilities for maze generation, for example, a modified version of Eller's algorithm which generates the maze from the center of the grid graph towards the borders, or variations of Wilson's algorithm which are achieved by different strategies of selecting the sources for the random walks. One can for example select the start vertices of the random walks in the order defined by space-filling-curves like ([Hilbert](EasyGrid/src/de/amr/easy/grid/curves/HilbertCurve.java), [Peano](EasyGrid/src/de/amr/easy/grid/curves/PeanoCurve.java) or [Moore](EasyGrid/src/de/amr/easy/grid/curves/MooreLCurve.java)) curves. Probably this has no practical use, but at least it's fun to watch!
+At first, I wanted to reimplement some of these algorithms in Java and reformulate them such that the underlying graph algorithms would become more clearly visible. In the course of doing that I discovered new possibilities for maze generation, for example, a modified version of Eller's algorithm which generates the maze from the center of the grid graph towards the borders, or variations of Wilson's algorithm which are achieved by different strategies of selecting the sources for the random walks. One can for example select the start vertices for the random walks in the order defined by space-filling-curves like [Hilbert](EasyGrid/src/de/amr/easy/grid/curves/HilbertCurve.java), [Peano](EasyGrid/src/de/amr/easy/grid/curves/PeanoCurve.java) or [Moore](EasyGrid/src/de/amr/easy/grid/curves/MooreLCurve.java) curves. Maybe this has no practical use at all, but at least it's fun to watch!
 
 The implementations given here make the underlying graph algorithm (spanning tree creation for an undirected grid graph) more explicit, the generator code itself is free of rendering details or ad-hoc data structure implementations.
 
@@ -42,7 +42,7 @@ The implementation uses Java 8 specific language features (streams, lambda expre
 
 Also included is a [Swing application](https://github.com/armin-reichert/mazes/releases/download/mai2018/mazedemoapp.jar) demonstrating all implemented maze generators. Using a control panel you can select the generation algorithm, path finder algorithm, grid resolution and rendering style ("walls" vs. "passages") interactively.
 
-Implemented algorithms:
+Implemented algorithms so far:
 
 Graph Traversal:
 - [Random Breadth-First-Search](EasyMaze/src/de/amr/easy/maze/alg/RandomBFS.java)
@@ -118,5 +118,5 @@ Other algorithms:
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_RecursiveDivision.gif">
 
 Path finding algorithms:
-- The [EasyGraph](EasyGraph) library contains a DFS and BFS-based path finding implementation.
+- The [EasyGraph](EasyGraph) library contains a reusable DFS and BFS-based path finding implementation.
 
