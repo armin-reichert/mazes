@@ -1,19 +1,19 @@
 ## Maze generation algorithms in Java 8
 
-My interest in maze generation algorithms started when reading a [weblog](http://weblog.jamisbuck.org/2011/2/7/maze-generation-algorithm-recap) where the author Jamis Buck presents the most commonly known algorithms together with a Ruby implementation.
+My interest in maze generation algorithms started when reading this blog [weblog](http://weblog.jamisbuck.org/2011/2/7/maze-generation-algorithm-recap) in which the blog's author Jamis Buck presents the most commonly known maze algorithms together with Ruby implementations. As an exercise, I wanted to reimplement some of these algorithms in the Java programming language and also rewrite the generator code such that the underlying graph algorithms would become more clearly visible. 
 
-At first, I wanted to reimplement some of these algorithms in Java and reformulate them such that the underlying graph algorithms would become more clearly visible. In the course of doing that I discovered new possibilities for maze generation, for example, a modified version of Eller's algorithm which generates the maze from the center of the grid graph towards the borders, or variations of Wilson's algorithm which are achieved by different strategies of selecting the sources for the random walks. One can for example select the start vertices for the random walks in the order defined by space-filling-curves like [Hilbert](EasyGrid/src/de/amr/easy/grid/curves/HilbertCurve.java), [Peano](EasyGrid/src/de/amr/easy/grid/curves/PeanoCurve.java) or [Moore](EasyGrid/src/de/amr/easy/grid/curves/MooreLCurve.java) curves. Maybe this has no practical use at all, but at least it's fun to watch!
+Doing so, I found new ways of generating mazes, for example a modification of Eller's algorithm which generates the maze from the center of the grid graph towards the borders, or many variations of Wilson's algorithm which result from different ways of selecting the random walks start cells. For example, one can start the random walks in the order defined by space-filling-curves like [Hilbert](EasyGrid/src/de/amr/easy/grid/curves/HilbertCurve.java), [Peano](EasyGrid/src/de/amr/easy/grid/curves/PeanoCurve.java) or [Moore](EasyGrid/src/de/amr/easy/grid/curves/MooreLCurve.java) curves. This gives visually appealing creation processes. If this has any practical use, time will show.
 
-The implementations given here make the underlying graph algorithm (spanning tree creation for an undirected grid graph) more explicit, the generator code itself is free of rendering details or ad-hoc data structure implementations.
+The code here makes the graph algorithm (creation of a spanning tree for a grid graph) more explicit because the generator code only deals with the graph and is free of rendering details or ad-hoc data structure implementations.
 
-To achieve this goal, there is
-- an API for Graph and Grid data structures 
-- an efficient implementation of a 2D-Grid with cell content
+To achieve this, there is
+- an API for graph and 2D-grid data structures 
+- an implementation of a 2D-grid with cell and edge content
 - a publish-subscribe mechanism for observing graph/grid operations
 
-The generation algorithms work strictly on the Grid API, drawing code is attached as graph change and traversal listeners.
+The maze generation algorithms work strictly against the grid API. For drawing and animation, graph and graph traversal listeners are used.
 
-As an example, the generator based on the Kruskal minimum-spanning-tree algorithm look like this:
+To illustrate, the generator based on the Kruskal minimum-spanning-tree algorithm looks like this:
 
 ```java
 public class KruskalMST extends MazeAlgorithm {
@@ -36,7 +36,7 @@ public class KruskalMST extends MazeAlgorithm {
 }
 ```
 
-Everybody who ever dealt with the Kruskal MST algorithm should immediately recognize it in this code.
+Whoever knows the Kruskal MST algorithm should immediately recognize it in these lines of code.
 
 The implementation uses Java 8 specific language features (streams, lambda expressions) for better readability. There are no dependencies to UI frameworks (AWT, Swing, JavaFX).
 
@@ -45,15 +45,15 @@ Also included is a [Swing application](https://github.com/armin-reichert/mazes/r
 Implemented algorithms so far:
 
 Graph Traversal:
-- [Random Breadth-First-Search](EasyMaze/src/de/amr/easy/maze/alg/RandomBFS.java)
+- [Random Breadth-First-Search](EasyMaze/src/de/amr/easy/maze/alg/traversal/RandomBFS.java)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_RandomBFS.gif">
 
-- [Random Depth-First-Search, iterative](EasyMaze/src/de/amr/easy/maze/alg/IterativeDFS.java)
+- [Random Depth-First-Search, iterative](EasyMaze/src/de/amr/easy/maze/alg/traversal/IterativeDFS.java)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_IterativeDFS.gif">
 
-- [Random Depth-First-Search, recursive](EasyMaze/src/de/amr/easy/maze/alg/RecursiveDFS.java)
+- [Random Depth-First-Search, recursive](EasyMaze/src/de/amr/easy/maze/alg/traversal/RecursiveDFS.java)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_RecursiveDFS.gif">
 
@@ -75,8 +75,9 @@ Minimum Spanning Tree:
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_ReverseDeleteMST.gif">
 
 Uniform Spanning Tree:
-- [Aldous-Broder](EasyMaze/src/de/amr/easy/maze/alg/AldousBroderUST.java)
-- [Wilson's algorithm](EasyMaze/src/de/amr/easy/maze/alg/wilson) (16 different variants)
+- [Aldous-Broder](EasyMaze/src/de/amr/easy/maze/alg/ust/AldousBroderUST.java)
+
+- [Wilson's algorithm](EasyMaze/src/de/amr/easy/maze/alg/ust) (16 different variants)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_WilsonUSTRandomCell.gif">
 
