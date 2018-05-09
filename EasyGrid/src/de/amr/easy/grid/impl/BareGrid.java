@@ -39,6 +39,12 @@ public class BareGrid<W extends Comparable<W>> implements BareGrid2D<W> {
 		}
 	}
 
+	private void checkDir(int dir) {
+		if (dir < 0 || dir > top.dirCount() - 1) {
+			throw new IllegalArgumentException("Invalid direction: " + dir);
+		}
+	}
+
 	private int index(int col, int row) {
 		return col + row * colCount;
 	}
@@ -281,6 +287,7 @@ public class BareGrid<W extends Comparable<W>> implements BareGrid2D<W> {
 	@Override
 	public OptionalInt neighbor(int cell, int dir) {
 		checkCell(cell);
+		checkDir(dir);
 		int col = col(cell) + top.dx(dir);
 		int row = row(cell) + top.dy(dir);
 		if (isValidCol(col) && isValidRow(row)) {
@@ -292,6 +299,7 @@ public class BareGrid<W extends Comparable<W>> implements BareGrid2D<W> {
 	@Override
 	public boolean isConnected(int cell, int dir) {
 		checkCell(cell);
+		checkDir(dir);
 		return bits.get(bit(cell, dir));
 	}
 
