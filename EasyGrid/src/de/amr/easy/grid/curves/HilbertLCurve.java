@@ -1,5 +1,11 @@
 package de.amr.easy.grid.curves;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import de.amr.easy.grid.api.Topology;
+import de.amr.easy.grid.impl.Topologies;
+
 /**
  * Implementation of a Hilbert curve using the following L-system:
  * <p>
@@ -22,7 +28,9 @@ package de.amr.easy.grid.curves;
  * 
  * @author Armin Reichert
  */
-public class HilbertLCurve extends AbstractCurve {
+public class HilbertLCurve implements Curve {
+
+	private final List<Integer> dirs = new ArrayList<>();
 
 	private final Compass4 compass = new Compass4();
 
@@ -86,5 +94,15 @@ public class HilbertLCurve extends AbstractCurve {
 			A(i - 1);
 			plus();
 		}
+	}
+
+	@Override
+	public Iterable<Integer> dirs() {
+		return dirs;
+	}
+
+	@Override
+	public Topology getTopology() {
+		return Topologies.TOP4;
 	}
 }

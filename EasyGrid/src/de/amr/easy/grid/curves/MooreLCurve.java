@@ -1,5 +1,11 @@
 package de.amr.easy.grid.curves;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import de.amr.easy.grid.api.Topology;
+import de.amr.easy.grid.impl.Topologies;
+
 /**
  * Computes a Moore curve from the following L-system:
  * <p>
@@ -27,7 +33,9 @@ package de.amr.easy.grid.curves;
  * @see http://cph.phys.spbu.ru/ACOPhys/materials/bader/sfc.pdf
  * @see https://en.wikipedia.org/wiki/Moore_curve
  */
-public class MooreLCurve extends AbstractCurve {
+public class MooreLCurve implements Curve {
+
+	private final List<Integer> dirs = new ArrayList<>();
 
 	private final Compass4 compass = new Compass4();
 
@@ -112,4 +120,15 @@ public class MooreLCurve extends AbstractCurve {
 			plus();
 		}
 	}
+
+	@Override
+	public Topology getTopology() {
+		return Topologies.TOP4;
+	}
+
+	@Override
+	public Iterable<Integer> dirs() {
+		return dirs;
+	}
+
 }

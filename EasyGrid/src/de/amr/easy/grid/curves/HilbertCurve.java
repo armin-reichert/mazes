@@ -5,6 +5,12 @@ import static de.amr.easy.grid.impl.Top4.N;
 import static de.amr.easy.grid.impl.Top4.S;
 import static de.amr.easy.grid.impl.Top4.W;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import de.amr.easy.grid.api.Topology;
+import de.amr.easy.grid.impl.Topologies;
+
 /**
  * Computes a Hilbert curve as a list of directions.
  * <p>
@@ -12,7 +18,9 @@ import static de.amr.easy.grid.impl.Top4.W;
  *
  * @author Armin Reichert
  */
-public class HilbertCurve extends AbstractCurve {
+public class HilbertCurve implements Curve {
+
+	private final List<Integer> dirs = new ArrayList<>();
 
 	public HilbertCurve(int i) {
 		hilbert(i, N, E, S, W);
@@ -32,5 +40,15 @@ public class HilbertCurve extends AbstractCurve {
 			dirs.add(e);
 			hilbert(i - 1, w, s, e, n);
 		}
+	}
+
+	@Override
+	public Topology getTopology() {
+		return Topologies.TOP4;
+	}
+
+	@Override
+	public Iterable<Integer> dirs() {
+		return dirs;
 	}
 }

@@ -36,7 +36,7 @@ public class WilsonUSTMooreCurve extends WilsonUST {
 		BareGrid<?> square = new BareGrid<>(n, n, Topologies.TOP4);
 		Integer cell = square.cell(n / 2, n - 1);
 		addCellToPath(n / 2, n - 1);
-		for (int dir : moore) {
+		for (int dir : moore.dirs()) {
 			cell = square.neighbor(cell, dir).getAsInt();
 			addCellToPath(square.col(cell), square.row(cell));
 		}

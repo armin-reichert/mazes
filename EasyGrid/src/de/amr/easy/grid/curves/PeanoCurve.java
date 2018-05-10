@@ -5,12 +5,20 @@ import static de.amr.easy.grid.impl.Top4.N;
 import static de.amr.easy.grid.impl.Top4.S;
 import static de.amr.easy.grid.impl.Top4.W;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import de.amr.easy.grid.api.Topology;
+import de.amr.easy.grid.impl.Topologies;
+
 /**
  * Computes a Peano-curve.
  * 
  * @author Armin Reichert
  */
-public class PeanoCurve extends AbstractCurve {
+public class PeanoCurve implements Curve {
+
+	private final List<Integer> dirs = new ArrayList<>();
 
 	public PeanoCurve(int i) {
 		peano(i, N, E, S, W);
@@ -36,5 +44,15 @@ public class PeanoCurve extends AbstractCurve {
 			dirs.add(n);
 			peano(i - 1, n, e, s, w);
 		}
+	}
+
+	@Override
+	public Topology getTopology() {
+		return Topologies.TOP4;
+	}
+
+	@Override
+	public Iterable<Integer> dirs() {
+		return dirs;
 	}
 }

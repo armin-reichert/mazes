@@ -9,6 +9,10 @@ import static de.amr.easy.grid.impl.Top8.SE;
 import static de.amr.easy.grid.impl.Top8.SW;
 import static de.amr.easy.grid.impl.Top8.W;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import de.amr.easy.grid.api.Topology;
 import de.amr.easy.grid.impl.Topologies;
 
 /**
@@ -16,10 +20,11 @@ import de.amr.easy.grid.impl.Topologies;
  * 
  * @author Armin Reichert
  */
-public class SierpinskiLCurve extends AbstractCurve {
+public class SierpinskiLCurve implements Curve {
+
+	private final List<Integer> dirs = new ArrayList<>();
 
 	public SierpinskiLCurve(int i) {
-		super(Topologies.TOP8);
 		S(i);
 	}
 
@@ -88,9 +93,14 @@ public class SierpinskiLCurve extends AbstractCurve {
 		}
 	}
 
-	public static void main(String[] args) {
-		System.out.println(new SierpinskiLCurve(1));
-		System.out.println(new SierpinskiLCurve(2));
+	@Override
+	public Topology getTopology() {
+		return Topologies.TOP8;
+	}
+
+	@Override
+	public Iterable<Integer> dirs() {
+		return dirs;
 	}
 
 }

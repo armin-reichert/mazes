@@ -36,7 +36,7 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 		BareGrid<?> square = new BareGrid<>(n, n, Topologies.TOP4);
 		Integer cell = square.cell(BOTTOM_LEFT);
 		addCellToPath(square.col(cell), square.row(cell));
-		for (int dir : peano) {
+		for (int dir : peano.dirs()) {
 			cell = square.neighbor(cell, dir).getAsInt();
 			addCellToPath(square.col(cell), square.row(cell));
 		}

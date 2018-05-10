@@ -4,6 +4,7 @@ import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.grid.api.GridPosition.TOP_RIGHT;
+import static de.amr.easy.grid.curves.CurveUtils.traverse;
 import static de.amr.easy.grid.impl.Top4.E;
 import static de.amr.easy.grid.impl.Top4.N;
 import static de.amr.easy.grid.impl.Top4.S;
@@ -58,7 +59,7 @@ public class HilbertCurveApp extends SwingGridSampleApp {
 				System.out.println("Start position: " + startPos);
 				System.out.println(hilbert);
 				int startCell = grid.cell(startPos);
-				hilbert.traverse(grid, startCell, this::addEdge);
+				traverse(hilbert, grid, startCell, this::addEdge);
 				SwingBFSAnimation bfs = new SwingBFSAnimation(canvas, grid);
 				bfs.setDistancesVisible(false);
 				bfs.run(startCell);

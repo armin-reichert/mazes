@@ -1,5 +1,6 @@
 package de.amr.demos.grid.curves;
 
+import static de.amr.easy.grid.curves.CurveUtils.traverse;
 import static de.amr.easy.util.GridUtils.log;
 
 import java.util.stream.IntStream;
@@ -32,7 +33,8 @@ public class MooreCurveApp extends SwingGridSampleApp {
 			resizeGrid(canvasSize.width / n);
 			int startCol = n / 2, startRow = n - 1;
 			int startCell = grid.cell(startCol, startRow);
-			new MooreLCurve(log(2, n)).traverse(grid, startCell, this::addEdge);
+			MooreLCurve curve = new MooreLCurve(log(2, n));
+			traverse(curve, grid, startCell, this::addEdge);
 			SwingBFSAnimation bfs = new SwingBFSAnimation(canvas, grid);
 			bfs.setDistancesVisible(false);
 			bfs.run(startCell);

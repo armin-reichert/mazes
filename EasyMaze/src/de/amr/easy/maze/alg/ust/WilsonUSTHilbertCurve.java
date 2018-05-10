@@ -40,7 +40,7 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 		int cell = square.cell(TOP_LEFT);
 		int i = 0;
 		path[i++] = cell;
-		for (int dir : hilbert) {
+		for (int dir : hilbert.dirs()) {
 			// Hilbert curve never leaves the square grid thus neighbor always exists:
 			cell = square.neighbor(cell, dir).getAsInt();
 			// Add cell if it is inside original grid:

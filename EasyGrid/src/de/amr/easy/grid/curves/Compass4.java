@@ -1,5 +1,9 @@
 package de.amr.easy.grid.curves;
 
+import static de.amr.easy.grid.impl.Top4.E;
+import static de.amr.easy.grid.impl.Top4.N;
+import static de.amr.easy.grid.impl.Top4.S;
+import static de.amr.easy.grid.impl.Top4.W;
 import static de.amr.easy.grid.impl.Topologies.TOP4;
 
 /**
@@ -12,7 +16,7 @@ public class Compass4 {
 	private final int[] dirs;
 
 	public Compass4() {
-		dirs = TOP4.dirs().toArray(); // N,E,S,W
+		dirs = new int[] { N, E, S, W };
 	}
 
 	public int ahead() {

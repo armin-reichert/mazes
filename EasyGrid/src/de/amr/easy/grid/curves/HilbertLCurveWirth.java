@@ -5,6 +5,12 @@ import static de.amr.easy.grid.impl.Top4.N;
 import static de.amr.easy.grid.impl.Top4.S;
 import static de.amr.easy.grid.impl.Top4.W;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import de.amr.easy.grid.api.Topology;
+import de.amr.easy.grid.impl.Topologies;
+
 /**
  * Implementation of a Hilbert curve using the following L-system (adapted from the book
  * "Algorithmen und Datenstrukturen" by Niklaus Wirth, Teubner 1983):
@@ -24,7 +30,9 @@ import static de.amr.easy.grid.impl.Top4.W;
  * 
  * @author Armin Reichert
  */
-public class HilbertLCurveWirth extends AbstractCurve {
+public class HilbertLCurveWirth implements Curve {
+
+	private final List<Integer> dirs = new ArrayList<>();
 
 	public HilbertLCurveWirth(int i) {
 		A(i);
@@ -100,5 +108,15 @@ public class HilbertLCurveWirth extends AbstractCurve {
 			dirs.add(N);
 			C(i - 1);
 		}
+	}
+
+	@Override
+	public Iterable<Integer> dirs() {
+		return dirs;
+	}
+
+	@Override
+	public Topology getTopology() {
+		return Topologies.TOP4;
 	}
 }
