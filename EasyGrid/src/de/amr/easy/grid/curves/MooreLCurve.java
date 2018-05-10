@@ -3,6 +3,7 @@ package de.amr.easy.grid.curves;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.amr.easy.grid.api.Curve;
 import de.amr.easy.grid.api.Topology;
 import de.amr.easy.grid.impl.Topologies;
 

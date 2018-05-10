@@ -8,6 +8,7 @@ import static de.amr.easy.grid.impl.Top4.W;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.amr.easy.grid.api.Curve;
 import de.amr.easy.grid.api.Topology;
 import de.amr.easy.grid.impl.Topologies;
 

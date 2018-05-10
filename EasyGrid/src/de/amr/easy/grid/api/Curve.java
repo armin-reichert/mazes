@@ -1,6 +1,4 @@
-package de.amr.easy.grid.curves;
-
-import de.amr.easy.grid.api.Topology;
+package de.amr.easy.grid.api;
 
 /**
  * Common interface for curves like the Hilbert curve.

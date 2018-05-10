@@ -19,6 +19,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import de.amr.easy.grid.api.GridPosition;
+import de.amr.easy.grid.curves.CurveUtils;
 import de.amr.easy.grid.curves.HilbertCurve;
 import de.amr.easy.grid.impl.Topologies;
 import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
@@ -55,10 +56,10 @@ public class HilbertCurveApp extends SwingGridSampleApp {
 				resizeGrid(cellSize);
 				HilbertCurve hilbert = new HilbertCurve(log(2, grid.numCols()), dirs.get(0), dirs.get(1), dirs.get(2),
 						dirs.get(3));
-				System.out.println(String.format("Grid cols:%d, rows:%d", grid.numCols(), grid.numRows()));
-				System.out.println("Start position: " + startPos);
-				System.out.println(hilbert);
 				int startCell = grid.cell(startPos);
+				System.out.println(String.format("Grid: cols: %d, rows: %d", grid.numCols(), grid.numRows()));
+				System.out.println("Curve start: " + startPos);
+//				System.out.println(CurveUtils.cellsAsString(hilbert, grid, startCell));
 				traverse(hilbert, grid, startCell, this::addEdge);
 				SwingBFSAnimation bfs = new SwingBFSAnimation(canvas, grid);
 				bfs.setDistancesVisible(false);
