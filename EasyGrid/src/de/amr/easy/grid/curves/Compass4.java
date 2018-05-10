@@ -1,9 +1,9 @@
 package de.amr.easy.grid.curves;
 
-import de.amr.easy.grid.impl.Topologies;
+import static de.amr.easy.grid.impl.Topologies.TOP4;
 
 /**
- * A compas with 4 directions.
+ * A compass with 4 directions.
  * 
  * @author Armin Reichert
  */
@@ -11,18 +11,8 @@ public class Compass4 {
 
 	private final int[] dirs;
 
-	public Compass4(int... dirs) {
-		if (dirs.length != 0 && dirs.length != 4) {
-			throw new IllegalArgumentException("A compas must have 4 directions");
-		}
-		if (dirs.length == 0) {
-			dirs = Topologies.TOP4.dirs().toArray(); // N,E,S,W
-		}
-		this.dirs = dirs;
-	}
-
-	public Compass4 copy() {
-		return new Compass4(dirs);
+	public Compass4() {
+		dirs = TOP4.dirs().toArray(); // N,E,S,W
 	}
 
 	public int ahead() {
@@ -43,13 +33,13 @@ public class Compass4 {
 
 	public void turnLeft() {
 		for (int i = 0; i < dirs.length; ++i) {
-			dirs[i] = Topologies.TOP4.left(dirs[i]);
+			dirs[i] = TOP4.left(dirs[i]);
 		}
 	}
 
 	public void turnRight() {
 		for (int i = 0; i < dirs.length; ++i) {
-			dirs[i] = Topologies.TOP4.right(dirs[i]);
+			dirs[i] = TOP4.right(dirs[i]);
 		}
 	}
 }

@@ -5,7 +5,8 @@ package de.amr.easy.grid.curves;
  * <p>
  * <code>
  * A → − B f + A f A + f B − <br/>
- * B → + A f − B f B − f A +
+ * B → + A f − B f B − f A + <br/>
+ * <p>
  * </code> with non-terminal symbols <code>{A,B}</code>, axiom <code>A</code> and terminal symbols
  * <code>{f,+,-}</code>.
  * <p>
