@@ -15,7 +15,7 @@ import de.amr.easy.graph.api.event.VertexChangeEvent;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.ObservableGrid2D;
 import de.amr.easy.grid.impl.ObservableGrid;
-import de.amr.easy.grid.impl.Topologies;
+import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.AnimatedGridCanvas;
 import de.amr.easy.grid.ui.swing.DefaultGridRenderingModel;
 import de.amr.easy.grid.ui.swing.GridRenderingModel;
@@ -101,7 +101,7 @@ public class MazeGenerationRecordingApp {
 
 	public void run(int numCols, int numRows, int cellSize, int scanRate, int delayMillis) {
 		for (Class<?> generatorClass : generatorClasses) {
-			grid = new ObservableGrid<>(numCols, numRows, Topologies.TOP4, TraversalState.UNVISITED);
+			grid = new ObservableGrid<>(numCols, numRows, Top4.get(), TraversalState.UNVISITED);
 			canvas = new AnimatedGridCanvas(grid, createRenderingModel(cellSize));
 			try {
 				MazeAlgorithm generator = (MazeAlgorithm) generatorClass.getConstructor(Grid2D.class).newInstance(grid);

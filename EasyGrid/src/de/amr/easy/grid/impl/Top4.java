@@ -11,6 +11,8 @@ import de.amr.easy.grid.api.Topology;
  */
 public class Top4 implements Topology {
 
+	private static final Top4 INSTANCE = new Top4();
+
 	private static final int DX[] = { 0, 1, 0, -1 };
 	private static final int DY[] = { -1, 0, 1, 0 };
 	private static final String NAMES[] = { "North", "East", "South", "West" };
@@ -24,7 +26,14 @@ public class Top4 implements Topology {
 	/** West */
 	public static final int W = 3;
 
-	Top4() {
+	/**
+	 * @return the singleton instance of this topology
+	 */
+	public static final Top4 get() {
+		return INSTANCE;
+	}
+
+	private Top4() {
 	}
 
 	@Override

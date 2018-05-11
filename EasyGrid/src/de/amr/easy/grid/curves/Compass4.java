@@ -4,7 +4,8 @@ import static de.amr.easy.grid.impl.Top4.E;
 import static de.amr.easy.grid.impl.Top4.N;
 import static de.amr.easy.grid.impl.Top4.S;
 import static de.amr.easy.grid.impl.Top4.W;
-import static de.amr.easy.grid.impl.Topologies.TOP4;
+
+import de.amr.easy.grid.impl.Top4;
 
 /**
  * A compass with 4 directions.
@@ -37,13 +38,13 @@ public class Compass4 {
 
 	public void turnLeft() {
 		for (int i = 0; i < dirs.length; ++i) {
-			dirs[i] = TOP4.left(dirs[i]);
+			dirs[i] = Top4.get().left(dirs[i]);
 		}
 	}
 
 	public void turnRight() {
 		for (int i = 0; i < dirs.length; ++i) {
-			dirs[i] = TOP4.right(dirs[i]);
+			dirs[i] = Top4.get().right(dirs[i]);
 		}
 	}
 }

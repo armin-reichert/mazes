@@ -24,7 +24,7 @@ import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.BareGrid;
 import de.amr.easy.grid.impl.Grid;
-import de.amr.easy.grid.impl.Topologies;
+import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.maze.alg.traversal.RandomBFS;
 
 /**
@@ -42,7 +42,7 @@ public class GridTests {
 
 	@Before
 	public void setUp() {
-		grid = new Grid<>(WIDTH, HEIGHT, Topologies.TOP4, UNVISITED);
+		grid = new Grid<>(WIDTH, HEIGHT, Top4.get(), UNVISITED);
 	}
 
 	@After
@@ -218,7 +218,7 @@ public class GridTests {
 			.filter(cell -> grid.degree(cell) < grid.neighbors(cell).count())
 			.findFirst()
 			.ifPresent(cell -> {
-				List<Integer> dirs = Topologies.TOP4.dirs().boxed().collect(toList());
+				List<Integer> dirs = Top4.get().dirs().boxed().collect(toList());
 				for (int dir : dirs) {
 					OptionalInt neighbor = grid.neighbor(cell, dir);
 					if (neighbor.isPresent() && !grid.adjacent(cell, neighbor.getAsInt())) {

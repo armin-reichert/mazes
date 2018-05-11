@@ -3,7 +3,7 @@ package de.amr.demos.grid;
 import java.awt.Color;
 import java.util.stream.IntStream;
 
-import de.amr.easy.grid.impl.Topologies;
+import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.DefaultGridRenderingModel;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 
@@ -52,7 +52,7 @@ public class RenderingModelApp extends SwingGridSampleApp {
 	}
 
 	public RenderingModelApp() {
-		super(8, Topologies.TOP4);
+		super(8, Top4.get());
 		setAppName("Rendering Model Demo");
 	}
 

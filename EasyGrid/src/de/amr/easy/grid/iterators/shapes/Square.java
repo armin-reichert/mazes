@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.amr.easy.grid.api.BareGrid2D;
-import de.amr.easy.grid.impl.Topologies;
+import de.amr.easy.grid.impl.Top4;
 
 /**
  * Iterates grid cells clockwise as a square with given top left corner and size.
@@ -41,8 +41,8 @@ public class Square extends AbstractShape {
 		for (int dir : dirs) {
 			for (int i = 0; i < size - 1; ++i) {
 				addCell(x, y);
-				x += Topologies.TOP4.dx(dir);
-				y += Topologies.TOP4.dy(dir);
+				x += Top4.get().dx(dir);
+				y += Top4.get().dy(dir);
 			}
 		}
 	}

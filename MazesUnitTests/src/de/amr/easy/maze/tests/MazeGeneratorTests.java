@@ -22,7 +22,7 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.Grid;
-import de.amr.easy.grid.impl.Topologies;
+import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.maze.alg.BinaryTree;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
 import de.amr.easy.maze.alg.Eller;
@@ -71,7 +71,7 @@ public class MazeGeneratorTests {
 	@BeforeClass
 	public static void beforeAllTests() {
 		// warm-up
-		new RandomBFS(new Grid<>(WIDTH, HEIGHT, Topologies.TOP4, UNVISITED)).run(0);
+		new RandomBFS(new Grid<>(WIDTH, HEIGHT, Top4.get(), UNVISITED)).run(0);
 	}
 
 	@AfterClass
@@ -82,7 +82,7 @@ public class MazeGeneratorTests {
 
 	@Before
 	public void setUp() {
-		grid = new Grid<>(WIDTH, HEIGHT, Topologies.TOP4, UNVISITED);
+		grid = new Grid<>(WIDTH, HEIGHT, Top4.get(), UNVISITED);
 		watch = new StopWatch();
 	}
 
@@ -165,7 +165,7 @@ public class MazeGeneratorTests {
 
 	@Test
 	public void testRecursiveDFS() {
-		grid = new Grid<>(32, 32, Topologies.TOP4, UNVISITED);
+		grid = new Grid<>(32, 32, Top4.get(), UNVISITED);
 		runTest(new RecursiveDFS(grid));
 	}
 
@@ -176,7 +176,7 @@ public class MazeGeneratorTests {
 
 	@Test
 	public void testReverseDeleteMST() {
-		grid = new Grid<>(32, 32, Topologies.TOP4, UNVISITED);
+		grid = new Grid<>(32, 32, Top4.get(), UNVISITED);
 		runTest(new ReverseDeleteMST(grid));
 	}
 

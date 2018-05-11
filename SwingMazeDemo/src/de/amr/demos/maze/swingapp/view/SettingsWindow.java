@@ -17,7 +17,7 @@ import de.amr.demos.maze.swingapp.action.CreateAllMazesAction;
 import de.amr.demos.maze.swingapp.action.CreateSingleMazeAction;
 import de.amr.demos.maze.swingapp.action.StopTaskAction;
 import de.amr.easy.grid.impl.ObservableGrid;
-import de.amr.easy.grid.impl.Topologies;
+import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.UserInterfaceUtils;
 import de.amr.easy.util.GridUtils;
 
@@ -66,7 +66,7 @@ public class SettingsWindow extends JFrame {
 			int cellSize = app.model.getGridCellSizes()[selector.getSelectedIndex()];
 			app.model.setGridCellSize(cellSize);
 			Dimension dim = UserInterfaceUtils.maxGridDimensionForDisplay(cellSize);
-			app.model.setGrid(new ObservableGrid<>(dim.width, dim.height, Topologies.TOP4, UNVISITED));
+			app.model.setGrid(new ObservableGrid<>(dim.width, dim.height, Top4.get(), UNVISITED));
 			app.updateCanvas();
 		});
 

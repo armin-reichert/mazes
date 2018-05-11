@@ -1,15 +1,11 @@
 package de.amr.demos.grid;
 
-import static de.amr.easy.graph.api.TraversalState.COMPLETED;
-import static de.amr.easy.grid.impl.Topologies.TOP4;
-import static de.amr.easy.grid.impl.Topologies.TOP8;
-import static java.lang.String.format;
-import static java.lang.System.out;
-
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import de.amr.easy.grid.impl.Topologies;
+import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.grid.impl.Top4;
+import de.amr.easy.grid.impl.Top8;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 import de.amr.easy.util.StopWatch;
 
@@ -20,7 +16,7 @@ public class FullGridApp extends SwingGridSampleApp {
 	}
 
 	public FullGridApp() {
-		super(512, Topologies.TOP4);
+		super(512, Top4.get());
 		setAppName("Full Grid");
 	}
 
@@ -29,14 +25,14 @@ public class FullGridApp extends SwingGridSampleApp {
 		canvas.setDelay(0);
 		canvas.stopListening();
 		StopWatch watch = new StopWatch();
-		Stream.of(TOP4, TOP8).forEach(topology -> {
+		Stream.of(Top4.get(), Top8.get()).forEach(topology -> {
 			IntStream.of(512, 256, 128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 				resizeGrid(cellSize);
-				grid.setDefaultContent(COMPLETED);
+				grid.setDefaultContent(TraversalState.COMPLETED);
 				grid.fill();
 				watch.runAndMeasure(canvas::drawGrid);
-				out.println(
-						format("Grid (%d cells @%d) rendered in %.2f seconds", grid.numCells(), cellSize, watch.getSeconds()));
+				System.out.println(String.format("Grid (%d cells @%d) rendered in %.2f seconds", grid.numCells(), cellSize,
+						watch.getSeconds()));
 				sleep(2000);
 			});
 		});

@@ -6,7 +6,7 @@ import static de.amr.easy.util.GridUtils.log;
 import java.util.stream.IntStream;
 
 import de.amr.easy.grid.curves.MooreLCurve;
-import de.amr.easy.grid.impl.Topologies;
+import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 
@@ -23,7 +23,7 @@ public class MooreCurveApp extends SwingGridSampleApp {
 	}
 
 	public MooreCurveApp() {
-		super(512, 512, 512, Topologies.TOP4);
+		super(512, 512, 512, Top4.get());
 		setAppName("Moore Curve");
 	}
 

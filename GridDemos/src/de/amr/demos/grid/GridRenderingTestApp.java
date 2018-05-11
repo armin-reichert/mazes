@@ -6,7 +6,7 @@ import static java.lang.System.out;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.grid.impl.Topologies;
+import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 import de.amr.easy.util.StopWatch;
 
@@ -17,7 +17,7 @@ public class GridRenderingTestApp extends SwingGridSampleApp {
 	}
 
 	public GridRenderingTestApp() {
-		super(256, Topologies.TOP4);
+		super(256, Top4.get());
 		setAppName("Full Grid");
 	}
 

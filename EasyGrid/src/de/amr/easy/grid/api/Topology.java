@@ -3,7 +3,7 @@ package de.amr.easy.grid.api;
 import java.util.stream.IntStream;
 
 /**
- * The topology (4 or 8 neighbors) of an orthogonal grid.
+ * The topology of a grid.
  * 
  * @author Armin Reichert
  */
@@ -22,12 +22,12 @@ public interface Topology {
 	public String getName(int dir);
 
 	/**
-	 * 
 	 * @return the number of directions of this topology
 	 */
 	public int dirCount();
 
 	/**
+	 * TODO: this make no sense for odd number of directions
 	 * 
 	 * @param dir
 	 *          direction
@@ -36,23 +36,20 @@ public interface Topology {
 	public int inv(int dir);
 
 	/**
-	 * 
 	 * @param dir
 	 *          direction
-	 * @return direction left of given direction
+	 * @return direction left (counter-clockwise) of given direction
 	 */
 	public int left(int dir);
 
 	/**
-	 * 
 	 * @param dir
 	 *          direction
-	 * @return direction right of given direction
+	 * @return direction right (clockwise) of given direction
 	 */
 	public int right(int dir);
 
 	/**
-	 * 
 	 * @param dir
 	 *          direction
 	 * @return x-difference when moving towards given direction

@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 
 import de.amr.easy.grid.curves.HilbertCurve;
-import de.amr.easy.grid.impl.Topologies;
+import de.amr.easy.grid.impl.Top4;
 
 public class HilbertCurveCanvasApp extends Canvas {
 
@@ -86,8 +86,8 @@ public class HilbertCurveCanvasApp extends Canvas {
 		x = getWidth() - 1;
 		y = 0;
 		for (int dir : curve.dirs()) {
-			int newX = x + 2 * Topologies.TOP4.dx(dir) * cellSize;
-			int newY = y + 2 * Topologies.TOP4.dy(dir) * cellSize;
+			int newX = x + 2 * Top4.get().dx(dir) * cellSize;
+			int newY = y + 2 * Top4.get().dy(dir) * cellSize;
 			g.setColor(Color.BLUE);
 			g.drawLine(x, y, newX, newY);
 			x = newX;

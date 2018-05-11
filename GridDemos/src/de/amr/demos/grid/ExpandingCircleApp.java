@@ -4,7 +4,7 @@ import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static java.lang.Math.min;
 
-import de.amr.easy.grid.impl.Topologies;
+import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.iterators.traversals.ExpandingCircle;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 
@@ -15,7 +15,7 @@ public class ExpandingCircleApp extends SwingGridSampleApp {
 	}
 
 	public ExpandingCircleApp() {
-		super(2, Topologies.TOP4);
+		super(2, Top4.get());
 		setAppName("Expanding Circle");
 	}
 

@@ -5,13 +5,13 @@ import org.junit.Test;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.Grid;
-import de.amr.easy.grid.impl.Topologies;
+import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 
 public class LargeMazesTests {
 
 	private void test_Kruskal(int cols, int rows) {
-		Grid2D<TraversalState, Integer> grid = new Grid<>(cols, rows, Topologies.TOP4, TraversalState.UNVISITED);
+		Grid2D<TraversalState, Integer> grid = new Grid<>(cols, rows, Top4.get(), TraversalState.UNVISITED);
 		new KruskalMST(grid).run(grid.cell(0, 0));
 	}
 

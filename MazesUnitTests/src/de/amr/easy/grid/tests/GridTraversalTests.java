@@ -6,7 +6,6 @@ import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.grid.curves.CurveUtils.traverse;
-import static de.amr.easy.grid.impl.Topologies.TOP4;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
@@ -26,6 +25,7 @@ import de.amr.easy.grid.curves.HilbertLCurveWirth;
 import de.amr.easy.grid.curves.MooreLCurve;
 import de.amr.easy.grid.curves.PeanoCurve;
 import de.amr.easy.grid.impl.Grid;
+import de.amr.easy.grid.impl.Top4;
 
 public class GridTraversalTests {
 
@@ -36,7 +36,7 @@ public class GridTraversalTests {
 
 	@Before
 	public void setUp() {
-		squareGrid = new Grid<>(SIZE, SIZE, TOP4, UNVISITED);
+		squareGrid = new Grid<>(SIZE, SIZE, Top4.get(), UNVISITED);
 		squareGrid.fill();
 	}
 
@@ -114,7 +114,7 @@ public class GridTraversalTests {
 
 	@Test
 	public void testPeanoCurve() {
-		Grid2D<TraversalState, Integer> grid = new Grid<>(243, 243, TOP4, UNVISITED);
+		Grid2D<TraversalState, Integer> grid = new Grid<>(243, 243, Top4.get(), UNVISITED);
 		Curve curve = new PeanoCurve(5);
 		traverse(curve, grid, grid.cell(GridPosition.BOTTOM_LEFT), (from, to) -> {
 			grid.set(from, COMPLETED);

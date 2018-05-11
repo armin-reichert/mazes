@@ -4,7 +4,7 @@ import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.grid.impl.Topologies;
+import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.iterators.traversals.RecursiveCrosses;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 
@@ -15,7 +15,7 @@ public class RecursiveCrossesApp extends SwingGridSampleApp {
 	}
 
 	public RecursiveCrossesApp() {
-		super(64, Topologies.TOP4);
+		super(64, Top4.get());
 		setAppName("Recursive Crosses");
 	}
 

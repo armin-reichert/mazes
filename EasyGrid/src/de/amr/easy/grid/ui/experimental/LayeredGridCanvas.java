@@ -16,7 +16,7 @@ import de.amr.easy.graph.api.event.VertexChangeEvent;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.ObservableGrid2D;
 import de.amr.easy.grid.impl.ObservableGrid;
-import de.amr.easy.grid.impl.Topologies;
+import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.DefaultGridRenderingModel;
 import de.amr.easy.grid.ui.swing.GridRenderer;
 
@@ -56,7 +56,7 @@ public class LayeredGridCanvas extends LayeredCanvas implements GraphObserver<We
 		if (grid != null) {
 			grid.removeGraphObserver(this);
 		}
-		grid = new ObservableGrid<>(cols, rows, Topologies.TOP4, TraversalState.UNVISITED);
+		grid = new ObservableGrid<>(cols, rows, Top4.get(), TraversalState.UNVISITED);
 		grid.addGraphObserver(this);
 	}
 

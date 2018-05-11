@@ -14,7 +14,7 @@ import java.util.List;
 
 import de.amr.easy.grid.api.Curve;
 import de.amr.easy.grid.api.Topology;
-import de.amr.easy.grid.impl.Topologies;
+import de.amr.easy.grid.impl.Top8;
 
 /**
  * Sierpinski curve (as defined in Niklaus Wirth, "Algorithmen und Datenstrukturen").
@@ -96,7 +96,7 @@ public class SierpinskiLCurve implements Curve {
 
 	@Override
 	public Topology getTopology() {
-		return Topologies.TOP8;
+		return Top8.get();
 	}
 
 	@Override

@@ -19,9 +19,8 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.grid.curves.CurveUtils;
 import de.amr.easy.grid.curves.HilbertCurve;
-import de.amr.easy.grid.impl.Topologies;
+import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 
@@ -40,7 +39,7 @@ public class HilbertCurveApp extends SwingGridSampleApp {
 	}
 
 	private HilbertCurveApp() {
-		super(512, 512, 256, Topologies.TOP4);
+		super(512, 512, 256, Top4.get());
 		orientation.put(TOP_RIGHT, asList(N, E, S, W));
 		orientation.put(TOP_LEFT, asList(N, W, S, E));
 		orientation.put(BOTTOM_RIGHT, asList(E, S, W, N));

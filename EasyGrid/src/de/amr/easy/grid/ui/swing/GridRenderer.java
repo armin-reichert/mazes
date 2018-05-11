@@ -16,7 +16,6 @@ import de.amr.easy.graph.api.Edge;
 import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.impl.Top8;
-import de.amr.easy.grid.impl.Topologies;
 
 /**
  * Renders a grid as "passages" or "cells with walls" depending on the selected passage thickness.
@@ -67,7 +66,7 @@ public class GridRenderer {
 		final int longside = (model.getCellSize() + model.getPassageWidth()) / 2;
 		final int shortside = model.getPassageWidth();
 		g.setColor(passageColor);
-		if (grid.getTopology() == Topologies.TOP4) {
+		if (grid.getTopology() == Top4.get()) {
 			switch (dir) {
 			case Top4.E:
 				g.translate(centerX - shortside / 2, centerY - shortside / 2);
@@ -90,7 +89,7 @@ public class GridRenderer {
 				g.translate(-centerX + shortside / 2, -centerY + model.getCellSize() / 2);
 				break;
 			}
-		} else if (grid.getTopology() == Topologies.TOP8) {
+		} else if (grid.getTopology() == Top8.get()) {
 			int diagonal = (int) round(longside * sqrt(2));
 			Stroke stroke = new BasicStroke(shortside / 2);
 			g.setStroke(stroke);

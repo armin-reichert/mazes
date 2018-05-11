@@ -7,7 +7,7 @@ import static de.amr.easy.util.GridUtils.log;
 import java.util.stream.IntStream;
 
 import de.amr.easy.grid.curves.PeanoCurve;
-import de.amr.easy.grid.impl.Topologies;
+import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 
@@ -18,7 +18,7 @@ public class PeanoCurveApp extends SwingGridSampleApp {
 	}
 
 	public PeanoCurveApp() {
-		super(243 * 4, 243 * 4, 4, Topologies.TOP4);
+		super(243 * 4, 243 * 4, 4, Top4.get());
 		setAppName("Peano Curve");
 	}
 
