@@ -1,10 +1,11 @@
 package de.amr.easy.maze.alg.mst;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
+import static java.util.Comparator.reverseOrder;
 import static java.util.stream.Collectors.toCollection;
 
-import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.api.TraversalState;
@@ -29,11 +30,12 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 	public void run(int start) {
 		grid.setDefaultContent(COMPLETED);
 		grid.fill();
-		LinkedList<WeightedEdge<Integer>> edgeList = grid.edgeStream().collect(toCollection(LinkedList::new));
-		edgeList.forEach(edge -> edge.setWeight(rnd.nextInt()));
-		Collections.sort(edgeList);
-		while (grid.edgeCount() > grid.vertexCount() - 1) {
-			WeightedEdge<Integer> maxEdge = edgeList.pollLast();
+		List<WeightedEdge<Integer>> edgesDescending = grid.edgeStream().map(edge -> {
+			edge.setWeight(rnd.nextInt());
+			return edge;
+		}).sorted(reverseOrder()).collect(toCollection(LinkedList::new));
+		while (!edgesDescending.isEmpty() && grid.edgeCount() > grid.vertexCount() - 1) {
+			WeightedEdge<Integer> maxEdge = edgesDescending.remove(0);
 			grid.removeEdge(maxEdge);
 			int u = maxEdge.either(), v = maxEdge.other(u);
 			if (disconnected(u, v)) {
