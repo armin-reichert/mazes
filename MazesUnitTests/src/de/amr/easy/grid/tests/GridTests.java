@@ -7,13 +7,9 @@ import static de.amr.easy.grid.impl.Top4.E;
 import static de.amr.easy.grid.impl.Top4.N;
 import static de.amr.easy.grid.impl.Top4.S;
 import static de.amr.easy.grid.impl.Top4.W;
-import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-import java.util.OptionalInt;
 
 import org.junit.After;
 import org.junit.Before;
@@ -209,22 +205,19 @@ public class GridTests {
 		// create a spanning tree
 		new RandomBFS(grid).run(grid.cell(0, 0));
 		assertFalse(containsCycle(grid));
-		// add edge at first vertex that has not full degree:
-		/*@formatter:off*/
+
+		// Find vertex with non-adjacent neighbor. Adding an edge to this neighbor produces a cycle.
+		///*@formatter:off*/
 		grid.vertexStream()
-			.filter(cell -> grid.degree(cell) < grid.neighbors(cell).count())
-			.findFirst()
-			.ifPresent(cell -> {
-				List<Integer> dirs = Top4.get().dirs().boxed().collect(toList());
-				for (int dir : dirs) {
-					OptionalInt neighbor = grid.neighbor(cell, dir);
-					if (neighbor.isPresent() && !grid.adjacent(cell, neighbor.getAsInt())) {
-						grid.addEdge(cell, neighbor.getAsInt());
-						break;
-					}
-				}
-			});
-		/*@formatter:on*/
+			.filter(cell -> grid.neighbors(cell).anyMatch(neighbor -> !grid.adjacent(cell, neighbor)))
+			.findAny()
+			.ifPresent(cell -> 	
+				grid.neighbors(cell)
+					.filter(neighbor -> !grid.adjacent(cell, neighbor))
+					.findAny()
+					.ifPresent(neighbor -> grid.addEdge(cell, neighbor)));
+		///*@formatter:on*/
+
 		// now there must be a cycle
 		assertTrue(containsCycle(grid));
 	}
