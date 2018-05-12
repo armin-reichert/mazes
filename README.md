@@ -36,7 +36,7 @@ public class KruskalMST extends MazeAlgorithm {
 }
 ```
 
-Whoever knows the Kruskal MST algorithm should immediately recognize it in these lines of code.
+The Kruskal MST algorithm should easily be identified in these lines of code.
 
 The implementation uses Java 8 specific language features (streams, lambda expressions) for better readability. There are no dependencies to UI frameworks (AWT, Swing, JavaFX).
 
