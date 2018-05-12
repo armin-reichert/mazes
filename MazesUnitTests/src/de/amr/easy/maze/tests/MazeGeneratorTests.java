@@ -1,6 +1,7 @@
 package de.amr.easy.maze.tests;
 
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
+import static de.amr.easy.graph.tests.CycleChecker.containsCycle;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static java.lang.String.format;
 import static java.lang.System.out;
@@ -17,9 +18,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import de.amr.easy.graph.alg.CycleChecker;
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.Grid;
 import de.amr.easy.grid.impl.Top4;
@@ -89,7 +88,7 @@ public class MazeGeneratorTests {
 	@After
 	public void tearDown() {
 		assertEquals(grid.edgeCount(), grid.vertexCount() - 1);
-		assertFalse(new CycleChecker<WeightedEdge<Integer>>().test(grid));
+		assertFalse(containsCycle(grid));
 	}
 
 	private void runTest(MazeAlgorithm algorithm) {

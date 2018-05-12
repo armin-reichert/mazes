@@ -1,6 +1,7 @@
 package de.amr.easy.grid.tests;
 
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
+import static de.amr.easy.graph.tests.CycleChecker.containsCycle;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static de.amr.easy.grid.impl.Top4.E;
 import static de.amr.easy.grid.impl.Top4.N;
@@ -18,9 +19,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.graph.alg.CycleChecker;
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.BareGrid;
 import de.amr.easy.grid.impl.Grid;
@@ -191,7 +190,6 @@ public class GridTests {
 
 	@Test
 	public void testCycleCheckerSquare() {
-		CycleChecker<WeightedEdge<Integer>> cycleChecker = new CycleChecker<>();
 		// create graph without cycle:
 		Integer a = grid.cell(0, 0);
 		Integer b = grid.cell(1, 0);
@@ -200,18 +198,17 @@ public class GridTests {
 		grid.addEdge(a, b);
 		grid.addEdge(b, c);
 		grid.addEdge(c, d);
-		assertFalse(cycleChecker.test(grid));
+		assertFalse(containsCycle(grid));
 		// add edge to create cycle:
 		grid.addEdge(d, a);
-		assertTrue(cycleChecker.test(grid));
+		assertTrue(containsCycle(grid));
 	}
 
 	@Test
 	public void testCycleCheckerSpanningTree() {
-		CycleChecker<WeightedEdge<Integer>> cycleChecker = new CycleChecker<>();
 		// create a spanning tree
 		new RandomBFS(grid).run(grid.cell(0, 0));
-		assertFalse(cycleChecker.test(grid));
+		assertFalse(containsCycle(grid));
 		// add edge at first vertex that has not full degree:
 		/*@formatter:off*/
 		grid.vertexStream()
@@ -229,6 +226,6 @@ public class GridTests {
 			});
 		/*@formatter:on*/
 		// now there must be a cycle
-		assertTrue(cycleChecker.test(grid));
+		assertTrue(containsCycle(grid));
 	}
 }

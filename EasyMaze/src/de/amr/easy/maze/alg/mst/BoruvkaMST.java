@@ -40,7 +40,7 @@ public class BoruvkaMST extends MazeAlgorithm {
 
 	private void addEdgeToMaze(Edge edge) {
 		int u = edge.either(), v = edge.other(u);
-		if (!forest.sameComponent(u, v)) {
+		if (forest.find(u) != forest.find(v)) {
 			addEdge(u, v);
 			forest.union(u, v);
 		}
@@ -51,7 +51,7 @@ public class BoruvkaMST extends MazeAlgorithm {
 	}
 
 	private Stream<Edge> combiningEdges(Integer node) {
-		return permute(grid.neighbors(node)).filter(neighbor -> !forest.sameComponent(node, neighbor))
+		return permute(grid.neighbors(node)).filter(neighbor -> forest.find(node) != forest.find(neighbor))
 				.mapToObj(neighbor -> new SimpleEdge(node, neighbor));
 	}
 }

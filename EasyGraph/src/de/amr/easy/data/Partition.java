@@ -76,19 +76,6 @@ public class Partition<E> implements Iterable<PartitionComp<E>> {
 	}
 
 	/**
-	 * Checks if given elements belong to the same component.
-	 * 
-	 * @param e1
-	 *          an element
-	 * @param e2
-	 *          an element
-	 * @return <code>true</code> iff the elements belong to the same component of the partition
-	 */
-	public boolean sameComponent(E e1, E e2) {
-		return find(e1) == find(e2);
-	}
-
-	/**
 	 * Finds the equivalence class of the given element and returns it.
 	 * 
 	 * @param e

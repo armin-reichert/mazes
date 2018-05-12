@@ -112,7 +112,7 @@ public class EllerInsideOut extends MazeAlgorithm {
 			}
 			if (prevCell != -1 && grid.areNeighbors(prevCell, cell)) {
 				if (all || rnd.nextBoolean()) {
-					if (!mazeParts.sameComponent(prevCell, cell)) {
+					if (mazeParts.find(prevCell) != mazeParts.find(cell)) {
 						connectCells(prevCell, cell);
 					}
 				}
@@ -122,7 +122,7 @@ public class EllerInsideOut extends MazeAlgorithm {
 		if (prevCell != -1 && firstCell != -1 && prevCell != firstCell && grid.areNeighbors(prevCell, firstCell)
 				&& !grid.adjacent(prevCell, firstCell)) {
 			if (all || rnd.nextBoolean()) {
-				if (!mazeParts.sameComponent(prevCell, firstCell)) {
+				if (mazeParts.find(prevCell) != mazeParts.find(firstCell)) {
 					connectCells(prevCell, firstCell);
 				}
 			}
