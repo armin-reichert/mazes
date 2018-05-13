@@ -13,10 +13,10 @@ import java.util.Arrays;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.curves.HilbertCurve;
 import de.amr.easy.grid.impl.BareGrid;
-import de.amr.easy.grid.impl.Top4;
 
 /**
  * Wilson's algorithm where the vertices are selected from a Hilbert curve.
@@ -32,18 +32,17 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 	@Override
 	protected IntStream cellStream() {
 		int[] path = new int[grid.numCells()];
+		// Create square helper grid for Hilbert curve:
 		int n = nextPow(2, max(grid.numCols(), grid.numRows()));
-		HilbertCurve hilbert = new HilbertCurve(log(2, n), W, N, E, S);
-		// Hilbert curve needs a square grid, so create one
-		BareGrid<?> square = new BareGrid<>(n, n, Top4.get());
-		// Traverse the intersection of the square grid cells with the original grid
+		BareGrid2D<?> square = new BareGrid<>(n, n, grid.getTopology());
 		int cell = square.cell(TOP_LEFT);
 		int i = 0;
 		path[i++] = cell;
+		HilbertCurve hilbert = new HilbertCurve(log(2, n), W, N, E, S);
 		for (int dir : hilbert.dirs()) {
-			// Hilbert curve never leaves the square grid thus neighbor always exists:
+			// curve never leaves the square grid thus neighbor always exists
 			cell = square.neighbor(cell, dir).getAsInt();
-			// Add cell if it is inside original grid:
+			// Add cell if inside original grid:
 			int col = square.col(cell), row = square.row(cell);
 			if (grid.isValidCol(col) && grid.isValidRow(row)) {
 				path[i++] = grid.cell(col, row);
