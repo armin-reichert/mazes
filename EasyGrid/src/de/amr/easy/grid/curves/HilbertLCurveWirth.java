@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.amr.easy.grid.api.Curve;
-import de.amr.easy.grid.api.Topology;
-import de.amr.easy.grid.impl.Top4;
 
 /**
  * Implementation of a Hilbert curve using the following L-system (adapted from the book
@@ -116,8 +114,4 @@ public class HilbertLCurveWirth implements Curve {
 		return dirs;
 	}
 
-	@Override
-	public Topology getTopology() {
-		return Top4.get();
-	}
 }

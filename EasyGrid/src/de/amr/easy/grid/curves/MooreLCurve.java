@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.amr.easy.grid.api.Curve;
-import de.amr.easy.grid.api.Topology;
-import de.amr.easy.grid.impl.Top4;
 
 /**
  * Computes a Moore curve from the following L-system:
@@ -120,11 +118,6 @@ public class MooreLCurve implements Curve {
 			L(i - 1);
 			plus();
 		}
-	}
-
-	@Override
-	public Topology getTopology() {
-		return Top4.get();
 	}
 
 	@Override

@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.amr.easy.grid.api.Curve;
-import de.amr.easy.grid.api.Topology;
-import de.amr.easy.grid.impl.Top4;
 
 /**
  * Computes a Peano-curve.
@@ -45,11 +43,6 @@ public class PeanoCurve implements Curve {
 			dirs.add(n);
 			peano(i - 1, n, e, s, w);
 		}
-	}
-
-	@Override
-	public Topology getTopology() {
-		return Top4.get();
 	}
 
 	@Override

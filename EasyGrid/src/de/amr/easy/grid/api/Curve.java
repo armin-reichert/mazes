@@ -7,7 +7,5 @@ package de.amr.easy.grid.api;
  */
 public interface Curve {
 
-	public Topology getTopology();
-
 	public Iterable<Integer> dirs();
 }

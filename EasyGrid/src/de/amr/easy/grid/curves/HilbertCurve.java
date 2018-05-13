@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.amr.easy.grid.api.Curve;
-import de.amr.easy.grid.api.Topology;
-import de.amr.easy.grid.impl.Top4;
 
 /**
  * Computes a Hilbert curve as a list of directions.
@@ -41,11 +39,6 @@ public class HilbertCurve implements Curve {
 			dirs.add(e);
 			hilbert(i - 1, w, s, e, n);
 		}
-	}
-
-	@Override
-	public Topology getTopology() {
-		return Top4.get();
 	}
 
 	@Override
