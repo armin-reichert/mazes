@@ -85,7 +85,7 @@ public class HilbertCurveCanvasApp extends Canvas {
 		g.translate(-cellSize, cellSize);
 		x = getWidth() - 1;
 		y = 0;
-		for (int dir : curve.dirs()) {
+		for (int dir : curve) {
 			int newX = x + 2 * Top4.get().dx(dir) * cellSize;
 			int newY = y + 2 * Top4.get().dy(dir) * cellSize;
 			g.setColor(Color.BLUE);

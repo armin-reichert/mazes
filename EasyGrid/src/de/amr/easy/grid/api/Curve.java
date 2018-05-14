@@ -1,11 +1,9 @@
 package de.amr.easy.grid.api;
 
 /**
- * Common interface for curves like the Hilbert curve.
+ * A curve is a list of directions representing a sequence of grid cells.
  * 
  * @author Armin Reichert
  */
-public interface Curve {
-
-	public Iterable<Integer> dirs();
+public interface Curve extends Iterable<Integer> {
 }

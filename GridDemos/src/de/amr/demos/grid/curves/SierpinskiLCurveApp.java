@@ -21,11 +21,9 @@ public class SierpinskiLCurveApp extends SwingGridSampleApp {
 
 	@Override
 	public void run() {
-		SierpinskiLCurve curve = new SierpinskiLCurve(6);
-		System.out.println(curve);
 		Integer current = grid.cell(1, 0);
 		grid.set(current, COMPLETED);
-		for (int dir : curve.dirs()) {
+		for (int dir : new SierpinskiLCurve(6)) {
 			current = grid.cell(grid.col(current) + grid.getTopology().dx(dir),
 					grid.row(current) + grid.getTopology().dy(dir));
 			grid.set(current, COMPLETED);

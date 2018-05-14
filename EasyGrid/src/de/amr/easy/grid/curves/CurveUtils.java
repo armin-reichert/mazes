@@ -30,7 +30,7 @@ public class CurveUtils {
 	 */
 	public static void traverse(Curve curve, BareGrid2D<?> grid, int start, BiConsumer<Integer, Integer> action) {
 		int current = start;
-		for (int dir : curve.dirs()) {
+		for (int dir : curve) {
 			int next = grid.neighbor(current, dir).getAsInt();
 			action.accept(current, next);
 			current = next;
@@ -53,7 +53,7 @@ public class CurveUtils {
 		List<Integer> cells = new ArrayList<>();
 		int current = start;
 		cells.add(current);
-		for (int dir : curve.dirs()) {
+		for (int dir : curve) {
 			int next = grid.neighbor(current, dir).getAsInt();
 			cells.add(next);
 			current = next;

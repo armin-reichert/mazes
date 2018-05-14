@@ -6,6 +6,7 @@ import static de.amr.easy.grid.impl.Top4.S;
 import static de.amr.easy.grid.impl.Top4.W;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import de.amr.easy.grid.api.Curve;
@@ -32,6 +33,11 @@ import de.amr.easy.grid.api.Curve;
 public class HilbertLCurveWirth implements Curve {
 
 	private final List<Integer> dirs = new ArrayList<>();
+
+	@Override
+	public Iterator<Integer> iterator() {
+		return dirs.iterator();
+	}
 
 	public HilbertLCurveWirth(int i) {
 		A(i);
@@ -108,10 +114,4 @@ public class HilbertLCurveWirth implements Curve {
 			C(i - 1);
 		}
 	}
-
-	@Override
-	public Iterable<Integer> dirs() {
-		return dirs;
-	}
-
 }

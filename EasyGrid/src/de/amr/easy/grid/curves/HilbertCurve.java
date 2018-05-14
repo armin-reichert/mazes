@@ -6,6 +6,7 @@ import static de.amr.easy.grid.impl.Top4.S;
 import static de.amr.easy.grid.impl.Top4.W;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import de.amr.easy.grid.api.Curve;
@@ -20,6 +21,11 @@ import de.amr.easy.grid.api.Curve;
 public class HilbertCurve implements Curve {
 
 	private final List<Integer> dirs = new ArrayList<>();
+
+	@Override
+	public Iterator<Integer> iterator() {
+		return dirs.iterator();
+	}
 
 	public HilbertCurve(int i) {
 		hilbert(i, N, E, S, W);
@@ -39,10 +45,5 @@ public class HilbertCurve implements Curve {
 			dirs.add(e);
 			hilbert(i - 1, w, s, e, n);
 		}
-	}
-
-	@Override
-	public Iterable<Integer> dirs() {
-		return dirs;
 	}
 }

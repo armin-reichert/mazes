@@ -32,11 +32,10 @@ public class WilsonUSTMooreCurve extends WilsonUST {
 	@Override
 	protected IntStream cellStream() {
 		int n = nextPow(2, max(grid.numCols(), grid.numRows()));
-		MooreLCurve moore = new MooreLCurve(log(2, n));
 		BareGrid<?> square = new BareGrid<>(n, n, Top4.get());
 		Integer cell = square.cell(n / 2, n - 1);
 		addCellToPath(n / 2, n - 1);
-		for (int dir : moore.dirs()) {
+		for (int dir : new MooreLCurve(log(2, n))) {
 			cell = square.neighbor(cell, dir).getAsInt();
 			addCellToPath(square.col(cell), square.row(cell));
 		}

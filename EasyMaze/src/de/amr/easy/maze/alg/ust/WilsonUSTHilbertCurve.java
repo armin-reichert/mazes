@@ -38,8 +38,7 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 		int cell = square.cell(TOP_LEFT);
 		int i = 0;
 		path[i++] = cell;
-		HilbertCurve hilbert = new HilbertCurve(log(2, n), W, N, E, S);
-		for (int dir : hilbert.dirs()) {
+		for (int dir : new HilbertCurve(log(2, n), W, N, E, S)) {
 			// curve never leaves the square grid thus neighbor always exists
 			cell = square.neighbor(cell, dir).getAsInt();
 			// Add cell if inside original grid:

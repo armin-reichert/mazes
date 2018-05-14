@@ -10,6 +10,7 @@ import static de.amr.easy.grid.impl.Top8.SW;
 import static de.amr.easy.grid.impl.Top8.W;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import de.amr.easy.grid.api.Curve;
@@ -22,6 +23,11 @@ import de.amr.easy.grid.api.Curve;
 public class SierpinskiLCurve implements Curve {
 
 	private final List<Integer> dirs = new ArrayList<>();
+
+	@Override
+	public Iterator<Integer> iterator() {
+		return dirs.iterator();
+	}
 
 	public SierpinskiLCurve(int i) {
 		S(i);
@@ -90,10 +96,5 @@ public class SierpinskiLCurve implements Curve {
 			dirs.add(NW);
 			D(i - 1);
 		}
-	}
-
-	@Override
-	public Iterable<Integer> dirs() {
-		return dirs;
 	}
 }

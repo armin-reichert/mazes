@@ -1,6 +1,7 @@
 package de.amr.easy.grid.curves;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import de.amr.easy.grid.api.Curve;
@@ -50,6 +51,11 @@ public class MooreLCurve implements Curve {
 
 	private void f() {
 		dirs.add(compass.ahead());
+	}
+
+	@Override
+	public Iterator<Integer> iterator() {
+		return dirs.iterator();
 	}
 
 	public MooreLCurve(int i) {
@@ -119,10 +125,4 @@ public class MooreLCurve implements Curve {
 			plus();
 		}
 	}
-
-	@Override
-	public Iterable<Integer> dirs() {
-		return dirs;
-	}
-
 }
