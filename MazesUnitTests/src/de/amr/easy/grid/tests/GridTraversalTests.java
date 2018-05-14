@@ -2,9 +2,11 @@ package de.amr.easy.grid.tests;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
+import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
+import static de.amr.easy.grid.api.GridPosition.TOP_RIGHT;
 import static de.amr.easy.grid.curves.CurveUtils.traverse;
 import static org.junit.Assert.assertTrue;
 
@@ -18,7 +20,6 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Curve;
 import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.curves.HilbertCurve;
 import de.amr.easy.grid.curves.HilbertLCurve;
 import de.amr.easy.grid.curves.HilbertLCurveWirth;
@@ -29,97 +30,81 @@ import de.amr.easy.grid.impl.Top4;
 
 public class GridTraversalTests {
 
-	private static final int LOG_N = 9;
-	private static final int SIZE = 1 << LOG_N;
+	private static final int K = 8;
+	private static final int N = 1 << K; // N = 2^K
 
-	private Grid2D<TraversalState, Integer> squareGrid;
+	private Grid2D<TraversalState, Integer> grid;
 
 	@Before
 	public void setUp() {
-		squareGrid = new Grid<>(SIZE, SIZE, Top4.get(), UNVISITED);
-		squareGrid.fill();
+		grid = new Grid<>(N, N, Top4.get(), UNVISITED);
+		grid.fill();
 	}
 
 	@After
 	public void tearDown() {
 	}
 
+	private void assertAllCells(TraversalState state) {
+		grid.vertexStream().forEach(cell -> assertTrue(grid.get(cell) == state));
+	}
+
+	private void setCompleted(int from, int to) {
+		grid.set(from, COMPLETED);
+		grid.set(to, COMPLETED);
+	}
+
 	@Test
 	public void testBFS() {
-		BreadthFirstTraversal<WeightedEdge<Integer>> bfs = new BreadthFirstTraversal<>(squareGrid, squareGrid.cell(CENTER));
-		squareGrid.vertexStream().forEach(cell -> {
-			assertTrue(bfs.getState(cell) == UNVISITED);
-		});
+		BreadthFirstTraversal<WeightedEdge<Integer>> bfs = new BreadthFirstTraversal<>(grid, grid.cell(CENTER));
+		grid.vertexStream().forEach(cell -> assertTrue(bfs.getState(cell) == UNVISITED));
 		bfs.traverseGraph();
-		squareGrid.vertexStream().forEach(cell -> {
-			assertTrue(bfs.getState(cell) == COMPLETED);
-		});
+		grid.vertexStream().forEach(cell -> assertTrue(bfs.getState(cell) == COMPLETED));
 	}
 
 	@Test
 	public void testDFS() {
-		Integer source = squareGrid.cell(TOP_LEFT), target = squareGrid.cell(BOTTOM_RIGHT);
-		DepthFirstTraversal<WeightedEdge<Integer>> dfs = new DepthFirstTraversal<>(squareGrid, source, target);
-		squareGrid.vertexStream().forEach(cell -> {
-			assertTrue(dfs.getState(cell) == UNVISITED);
-		});
+		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
+		DepthFirstTraversal<WeightedEdge<Integer>> dfs = new DepthFirstTraversal<>(grid, source, target);
+		grid.vertexStream().forEach(cell -> assertTrue(dfs.getState(cell) == UNVISITED));
 		dfs.traverseGraph();
-		assertTrue(dfs.getState(source) == COMPLETED || dfs.getState(target) == COMPLETED);
-		for (Integer cell : dfs.findPath(target)) {
-			assertTrue(dfs.getState(cell) == COMPLETED);
-		}
+		dfs.findPath(target).forEach(cell -> assertTrue(dfs.getState(cell) == COMPLETED));
 	}
 
 	@Test
 	public void testHilbertCurve() {
-		Curve curve = new HilbertCurve(LOG_N);
-		traverse(curve, squareGrid, squareGrid.cell(GridPosition.TOP_RIGHT), (from, to) -> {
-			squareGrid.set(from, COMPLETED);
-			squareGrid.set(to, COMPLETED);
-		});
-		squareGrid.vertexStream().forEach(cell -> assertTrue(squareGrid.get(cell) == COMPLETED));
+		assertAllCells(UNVISITED);
+		traverse(new HilbertCurve(K), grid, grid.cell(TOP_RIGHT), this::setCompleted);
+		assertAllCells(COMPLETED);
 	}
 
 	@Test
 	public void testHilbertLCurve() {
-		Curve curve = new HilbertLCurve(LOG_N);
-		traverse(curve, squareGrid, squareGrid.cell(GridPosition.BOTTOM_LEFT), (from, to) -> {
-			squareGrid.set(from, COMPLETED);
-			squareGrid.set(to, COMPLETED);
-		});
-		squareGrid.vertexStream().forEach(cell -> assertTrue(squareGrid.get(cell) == COMPLETED));
+		Curve curve = new HilbertLCurve(K);
+		assertAllCells(UNVISITED);
+		traverse(curve, grid, grid.cell(BOTTOM_LEFT), this::setCompleted);
+		assertAllCells(COMPLETED);
 	}
 
 	@Test
 	public void testHilbertLCurveWirth() {
-		Curve curve = new HilbertLCurveWirth(LOG_N);
-		traverse(curve, squareGrid, squareGrid.cell(GridPosition.TOP_RIGHT), (from, to) -> {
-			squareGrid.set(from, COMPLETED);
-			squareGrid.set(to, COMPLETED);
-		});
-		squareGrid.vertexStream().forEach(cell -> assertTrue(squareGrid.get(cell) == COMPLETED));
+		assertAllCells(UNVISITED);
+		traverse(new HilbertLCurveWirth(K), grid, grid.cell(TOP_RIGHT), this::setCompleted);
+		assertAllCells(COMPLETED);
 	}
 
 	@Test
 	public void testMooreLCurve() {
-		Curve curve = new MooreLCurve(LOG_N);
-		int startCol = SIZE / 2, startRow = SIZE - 1;
-		int startCell = squareGrid.cell(startCol, startRow);
-		traverse(curve, squareGrid, startCell, (from, to) -> {
-			squareGrid.set(from, COMPLETED);
-			squareGrid.set(to, COMPLETED);
-		});
-		squareGrid.vertexStream().forEach(cell -> assertTrue(squareGrid.get(cell) == COMPLETED));
+		assertAllCells(UNVISITED);
+		traverse(new MooreLCurve(K), grid, grid.cell(N / 2, N - 1), this::setCompleted);
+		assertAllCells(COMPLETED);
 	}
 
 	@Test
 	public void testPeanoCurve() {
-		Grid2D<TraversalState, Integer> grid = new Grid<>(243, 243, Top4.get(), UNVISITED);
-		Curve curve = new PeanoCurve(5);
-		traverse(curve, grid, grid.cell(GridPosition.BOTTOM_LEFT), (from, to) -> {
-			grid.set(from, COMPLETED);
-			grid.set(to, COMPLETED);
-		});
-		grid.vertexStream().forEach(cell -> assertTrue(grid.get(cell) == COMPLETED));
+		grid = new Grid<>(243, 243, Top4.get(), UNVISITED);
+		assertAllCells(UNVISITED);
+		traverse(new PeanoCurve(5), grid, grid.cell(BOTTOM_LEFT), this::setCompleted);
+		assertAllCells(COMPLETED);
 	}
 }
