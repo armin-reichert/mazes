@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalListener;
 
@@ -16,11 +15,8 @@ import de.amr.easy.graph.api.event.GraphTraversalListener;
  * observers for vertex and edge traversal.
  * 
  * @author Armin Reichert
- *
- * @param <E>
- *          edge type
  */
-public abstract class AbstractGraphTraversal<E extends Edge> {
+public abstract class AbstractGraphTraversal {
 
 	protected final Map<Integer, Integer> parentMap = new HashMap<>();
 	protected final Map<Integer, TraversalState> stateMap = new HashMap<>();

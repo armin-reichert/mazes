@@ -17,7 +17,6 @@ import org.junit.Test;
 import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.alg.traversal.DepthFirstTraversal;
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.curves.HilbertCurve;
 import de.amr.easy.grid.curves.HilbertLCurve;
@@ -55,7 +54,7 @@ public class GridTraversalTests {
 
 	@Test
 	public void testBFS() {
-		BreadthFirstTraversal<WeightedEdge<Integer>> bfs = new BreadthFirstTraversal<>(grid, grid.cell(CENTER));
+		BreadthFirstTraversal bfs = new BreadthFirstTraversal(grid, grid.cell(CENTER));
 		grid.vertexStream().forEach(cell -> assertTrue(bfs.getState(cell) == UNVISITED));
 		bfs.traverseGraph();
 		grid.vertexStream().forEach(cell -> assertTrue(bfs.getState(cell) == COMPLETED));
@@ -64,7 +63,7 @@ public class GridTraversalTests {
 	@Test
 	public void testDFS() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		DepthFirstTraversal<WeightedEdge<Integer>> dfs = new DepthFirstTraversal<>(grid, source, target);
+		DepthFirstTraversal dfs = new DepthFirstTraversal(grid, source, target);
 		grid.vertexStream().forEach(cell -> assertTrue(dfs.getState(cell) == UNVISITED));
 		dfs.traverseGraph();
 		dfs.findPath(target).forEach(cell -> assertTrue(dfs.getState(cell) == COMPLETED));

@@ -21,7 +21,7 @@ public class SwingDFSAnimation implements GraphTraversalListener {
 	private final AnimatedGridCanvas canvas;
 	private final ObservableBareGrid2D<?> grid;
 	private final DFSRenderingModel renderingModel;
-	private final DepthFirstTraversal<?> dfs;
+	private final DepthFirstTraversal dfs;
 	private final LinkedHashSet<Integer> path;
 
 	public SwingDFSAnimation(AnimatedGridCanvas canvas, ObservableBareGrid2D<?> grid, Integer source, Integer target) {
@@ -30,7 +30,7 @@ public class SwingDFSAnimation implements GraphTraversalListener {
 		GridRenderingModel currentModel = canvas.getRenderingModel();
 		this.renderingModel = new DFSRenderingModel(currentModel.getCellSize(), currentModel.getPassageWidth(),
 				currentModel::getCellBgColor, Color.RED, Color.BLUE);
-		dfs = new DepthFirstTraversal<>(grid, source, target);
+		dfs = new DepthFirstTraversal(grid, source, target);
 		path = new LinkedHashSet<>();
 	}
 

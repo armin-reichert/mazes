@@ -45,7 +45,7 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 	}
 
 	private boolean disconnected(int u, int v) {
-		BreadthFirstTraversal<?> bfs = new BreadthFirstTraversal<>(grid, u);
+		BreadthFirstTraversal bfs = new BreadthFirstTraversal(grid, u);
 		bfs.setStopAt(v);
 		bfs.traverseGraph();
 		return bfs.getDistance(v) == -1;

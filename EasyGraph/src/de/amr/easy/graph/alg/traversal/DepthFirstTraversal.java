@@ -11,7 +11,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.OptionalInt;
 
-import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.PathFinder;
 import de.amr.easy.graph.api.TraversalState;
@@ -28,9 +27,9 @@ import de.amr.easy.graph.api.TraversalState;
  * 
  * @author Armin Reichert
  */
-public class DepthFirstTraversal<E extends Edge> extends AbstractGraphTraversal<E> implements PathFinder {
+public class DepthFirstTraversal extends AbstractGraphTraversal implements PathFinder {
 
-	private final Graph<E> graph;
+	private final Graph<?> graph;
 	private final int source;
 	private final int target;
 	private final Deque<Integer> stack;
@@ -45,7 +44,7 @@ public class DepthFirstTraversal<E extends Edge> extends AbstractGraphTraversal<
 	 * @param target
 	 *          the target vertex
 	 */
-	public DepthFirstTraversal(Graph<E> graph, int source, int target) {
+	public DepthFirstTraversal(Graph<?> graph, int source, int target) {
 		this.graph = graph;
 		this.source = source;
 		this.target = target;

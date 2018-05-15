@@ -14,7 +14,7 @@ public class LargeMazesTests {
 
 	private void test_Kruskal(int cols, int rows) {
 		Grid2D<TraversalState, Integer> grid = new Grid<>(cols, rows, Top4.get(), UNVISITED);
-		new KruskalMST(grid).run(grid.cell(0, 0));
+		new KruskalMST(grid).run(0);
 	}
 
 	@Test

@@ -11,7 +11,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.PathFinder;
 
@@ -27,14 +26,11 @@ import de.amr.easy.graph.api.PathFinder;
  * During the traversal, events are fired which can be processed by a listener, for example an
  * animation.
  * 
- * @param <E>
- *          the edge type
- * 
  * @author Armin Reichert
  */
-public class BreadthFirstTraversal<E extends Edge> extends AbstractGraphTraversal<E> implements PathFinder {
+public class BreadthFirstTraversal extends AbstractGraphTraversal implements PathFinder {
 
-	private final Graph<E> graph;
+	private final Graph<?> graph;
 	private final int source;
 	private final Queue<Integer> q;
 	private final int[] distances;
@@ -42,7 +38,7 @@ public class BreadthFirstTraversal<E extends Edge> extends AbstractGraphTraversa
 	private int farest = -1;
 	private int stopAt = -1;
 
-	public BreadthFirstTraversal(Graph<E> graph, int source) {
+	public BreadthFirstTraversal(Graph<?> graph, int source) {
 		this.graph = graph;
 		this.source = source;
 		q = new ArrayDeque<>();
