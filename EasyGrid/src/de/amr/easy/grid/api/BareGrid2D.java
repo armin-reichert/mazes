@@ -2,7 +2,6 @@ package de.amr.easy.grid.api;
 
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.WeightedEdge;
@@ -153,9 +152,4 @@ public interface BareGrid2D<W extends Comparable<W>> extends Graph<WeightedEdge<
 	 * Makes this grid a full grid.
 	 */
 	public void fill();
-
-	/**
-	 * @return a stream of the edges for a full grid. The edge weights are undefined.
-	 */
-	public Stream<WeightedEdge<W>> fullGridEdges();
 }

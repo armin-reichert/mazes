@@ -253,13 +253,6 @@ public class BareGrid<W extends Comparable<W>> implements BareGrid2D<W> {
 	}
 
 	@Override
-	public Stream<WeightedEdge<W>> fullGridEdges() {
-		BareGrid<W> fullGrid = new BareGrid<>(colCount, rowCount, top);
-		fullGrid.fill();
-		return fullGrid.edgeStream();
-	}
-
-	@Override
 	public boolean isValidCol(int col) {
 		return 0 <= col && col < colCount;
 	}

@@ -2,8 +2,11 @@ package de.amr.easy.maze.alg.mst;
 
 import static de.amr.easy.util.StreamUtils.permute;
 
+import java.util.stream.Stream;
+
 import de.amr.easy.data.Partition;
 import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.maze.alg.MazeAlgorithm;
 
@@ -11,6 +14,9 @@ import de.amr.easy.maze.alg.MazeAlgorithm;
  * Maze generator derived from Kruskal's minimum spanning tree algorithm.
  * 
  * @author Armin Reichert
+ * 
+ * @see <a href="https://en.wikipedia.org/wiki/Kruskal%27s_algorithm">Kruskal's Algorithm -
+ *      Wikipedia</a>
  * 
  * @see <a href="http://weblog.jamisbuck.org/2011/1/3/maze-generation-kruskal-s-algorithm.html">Maze
  *      Generation: Kruskal's Algorithm</a>
@@ -23,12 +29,15 @@ public class KruskalMST extends MazeAlgorithm {
 
 	@Override
 	public void run(int start) {
-		Partition<Integer> forest = new Partition<>(grid.vertexStream().boxed());
-		permute(grid.fullGridEdges()).forEach(edge -> {
+		grid.fill();
+		Stream<WeightedEdge<Integer>> edges = permute(grid.edgeStream());
+		grid.removeEdges();
+		Partition<Integer> forest = new Partition<>();
+		edges.forEach(edge -> {
 			int u = edge.either(), v = edge.other(u);
 			if (forest.find(u) != forest.find(v)) {
-				forest.union(u, v);
 				addEdge(u, v);
+				forest.union(u, v);
 			}
 		});
 	}
