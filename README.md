@@ -13,7 +13,7 @@ To achieve this, there is
 
 The maze generation algorithms work strictly against the grid API. For drawing and animation, graph and graph traversal listeners are used.
 
-To illustrate, the generator based on the Kruskal minimum-spanning-tree algorithm looks like this:
+For example, the maze generator based on Kruskal's minimum-spanning-tree algorithm looks like this:
 
 ```java
 public class KruskalMST extends MazeAlgorithm {
@@ -24,19 +24,21 @@ public class KruskalMST extends MazeAlgorithm {
 
 	@Override
 	public void run(int start) {
-		Partition<Integer> forest = new Partition<>(grid.vertexStream().boxed());
-		permute(grid.fullGridEdges()).forEach(edge -> {
+		grid.fill();
+		Stream<WeightedEdge<Integer>> edges = permute(grid.edgeStream());
+		grid.removeEdges();
+		Partition<Integer> forest = new Partition<>();
+		edges.forEach(edge -> {
 			int u = edge.either(), v = edge.other(u);
 			if (forest.find(u) != forest.find(v)) {
-				forest.union(u, v);
 				addEdge(u, v);
+				forest.union(u, v);
 			}
 		});
 	}
 }
 ```
-
-The Kruskal MST algorithm should easily be identified in these lines of code.
+Here, the edges of a full grid are processed in permuted order (the Kruskal MST algorithm would process the edges in order of increasing weight).
 
 The implementation uses Java 8 specific language features (streams, lambda expressions) for better readability. There are no dependencies to UI frameworks (AWT, Swing, JavaFX).
 
