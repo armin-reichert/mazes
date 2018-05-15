@@ -1,15 +1,10 @@
-package de.amr.easy.graph.tests;
+package de.amr.easy.util;
 
 import de.amr.easy.data.Partition;
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
 
-/**
- * Tests an undirected graph for a cycle.
- * 
- * @author Armin Reichert
- */
-public class CycleChecker {
+public class GraphUtils {
 
 	public static <E extends Edge> boolean containsCycle(Graph<E> g) {
 		Partition<Integer> p = new Partition<>(g.vertexStream().boxed());
@@ -23,4 +18,5 @@ public class CycleChecker {
 		}
 		return false;
 	}
+
 }

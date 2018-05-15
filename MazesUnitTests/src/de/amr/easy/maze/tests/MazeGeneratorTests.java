@@ -1,7 +1,6 @@
 package de.amr.easy.maze.tests;
 
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
-import static de.amr.easy.graph.tests.CycleChecker.containsCycle;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static java.lang.String.format;
 import static java.lang.System.out;
@@ -54,6 +53,7 @@ import de.amr.easy.maze.alg.ust.WilsonUSTRandomCell;
 import de.amr.easy.maze.alg.ust.WilsonUSTRecursiveCrosses;
 import de.amr.easy.maze.alg.ust.WilsonUSTRightToLeftSweep;
 import de.amr.easy.maze.alg.ust.WilsonUSTRowsTopDown;
+import de.amr.easy.util.GraphUtils;
 import de.amr.easy.util.StopWatch;
 
 public class MazeGeneratorTests {
@@ -87,7 +87,7 @@ public class MazeGeneratorTests {
 	@After
 	public void tearDown() {
 		assertEquals(grid.edgeCount(), grid.vertexCount() - 1);
-		assertFalse(containsCycle(grid));
+		assertFalse(GraphUtils.containsCycle(grid));
 	}
 
 	private void runTest(MazeAlgorithm algorithm) {

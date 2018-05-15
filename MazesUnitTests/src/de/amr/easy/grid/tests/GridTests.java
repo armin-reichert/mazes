@@ -1,7 +1,6 @@
 package de.amr.easy.grid.tests;
 
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
-import static de.amr.easy.graph.tests.CycleChecker.containsCycle;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static de.amr.easy.grid.impl.Top4.E;
 import static de.amr.easy.grid.impl.Top4.N;
@@ -21,6 +20,7 @@ import de.amr.easy.grid.impl.BareGrid;
 import de.amr.easy.grid.impl.Grid;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.maze.alg.traversal.RandomBFS;
+import de.amr.easy.util.GraphUtils;
 
 /**
  * Test case for {@link BareGrid}
@@ -194,17 +194,17 @@ public class GridTests {
 		grid.addEdge(a, b);
 		grid.addEdge(b, c);
 		grid.addEdge(c, d);
-		assertFalse(containsCycle(grid));
+		assertFalse(GraphUtils.containsCycle(grid));
 		// add edge to create cycle:
 		grid.addEdge(d, a);
-		assertTrue(containsCycle(grid));
+		assertTrue(GraphUtils.containsCycle(grid));
 	}
 
 	@Test
 	public void testCycleCheckerSpanningTree() {
 		// create a spanning tree
 		new RandomBFS(grid).run(grid.cell(0, 0));
-		assertFalse(containsCycle(grid));
+		assertFalse(GraphUtils.containsCycle(grid));
 
 		// Find vertex with non-adjacent neighbor. Adding an edge to this neighbor produces a cycle.
 		///*@formatter:off*/
@@ -219,6 +219,6 @@ public class GridTests {
 		///*@formatter:on*/
 
 		// now there must be a cycle
-		assertTrue(containsCycle(grid));
+		assertTrue(GraphUtils.containsCycle(grid));
 	}
 }
