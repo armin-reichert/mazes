@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import de.amr.easy.data.Partition;
-import de.amr.easy.data.PartitionComp;
+import de.amr.easy.data.PartitionSet;
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
@@ -31,9 +31,10 @@ public class BoruvkaMST extends MazeAlgorithm {
 
 	@Override
 	public void run(int start) {
-		forest = new Partition<>(grid.vertexStream().boxed());
+		forest = new Partition<>();
+		grid.vertexStream().forEach(forest::makeSet);
 		while (forest.size() > 1) {
-			permute(forest.components()).map(this::findCombiningEdge).filter(Optional::isPresent).map(Optional::get)
+			permute(forest.sets()).map(this::findCombiningEdge).filter(Optional::isPresent).map(Optional::get)
 					.forEach(this::addEdgeToMaze);
 		}
 	}
@@ -46,7 +47,7 @@ public class BoruvkaMST extends MazeAlgorithm {
 		}
 	}
 
-	private Optional<Edge> findCombiningEdge(PartitionComp<Integer> tree) {
+	private Optional<Edge> findCombiningEdge(PartitionSet<Integer> tree) {
 		return permute(tree.elements()).flatMap(this::combiningEdges).findFirst();
 	}
 

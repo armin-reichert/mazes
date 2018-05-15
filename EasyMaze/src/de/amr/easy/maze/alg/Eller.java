@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import de.amr.easy.data.Partition;
-import de.amr.easy.data.PartitionComp;
+import de.amr.easy.data.PartitionSet;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 
@@ -56,7 +56,7 @@ public class Eller extends MazeAlgorithm {
 	}
 
 	private void connectCellsWithNextRow(int row) {
-		Set<PartitionComp<Integer>> connected = new HashSet<>();
+		Set<PartitionSet<Integer>> connected = new HashSet<>();
 		range(0, grid.numCols()).forEach(col -> {
 			if (rnd.nextBoolean()) {
 				int above = grid.cell(col, row), below = grid.cell(col, row + 1);
@@ -68,7 +68,7 @@ public class Eller extends MazeAlgorithm {
 		List<Integer> unconnected = new ArrayList<>();
 		range(0, grid.numCols()).forEach(col -> {
 			int cell = grid.cell(col, row);
-			PartitionComp<Integer> component = partition.find(cell);
+			PartitionSet<Integer> component = partition.find(cell);
 			if (!connected.contains(component)) {
 				unconnected.add(cell);
 			}
@@ -77,7 +77,7 @@ public class Eller extends MazeAlgorithm {
 		Collections.shuffle(unconnected);
 		// connect cells and mark component as connected
 		unconnected.forEach(above -> {
-			PartitionComp<Integer> component = partition.find(above);
+			PartitionSet<Integer> component = partition.find(above);
 			if (!connected.contains(component)) {
 				int below = grid.cell(grid.col(above), row + 1);
 				connectCells(above, below);

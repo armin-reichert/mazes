@@ -10,99 +10,93 @@ import java.util.stream.Stream;
 
 /**
  * Data structure for partitions (union-find with path compression).
+ * <p>
+ * In this implementation, sets are created on-demand. Calling the {code {@link #find(Object)}
+ * method on an element not yet in the partition will create a separate set for this element.
  * 
  * @author Armin Reichert
  * 
  * @param <E>
- *          type of elements in each set
+ *          type of the elements in this partition
  */
-public class Partition<E> implements Iterable<PartitionComp<E>> {
+public class Partition<E> implements Iterable<PartitionSet<E>> {
 
-	private final Map<E, PartitionComp<E>> componentOfElement = new HashMap<>();
-	private int numComponents;
+	private final Map<E, PartitionSet<E>> sets;
+	private int setCount;
 
-	private PartitionComp<E> addComponent(E e) {
-		if (componentOfElement.containsKey(e)) {
-			throw new IllegalArgumentException("Duplicate component for element: " + e);
-		}
-		PartitionComp<E> comp = new PartitionComp<>(e);
-		componentOfElement.put(e, comp);
-		++numComponents;
-		return comp;
+	public Partition() {
+		sets = new HashMap<>();
+		setCount = 0;
 	}
 
 	/**
-	 * Creates a partition containing a component for each element.
+	 * Returns a stream of all sets.
 	 * 
-	 * @param elements
-	 *          elements to be added into this partition
+	 * @return a stream of all sets of this partition
 	 */
-	@SuppressWarnings("unchecked")
-	public Partition(E... elements) {
-		for (E e : elements) {
-			addComponent(e);
-		}
-	}
-
-	/**
-	 * Creates a partition containing a component for each element.
-	 * 
-	 * @param elements
-	 *          elements to be added into this partition
-	 */
-	public Partition(Stream<E> elements) {
-		elements.forEach(this::addComponent);
-	}
-
-	/**
-	 * Returns a stream of all components.
-	 * 
-	 * @return a stream of all components of this partition
-	 */
-	public Stream<PartitionComp<E>> components() {
-		return componentOfElement.values().stream();
+	public Stream<PartitionSet<E>> sets() {
+		return sets.values().stream();
 	}
 
 	@Override
-	public Iterator<PartitionComp<E>> iterator() {
-		return componentOfElement.values().iterator();
+	public Iterator<PartitionSet<E>> iterator() {
+		return sets.values().iterator();
 	}
 
 	/**
-	 * @return the number of components (equivalence classes) of this partition
+	 * @return the number of sets (equivalence classes) of this partition
 	 */
 	public int size() {
-		return numComponents;
+		return setCount;
 	}
 
 	/**
-	 * Finds the equivalence class of the given element and returns it.
+	 * Creates a new set containing only the given element. If the element is already contained in a
+	 * set, an exception is thrown.
 	 * 
-	 * @param e
-	 *          element from the partitioned set
-	 * @return component (equivalence class) containing the given element (created on demand if not
-	 *         yet existing)
+	 * @param el
+	 *          an element
+	 * @return a new set
 	 */
-	public PartitionComp<E> find(E e) {
-		PartitionComp<E> comp = componentOfElement.get(e);
-		if (comp == null) {
-			return addComponent(e);
+	public PartitionSet<E> makeSet(E el) {
+		if (sets.containsKey(el)) {
+			throw new IllegalArgumentException("Set for element e already exists, e= " + el);
 		}
-		// find path of objects leading to the root
-		List<PartitionComp<E>> path = new ArrayList<>();
-		PartitionComp<E> root = comp;
+		PartitionSet<E> set = new PartitionSet<>(el);
+		sets.put(el, set);
+		++setCount;
+		return set;
+	}
+
+	/**
+	 * Returns the set (equivalence class) for the given element. Maybe creates a new set.
+	 * 
+	 * @param el
+	 *          element from the partitioned set
+	 * @return set (equivalence class) containing the given element (created on demand if not yet
+	 *         existing)
+	 */
+	public PartitionSet<E> find(E el) {
+		PartitionSet<E> set = sets.get(el);
+		if (set == null) {
+			return makeSet(el);
+		}
+		// find path to the root
+		List<PartitionSet<E>> path = new ArrayList<>();
+		PartitionSet<E> root = set;
 		for (; root != root.parent; root = root.parent) {
 			path.add(root);
 		}
 		// compress the path and return
-		for (PartitionComp<E> ancestor : path) {
+		for (PartitionSet<E> ancestor : path) {
 			ancestor.parent = root;
 		}
 		return root;
 	}
 
 	/**
-	 * Merges two components into one. Uses weighted union which guarantees logarithmic time for find.
+	 * Merges two sets into one. Uses weighted-union which guarantees logarithmic time for
+	 * find-operations.
 	 * 
 	 * @param x
 	 *          first element
@@ -110,7 +104,7 @@ public class Partition<E> implements Iterable<PartitionComp<E>> {
 	 *          second element
 	 */
 	public void union(E x, E y) {
-		PartitionComp<E> cx = find(x), cy = find(y);
+		PartitionSet<E> cx = find(x), cy = find(y);
 		if (cx == cy) {
 			return;
 		}
@@ -123,6 +117,6 @@ public class Partition<E> implements Iterable<PartitionComp<E>> {
 			cx.elements.addAll(cy.elements);
 			cy.elements = Collections.emptyList();
 		}
-		--numComponents;
+		--setCount;
 	}
 }

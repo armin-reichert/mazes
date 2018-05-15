@@ -21,7 +21,7 @@ public class GraphUtils {
 	 * @return {@code true} if the graph contains a cycle
 	 */
 	public static <E extends Edge> boolean containsCycle(Graph<E> g) {
-		Partition<Integer> p = new Partition<>(g.vertexStream().boxed());
+		Partition<Integer> p = new Partition<>();
 		Iterable<E> edges = g.edgeStream()::iterator;
 		for (E edge : edges) {
 			int u = edge.either(), v = edge.other(u);

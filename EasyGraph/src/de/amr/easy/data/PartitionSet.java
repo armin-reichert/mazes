@@ -12,19 +12,19 @@ import java.util.stream.Stream;
  * 
  * @see Partition
  */
-public class PartitionComp<E> implements Iterable<E> {
+public class PartitionSet<E> implements Iterable<E> {
 
-	PartitionComp<E> parent;
+	PartitionSet<E> parent;
 	List<E> elements;
 
-	PartitionComp(E e) {
+	PartitionSet(E e) {
 		parent = this;
 		elements = new ArrayList<>();
 		elements.add(e);
 	}
 
-	private PartitionComp<E> root() {
-		PartitionComp<E> comp = this;
+	private PartitionSet<E> root() {
+		PartitionSet<E> comp = this;
 		while (comp.parent != comp) {
 			comp = comp.parent;
 		}
