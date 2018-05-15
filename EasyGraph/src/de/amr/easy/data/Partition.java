@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 /**
- * Data structure for partitions (union-find with path compression).
+ * Data structure for set-partitions.
  * <p>
  * In this implementation, sets are created on-demand. Calling the {code {@link #find(Object)}
  * method on an element not yet in the partition will create a separate set for this element.
@@ -19,9 +19,55 @@ import java.util.stream.Stream;
  * @param <E>
  *          type of the elements in this partition
  */
-public class Partition<E> implements Iterable<PartitionSet<E>> {
+public class Partition<E> implements Iterable<Partition<E>.Set> {
 
-	private final Map<E, PartitionSet<E>> sets;
+	/**
+	 * A set in a partition.
+	 *
+	 */
+	public class Set implements Iterable<E> {
+
+		private Set parent;
+		private List<E> elements;
+
+		private Set(E e) {
+			parent = this;
+			elements = new ArrayList<>();
+			elements.add(e);
+		}
+
+		/**
+		 * @return
+		 */
+		private Set root() {
+			Set set = this;
+			while (set.parent != set) {
+				set = set.parent;
+			}
+			return set;
+		}
+
+		/**
+		 * @return the cardinality of this set
+		 */
+		public int size() {
+			return root().elements.size();
+		}
+
+		/**
+		 * @return a stream of the elements in this set.
+		 */
+		public Stream<E> elements() {
+			return root().elements.stream();
+		}
+
+		@Override
+		public Iterator<E> iterator() {
+			return root().elements.iterator();
+		}
+	}
+
+	private final Map<E, Set> sets;
 	private int setCount;
 
 	public Partition() {
@@ -34,12 +80,12 @@ public class Partition<E> implements Iterable<PartitionSet<E>> {
 	 * 
 	 * @return a stream of all sets of this partition
 	 */
-	public Stream<PartitionSet<E>> sets() {
+	public Stream<Set> sets() {
 		return sets.values().stream();
 	}
 
 	@Override
-	public Iterator<PartitionSet<E>> iterator() {
+	public Iterator<Set> iterator() {
 		return sets.values().iterator();
 	}
 
@@ -58,11 +104,11 @@ public class Partition<E> implements Iterable<PartitionSet<E>> {
 	 *          an element
 	 * @return a new set
 	 */
-	public PartitionSet<E> makeSet(E el) {
+	public Set makeSet(E el) {
 		if (sets.containsKey(el)) {
 			throw new IllegalArgumentException("Set for element e already exists, e= " + el);
 		}
-		PartitionSet<E> set = new PartitionSet<>(el);
+		Set set = new Set(el);
 		sets.put(el, set);
 		++setCount;
 		return set;
@@ -76,19 +122,19 @@ public class Partition<E> implements Iterable<PartitionSet<E>> {
 	 * @return set (equivalence class) containing the given element (created on demand if not yet
 	 *         existing)
 	 */
-	public PartitionSet<E> find(E el) {
-		PartitionSet<E> set = sets.get(el);
+	public Set find(E el) {
+		Set set = sets.get(el);
 		if (set == null) {
 			return makeSet(el);
 		}
 		// find path to the root
-		List<PartitionSet<E>> path = new ArrayList<>();
-		PartitionSet<E> root = set;
+		List<Set> path = new ArrayList<>();
+		Set root = set;
 		for (; root != root.parent; root = root.parent) {
 			path.add(root);
 		}
 		// compress the path and return
-		for (PartitionSet<E> ancestor : path) {
+		for (Set ancestor : path) {
 			ancestor.parent = root;
 		}
 		return root;
@@ -104,7 +150,7 @@ public class Partition<E> implements Iterable<PartitionSet<E>> {
 	 *          second element
 	 */
 	public void union(E x, E y) {
-		PartitionSet<E> cx = find(x), cy = find(y);
+		Set cx = find(x), cy = find(y);
 		if (cx == cy) {
 			return;
 		}

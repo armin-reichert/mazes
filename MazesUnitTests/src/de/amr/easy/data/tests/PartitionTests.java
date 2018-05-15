@@ -10,7 +10,6 @@ import java.util.HashSet;
 import org.junit.Test;
 
 import de.amr.easy.data.Partition;
-import de.amr.easy.data.PartitionSet;
 
 public class PartitionTests {
 
@@ -29,7 +28,7 @@ public class PartitionTests {
 		assertEquals(3, p1.size());
 		p1.union(1, 2);
 		assertEquals(2, p1.size());
-		PartitionSet<Integer> c1 = p1.find(1);
+		Partition<Integer>.Set c1 = p1.find(1);
 		assertEquals(2, c1.size());
 		assertEquals(new HashSet<>(Arrays.asList(1, 2)), c1.elements().collect(toSet()));
 	}
