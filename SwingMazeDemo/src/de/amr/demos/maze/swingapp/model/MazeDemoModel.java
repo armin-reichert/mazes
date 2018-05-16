@@ -25,7 +25,8 @@ import de.amr.easy.maze.alg.Sidewinder;
 import de.amr.easy.maze.alg.mst.BoruvkaMST;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 import de.amr.easy.maze.alg.mst.PrimMST;
-import de.amr.easy.maze.alg.mst.ReverseDeleteMST;
+import de.amr.easy.maze.alg.mst.ReverseDeleteBFSMST;
+import de.amr.easy.maze.alg.mst.ReverseDeleteDFSMST;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
 import de.amr.easy.maze.alg.traversal.RandomBFS;
 import de.amr.easy.maze.alg.traversal.RecursiveDFS;
@@ -66,7 +67,8 @@ public class MazeDemoModel {
 		new AlgorithmInfo<>(KruskalMST.class, "Kruskal MST", MST),
 		new AlgorithmInfo<>(PrimMST.class, "Prim MST", MST),
 		new AlgorithmInfo<>(BoruvkaMST.class, "Boruvka MST", MST),
-		new AlgorithmInfo<>(ReverseDeleteMST.class, "Reverse-Delete MST (slow!)", MST, SmallGridOnly),
+		new AlgorithmInfo<>(ReverseDeleteBFSMST.class, "Reverse-Delete MST (BFS version, slow!)", MST, SmallGridOnly),
+		new AlgorithmInfo<>(ReverseDeleteDFSMST.class, "Reverse-Delete MST (DFS version, slow!)", MST, SmallGridOnly),
 		new AlgorithmInfo<>(AldousBroderUST.class, "Aldous-Broder UST (slow!)", UST, Slow),
 		new AlgorithmInfo<>(WilsonUSTRandomCell.class, "Wilson UST (random)", UST, Slow),
 		new AlgorithmInfo<>(WilsonUSTRowsTopDown.class, "Wilson UST (row-wise top-to-bottom)", UST),

@@ -34,7 +34,8 @@ import de.amr.easy.maze.alg.Sidewinder;
 import de.amr.easy.maze.alg.mst.BoruvkaMST;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 import de.amr.easy.maze.alg.mst.PrimMST;
-import de.amr.easy.maze.alg.mst.ReverseDeleteMST;
+import de.amr.easy.maze.alg.mst.ReverseDeleteBFSMST;
+import de.amr.easy.maze.alg.mst.ReverseDeleteDFSMST;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
 import de.amr.easy.maze.alg.traversal.RandomBFS;
 import de.amr.easy.maze.alg.traversal.RecursiveDFS;
@@ -173,9 +174,15 @@ public class MazeGeneratorTests {
 	}
 
 	@Test
-	public void testReverseDeleteMST() {
+	public void testReverseDeleteDFSMST() {
 		grid = new Grid<>(32, 32, Top4.get(), UNVISITED);
-		runTest(new ReverseDeleteMST(grid));
+		runTest(new ReverseDeleteDFSMST(grid));
+	}
+
+	@Test
+	public void testReverseDeleteBFSMST() {
+		grid = new Grid<>(32, 32, Top4.get(), UNVISITED);
+		runTest(new ReverseDeleteBFSMST(grid));
 	}
 
 	@Test

@@ -7,24 +7,24 @@ import java.util.stream.IntStream;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
-import de.amr.easy.maze.alg.mst.ReverseDeleteMST;
+import de.amr.easy.maze.alg.mst.ReverseDeleteBFSMST;
 
-public class ReverseDeleteApp extends SwingGridSampleApp {
+public class ReverseDeleteBFSApp extends SwingGridSampleApp {
 
 	public static void main(String[] args) {
-		launch(new ReverseDeleteApp());
+		launch(new ReverseDeleteBFSApp());
 	}
 
-	public ReverseDeleteApp() {
+	public ReverseDeleteBFSApp() {
 		super(128, Top4.get());
-		setAppName("Reverse-Delete-MST Maze");
+		setAppName("Reverse-Delete-MST Maze (BFS)");
 	}
 
 	@Override
 	public void run() {
 		IntStream.of(128, 64, 32).forEach(cellSize -> {
 			resizeGrid(cellSize);
-			new ReverseDeleteMST(grid).run(-1);
+			new ReverseDeleteBFSMST(grid).run(-1);
 			new SwingBFSAnimation(canvas, grid).run(grid.cell(TOP_LEFT));
 			sleep(1000);
 		});

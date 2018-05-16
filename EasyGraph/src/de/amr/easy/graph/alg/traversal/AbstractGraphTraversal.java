@@ -41,7 +41,7 @@ public abstract class AbstractGraphTraversal {
 	}
 
 	public int getParent(int v) {
-		return parentMap.get(v);
+		return parentMap.containsKey(v) ? parentMap.get(v) : -1;
 	}
 
 	public void setParent(int v, int parent) {

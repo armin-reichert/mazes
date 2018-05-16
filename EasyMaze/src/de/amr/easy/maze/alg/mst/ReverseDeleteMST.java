@@ -3,20 +3,19 @@ package de.amr.easy.maze.alg.mst;
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.util.StreamUtils.permute;
 
-import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.maze.alg.MazeAlgorithm;
 
 /**
- * A (naive?) implementation of the Reverse-Delete-MST algorithm.
+ * Maze generator derived from the Reverse-Delete-MST algorithm.
  * 
  * @author Armin Reichert
  *
  * @see <a href="https://en.wikipedia.org/wiki/Reverse-delete_algorithm">Wikipedia</a>
  */
-public class ReverseDeleteMST extends MazeAlgorithm {
+public abstract class ReverseDeleteMST extends MazeAlgorithm {
 
 	public ReverseDeleteMST(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
@@ -39,10 +38,13 @@ public class ReverseDeleteMST extends MazeAlgorithm {
 		}
 	}
 
-	private boolean disconnected(int u, int v) {
-		BreadthFirstTraversal bfs = new BreadthFirstTraversal(grid, u);
-		bfs.setStopAt(v);
-		bfs.traverseGraph();
-		return bfs.getDistance(v) == -1;
-	}
+	/**
+	 * 
+	 * @param u
+	 *          a cell
+	 * @param v
+	 *          a cell
+	 * @return {@code true} if given cells are not connected by some path
+	 */
+	protected abstract boolean disconnected(int u, int v);
 }
