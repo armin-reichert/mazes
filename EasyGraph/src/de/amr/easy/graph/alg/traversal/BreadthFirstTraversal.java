@@ -34,16 +34,16 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal implements Pat
 	private final int source;
 	private final Queue<Integer> q;
 	private final int[] distances;
-	private int maxDistance = -1;
-	private int farest = -1;
-	private int stopAt = -1;
+	private int maxDistance;
+	private int farest;
+	private int stopAt;
 
 	public BreadthFirstTraversal(Graph<?> graph, int source) {
 		this.graph = graph;
 		this.source = source;
 		q = new ArrayDeque<>();
 		distances = new int[graph.vertexCount()];
-		Arrays.fill(distances, -1);
+		clear();
 	}
 
 	public void setStopAt(int vertex) {
@@ -57,6 +57,7 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal implements Pat
 		Arrays.fill(distances, -1);
 		maxDistance = -1;
 		farest = -1;
+		stopAt = -1;
 	}
 
 	@Override
