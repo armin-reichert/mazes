@@ -72,7 +72,9 @@ Minimum Spanning Tree:
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_PrimMST.gif">
 
-- [Reverse-Delete, naive](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteMST.java)
+- [Reverse-Delete, DFS version](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteDFSMST.java)
+
+- [Reverse-Delete, BFS version](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteBFSMST.java)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_ReverseDeleteMST.gif">
 
