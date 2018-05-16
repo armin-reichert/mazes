@@ -1,6 +1,7 @@
 package de.amr.easy.util;
 
 import de.amr.easy.data.Partition;
+import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
 
@@ -33,4 +34,19 @@ public class GraphUtils {
 		return false;
 	}
 
+	/**
+	 * Checks if the given cells are connected by some path.
+	 * 
+	 * @param u
+	 *          a cell
+	 * @param v
+	 *          a cell
+	 * @return {@code true} if there exists a path connecting the given cells
+	 */
+	public static <E extends Edge> boolean areConnected(Graph<E> g, int u, int v) {
+		BreadthFirstTraversal bfs = new BreadthFirstTraversal(g, u);
+		bfs.setStopAt(v);
+		bfs.traverseGraph();
+		return bfs.getDistance(v) != -1;
+	}
 }

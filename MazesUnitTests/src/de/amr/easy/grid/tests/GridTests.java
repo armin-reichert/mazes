@@ -16,6 +16,7 @@ import org.junit.Test;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.BareGrid;
 import de.amr.easy.grid.impl.Grid;
 import de.amr.easy.grid.impl.Top4;
@@ -220,5 +221,23 @@ public class GridTests {
 
 		// now there must be a cycle
 		assertTrue(GraphUtils.containsCycle(grid));
+	}
+	
+	@Test
+	public void testConnected() {
+		int u = grid.cell(GridPosition.TOP_LEFT);
+		int v = grid.cell(GridPosition.BOTTOM_RIGHT);
+		assertFalse(GraphUtils.areConnected(grid, u, v));
+		grid.fill();
+		assertTrue(GraphUtils.areConnected(grid, u, v));
+		grid.removeEdges();
+
+		assertFalse(GraphUtils.areConnected(grid, 0, 1));
+		grid.addEdge(0, 1);
+		assertTrue(GraphUtils.areConnected(grid, 0, 1));
+		grid.removeEdge(0, 1);
+		assertFalse(GraphUtils.areConnected(grid, 0, 1));
+		
+		assertTrue(GraphUtils.areConnected(grid, 0, 0));
 	}
 }
