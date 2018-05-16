@@ -18,7 +18,6 @@ public class ReverseDeleteApp extends SwingGridSampleApp {
 	public ReverseDeleteApp() {
 		super(128, Top4.get());
 		setAppName("Reverse-Delete-MST Maze");
-		fullscreen = false;
 	}
 
 	@Override
