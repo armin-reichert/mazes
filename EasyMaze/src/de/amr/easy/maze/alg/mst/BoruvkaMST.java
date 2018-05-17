@@ -40,10 +40,8 @@ public class BoruvkaMST extends MazeAlgorithm {
 
 	private void addEdge(Edge edge) {
 		int u = edge.either(), v = edge.other(u);
-		if (forest.find(u) != forest.find(v)) {
-			addEdge(u, v);
-			forest.union(u, v);
-		}
+		addEdge(u, v);
+		forest.union(u, v);
 	}
 
 	private Optional<Edge> findCombiningEdge(Partition<Integer>.Set tree) {
