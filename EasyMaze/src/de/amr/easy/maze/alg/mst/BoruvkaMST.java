@@ -34,11 +34,11 @@ public class BoruvkaMST extends MazeAlgorithm {
 		grid.vertexStream().forEach(forest::makeSet);
 		while (forest.size() > 1) {
 			permute(forest.sets()).map(this::findCombiningEdge).filter(Optional::isPresent).map(Optional::get)
-					.forEach(this::addEdgeToMaze);
+					.forEach(this::addEdge);
 		}
 	}
 
-	private void addEdgeToMaze(Edge edge) {
+	private void addEdge(Edge edge) {
 		int u = edge.either(), v = edge.other(u);
 		if (forest.find(u) != forest.find(v)) {
 			addEdge(u, v);
@@ -50,8 +50,8 @@ public class BoruvkaMST extends MazeAlgorithm {
 		return permute(tree.elements()).flatMap(this::combiningEdges).findFirst();
 	}
 
-	private Stream<Edge> combiningEdges(Integer node) {
-		return permute(grid.neighbors(node)).filter(neighbor -> forest.find(node) != forest.find(neighbor))
-				.mapToObj(neighbor -> new SimpleEdge(node, neighbor));
+	private Stream<Edge> combiningEdges(int cell) {
+		return permute(grid.neighbors(cell)).filter(neighbor -> forest.find(cell) != forest.find(neighbor))
+				.mapToObj(neighbor -> new SimpleEdge(cell, neighbor));
 	}
 }
