@@ -52,5 +52,10 @@ public class SimpleEdge implements Edge {
 		result = prime * result + v;
 		return result;
 	}
+	
+	@Override
+	public String toString() {
+		return "(" + u + "," + v + ")";
+	}
 
 }
