@@ -44,43 +44,39 @@ public class Eller extends MazeAlgorithm {
 	}
 
 	private void connectCellsInsideRow(int row, boolean all) {
-		range(0, grid.numCols() - 1).forEach(col -> {
-			if (all || rnd.nextBoolean()) {
-				int left = grid.cell(col, row), right = grid.cell(col + 1, row);
-				if (partition.find(left) != partition.find(right)) {
-					connectCells(left, right);
-				}
+		range(0, grid.numCols() - 1).filter(cell -> all || rnd.nextBoolean()).forEach(col -> {
+			int left = grid.cell(col, row), right = grid.cell(col + 1, row);
+			if (partition.find(left) != partition.find(right)) {
+				connectCells(left, right);
 			}
 		});
 	}
 
 	private void connectCellsWithNextRow(int row) {
-		Set<Partition<Integer>.Set> connected = new HashSet<>();
-		range(0, grid.numCols()).forEach(col -> {
-			if (rnd.nextBoolean()) {
-				int above = grid.cell(col, row), below = grid.cell(col, row + 1);
-				connectCells(above, below);
-				connected.add(partition.find(above));
-			}
+		Set<Partition<Integer>.Set> connectedSets = new HashSet<>();
+		range(0, grid.numCols()).filter(cell -> rnd.nextBoolean()).forEach(col -> {
+			int above = grid.cell(col, row), below = grid.cell(col, row + 1);
+			connectCells(above, below);
+			connectedSets.add(partition.find(above));
 		});
 		// collect cells of still unconnected components
-		List<Integer> unconnected = new ArrayList<>();
+		List<Integer> unconnectedSets = new ArrayList<>();
 		range(0, grid.numCols()).forEach(col -> {
 			int cell = grid.cell(col, row);
-			Partition<Integer>.Set component = partition.find(cell);
-			if (!connected.contains(component)) {
-				unconnected.add(cell);
+			Partition<Integer>.Set set = partition.find(cell);
+			if (!connectedSets.contains(set)) {
+				unconnectedSets.add(cell);
 			}
 		});
 		// shuffle cells to avoid biased maze
-		Collections.shuffle(unconnected);
+		Collections.shuffle(unconnectedSets);
 		// connect cells and mark component as connected
-		unconnected.forEach(above -> {
-			Partition<Integer>.Set component = partition.find(above);
-			if (!connected.contains(component)) {
+		unconnectedSets.forEach(above -> {
+			Partition<Integer>.Set set = partition.find(above);
+			if (!connectedSets.contains(set)) {
 				int below = grid.cell(grid.col(above), row + 1);
 				connectCells(above, below);
-				connected.add(component);
+				connectedSets.add(set);
 			}
 		});
 	}
