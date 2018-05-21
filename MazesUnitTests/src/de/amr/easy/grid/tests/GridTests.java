@@ -10,6 +10,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Random;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,10 +37,16 @@ public class GridTests {
 	private static final int HEIGHT = 100;
 
 	private Grid2D<TraversalState, Integer> grid;
+	private Random rnd = new Random();
+
+	private TraversalState randomTraversalState() {
+		TraversalState values[] = TraversalState.values();
+		return values[rnd.nextInt(values.length)];
+	}
 
 	@Before
 	public void setUp() {
-		grid = new Grid<>(WIDTH, HEIGHT, Top4.get(), UNVISITED);
+		grid = new Grid<>(WIDTH, HEIGHT, Top4.get(), UNVISITED, false);
 	}
 
 	@After
@@ -58,6 +66,25 @@ public class GridTests {
 	@Test
 	public void testInitialContent() {
 		assertEquals(grid.vertexStream().filter(cell -> grid.get(cell) == UNVISITED).count(), grid.numCells());
+	}
+
+	@Test
+	public void testGridCopyConstructor() {
+		Grid<TraversalState, Integer> copy = new Grid<>(grid);
+		assertEquals(grid.edgeCount(), copy.edgeCount());
+		assertEquals(grid.vertexCount(), copy.vertexCount());
+		assertEquals(grid.numCols(), copy.numCols());
+		assertEquals(grid.numRows(), copy.numRows());
+		assertEquals(grid.getTopology(), copy.getTopology());
+		assertEquals(grid.getDefaultContent(), copy.getDefaultContent());
+		grid.vertexStream().forEach(v -> assertEquals(grid.get(v), copy.get(v)));
+	}
+
+	@Test
+	public void testGridCopyRandomContent() {
+		grid.vertexStream().forEach(v -> grid.set(v, randomTraversalState()));
+		Grid<TraversalState, Integer> copy = new Grid<>(grid);
+		grid.vertexStream().forEach(v -> assertEquals(grid.get(v), copy.get(v)));
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
@@ -222,7 +249,7 @@ public class GridTests {
 		// now there must be a cycle
 		assertTrue(GraphUtils.containsCycle(grid));
 	}
-	
+
 	@Test
 	public void testConnected() {
 		int u = grid.cell(GridPosition.TOP_LEFT);
@@ -237,7 +264,7 @@ public class GridTests {
 		assertTrue(GraphUtils.areConnected(grid, 0, 1));
 		grid.removeEdge(0, 1);
 		assertFalse(GraphUtils.areConnected(grid, 0, 1));
-		
+
 		assertTrue(GraphUtils.areConnected(grid, 0, 0));
 	}
 }

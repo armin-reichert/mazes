@@ -66,7 +66,7 @@ public class SettingsWindow extends JFrame {
 			int cellSize = app.model.getGridCellSizes()[selector.getSelectedIndex()];
 			app.model.setGridCellSize(cellSize);
 			Dimension dim = UserInterfaceUtils.maxGridDimensionForDisplay(cellSize);
-			app.model.setGrid(new ObservableGrid<>(dim.width, dim.height, Top4.get(), UNVISITED));
+			app.model.setGrid(new ObservableGrid<>(dim.width, dim.height, Top4.get(), UNVISITED, false));
 			app.updateCanvas();
 		});
 

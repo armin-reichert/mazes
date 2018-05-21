@@ -44,4 +44,9 @@ public interface VertexContent<C> {
 	 * @return the default content of the cells
 	 */
 	public C getDefaultContent();
+
+	/**
+	 * @return {@code true} if this is a sparse content store
+	 */
+	boolean isSparse();
 }

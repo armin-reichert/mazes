@@ -70,7 +70,7 @@ public class MazeGeneratorTests {
 	@BeforeClass
 	public static void beforeAllTests() {
 		// warm-up
-		new RandomBFS(new Grid<>(WIDTH, HEIGHT, Top4.get(), UNVISITED)).run(0);
+		new RandomBFS(new Grid<>(WIDTH, HEIGHT, Top4.get(), UNVISITED, false)).run(0);
 	}
 
 	@AfterClass
@@ -81,7 +81,7 @@ public class MazeGeneratorTests {
 
 	@Before
 	public void setUp() {
-		grid = new Grid<>(WIDTH, HEIGHT, Top4.get(), UNVISITED);
+		grid = new Grid<>(WIDTH, HEIGHT, Top4.get(), UNVISITED, false);
 		watch = new StopWatch();
 	}
 
@@ -164,7 +164,7 @@ public class MazeGeneratorTests {
 
 	@Test
 	public void testRecursiveDFS() {
-		grid = new Grid<>(32, 32, Top4.get(), UNVISITED);
+		grid = new Grid<>(32, 32, Top4.get(), UNVISITED, false);
 		runTest(new RecursiveDFS(grid));
 	}
 
@@ -175,13 +175,13 @@ public class MazeGeneratorTests {
 
 	@Test
 	public void testReverseDeleteDFSMST() {
-		grid = new Grid<>(32, 32, Top4.get(), UNVISITED);
+		grid = new Grid<>(32, 32, Top4.get(), UNVISITED, false);
 		runTest(new ReverseDeleteDFSMST(grid));
 	}
 
 	@Test
 	public void testReverseDeleteBFSMST() {
-		grid = new Grid<>(32, 32, Top4.get(), UNVISITED);
+		grid = new Grid<>(32, 32, Top4.get(), UNVISITED, false);
 		runTest(new ReverseDeleteBFSMST(grid));
 	}
 

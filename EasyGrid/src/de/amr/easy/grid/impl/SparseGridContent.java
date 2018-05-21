@@ -43,4 +43,9 @@ class SparseGridContent<C> implements VertexContent<C> {
 	public void setDefaultContent(C cellContent) {
 		defaultCellContent = cellContent;
 	}
+
+	@Override
+	public boolean isSparse() {
+		return true;
+	}
 }

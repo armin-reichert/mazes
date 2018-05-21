@@ -58,7 +58,7 @@ public class MazeDemoApp {
 		model.setLongestPathHighlighted(false);
 		model.setDelay(0);
 		Dimension size = UserInterfaceUtils.maxGridDimensionForDisplay(model.getGridCellSize());
-		model.setGrid(new ObservableGrid<>(size.width, size.height, Top4.get(), UNVISITED));
+		model.setGrid(new ObservableGrid<>(size.width, size.height, Top4.get(), UNVISITED, false));
 
 		settingsWindow = new SettingsWindow(this);
 		settingsWindow.setAlwaysOnTop(true);

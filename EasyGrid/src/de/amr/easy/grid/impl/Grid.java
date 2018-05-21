@@ -9,50 +9,80 @@ import de.amr.easy.grid.api.Topology;
  * 
  * @author Armin Reichert
  * 
- * @param <Content>
- *          grid content type
- * @param <Weight>
- *          passage weight type
+ * @param <C>
+ *          vertex content type
+ * @param <W>
+ *          edge weight type
  */
-public class Grid<Content, Weight extends Comparable<Weight>> extends BareGrid<Weight>
-		implements Grid2D<Content, Weight> {
+public class Grid<C, W extends Comparable<W>> extends BareGrid<W> implements Grid2D<C, W> {
 
-	private final VertexContent<Content> gridContent;
+	private final VertexContent<C> content;
 
-	public Grid(int numCols, int numRows, Topology top, Content defaultContent, boolean sparse) {
+	/**
+	 * Creates a grid with the given properties.
+	 * 
+	 * @param numCols
+	 *          the number of columns ("width")
+	 * @param numRows
+	 *          the number of rows ("height")
+	 * @param top
+	 *          the topology of the grid
+	 * @param defaultContent
+	 *          the default content of grid cells
+	 * @param sparse
+	 *          if the grid has sparse content
+	 */
+	public Grid(int numCols, int numRows, Topology top, C defaultContent, boolean sparse) {
 		super(numCols, numRows, top);
-		gridContent = sparse ? new SparseGridContent<>() : new DenseGridContent<>(numCols * numRows);
-		gridContent.setDefaultContent(defaultContent);
+		content = sparse ? new SparseGridContent<>() : new DenseGridContent<>(numCols * numRows);
+		content.setDefaultContent(defaultContent);
 	}
 
-	public Grid(int numCols, int numRows, Topology top, Content defaultContent) {
-		this(numCols, numRows, top, defaultContent, true);
+	/**
+	 * Creates a copy of the given grid.
+	 * 
+	 * @param grid
+	 *          the grid to copy
+	 */
+	public Grid(Grid2D<C, W> grid) {
+		this(grid.numCols(), grid.numRows(), grid.getTopology(), grid.getDefaultContent(), grid.isSparse());
+		vertexStream().forEach(v -> {
+			C content = grid.get(v);
+			if (!content.equals(grid.getDefaultContent())) {
+				set(v, content);
+			}
+		});
 	}
 
-	// --- {@link GridContent} interface ---
+	// --- {@link VertexContent} interface ---
 
 	@Override
 	public void clearContent() {
-		gridContent.clearContent();
+		content.clearContent();
 	}
 
 	@Override
-	public Content getDefaultContent() {
-		return gridContent.getDefaultContent();
+	public C getDefaultContent() {
+		return content.getDefaultContent();
 	}
 
 	@Override
-	public void setDefaultContent(Content cellContent) {
-		gridContent.setDefaultContent(cellContent);
+	public void setDefaultContent(C cellContent) {
+		content.setDefaultContent(cellContent);
 	}
 
 	@Override
-	public Content get(int cell) {
-		return gridContent.get(cell);
+	public C get(int cell) {
+		return content.get(cell);
 	}
 
 	@Override
-	public void set(int cell, Content cellContent) {
-		gridContent.set(cell, cellContent);
+	public void set(int cell, C cellContent) {
+		content.set(cell, cellContent);
+	}
+
+	@Override
+	public boolean isSparse() {
+		return content.isSparse();
 	}
 }

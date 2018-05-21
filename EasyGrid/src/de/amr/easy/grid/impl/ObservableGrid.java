@@ -17,45 +17,76 @@ import de.amr.easy.grid.api.Topology;
 public class ObservableGrid<C, W extends Comparable<W>> extends ObservableBareGrid<W>
 		implements ObservableGrid2D<C, W> {
 
-	private final VertexContent<C> gridContent;
+	private final VertexContent<C> content;
 
+	/**
+	 * Creates an observable grid with the given properties.
+	 * 
+	 * @param numCols
+	 *          the number of columns ("width")
+	 * @param numRows
+	 *          the number of rows ("height")
+	 * @param top
+	 *          the topology
+	 * @param defaultContent
+	 *          the default vertex content
+	 * @param sparse
+	 *          if the vertex content will be sparse
+	 */
 	public ObservableGrid(int numCols, int numRows, Topology top, C defaultContent, boolean sparse) {
 		super(numCols, numRows, top);
-		gridContent = sparse ? new SparseGridContent<>() : new DenseGridContent<>(numCols * numRows);
-		gridContent.setDefaultContent(defaultContent);
+		content = sparse ? new SparseGridContent<>() : new DenseGridContent<>(numCols * numRows);
+		content.setDefaultContent(defaultContent);
 	}
 
-	public ObservableGrid(int numCols, int numRows, Topology top, C defaultContent) {
-		this(numCols, numRows, top, defaultContent, true);
+	/**
+	 * Creates an observable grid as a copy of the given grid. Observers are not copied.
+	 * 
+	 * @param grid
+	 *          an observable grid
+	 */
+	public ObservableGrid(ObservableGrid<C, W> grid) {
+		this(grid.numCols(), grid.numRows(), grid.getTopology(), grid.getDefaultContent(), grid.isSparse());
+		vertexStream().forEach(v -> {
+			C content = grid.get(v);
+			if (!content.equals(grid.getDefaultContent())) {
+				set(v, content);
+			}
+		});
 	}
 
 	// --- {@link VertexContent} interface ---
 
 	@Override
 	public void clearContent() {
-		gridContent.clearContent();
+		content.clearContent();
 	}
 
 	@Override
 	public C getDefaultContent() {
-		return gridContent.getDefaultContent();
+		return content.getDefaultContent();
 	}
 
 	@Override
-	public void setDefaultContent(C content) {
-		gridContent.setDefaultContent(content);
+	public void setDefaultContent(C defaultContent) {
+		content.setDefaultContent(defaultContent);
 		fireGraphChange(this);
 	}
 
 	@Override
 	public C get(int cell) {
-		return gridContent.get(cell);
+		return content.get(cell);
 	}
 
 	@Override
-	public void set(int cell, C content) {
-		C oldContent = gridContent.get(cell);
-		gridContent.set(cell, content);
-		fireVertexChange(cell, oldContent, content);
+	public void set(int cell, C newContent) {
+		C oldContent = content.get(cell);
+		content.set(cell, newContent);
+		fireVertexChange(cell, oldContent, newContent);
+	}
+
+	@Override
+	public boolean isSparse() {
+		return content.isSparse();
 	}
 }

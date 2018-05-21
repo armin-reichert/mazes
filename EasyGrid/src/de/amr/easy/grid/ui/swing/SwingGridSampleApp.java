@@ -80,7 +80,7 @@ public abstract class SwingGridSampleApp extends JFrame implements Runnable {
 	public SwingGridSampleApp(int canvasWidth, int canvasHeight, int cellSize, Topology top) {
 		fullscreen = false;
 		canvasSize = new Dimension(canvasWidth, canvasHeight);
-		grid = new ObservableGrid<>(canvasWidth / cellSize, canvasHeight / cellSize, top, UNVISITED);
+		grid = new ObservableGrid<>(canvasWidth / cellSize, canvasHeight / cellSize, top, UNVISITED, false);
 		renderingModel.setCellSize(cellSize);
 	}
 
@@ -94,7 +94,7 @@ public abstract class SwingGridSampleApp extends JFrame implements Runnable {
 	public SwingGridSampleApp(int cellSize, Topology top) {
 		fullscreen = true;
 		canvasSize = GridUtils.getScreenResolution();
-		grid = new ObservableGrid<>(canvasSize.width / cellSize, canvasSize.height / cellSize, top, UNVISITED);
+		grid = new ObservableGrid<>(canvasSize.width / cellSize, canvasSize.height / cellSize, top, UNVISITED, false);
 		renderingModel.setCellSize(cellSize);
 	}
 
@@ -157,7 +157,7 @@ public abstract class SwingGridSampleApp extends JFrame implements Runnable {
 			return;
 		}
 		grid = new ObservableGrid<>(canvasSize.width / cellSize, canvasSize.height / cellSize, grid.getTopology(),
-				grid.getDefaultContent());
+				grid.getDefaultContent(), false);
 		canvas.setGrid(grid);
 		renderingModel.setCellSize(cellSize);
 		canvas.adaptSize();

@@ -111,7 +111,7 @@ public class MazeDemoFX extends Application {
 	}
 
 	private void nextMaze() {
-		maze = new ObservableGrid<>(cols, rows, Top4.get(), UNVISITED);
+		maze = new ObservableGrid<>(cols, rows, Top4.get(), UNVISITED, false);
 		canvas.resize((cols + 1) * cellSize, (rows + 1) * cellSize);
 		Consumer<Integer> generator = randomMazeGenerator();
 		generator.accept(maze.cell(0, 0));

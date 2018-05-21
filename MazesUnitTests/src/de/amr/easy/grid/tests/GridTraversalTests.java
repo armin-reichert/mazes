@@ -35,7 +35,7 @@ public class GridTraversalTests {
 
 	@Before
 	public void setUp() {
-		grid = new Grid<>(N, N, Top4.get(), UNVISITED);
+		grid = new Grid<>(N, N, Top4.get(), UNVISITED, false);
 		grid.fill();
 	}
 
@@ -99,7 +99,7 @@ public class GridTraversalTests {
 
 	@Test
 	public void testPeanoCurve() {
-		grid = new Grid<>(243, 243, Top4.get(), UNVISITED);
+		grid = new Grid<>(243, 243, Top4.get(), UNVISITED, false);
 		assertAllCells(UNVISITED);
 		traverse(new PeanoCurve(5), grid, grid.cell(BOTTOM_LEFT), this::setCompleted);
 		assertAllCells(COMPLETED);

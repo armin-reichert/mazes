@@ -13,7 +13,7 @@ import de.amr.easy.maze.alg.mst.KruskalMST;
 public class LargeMazesTests {
 
 	private void test_Kruskal(int cols, int rows) {
-		Grid2D<TraversalState, Integer> grid = new Grid<>(cols, rows, Top4.get(), UNVISITED);
+		Grid2D<TraversalState, Integer> grid = new Grid<>(cols, rows, Top4.get(), UNVISITED, false);
 		new KruskalMST(grid).run(0);
 	}
 

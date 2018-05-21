@@ -56,7 +56,7 @@ public class LayeredGridCanvas extends LayeredCanvas implements GraphObserver<We
 		if (grid != null) {
 			grid.removeGraphObserver(this);
 		}
-		grid = new ObservableGrid<>(cols, rows, Top4.get(), TraversalState.UNVISITED);
+		grid = new ObservableGrid<>(cols, rows, Top4.get(), TraversalState.UNVISITED, false);
 		grid.addGraphObserver(this);
 	}
 

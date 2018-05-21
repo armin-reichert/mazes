@@ -45,4 +45,9 @@ class DenseGridContent<C> implements VertexContent<C> {
 	public void setDefaultContent(C content) {
 		defaultCellContent = content;
 	}
+
+	@Override
+	public boolean isSparse() {
+		return false;
+	}
 }

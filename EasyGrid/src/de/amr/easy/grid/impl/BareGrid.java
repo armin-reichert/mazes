@@ -25,35 +25,35 @@ import de.amr.easy.grid.api.Topology;
  */
 public class BareGrid<W extends Comparable<W>> implements BareGrid2D<W> {
 
-	private Topology top;
-	private BitSet bits;
-	private final int colCount;
-	private final int rowCount;
-	private final int cellCount;
+	protected Topology top;
+	protected BitSet bits;
+	protected final int colCount;
+	protected final int rowCount;
+	protected final int cellCount;
 
 	// helper methods
 
-	private void checkCell(int cell) {
+	protected void checkCell(int cell) {
 		if (cell < 0 || cell >= cellCount) {
 			throw new IllegalArgumentException("Invalid cell: " + cell);
 		}
 	}
 
-	private void checkDir(int dir) {
+	protected void checkDir(int dir) {
 		if (dir < 0 || dir > top.dirCount() - 1) {
 			throw new IllegalArgumentException("Invalid direction: " + dir);
 		}
 	}
 
-	private int index(int col, int row) {
+	protected int index(int col, int row) {
 		return col + row * colCount;
 	}
 
-	private int bit(int cell, int dir) {
+	protected int bit(int cell, int dir) {
 		return cell * top.dirCount() + dir;
 	}
 
-	private void connect(int p, int q, int dir, boolean connected) {
+	protected void connect(int p, int q, int dir, boolean connected) {
 		bits.set(bit(p, dir), connected);
 		bits.set(bit(q, top.inv(dir)), connected);
 	}
@@ -80,6 +80,16 @@ public class BareGrid<W extends Comparable<W>> implements BareGrid2D<W> {
 		this.cellCount = colCount * rowCount;
 		this.top = top;
 		this.bits = new BitSet(top.dirCount() * cellCount);
+	}
+
+	/**
+	 * Creates a copy of the given grid.
+	 * 
+	 * @param grid
+	 *          the grid to copy
+	 */
+	public BareGrid(BareGrid<W> grid) {
+		this(grid.colCount, grid.rowCount, grid.top);
 	}
 
 	// Implement {@link Graph} interface

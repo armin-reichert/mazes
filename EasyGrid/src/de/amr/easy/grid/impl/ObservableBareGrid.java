@@ -23,12 +23,18 @@ import de.amr.easy.grid.api.Topology;
  */
 public class ObservableBareGrid<W extends Comparable<W>> extends BareGrid<W> implements ObservableBareGrid2D<W> {
 
-	private final Set<GraphObserver<WeightedEdge<W>>> observers = new HashSet<>();
+	private final Set<GraphObserver<WeightedEdge<W>>> observers;
 	private boolean fireEvents;
 
 	public ObservableBareGrid(int numCols, int numRows, Topology top) {
 		super(numCols, numRows, top);
+		observers = new HashSet<>();
 		fireEvents = true;
+	}
+
+	public ObservableBareGrid(ObservableBareGrid<W> grid) {
+		this(grid.numCols(), grid.numRows(), grid.getTopology());
+		this.fireEvents = grid.fireEvents;
 	}
 
 	@Override

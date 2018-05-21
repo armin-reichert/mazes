@@ -101,7 +101,7 @@ public class MazeGenerationRecordingApp {
 
 	public void run(int numCols, int numRows, int cellSize, int scanRate, int delayMillis) {
 		for (Class<?> generatorClass : generatorClasses) {
-			grid = new ObservableGrid<>(numCols, numRows, Top4.get(), TraversalState.UNVISITED);
+			grid = new ObservableGrid<>(numCols, numRows, Top4.get(), TraversalState.UNVISITED, false);
 			canvas = new AnimatedGridCanvas(grid, createRenderingModel(cellSize));
 			try {
 				MazeAlgorithm generator = (MazeAlgorithm) generatorClass.getConstructor(Grid2D.class).newInstance(grid);
