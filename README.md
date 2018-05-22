@@ -1,17 +1,17 @@
 ## Maze generation algorithms in Java 8
 
-My interest in maze generation algorithms started when reading this [weblog](http://weblog.jamisbuck.org/2011/2/7/maze-generation-algorithm-recap) by Jamis Buck who presents the most commonly known maze algorithms together with Ruby implementations. As an exercise, I wanted to reimplement some of these algorithms in the Java programming language and also rewrite the generator code such that the underlying graph algorithms would become more clearly visible. 
+Maze generation algorithms took my attention when reading [this blog](http://weblog.jamisbuck.org/2011/2/7/maze-generation-algorithm-recap) where Jamis Buck presents the most commonly known algorithms together with Ruby implementations and Javascript animations. 
 
-Doing so, I found new ways of generating mazes, for example a modification of Eller's algorithm which generates the maze from the center of the grid graph towards the borders, or many variations of Wilson's algorithm which result from different ways of selecting the random walks start cells. For example, one can start the random walks in the order defined by space-filling-curves like [Hilbert](EasyGrid/src/de/amr/easy/grid/curves/HilbertCurve.java), [Peano](EasyGrid/src/de/amr/easy/grid/curves/PeanoCurve.java) or [Moore](EasyGrid/src/de/amr/easy/grid/curves/MooreLCurve.java) curves. This gives visually appealing creation processes. If this has any practical use, time will show.
-
-The code here makes the graph algorithm (creation of a spanning tree for a grid graph) more explicit because the generator code only deals with the graph and is free of rendering details or ad-hoc data structure implementations.
+As an exercise for learning the new Java 8 features (lambda expressions, streams etc.), I started to reimplement some of these algorithms. Apart from using Java 8 style, my intent was to make the underlying graph algorithm (creation of a spanning tree of a 2D grid graph) more explicit. If you browse the web for maze algorithm implementations, you will find many of them, but most of them are rather low-level, use ad-hoc data structures or mix the essentials with UI or animation related code. In contrast I wanted to give implementation that purely manipulate the grid graph and clearly reflect the graph algorithms. There are no dependencies to UI frameworks (AWT, Swing, JavaFX).
 
 To achieve this, there is
 - an API for graph and 2D-grid data structures 
 - an implementation of a 2D-grid with cell and edge content
-- a publish-subscribe mechanism for observing graph/grid operations
+- a publish-subscribe mechanism for observing graph/grid operations and traversal algorithms
 
 The maze generation algorithms work strictly against the grid API. For drawing and animation, graph and graph traversal listeners are used.
+
+I also found new ways of generating mazes, for example a modification of Eller's algorithm which generates the maze from the center of the grid graph towards the borders, or many variations of Wilson's algorithm which result from different ways of selecting the random walks start cells. For example, one can start the random walks in the order defined by space-filling-curves like [Hilbert](EasyGrid/src/de/amr/easy/grid/curves/HilbertCurve.java), [Peano](EasyGrid/src/de/amr/easy/grid/curves/PeanoCurve.java) or [Moore](EasyGrid/src/de/amr/easy/grid/curves/MooreLCurve.java) curves. This gives visually appealing creation processes. If this has any practical use, time will show.
 
 For example, the maze generator based on Kruskal's minimum-spanning-tree algorithm looks like this:
 
@@ -40,9 +40,8 @@ public class KruskalMST extends MazeAlgorithm {
 ```
 Here, the edges of a full grid are processed in permuted order (the Kruskal MST algorithm would process the edges in order of increasing weight).
 
-The implementation uses Java 8 specific language features (streams, lambda expressions) for better readability. There are no dependencies to UI frameworks (AWT, Swing, JavaFX).
 
-Also included is a [Swing application](https://github.com/armin-reichert/mazes/releases/download/mai2018/mazedemoapp.jar) demonstrating all implemented maze generators. Using a control panel you can select the generation algorithm, path finder algorithm, grid resolution and rendering style ("walls" vs. "passages") interactively.
+Also included is a [Swing application](https://github.com/armin-reichert/mazes/releases/download/mai2018/mazedemoapp.jar) demonstrating all implemented maze generators. Using a control panel you can select the generation algorithm, path finder algorithm, grid resolution and rendering style ("walls", "passages") interactively.
 
 Implemented algorithms so far:
 
