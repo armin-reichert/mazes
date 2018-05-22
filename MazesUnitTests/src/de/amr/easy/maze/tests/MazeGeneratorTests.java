@@ -48,6 +48,7 @@ import de.amr.easy.maze.alg.ust.WilsonUSTExpandingRectangle;
 import de.amr.easy.maze.alg.ust.WilsonUSTExpandingSpiral;
 import de.amr.easy.maze.alg.ust.WilsonUSTHilbertCurve;
 import de.amr.easy.maze.alg.ust.WilsonUSTLeftToRightSweep;
+import de.amr.easy.maze.alg.ust.WilsonUSTMooreCurve;
 import de.amr.easy.maze.alg.ust.WilsonUSTNestedRectangles;
 import de.amr.easy.maze.alg.ust.WilsonUSTPeanoCurve;
 import de.amr.easy.maze.alg.ust.WilsonUSTRandomCell;
@@ -234,6 +235,11 @@ public class MazeGeneratorTests {
 	@Test
 	public void testWilsonUSTLeftToRightSweep() {
 		runTest(new WilsonUSTLeftToRightSweep(grid));
+	}
+
+	@Test
+	public void testWilsonUSTMooreCurve() {
+		runTest(new WilsonUSTMooreCurve(grid));
 	}
 
 	@Test
