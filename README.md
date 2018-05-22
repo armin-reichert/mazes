@@ -1,6 +1,6 @@
 ## Maze generation algorithms in Java 8
 
-Maze generation algorithms took my attention when reading [this blog](http://weblog.jamisbuck.org/2011/2/7/maze-generation-algorithm-recap) where Jamis Buck presents the most commonly known algorithms together with Ruby implementations and Javascript animations. 
+Maze generation algorithms got my attention when I found [this blog post](http://weblog.jamisbuck.org/2011/2/7/maze-generation-algorithm-recap) in which Jamis Buck presents the most commonly known algorithms together with Ruby implementations and Javascript animations. 
 
 As an exercise for learning the new Java 8 features (lambda expressions, streams etc.), I started to reimplement some of these algorithms. Apart from using Java 8 style, my intent was to make the underlying graph algorithm (creation of a spanning tree of a 2D grid graph) more explicit. If you browse the web for maze algorithm implementations, you will find many of them, but most of them are rather low-level, use ad-hoc data structures or mix the essentials with UI or animation related code. In contrast I wanted to give implementations that just change the edges of the grid graph and clearly reflect the underlying graph algorithm. Also, there are no dependencies to UI frameworks (AWT, Swing, JavaFX) which makes the code reusable.
 
