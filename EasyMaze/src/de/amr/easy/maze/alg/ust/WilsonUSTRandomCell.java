@@ -1,15 +1,12 @@
 package de.amr.easy.maze.alg.ust;
 
-import static java.util.stream.Collectors.toCollection;
-
-import java.util.ArrayList;
-import java.util.List;
+import static de.amr.easy.util.StreamUtils.permute;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 
 /**
- * Wilson's algorithm with randomly selected start cells of the random walks.
+ * Wilson's algorithm with random start cells of the loop-erased random walks.
  * 
  * @author Armin Reichert
  */
@@ -22,11 +19,6 @@ public class WilsonUSTRandomCell extends WilsonUST {
 	@Override
 	public void run(int start) {
 		addToTree(start);
-		List<Integer> walkStarts = grid.vertexStream().filter(v -> v != start).boxed()
-				.collect(toCollection(ArrayList::new));
-		while (!walkStarts.isEmpty()) {
-			int walkStart = walkStarts.remove(rnd.nextInt(walkStarts.size()));
-			loopErasedRandomWalk(walkStart);
-		}
+		permute(grid.vertexStream()).forEach(this::loopErasedRandomWalk);
 	}
 }

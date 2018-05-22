@@ -86,7 +86,7 @@ public abstract class WilsonUST extends MazeAlgorithm {
 	 *          a grid cell
 	 * @return <code>true</code> if the cell belongs to the tree
 	 */
-	private boolean inTree(int cell) {
+	protected boolean inTree(int cell) {
 		return grid.get(cell) == COMPLETED;
 	}
 
