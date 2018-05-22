@@ -5,10 +5,7 @@ import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
 import java.util.ArrayDeque;
-import java.util.Collections;
 import java.util.Deque;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.OptionalInt;
 
 import de.amr.easy.graph.api.Graph;
@@ -121,19 +118,5 @@ public class DepthFirstTraversal extends AbstractGraphTraversal implements PathF
 
 	private OptionalInt findUnvisitedNeighbour(int v) {
 		return graph.adjVertices(v).filter(neighbor -> getState(neighbor) == UNVISITED).findAny();
-	}
-
-	// PathFinder implementation
-
-	@Override
-	public Iterable<Integer> findPath(int target) {
-		if (getState(target) == UNVISITED) {
-			return Collections.emptyList();
-		}
-		List<Integer> path = new LinkedList<>();
-		for (int vertex = target; vertex != -1; vertex = getParent(vertex)) {
-			path.add(0, vertex);
-		}
-		return path;
 	}
 }

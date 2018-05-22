@@ -1,5 +1,7 @@
 package de.amr.easy.graph.api;
 
+import java.util.stream.IntStream;
+
 /**
  * Single-source path finder.
  * 
@@ -7,12 +9,5 @@ package de.amr.easy.graph.api;
  */
 public interface PathFinder {
 
-	/**
-	 * Returns the path to the given target.
-	 * 
-	 * @param target
-	 *          target vertex
-	 * @return path from source to target vertex
-	 */
-	public Iterable<Integer> findPath(int target);
+	IntStream findPath(int target);
 }

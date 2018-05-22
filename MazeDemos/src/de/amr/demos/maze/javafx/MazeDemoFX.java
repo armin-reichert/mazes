@@ -6,7 +6,6 @@ import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.function.Consumer;
 
 import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.api.TraversalState;
@@ -18,6 +17,7 @@ import de.amr.easy.maze.alg.Eller;
 import de.amr.easy.maze.alg.EllerInsideOut;
 import de.amr.easy.maze.alg.GrowingTree;
 import de.amr.easy.maze.alg.HuntAndKillRandom;
+import de.amr.easy.maze.alg.MazeAlgorithm;
 import de.amr.easy.maze.alg.RecursiveDivision;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 import de.amr.easy.maze.alg.mst.PrimMST;
@@ -113,19 +113,18 @@ public class MazeDemoFX extends Application {
 	private void nextMaze() {
 		maze = new ObservableGrid<>(cols, rows, Top4.get(), UNVISITED, false);
 		canvas.resize((cols + 1) * cellSize, (rows + 1) * cellSize);
-		Consumer<Integer> generator = randomMazeGenerator();
-		generator.accept(maze.cell(0, 0));
+		MazeAlgorithm generator = randomMazeGenerator();
+		generator.run(maze.cell(0, 0));
 		drawGrid();
 		BreadthFirstTraversal bfs = new BreadthFirstTraversal(maze, maze.cell(0, 0));
 		bfs.traverseGraph();
-		drawPath(bfs.findPath(maze.cell(BOTTOM_RIGHT)));
+		drawPath(bfs.findPath(maze.cell(BOTTOM_RIGHT))::iterator);
 	}
 
-	@SuppressWarnings("unchecked")
-	private Consumer<Integer> randomMazeGenerator() {
+	private MazeAlgorithm randomMazeGenerator() {
 		Class<?> generatorClass = GENERATOR_CLASSES[RAND.nextInt(GENERATOR_CLASSES.length)];
 		try {
-			return (Consumer<Integer>) generatorClass.getConstructor(Grid2D.class).newInstance(maze);
+			return (MazeAlgorithm) generatorClass.getConstructor(Grid2D.class).newInstance(maze);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Could not create maze generator instance");

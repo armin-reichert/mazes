@@ -102,7 +102,7 @@ public class LayeredGridCanvas extends LayeredCanvas implements GraphObserver<We
 	public void runPathFinder(int pathStartCell, int pathTargetCell) {
 		bfs = new BreadthFirstTraversal(grid, pathStartCell);
 		bfs.traverseGraph();
-		path = bfs.findPath(pathTargetCell);
+		path = bfs.findPath(pathTargetCell)::iterator;
 	}
 
 	public Iterable<Integer> getPath() {

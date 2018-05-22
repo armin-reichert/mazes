@@ -8,14 +8,20 @@ import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.grid.api.GridPosition.TOP_RIGHT;
 import static de.amr.easy.grid.curves.CurveUtils.traverse;
+import static java.lang.Math.abs;
 import static org.junit.Assert.assertTrue;
+
+import java.util.Comparator;
+import java.util.stream.IntStream;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.amr.easy.graph.alg.traversal.BestFirstTraversal;
 import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.alg.traversal.DepthFirstTraversal;
+import de.amr.easy.graph.alg.traversal.HillClimbing;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.curves.HilbertCurve;
@@ -25,6 +31,7 @@ import de.amr.easy.grid.curves.MooreLCurve;
 import de.amr.easy.grid.curves.PeanoCurve;
 import de.amr.easy.grid.impl.Grid;
 import de.amr.easy.grid.impl.Top4;
+import de.amr.easy.maze.alg.traversal.IterativeDFS;
 
 public class GridTraversalTests {
 
@@ -67,6 +74,45 @@ public class GridTraversalTests {
 		grid.vertexStream().forEach(cell -> assertTrue(dfs.getState(cell) == UNVISITED));
 		dfs.traverseGraph();
 		dfs.findPath(target).forEach(cell -> assertTrue(dfs.getState(cell) == COMPLETED));
+	}
+
+	@Test
+	public void testHillClimbing() {
+		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
+		HillClimbing dfs = new HillClimbing(grid, source, target);
+		grid.vertexStream().forEach(cell -> assertTrue(dfs.getState(cell) == UNVISITED));
+		dfs.traverseGraph();
+		IntStream path = dfs.findPath(target);
+		path.forEach(cell -> assertTrue(dfs.getState(cell) == COMPLETED));
+	}
+
+	@Test
+	public void testBestFS() {
+		int target = grid.cell(BOTTOM_RIGHT);
+		Comparator<Integer> manhattan = (u, v) -> {
+			int ux = grid.col(u), uy = grid.row(u), vx = grid.col(v), vy = grid.row(v);
+			int tx = grid.col(target), ty = grid.row(target);
+			return Integer.compare(abs(ux - tx) + abs(uy - ty), abs(vx - tx) + abs(vy - ty));
+		};
+
+		grid.removeEdges();
+		new IterativeDFS(grid).run(target);
+
+		{
+			BestFirstTraversal bfs = new BestFirstTraversal(grid, grid.cell(TOP_LEFT), manhattan);
+			grid.vertexStream().forEach(cell -> assertTrue(bfs.getState(cell) == UNVISITED));
+			bfs.traverseGraph();
+			grid.vertexStream().forEach(cell -> assertTrue(bfs.getState(cell) == COMPLETED));
+			long length = bfs.findPath(target).count();
+			System.out.println("Best-first search found path of length " + length);
+		}
+
+		{
+			BreadthFirstTraversal best = new BreadthFirstTraversal(grid, grid.cell(TOP_LEFT));
+			best.traverseGraph();
+			long length = best.findPath(target).count();
+			System.out.println("Breadth-first search found path of length " + length);
+		}
 	}
 
 	@Test

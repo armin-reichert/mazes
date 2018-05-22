@@ -4,9 +4,13 @@ import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.IntStream;
 
+import de.amr.easy.graph.api.PathFinder;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalListener;
 
@@ -16,7 +20,7 @@ import de.amr.easy.graph.api.event.GraphTraversalListener;
  * 
  * @author Armin Reichert
  */
-public abstract class AbstractGraphTraversal {
+public abstract class AbstractGraphTraversal implements PathFinder {
 
 	protected final Map<Integer, Integer> parentMap = new HashMap<>();
 	protected final Map<Integer, TraversalState> stateMap = new HashMap<>();
@@ -55,4 +59,19 @@ public abstract class AbstractGraphTraversal {
 	public void removeObserver(GraphTraversalListener observer) {
 		observers.remove(observer);
 	}
+
+	// {PathFinder} interface
+
+	@Override
+	public IntStream findPath(int target) {
+		if (getParent(target) == -1) {
+			return IntStream.empty();
+		}
+		List<Integer> path = new LinkedList<>();
+		for (int vertex = target; vertex != -1; vertex = getParent(vertex)) {
+			path.add(0, vertex);
+		}
+		return path.stream().mapToInt(Integer::intValue);
+	}
+
 }
