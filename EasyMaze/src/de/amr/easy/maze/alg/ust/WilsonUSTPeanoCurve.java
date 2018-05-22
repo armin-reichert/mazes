@@ -9,6 +9,7 @@ import static java.util.Arrays.stream;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.grid.api.Curve;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.curves.PeanoCurve;
 import de.amr.easy.grid.impl.BareGrid;
@@ -22,16 +23,14 @@ import de.amr.easy.grid.impl.Top4;
 public class WilsonUSTPeanoCurve extends WilsonUST {
 
 	private final int[] walkStartCells;
-	private final BareGrid<?> square;
-	private final PeanoCurve peano;
 	private int i;
 
 	public WilsonUSTPeanoCurve(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
 		walkStartCells = new int[grid.numCells()];
 		int n = nextPow(3, max(grid.numCols(), grid.numRows()));
-		square = new BareGrid<>(n, n, Top4.get());
-		peano = new PeanoCurve(log(3, n));
+		BareGrid<?> square = new BareGrid<>(n, n, Top4.get());
+		Curve peano = new PeanoCurve(log(3, n));
 		int current = square.cell(BOTTOM_LEFT);
 		addWalkStartCell(square.col(current), square.row(current));
 		for (int dir : peano) {
