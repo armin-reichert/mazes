@@ -2,7 +2,7 @@ package de.amr.easy.grid.ui.swing;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.util.LinkedHashSet;
+import java.util.BitSet;
 import java.util.OptionalInt;
 
 import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
@@ -21,7 +21,8 @@ public class SwingBFSAnimation implements GraphTraversalListener {
 	private final AnimatedGridCanvas canvas;
 	private final ConfigurableGridRenderer renderer;
 	private final ObservableBareGrid2D<?> grid;
-	private final LinkedHashSet<Integer> path;
+	private int[] path;
+	private BitSet inPath;
 	private BreadthFirstTraversal bfs;
 	private int maxDistance;
 	private int maxDistanceCell;
@@ -31,10 +32,10 @@ public class SwingBFSAnimation implements GraphTraversalListener {
 	public SwingBFSAnimation(AnimatedGridCanvas canvas, ObservableBareGrid2D<?> grid) {
 		this.canvas = canvas;
 		this.grid = grid;
+		this.inPath = new BitSet();
 		GridRenderer oldRenderer = canvas.getRenderer();
 		renderer = new ConfigurableGridRenderer();
 		configureRenderer(oldRenderer);
-		path = new LinkedHashSet<>();
 		maxDistance = -1;
 		maxDistanceCell = -1;
 		distancesVisible = true;
@@ -58,10 +59,15 @@ public class SwingBFSAnimation implements GraphTraversalListener {
 	}
 
 	public void showPath(int targetCell) {
-		path.clear();
-		bfs.findPath(targetCell).forEach(path::add);
+		path = bfs.findPath(targetCell).toArray();
+		inPath = new BitSet();
+		for (int cell : path) {
+			inPath.set(cell);
+		}
 		canvas.pushRenderer(renderer);
-		path.forEach(canvas::drawGridCell);
+		for (int cell : path) {
+			canvas.drawGridCell(cell);
+		}
 		canvas.popRenderer();
 	}
 
@@ -102,12 +108,12 @@ public class SwingBFSAnimation implements GraphTraversalListener {
 			}
 			return "";
 		};
-		renderer.fnCellBgColor = cell -> path.contains(cell) ? pathColor : cellColorByDistance(cell, oldRenderer);
+		renderer.fnCellBgColor = cell -> inPath.get(cell) ? pathColor : cellColorByDistance(cell, oldRenderer);
 		renderer.fnPassageColor = (cell, dir) -> {
-			if (path.contains(cell)) {
+			if (inPath.get(cell)) {
 				OptionalInt neighbor = grid.neighbor(cell, dir);
 				if (neighbor.isPresent()) {
-					if (path.contains(neighbor.getAsInt())) {
+					if (inPath.get(neighbor.getAsInt())) {
 						return pathColor;
 					}
 				}
