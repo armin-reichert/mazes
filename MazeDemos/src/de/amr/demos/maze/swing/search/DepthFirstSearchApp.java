@@ -24,6 +24,11 @@ import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.ConfigurableGridRenderer;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 
+/**
+ * A simple test application.
+ * 
+ * @author Armin Reichert
+ */
 public class DepthFirstSearchApp {
 
 	public static void main(String[] args) {
@@ -37,44 +42,46 @@ public class DepthFirstSearchApp {
 	private int target;
 	private BitSet solution = new BitSet();
 
+	private DrawingArea canvas;
 	private ConfigurableGridRenderer renderer;
-	private JComponent canvas;
+
+	private class DrawingArea extends JComponent {
+
+		@Override
+		protected void paintComponent(Graphics g_) {
+			super.paintComponent(g_);
+			Graphics2D g = (Graphics2D) g_;
+			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			g.setColor(renderer.getGridBgColor());
+			g.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+			renderer.drawGrid(g, grid);
+			// draw solution
+			if (!solution.isEmpty()) {
+				int[] path = dfs.findPath(target).toArray();
+				int prev = -1;
+				for (int i = 0; i < path.length; ++i) {
+					int cell = path[i];
+					int row = grid.row(cell), col = grid.col(cell);
+					int cs = renderer.getCellSize();
+					int diam = renderer.getPassageWidth() / 4;
+					int x = cs * col + cs / 2, y = cs * row + cs / 2;
+					g.setColor(Color.BLUE);
+					g.fillOval(x - diam / 2, y - diam / 2, diam, diam);
+					if (prev != -1) {
+						int px = cs * grid.col(prev) + cs / 2, py = cs * grid.row(prev) + cs / 2;
+						g.drawLine(px, py, x, y);
+					}
+					prev = cell;
+				}
+			}
+		}
+	};
 
 	public DepthFirstSearchApp() {
 		newMaze(8);
 
 		// Canvas
-		canvas = new JComponent() {
-
-			@Override
-			protected void paintComponent(Graphics g_) {
-				super.paintComponent(g_);
-				Graphics2D g = (Graphics2D) g_;
-				g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-				g.setColor(renderer.getGridBgColor());
-				g.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-				renderer.drawGrid(g, grid);
-				// draw solution
-				if (!solution.isEmpty()) {
-					int[] path = dfs.findPath(target).toArray();
-					int prev = -1;
-					for (int i = 0; i < path.length; ++i) {
-						int cell = path[i];
-						int row = grid.row(cell), col = grid.col(cell);
-						int cs = renderer.getCellSize();
-						int diam = renderer.getPassageWidth() / 4;
-						int x = cs * col + cs / 2, y = cs * row + cs / 2;
-						g.setColor(Color.BLUE);
-						g.fillOval(x - diam / 2, y - diam / 2, diam, diam);
-						if (prev != -1) {
-							int px = cs * grid.col(prev) + cs / 2, py = cs * grid.row(prev) + cs / 2;
-							g.drawLine(px, py, x, y);
-						}
-						prev = cell;
-					}
-				}
-			}
-		};
+		canvas = new DrawingArea();
 		canvas.setPreferredSize(new Dimension(1024, 1024));
 
 		// Renderer
