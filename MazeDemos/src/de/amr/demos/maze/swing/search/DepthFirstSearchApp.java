@@ -8,7 +8,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
-import java.util.BitSet;
 
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
@@ -40,7 +39,7 @@ public class DepthFirstSearchApp {
 	private DepthFirstTraversal dfs;
 	private int source;
 	private int target;
-	private BitSet solution = new BitSet();
+	private int[] solution;
 
 	private DrawingArea canvas;
 	private ConfigurableGridRenderer renderer;
@@ -49,30 +48,30 @@ public class DepthFirstSearchApp {
 
 		@Override
 		protected void paintComponent(Graphics g_) {
-			super.paintComponent(g_);
 			Graphics2D g = (Graphics2D) g_;
+			super.paintComponent(g);
 			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			g.setColor(renderer.getGridBgColor());
 			g.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 			renderer.drawGrid(g, grid);
-			// draw solution
-			if (!solution.isEmpty()) {
-				int[] path = dfs.findPath(target).toArray();
-				int prev = -1;
-				for (int i = 0; i < path.length; ++i) {
-					int cell = path[i];
-					int row = grid.row(cell), col = grid.col(cell);
-					int cs = renderer.getCellSize();
-					int diam = renderer.getPassageWidth() / 4;
-					int x = cs * col + cs / 2, y = cs * row + cs / 2;
-					g.setColor(Color.BLUE);
-					g.fillOval(x - diam / 2, y - diam / 2, diam, diam);
-					if (prev != -1) {
-						int px = cs * grid.col(prev) + cs / 2, py = cs * grid.row(prev) + cs / 2;
-						g.drawLine(px, py, x, y);
-					}
-					prev = cell;
+			if (solution != null) {
+				drawSolution(g);
+			}
+		}
+
+		private void drawSolution(Graphics2D g) {
+			int prev = -1;
+			int cs = renderer.getCellSize();
+			int diam = renderer.getPassageWidth() / 4;
+			for (int cell : solution) {
+				int x = cs * grid.col(cell) + cs / 2, y = cs * grid.row(cell) + cs / 2;
+				g.setColor(Color.BLUE);
+				g.fillOval(x - diam / 2, y - diam / 2, diam, diam);
+				if (prev != -1) {
+					int px = cs * grid.col(prev) + cs / 2, py = cs * grid.row(prev) + cs / 2;
+					g.drawLine(px, py, x, y);
 				}
+				prev = cell;
 			}
 		}
 	};
@@ -96,9 +95,8 @@ public class DepthFirstSearchApp {
 		renderer.fnTextFont = () -> new Font("Arial Bold", Font.PLAIN, renderer.getPassageWidth() - 3);
 
 		// Keyboard Actions
-		addKeyboardAction('c', this::clearSolution);
-		addKeyboardAction('d', this::dfs);
-		addKeyboardAction('n', this::newMaze);
+		addKeyboardAction('s', this::dfs);
+		addKeyboardAction(' ', this::newMaze);
 		addKeyboardAction('+', this::largerMaze);
 		addKeyboardAction('-', this::smallerMaze);
 
@@ -141,7 +139,7 @@ public class DepthFirstSearchApp {
 		grid = new Grid<>(gridSize, gridSize, Top4.get(), TraversalState.UNVISITED, false);
 		source = grid.cell(GridPosition.TOP_LEFT);
 		target = grid.cell(GridPosition.BOTTOM_RIGHT);
-		solution = new BitSet();
+		solution = null;
 		new KruskalMST(grid).run(0);
 	}
 
@@ -150,13 +148,8 @@ public class DepthFirstSearchApp {
 	}
 
 	private void dfs() {
-		solution = new BitSet();
 		dfs = new DepthFirstTraversal(grid, source, target);
 		dfs.traverseGraph();
-		dfs.findPath(target).forEach(solution::set);
-	}
-
-	private void clearSolution() {
-		solution = new BitSet();
+		solution = dfs.findPath(target).toArray();
 	}
 }
