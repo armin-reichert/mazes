@@ -5,6 +5,7 @@ import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
 import java.util.ArrayDeque;
+import java.util.Comparator;
 import java.util.Deque;
 
 import de.amr.easy.graph.api.Graph;
@@ -25,6 +26,8 @@ public class HillClimbing extends AbstractGraphTraversal implements PathFinder {
 		this.stack = new ArrayDeque<>();
 	}
 
+	public Comparator<Integer> vertexValuation = Integer::compare;
+
 	@Override
 	public void traverseGraph() {
 		stack.push(source);
@@ -35,8 +38,8 @@ public class HillClimbing extends AbstractGraphTraversal implements PathFinder {
 				targetFound = true;
 			} else {
 				int current = stack.pop();
-				graph.adjVertices(current).filter(child -> getState(child) == UNVISITED)
-						.forEach(child -> visit(current, child));
+				graph.adjVertices(current).filter(child -> getState(child) == UNVISITED).boxed()
+						.sorted(vertexValuation.reversed()).forEach(child -> visit(current, child));
 				setState(current, COMPLETED);
 			}
 		}
