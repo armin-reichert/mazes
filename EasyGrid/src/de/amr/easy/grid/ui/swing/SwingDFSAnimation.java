@@ -4,7 +4,6 @@ import static de.amr.easy.graph.api.TraversalState.VISITED;
 
 import java.awt.Color;
 import java.util.LinkedHashSet;
-import java.util.function.Function;
 
 import de.amr.easy.graph.alg.traversal.DepthFirstTraversal;
 import de.amr.easy.graph.api.TraversalState;
@@ -20,28 +19,28 @@ public class SwingDFSAnimation implements GraphTraversalListener {
 
 	private final AnimatedGridCanvas canvas;
 	private final ObservableBareGrid2D<?> grid;
-	private final DFSRenderingModel renderingModel;
+	private final ConfigurableGridRenderer renderer;
 	private final DepthFirstTraversal dfs;
 	private final LinkedHashSet<Integer> path;
 
 	public SwingDFSAnimation(AnimatedGridCanvas canvas, ObservableBareGrid2D<?> grid, Integer source, Integer target) {
 		this.canvas = canvas;
 		this.grid = grid;
-		GridRenderingModel currentModel = canvas.getRenderingModel();
-		this.renderingModel = new DFSRenderingModel(currentModel.getCellSize(), currentModel.getPassageWidth(),
-				currentModel::getCellBgColor, Color.RED, Color.BLUE);
+		GridRenderer oldRenderer = canvas.getRenderer();
+		renderer = new ConfigurableGridRenderer();
+		configureRenderer(oldRenderer);
 		dfs = new DepthFirstTraversal(grid, source, target);
 		path = new LinkedHashSet<>();
 	}
 
 	public void run() {
 		dfs.addObserver(this);
-		canvas.pushRenderingModel(renderingModel);
+		canvas.pushRenderer(renderer);
 		path.clear();
 		dfs.traverseGraph();
 		dfs.findPath(dfs.getTarget()).forEach(path::add);
 		path.forEach(cell -> canvas.drawGridCell(cell));
-		canvas.popRenderingModel();
+		canvas.popRenderer();
 		dfs.removeObserver(this);
 	}
 
@@ -55,36 +54,24 @@ public class SwingDFSAnimation implements GraphTraversalListener {
 		canvas.drawGridCell(vertex);
 	}
 
-	// -- Rendering model
+	// -- Renderer
 
-	private class DFSRenderingModel extends DefaultGridRenderingModel {
+	private Color pathColor = Color.RED;
+	private Color visitedCellColor = Color.BLUE;
 
-		private final Function<Integer, Color> baseCellColorFunction;
-		private final Color pathColor;
-		private final Color visitedCellColor;
-
-		public DFSRenderingModel(int cellSize, int passageWidth, Function<Integer, Color> baseCellColorFunction,
-				Color pathColor, Color visitedCellColor) {
-			this.cellSize = cellSize;
-			this.passageWidth = passageWidth > 5 ? passageWidth / 2 : passageWidth;
-			this.baseCellColorFunction = baseCellColorFunction;
-			this.pathColor = pathColor;
-			this.visitedCellColor = visitedCellColor;
-		}
-
-		@Override
-		public Color getCellBgColor(int cell) {
+	private void configureRenderer(GridRenderer oldRenderer) {
+		renderer.fnCellSize = oldRenderer::getCellSize;
+		renderer.fnPassageWidth = () -> oldRenderer.getPassageWidth() > 5 ? oldRenderer.getPassageWidth() / 2 : oldRenderer.getPassageWidth();
+		renderer.fnCellBgColor = cell -> {
 			if (path.contains(cell)) {
 				return pathColor;
 			}
 			if (dfs.getState(cell) == VISITED || dfs.isStacked(cell)) {
 				return visitedCellColor;
 			}
-			return baseCellColorFunction.apply(cell);
-		}
-
-		@Override
-		public Color getPassageColor(int cell, int dir) {
+			return oldRenderer.getCellBgColor(cell);
+		};
+		renderer.fnPassageColor = (cell, dir) -> {
 			int neighbor = grid.neighbor(cell, dir).getAsInt();
 			if (path.contains(cell) && path.contains(neighbor)) {
 				return pathColor;
@@ -92,10 +79,10 @@ public class SwingDFSAnimation implements GraphTraversalListener {
 			if (dfs.getState(cell) == VISITED && dfs.getState(neighbor) == VISITED) {
 				return visitedCellColor;
 			}
-			if (getCellBgColor(cell) == visitedCellColor && getCellBgColor(neighbor) == visitedCellColor) {
+			if (renderer.getCellBgColor(cell) == visitedCellColor && renderer.getCellBgColor(neighbor) == visitedCellColor) {
 				return visitedCellColor;
 			}
-			return baseCellColorFunction.apply(cell);
-		}
-	};
+			return oldRenderer.getCellBgColor(cell);
+		};
+	}
 }

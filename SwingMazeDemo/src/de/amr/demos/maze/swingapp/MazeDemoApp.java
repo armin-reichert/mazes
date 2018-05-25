@@ -5,6 +5,7 @@ import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
@@ -50,6 +51,9 @@ public class MazeDemoApp {
 		model.setGridCellSizes(128, 64, 32, 16, 8, 4, 2);
 		model.setGridCellSize(32);
 		model.setPassageThicknessPct(25);
+		model.setCompletedCellColor(Color.WHITE);
+		model.setVisitedCellColor(Color.BLUE);
+		model.setUnvisitedCellColor(Color.BLACK);
 		model.setGenerationStart(CENTER);
 		model.setPathFinderStart(TOP_LEFT);
 		model.setPathFinderTarget(BOTTOM_RIGHT);

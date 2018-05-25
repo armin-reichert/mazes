@@ -17,8 +17,7 @@ import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.ObservableGrid2D;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.ui.swing.DefaultGridRenderingModel;
-import de.amr.easy.grid.ui.swing.GridRenderer;
+import de.amr.easy.grid.ui.swing.ConfigurableGridRenderer;
 
 /**
  * Canvas that can display a grid, a colored distance map and a path between two cells.
@@ -110,76 +109,42 @@ public class LayeredGridCanvas extends LayeredCanvas implements GraphObserver<We
 	}
 
 	private void addGridLayer() {
-		DefaultGridRenderingModel gridRenderModel = new DefaultGridRenderingModel() {
-
-			@Override
-			public int getPassageWidth() {
-				return cellSize * 9 / 10;
-			}
-		};
-		gridRenderModel.setCellSize(cellSize);
-		GridRenderer gridRenderer = new GridRenderer(gridRenderModel);
-		pushLayer(Layers.Grid.name(), g -> {
-			gridRenderer.drawGrid(g, grid);
-		});
+		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
+		renderer.fnPassageWidth = () -> cellSize * 9 / 10;
+		renderer.fnCellSize = () -> cellSize;
+		pushLayer(Layers.Grid.name(), g -> renderer.drawGrid(g, grid));
 	}
 
 	private void addDistanceLayer() {
-		DefaultGridRenderingModel gridRenderModel = new DefaultGridRenderingModel() {
-
-			@Override
-			public int getPassageWidth() {
-				return cellSize * 9 / 10;
+		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
+		renderer.fnPassageWidth = () -> cellSize * 9 / 10;
+		renderer.fnText = cell -> cellSize / 2 < renderer.getMinFontSize() ? ""
+				: String.format("%d", bfs.getDistance(cell));
+		renderer.fnTextFont = () -> new Font("Sans", Font.PLAIN, cellSize / 2);
+		renderer.fnCellBgColor = cell -> {
+			if (bfs.getMaxDistance() == -1) {
+				return Color.BLACK;
 			}
-
-			@Override
-			public String getText(int cell) {
-				return cellSize / 2 < getMinFontSize() ? "" : String.format("%d", bfs.getDistance(cell));
+			float hue = 0.16f;
+			if (bfs.getMaxDistance() > 0) {
+				hue += 0.7f * bfs.getDistance(cell) / bfs.getMaxDistance();
 			}
-
-			@Override
-			public Font getTextFont() {
-				return new Font("Sans", Font.PLAIN, cellSize / 2);
-			}
-
-			@Override
-			public Color getCellBgColor(int cell) {
-				if (bfs.getMaxDistance() == -1) {
-					return super.getCellBgColor(cell);
-				}
-				float hue = 0.16f;
-				if (bfs.getMaxDistance() > 0) {
-					hue += 0.7f * bfs.getDistance(cell) / bfs.getMaxDistance();
-				}
-				return Color.getHSBColor(hue, 0.5f, 1f);
-			}
-
+			return Color.getHSBColor(hue, 0.5f, 1f);
 		};
-		gridRenderModel.setCellSize(cellSize);
-		GridRenderer gridRenderer = new GridRenderer(gridRenderModel);
+		renderer.fnCellSize = () -> cellSize;
 		pushLayer(Layers.Distances.name(), g -> {
 			if (bfs != null) {
-				gridRenderer.drawGrid(g, grid);
+				renderer.drawGrid(g, grid);
 			}
 		});
 		getLayer(Layers.Distances.name()).ifPresent(layer -> layer.setVisible(distancesDisplayed));
 	}
 
 	private void addPathLayer() {
-		DefaultGridRenderingModel pathRenderModel = new DefaultGridRenderingModel() {
-
-			@Override
-			public int getPassageWidth() {
-				return Math.max(cellSize * 10 / 100, 1);
-			}
-
-			@Override
-			public Color getCellBgColor(int cell) {
-				return Color.RED;
-			}
-		};
-		pathRenderModel.setCellSize(cellSize);
-		GridRenderer pathRenderer = new GridRenderer(pathRenderModel);
+		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
+		renderer.fnPassageWidth = () -> Math.max(cellSize * 10 / 100, 1);
+		renderer.fnCellBgColor = cell -> Color.RED;
+		renderer.fnCellSize = () -> cellSize;
 		pushLayer(Layers.Path.name(), g -> {
 			if (path != null) {
 				Integer from = null;
@@ -187,7 +152,7 @@ public class LayeredGridCanvas extends LayeredCanvas implements GraphObserver<We
 					if (from == null) {
 						from = cell;
 					} else {
-						pathRenderer.drawPassage(g, grid, grid.edge(from, cell).get(), true);
+						renderer.drawPassage(g, grid, grid.edge(from, cell).get(), true);
 						from = cell;
 					}
 				}

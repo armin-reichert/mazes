@@ -21,8 +21,7 @@ import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.Grid;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.ui.swing.DefaultGridRenderingModel;
-import de.amr.easy.grid.ui.swing.GridRenderer;
+import de.amr.easy.grid.ui.swing.ConfigurableGridRenderer;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 
 public class DepthFirstSearchApp {
@@ -38,8 +37,7 @@ public class DepthFirstSearchApp {
 	private int target;
 	private BitSet solution = new BitSet();
 
-	private GridRenderer renderer;
-	private DefaultGridRenderingModel model;
+	private ConfigurableGridRenderer renderer;
 	private JComponent canvas;
 
 	public DepthFirstSearchApp() {
@@ -53,11 +51,8 @@ public class DepthFirstSearchApp {
 				super.paintComponent(g_);
 				Graphics2D g = (Graphics2D) g_;
 				g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-				g.setColor(model.getGridBgColor());
+				g.setColor(renderer.getGridBgColor());
 				g.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-				model.setCellSize(canvas.getHeight() / grid.numRows());
-				model.setPassageWidth(model.getCellSize() / 4);
-				model.setTextFont(new Font("Arial Bold", Font.PLAIN, model.getPassageWidth() - 3));
 				renderer.drawGrid(g, grid);
 				// draw solution
 				if (!solution.isEmpty()) {
@@ -66,8 +61,8 @@ public class DepthFirstSearchApp {
 					for (int i = 0; i < path.length; ++i) {
 						int cell = path[i];
 						int row = grid.row(cell), col = grid.col(cell);
-						int cs = model.getCellSize();
-						int diam = model.getPassageWidth() / 2;
+						int cs = renderer.getCellSize();
+						int diam = renderer.getPassageWidth() / 4;
 						int x = cs * col + cs / 2, y = cs * row + cs / 2;
 						g.setColor(Color.BLUE);
 						g.fillOval(x - diam / 2, y - diam / 2, diam, diam);
@@ -83,13 +78,15 @@ public class DepthFirstSearchApp {
 		canvas.setPreferredSize(new Dimension(1024, 1024));
 
 		// Renderer
-		model = new DefaultGridRenderingModel() {
-
-			{
-				setTextColor(Color.RED);
-			}
-		};
-		renderer = new GridRenderer(model);
+		renderer = new ConfigurableGridRenderer();
+		renderer.fnCellBgColor = cell -> Color.WHITE;
+		renderer.fnCellSize = () -> canvas.getHeight() / grid.numRows();
+		renderer.fnGridBgColor = () -> Color.BLACK;
+		renderer.fnPassageColor = (cell, dir) -> Color.WHITE;
+		renderer.fnPassageWidth = () -> renderer.getCellSize() / 4;
+		renderer.fnText = cell -> String.format("%d", cell);
+		renderer.fnTextColor = () -> Color.RED;
+		renderer.fnTextFont = () -> new Font("Arial Bold", Font.PLAIN, renderer.getPassageWidth() - 3);
 
 		// Keyboard Actions
 		addKeyboardAction('c', this::clearSolution);

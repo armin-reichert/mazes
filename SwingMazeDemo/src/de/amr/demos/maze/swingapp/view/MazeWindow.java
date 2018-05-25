@@ -8,8 +8,8 @@ import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
-import de.amr.demos.maze.swingapp.rendering.GridColoring;
 import de.amr.easy.grid.ui.swing.AnimatedGridCanvas;
+import de.amr.easy.grid.ui.swing.ConfigurableGridRenderer;
 
 /**
  * Display area for the grid/maze.
@@ -30,7 +30,7 @@ public class MazeWindow extends JFrame {
 	}
 
 	public void createCanvas() {
-		canvas = new AnimatedGridCanvas(app.grid(), new GridColoring(app.model));
+		canvas = new AnimatedGridCanvas(app.grid(), createRenderer());
 		canvas.setDelay(app.model.getDelay());
 		canvas.getActionMap().put("showControlsView", new AbstractAction() {
 
@@ -42,6 +42,33 @@ public class MazeWindow extends JFrame {
 		canvas.getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showControlsView");
 		setContentPane(canvas);
 		repaint();
+	}
+
+	private ConfigurableGridRenderer createRenderer() {
+		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
+		renderer.fnCellSize = () -> app.model.getGridCellSize();
+		renderer.fnPassageWidth = () -> {
+			int thickness = app.model.getGridCellSize() * app.model.getPassageThicknessPct() / 100;
+			if (thickness < 1) {
+				thickness = 1;
+			} else if (thickness > app.model.getGridCellSize() - 1) {
+				thickness = app.model.getGridCellSize() - 1;
+			}
+			return thickness;
+		};
+		renderer.fnCellBgColor = cell -> {
+			switch (app.model.getGrid().get(cell)) {
+			case COMPLETED:
+				return app.model.getCompletedCellColor();
+			case UNVISITED:
+				return app.model.getUnvisitedCellColor();
+			case VISITED:
+				return app.model.getVisitedCellColor();
+			default:
+				return renderer.getGridBgColor();
+			}
+		};
+		return renderer;
 	}
 
 	public AnimatedGridCanvas getCanvas() {

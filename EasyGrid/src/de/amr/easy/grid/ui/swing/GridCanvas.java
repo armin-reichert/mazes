@@ -23,24 +23,19 @@ import de.amr.easy.grid.api.BareGrid2D;
  */
 public class GridCanvas<G extends BareGrid2D<?>> extends JComponent {
 
-	private final Deque<GridRenderingModel> renderModelStack = new ArrayDeque<>();
-	protected final GridRenderer renderer;
+	private final Deque<GridRenderer> rendererStack = new ArrayDeque<>();
 	private BufferedImage drawingBuffer;
 	protected Graphics2D g2;
 	protected G grid;
 
-	public GridCanvas(G grid, GridRenderingModel renderModel) {
+	public GridCanvas(G grid, GridRenderer renderer) {
 		if (grid == null) {
 			throw new IllegalArgumentException("NULL grid not allowed");
 		}
-		if (renderModel == null) {
-			throw new IllegalArgumentException("rendering model is NULL");
-		}
 		this.grid = grid;
-		renderModelStack.push(renderModel);
-		renderer = new GridRenderer(renderModel);
+		rendererStack.push(renderer);
 		setDoubleBuffered(false);
-		setBackground(renderModel.getGridBgColor());
+		setBackground(renderer.getGridBgColor());
 		adaptSize();
 	}
 
@@ -60,7 +55,7 @@ public class GridCanvas<G extends BareGrid2D<?>> extends JComponent {
 	}
 
 	public int getCellSize() {
-		return getRenderingModel().getCellSize();
+		return getRenderer().getCellSize();
 	}
 
 	public void adaptSize() {
@@ -81,35 +76,39 @@ public class GridCanvas<G extends BareGrid2D<?>> extends JComponent {
 	}
 
 	public void clear() {
-		g2.setColor(getRenderingModel().getGridBgColor());
+		g2.setColor(getBackground());
 		g2.fillRect(0, 0, getWidth(), getHeight());
 		repaint();
 	}
 
-	public GridRenderingModel getRenderingModel() {
-		return renderModelStack.getFirst();
+	public GridRenderer getRenderer() {
+		return rendererStack.getFirst();
 	}
 
-	public void resetRenderingModel(GridRenderingModel model) {
-		renderModelStack.clear();
-		renderModelStack.push(model);
-		setBackground(model.getGridBgColor());
+	public void resetRenderer(GridRenderer renderer) {
+		rendererStack.clear();
+		rendererStack.push(renderer);
+		setBackground(renderer.getGridBgColor());
 		adaptSize();
 	}
 
-	public void pushRenderingModel(GridRenderingModel model) {
-		renderModelStack.push(model);
-		setBackground(model.getGridBgColor());
-		if (model.getCellSize() != getCellSize()) {
+	public void pushRenderer(GridRenderer renderer) {
+		int oldCellSize = getCellSize();
+		rendererStack.push(renderer);
+		setBackground(renderer.getGridBgColor());
+		if (renderer.getCellSize() != oldCellSize) {
 			adaptSize();
 		}
 	}
 
-	public void popRenderingModel() {
-		renderModelStack.pop();
-		GridRenderingModel model = renderModelStack.getFirst();
-		setBackground(model.getGridBgColor());
-		if (model.getCellSize() != getCellSize()) {
+	public void popRenderer() {
+		if (rendererStack.isEmpty()) {
+			throw new IllegalStateException("Cannot pop from empty stack");
+		}
+		int oldCellSize = getCellSize();
+		rendererStack.pop();
+		setBackground(getRenderer().getGridBgColor());
+		if (getCellSize() != oldCellSize) {
 			adaptSize();
 		}
 	}

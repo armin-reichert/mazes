@@ -22,8 +22,8 @@ public class AnimatedGridCanvas extends GridCanvas<ObservableGrid2D<TraversalSta
 
 	private int delayMillis;
 
-	public AnimatedGridCanvas(ObservableGrid2D<TraversalState, Integer> grid, GridRenderingModel model) {
-		super(grid, model);
+	public AnimatedGridCanvas(ObservableGrid2D<TraversalState, Integer> grid, GridRenderer renderer) {
+		super(grid, renderer);
 		grid.addGraphObserver(this);
 	}
 
@@ -47,7 +47,6 @@ public class AnimatedGridCanvas extends GridCanvas<ObservableGrid2D<TraversalSta
 				e.printStackTrace();
 			}
 		}
-		renderer.setModel(getRenderingModel());
 		code.run();
 		repaint();
 	}
@@ -69,15 +68,15 @@ public class AnimatedGridCanvas extends GridCanvas<ObservableGrid2D<TraversalSta
 	}
 
 	public void drawGridCell(int cell) {
-		drawDelayed(() -> renderer.drawCell(g2, grid, cell));
+		drawDelayed(() -> getRenderer().drawCell(g2, grid, cell));
 	}
 
 	public void drawGridPassage(Edge edge, boolean visible) {
-		drawDelayed(() -> renderer.drawPassage(g2, grid, edge, visible));
+		drawDelayed(() -> getRenderer().drawPassage(g2, grid, edge, visible));
 	}
 
 	public void drawGrid() {
-		drawDelayed(() -> renderer.drawGrid(g2, grid));
+		drawDelayed(() -> getRenderer().drawGrid(g2, grid));
 	}
 
 	// implement GraphObserver interface

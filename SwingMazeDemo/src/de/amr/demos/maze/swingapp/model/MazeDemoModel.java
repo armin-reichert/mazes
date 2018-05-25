@@ -6,6 +6,7 @@ import static de.amr.demos.maze.swingapp.model.MazeDemoModel.Tag.SmallGridOnly;
 import static de.amr.demos.maze.swingapp.model.MazeDemoModel.Tag.Traversal;
 import static de.amr.demos.maze.swingapp.model.MazeDemoModel.Tag.UST;
 
+import java.awt.Color;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
@@ -117,6 +118,9 @@ public class MazeDemoModel {
 	private GridPosition generationStart;
 	private GridPosition pathFinderStart;
 	private GridPosition pathFinderTarget;
+	private Color unvisitedCellColor;
+	private Color visitedCellColor;
+	private Color completedCellColor;
 
 	public int[] getGridCellSizes() {
 		return gridCellSizes;
@@ -204,5 +208,29 @@ public class MazeDemoModel {
 
 	public void setPathFinderTarget(GridPosition pos) {
 		this.pathFinderTarget = pos;
+	}
+
+	public Color getUnvisitedCellColor() {
+		return unvisitedCellColor;
+	}
+
+	public void setUnvisitedCellColor(Color unvisitedCellColor) {
+		this.unvisitedCellColor = unvisitedCellColor;
+	}
+
+	public Color getVisitedCellColor() {
+		return visitedCellColor;
+	}
+
+	public void setVisitedCellColor(Color visitedCellColor) {
+		this.visitedCellColor = visitedCellColor;
+	}
+
+	public Color getCompletedCellColor() {
+		return completedCellColor;
+	}
+
+	public void setCompletedCellColor(Color completedCellColor) {
+		this.completedCellColor = completedCellColor;
 	}
 }

@@ -29,7 +29,7 @@ public class AlgorithmMenu extends JMenu {
 		addMenu("Uniform Spanning Tree", model.algorithms().filter(alg -> alg.isTagged(UST)));
 		addMenu("Other Algorithms",
 				model.algorithms().filter(alg -> !alg.isTagged(Traversal) && !alg.isTagged(MST) && !alg.isTagged(UST)));
-		JMenuItem selectedItem = ((JMenu) getItem(0)).getItem(0);
+		JMenuItem selectedItem = ((JMenu) getItem(0)).getItem(1);
 		selectedItem.setSelected(true);
 	}
 
