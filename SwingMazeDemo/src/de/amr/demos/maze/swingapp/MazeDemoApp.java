@@ -54,6 +54,7 @@ public class MazeDemoApp {
 		model.setCompletedCellColor(Color.WHITE);
 		model.setVisitedCellColor(Color.BLUE);
 		model.setUnvisitedCellColor(Color.BLACK);
+		model.setPathColor(Color.RED);
 		model.setGenerationStart(CENTER);
 		model.setPathFinderStart(TOP_LEFT);
 		model.setPathFinderTarget(BOTTOM_RIGHT);

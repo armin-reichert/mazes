@@ -121,6 +121,7 @@ public class MazeDemoModel {
 	private Color unvisitedCellColor;
 	private Color visitedCellColor;
 	private Color completedCellColor;
+	private Color pathColor;
 
 	public int[] getGridCellSizes() {
 		return gridCellSizes;
@@ -232,5 +233,13 @@ public class MazeDemoModel {
 
 	public void setCompletedCellColor(Color completedCellColor) {
 		this.completedCellColor = completedCellColor;
+	}
+
+	public Color getPathColor() {
+		return pathColor;
+	}
+
+	public void setPathColor(Color pathColor) {
+		this.pathColor = pathColor;
 	}
 }

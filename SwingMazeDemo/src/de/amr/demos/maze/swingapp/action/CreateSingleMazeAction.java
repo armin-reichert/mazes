@@ -40,8 +40,7 @@ public class CreateSingleMazeAction extends AbstractAction {
 			try {
 				enableControls(false);
 				generateMaze(app.settingsWindow.getAlgorithmMenu().getSelectedAlgorithm());
-				AlgorithmInfo<?> pathFinder = app.settingsWindow.getPathFinderMenu()
-						.getSelectedPathFinder();
+				AlgorithmInfo<?> pathFinder = app.settingsWindow.getPathFinderMenu().getSelectedPathFinder();
 				if (pathFinder != null) {
 					runPathFinder(pathFinder);
 				}
@@ -65,8 +64,7 @@ public class CreateSingleMazeAction extends AbstractAction {
 	}
 
 	protected void generateMaze(AlgorithmInfo<?> generatorInfo) throws Exception {
-		app.showMessage(
-				format("\n%s (%d cells)", generatorInfo.getDescription(), app.grid().numCells()));
+		app.showMessage(format("\n%s (%d cells)", generatorInfo.getDescription(), app.grid().numCells()));
 
 		// Reset grid
 		app.grid().setEventsEnabled(false);
@@ -78,11 +76,11 @@ public class CreateSingleMazeAction extends AbstractAction {
 		app.canvas().clear();
 
 		// Create generator instance
-		MazeAlgorithm generator = (MazeAlgorithm) generatorInfo.getAlgorithmClass()
-				.getConstructor(Grid2D.class).newInstance(app.model.getGrid());
+		MazeAlgorithm generator = (MazeAlgorithm) generatorInfo.getAlgorithmClass().getConstructor(Grid2D.class)
+				.newInstance(app.model.getGrid());
 
 		// Create maze
-		Integer startCell = app.grid().cell(app.model.getGenerationStart());
+		int startCell = app.grid().cell(app.model.getGenerationStart());
 		if (app.model.isGenerationAnimated()) {
 			// event handlers do the rendering
 			generator.run(startCell);
@@ -98,10 +96,11 @@ public class CreateSingleMazeAction extends AbstractAction {
 	}
 
 	protected void runPathFinder(AlgorithmInfo<?> pathFinder) {
-		final Integer source = app.grid().cell(app.model.getPathFinderSource());
-		final Integer target = app.grid().cell(app.model.getPathFinderTarget());
+		final int source = app.grid().cell(app.model.getPathFinderSource());
+		final int target = app.grid().cell(app.model.getPathFinderTarget());
 		if (pathFinder.getAlgorithmClass() == SwingBFSAnimation.class) {
 			final SwingBFSAnimation bfs = new SwingBFSAnimation(app.canvas(), app.grid());
+			bfs.setPathColor(app.model.getPathColor());
 			watch.runAndMeasure(() -> bfs.run(source));
 			app.showMessage(format("BFS time: %.6f seconds.", watch.getSeconds()));
 
@@ -111,8 +110,9 @@ public class CreateSingleMazeAction extends AbstractAction {
 				bfs.showPath(app.grid().cell(app.model.getPathFinderTarget()));
 			}
 		} else if (pathFinder.getAlgorithmClass() == SwingDFSAnimation.class) {
-			watch.runAndMeasure(
-					() -> new SwingDFSAnimation(app.canvas(), app.grid(), source, target).run());
+			SwingDFSAnimation dfs = new SwingDFSAnimation(app.canvas(), app.grid(), source, target);
+			dfs.setPathColor(app.model.getPathColor());
+			watch.runAndMeasure(dfs::run);
 			app.showMessage(format("DFS time: %.6f seconds.", watch.getSeconds()));
 		}
 	}
