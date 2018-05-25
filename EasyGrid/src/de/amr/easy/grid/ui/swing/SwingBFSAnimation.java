@@ -27,7 +27,7 @@ public class SwingBFSAnimation implements GraphTraversalListener {
 	private int maxDistance;
 	private int maxDistanceCell;
 	private boolean distancesVisible;
-	private Color pathColor = Color.RED;
+	private Color pathColor;
 
 	public SwingBFSAnimation(AnimatedGridCanvas canvas, ObservableBareGrid2D<?> grid) {
 		this.canvas = canvas;
@@ -39,6 +39,7 @@ public class SwingBFSAnimation implements GraphTraversalListener {
 		maxDistance = -1;
 		maxDistanceCell = -1;
 		distancesVisible = true;
+		pathColor = Color.RED;
 	}
 
 	public void run(int startCell) {
@@ -81,6 +82,14 @@ public class SwingBFSAnimation implements GraphTraversalListener {
 
 	public void setDistancesVisible(boolean distancesVisible) {
 		this.distancesVisible = distancesVisible;
+	}
+
+	public Color getPathColor() {
+		return pathColor;
+	}
+
+	public void setPathColor(Color pathColor) {
+		this.pathColor = pathColor;
 	}
 
 	// GraphTraversalListener
