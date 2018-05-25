@@ -11,6 +11,8 @@ import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.view.ControlPanel;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.impl.ObservableGrid;
+import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
 import de.amr.easy.grid.ui.swing.SwingDFSAnimation;
 import de.amr.easy.maze.alg.MazeAlgorithm;
@@ -47,6 +49,10 @@ public class CreateSingleMazeAction extends AbstractAction {
 			} catch (Throwable x) {
 				x.printStackTrace(System.err);
 				app.showMessage("An exception occured: " + x);
+				app.model.setGrid(new ObservableGrid<>(app.model.getGrid().numCols(), app.model.getGrid().numRows(), Top4.get(),
+						UNVISITED, false));
+				app.updateCanvas();
+
 			} finally {
 				enableControls(true);
 				app.settingsWindow.setVisible(true);
@@ -95,21 +101,20 @@ public class CreateSingleMazeAction extends AbstractAction {
 		}
 	}
 
-	protected void runPathFinder(AlgorithmInfo<?> pathFinder) {
-		final int source = app.grid().cell(app.model.getPathFinderSource());
-		final int target = app.grid().cell(app.model.getPathFinderTarget());
-		if (pathFinder.getAlgorithmClass() == SwingBFSAnimation.class) {
-			final SwingBFSAnimation bfs = new SwingBFSAnimation(app.canvas(), app.grid());
+	protected void runPathFinder(AlgorithmInfo<?> pathFinderInfo) {
+		int source = app.grid().cell(app.model.getPathFinderSource());
+		int target = app.grid().cell(app.model.getPathFinderTarget());
+		if (pathFinderInfo.getAlgorithmClass() == SwingBFSAnimation.class) {
+			SwingBFSAnimation bfs = new SwingBFSAnimation(app.canvas(), app.grid());
 			bfs.setPathColor(app.model.getPathColor());
 			watch.runAndMeasure(() -> bfs.run(source));
 			app.showMessage(format("BFS time: %.6f seconds.", watch.getSeconds()));
-
 			if (app.model.isLongestPathHighlighted()) {
 				bfs.showPath(bfs.getMaxDistanceCell());
 			} else {
-				bfs.showPath(app.grid().cell(app.model.getPathFinderTarget()));
+				bfs.showPath(target);
 			}
-		} else if (pathFinder.getAlgorithmClass() == SwingDFSAnimation.class) {
+		} else if (pathFinderInfo.getAlgorithmClass() == SwingDFSAnimation.class) {
 			SwingDFSAnimation dfs = new SwingDFSAnimation(app.canvas(), app.grid(), source, target);
 			dfs.setPathColor(app.model.getPathColor());
 			watch.runAndMeasure(dfs::run);
