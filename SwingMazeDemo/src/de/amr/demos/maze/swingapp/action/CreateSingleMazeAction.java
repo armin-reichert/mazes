@@ -105,14 +105,14 @@ public class CreateSingleMazeAction extends AbstractAction {
 		int source = app.grid().cell(app.model.getPathFinderSource());
 		int target = app.grid().cell(app.model.getPathFinderTarget());
 		if (pathFinderInfo.getAlgorithmClass() == SwingBFSAnimation.class) {
-			SwingBFSAnimation bfs = new SwingBFSAnimation(app.canvas(), app.grid());
+			SwingBFSAnimation bfs = new SwingBFSAnimation(app.grid());
 			bfs.setPathColor(app.model.getPathColor());
-			watch.runAndMeasure(() -> bfs.run(source));
+			watch.runAndMeasure(() -> bfs.run(app.canvas(), source));
 			app.showMessage(format("BFS time: %.6f seconds.", watch.getSeconds()));
 			if (app.model.isLongestPathHighlighted()) {
-				bfs.showPath(bfs.getMaxDistanceCell());
+				bfs.showPath(app.canvas(), bfs.getMaxDistanceCell());
 			} else {
-				bfs.showPath(target);
+				bfs.showPath(app.canvas(), target);
 			}
 		} else if (pathFinderInfo.getAlgorithmClass() == SwingDFSAnimation.class) {
 			SwingDFSAnimation dfs = new SwingDFSAnimation(app.canvas(), app.grid(), source, target);

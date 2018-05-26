@@ -6,10 +6,7 @@ import static de.amr.easy.graph.api.TraversalState.VISITED;
 
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.PriorityQueue;
-import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.PathFinder;
@@ -103,6 +100,5 @@ public class BestFirstTraversal extends AbstractGraphTraversal implements PathFi
 	public int getMaxDistanceVertex() {
 		return farest;
 	}
-
 
 }

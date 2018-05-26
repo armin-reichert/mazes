@@ -29,9 +29,9 @@ public class PeanoCurveApp extends SwingGridSampleApp {
 			int startCell = grid.cell(BOTTOM_LEFT);
 			PeanoCurve curve = new PeanoCurve(log(3, n));
 			traverse(curve, grid, startCell, this::addEdge);
-			SwingBFSAnimation bfs = new SwingBFSAnimation(canvas, grid);
+			SwingBFSAnimation bfs = new SwingBFSAnimation(grid);
 			bfs.setDistancesVisible(false);
-			bfs.run(startCell);
+			bfs.run(canvas, startCell);
 			sleep(1000);
 		});
 	}

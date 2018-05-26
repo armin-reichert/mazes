@@ -16,11 +16,10 @@ import de.amr.easy.grid.api.ObservableBareGrid2D;
  * 
  * @author Armin Reichert
  */
-public class SwingBFSAnimation implements GraphTraversalListener {
+public class SwingBFSAnimation {
 
-	private final AnimatedGridCanvas canvas;
-	private final ConfigurableGridRenderer renderer;
 	private final ObservableBareGrid2D<?> grid;
+	private ConfigurableGridRenderer renderer;
 	private int[] path;
 	private BitSet inPath;
 	private BreadthFirstTraversal bfs;
@@ -29,23 +28,74 @@ public class SwingBFSAnimation implements GraphTraversalListener {
 	private boolean distancesVisible;
 	private Color pathColor;
 
-	public SwingBFSAnimation(AnimatedGridCanvas canvas, ObservableBareGrid2D<?> grid) {
-		this.canvas = canvas;
+	public SwingBFSAnimation(ObservableBareGrid2D<?> grid) {
 		this.grid = grid;
 		this.inPath = new BitSet();
-		GridRenderer oldRenderer = canvas.getRenderer();
-		renderer = new ConfigurableGridRenderer();
-		configureRenderer(oldRenderer);
 		maxDistance = -1;
 		maxDistanceCell = -1;
 		distancesVisible = true;
 		pathColor = Color.RED;
 	}
 
-	public void run(int startCell) {
+	private ConfigurableGridRenderer createRenderer(GridRenderer oldRenderer) {
+		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
+		renderer.fnCellSize = oldRenderer::getCellSize;
+		renderer.fnPassageWidth = oldRenderer::getPassageWidth;
+		renderer.fnTextFont = () -> new Font("SansSerif", Font.PLAIN, renderer.getPassageWidth() / 2);
+		renderer.fnText = cell -> {
+			if (distancesVisible) {
+				int distance = bfs.getDistance(cell);
+				if (distance != -1) {
+					return String.valueOf(distance);
+				}
+			}
+			return "";
+		};
+		renderer.fnCellBgColor = cell -> inPath.get(cell) ? pathColor : cellColorByDistance(cell, oldRenderer);
+		renderer.fnPassageColor = (cell, dir) -> {
+			if (inPath.get(cell)) {
+				OptionalInt neighbor = grid.neighbor(cell, dir);
+				if (neighbor.isPresent()) {
+					if (inPath.get(neighbor.getAsInt())) {
+						return pathColor;
+					}
+				}
+			}
+			return cellColorByDistance(cell, oldRenderer);
+		};
+		return renderer;
+	}
+
+	private Color cellColorByDistance(int cell, GridRenderer oldRenderer) {
+		if (maxDistance == -1) {
+			return oldRenderer.getCellBgColor(cell);
+		}
+		float hue = 0.16f;
+		if (maxDistance > 0) {
+			hue += 0.7f * bfs.getDistance(cell) / maxDistance;
+		}
+		return Color.getHSBColor(hue, 0.5f, 1f);
+	}
+
+	public void run(AnimatedGridCanvas canvas, int startCell) {
+		renderer = createRenderer(canvas.getRenderer());
+		
+		bfs = new BreadthFirstTraversal(grid, startCell);
+		bfs.addObserver(new GraphTraversalListener() {
+
+			@Override
+			public void edgeTouched(int source, int target) {
+				canvas.drawGridPassage(grid.edge(source, target).get(), true);
+			}
+
+			@Override
+			public void vertexTouched(int vertex, TraversalState oldState, TraversalState newState) {
+				canvas.drawGridCell(vertex);
+			}
+		});
+
 		// 1. silent run for computing maximum distance from start cell
 		canvas.stopListening();
-		bfs = new BreadthFirstTraversal(grid, startCell);
 		bfs.traverseGraph();
 		maxDistance = bfs.getMaxDistance();
 		maxDistanceCell = bfs.getMaxDistanceVertex();
@@ -53,14 +103,12 @@ public class SwingBFSAnimation implements GraphTraversalListener {
 		// 2. run with publishing of events
 		canvas.startListening();
 		canvas.pushRenderer(renderer);
-		bfs.addObserver(this);
 		bfs.traverseGraph();
-		bfs.removeObserver(this);
 		canvas.popRenderer();
 	}
 
-	public void showPath(int targetCell) {
-		path = bfs.findPath(targetCell).toArray();
+	public void showPath(AnimatedGridCanvas canvas, int target) {
+		path = bfs.findPath(target).toArray();
 		inPath = new BitSet();
 		for (int cell : path) {
 			inPath.set(cell);
@@ -90,55 +138,5 @@ public class SwingBFSAnimation implements GraphTraversalListener {
 
 	public void setPathColor(Color pathColor) {
 		this.pathColor = pathColor;
-	}
-
-	// GraphTraversalListener
-
-	@Override
-	public void edgeTouched(int source, int target) {
-		canvas.drawGridPassage(grid.edge(source, target).get(), true);
-	}
-
-	@Override
-	public void vertexTouched(int vertex, TraversalState oldState, TraversalState newState) {
-		canvas.drawGridCell(vertex);
-	}
-
-	private void configureRenderer(GridRenderer oldRenderer) {
-		renderer.fnCellSize = oldRenderer::getCellSize;
-		renderer.fnPassageWidth = oldRenderer::getPassageWidth;
-		renderer.fnTextFont = () -> new Font("SansSerif", Font.PLAIN, renderer.getPassageWidth() / 2);
-		renderer.fnText = cell -> {
-			if (distancesVisible) {
-				int distance = bfs.getDistance(cell);
-				if (distance != -1) {
-					return String.valueOf(distance);
-				}
-			}
-			return "";
-		};
-		renderer.fnCellBgColor = cell -> inPath.get(cell) ? pathColor : cellColorByDistance(cell, oldRenderer);
-		renderer.fnPassageColor = (cell, dir) -> {
-			if (inPath.get(cell)) {
-				OptionalInt neighbor = grid.neighbor(cell, dir);
-				if (neighbor.isPresent()) {
-					if (inPath.get(neighbor.getAsInt())) {
-						return pathColor;
-					}
-				}
-			}
-			return cellColorByDistance(cell, oldRenderer);
-		};
-	}
-
-	private Color cellColorByDistance(int cell, GridRenderer oldRenderer) {
-		if (maxDistance == -1) {
-			return oldRenderer.getCellBgColor(cell);
-		}
-		float hue = 0.16f;
-		if (maxDistance > 0) {
-			hue += 0.7f * bfs.getDistance(cell) / maxDistance;
-		}
-		return Color.getHSBColor(hue, 0.5f, 1f);
 	}
 }
