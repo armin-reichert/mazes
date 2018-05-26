@@ -15,72 +15,23 @@ import de.amr.easy.grid.api.ObservableBareGrid2D;
  * 
  * @author Armin Reichert
  */
-public class SwingDFSAnimation implements GraphTraversalListener {
+public class SwingDFSAnimation {
 
-	private final AnimatedGridCanvas canvas;
 	private final ObservableBareGrid2D<?> grid;
-	private final ConfigurableGridRenderer renderer;
 	private final DepthFirstTraversal dfs;
 	private int[] path;
 	private BitSet inPath;
 	private Color pathColor = Color.RED;
 	private Color visitedCellColor = Color.BLUE;
 
-	public SwingDFSAnimation(AnimatedGridCanvas canvas, ObservableBareGrid2D<?> grid, Integer source, Integer target) {
-		this.canvas = canvas;
+	public SwingDFSAnimation(ObservableBareGrid2D<?> grid, Integer source, Integer target) {
 		this.grid = grid;
-		GridRenderer oldRenderer = canvas.getRenderer();
-		renderer = new ConfigurableGridRenderer();
-		configureRenderer(oldRenderer);
 		dfs = new DepthFirstTraversal(grid, source, target);
 		inPath = new BitSet();
 	}
 
-	public void run() {
-		dfs.addObserver(this);
-		canvas.pushRenderer(renderer);
-		dfs.traverseGraph();
-		path = dfs.findPath(dfs.getTarget()).toArray();
-		inPath = new BitSet();
-		for (int cell : path) {
-			inPath.set(cell);
-		}
-		for (int cell : path) {
-			canvas.drawGridCell(cell);
-		}
-		canvas.popRenderer();
-		dfs.removeObserver(this);
-	}
-
-	public Color getPathColor() {
-		return pathColor;
-	}
-
-	public void setPathColor(Color pathColor) {
-		this.pathColor = pathColor;
-	}
-
-	public Color getVisitedCellColor() {
-		return visitedCellColor;
-	}
-
-	public void setVisitedCellColor(Color visitedCellColor) {
-		this.visitedCellColor = visitedCellColor;
-	}
-
-	@Override
-	public void edgeTouched(int source, int target) {
-		canvas.drawGridPassage(grid.edge(source, target).get(), true);
-	}
-
-	@Override
-	public void vertexTouched(int vertex, TraversalState oldState, TraversalState newState) {
-		canvas.drawGridCell(vertex);
-	}
-
-	// -- Renderer
-
-	private void configureRenderer(GridRenderer oldRenderer) {
+	private ConfigurableGridRenderer createRenderer(GridRenderer oldRenderer) {
+		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
 		renderer.fnCellSize = oldRenderer::getCellSize;
 		renderer.fnPassageWidth = () -> oldRenderer.getPassageWidth() > 5 ? oldRenderer.getPassageWidth() / 2
 				: oldRenderer.getPassageWidth();
@@ -106,5 +57,49 @@ public class SwingDFSAnimation implements GraphTraversalListener {
 			}
 			return oldRenderer.getCellBgColor(cell);
 		};
+		return renderer;
+	}
+
+	public void run(AnimatedGridCanvas canvas) {
+		ConfigurableGridRenderer renderer = createRenderer(canvas.getRenderer());
+		dfs.addObserver(new GraphTraversalListener() {
+
+			@Override
+			public void edgeTouched(int source, int target) {
+				canvas.drawGridPassage(grid.edge(source, target).get(), true);
+			}
+
+			@Override
+			public void vertexTouched(int vertex, TraversalState oldState, TraversalState newState) {
+				canvas.drawGridCell(vertex);
+			}
+		});
+		canvas.pushRenderer(renderer);
+		dfs.traverseGraph();
+		path = dfs.findPath(dfs.getTarget()).toArray();
+		inPath = new BitSet();
+		for (int cell : path) {
+			inPath.set(cell);
+		}
+		for (int cell : path) {
+			canvas.drawGridCell(cell);
+		}
+		canvas.popRenderer();
+	}
+
+	public Color getPathColor() {
+		return pathColor;
+	}
+
+	public void setPathColor(Color pathColor) {
+		this.pathColor = pathColor;
+	}
+
+	public Color getVisitedCellColor() {
+		return visitedCellColor;
+	}
+
+	public void setVisitedCellColor(Color visitedCellColor) {
+		this.visitedCellColor = visitedCellColor;
 	}
 }
