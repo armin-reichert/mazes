@@ -105,19 +105,19 @@ public class CreateSingleMazeAction extends AbstractAction {
 		int source = app.grid().cell(app.model.getPathFinderSource());
 		int target = app.grid().cell(app.model.getPathFinderTarget());
 		if (pathFinderInfo.getAlgorithmClass() == SwingBFSAnimation.class) {
-			SwingBFSAnimation bfs = new SwingBFSAnimation(app.grid());
-			bfs.setPathColor(app.model.getPathColor());
-			watch.runAndMeasure(() -> bfs.run(app.canvas(), source));
+			SwingBFSAnimation bfsAnimation = new SwingBFSAnimation(app.grid());
+			bfsAnimation.setPathColor(app.model.getPathColor());
+			watch.runAndMeasure(() -> bfsAnimation.run(app.canvas(), source));
 			app.showMessage(format("BFS time: %.6f seconds.", watch.getSeconds()));
 			if (app.model.isLongestPathHighlighted()) {
-				bfs.showPath(app.canvas(), bfs.getMaxDistanceCell());
+				bfsAnimation.showPath(app.canvas(), bfsAnimation.getMaxDistanceCell());
 			} else {
-				bfs.showPath(app.canvas(), target);
+				bfsAnimation.showPath(app.canvas(), target);
 			}
 		} else if (pathFinderInfo.getAlgorithmClass() == SwingDFSAnimation.class) {
-			SwingDFSAnimation dfs = new SwingDFSAnimation(app.grid(), source, target);
-			dfs.setPathColor(app.model.getPathColor());
-			watch.runAndMeasure(() -> dfs.run(app.canvas()));
+			SwingDFSAnimation dfsAnimation = new SwingDFSAnimation(app.grid());
+			dfsAnimation.setPathColor(app.model.getPathColor());
+			watch.runAndMeasure(() -> dfsAnimation.run(app.canvas(), source, target));
 			app.showMessage(format("DFS time: %.6f seconds.", watch.getSeconds()));
 		}
 	}

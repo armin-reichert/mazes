@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.BitSet;
 import java.util.OptionalInt;
+import java.util.stream.IntStream;
 
 import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.api.TraversalState;
@@ -12,16 +13,13 @@ import de.amr.easy.grid.api.ObservableBareGrid2D;
 
 /**
  * Animation of breadth-first-search with path finding. Shows the distances as the BFS traverses the
- * graph and colors the cells according to their distance from the source.
+ * graph and colors the cells according to their distance from the source ("flood-fill").
  * 
  * @author Armin Reichert
  */
 public class SwingBFSAnimation {
 
 	private final ObservableBareGrid2D<?> grid;
-	private ConfigurableGridRenderer renderer;
-	private int[] path;
-	private BitSet inPath;
 	private BreadthFirstTraversal bfs;
 	private int maxDistance;
 	private int maxDistanceCell;
@@ -30,28 +28,20 @@ public class SwingBFSAnimation {
 
 	public SwingBFSAnimation(ObservableBareGrid2D<?> grid) {
 		this.grid = grid;
-		this.inPath = new BitSet();
 		maxDistance = -1;
 		maxDistanceCell = -1;
 		distancesVisible = true;
 		pathColor = Color.RED;
 	}
 
-	private ConfigurableGridRenderer createRenderer(GridRenderer oldRenderer) {
+	private ConfigurableGridRenderer createRenderer(GridRenderer oldRenderer, BitSet inPath) {
 		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
 		renderer.fnCellSize = oldRenderer::getCellSize;
 		renderer.fnPassageWidth = oldRenderer::getPassageWidth;
 		renderer.fnTextFont = () -> new Font("SansSerif", Font.PLAIN, renderer.getPassageWidth() / 2);
-		renderer.fnText = cell -> {
-			if (distancesVisible) {
-				int distance = bfs.getDistance(cell);
-				if (distance != -1) {
-					return String.valueOf(distance);
-				}
-			}
-			return "";
-		};
-		renderer.fnCellBgColor = cell -> inPath.get(cell) ? pathColor : cellColorByDistance(cell, oldRenderer);
+		renderer.fnText = cell -> distancesVisible && bfs.getDistance(cell) != -1 ? "" + bfs.getDistance(cell) : "";
+		renderer.fnCellBgColor = cell -> inPath.get(cell) ? pathColor
+				: cellColorByDistance(cell, oldRenderer.getCellBgColor(cell));
 		renderer.fnPassageColor = (cell, dir) -> {
 			if (inPath.get(cell)) {
 				OptionalInt neighbor = grid.neighbor(cell, dir);
@@ -61,14 +51,14 @@ public class SwingBFSAnimation {
 					}
 				}
 			}
-			return cellColorByDistance(cell, oldRenderer);
+			return cellColorByDistance(cell, oldRenderer.getCellBgColor(cell));
 		};
 		return renderer;
 	}
 
-	private Color cellColorByDistance(int cell, GridRenderer oldRenderer) {
+	private Color cellColorByDistance(int cell, Color defaultColor) {
 		if (maxDistance == -1) {
-			return oldRenderer.getCellBgColor(cell);
+			return defaultColor;
 		}
 		float hue = 0.16f;
 		if (maxDistance > 0) {
@@ -78,8 +68,6 @@ public class SwingBFSAnimation {
 	}
 
 	public void run(AnimatedGridCanvas canvas, int startCell) {
-		renderer = createRenderer(canvas.getRenderer());
-		
 		bfs = new BreadthFirstTraversal(grid, startCell);
 		bfs.addObserver(new GraphTraversalListener() {
 
@@ -93,6 +81,9 @@ public class SwingBFSAnimation {
 				canvas.drawGridCell(vertex);
 			}
 		});
+
+		BitSet inPath = new BitSet();
+		ConfigurableGridRenderer renderer = createRenderer(canvas.getRenderer(), inPath);
 
 		// 1. silent run for computing maximum distance from start cell
 		canvas.stopListening();
@@ -108,15 +99,15 @@ public class SwingBFSAnimation {
 	}
 
 	public void showPath(AnimatedGridCanvas canvas, int target) {
-		path = bfs.findPath(target).toArray();
-		inPath = new BitSet();
-		for (int cell : path) {
-			inPath.set(cell);
+		if (bfs == null) {
+			throw new IllegalStateException("Must run BFS before showing path");
 		}
+		int[] path = bfs.findPath(target).toArray();
+		BitSet inPath = new BitSet();
+		IntStream.of(path).forEach(inPath::set);
+		ConfigurableGridRenderer renderer = createRenderer(canvas.getRenderer(), inPath);
 		canvas.pushRenderer(renderer);
-		for (int cell : path) {
-			canvas.drawGridCell(cell);
-		}
+		IntStream.of(path).forEach(canvas::drawGridCell);
 		canvas.popRenderer();
 	}
 

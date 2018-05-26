@@ -4,6 +4,7 @@ import static de.amr.easy.graph.api.TraversalState.VISITED;
 
 import java.awt.Color;
 import java.util.BitSet;
+import java.util.stream.IntStream;
 
 import de.amr.easy.graph.alg.traversal.DepthFirstTraversal;
 import de.amr.easy.graph.api.TraversalState;
@@ -18,19 +19,15 @@ import de.amr.easy.grid.api.ObservableBareGrid2D;
 public class SwingDFSAnimation {
 
 	private final ObservableBareGrid2D<?> grid;
-	private final DepthFirstTraversal dfs;
 	private int[] path;
-	private BitSet inPath;
 	private Color pathColor = Color.RED;
 	private Color visitedCellColor = Color.BLUE;
 
-	public SwingDFSAnimation(ObservableBareGrid2D<?> grid, Integer source, Integer target) {
+	public SwingDFSAnimation(ObservableBareGrid2D<?> grid) {
 		this.grid = grid;
-		dfs = new DepthFirstTraversal(grid, source, target);
-		inPath = new BitSet();
 	}
 
-	private ConfigurableGridRenderer createRenderer(GridRenderer oldRenderer) {
+	private ConfigurableGridRenderer createRenderer(DepthFirstTraversal dfs, BitSet inPath, GridRenderer oldRenderer) {
 		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
 		renderer.fnCellSize = oldRenderer::getCellSize;
 		renderer.fnPassageWidth = () -> oldRenderer.getPassageWidth() > 5 ? oldRenderer.getPassageWidth() / 2
@@ -60,8 +57,8 @@ public class SwingDFSAnimation {
 		return renderer;
 	}
 
-	public void run(AnimatedGridCanvas canvas) {
-		ConfigurableGridRenderer renderer = createRenderer(canvas.getRenderer());
+	public void run(AnimatedGridCanvas canvas, int source, int target) {
+		DepthFirstTraversal dfs = new DepthFirstTraversal(grid, source, target);
 		dfs.addObserver(new GraphTraversalListener() {
 
 			@Override
@@ -74,16 +71,12 @@ public class SwingDFSAnimation {
 				canvas.drawGridCell(vertex);
 			}
 		});
-		canvas.pushRenderer(renderer);
+		BitSet inPath = new BitSet();
+		canvas.pushRenderer(createRenderer(dfs, inPath, canvas.getRenderer()));
 		dfs.traverseGraph();
 		path = dfs.findPath(dfs.getTarget()).toArray();
-		inPath = new BitSet();
-		for (int cell : path) {
-			inPath.set(cell);
-		}
-		for (int cell : path) {
-			canvas.drawGridCell(cell);
-		}
+		IntStream.of(path).forEach(inPath::set);
+		IntStream.of(path).forEach(canvas::drawGridCell);
 		canvas.popRenderer();
 	}
 
