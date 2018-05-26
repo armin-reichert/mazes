@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 import de.amr.easy.graph.alg.traversal.DepthFirstTraversal;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalListener;
-import de.amr.easy.grid.api.ObservableBareGrid2D;
+import de.amr.easy.grid.api.BareGrid2D;
 
 /**
  * Animation of depth-first-search path finding.
@@ -18,12 +18,12 @@ import de.amr.easy.grid.api.ObservableBareGrid2D;
  */
 public class SwingDFSAnimation {
 
-	private final ObservableBareGrid2D<?> grid;
+	private final BareGrid2D<?> grid;
 	private int[] path;
 	private Color pathColor = Color.RED;
 	private Color visitedCellColor = Color.BLUE;
 
-	public SwingDFSAnimation(ObservableBareGrid2D<?> grid) {
+	public SwingDFSAnimation(BareGrid2D<?> grid) {
 		this.grid = grid;
 	}
 

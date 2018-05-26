@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalListener;
-import de.amr.easy.grid.api.ObservableBareGrid2D;
+import de.amr.easy.grid.api.BareGrid2D;
 
 /**
  * Animation of breadth-first-search with path finding. Shows the distances as the BFS traverses the
@@ -20,14 +20,14 @@ import de.amr.easy.grid.api.ObservableBareGrid2D;
  */
 public class SwingBFSAnimation {
 
-	private final ObservableBareGrid2D<?> grid;
+	private final BareGrid2D<?> grid;
 	private BreadthFirstTraversal bfs;
 	private int maxDistance;
 	private int maxDistanceCell;
 	private boolean distancesVisible;
 	private Color pathColor;
 
-	public SwingBFSAnimation(ObservableBareGrid2D<?> grid) {
+	public SwingBFSAnimation(BareGrid2D<?> grid) {
 		this.grid = grid;
 		maxDistance = -1;
 		maxDistanceCell = -1;
@@ -68,8 +68,16 @@ public class SwingBFSAnimation {
 		return renderer;
 	}
 
-	public void runBFSAnimation(AnimatedGridCanvas canvas, int startCell) {
-		bfs = new BreadthFirstTraversal(grid, startCell);
+	public void runBFSAnimation(AnimatedGridCanvas canvas, int source) {
+		// 1. run without events for computing maximum distance (cell) from source
+		bfs = new BreadthFirstTraversal(grid, source);
+		bfs.traverseGraph();
+		maxDistance = bfs.getMaxDistance();
+		maxDistanceCell = bfs.getMaxDistanceVertex();
+
+		// 2. run with events
+		ConfigurableGridRenderer renderer = createRenderer(canvas.getRenderer(), new BitSet());
+		canvas.pushRenderer(renderer);
 		bfs.addObserver(new GraphTraversalListener() {
 
 			@Override
@@ -82,19 +90,6 @@ public class SwingBFSAnimation {
 				canvas.drawGridCell(vertex);
 			}
 		});
-
-		BitSet inPath = new BitSet();
-		ConfigurableGridRenderer renderer = createRenderer(canvas.getRenderer(), inPath);
-
-		// 1. silent run for computing maximum distance from start cell
-		canvas.stopListening();
-		bfs.traverseGraph();
-		maxDistance = bfs.getMaxDistance();
-		maxDistanceCell = bfs.getMaxDistanceVertex();
-
-		// 2. run with publishing of events
-		canvas.startListening();
-		canvas.pushRenderer(renderer);
 		bfs.traverseGraph();
 		canvas.popRenderer();
 	}
@@ -109,6 +104,7 @@ public class SwingBFSAnimation {
 		ConfigurableGridRenderer renderer = createRenderer(canvas.getRenderer(), inPath);
 		int smallerPassageWidth = renderer.getPassageWidth() / 2;
 		renderer.fnPassageWidth = () -> smallerPassageWidth;
+		renderer.fnText = cell -> "";
 		canvas.pushRenderer(renderer);
 		IntStream.of(path).forEach(canvas::drawGridCell);
 		canvas.popRenderer();
