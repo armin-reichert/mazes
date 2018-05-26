@@ -25,7 +25,7 @@ public class KruskalMSTApp extends SwingGridSampleApp {
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			resizeGrid(cellSize);
 			new KruskalMST(grid).run(grid.cell(TOP_LEFT));
-			new SwingBFSAnimation(grid).run(canvas,grid.cell(TOP_LEFT));
+			new SwingBFSAnimation(grid).runBFSAnimation(canvas,grid.cell(TOP_LEFT));
 			sleep(1000);
 		});
 		System.exit(0);

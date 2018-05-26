@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.BitSet;
 import java.util.OptionalInt;
+import java.util.function.Function;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
@@ -35,13 +36,24 @@ public class SwingBFSAnimation {
 	}
 
 	private ConfigurableGridRenderer createRenderer(GridRenderer oldRenderer, BitSet inPath) {
+
+		Function<Integer, Color> distanceColor = cell -> {
+			if (maxDistance == -1) {
+				return oldRenderer.getCellBgColor(cell);
+			}
+			float hue = 0.16f;
+			if (maxDistance > 0) {
+				hue += 0.7f * bfs.getDistance(cell) / maxDistance;
+			}
+			return Color.getHSBColor(hue, 0.5f, 1f);
+		};
+
 		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
 		renderer.fnCellSize = oldRenderer::getCellSize;
 		renderer.fnPassageWidth = oldRenderer::getPassageWidth;
 		renderer.fnTextFont = () -> new Font("SansSerif", Font.PLAIN, renderer.getPassageWidth() / 2);
 		renderer.fnText = cell -> distancesVisible && bfs.getDistance(cell) != -1 ? "" + bfs.getDistance(cell) : "";
-		renderer.fnCellBgColor = cell -> inPath.get(cell) ? pathColor
-				: cellColorByDistance(cell, oldRenderer.getCellBgColor(cell));
+		renderer.fnCellBgColor = cell -> inPath.get(cell) ? pathColor : distanceColor.apply(cell);
 		renderer.fnPassageColor = (cell, dir) -> {
 			if (inPath.get(cell)) {
 				OptionalInt neighbor = grid.neighbor(cell, dir);
@@ -51,23 +63,12 @@ public class SwingBFSAnimation {
 					}
 				}
 			}
-			return cellColorByDistance(cell, oldRenderer.getCellBgColor(cell));
+			return distanceColor.apply(cell);
 		};
 		return renderer;
 	}
 
-	private Color cellColorByDistance(int cell, Color defaultColor) {
-		if (maxDistance == -1) {
-			return defaultColor;
-		}
-		float hue = 0.16f;
-		if (maxDistance > 0) {
-			hue += 0.7f * bfs.getDistance(cell) / maxDistance;
-		}
-		return Color.getHSBColor(hue, 0.5f, 1f);
-	}
-
-	public void run(AnimatedGridCanvas canvas, int startCell) {
+	public void runBFSAnimation(AnimatedGridCanvas canvas, int startCell) {
 		bfs = new BreadthFirstTraversal(grid, startCell);
 		bfs.addObserver(new GraphTraversalListener() {
 
@@ -106,6 +107,8 @@ public class SwingBFSAnimation {
 		BitSet inPath = new BitSet();
 		IntStream.of(path).forEach(inPath::set);
 		ConfigurableGridRenderer renderer = createRenderer(canvas.getRenderer(), inPath);
+		int smallerPassageWidth = renderer.getPassageWidth() / 2;
+		renderer.fnPassageWidth = () -> smallerPassageWidth;
 		canvas.pushRenderer(renderer);
 		IntStream.of(path).forEach(canvas::drawGridCell);
 		canvas.popRenderer();
