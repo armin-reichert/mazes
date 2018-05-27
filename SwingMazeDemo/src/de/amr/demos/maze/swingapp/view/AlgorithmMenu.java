@@ -19,11 +19,11 @@ import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 public class AlgorithmMenu extends JMenu {
 
 	private final ButtonGroup group = new ButtonGroup();
-	private final SettingsWindow settings;
+	private final ControlPanel controlPanel;
 
-	public AlgorithmMenu(MazeDemoModel model, SettingsWindow settings) {
+	public AlgorithmMenu(MazeDemoModel model, ControlPanel controlPanel) {
 		super("Algorithms");
-		this.settings = settings;
+		this.controlPanel = controlPanel;
 		addMenu("Graph Traversals", model.algorithms().filter(alg -> alg.isTagged(Traversal)));
 		addMenu("Minimum Spanning Tree", model.algorithms().filter(alg -> alg.isTagged(MST)));
 		addMenu("Uniform Spanning Tree", model.algorithms().filter(alg -> alg.isTagged(UST)));
@@ -39,7 +39,7 @@ public class AlgorithmMenu extends JMenu {
 		algorithms.forEachOrdered(alg -> {
 			JRadioButtonMenuItem item = new JRadioButtonMenuItem(alg.getDescription());
 			item.addActionListener(e -> {
-				settings.getControlPanel().getAlgorithmLabel().setText(item.getText());
+				controlPanel.getAlgorithmLabel().setText(item.getText());
 			});
 			item.putClientProperty("algorithm", alg);
 			group.add(item);

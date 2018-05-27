@@ -46,13 +46,7 @@ public class SettingsWindow extends JFrame {
 		setTitle("Maze Generation Algorithms");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		setJMenuBar(new JMenuBar());
-		getJMenuBar().add(algorithmMenu = new AlgorithmMenu(model, this));
-		getJMenuBar().add(pathFinderMenu = new PathFinderMenu());
-		getJMenuBar().add(optionMenu = new OptionMenu(app));
-
 		controlPanel = new ControlPanel();
-
 		ComboBoxModel<String> comboModel = new DefaultComboBoxModel<>(
 				Arrays.stream(model.getGridCellSizes()).mapToObj(cellSize -> {
 					int width = displayMode.getWidth() / cellSize;
@@ -60,8 +54,6 @@ public class SettingsWindow extends JFrame {
 					return format("%d cells (%d x %d @ %d)", width * height, width, height, cellSize);
 				}).toArray(String[]::new));
 		controlPanel.getResolutionSelector().setModel(comboModel);
-
-		controlPanel.getAlgorithmLabel().setText(algorithmMenu.getSelectedAlgorithm().getDescription());
 
 		int[] sizes = model.getGridCellSizes();
 		int selectedIndex = range(0, sizes.length).filter(i -> sizes[i] == model.getGridCellSize()).findFirst().orElse(-1);
@@ -99,6 +91,14 @@ public class SettingsWindow extends JFrame {
 
 		getContentPane().add(controlPanel, BorderLayout.CENTER);
 		getContentPane().setPreferredSize(new Dimension(400, 200));
+
+		setJMenuBar(new JMenuBar());
+		getJMenuBar().add(algorithmMenu = new AlgorithmMenu(model, getControlPanel()));
+		getJMenuBar().add(pathFinderMenu = new PathFinderMenu());
+		getJMenuBar().add(optionMenu = new OptionMenu(app));
+
+		controlPanel.getAlgorithmLabel().setText(algorithmMenu.getSelectedAlgorithm().getDescription());
+
 		pack();
 	}
 
