@@ -17,12 +17,12 @@ import de.amr.easy.grid.api.ObservableGrid2D;
  * 
  * @author Armin Reichert
  */
-public class AnimatedGridCanvas extends GridCanvas<ObservableGrid2D<TraversalState, Integer>>
+public class ObservingGridCanvas extends GridCanvas<ObservableGrid2D<TraversalState, Integer>>
 		implements GraphObserver<WeightedEdge<Integer>> {
 
 	private int delayMillis;
 
-	public AnimatedGridCanvas(ObservableGrid2D<TraversalState, Integer> grid, GridRenderer renderer) {
+	public ObservingGridCanvas(ObservableGrid2D<TraversalState, Integer> grid, GridRenderer renderer) {
 		super(grid, renderer);
 		grid.addGraphObserver(this);
 	}

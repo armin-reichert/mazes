@@ -16,7 +16,7 @@ import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.ObservableGrid2D;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.ui.swing.AnimatedGridCanvas;
+import de.amr.easy.grid.ui.swing.ObservingGridCanvas;
 import de.amr.easy.grid.ui.swing.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.GridRenderer;
 import de.amr.easy.maze.alg.BinaryTree;
@@ -97,12 +97,12 @@ public class MazeGenerationRecordingApp {
 	};
 
 	private ObservableGrid2D<TraversalState, Integer> grid;
-	private AnimatedGridCanvas canvas;
+	private ObservingGridCanvas canvas;
 
 	public void run(int numCols, int numRows, int cellSize, int scanRate, int delayMillis) {
 		for (Class<?> generatorClass : generatorClasses) {
 			grid = new ObservableGrid<>(numCols, numRows, Top4.get(), TraversalState.UNVISITED, false);
-			canvas = new AnimatedGridCanvas(grid, createRenderer(cellSize));
+			canvas = new ObservingGridCanvas(grid, createRenderer(cellSize));
 			try {
 				MazeAlgorithm generator = (MazeAlgorithm) generatorClass.getConstructor(Grid2D.class).newInstance(grid);
 				try (GifRecorder recorder = new GifRecorder(canvas.getDrawingBuffer().getType())) {

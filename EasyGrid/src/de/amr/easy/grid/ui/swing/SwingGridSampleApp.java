@@ -42,7 +42,7 @@ public abstract class SwingGridSampleApp extends JFrame implements Runnable {
 	protected String appName;
 	protected boolean fullscreen;
 	protected ObservableGrid<TraversalState, Integer> grid;
-	protected AnimatedGridCanvas canvas;
+	protected ObservingGridCanvas canvas;
 	protected ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
 
 	private void configureRenderer() {
@@ -94,7 +94,7 @@ public abstract class SwingGridSampleApp extends JFrame implements Runnable {
 	}
 
 	private void createAndShowUI() {
-		canvas = new AnimatedGridCanvas(grid, renderer);
+		canvas = new ObservingGridCanvas(grid, renderer);
 		canvas.setBackground(Color.BLACK);
 		canvas.setDelay(0);
 		canvas.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "exit");

@@ -18,7 +18,7 @@ import de.amr.demos.maze.swingapp.view.SettingsWindow;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.ui.swing.AnimatedGridCanvas;
+import de.amr.easy.grid.ui.swing.ObservingGridCanvas;
 import de.amr.easy.grid.ui.swing.UserInterfaceUtils;
 
 /**
@@ -74,7 +74,7 @@ public class MazeDemoApp {
 		mazeWindow.setVisible(true);
 	}
 
-	public AnimatedGridCanvas canvas() {
+	public ObservingGridCanvas canvas() {
 		return mazeWindow.getCanvas();
 	}
 
