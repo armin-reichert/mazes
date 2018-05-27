@@ -41,9 +41,9 @@ public class KruskalMST extends MazeAlgorithm {
 Here, the edges of a full grid are processed in permuted order (the Kruskal MST algorithm would process the edges in order of increasing weight).
 
 
-Also included is a [Swing demo application](https://github.com/armin-reichert/mazes/releases/download/mai2018/mazedemoapp.jar) demonstrating all implemented maze generators. Using a control panel you can select the generation algorithm, path finder algorithm, grid resolution and rendering style ("walls", "passages") interactively.
+Also included is a [demo application](https://github.com/armin-reichert/mazes/releases/download/mai2018/mazedemoapp.jar) demonstrating all implemented maze generators and path finders. Using a control panel one can interactively select the generation algorithm, path finder algorithm, grid resolution and rendering style ("walls", "passages").
 
-Implemented algorithms so far:
+Implemented algorithms:
 
 Graph Traversal:
 - [Random Breadth-First-Search](EasyMaze/src/de/amr/easy/maze/alg/traversal/RandomBFS.java)
