@@ -11,6 +11,7 @@ import java.util.Deque;
 
 import javax.swing.JComponent;
 
+import de.amr.easy.graph.api.Edge;
 import de.amr.easy.grid.api.BareGrid2D;
 
 /**
@@ -35,7 +36,6 @@ public class GridCanvas<G extends BareGrid2D<?>> extends JComponent {
 		this.grid = grid;
 		rendererStack.push(renderer);
 		setDoubleBuffered(false);
-		setBackground(renderer.getGridBgColor());
 		adaptSize();
 	}
 
@@ -49,17 +49,26 @@ public class GridCanvas<G extends BareGrid2D<?>> extends JComponent {
 
 	public void setGrid(G grid) {
 		if (grid == null) {
-			throw new IllegalArgumentException("NULL grid not allowed");
+			throw new IllegalArgumentException("Canvas must have a grid");
 		}
 		this.grid = grid;
 	}
 
-	public int getCellSize() {
-		return getRenderer().getCellSize();
+	public void drawGridCell(int cell) {
+		getRenderer().drawCell(g2, grid, cell);
+	}
+
+	public void drawGridPassage(Edge edge, boolean visible) {
+		getRenderer().drawPassage(g2, grid, edge, visible);
+	}
+
+	public void drawGrid() {
+		getRenderer().drawGrid(g2, grid);
 	}
 
 	public void adaptSize() {
-		Dimension size = new Dimension(grid.numCols() * getCellSize(), grid.numRows() * getCellSize());
+		Dimension size = new Dimension(grid.numCols() * getRenderer().getCellSize(),
+				grid.numRows() * getRenderer().getCellSize());
 		setSize(size);
 		setPreferredSize(size);
 		GraphicsConfiguration config = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
@@ -76,39 +85,30 @@ public class GridCanvas<G extends BareGrid2D<?>> extends JComponent {
 	}
 
 	public void clear() {
-		g2.setColor(getBackground());
+		g2.setColor(getRenderer().getGridBgColor());
 		g2.fillRect(0, 0, getWidth(), getHeight());
 		repaint();
 	}
 
 	public GridRenderer getRenderer() {
-		return rendererStack.getFirst();
-	}
-
-	public void resetRenderer(GridRenderer renderer) {
-		rendererStack.clear();
-		rendererStack.push(renderer);
-		setBackground(renderer.getGridBgColor());
-		adaptSize();
+		return rendererStack.peek();
 	}
 
 	public void pushRenderer(GridRenderer renderer) {
-		int oldCellSize = getCellSize();
+		int oldCellSize = getRenderer().getCellSize();
 		rendererStack.push(renderer);
-		setBackground(renderer.getGridBgColor());
-		if (renderer.getCellSize() != oldCellSize) {
+		if (getRenderer().getCellSize() != oldCellSize) {
 			adaptSize();
 		}
 	}
 
 	public void popRenderer() {
 		if (rendererStack.isEmpty()) {
-			throw new IllegalStateException("Cannot pop from empty stack");
+			throw new IllegalStateException("Cannot remove last renderer");
 		}
-		int oldCellSize = getCellSize();
+		int oldCellSize = getRenderer().getCellSize();
 		rendererStack.pop();
-		setBackground(getRenderer().getGridBgColor());
-		if (getCellSize() != oldCellSize) {
+		if (getRenderer().getCellSize() != oldCellSize) {
 			adaptSize();
 		}
 	}

@@ -51,7 +51,7 @@ public class SwingBFSAnimation {
 		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
 		renderer.fnCellSize = oldRenderer::getCellSize;
 		renderer.fnPassageWidth = oldRenderer::getPassageWidth;
-		renderer.fnTextFont = () -> new Font("SansSerif", Font.PLAIN, renderer.getPassageWidth() / 2);
+		renderer.fnTextFont = () -> new Font(Font.SANS_SERIF, Font.PLAIN, renderer.getPassageWidth() / 2);
 		renderer.fnText = cell -> distancesVisible && bfs.getDistance(cell) != -1 ? "" + bfs.getDistance(cell) : "";
 		renderer.fnCellBgColor = cell -> inPath.get(cell) ? pathColor : distanceColor.apply(cell);
 		renderer.fnPassageColor = (cell, dir) -> {
