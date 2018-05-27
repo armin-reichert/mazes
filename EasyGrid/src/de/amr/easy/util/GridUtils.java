@@ -63,34 +63,6 @@ public class GridUtils {
 		return pow;
 	}
 
-	/**
-	 * 
-	 * @param needle
-	 *          object to be found
-	 * @param haystack
-	 *          array to be searched
-	 * @return the index of the needle in the haystack or <code>-1</code> otherwise
-	 */
-	public static <T> int indexOf(T needle, T[] haystack) {
-		int i = -1;
-		for (T x : haystack) {
-			++i;
-			if (x.equals(needle))
-				return i;
-		}
-		return i;
-	}
-
-	public static int indexOf(int needle, int[] haystack) {
-		int i = -1;
-		for (int x : haystack) {
-			++i;
-			if (x == needle)
-				return i;
-		}
-		return i;
-	}
-
 	public static Multigraph<WeightedEdge<Integer>> dualGraphOfGrid(int cols, int rows) {
 		Multigraph<WeightedEdge<Integer>> dual = new DefaultMultigraph<>();
 		int dualRows = rows - 1, dualCols = cols - 1;
