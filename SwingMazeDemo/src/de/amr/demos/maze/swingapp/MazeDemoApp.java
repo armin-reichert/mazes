@@ -6,8 +6,9 @@ import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.DisplayMode;
 import java.awt.EventQueue;
+import java.awt.GraphicsEnvironment;
 
 import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
@@ -18,7 +19,6 @@ import de.amr.demos.maze.swingapp.view.SettingsWindow;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.ui.swing.Display;
 import de.amr.easy.grid.ui.swing.ObservingGridCanvas;
 
 /**
@@ -62,10 +62,11 @@ public class MazeDemoApp {
 		model.setHidingControlsWhenRunning(false);
 		model.setLongestPathHighlighted(false);
 		model.setDelay(0);
-		Dimension size = Display.getScreenResolution();
-		size.width /= model.getGridCellSize();
-		size.height /= model.getGridCellSize();
-		model.setGrid(new ObservableGrid<>(size.width, size.height, Top4.get(), UNVISITED, false));
+		DisplayMode displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
+				.getDisplayMode();
+		int width = displayMode.getWidth() / model.getGridCellSize();
+		int height = displayMode.getHeight() / model.getGridCellSize();
+		model.setGrid(new ObservableGrid<>(width, height, Top4.get(), UNVISITED, false));
 
 		settingsWindow = new SettingsWindow(this);
 		settingsWindow.setAlwaysOnTop(true);

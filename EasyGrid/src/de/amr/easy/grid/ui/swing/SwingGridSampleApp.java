@@ -9,6 +9,8 @@ import static javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.DisplayMode;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -87,7 +89,9 @@ public abstract class SwingGridSampleApp extends JFrame implements Runnable {
 	 */
 	public SwingGridSampleApp(int cellSize, Topology top) {
 		fullscreen = true;
-		canvasSize = Display.getScreenResolution();
+		DisplayMode displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
+				.getDisplayMode();
+		canvasSize = new Dimension(displayMode.getWidth(), displayMode.getHeight());
 		grid = new ObservableGrid<>(canvasSize.width / cellSize, canvasSize.height / cellSize, top, UNVISITED, false);
 		configureRenderer();
 	}

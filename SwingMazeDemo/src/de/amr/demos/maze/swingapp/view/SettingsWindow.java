@@ -6,6 +6,8 @@ import static java.util.stream.IntStream.range;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.DisplayMode;
+import java.awt.GraphicsEnvironment;
 import java.util.Arrays;
 
 import javax.swing.ComboBoxModel;
@@ -22,7 +24,6 @@ import de.amr.demos.maze.swingapp.action.StopTaskAction;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.ui.swing.Display;
 
 /**
  * This view enables the user to select the maze generation and path finder algorithm and all the
@@ -39,6 +40,8 @@ public class SettingsWindow extends JFrame {
 
 	public SettingsWindow(MazeDemoApp app) {
 		final MazeDemoModel model = app.model;
+		final DisplayMode displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
+				.getDisplayMode();
 
 		setTitle("Maze Generation Algorithms");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,10 +55,9 @@ public class SettingsWindow extends JFrame {
 
 		ComboBoxModel<String> comboModel = new DefaultComboBoxModel<>(
 				Arrays.stream(model.getGridCellSizes()).mapToObj(cellSize -> {
-					Dimension dim = Display.getScreenResolution();
-					dim.width /= cellSize;
-					dim.height /= cellSize;
-					return format("%d cells (%d x %d @ %d)", dim.width * dim.height, dim.width, dim.height, cellSize);
+					int width = displayMode.getWidth() / cellSize;
+					int height = displayMode.getHeight() / cellSize;
+					return format("%d cells (%d x %d @ %d)", width * height, width, height, cellSize);
 				}).toArray(String[]::new));
 		controlPanel.getResolutionSelector().setModel(comboModel);
 
@@ -69,10 +71,9 @@ public class SettingsWindow extends JFrame {
 			JComboBox<?> selector = (JComboBox<?>) e.getSource();
 			int cellSize = model.getGridCellSizes()[selector.getSelectedIndex()];
 			model.setGridCellSize(cellSize);
-			Dimension dim = Display.getScreenResolution();
-			dim.width /= cellSize;
-			dim.height /= cellSize;
-			model.setGrid(new ObservableGrid<>(dim.width, dim.height, Top4.get(), UNVISITED, false));
+			int width = displayMode.getWidth() / cellSize;
+			int height = displayMode.getHeight() / cellSize;
+			model.setGrid(new ObservableGrid<>(width, height, Top4.get(), UNVISITED, false));
 			app.updateCanvas();
 		});
 
