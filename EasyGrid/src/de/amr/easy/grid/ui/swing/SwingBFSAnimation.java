@@ -68,7 +68,7 @@ public class SwingBFSAnimation {
 		return renderer;
 	}
 
-	public void runBFSAnimation(ObservingGridCanvas canvas, int source) {
+	public void runBFSAnimation(GridCanvas<?> canvas, int source) {
 		// 1. run without events for computing maximum distance (cell) from source
 		bfs = new BreadthFirstTraversal(grid, source);
 		bfs.traverseGraph();
@@ -94,7 +94,7 @@ public class SwingBFSAnimation {
 		canvas.popRenderer();
 	}
 
-	public void showPath(ObservingGridCanvas canvas, int target) {
+	public void showPath(GridCanvas<?> canvas, int target) {
 		if (bfs == null) {
 			throw new IllegalStateException("Must run BFS before showing path");
 		}

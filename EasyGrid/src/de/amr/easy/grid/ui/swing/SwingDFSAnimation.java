@@ -57,7 +57,7 @@ public class SwingDFSAnimation {
 		return renderer;
 	}
 
-	public void runDFSAnimation(ObservingGridCanvas canvas, int source, int target) {
+	public void runDFSAnimation(GridCanvas<?> canvas, int source, int target) {
 		DepthFirstTraversal dfs = new DepthFirstTraversal(grid, source, target);
 		dfs.addObserver(new GraphTraversalListener() {
 
