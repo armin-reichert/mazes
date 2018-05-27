@@ -16,7 +16,6 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.demos.maze.swingapp.view.MazeWindow;
 import de.amr.demos.maze.swingapp.view.SettingsWindow;
-import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.ObservingGridCanvas;
@@ -50,7 +49,7 @@ public class MazeDemoApp {
 		model = new MazeDemoModel();
 		model.setGridCellSizes(128, 64, 32, 16, 8, 4, 2);
 		model.setGridCellSize(32);
-		model.setPassageWidthPercentage(25);
+		model.setPassageWidthPercentage(50);
 		model.setCompletedCellColor(Color.WHITE);
 		model.setVisitedCellColor(Color.BLUE);
 		model.setUnvisitedCellColor(Color.BLACK);
@@ -79,10 +78,6 @@ public class MazeDemoApp {
 
 	public ObservingGridCanvas canvas() {
 		return mazeWindow.getCanvas();
-	}
-
-	public ObservableGrid<TraversalState, Integer> grid() {
-		return model.getGrid();
 	}
 
 	public void showMessage(String msg) {

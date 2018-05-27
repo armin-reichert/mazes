@@ -1,7 +1,7 @@
 package de.amr.demos.maze.swingapp.action;
 
 import static de.amr.demos.maze.swingapp.model.AlgorithmTag.Slow;
-import static de.amr.demos.maze.swingapp.model.AlgorithmTag.SmallGridOnly;
+import static de.amr.demos.maze.swingapp.model.AlgorithmTag.SmallGrid;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -42,7 +42,7 @@ public class CreateAllMazesAction extends CreateSingleMazeAction {
 		readyForNext = true;
 		/*@formatter:off*/
 		Stream.of(MazeDemoModel.ALGORITHMS)
-			.filter(alg -> !(alg.isTagged(Slow) || alg.isTagged(SmallGridOnly)))
+			.filter(alg -> !(alg.isTagged(Slow) || alg.isTagged(SmallGrid)))
 			.forEachOrdered(alg -> {
 				if (app.isTaskStopped()) {
 					return;

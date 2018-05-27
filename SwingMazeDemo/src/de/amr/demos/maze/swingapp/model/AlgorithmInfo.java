@@ -1,8 +1,6 @@
 package de.amr.demos.maze.swingapp.model;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Meta-data for an algorithm.
@@ -13,12 +11,12 @@ public class AlgorithmInfo {
 
 	private Class<?> algorithmClass;
 	private String description;
-	private Set<?> tags;
+	private Object[] tags;
 
 	public AlgorithmInfo(Class<?> algorithmClass, String description, Object... tags) {
 		this.algorithmClass = algorithmClass;
 		this.description = description;
-		this.tags = new HashSet<>(Arrays.asList(tags));
+		this.tags = tags;
 	}
 
 	public Class<?> getAlgorithmClass() {
@@ -29,12 +27,8 @@ public class AlgorithmInfo {
 		return description;
 	}
 
-	public Set<?> getTags() {
-		return tags;
-	}
-
 	public boolean isTagged(Object tag) {
-		return tags.contains(tag);
+		return Arrays.stream(tags).anyMatch(t -> t.equals(tag));
 	}
 
 	@Override

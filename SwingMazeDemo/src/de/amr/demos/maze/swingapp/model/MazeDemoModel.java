@@ -2,7 +2,7 @@ package de.amr.demos.maze.swingapp.model;
 
 import static de.amr.demos.maze.swingapp.model.AlgorithmTag.MST;
 import static de.amr.demos.maze.swingapp.model.AlgorithmTag.Slow;
-import static de.amr.demos.maze.swingapp.model.AlgorithmTag.SmallGridOnly;
+import static de.amr.demos.maze.swingapp.model.AlgorithmTag.SmallGrid;
 import static de.amr.demos.maze.swingapp.model.AlgorithmTag.Traversal;
 import static de.amr.demos.maze.swingapp.model.AlgorithmTag.UST;
 
@@ -57,15 +57,15 @@ public class MazeDemoModel {
 
 	public static final AlgorithmInfo[] ALGORITHMS = {
 		/*@formatter:off*/
-		new AlgorithmInfo(RecursiveDFS.class, "Depth-First-Traversal (recursive, small grids only!)", Traversal, SmallGridOnly),
+		new AlgorithmInfo(RecursiveDFS.class, "Depth-First-Traversal (recursive, small grids only!)", Traversal, SmallGrid),
 		new AlgorithmInfo(IterativeDFS.class, "Depth-First-Traversal (non-recursive)", Traversal),
 		new AlgorithmInfo(RandomBFS.class, "Breadth-First-Traversal", Traversal),
 		new AlgorithmInfo(KruskalMST.class, "Kruskal MST", MST),
 		new AlgorithmInfo(PrimMST.class, "Prim MST", MST),
 		new AlgorithmInfo(BoruvkaMST.class, "Boruvka MST", MST),
-		new AlgorithmInfo(ReverseDeleteBFSMST.class, "Reverse-Delete MST (BFS version, slow!)", MST, SmallGridOnly),
-		new AlgorithmInfo(ReverseDeleteDFSMST.class, "Reverse-Delete MST (DFS version, slow!)", MST, SmallGridOnly),
-		new AlgorithmInfo(AldousBroderUST.class, "Aldous-Broder UST (slow!)", UST, Slow),
+		new AlgorithmInfo(ReverseDeleteBFSMST.class, "Reverse-Delete MST (BFS, very slow)", MST, SmallGrid),
+		new AlgorithmInfo(ReverseDeleteDFSMST.class, "Reverse-Delete MST (DFS, very slow)", MST, SmallGrid),
+		new AlgorithmInfo(AldousBroderUST.class, "Aldous-Broder UST (rather slow)", UST, Slow),
 		new AlgorithmInfo(WilsonUSTRandomCell.class, "Wilson UST (random)", UST, Slow),
 		new AlgorithmInfo(WilsonUSTRowsTopDown.class, "Wilson UST (row-wise top-to-bottom)", UST),
 		new AlgorithmInfo(WilsonUSTLeftToRightSweep.class, "Wilson UST (column-wise left to right)", UST),
