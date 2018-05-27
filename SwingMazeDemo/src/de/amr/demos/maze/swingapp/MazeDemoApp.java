@@ -50,7 +50,7 @@ public class MazeDemoApp {
 		model = new MazeDemoModel();
 		model.setGridCellSizes(128, 64, 32, 16, 8, 4, 2);
 		model.setGridCellSize(32);
-		model.setPassageThicknessPct(25);
+		model.setPassageWidthPercentage(25);
 		model.setCompletedCellColor(Color.WHITE);
 		model.setVisitedCellColor(Color.BLUE);
 		model.setUnvisitedCellColor(Color.BLACK);
@@ -99,7 +99,7 @@ public class MazeDemoApp {
 	}
 
 	public void setGridPassageThickness(int percent) {
-		model.setPassageThicknessPct(percent);
+		model.setPassageWidthPercentage(percent);
 		canvas().fill(Color.BLACK);
 		canvas().drawGrid();
 	}

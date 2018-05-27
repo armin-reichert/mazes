@@ -9,14 +9,13 @@ import java.util.Set;
  * 
  * @author Armin Reichert
  */
-public class AlgorithmInfo<Tag> {
+public class AlgorithmInfo {
 
 	private Class<?> algorithmClass;
 	private String description;
-	private Set<Tag> tags;
+	private Set<?> tags;
 
-	@SafeVarargs
-	public AlgorithmInfo(Class<?> algorithmClass, String description, Tag... tags) {
+	public AlgorithmInfo(Class<?> algorithmClass, String description, Object... tags) {
 		this.algorithmClass = algorithmClass;
 		this.description = description;
 		this.tags = new HashSet<>(Arrays.asList(tags));
@@ -30,7 +29,7 @@ public class AlgorithmInfo<Tag> {
 		return description;
 	}
 
-	public Set<Tag> getTags() {
+	public Set<?> getTags() {
 		return tags;
 	}
 

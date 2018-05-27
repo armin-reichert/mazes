@@ -48,7 +48,7 @@ public class MazeWindow extends JFrame {
 		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
 		renderer.fnCellSize = () -> app.model.getGridCellSize();
 		renderer.fnPassageWidth = () -> {
-			int thickness = app.model.getGridCellSize() * app.model.getPassageThicknessPct() / 100;
+			int thickness = app.model.getGridCellSize() * app.model.getPassageWidthPercentage() / 100;
 			if (thickness < 1) {
 				thickness = 1;
 			} else if (thickness > app.model.getGridCellSize() - 1) {

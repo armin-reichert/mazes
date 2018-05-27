@@ -69,8 +69,8 @@ public class SettingsWindow extends JFrame {
 			app.updateCanvas();
 		});
 
-		controlPanel.getPassageThicknessSlider().setValue(model.getPassageThicknessPct());
-		controlPanel.getPassageThicknessSlider().addChangeListener(e -> {
+		controlPanel.getPassageWidthSlider().setValue(model.getPassageWidthPercentage());
+		controlPanel.getPassageWidthSlider().addChangeListener(e -> {
 			JSlider slider = (JSlider) e.getSource();
 			if (!slider.getValueIsAdjusting()) {
 				app.setGridPassageThickness(slider.getValue());
@@ -93,9 +93,12 @@ public class SettingsWindow extends JFrame {
 		getContentPane().setPreferredSize(new Dimension(400, 200));
 
 		setJMenuBar(new JMenuBar());
-		getJMenuBar().add(algorithmMenu = new AlgorithmMenu(model, getControlPanel()));
-		getJMenuBar().add(pathFinderMenu = new PathFinderMenu());
-		getJMenuBar().add(optionMenu = new OptionMenu(app));
+		algorithmMenu = new AlgorithmMenu(model, item -> controlPanel.getAlgorithmLabel().setText(item.getText()));
+		getJMenuBar().add(algorithmMenu);
+		pathFinderMenu = new PathFinderMenu();
+		getJMenuBar().add(pathFinderMenu);
+		optionMenu = new OptionMenu(app);
+		getJMenuBar().add(optionMenu);
 
 		controlPanel.getAlgorithmLabel().setText(algorithmMenu.getSelectedAlgorithm().getDescription());
 

@@ -1,13 +1,15 @@
 package de.amr.demos.maze.swingapp.action;
 
-import static de.amr.demos.maze.swingapp.model.MazeDemoModel.Tag.Slow;
-import static de.amr.demos.maze.swingapp.model.MazeDemoModel.Tag.SmallGridOnly;
+import static de.amr.demos.maze.swingapp.model.AlgorithmTag.Slow;
+import static de.amr.demos.maze.swingapp.model.AlgorithmTag.SmallGridOnly;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.util.stream.Stream;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
+import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 
 public class CreateAllMazesAction extends CreateSingleMazeAction {
 
@@ -39,7 +41,7 @@ public class CreateAllMazesAction extends CreateSingleMazeAction {
 	private void generateAllMazes() {
 		readyForNext = true;
 		/*@formatter:off*/
-		app.model.algorithms()
+		Stream.of(MazeDemoModel.ALGORITHMS)
 			.filter(alg -> !(alg.isTagged(Slow) || alg.isTagged(SmallGridOnly)))
 			.forEachOrdered(alg -> {
 				if (app.isTaskStopped()) {
@@ -58,14 +60,14 @@ public class CreateAllMazesAction extends CreateSingleMazeAction {
 		app.showMessage("Done.");
 	}
 
-	private void createNextMaze(AlgorithmInfo<?> algorithm) {
+	private void createNextMaze(AlgorithmInfo algorithm) {
 		readyForNext = false;
 		app.canvas().fill(Color.BLACK);
 		app.settingsWindow.getControlPanel().getAlgorithmLabel().setText(algorithm.getDescription());
 		try {
 			app.settingsWindow.getAlgorithmMenu().setSelectedAlgorithm(algorithm);
 			generateMaze(algorithm);
-			AlgorithmInfo<?> pathFinder = app.settingsWindow.getPathFinderMenu().getSelectedPathFinder();
+			AlgorithmInfo pathFinder = app.settingsWindow.getPathFinderMenu().getSelectedAlgorithm();
 			if (pathFinder != null) {
 				runPathFinder(pathFinder);
 			}

@@ -43,7 +43,7 @@ public class CreateSingleMazeAction extends AbstractAction {
 			try {
 				enableControls(false);
 				generateMaze(app.settingsWindow.getAlgorithmMenu().getSelectedAlgorithm());
-				AlgorithmInfo<?> pathFinder = app.settingsWindow.getPathFinderMenu().getSelectedPathFinder();
+				AlgorithmInfo pathFinder = app.settingsWindow.getPathFinderMenu().getSelectedAlgorithm();
 				if (pathFinder != null) {
 					runPathFinder(pathFinder);
 				}
@@ -66,11 +66,11 @@ public class CreateSingleMazeAction extends AbstractAction {
 		ControlPanel controls = app.settingsWindow.getControlPanel();
 		controls.getBtnCreateMaze().setEnabled(b);
 		controls.getBtnCreateAllMazes().setEnabled(b);
-		controls.getPassageThicknessSlider().setEnabled(b);
+		controls.getPassageWidthSlider().setEnabled(b);
 		controls.getResolutionSelector().setEnabled(b);
 	}
 
-	protected void generateMaze(AlgorithmInfo<?> generatorInfo) throws Exception {
+	protected void generateMaze(AlgorithmInfo generatorInfo) throws Exception {
 		app.showMessage(format("\n%s (%d cells)", generatorInfo.getDescription(), app.grid().numCells()));
 
 		// Reset grid
@@ -102,7 +102,7 @@ public class CreateSingleMazeAction extends AbstractAction {
 		}
 	}
 
-	protected void runPathFinder(AlgorithmInfo<?> pathFinderInfo) {
+	protected void runPathFinder(AlgorithmInfo pathFinderInfo) {
 		int source = app.grid().cell(app.model.getPathFinderSource());
 		int target = app.grid().cell(app.model.getPathFinderTarget());
 		if (pathFinderInfo.getAlgorithmClass() == SwingBFSAnimation.class) {

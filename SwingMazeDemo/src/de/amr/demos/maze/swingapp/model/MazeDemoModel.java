@@ -1,13 +1,12 @@
 package de.amr.demos.maze.swingapp.model;
 
-import static de.amr.demos.maze.swingapp.model.MazeDemoModel.Tag.MST;
-import static de.amr.demos.maze.swingapp.model.MazeDemoModel.Tag.Slow;
-import static de.amr.demos.maze.swingapp.model.MazeDemoModel.Tag.SmallGridOnly;
-import static de.amr.demos.maze.swingapp.model.MazeDemoModel.Tag.Traversal;
-import static de.amr.demos.maze.swingapp.model.MazeDemoModel.Tag.UST;
+import static de.amr.demos.maze.swingapp.model.AlgorithmTag.MST;
+import static de.amr.demos.maze.swingapp.model.AlgorithmTag.Slow;
+import static de.amr.demos.maze.swingapp.model.AlgorithmTag.SmallGridOnly;
+import static de.amr.demos.maze.swingapp.model.AlgorithmTag.Traversal;
+import static de.amr.demos.maze.swingapp.model.AlgorithmTag.UST;
 
 import java.awt.Color;
-import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.GridPosition;
@@ -56,61 +55,53 @@ import de.amr.easy.maze.alg.ust.WilsonUSTRowsTopDown;
  */
 public class MazeDemoModel {
 
-	public enum Tag {
-		Traversal, MST, UST, Slow, SmallGridOnly;
-	};
-
-	private static final AlgorithmInfo<?>[] ALGORITHMS = {
+	public static final AlgorithmInfo[] ALGORITHMS = {
 		/*@formatter:off*/
-		new AlgorithmInfo<>(RecursiveDFS.class, "Depth-First-Traversal (recursive, small grids only!)", Traversal, SmallGridOnly),
-		new AlgorithmInfo<>(IterativeDFS.class, "Depth-First-Traversal (non-recursive)", Traversal),
-		new AlgorithmInfo<>(RandomBFS.class, "Breadth-First-Traversal", Traversal),
-		new AlgorithmInfo<>(KruskalMST.class, "Kruskal MST", MST),
-		new AlgorithmInfo<>(PrimMST.class, "Prim MST", MST),
-		new AlgorithmInfo<>(BoruvkaMST.class, "Boruvka MST", MST),
-		new AlgorithmInfo<>(ReverseDeleteBFSMST.class, "Reverse-Delete MST (BFS version, slow!)", MST, SmallGridOnly),
-		new AlgorithmInfo<>(ReverseDeleteDFSMST.class, "Reverse-Delete MST (DFS version, slow!)", MST, SmallGridOnly),
-		new AlgorithmInfo<>(AldousBroderUST.class, "Aldous-Broder UST (slow!)", UST, Slow),
-		new AlgorithmInfo<>(WilsonUSTRandomCell.class, "Wilson UST (random)", UST, Slow),
-		new AlgorithmInfo<>(WilsonUSTRowsTopDown.class, "Wilson UST (row-wise top-to-bottom)", UST),
-		new AlgorithmInfo<>(WilsonUSTLeftToRightSweep.class, "Wilson UST (column-wise left to right)", UST),
-		new AlgorithmInfo<>(WilsonUSTRightToLeftSweep.class, "Wilson UST (column-wise right to left)", UST),
-		new AlgorithmInfo<>(WilsonUSTCollapsingWalls.class, "Wilson UST (column-wise collapsing)", UST),
-		new AlgorithmInfo<>(WilsonUSTCollapsingRectangle.class, "Wilson UST (collapsing rectangle)", UST),
-		new AlgorithmInfo<>(WilsonUSTExpandingCircle.class, "Wilson UST (expanding circle)", UST),
-		new AlgorithmInfo<>(WilsonUSTCollapsingCircle.class, "Wilson UST (collapsing circle)", UST),
-		new AlgorithmInfo<>(WilsonUSTExpandingCircles.class, "Wilson UST (expanding circles)", UST),
-		new AlgorithmInfo<>(WilsonUSTExpandingSpiral.class, "Wilson UST (expanding spiral)", UST),
-		new AlgorithmInfo<>(WilsonUSTExpandingRectangle.class, "Wilson UST (expanding rectangle)", UST),
-		new AlgorithmInfo<>(WilsonUSTNestedRectangles.class, "Wilson UST (nested rectangles)", UST),
-		new AlgorithmInfo<>(WilsonUSTRecursiveCrosses.class, "Wilson UST (recursive crosses)", UST),
-		new AlgorithmInfo<>(WilsonUSTHilbertCurve.class, "Wilson UST (Hilbert curve)", UST),
-		new AlgorithmInfo<>(WilsonUSTMooreCurve.class, "Wilson UST (Moore curve)", UST),
-		new AlgorithmInfo<>(WilsonUSTPeanoCurve.class, "Wilson UST (Peano curve)", UST),
-		new AlgorithmInfo<>(BinaryTree.class, "Binary Tree (row-wise, top-to-bottom)"),
-		new AlgorithmInfo<>(BinaryTreeRandom.class, "Binary Tree (random)"), 
-		new AlgorithmInfo<>(Sidewinder.class, "Sidewinder"),
-		new AlgorithmInfo<>(Eller.class, "Eller's Algorithm"), 
-		new AlgorithmInfo<>(EllerInsideOut.class, "Armin's Algorithm"), 
-		new AlgorithmInfo<>(HuntAndKill.class, "Hunt-And-Kill"),
-		new AlgorithmInfo<>(HuntAndKillRandom.class, "Hunt-And-Kill (random)"),
-		new AlgorithmInfo<>(GrowingTree.class, "Growing Tree", Slow),
-		new AlgorithmInfo<>(RecursiveDivision.class, "Recursive Division"),
+		new AlgorithmInfo(RecursiveDFS.class, "Depth-First-Traversal (recursive, small grids only!)", Traversal, SmallGridOnly),
+		new AlgorithmInfo(IterativeDFS.class, "Depth-First-Traversal (non-recursive)", Traversal),
+		new AlgorithmInfo(RandomBFS.class, "Breadth-First-Traversal", Traversal),
+		new AlgorithmInfo(KruskalMST.class, "Kruskal MST", MST),
+		new AlgorithmInfo(PrimMST.class, "Prim MST", MST),
+		new AlgorithmInfo(BoruvkaMST.class, "Boruvka MST", MST),
+		new AlgorithmInfo(ReverseDeleteBFSMST.class, "Reverse-Delete MST (BFS version, slow!)", MST, SmallGridOnly),
+		new AlgorithmInfo(ReverseDeleteDFSMST.class, "Reverse-Delete MST (DFS version, slow!)", MST, SmallGridOnly),
+		new AlgorithmInfo(AldousBroderUST.class, "Aldous-Broder UST (slow!)", UST, Slow),
+		new AlgorithmInfo(WilsonUSTRandomCell.class, "Wilson UST (random)", UST, Slow),
+		new AlgorithmInfo(WilsonUSTRowsTopDown.class, "Wilson UST (row-wise top-to-bottom)", UST),
+		new AlgorithmInfo(WilsonUSTLeftToRightSweep.class, "Wilson UST (column-wise left to right)", UST),
+		new AlgorithmInfo(WilsonUSTRightToLeftSweep.class, "Wilson UST (column-wise right to left)", UST),
+		new AlgorithmInfo(WilsonUSTCollapsingWalls.class, "Wilson UST (column-wise collapsing)", UST),
+		new AlgorithmInfo(WilsonUSTCollapsingRectangle.class, "Wilson UST (collapsing rectangle)", UST),
+		new AlgorithmInfo(WilsonUSTExpandingCircle.class, "Wilson UST (expanding circle)", UST),
+		new AlgorithmInfo(WilsonUSTCollapsingCircle.class, "Wilson UST (collapsing circle)", UST),
+		new AlgorithmInfo(WilsonUSTExpandingCircles.class, "Wilson UST (expanding circles)", UST),
+		new AlgorithmInfo(WilsonUSTExpandingSpiral.class, "Wilson UST (expanding spiral)", UST),
+		new AlgorithmInfo(WilsonUSTExpandingRectangle.class, "Wilson UST (expanding rectangle)", UST),
+		new AlgorithmInfo(WilsonUSTNestedRectangles.class, "Wilson UST (nested rectangles)", UST),
+		new AlgorithmInfo(WilsonUSTRecursiveCrosses.class, "Wilson UST (recursive crosses)", UST),
+		new AlgorithmInfo(WilsonUSTHilbertCurve.class, "Wilson UST (Hilbert curve)", UST),
+		new AlgorithmInfo(WilsonUSTMooreCurve.class, "Wilson UST (Moore curve)", UST),
+		new AlgorithmInfo(WilsonUSTPeanoCurve.class, "Wilson UST (Peano curve)", UST),
+		new AlgorithmInfo(BinaryTree.class, "Binary Tree (row-wise, top-to-bottom)"),
+		new AlgorithmInfo(BinaryTreeRandom.class, "Binary Tree (random)"), 
+		new AlgorithmInfo(Sidewinder.class, "Sidewinder"),
+		new AlgorithmInfo(Eller.class, "Eller's Algorithm"), 
+		new AlgorithmInfo(EllerInsideOut.class, "Armin's Algorithm"), 
+		new AlgorithmInfo(HuntAndKill.class, "Hunt-And-Kill"),
+		new AlgorithmInfo(HuntAndKillRandom.class, "Hunt-And-Kill (random)"),
+		new AlgorithmInfo(GrowingTree.class, "Growing Tree", Slow),
+		new AlgorithmInfo(RecursiveDivision.class, "Recursive Division"),
 		/*@formatter:on*/
 	};
 
-	public Stream<AlgorithmInfo<?>> algorithms() {
-		return Stream.of(ALGORITHMS);
-	}
-
-	public static final AlgorithmInfo<?>[] PATHFINDER_ALGORITHMS = {
-			new AlgorithmInfo<>(SwingDFSAnimation.class, "Depth-First-Search"),
-			new AlgorithmInfo<>(SwingBFSAnimation.class, "Breadth-First-Search"), };
+	public static final AlgorithmInfo[] PATHFINDER_ALGORITHMS = {
+			new AlgorithmInfo(SwingDFSAnimation.class, "Depth-First-Search"),
+			new AlgorithmInfo(SwingBFSAnimation.class, "Breadth-First-Search"), };
 
 	private ObservableGrid<TraversalState, Integer> grid;
 	private int[] gridCellSizes;
 	private int gridCellSize;
-	private int passageThicknessPct;
+	private int passageWidthPercentage;
 	private boolean generationAnimated;
 	private boolean hidingControlsWhenRunning;
 	private boolean longestPathHighlighted;
@@ -139,12 +130,12 @@ public class MazeDemoModel {
 		this.gridCellSize = gridCellSize;
 	}
 
-	public int getPassageThicknessPct() {
-		return passageThicknessPct;
+	public int getPassageWidthPercentage() {
+		return passageWidthPercentage;
 	}
 
-	public void setPassageThicknessPct(int percent) {
-		this.passageThicknessPct = percent;
+	public void setPassageWidthPercentage(int percent) {
+		this.passageWidthPercentage = percent;
 	}
 
 	public boolean isGenerationAnimated() {
