@@ -3,7 +3,6 @@ package de.amr.easy.grid.ui.swing;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.BitSet;
-import java.util.OptionalInt;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 
@@ -55,15 +54,8 @@ public class SwingBFSAnimation {
 		renderer.fnText = cell -> distancesVisible && bfs.getDistance(cell) != -1 ? "" + bfs.getDistance(cell) : "";
 		renderer.fnCellBgColor = cell -> inPath.get(cell) ? pathColor : distanceColor.apply(cell);
 		renderer.fnPassageColor = (cell, dir) -> {
-			if (inPath.get(cell)) {
-				OptionalInt neighbor = grid.neighbor(cell, dir);
-				if (neighbor.isPresent()) {
-					if (inPath.get(neighbor.getAsInt())) {
-						return pathColor;
-					}
-				}
-			}
-			return distanceColor.apply(cell);
+			int neighbor = grid.neighbor(cell, dir).getAsInt();
+			return inPath.get(cell) && inPath.get(neighbor) ? pathColor : distanceColor.apply(cell);
 		};
 		return renderer;
 	}
@@ -102,9 +94,9 @@ public class SwingBFSAnimation {
 		BitSet inPath = new BitSet();
 		IntStream.of(path).forEach(inPath::set);
 		ConfigurableGridRenderer renderer = createRenderer(canvas.getRenderer().get(), inPath);
-		int smallerPassageWidth = renderer.getPassageWidth() / 2;
-		renderer.fnPassageWidth = () -> smallerPassageWidth;
-		renderer.fnText = cell -> "";
+		int passageWidth = renderer.getPassageWidth();
+		renderer.fnPassageWidth = () -> passageWidth > 5 ? passageWidth / 2 : passageWidth;
+		renderer.fnTextColor = () -> Color.WHITE;
 		canvas.pushRenderer(renderer);
 		IntStream.of(path).forEach(canvas::drawGridCell);
 		canvas.popRenderer();
