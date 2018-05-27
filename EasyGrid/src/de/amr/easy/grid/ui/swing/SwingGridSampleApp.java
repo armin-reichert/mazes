@@ -155,7 +155,7 @@ public abstract class SwingGridSampleApp extends JFrame implements Runnable {
 				grid.getDefaultContent(), false);
 		canvas.setGrid(grid);
 		renderer.fnCellSize = () -> cellSize;
-		canvas.adaptSize();
+		canvas.adaptSize(cellSize);
 		setTitle(createTitle());
 	}
 

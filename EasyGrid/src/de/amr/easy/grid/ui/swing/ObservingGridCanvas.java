@@ -23,8 +23,9 @@ public class ObservingGridCanvas extends GridCanvas<ObservableGrid2D<TraversalSt
 	private int delayMillis;
 
 	public ObservingGridCanvas(ObservableGrid2D<TraversalState, Integer> grid, GridRenderer renderer) {
-		super(grid, renderer);
+		super(grid, renderer.getCellSize());
 		grid.addGraphObserver(this);
+		pushRenderer(renderer);
 	}
 
 	@Override

@@ -72,7 +72,7 @@ public class SwingDFSAnimation {
 			}
 		});
 		BitSet inPath = new BitSet();
-		canvas.pushRenderer(createRenderer(dfs, inPath, canvas.getRenderer()));
+		canvas.pushRenderer(createRenderer(dfs, inPath, canvas.getRenderer().get()));
 		dfs.traverseGraph();
 		path = dfs.findPath(dfs.getTarget()).toArray();
 		IntStream.of(path).forEach(inPath::set);

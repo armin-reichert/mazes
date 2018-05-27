@@ -3,6 +3,7 @@ package de.amr.demos.maze.swingapp.action;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static java.lang.String.format;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -33,7 +34,7 @@ public class CreateSingleMazeAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app.canvas().clear();
+		app.canvas().fill(Color.BLACK);
 
 		app.settingsWindow.setVisible(!app.model.isHidingControlsWhenRunning());
 		app.mazeWindow.setVisible(true);
@@ -79,7 +80,7 @@ public class CreateSingleMazeAction extends AbstractAction {
 		app.grid().removeEdges();
 		app.grid().setEventsEnabled(true);
 
-		app.canvas().clear();
+		app.canvas().fill(Color.BLACK);
 
 		// Create generator instance
 		MazeAlgorithm generator = (MazeAlgorithm) generatorInfo.getAlgorithmClass().getConstructor(Grid2D.class)

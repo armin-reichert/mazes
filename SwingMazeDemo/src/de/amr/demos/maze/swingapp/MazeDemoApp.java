@@ -97,7 +97,7 @@ public class MazeDemoApp {
 
 	public void setGridPassageThickness(int percent) {
 		model.setPassageThicknessPct(percent);
-		canvas().clear();
+		canvas().fill(Color.BLACK);
 		canvas().drawGrid();
 	}
 

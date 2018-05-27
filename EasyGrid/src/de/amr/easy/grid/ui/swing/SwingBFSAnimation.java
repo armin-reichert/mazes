@@ -76,7 +76,7 @@ public class SwingBFSAnimation {
 		maxDistanceCell = bfs.getMaxDistanceVertex();
 
 		// 2. run with events
-		ConfigurableGridRenderer renderer = createRenderer(canvas.getRenderer(), new BitSet());
+		ConfigurableGridRenderer renderer = createRenderer(canvas.getRenderer().get(), new BitSet());
 		canvas.pushRenderer(renderer);
 		bfs.addObserver(new GraphTraversalListener() {
 
@@ -101,7 +101,7 @@ public class SwingBFSAnimation {
 		int[] path = bfs.findPath(target).toArray();
 		BitSet inPath = new BitSet();
 		IntStream.of(path).forEach(inPath::set);
-		ConfigurableGridRenderer renderer = createRenderer(canvas.getRenderer(), inPath);
+		ConfigurableGridRenderer renderer = createRenderer(canvas.getRenderer().get(), inPath);
 		int smallerPassageWidth = renderer.getPassageWidth() / 2;
 		renderer.fnPassageWidth = () -> smallerPassageWidth;
 		renderer.fnText = cell -> "";

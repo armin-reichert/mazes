@@ -3,6 +3,7 @@ package de.amr.demos.maze.swingapp.action;
 import static de.amr.demos.maze.swingapp.model.MazeDemoModel.Tag.Slow;
 import static de.amr.demos.maze.swingapp.model.MazeDemoModel.Tag.SmallGridOnly;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
@@ -59,7 +60,7 @@ public class CreateAllMazesAction extends CreateSingleMazeAction {
 
 	private void createNextMaze(AlgorithmInfo<?> algorithm) {
 		readyForNext = false;
-		app.canvas().clear();
+		app.canvas().fill(Color.BLACK);
 		app.settingsWindow.getControlPanel().getAlgorithmLabel().setText(algorithm.getDescription());
 		try {
 			app.settingsWindow.getAlgorithmMenu().setSelectedAlgorithm(algorithm);
