@@ -13,7 +13,7 @@ The maze generation algorithms work strictly against the grid API. For drawing a
 
 I also found new ways of generating mazes, for example a modification of Eller's algorithm which generates the maze from the center of the grid towards the borders, or variations of Wilson's algorithm which result from the different ways of selecting the random walk start cells. For example, one can start the random walks in the order defined by space-filling-curves like [Hilbert](EasyGrid/src/de/amr/easy/grid/curves/HilbertCurve.java), [Peano](EasyGrid/src/de/amr/easy/grid/curves/PeanoCurve.java) or [Moore](EasyGrid/src/de/amr/easy/grid/curves/MooreLCurve.java) curves. This gives visually appealing creation processes. If it has any practical use, time will show.
 
-For example, the maze generator based on Kruskal's minimum-spanning-tree algorithm looks like this:
+To illustrate, the maze generator based on Kruskal's minimum-spanning-tree algorithm looks like this:
 
 ```java
 public class KruskalMST extends MazeAlgorithm {
