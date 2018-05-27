@@ -1,7 +1,6 @@
 package de.amr.demos.maze.swingapp.view;
 
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
-import static de.amr.easy.grid.ui.swing.UserInterfaceUtils.maxGridDimensionForDisplay;
 import static java.lang.String.format;
 import static java.util.stream.IntStream.range;
 
@@ -23,6 +22,7 @@ import de.amr.demos.maze.swingapp.action.StopTaskAction;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.impl.Top4;
+import de.amr.easy.grid.ui.swing.Display;
 
 /**
  * This view enables the user to select the maze generation and path finder algorithm and all the
@@ -52,7 +52,9 @@ public class SettingsWindow extends JFrame {
 
 		ComboBoxModel<String> comboModel = new DefaultComboBoxModel<>(
 				Arrays.stream(model.getGridCellSizes()).mapToObj(cellSize -> {
-					Dimension dim = maxGridDimensionForDisplay(cellSize);
+					Dimension dim = Display.getScreenResolution();
+					dim.width /= cellSize;
+					dim.height /= cellSize;
 					return format("%d cells (%d x %d @ %d)", dim.width * dim.height, dim.width, dim.height, cellSize);
 				}).toArray(String[]::new));
 		controlPanel.getResolutionSelector().setModel(comboModel);
@@ -67,7 +69,9 @@ public class SettingsWindow extends JFrame {
 			JComboBox<?> selector = (JComboBox<?>) e.getSource();
 			int cellSize = model.getGridCellSizes()[selector.getSelectedIndex()];
 			model.setGridCellSize(cellSize);
-			Dimension dim = maxGridDimensionForDisplay(cellSize);
+			Dimension dim = Display.getScreenResolution();
+			dim.width /= cellSize;
+			dim.height /= cellSize;
 			model.setGrid(new ObservableGrid<>(dim.width, dim.height, Top4.get(), UNVISITED, false));
 			app.updateCanvas();
 		});

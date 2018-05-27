@@ -1,7 +1,6 @@
 package de.amr.demos.grid.curves;
 
 import static de.amr.easy.grid.curves.CurveUtils.traverse;
-import static de.amr.easy.util.GridUtils.log;
 
 import java.util.stream.IntStream;
 
@@ -9,6 +8,7 @@ import de.amr.easy.grid.curves.MooreLCurve;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
+import de.amr.easy.util.GraphUtils;
 
 /**
  * Creates Moore curves of different sizes and shows an animation of the creation and BFS-traversal
@@ -33,7 +33,7 @@ public class MooreCurveApp extends SwingGridSampleApp {
 			resizeGrid(canvasSize.width / n);
 			int startCol = n / 2, startRow = n - 1;
 			int startCell = grid.cell(startCol, startRow);
-			MooreLCurve curve = new MooreLCurve(log(2, n));
+			MooreLCurve curve = new MooreLCurve(GraphUtils.log(2, n));
 			traverse(curve, grid, startCell, this::addEdge);
 			SwingBFSAnimation bfs = new SwingBFSAnimation(grid);
 			bfs.setDistancesVisible(false);

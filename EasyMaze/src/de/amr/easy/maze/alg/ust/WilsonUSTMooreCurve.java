@@ -1,7 +1,5 @@
 package de.amr.easy.maze.alg.ust;
 
-import static de.amr.easy.util.GridUtils.log;
-import static de.amr.easy.util.GridUtils.nextPow;
 import static java.lang.Math.max;
 import static java.util.Arrays.stream;
 
@@ -13,6 +11,7 @@ import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.curves.MooreLCurve;
 import de.amr.easy.grid.impl.BareGrid;
 import de.amr.easy.grid.impl.Top4;
+import de.amr.easy.util.GraphUtils;
 
 /**
  * Wilson's algorithm where the random walks start in the order defined by a Moore curve.
@@ -26,9 +25,9 @@ public class WilsonUSTMooreCurve extends WilsonUST {
 	public WilsonUSTMooreCurve(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
 		walkStartCells = new int[grid.numCells()];
-		int n = nextPow(2, max(grid.numCols(), grid.numRows()));
+		int n = GraphUtils.nextPow(2, max(grid.numCols(), grid.numRows()));
 		BareGrid<?> square = new BareGrid<>(n, n, Top4.get());
-		Curve mooreCurve = new MooreLCurve(log(2, n));
+		Curve mooreCurve = new MooreLCurve(GraphUtils.log(2, n));
 		int cell = square.cell(n / 2, n - 1);
 		int i = 0;
 		if (grid.isValidCol(n / 2) && grid.isValidRow(n - 1)) {

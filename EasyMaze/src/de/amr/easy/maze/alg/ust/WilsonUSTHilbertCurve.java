@@ -5,8 +5,6 @@ import static de.amr.easy.grid.impl.Top4.E;
 import static de.amr.easy.grid.impl.Top4.N;
 import static de.amr.easy.grid.impl.Top4.S;
 import static de.amr.easy.grid.impl.Top4.W;
-import static de.amr.easy.util.GridUtils.log;
-import static de.amr.easy.util.GridUtils.nextPow;
 import static java.lang.Math.max;
 import static java.util.Arrays.stream;
 
@@ -17,6 +15,7 @@ import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.curves.HilbertCurve;
 import de.amr.easy.grid.impl.BareGrid;
+import de.amr.easy.util.GraphUtils;
 
 /**
  * Wilson's algorithm where the random walks start in the order defined by a Hilbert curve.
@@ -30,12 +29,12 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 	public WilsonUSTHilbertCurve(Grid2D<TraversalState, Integer> grid) {
 		super(grid);
 		walkStartCells = new int[grid.numCells()];
-		int n = nextPow(2, max(grid.numCols(), grid.numRows()));
+		int n = GraphUtils.nextPow(2, max(grid.numCols(), grid.numRows()));
 		BareGrid2D<?> square = new BareGrid<>(n, n, grid.getTopology());
 		int cell = square.cell(TOP_LEFT);
 		int i = 0;
 		walkStartCells[i++] = cell;
-		for (int dir : new HilbertCurve(log(2, n), W, N, E, S)) {
+		for (int dir : new HilbertCurve(GraphUtils.log(2, n), W, N, E, S)) {
 			cell = square.neighbor(cell, dir).getAsInt();
 			int col = square.col(cell), row = square.row(cell);
 			if (grid.isValidCol(col) && grid.isValidRow(row)) {

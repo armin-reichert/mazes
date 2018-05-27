@@ -2,7 +2,6 @@ package de.amr.demos.grid.curves;
 
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
 import static de.amr.easy.grid.curves.CurveUtils.traverse;
-import static de.amr.easy.util.GridUtils.log;
 
 import java.util.stream.IntStream;
 
@@ -10,6 +9,7 @@ import de.amr.easy.grid.curves.PeanoCurve;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
+import de.amr.easy.util.GraphUtils;
 
 public class PeanoCurveApp extends SwingGridSampleApp {
 
@@ -27,7 +27,7 @@ public class PeanoCurveApp extends SwingGridSampleApp {
 		IntStream.of(3, 9, 81, 243).forEach(n -> {
 			resizeGrid(canvasSize.width / n);
 			int startCell = grid.cell(BOTTOM_LEFT);
-			PeanoCurve curve = new PeanoCurve(log(3, n));
+			PeanoCurve curve = new PeanoCurve(GraphUtils.log(3, n));
 			traverse(curve, grid, startCell, this::addEdge);
 			SwingBFSAnimation bfs = new SwingBFSAnimation(grid);
 			bfs.setDistancesVisible(false);

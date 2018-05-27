@@ -9,7 +9,6 @@ import static de.amr.easy.grid.impl.Top4.E;
 import static de.amr.easy.grid.impl.Top4.N;
 import static de.amr.easy.grid.impl.Top4.S;
 import static de.amr.easy.grid.impl.Top4.W;
-import static de.amr.easy.util.GridUtils.log;
 import static java.util.Arrays.asList;
 
 import java.util.HashMap;
@@ -23,6 +22,7 @@ import de.amr.easy.grid.curves.HilbertCurve;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
+import de.amr.easy.util.GraphUtils;
 
 /**
  * Creates Hilbert curves of different sizes and shows an animation of the creation and
@@ -53,12 +53,12 @@ public class HilbertCurveApp extends SwingGridSampleApp {
 			List<Integer> dirs = orientation.get(startPos);
 			IntStream.of(256, 128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 				resizeGrid(cellSize);
-				HilbertCurve hilbert = new HilbertCurve(log(2, grid.numCols()), dirs.get(0), dirs.get(1), dirs.get(2),
-						dirs.get(3));
+				HilbertCurve hilbert = new HilbertCurve(GraphUtils.log(2, grid.numCols()), dirs.get(0), dirs.get(1),
+						dirs.get(2), dirs.get(3));
 				int startCell = grid.cell(startPos);
 				System.out.println(String.format("Grid: cols: %d, rows: %d", grid.numCols(), grid.numRows()));
 				System.out.println("Curve start: " + startPos);
-//				System.out.println(CurveUtils.cellsAsString(hilbert, grid, startCell));
+				// System.out.println(CurveUtils.cellsAsString(hilbert, grid, startCell));
 				traverse(hilbert, grid, startCell, this::addEdge);
 				SwingBFSAnimation bfs = new SwingBFSAnimation(grid);
 				bfs.setDistancesVisible(false);

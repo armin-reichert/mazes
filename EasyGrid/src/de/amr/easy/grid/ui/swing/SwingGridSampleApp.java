@@ -20,7 +20,6 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Topology;
 import de.amr.easy.grid.impl.ObservableGrid;
-import de.amr.easy.util.GridUtils;
 
 /**
  * Base class for grid sample applications.
@@ -88,7 +87,7 @@ public abstract class SwingGridSampleApp extends JFrame implements Runnable {
 	 */
 	public SwingGridSampleApp(int cellSize, Topology top) {
 		fullscreen = true;
-		canvasSize = GridUtils.getScreenResolution();
+		canvasSize = Display.getScreenResolution();
 		grid = new ObservableGrid<>(canvasSize.width / cellSize, canvasSize.height / cellSize, top, UNVISITED, false);
 		configureRenderer();
 	}
