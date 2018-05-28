@@ -68,13 +68,14 @@ public class MazeDemoApp {
 		model.setGrid(new ObservableGrid<>(numCols, numRows, Top4.get(), UNVISITED, false));
 
 		mazeWindow = new MazeWindow(this);
-		mazeWindow.setVisible(true);
-
 		settingsWindow = new SettingsWindow(this);
+
 		settingsWindow.setAlwaysOnTop(true);
 		settingsWindow.pack();
 		settingsWindow.setLocationRelativeTo(null);
 		settingsWindow.setVisible(true);
+
+		mazeWindow.setVisible(true);
 	}
 
 	public ObservingGridCanvas getCanvas() {

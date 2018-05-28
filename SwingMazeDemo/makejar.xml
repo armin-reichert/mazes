@@ -17,6 +17,7 @@
             <fileset dir="C:/Users/Armin/git/mazes/EasyGraph/bin"/>
             <fileset dir="C:/Users/Armin/git/mazes/EasyMaze/bin"/>
             <fileset dir="C:/Users/Armin/git/mazes/GridDemos/bin"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.jarfile}/miglayout15-swing.jar"/>
         </jar>
     </target>
 </project>
