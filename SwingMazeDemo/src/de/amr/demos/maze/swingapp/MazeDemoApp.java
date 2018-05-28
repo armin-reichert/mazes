@@ -84,6 +84,7 @@ public class MazeDemoApp {
 
 	public void newCanvas() {
 		mazeWindow.createCanvas();
+		mazeWindow.repaint();
 	}
 
 	public void showMessage(String msg) {

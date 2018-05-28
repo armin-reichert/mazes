@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
+import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.ui.swing.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.ObservingGridCanvas;
 
@@ -29,35 +30,36 @@ public class MazeWindow extends JFrame {
 		createCanvas();
 	}
 
+	public ObservingGridCanvas getCanvas() {
+		return canvas;
+	}
+
 	public void createCanvas() {
 		canvas = new ObservingGridCanvas(app.model.getGrid(), createRenderer());
 		canvas.setDelay(app.model.getDelay());
-		canvas.getActionMap().put("showControlsView", new AbstractAction() {
+		canvas.getActionMap().put("showSettings", new AbstractAction() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				app.showSettingsWindow();
 			}
 		});
-		canvas.getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showControlsView");
+		canvas.getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
 		setContentPane(canvas);
-		repaint();
 	}
 
 	private ConfigurableGridRenderer createRenderer() {
 		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
 		renderer.fnCellSize = () -> app.model.getGridCellSize();
 		renderer.fnPassageWidth = () -> {
-			int thickness = app.model.getGridCellSize() * app.model.getPassageWidthPercentage() / 100;
-			if (thickness < 1) {
-				thickness = 1;
-			} else if (thickness > app.model.getGridCellSize() - 1) {
-				thickness = app.model.getGridCellSize() - 1;
-			}
-			return thickness;
+			int passageWidth = app.model.getGridCellSize() * app.model.getPassageWidthPercentage() / 100;
+			passageWidth = Math.max(1, passageWidth);
+			passageWidth = Math.min(app.model.getGridCellSize() - 1, passageWidth);
+			return passageWidth;
 		};
 		renderer.fnCellBgColor = cell -> {
-			switch (app.model.getGrid().get(cell)) {
+			TraversalState state = app.model.getGrid().get(cell);
+			switch (state) {
 			case COMPLETED:
 				return app.model.getCompletedCellColor();
 			case UNVISITED:
@@ -69,9 +71,5 @@ public class MazeWindow extends JFrame {
 			}
 		};
 		return renderer;
-	}
-
-	public ObservingGridCanvas getCanvas() {
-		return canvas;
 	}
 }
