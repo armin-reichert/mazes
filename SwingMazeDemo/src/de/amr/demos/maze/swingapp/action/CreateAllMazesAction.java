@@ -64,13 +64,10 @@ public class CreateAllMazesAction extends CreateSingleMazeAction {
 		readyForNext = false;
 		app.getCanvas().fill(Color.BLACK);
 		app.settingsWindow.getControlPanel().getLblGenerationAlgorithm().setText(algorithm.getDescription());
+		app.settingsWindow.getAlgorithmMenu().setSelectedAlgorithm(algorithm);
 		try {
-			app.settingsWindow.getAlgorithmMenu().setSelectedAlgorithm(algorithm);
 			generateMaze(algorithm);
-			AlgorithmInfo pathFinder = app.settingsWindow.getPathFinderMenu().getSelectedAlgorithm();
-			if (pathFinder != null) {
-				runPathFinder(pathFinder);
-			}
+			app.settingsWindow.getPathFinderMenu().getSelectedAlgorithm().ifPresent(this::runPathFinder);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

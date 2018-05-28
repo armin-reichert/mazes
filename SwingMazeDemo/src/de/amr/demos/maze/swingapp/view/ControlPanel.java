@@ -2,6 +2,7 @@ package de.amr.demos.maze.swingapp.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
@@ -16,8 +17,12 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
-import java.awt.Dimension;
 
+/**
+ * Panel for setting parameters and running maze generator and path finder.
+ * 
+ * @author Armin Reichert
+ */
 public class ControlPanel extends JPanel {
 
 	private JButton btnCreateMaze;

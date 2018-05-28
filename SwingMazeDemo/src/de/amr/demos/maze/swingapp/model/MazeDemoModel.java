@@ -7,6 +7,8 @@ import static de.amr.demos.maze.swingapp.model.AlgorithmTag.Traversal;
 import static de.amr.demos.maze.swingapp.model.AlgorithmTag.UST;
 
 import java.awt.Color;
+import java.util.Arrays;
+import java.util.Optional;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.GridPosition;
@@ -93,6 +95,10 @@ public class MazeDemoModel {
 		new AlgorithmInfo(RecursiveDivision.class, "Recursive Division"),
 		/*@formatter:on*/
 	};
+
+	public static Optional<AlgorithmInfo> findAlgorithm(Class<?> generatorClass) {
+		return Arrays.stream(ALGORITHMS).filter(alg -> alg.getAlgorithmClass().equals(generatorClass)).findFirst();
+	}
 
 	public static final AlgorithmInfo[] PATHFINDER_ALGORITHMS = {
 			new AlgorithmInfo(SwingDFSAnimation.class, "Depth-First-Search"),

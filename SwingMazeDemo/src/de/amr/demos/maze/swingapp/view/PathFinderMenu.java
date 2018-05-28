@@ -4,6 +4,7 @@ import static de.amr.demos.maze.swingapp.model.MazeDemoModel.PATHFINDER_ALGORITH
 import static java.util.Arrays.stream;
 
 import java.util.Enumeration;
+import java.util.Optional;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
@@ -12,28 +13,33 @@ import javax.swing.JRadioButtonMenuItem;
 
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 
+/**
+ * Menu for selecting path finder algorithm.
+ * 
+ * @author Armin Reichert
+ */
 public class PathFinderMenu extends JMenu {
 
-	private ButtonGroup group = new ButtonGroup();
+	private final ButtonGroup group = new ButtonGroup();
 
 	public PathFinderMenu() {
 		super("Pathfinders");
-		addItem("No Pathfinder", null).setSelected(true);
-		stream(PATHFINDER_ALGORITHMS).forEach(alg -> addItem(alg.getDescription(), alg));
+		addItem(AlgorithmInfo.NONE).setSelected(true);
+		stream(PATHFINDER_ALGORITHMS).forEach(this::addItem);
 	}
 
-	public AlgorithmInfo getSelectedAlgorithm() {
+	public Optional<AlgorithmInfo> getSelectedAlgorithm() {
 		for (Enumeration<AbstractButton> items = group.getElements(); items.hasMoreElements();) {
 			AbstractButton item = items.nextElement();
 			if (item.isSelected()) {
-				return (AlgorithmInfo) item.getClientProperty("algorithm");
+				return Optional.of((AlgorithmInfo) item.getClientProperty("algorithm"));
 			}
 		}
-		return null;
+		return Optional.empty();
 	}
 
-	private JRadioButtonMenuItem addItem(String text, AlgorithmInfo alg) {
-		JRadioButtonMenuItem item = new JRadioButtonMenuItem(text);
+	private JRadioButtonMenuItem addItem(AlgorithmInfo alg) {
+		JRadioButtonMenuItem item = new JRadioButtonMenuItem(alg.getDescription());
 		item.putClientProperty("algorithm", alg);
 		add(item);
 		group.add(item);

@@ -5,6 +5,7 @@ import static java.lang.String.format;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.util.Optional;
 
 import javax.swing.AbstractAction;
 
@@ -35,29 +36,27 @@ public class CreateSingleMazeAction extends AbstractAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		app.getCanvas().fill(Color.BLACK);
-
 		app.settingsWindow.setVisible(!app.model.isHidingControlsWhenRunning());
 		app.mazeWindow.setVisible(true);
-
+		enableControls(false);
+		Optional<AlgorithmInfo> generator = app.settingsWindow.getAlgorithmMenu().getSelectedAlgorithm();
 		app.startTask(() -> {
-			try {
-				enableControls(false);
-				generateMaze(app.settingsWindow.getAlgorithmMenu().getSelectedAlgorithm());
-				AlgorithmInfo pathFinder = app.settingsWindow.getPathFinderMenu().getSelectedAlgorithm();
-				if (pathFinder != null) {
-					runPathFinder(pathFinder);
-				}
-			} catch (Throwable x) {
-				x.printStackTrace(System.err);
-				app.showMessage("An exception occured: " + x);
-				app.model.setGrid(new ObservableGrid<>(app.model.getGrid().numCols(), app.model.getGrid().numRows(), Top4.get(),
-						UNVISITED, false));
-				app.newCanvas();
+			if (generator.isPresent()) {
+				try {
+					generateMaze(generator.get());
+					app.settingsWindow.getPathFinderMenu().getSelectedAlgorithm().ifPresent(this::runPathFinder);
+				} catch (Throwable x) {
+					x.printStackTrace(System.err);
+					app.showMessage("An exception occured: " + x);
+					app.model.setGrid(new ObservableGrid<>(app.model.getGrid().numCols(), app.model.getGrid().numRows(),
+							Top4.get(), UNVISITED, false));
+					app.newCanvas();
 
-			} finally {
-				enableControls(true);
-				app.settingsWindow.setVisible(true);
-				app.settingsWindow.requestFocus();
+				} finally {
+					enableControls(true);
+					app.settingsWindow.setVisible(true);
+					app.settingsWindow.requestFocus();
+				}
 			}
 		});
 	}

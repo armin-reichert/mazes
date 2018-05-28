@@ -1,13 +1,12 @@
 package de.amr.demos.maze.swingapp.view;
 
-import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static java.lang.String.format;
-import static java.util.stream.IntStream.range;
 
 import java.awt.BorderLayout;
 import java.awt.DisplayMode;
 import java.awt.GraphicsEnvironment;
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -21,8 +20,10 @@ import de.amr.demos.maze.swingapp.action.CreateAllMazesAction;
 import de.amr.demos.maze.swingapp.action.CreateSingleMazeAction;
 import de.amr.demos.maze.swingapp.action.StopTaskAction;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
+import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.impl.Top4;
+import de.amr.easy.maze.alg.traversal.IterativeDFS;
 
 /**
  * This view enables the user to select the maze generation and path finder algorithm and all the
@@ -33,7 +34,7 @@ import de.amr.easy.grid.impl.Top4;
 public class SettingsWindow extends JFrame {
 
 	private final ControlPanel controlPanel;
-	private final AlgorithmMenu algorithmMenu;
+	private final GenerationAlgorithmMenu generationAlgorithmMenu;
 	private final PathFinderMenu pathFinderMenu;
 	private final OptionMenu optionMenu;
 
@@ -55,7 +56,8 @@ public class SettingsWindow extends JFrame {
 		controlPanel.getComboGridResolution().setModel(comboModel);
 
 		int[] sizes = model.getGridCellSizes();
-		int selectedIndex = range(0, sizes.length).filter(i -> sizes[i] == model.getGridCellSize()).findFirst().orElse(-1);
+		int selectedIndex = IntStream.range(0, sizes.length).filter(i -> sizes[i] == model.getGridCellSize()).findFirst()
+				.orElse(-1);
 		controlPanel.getComboGridResolution().setSelectedIndex(selectedIndex);
 
 		controlPanel.getComboGridResolution().addActionListener(e -> {
@@ -64,7 +66,7 @@ public class SettingsWindow extends JFrame {
 			model.setGridCellSize(cellSize);
 			int width = displayMode.getWidth() / cellSize;
 			int height = displayMode.getHeight() / cellSize;
-			model.setGrid(new ObservableGrid<>(width, height, Top4.get(), UNVISITED, false));
+			model.setGrid(new ObservableGrid<>(width, height, Top4.get(), TraversalState.UNVISITED, false));
 			app.newCanvas();
 		});
 
@@ -91,22 +93,29 @@ public class SettingsWindow extends JFrame {
 		getContentPane().add(controlPanel, BorderLayout.CENTER);
 
 		setJMenuBar(new JMenuBar());
-		algorithmMenu = new AlgorithmMenu(model, item -> controlPanel.getLblGenerationAlgorithm().setText(item.getText()));
-		getJMenuBar().add(algorithmMenu);
+
+		generationAlgorithmMenu = new GenerationAlgorithmMenu(
+				item -> controlPanel.getLblGenerationAlgorithm().setText(item.getText()));
+		MazeDemoModel.findAlgorithm(IterativeDFS.class).ifPresent(alg -> {
+			generationAlgorithmMenu.setSelectedAlgorithm(alg);
+			controlPanel.getLblGenerationAlgorithm().setText(alg.getDescription());
+		});
+		getJMenuBar().add(generationAlgorithmMenu);
+
 		pathFinderMenu = new PathFinderMenu();
 		getJMenuBar().add(pathFinderMenu);
+
 		optionMenu = new OptionMenu(app);
 		getJMenuBar().add(optionMenu);
 
-		controlPanel.getLblGenerationAlgorithm().setText(algorithmMenu.getSelectedAlgorithm().getDescription());
 	}
 
 	public ControlPanel getControlPanel() {
 		return controlPanel;
 	}
 
-	public AlgorithmMenu getAlgorithmMenu() {
-		return algorithmMenu;
+	public GenerationAlgorithmMenu getAlgorithmMenu() {
+		return generationAlgorithmMenu;
 	}
 
 	public OptionMenu getOptionMenu() {

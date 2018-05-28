@@ -12,7 +12,7 @@ import de.amr.easy.grid.ui.swing.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.ObservingGridCanvas;
 
 /**
- * Display area for the grid/maze.
+ * Full-screen window displaying the the grid and maze creation.
  * 
  * @author Armin Reichert
  */

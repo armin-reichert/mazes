@@ -12,6 +12,11 @@ import javax.swing.JRadioButtonMenuItem;
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.easy.grid.api.GridPosition;
 
+/**
+ * Menu for selecting generation and path finder options.
+ * 
+ * @author Armin Reichert
+ */
 public class OptionMenu extends JMenu {
 
 	private static abstract class PositionMenu extends JMenu {
