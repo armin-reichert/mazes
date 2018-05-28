@@ -4,9 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,103 +15,66 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import net.miginfocom.swing.MigLayout;
+import java.awt.Dimension;
+
 public class ControlPanel extends JPanel {
 
 	private JButton btnCreateMaze;
-	private JComboBox<?> resolutionSelector;
-	private JSlider delaySlider;
+	private JComboBox<?> comboGridResolution;
+	private JSlider sliderDelay;
 	private JTextArea textArea;
-	private JLabel lblPassageThickness;
-	private JSlider passageWidthSlider;
+	private JLabel lblPassageWidth;
+	private JSlider sliderPassageWidth;
 	private JLabel lblDelay;
 	private JButton btnCreateAllMazes;
 	private JButton btnStop;
-	private JLabel algorithmLabel;
+	private JLabel lblGenerationAlgorithm;
 
 	public ControlPanel() {
+		setPreferredSize(new Dimension(450, 350));
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(new BorderLayout(0, 0));
 
-		JPanel controls = new JPanel();
-		add(controls, BorderLayout.NORTH);
-		GridBagLayout gbl_controls = new GridBagLayout();
-		gbl_controls.columnWeights = new double[] { 0.0, 1.0 };
-		gbl_controls.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0 };
-		controls.setLayout(gbl_controls);
+		JPanel controlsPanel = new JPanel();
+		add(controlsPanel, BorderLayout.NORTH);
+		controlsPanel.setLayout(new MigLayout("", "[center][:5px:5px,fill][grow]", "[grow,center][][][]"));
 
-		algorithmLabel = new JLabel("Generation Algorithm");
-		algorithmLabel.setForeground(Color.BLUE);
-		algorithmLabel.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		algorithmLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		GridBagConstraints gbc_algorithmLabel = new GridBagConstraints();
-		gbc_algorithmLabel.ipady = 5;
-		gbc_algorithmLabel.fill = GridBagConstraints.HORIZONTAL;
-		gbc_algorithmLabel.gridwidth = 2;
-		gbc_algorithmLabel.insets = new Insets(0, 0, 5, 0);
-		gbc_algorithmLabel.gridx = 0;
-		gbc_algorithmLabel.gridy = 0;
-		controls.add(algorithmLabel, gbc_algorithmLabel);
+		lblGenerationAlgorithm = new JLabel("Generation Algorithm");
+		lblGenerationAlgorithm.setBorder(new EmptyBorder(5, 0, 5, 0));
+		lblGenerationAlgorithm.setForeground(Color.BLUE);
+		lblGenerationAlgorithm.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		lblGenerationAlgorithm.setHorizontalAlignment(SwingConstants.CENTER);
+		controlsPanel.add(lblGenerationAlgorithm, "cell 0 0 3 1,growx,aligny center");
 
 		JLabel lblGridResolution = new JLabel("Grid Resolution");
-		GridBagConstraints gbc_lblGridResolution = new GridBagConstraints();
-		gbc_lblGridResolution.fill = GridBagConstraints.BOTH;
-		gbc_lblGridResolution.insets = new Insets(0, 0, 5, 5);
-		gbc_lblGridResolution.gridx = 0;
-		gbc_lblGridResolution.gridy = 1;
-		controls.add(lblGridResolution, gbc_lblGridResolution);
+		controlsPanel.add(lblGridResolution, "cell 0 1,alignx left,growy");
 
-		resolutionSelector = new JComboBox<>();
-		GridBagConstraints gbc_resolutionSelector = new GridBagConstraints();
-		gbc_resolutionSelector.weightx = 1.0;
-		gbc_resolutionSelector.fill = GridBagConstraints.BOTH;
-		gbc_resolutionSelector.insets = new Insets(0, 0, 5, 0);
-		gbc_resolutionSelector.gridx = 1;
-		gbc_resolutionSelector.gridy = 1;
-		controls.add(resolutionSelector, gbc_resolutionSelector);
+		comboGridResolution = new JComboBox<>();
+		controlsPanel.add(comboGridResolution, "cell 2 1,grow");
 
-		lblPassageThickness = new JLabel("Passage Thickness");
-		GridBagConstraints gbc_lblPassageThickness = new GridBagConstraints();
-		gbc_lblPassageThickness.fill = GridBagConstraints.BOTH;
-		gbc_lblPassageThickness.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPassageThickness.gridx = 0;
-		gbc_lblPassageThickness.gridy = 2;
-		controls.add(lblPassageThickness, gbc_lblPassageThickness);
-		lblPassageThickness.setLabelFor(passageWidthSlider);
+		lblPassageWidth = new JLabel("Passage Width");
+		controlsPanel.add(lblPassageWidth, "cell 0 2,alignx left,growy");
+		lblPassageWidth.setLabelFor(sliderPassageWidth);
 
-		passageWidthSlider = new JSlider();
-		passageWidthSlider.setPaintLabels(true);
-		passageWidthSlider.setMinimum(1);
-		passageWidthSlider.setToolTipText("Thickness of maze passages");
-		passageWidthSlider.setPaintTicks(true);
-		GridBagConstraints gbc_passageThicknessSlider = new GridBagConstraints();
-		gbc_passageThicknessSlider.weightx = 1.0;
-		gbc_passageThicknessSlider.fill = GridBagConstraints.BOTH;
-		gbc_passageThicknessSlider.insets = new Insets(0, 0, 5, 0);
-		gbc_passageThicknessSlider.gridx = 1;
-		gbc_passageThicknessSlider.gridy = 2;
-		controls.add(passageWidthSlider, gbc_passageThicknessSlider);
+		sliderPassageWidth = new JSlider();
+		sliderPassageWidth.setPaintLabels(true);
+		sliderPassageWidth.setMinimum(1);
+		sliderPassageWidth.setToolTipText("Thickness of maze passages");
+		sliderPassageWidth.setPaintTicks(true);
+		controlsPanel.add(sliderPassageWidth, "cell 2 2,grow");
 
 		lblDelay = new JLabel("Delay");
-		GridBagConstraints gbc_lblDelay = new GridBagConstraints();
-		gbc_lblDelay.fill = GridBagConstraints.BOTH;
-		gbc_lblDelay.insets = new Insets(0, 0, 0, 5);
-		gbc_lblDelay.gridx = 0;
-		gbc_lblDelay.gridy = 3;
-		controls.add(lblDelay, gbc_lblDelay);
+		controlsPanel.add(lblDelay, "cell 0 3,alignx left,growy");
 
-		delaySlider = new JSlider();
-		delaySlider.setToolTipText("Rendering Delay");
-		delaySlider.setValue(10);
-		delaySlider.setSnapToTicks(true);
-		delaySlider.setMaximum(50);
-		delaySlider.setMinorTickSpacing(1);
-		delaySlider.setMajorTickSpacing(5);
-		GridBagConstraints gbc_delaySlider = new GridBagConstraints();
-		gbc_delaySlider.weightx = 1.0;
-		gbc_delaySlider.fill = GridBagConstraints.BOTH;
-		gbc_delaySlider.gridx = 1;
-		gbc_delaySlider.gridy = 3;
-		controls.add(delaySlider, gbc_delaySlider);
+		sliderDelay = new JSlider();
+		sliderDelay.setToolTipText("Rendering Delay");
+		sliderDelay.setValue(10);
+		sliderDelay.setSnapToTicks(true);
+		sliderDelay.setMaximum(50);
+		sliderDelay.setMinorTickSpacing(1);
+		sliderDelay.setMajorTickSpacing(5);
+		controlsPanel.add(sliderDelay, "cell 2 3,grow");
 
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, BorderLayout.CENTER);
@@ -140,30 +100,30 @@ public class ControlPanel extends JPanel {
 		buttonPanel.add(btnStop);
 	}
 
+	public void showMessage(String msg) {
+		textArea.append(msg);
+		textArea.setCaretPosition(textArea.getDocument().getLength());
+	}
+
 	public JButton getBtnCreateMaze() {
 		return btnCreateMaze;
 	}
 
 	@SuppressWarnings("unchecked")
-	public JComboBox<String> getResolutionSelector() {
-		return (JComboBox<String>) resolutionSelector;
+	public JComboBox<String> getComboGridResolution() {
+		return (JComboBox<String>) comboGridResolution;
 	}
 
-	public JSlider getDelaySlider() {
-		return delaySlider;
+	public JSlider getSliderDelay() {
+		return sliderDelay;
 	}
 
 	public JTextArea getTextArea() {
 		return textArea;
 	}
 
-	public void showMessage(String msg) {
-		textArea.append(msg);
-		textArea.setCaretPosition(textArea.getDocument().getLength());
-	}
-
-	public JSlider getPassageWidthSlider() {
-		return passageWidthSlider;
+	public JSlider getSliderPassageWidth() {
+		return sliderPassageWidth;
 	}
 
 	public JButton getBtnCreateAllMazes() {
@@ -174,7 +134,7 @@ public class ControlPanel extends JPanel {
 		return btnStop;
 	}
 
-	public JLabel getAlgorithmLabel() {
-		return algorithmLabel;
+	public JLabel getLblGenerationAlgorithm() {
+		return lblGenerationAlgorithm;
 	}
 }

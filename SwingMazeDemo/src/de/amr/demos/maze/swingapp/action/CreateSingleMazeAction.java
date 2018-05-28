@@ -34,7 +34,7 @@ public class CreateSingleMazeAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app.canvas().fill(Color.BLACK);
+		app.getCanvas().fill(Color.BLACK);
 
 		app.settingsWindow.setVisible(!app.model.isHidingControlsWhenRunning());
 		app.mazeWindow.setVisible(true);
@@ -52,7 +52,7 @@ public class CreateSingleMazeAction extends AbstractAction {
 				app.showMessage("An exception occured: " + x);
 				app.model.setGrid(new ObservableGrid<>(app.model.getGrid().numCols(), app.model.getGrid().numRows(), Top4.get(),
 						UNVISITED, false));
-				app.updateCanvas();
+				app.newCanvas();
 
 			} finally {
 				enableControls(true);
@@ -66,8 +66,8 @@ public class CreateSingleMazeAction extends AbstractAction {
 		ControlPanel controls = app.settingsWindow.getControlPanel();
 		controls.getBtnCreateMaze().setEnabled(b);
 		controls.getBtnCreateAllMazes().setEnabled(b);
-		controls.getPassageWidthSlider().setEnabled(b);
-		controls.getResolutionSelector().setEnabled(b);
+		controls.getSliderPassageWidth().setEnabled(b);
+		controls.getComboGridResolution().setEnabled(b);
 	}
 
 	protected void generateMaze(AlgorithmInfo generatorInfo) throws Exception {
@@ -80,7 +80,7 @@ public class CreateSingleMazeAction extends AbstractAction {
 		app.model.getGrid().removeEdges();
 		app.model.getGrid().setEventsEnabled(true);
 
-		app.canvas().fill(Color.BLACK);
+		app.getCanvas().fill(Color.BLACK);
 
 		// Create generator instance
 		MazeAlgorithm generator = (MazeAlgorithm) generatorInfo.getAlgorithmClass().getConstructor(Grid2D.class)
@@ -93,12 +93,12 @@ public class CreateSingleMazeAction extends AbstractAction {
 			generator.run(startCell);
 		} else {
 			// no animation, must render explicitly
-			app.canvas().stopListening();
+			app.getCanvas().stopListening();
 			watch.runAndMeasure(() -> generator.run(startCell));
 			app.showMessage(format("Generation time: %.6f seconds.", watch.getSeconds()));
-			watch.runAndMeasure(() -> app.canvas().drawGrid());
+			watch.runAndMeasure(() -> app.getCanvas().drawGrid());
 			app.showMessage(format("Rendering time:  %.6f seconds.", watch.getSeconds()));
-			app.canvas().startListening();
+			app.getCanvas().startListening();
 		}
 	}
 
@@ -108,17 +108,17 @@ public class CreateSingleMazeAction extends AbstractAction {
 		if (pathFinderInfo.getAlgorithmClass() == SwingBFSAnimation.class) {
 			SwingBFSAnimation bfsAnimation = new SwingBFSAnimation(app.model.getGrid());
 			bfsAnimation.setPathColor(app.model.getPathColor());
-			watch.runAndMeasure(() -> bfsAnimation.runBFSAnimation(app.canvas(), source));
+			watch.runAndMeasure(() -> bfsAnimation.runBFSAnimation(app.getCanvas(), source));
 			app.showMessage(format("BFS time: %.6f seconds.", watch.getSeconds()));
 			if (app.model.isLongestPathHighlighted()) {
-				bfsAnimation.showPath(app.canvas(), bfsAnimation.getMaxDistanceCell());
+				bfsAnimation.showPath(app.getCanvas(), bfsAnimation.getMaxDistanceCell());
 			} else {
-				bfsAnimation.showPath(app.canvas(), target);
+				bfsAnimation.showPath(app.getCanvas(), target);
 			}
 		} else if (pathFinderInfo.getAlgorithmClass() == SwingDFSAnimation.class) {
 			SwingDFSAnimation dfsAnimation = new SwingDFSAnimation(app.model.getGrid());
 			dfsAnimation.setPathColor(app.model.getPathColor());
-			watch.runAndMeasure(() -> dfsAnimation.runDFSAnimation(app.canvas(), source, target));
+			watch.runAndMeasure(() -> dfsAnimation.runDFSAnimation(app.getCanvas(), source, target));
 			app.showMessage(format("DFS time: %.6f seconds.", watch.getSeconds()));
 		}
 	}

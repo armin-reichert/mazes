@@ -6,5 +6,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/EasyMaze"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/GridDemos"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/EasyGraph"/>
+	<classpathentry kind="lib" path="miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

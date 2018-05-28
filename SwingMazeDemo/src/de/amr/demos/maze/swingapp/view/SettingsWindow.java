@@ -5,7 +5,6 @@ import static java.lang.String.format;
 import static java.util.stream.IntStream.range;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.awt.GraphicsEnvironment;
 import java.util.Arrays;
@@ -49,36 +48,36 @@ public class SettingsWindow extends JFrame {
 		controlPanel = new ControlPanel();
 		ComboBoxModel<String> comboModel = new DefaultComboBoxModel<>(
 				Arrays.stream(model.getGridCellSizes()).mapToObj(cellSize -> {
-					int width = displayMode.getWidth() / cellSize;
-					int height = displayMode.getHeight() / cellSize;
-					return format("%d cells (%d x %d @ %d)", width * height, width, height, cellSize);
+					int numCols = displayMode.getWidth() / cellSize;
+					int numRows = displayMode.getHeight() / cellSize;
+					return format("%d cells (%d cols x %d rows, cell size %d)", numCols * numRows, numCols, numRows, cellSize);
 				}).toArray(String[]::new));
-		controlPanel.getResolutionSelector().setModel(comboModel);
+		controlPanel.getComboGridResolution().setModel(comboModel);
 
 		int[] sizes = model.getGridCellSizes();
 		int selectedIndex = range(0, sizes.length).filter(i -> sizes[i] == model.getGridCellSize()).findFirst().orElse(-1);
-		controlPanel.getResolutionSelector().setSelectedIndex(selectedIndex);
+		controlPanel.getComboGridResolution().setSelectedIndex(selectedIndex);
 
-		controlPanel.getResolutionSelector().addActionListener(e -> {
+		controlPanel.getComboGridResolution().addActionListener(e -> {
 			JComboBox<?> selector = (JComboBox<?>) e.getSource();
 			int cellSize = model.getGridCellSizes()[selector.getSelectedIndex()];
 			model.setGridCellSize(cellSize);
 			int width = displayMode.getWidth() / cellSize;
 			int height = displayMode.getHeight() / cellSize;
 			model.setGrid(new ObservableGrid<>(width, height, Top4.get(), UNVISITED, false));
-			app.updateCanvas();
+			app.newCanvas();
 		});
 
-		controlPanel.getPassageWidthSlider().setValue(model.getPassageWidthPercentage());
-		controlPanel.getPassageWidthSlider().addChangeListener(e -> {
+		controlPanel.getSliderPassageWidth().setValue(model.getPassageWidthPercentage());
+		controlPanel.getSliderPassageWidth().addChangeListener(e -> {
 			JSlider slider = (JSlider) e.getSource();
 			if (!slider.getValueIsAdjusting()) {
 				app.setGridPassageThickness(slider.getValue());
 			}
 		});
 
-		controlPanel.getDelaySlider().setValue(model.getDelay());
-		controlPanel.getDelaySlider().addChangeListener(e -> {
+		controlPanel.getSliderDelay().setValue(model.getDelay());
+		controlPanel.getSliderDelay().addChangeListener(e -> {
 			JSlider slider = (JSlider) e.getSource();
 			if (!slider.getValueIsAdjusting()) {
 				app.setDelay(slider.getValue());
@@ -90,19 +89,16 @@ public class SettingsWindow extends JFrame {
 		controlPanel.getBtnStop().setAction(new StopTaskAction(app));
 
 		getContentPane().add(controlPanel, BorderLayout.CENTER);
-		getContentPane().setPreferredSize(new Dimension(400, 200));
 
 		setJMenuBar(new JMenuBar());
-		algorithmMenu = new AlgorithmMenu(model, item -> controlPanel.getAlgorithmLabel().setText(item.getText()));
+		algorithmMenu = new AlgorithmMenu(model, item -> controlPanel.getLblGenerationAlgorithm().setText(item.getText()));
 		getJMenuBar().add(algorithmMenu);
 		pathFinderMenu = new PathFinderMenu();
 		getJMenuBar().add(pathFinderMenu);
 		optionMenu = new OptionMenu(app);
 		getJMenuBar().add(optionMenu);
 
-		controlPanel.getAlgorithmLabel().setText(algorithmMenu.getSelectedAlgorithm().getDescription());
-
-		pack();
+		controlPanel.getLblGenerationAlgorithm().setText(algorithmMenu.getSelectedAlgorithm().getDescription());
 	}
 
 	public ControlPanel getControlPanel() {

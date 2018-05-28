@@ -25,7 +25,7 @@ public class CreateAllMazesAction extends CreateSingleMazeAction {
 		if (app.model.isHidingControlsWhenRunning()) {
 			app.settingsWindow.setVisible(false);
 		}
-		app.canvas().setDelay(app.model.getDelay());
+		app.getCanvas().setDelay(app.model.getDelay());
 		app.mazeWindow.setVisible(true);
 		app.startTask(() -> {
 			enableControls(false);
@@ -62,8 +62,8 @@ public class CreateAllMazesAction extends CreateSingleMazeAction {
 
 	private void createNextMaze(AlgorithmInfo algorithm) {
 		readyForNext = false;
-		app.canvas().fill(Color.BLACK);
-		app.settingsWindow.getControlPanel().getAlgorithmLabel().setText(algorithm.getDescription());
+		app.getCanvas().fill(Color.BLACK);
+		app.settingsWindow.getControlPanel().getLblGenerationAlgorithm().setText(algorithm.getDescription());
 		try {
 			app.settingsWindow.getAlgorithmMenu().setSelectedAlgorithm(algorithm);
 			generateMaze(algorithm);

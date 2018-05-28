@@ -38,7 +38,6 @@ public class MazeDemoApp {
 	}
 
 	public final MazeDemoModel model;
-
 	public final SettingsWindow settingsWindow;
 	public final MazeWindow mazeWindow;
 
@@ -47,9 +46,10 @@ public class MazeDemoApp {
 
 	public MazeDemoApp() {
 		model = new MazeDemoModel();
-		model.setGridCellSizes(128, 64, 32, 16, 8, 4, 2);
+		model.setGridCellSizes(256, 128, 64, 32, 16, 8, 4, 2);
 		model.setGridCellSize(32);
 		model.setPassageWidthPercentage(50);
+		model.setDelay(0);
 		model.setCompletedCellColor(Color.WHITE);
 		model.setVisitedCellColor(Color.BLUE);
 		model.setUnvisitedCellColor(Color.BLACK);
@@ -60,24 +60,29 @@ public class MazeDemoApp {
 		model.setGenerationAnimated(true);
 		model.setHidingControlsWhenRunning(false);
 		model.setLongestPathHighlighted(false);
-		model.setDelay(0);
+
 		DisplayMode displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
 				.getDisplayMode();
-		int width = displayMode.getWidth() / model.getGridCellSize();
-		int height = displayMode.getHeight() / model.getGridCellSize();
-		model.setGrid(new ObservableGrid<>(width, height, Top4.get(), UNVISITED, false));
-
-		settingsWindow = new SettingsWindow(this);
-		settingsWindow.setAlwaysOnTop(true);
-		settingsWindow.setLocationRelativeTo(null);
-		settingsWindow.setVisible(true);
+		int numCols = displayMode.getWidth() / model.getGridCellSize();
+		int numRows = displayMode.getHeight() / model.getGridCellSize();
+		model.setGrid(new ObservableGrid<>(numCols, numRows, Top4.get(), UNVISITED, false));
 
 		mazeWindow = new MazeWindow(this);
 		mazeWindow.setVisible(true);
+
+		settingsWindow = new SettingsWindow(this);
+		settingsWindow.setAlwaysOnTop(true);
+		settingsWindow.pack();
+		settingsWindow.setLocationRelativeTo(null);
+		settingsWindow.setVisible(true);
 	}
 
-	public ObservingGridCanvas canvas() {
+	public ObservingGridCanvas getCanvas() {
 		return mazeWindow.getCanvas();
+	}
+
+	public void newCanvas() {
+		mazeWindow.createCanvas();
 	}
 
 	public void showMessage(String msg) {
@@ -89,19 +94,15 @@ public class MazeDemoApp {
 		settingsWindow.requestFocus();
 	}
 
-	public void updateCanvas() {
-		mazeWindow.createCanvas();
-	}
-
 	public void setGridPassageThickness(int percent) {
 		model.setPassageWidthPercentage(percent);
-		canvas().fill(Color.BLACK);
-		canvas().drawGrid();
+		getCanvas().fill(Color.BLACK);
+		getCanvas().drawGrid();
 	}
 
 	public void setDelay(int delay) {
 		model.setDelay(delay);
-		canvas().setDelay(delay);
+		getCanvas().setDelay(delay);
 	}
 
 	public void startTask(Runnable task) {
