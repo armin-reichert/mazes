@@ -1,9 +1,9 @@
 package de.amr.easy.util;
 
 import de.amr.easy.data.Partition;
-import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
+import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 
 /**
  * Some useful graph methods.

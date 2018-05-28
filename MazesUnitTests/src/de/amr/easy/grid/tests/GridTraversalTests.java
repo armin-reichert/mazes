@@ -19,11 +19,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.graph.alg.traversal.BestFirstTraversal;
-import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
-import de.amr.easy.graph.alg.traversal.DepthFirstTraversal;
-import de.amr.easy.graph.alg.traversal.HillClimbing;
 import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.graph.traversal.BestFirstTraversal;
+import de.amr.easy.graph.traversal.BreadthFirstTraversal;
+import de.amr.easy.graph.traversal.DepthFirstTraversal;
+import de.amr.easy.graph.traversal.HillClimbing;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.curves.HilbertCurve;
 import de.amr.easy.grid.curves.HilbertLCurve;

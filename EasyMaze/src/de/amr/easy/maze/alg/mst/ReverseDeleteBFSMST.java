@@ -1,7 +1,7 @@
 package de.amr.easy.maze.alg.mst;
 
-import de.amr.easy.graph.alg.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.api.Grid2D;
 
 /**

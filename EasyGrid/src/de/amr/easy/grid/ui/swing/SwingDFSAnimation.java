@@ -6,9 +6,9 @@ import java.awt.Color;
 import java.util.BitSet;
 import java.util.stream.IntStream;
 
-import de.amr.easy.graph.alg.traversal.DepthFirstTraversal;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalListener;
+import de.amr.easy.graph.traversal.DepthFirstTraversal;
 import de.amr.easy.grid.api.BareGrid2D;
 
 /**

@@ -1,4 +1,4 @@
-package de.amr.easy.graph.alg.traversal;
+package de.amr.easy.graph.traversal;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;

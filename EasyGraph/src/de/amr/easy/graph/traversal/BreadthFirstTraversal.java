@@ -1,30 +1,44 @@
-package de.amr.easy.graph.alg.traversal;
+package de.amr.easy.graph.traversal;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
-import java.util.Comparator;
-import java.util.PriorityQueue;
+import java.util.Queue;
 
 import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.PathFinder;
 
-public class BestFirstTraversal extends AbstractGraphTraversal implements PathFinder {
+/**
+ * Breadth-first-traversal of an undirected graph from a given source vertex. After being executed,
+ * the distance of each vertex from the source can be queried, as well as the maximal distance of a
+ * reachable vertex from the source.
+ * <p>
+ * Implements the {@link PathFinder} interface such that the traversal state of each vertex can be
+ * queried and a path from the source to any target vertex can be asked for.
+ * 
+ * <p>
+ * During the traversal, events are fired which can be processed by a listener, for example an
+ * animation.
+ * 
+ * @author Armin Reichert
+ */
+public class BreadthFirstTraversal extends AbstractGraphTraversal implements PathFinder {
 
 	private final Graph<?> graph;
 	private final int source;
-	private final PriorityQueue<Integer> q;
+	private final Queue<Integer> q;
 	private final int[] distances;
 	private int maxDistance;
 	private int farest;
 	private int stopAt;
 
-	public BestFirstTraversal(Graph<?> graph, int source, Comparator<Integer> vertexComparator) {
+	public BreadthFirstTraversal(Graph<?> graph, int source) {
 		this.graph = graph;
 		this.source = source;
-		q = new PriorityQueue<>(vertexComparator);
+		q = new ArrayDeque<>();
 		distances = new int[graph.vertexCount()];
 		clear();
 	}
