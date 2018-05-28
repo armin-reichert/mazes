@@ -37,6 +37,7 @@ public class MazeWindow extends JFrame {
 	public void createCanvas() {
 		canvas = new ObservingGridCanvas(app.model.getGrid(), createRenderer());
 		canvas.setDelay(app.model.getDelay());
+		canvas.getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
 		canvas.getActionMap().put("showSettings", new AbstractAction() {
 
 			@Override
@@ -44,7 +45,6 @@ public class MazeWindow extends JFrame {
 				app.showSettingsWindow();
 			}
 		});
-		canvas.getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
 		setContentPane(canvas);
 	}
 

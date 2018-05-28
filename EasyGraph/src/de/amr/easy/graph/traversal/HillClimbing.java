@@ -4,10 +4,9 @@ import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
-import java.util.ArrayDeque;
 import java.util.Comparator;
-import java.util.Deque;
 
+import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.PathFinder;
 import de.amr.easy.graph.api.TraversalState;
@@ -17,13 +16,13 @@ public class HillClimbing extends AbstractGraphTraversal implements PathFinder {
 	private final Graph<?> graph;
 	private final int source;
 	private final int target;
-	private final Deque<Integer> stack;
+	private final Stack<Integer> stack;
 
 	public HillClimbing(Graph<?> graph, int source, int target) {
 		this.graph = graph;
 		this.source = source;
 		this.target = target;
-		this.stack = new ArrayDeque<>();
+		this.stack = new Stack<>();
 	}
 
 	public Comparator<Integer> vertexValuation = Integer::compare;
@@ -34,7 +33,7 @@ public class HillClimbing extends AbstractGraphTraversal implements PathFinder {
 		setState(source, VISITED);
 		boolean targetFound = false;
 		while (!stack.isEmpty() && !targetFound) {
-			if (stack.peek() == target) {
+			if (stack.top().get() == target) {
 				targetFound = true;
 			} else {
 				int current = stack.pop();

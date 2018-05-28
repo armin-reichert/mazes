@@ -4,10 +4,9 @@ import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.OptionalInt;
 
+import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.PathFinder;
 import de.amr.easy.graph.api.TraversalState;
@@ -29,7 +28,7 @@ public class DepthFirstTraversal extends AbstractGraphTraversal implements PathF
 	private final Graph<?> graph;
 	private final int source;
 	private final int target;
-	private final Deque<Integer> stack;
+	private final Stack<Integer> stack;
 
 	/**
 	 * Constructs an instance without executing the traversal.
@@ -45,7 +44,7 @@ public class DepthFirstTraversal extends AbstractGraphTraversal implements PathF
 		this.graph = graph;
 		this.source = source;
 		this.target = target;
-		this.stack = new ArrayDeque<>();
+		this.stack = new Stack<>();
 	}
 
 	@Override

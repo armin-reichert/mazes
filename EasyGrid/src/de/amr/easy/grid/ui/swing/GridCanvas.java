@@ -7,12 +7,11 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.Optional;
 
 import javax.swing.JComponent;
 
+import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.grid.api.BareGrid2D;
 
@@ -26,7 +25,7 @@ import de.amr.easy.grid.api.BareGrid2D;
  */
 public class GridCanvas<G extends BareGrid2D<?>> extends JComponent {
 
-	private final Deque<GridRenderer> rendererStack = new ArrayDeque<>();
+	private final Stack<GridRenderer> rendererStack = new Stack<>();
 	private BufferedImage drawingBuffer;
 	protected Graphics2D g2;
 	protected G grid;
@@ -91,7 +90,7 @@ public class GridCanvas<G extends BareGrid2D<?>> extends JComponent {
 	}
 
 	public Optional<GridRenderer> getRenderer() {
-		return Optional.ofNullable(rendererStack.peek());
+		return rendererStack.top();
 	}
 
 	public void pushRenderer(GridRenderer renderer) {

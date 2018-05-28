@@ -4,10 +4,9 @@ import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 import static de.amr.easy.util.StreamUtils.randomElement;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.OptionalInt;
 
+import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.maze.alg.MazeAlgorithm;
@@ -25,7 +24,7 @@ public class IterativeDFS extends MazeAlgorithm {
 
 	@Override
 	public void run(int start) {
-		Deque<Integer> stack = new ArrayDeque<>();
+		Stack<Integer> stack = new Stack<>();
 		int current = start;
 		grid.set(current, VISITED);
 		stack.push(current);
