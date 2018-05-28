@@ -1,6 +1,8 @@
 package de.amr.demos.maze.swingapp.model;
 
 import java.util.Arrays;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * Meta-data for an algorithm.
@@ -9,11 +11,14 @@ import java.util.Arrays;
  */
 public class AlgorithmInfo {
 
-	private Class<?> algorithmClass;
-	private String description;
-	private Object[] tags;
+	public static final AlgorithmInfo NONE = new AlgorithmInfo(Object.class, "None");
+
+	private final Class<?> algorithmClass;
+	private final String description;
+	private final Object[] tags;
 
 	public AlgorithmInfo(Class<?> algorithmClass, String description, Object... tags) {
+		Objects.requireNonNull(algorithmClass);
 		this.algorithmClass = algorithmClass;
 		this.description = description;
 		this.tags = tags;
@@ -28,11 +33,10 @@ public class AlgorithmInfo {
 	}
 
 	public boolean isTagged(Object tag) {
-		return Arrays.stream(tags).anyMatch(t -> t.equals(tag));
+		return tags().anyMatch(t -> t.equals(tag));
 	}
 
-	@Override
-	public String toString() {
-		return description;
+	public Stream<?> tags() {
+		return Arrays.stream(tags);
 	}
 }
