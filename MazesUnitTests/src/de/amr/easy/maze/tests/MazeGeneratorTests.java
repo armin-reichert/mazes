@@ -40,6 +40,7 @@ import de.amr.easy.maze.alg.traversal.IterativeDFS;
 import de.amr.easy.maze.alg.traversal.RandomBFS;
 import de.amr.easy.maze.alg.traversal.RecursiveDFS;
 import de.amr.easy.maze.alg.ust.AldousBroderUST;
+import de.amr.easy.maze.alg.ust.AldousBroderWilsonUST;
 import de.amr.easy.maze.alg.ust.WilsonUSTCollapsingRectangle;
 import de.amr.easy.maze.alg.ust.WilsonUSTCollapsingWalls;
 import de.amr.easy.maze.alg.ust.WilsonUSTExpandingCircle;
@@ -101,6 +102,11 @@ public class MazeGeneratorTests {
 	@Test
 	public void testAldousBroder() {
 		runTest(new AldousBroderUST(grid));
+	}
+
+	@Test
+	public void testAldousBroderWilson() {
+		runTest(new AldousBroderWilsonUST(grid));
 	}
 
 	@Test

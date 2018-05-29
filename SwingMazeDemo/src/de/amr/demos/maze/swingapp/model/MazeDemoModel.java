@@ -33,6 +33,7 @@ import de.amr.easy.maze.alg.traversal.IterativeDFS;
 import de.amr.easy.maze.alg.traversal.RandomBFS;
 import de.amr.easy.maze.alg.traversal.RecursiveDFS;
 import de.amr.easy.maze.alg.ust.AldousBroderUST;
+import de.amr.easy.maze.alg.ust.AldousBroderWilsonUST;
 import de.amr.easy.maze.alg.ust.WilsonUSTCollapsingCircle;
 import de.amr.easy.maze.alg.ust.WilsonUSTCollapsingRectangle;
 import de.amr.easy.maze.alg.ust.WilsonUSTCollapsingWalls;
@@ -68,6 +69,7 @@ public class MazeDemoModel {
 		new AlgorithmInfo(ReverseDeleteBFSMST.class, "Reverse-Delete MST (BFS, very slow)", MST, SmallGrid),
 		new AlgorithmInfo(ReverseDeleteDFSMST.class, "Reverse-Delete MST (DFS, very slow)", MST, SmallGrid),
 		new AlgorithmInfo(AldousBroderUST.class, "Aldous-Broder UST (rather slow)", UST, Slow),
+		new AlgorithmInfo(AldousBroderWilsonUST.class, "Houston UST (rather slow)", UST, Slow),
 		new AlgorithmInfo(WilsonUSTRandomCell.class, "Wilson UST (random)", UST, Slow),
 		new AlgorithmInfo(WilsonUSTRowsTopDown.class, "Wilson UST (row-wise top-to-bottom)", UST),
 		new AlgorithmInfo(WilsonUSTLeftToRightSweep.class, "Wilson UST (column-wise left to right)", UST),

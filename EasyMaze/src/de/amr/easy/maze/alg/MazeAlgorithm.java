@@ -45,10 +45,10 @@ public abstract class MazeAlgorithm {
 	 * Runs the maze generation starting from the given cell. The maze algorithm of course can ignore
 	 * this and select another cell.
 	 * 
-	 * @param startCell
+	 * @param start
 	 *          the grid cell where the generation starts
 	 */
-	public abstract void run(int startCell);
+	public abstract void run(int start);
 
 	/**
 	 * Can be overridden by subclasses of a maze generation algorithm to specify a different start
