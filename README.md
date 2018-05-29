@@ -2,14 +2,14 @@
 
 Maze generation algorithms got my attention when I found a series of [blog posts](http://weblog.jamisbuck.org/2011/2/7/maze-generation-algorithm-recap) by Jamis Buck where he presents the most common maze algorithms together with Ruby implementations and Javascript animations. 
 
-As an exercise for learning the new Java 8 language features (lambda expressions, streams etc.) I started to reimplement some of these algorithms. Apart from using Java 8 style, my intent was to make the underlying graph algorithm (creation of a spanning tree of a 2D grid graph) more explicit in the code. On the web one can find a huge number of maze implementations, but most of these are not very interesting because they are poorly coded, use ad-hoc data structures or mix the essentials of the algorithms with UI or animation related code. In contrast I wanted to provide implementations that just modify the edges of a 2D grid graph and clearly reflect the underlying graph algorithm. Also, there are no dependencies to UI frameworks (AWT, Swing, JavaFX) which makes the code reusable.
+As an exercise for learning the new Java 8 language features (lambda expressions, streams etc.) I started to reimplement some of these algorithms. Apart from using Java 8 style, my intent was to make the underlying graph algorithm (creation of a spanning tree of a 2D grid graph) more explicit in the code. On the web one can find a large number of maze implementations, but many of them are not very interesting because they are not so well coded, use ad-hoc data structures or mix the essentials of the maze creation algorithm with UI or animation related code. In contrast, I wanted to provide implementations that just change the edge set of a 2D grid graph and emphasize the underlying graph algorithm. The generator classes have no dependencies to any UI frameworks (Swing, JavaFX) which makes them easily reusable.
 
 To achieve these goals, there is
 - an API for graph and 2D-grid data structures 
 - an implementation of a 2D-grid with cell and edge content
 - a publish-subscribe mechanism for observing graph/grid operations and traversal algorithms
 
-The maze generation algorithms work strictly against the grid API. For drawing and animation, graph and graph traversal listeners are used.
+The maze generation algorithms operate strictly on the grid API. For drawing and animation, graph and graph traversal listeners are used.
 
 I also found new ways of generating mazes, for example a modification of Eller's algorithm which generates the maze from the center of the grid towards the borders, or variations of Wilson's algorithm which result from the different ways of selecting the random walk start cells. For example, one can start the random walks in the order defined by space-filling-curves like [Hilbert](EasyGrid/src/de/amr/easy/grid/curves/HilbertCurve.java), [Peano](EasyGrid/src/de/amr/easy/grid/curves/PeanoCurve.java) or [Moore](EasyGrid/src/de/amr/easy/grid/curves/MooreLCurve.java) curves. This gives visually appealing creation processes. If it has any practical use, time will show.
 
