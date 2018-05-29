@@ -43,9 +43,11 @@ Here, the edges of a full grid are processed in permuted order (the Kruskal MST 
 
 Also included is a [demo application](https://github.com/armin-reichert/mazes/releases/download/mai2018/mazedemoapp.jar) demonstrating all implemented maze generators and path finders. Using a control panel one can interactively select the generation algorithm, path finder algorithm, grid resolution and rendering style ("walls", "passages").
 
+<img width="800" height="450" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/mazedemoapp.png">
+
 Implemented algorithms:
 
-Graph Traversal:
+### Graph Traversal:
 - [Random Breadth-First-Search](EasyMaze/src/de/amr/easy/maze/alg/traversal/RandomBFS.java)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_RandomBFS.gif">
@@ -58,7 +60,7 @@ Graph Traversal:
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_RecursiveDFS.gif">
 
-Minimum Spanning Tree: 
+### Minimum Spanning Tree: 
 - [Boruvka](EasyMaze/src/de/amr/easy/maze/alg/mst/BoruvkaMST.java)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_BoruvkaMST.gif">
@@ -79,14 +81,14 @@ Minimum Spanning Tree:
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_ReverseDeleteMST.gif">
 
-Uniform Spanning Tree:
+### Uniform Spanning Tree:
 - [Aldous-Broder](EasyMaze/src/de/amr/easy/maze/alg/ust/AldousBroderUST.java)
 
 - [Wilson's algorithm](EasyMaze/src/de/amr/easy/maze/alg/ust) (16 different variants)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_WilsonUSTRandomCell.gif">
 
-Other algorithms:
+### Other algorithms:
 - [Binary Tree, top-to-bottom](EasyMaze/src/de/amr/easy/maze/alg/BinaryTree.java)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_BinaryTree.gif">
@@ -123,6 +125,6 @@ Other algorithms:
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_RecursiveDivision.gif">
 
-Path finding algorithms:
+### Path finding algorithms:
 - The [EasyGraph](EasyGraph) library contains a reusable DFS and BFS-based path finding implementation that is for example used by the reverse-delete algorithm.
 
