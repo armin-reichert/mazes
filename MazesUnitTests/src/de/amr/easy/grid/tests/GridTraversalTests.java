@@ -7,6 +7,7 @@ import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.grid.api.GridPosition.TOP_RIGHT;
+import static de.amr.easy.grid.curves.CurveUtils.cells;
 import static de.amr.easy.grid.curves.CurveUtils.traverse;
 import static java.lang.Math.abs;
 import static org.junit.Assert.assertTrue;
@@ -160,6 +161,12 @@ public class GridTraversalTests {
 		grid = new Grid<>(243, 243, Top4.get(), UNVISITED, false);
 		assertAllCells(UNVISITED);
 		traverse(new PeanoCurve(5), grid, grid.cell(BOTTOM_LEFT), this::setCompleted);
+		assertAllCells(COMPLETED);
+	}
+
+	@Test
+	public void testCurveStream() {
+		cells(new HilbertCurve(K), grid, grid.cell(TOP_RIGHT)).forEach(cell -> grid.set(cell, COMPLETED));
 		assertAllCells(COMPLETED);
 	}
 }

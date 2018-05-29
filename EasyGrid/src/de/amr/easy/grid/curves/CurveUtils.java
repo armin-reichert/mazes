@@ -1,10 +1,10 @@
 package de.amr.easy.grid.curves;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.api.Curve;
@@ -38,8 +38,7 @@ public class CurveUtils {
 	}
 
 	/**
-	 * Returns the stream of cells when the given curve is traversed from the start cell on the given
-	 * grid.
+	 * Returns the list of cells traversed by a curve on a grid when starting at a given cell.
 	 * 
 	 * @param curve
 	 *          a curve
@@ -47,18 +46,16 @@ public class CurveUtils {
 	 *          the traversed grid
 	 * @param start
 	 *          the start cell
-	 * @return stream of cells when the given curve is traversed from the start cell on the given grid
+	 * @return list of cells traversed by {@code curve} on {@code grid} when starting at {@code start}
 	 */
-	public static IntStream cells(Curve curve, BareGrid2D<?> grid, int start) {
-		List<Integer> cells = new ArrayList<>();
-		int current = start;
-		cells.add(current);
-		for (int dir : curve) {
-			int next = grid.neighbor(current, dir).getAsInt();
-			cells.add(next);
-			current = next;
-		}
-		return cells.stream().mapToInt(Integer::intValue);
+	public static List<Integer> cells(Curve curve, BareGrid2D<?> grid, int start) {
+		/*@formatter:off*/
+		return curve.stream().collect(
+			() -> new ArrayList<>(Arrays.asList(start)), 
+			(cells, dir) -> cells.add(grid.neighbor(cells.get(cells.size() - 1), dir).getAsInt()),
+			ArrayList<Integer>::addAll
+		);
+		/*@formatter:on*/
 	}
 
 	/**
@@ -73,10 +70,7 @@ public class CurveUtils {
 	 * @return textual representation of the grid cells traversed by the given curve
 	 */
 	public static String cellsAsString(Curve curve, BareGrid2D<?> grid, int start) {
-		/*@formatter:off*/
-		return cells(curve, grid, start).boxed()
-				.map(cell -> String.format("(%d,%d)", grid.col(cell), grid.row(cell)))
+		return cells(curve, grid, start).stream().map(cell -> String.format("(%d,%d)", grid.col(cell), grid.row(cell)))
 				.collect(Collectors.joining());
-		/*@formatter:on*/
 	}
 }
