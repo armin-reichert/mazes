@@ -43,7 +43,7 @@ Here, the edges of a full grid are processed in permuted order (the Kruskal MST 
 
 Also included is a [demo application](https://github.com/armin-reichert/mazes/releases/download/mai2018/mazedemoapp.jar) demonstrating all implemented maze generators and path finders. Using a control panel one can interactively select the generation algorithm, path finder algorithm, grid resolution and rendering style ("walls", "passages").
 
-<img width="800" height="450" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/mazedemoapp.png">
+<img style="width:100%; height=auto" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/mazedemoapp.png">
 
 Implemented algorithms:
 
