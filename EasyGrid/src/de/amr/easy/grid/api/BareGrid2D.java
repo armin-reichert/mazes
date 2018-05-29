@@ -23,24 +23,24 @@ public interface BareGrid2D<W extends Comparable<W>> extends Graph<WeightedEdge<
 	/**
 	 * @return the number of columns (width) of the grid
 	 */
-	public int numCols();
+	 int numCols();
 
 	/**
 	 * @return the number of rows (height) of the grid
 	 */
-	public int numRows();
+	 int numRows();
 
 	/**
 	 * @return the number of cells of the grid
 	 */
-	default public int numCells() {
+	default  int numCells() {
 		return numCols() * numRows();
 	}
 
 	/**
 	 * @return the topology of this grid
 	 */
-	public Topology getTopology();
+	 Topology getTopology();
 
 	/**
 	 * @param col
@@ -49,42 +49,42 @@ public interface BareGrid2D<W extends Comparable<W>> extends Graph<WeightedEdge<
 	 *          a row index
 	 * @return the cell index ("cell") for coordinate (col, row)
 	 */
-	public int cell(int col, int row);
+	 int cell(int col, int row);
 
 	/**
 	 * @param position
 	 *          a symbolic grid position like TOP_LEFT
 	 * @return the cell index at the given position
 	 */
-	public int cell(GridPosition position);
+	 int cell(GridPosition position);
 
 	/**
 	 * @param cell
 	 *          a cell index
 	 * @return the column index of the given cell
 	 */
-	public int col(int cell);
+	 int col(int cell);
 
 	/**
 	 * @param cell
 	 *          a cell index
 	 * @return the row index of the given cell
 	 */
-	public int row(int cell);
+	 int row(int cell);
 
 	/**
 	 * @param col
 	 *          the column index
 	 * @return {@code true} if the given column index is valid
 	 */
-	public boolean isValidCol(int col);
+	 boolean isValidCol(int col);
 
 	/**
 	 * @param row
 	 *          the row index
 	 * @return if given row index is valid
 	 */
-	public boolean isValidRow(int row);
+	 boolean isValidRow(int row);
 
 	/**
 	 * Returns all neighbor cells of a cell as specified by the given directions.
@@ -95,7 +95,7 @@ public interface BareGrid2D<W extends Comparable<W>> extends Graph<WeightedEdge<
 	 *          a list of directions
 	 * @return stream of the neighbor cells in the given directions
 	 */
-	public IntStream neighbors(int cell, IntStream dirs);
+	 IntStream neighbors(int cell, IntStream dirs);
 
 	/**
 	 * Returns all neighbor cells of a cell.
@@ -104,7 +104,7 @@ public interface BareGrid2D<W extends Comparable<W>> extends Graph<WeightedEdge<
 	 *          a grid cell
 	 * @return stream of the neighbor cells in the given directions
 	 */
-	public IntStream neighbors(int cell);
+	 IntStream neighbors(int cell);
 
 	/**
 	 * 
@@ -114,7 +114,7 @@ public interface BareGrid2D<W extends Comparable<W>> extends Graph<WeightedEdge<
 	 *          a direction
 	 * @return the optional neighbor in the given direction
 	 */
-	public OptionalInt neighbor(int cell, int dir);
+	 OptionalInt neighbor(int cell, int dir);
 
 	/**
 	 * Tells if the given cells are "neighbors". Two cells are neighbors if you can reach one from the
@@ -126,7 +126,7 @@ public interface BareGrid2D<W extends Comparable<W>> extends Graph<WeightedEdge<
 	 *          another cell
 	 * @return {@code true} if the cells are neighbors
 	 */
-	public boolean areNeighbors(int either, int other);
+	 boolean areNeighbors(int either, int other);
 
 	/**
 	 * 
@@ -137,7 +137,7 @@ public interface BareGrid2D<W extends Comparable<W>> extends Graph<WeightedEdge<
 	 * @return {@code true} if the cell is connected to the neighbor in the given direction
 	 *         ("passage", no "wall")
 	 */
-	public boolean isConnected(int cell, int dir);
+	 boolean isConnected(int cell, int dir);
 
 	/**
 	 * @param either
@@ -146,10 +146,10 @@ public interface BareGrid2D<W extends Comparable<W>> extends Graph<WeightedEdge<
 	 *          other cell
 	 * @return the direction from either to other cell (if those cells are neighbors)
 	 */
-	public OptionalInt direction(int either, int other);
+	 OptionalInt direction(int either, int other);
 
 	/**
 	 * Makes this grid a full grid.
 	 */
-	public void fill();
+	 void fill();
 }

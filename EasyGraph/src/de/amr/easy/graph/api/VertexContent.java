@@ -15,7 +15,7 @@ public interface VertexContent<C> {
 	 *          a vertex
 	 * @return the content or the default content if no content has been set for this vertex
 	 */
-	public C get(int vertex);
+	 C get(int vertex);
 
 	/**
 	 * Sets the content of the given vertex.
@@ -25,12 +25,12 @@ public interface VertexContent<C> {
 	 * @param data
 	 *          the vertex content
 	 */
-	public void set(int vertex, C data);
+	 void set(int vertex, C data);
 
 	/**
 	 * Clears the complete grid content.
 	 */
-	public void clearContent();
+	 void clearContent();
 
 	/**
 	 * Sets the default content for the cells
@@ -38,12 +38,12 @@ public interface VertexContent<C> {
 	 * @param data
 	 *          the default content
 	 */
-	public void setDefaultContent(C data);
+	 void setDefaultContent(C data);
 
 	/**
 	 * @return the default content of the cells
 	 */
-	public C getDefaultContent();
+	 C getDefaultContent();
 
 	/**
 	 * @return {@code true} if this is a sparse content store

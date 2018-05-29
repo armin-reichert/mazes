@@ -16,7 +16,7 @@ public interface ObservableGraph<E extends Edge> extends Graph<E> {
 	 * @param observer
 	 *          graph observer
 	 */
-	public void addGraphObserver(GraphObserver<E> observer);
+	 void addGraphObserver(GraphObserver<E> observer);
 
 	/**
 	 * Removes the given observer to this graph.
@@ -24,7 +24,7 @@ public interface ObservableGraph<E extends Edge> extends Graph<E> {
 	 * @param observer
 	 *          graph observer
 	 */
-	public void removeGraphObserver(GraphObserver<E> observer);
+	 void removeGraphObserver(GraphObserver<E> observer);
 
 	/**
 	 * Activates or deactivates eventing.
@@ -32,5 +32,5 @@ public interface ObservableGraph<E extends Edge> extends Graph<E> {
 	 * @param enabled
 	 *          tells if eventing should be enabled
 	 */
-	public void setEventsEnabled(boolean enabled);
+	 void setEventsEnabled(boolean enabled);
 }

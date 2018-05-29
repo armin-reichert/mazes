@@ -12,19 +12,19 @@ public interface Topology {
 	/**
 	 * @return stream of the directions of this topology
 	 */
-	public IntStream dirs();
+	 IntStream dirs();
 
 	/**
 	 * @param dir
 	 *          direction
 	 * @return readable name for given direction
 	 */
-	public String getName(int dir);
+	 String getName(int dir);
 
 	/**
 	 * @return the number of directions of this topology
 	 */
-	public int dirCount();
+	 int dirCount();
 
 	/**
 	 * TODO: this make no sense for odd number of directions
@@ -33,28 +33,28 @@ public interface Topology {
 	 *          direction
 	 * @return opposite of given direction
 	 */
-	public int inv(int dir);
+	 int inv(int dir);
 
 	/**
 	 * @param dir
 	 *          direction
 	 * @return direction left (counter-clockwise) of given direction
 	 */
-	public int left(int dir);
+	 int left(int dir);
 
 	/**
 	 * @param dir
 	 *          direction
 	 * @return direction right (clockwise) of given direction
 	 */
-	public int right(int dir);
+	 int right(int dir);
 
 	/**
 	 * @param dir
 	 *          direction
 	 * @return x-difference when moving towards given direction
 	 */
-	public int dx(int dir);
+	 int dx(int dir);
 
 	/**
 	 * 
@@ -62,5 +62,5 @@ public interface Topology {
 	 *          direction
 	 * @return y-difference when moving towards given direction
 	 */
-	public int dy(int dir);
+	 int dy(int dir);
 }

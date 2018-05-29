@@ -8,12 +8,12 @@ public interface Edge {
 	/**
 	 * @return one vertex of this edge
 	 */
-	public int either();
+	 int either();
 
 	/**
 	 * @param either
 	 *          one vertex of this edge
 	 * @return the vertex opposite to the given vertex
 	 */
-	public int other(int either);
+	 int other(int either);
 }

@@ -11,7 +11,7 @@ import java.util.stream.StreamSupport;
  */
 public interface CellSequence extends Iterable<Integer> {
 
-	public default IntStream stream() {
+	 default IntStream stream() {
 		return StreamSupport.stream(spliterator(), false).mapToInt(Integer::intValue);
 	}
 }
