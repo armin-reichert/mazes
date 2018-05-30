@@ -1,8 +1,13 @@
 package de.amr.easy.util;
 
+import static java.lang.Math.abs;
+
+import java.util.function.BiFunction;
+
 import de.amr.easy.graph.api.Multigraph;
 import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.graph.impl.DefaultMultigraph;
+import de.amr.easy.grid.api.BareGrid2D;
 
 /**
  * The garbage heap of this library.
@@ -10,6 +15,27 @@ import de.amr.easy.graph.impl.DefaultMultigraph;
  * @author Armin Reichert
  */
 public class GridUtils {
+
+	/**
+	 * Returns a function which compares two grid cells according to their Manhattan distance from the
+	 * given target cell.
+	 * 
+	 * @param grid
+	 *          a grid
+	 * @param target
+	 *          the target cell
+	 * @return a function comparing two cells according to their Manhattan distance to the target cell
+	 */
+	public static BiFunction<Integer, Integer, Integer> manhattanDistance(BareGrid2D<?> grid, int target) {
+		return (u, v) -> {
+			int[] coord_u = { grid.col(u), grid.row(u) };
+			int[] coord_v = { grid.col(v), grid.row(v) };
+			int[] coord_target = { grid.col(target), grid.row(target) };
+			int dist_u = abs(coord_u[0] - coord_target[0]) + abs(coord_u[1] - coord_target[1]);
+			int dist_v = abs(coord_v[0] - coord_target[0]) + abs(coord_v[1] - coord_target[1]);
+			return Integer.compare(dist_u, dist_v);
+		};
+	}
 
 	public static Multigraph<WeightedEdge<Integer>> dualGraphOfGrid(int cols, int rows) {
 		Multigraph<WeightedEdge<Integer>> dual = new DefaultMultigraph<>();

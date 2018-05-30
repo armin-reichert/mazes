@@ -1,5 +1,6 @@
 package de.amr.demos.maze.swingapp.model;
 
+import static de.amr.demos.maze.swingapp.model.AlgorithmTag.HillClimbing;
 import static de.amr.demos.maze.swingapp.model.AlgorithmTag.MST;
 import static de.amr.demos.maze.swingapp.model.AlgorithmTag.Slow;
 import static de.amr.demos.maze.swingapp.model.AlgorithmTag.SmallGrid;
@@ -104,7 +105,9 @@ public class MazeDemoModel {
 
 	public static final AlgorithmInfo[] PATHFINDER_ALGORITHMS = {
 			new AlgorithmInfo(SwingDFSAnimation.class, "Depth-First-Search"),
-			new AlgorithmInfo(SwingBFSAnimation.class, "Breadth-First-Search"), };
+			new AlgorithmInfo(SwingDFSAnimation.class, "Hill Climbing", HillClimbing),
+			new AlgorithmInfo(SwingBFSAnimation.class, "Breadth-First-Search"),
+			};
 
 	private ObservableGrid<TraversalState, Integer> grid;
 	private int[] gridCellSizes;

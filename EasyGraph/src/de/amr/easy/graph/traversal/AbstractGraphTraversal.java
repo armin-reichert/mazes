@@ -41,7 +41,7 @@ public abstract class AbstractGraphTraversal implements PathFinder {
 	public void setState(int v, TraversalState newState) {
 		TraversalState oldState = stateMap.get(v);
 		stateMap.put(v, newState);
-		observers.forEach(observer -> observer.vertexTouched(v, oldState, newState));
+		vertexTouched(v, oldState, newState);
 	}
 
 	public int getParent(int v) {
@@ -60,6 +60,14 @@ public abstract class AbstractGraphTraversal implements PathFinder {
 		observers.remove(observer);
 	}
 
+	protected void edgeTouched(int u, int v) {
+		observers.forEach(observer -> observer.edgeTouched(u, v));
+	}
+
+	protected void vertexTouched(int u, TraversalState oldState, TraversalState newState) {
+		observers.forEach(observer -> observer.vertexTouched(u, oldState, newState));
+	}
+
 	// {PathFinder} interface
 
 	@Override
@@ -73,5 +81,4 @@ public abstract class AbstractGraphTraversal implements PathFinder {
 		}
 		return path.stream().mapToInt(Integer::intValue);
 	}
-
 }

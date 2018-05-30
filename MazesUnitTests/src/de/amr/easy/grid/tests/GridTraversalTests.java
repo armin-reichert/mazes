@@ -34,6 +34,7 @@ import de.amr.easy.grid.curves.PeanoCurve;
 import de.amr.easy.grid.impl.Grid;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
+import de.amr.easy.util.GridUtils;
 
 public class GridTraversalTests {
 
@@ -87,12 +88,7 @@ public class GridTraversalTests {
 	public void testHillClimbing() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
 		HillClimbing dfs = new HillClimbing(grid, source, target);
-		dfs.vertexValuation = (u, v) -> {
-			int ux = grid.col(u), uy = grid.row(u);
-			int vx = grid.col(v), vy = grid.row(v);
-			int tx = grid.col(target), ty = grid.row(target);
-			return Integer.compare(Math.abs(ux - tx) + Math.abs(uy - ty), Math.abs(vx - tx) + Math.abs(vy - ty));
-		};
+		dfs.vertexValuation = (u, v) -> GridUtils.manhattanDistance(grid, target).apply(u, v);
 		assertState(grid.vertexStream(), dfs::getState, UNVISITED);
 		dfs.traverseGraph();
 		IntStream path = dfs.findPath(target);

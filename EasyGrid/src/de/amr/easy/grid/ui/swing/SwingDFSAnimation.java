@@ -8,7 +8,7 @@ import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalListener;
-import de.amr.easy.graph.traversal.DepthFirstTraversal;
+import de.amr.easy.graph.traversal.ObservableDFSPathFinder;
 import de.amr.easy.grid.api.BareGrid2D;
 
 /**
@@ -27,7 +27,8 @@ public class SwingDFSAnimation {
 		this.grid = grid;
 	}
 
-	private ConfigurableGridRenderer createRenderer(DepthFirstTraversal dfs, BitSet inPath, GridRenderer oldRenderer) {
+	private ConfigurableGridRenderer createRenderer(ObservableDFSPathFinder dfs, BitSet inPath,
+			GridRenderer oldRenderer) {
 		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
 		renderer.fnCellSize = oldRenderer::getCellSize;
 		renderer.fnPassageWidth = () -> oldRenderer.getPassageWidth() > 5 ? oldRenderer.getPassageWidth() / 2
@@ -57,8 +58,7 @@ public class SwingDFSAnimation {
 		return renderer;
 	}
 
-	public void runDFSAnimation(GridCanvas<?> canvas, int source, int target) {
-		DepthFirstTraversal dfs = new DepthFirstTraversal(grid, source, target);
+	public void run(GridCanvas<?> canvas, ObservableDFSPathFinder dfs, int source, int target) {
 		dfs.addObserver(new GraphTraversalListener() {
 
 			@Override

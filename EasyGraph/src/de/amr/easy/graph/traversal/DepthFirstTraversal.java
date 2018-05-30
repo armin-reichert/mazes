@@ -9,7 +9,6 @@ import java.util.OptionalInt;
 import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.PathFinder;
-import de.amr.easy.graph.api.TraversalState;
 
 /**
  * Depth-first-traversal of an undirected graph.
@@ -23,7 +22,7 @@ import de.amr.easy.graph.api.TraversalState;
  * 
  * @author Armin Reichert
  */
-public class DepthFirstTraversal extends AbstractGraphTraversal implements PathFinder {
+public class DepthFirstTraversal extends AbstractGraphTraversal implements ObservableDFSPathFinder {
 
 	private final Graph<?> graph;
 	private final int source;
@@ -53,14 +52,17 @@ public class DepthFirstTraversal extends AbstractGraphTraversal implements PathF
 		stack.clear();
 	}
 
+	@Override
 	public int getSource() {
 		return source;
 	}
 
+	@Override
 	public int getTarget() {
 		return target;
 	}
 
+	@Override
 	public boolean isStacked(int v) {
 		return stack.contains(v);
 	}
@@ -86,22 +88,17 @@ public class DepthFirstTraversal extends AbstractGraphTraversal implements PathF
 				}
 				if (getState(current) == VISITED) {
 					stack.push(current);
-					setState(current, UNVISITED);
-					setState(current, VISITED); // "re-visited"
 				}
 			}
 		}
 	}
 
 	private void visit(int v, int parent) {
-		TraversalState oldState = getState(v);
 		setState(v, VISITED);
-		if (parent != -1) {
-			observers.forEach(observer -> observer.edgeTouched(parent, v));
-		} else {
-			observers.forEach(observer -> observer.vertexTouched(v, oldState, getState(v)));
-		}
 		setParent(v, parent);
+		if (parent != -1) {
+			edgeTouched(parent, v);
+		}
 	}
 
 	private boolean checkTarget(int v) {
