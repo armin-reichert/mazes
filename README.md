@@ -128,5 +128,8 @@ Implemented algorithms:
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_RecursiveDivision.gif">
 
 ### Path finding algorithms:
-- The [EasyGraph](EasyGraph) library contains reusable DFS and BFS-implementations which can be used for finding paths or inside algorithms as for example is done in the Reverse-Delete-MST algorithm.
-
+- The [EasyGraph](EasyGraph) library contains the following path finder algorithms:
+  - Breadth-first-search
+  - Hill climbing with Manhattan distance
+  - Hill climbing with Euclidian distance
+  - Depth-first-search
