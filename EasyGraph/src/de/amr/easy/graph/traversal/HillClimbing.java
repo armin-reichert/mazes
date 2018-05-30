@@ -71,7 +71,7 @@ public class HillClimbing extends AbstractGraphTraversal implements ObservableDF
 				.sorted(vertexValuation.reversed())
 				.forEach(child -> visit(current, child));
 			/*@formatter:on*/
-			setState(current, COMPLETED);
+//			setState(current, COMPLETED);
 		}
 		while (!stack.isEmpty()) {
 			setState(stack.pop(), COMPLETED);
