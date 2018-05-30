@@ -8,6 +8,7 @@ import java.util.Comparator;
 
 import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Graph;
+import de.amr.easy.graph.api.ObservableDFSPathFinder;
 import de.amr.easy.graph.api.TraversalState;
 
 /**
@@ -64,12 +65,12 @@ public class HillClimbing extends AbstractGraphTraversal implements ObservableDF
 			}
 			int current = stack.pop();
 			/*@formatter:off*/
-				graph.adjVertices(current)
-					.filter(child -> getState(child) == UNVISITED)
-					.boxed()
-					.sorted(vertexValuation.reversed())
-					.forEach(child -> visit(current, child));
-				/*@formatter:on*/
+			graph.adjVertices(current)
+				.filter(child -> getState(child) == UNVISITED)
+				.boxed()
+				.sorted(vertexValuation.reversed())
+				.forEach(child -> visit(current, child));
+			/*@formatter:on*/
 			setState(current, COMPLETED);
 		}
 		while (!stack.isEmpty()) {

@@ -1,8 +1,10 @@
-package de.amr.easy.graph.traversal;
+package de.amr.easy.graph.api;
 
-import de.amr.easy.graph.api.PathFinder;
-import de.amr.easy.graph.api.TraversalState;
-
+/**
+ * Interface for DFS-based path finder implementations.
+ * 
+ * @author Armin Reichert
+ */
 public interface DFSPathFinder extends PathFinder {
 
 	void traverseGraph();
@@ -14,5 +16,4 @@ public interface DFSPathFinder extends PathFinder {
 	TraversalState getState(int cell);
 
 	boolean isStacked(int cell);
-
 }

@@ -8,6 +8,7 @@ import java.util.OptionalInt;
 
 import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Graph;
+import de.amr.easy.graph.api.ObservableDFSPathFinder;
 import de.amr.easy.graph.api.PathFinder;
 
 /**
