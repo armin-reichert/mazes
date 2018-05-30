@@ -84,6 +84,8 @@ Implemented algorithms:
 ### Uniform Spanning Tree:
 - [Aldous-Broder](EasyMaze/src/de/amr/easy/maze/alg/ust/AldousBroderUST.java)
 
+- [Houston](EasyMaze/src/de/amr/easy/maze/alg/ust/AldousBroderWilsonUST.java)
+
 - [Wilson's algorithm](EasyMaze/src/de/amr/easy/maze/alg/ust) (16 different variants)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_WilsonUSTRandomCell.gif">
