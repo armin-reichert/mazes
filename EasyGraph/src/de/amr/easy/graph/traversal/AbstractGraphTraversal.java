@@ -15,8 +15,8 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalListener;
 
 /**
- * Base class for graph traversals. Stores traversal state of vertices and allows to register
- * observers for vertex and edge traversal.
+ * Base class for graph traversals. Stores traversal state and parent vertex of each vertex and
+ * allows to register observers for vertex and edge visits.
  * 
  * @author Armin Reichert
  */
@@ -34,12 +34,11 @@ public abstract class AbstractGraphTraversal implements PathFinder {
 	}
 
 	public TraversalState getState(int v) {
-		TraversalState state = stateMap.get(v);
-		return state == null ? UNVISITED : state;
+		return stateMap.containsKey(v) ? stateMap.get(v) : UNVISITED;
 	}
 
 	public void setState(int v, TraversalState newState) {
-		TraversalState oldState = stateMap.get(v);
+		TraversalState oldState = getState(v);
 		stateMap.put(v, newState);
 		vertexTouched(v, oldState, newState);
 	}
@@ -76,8 +75,8 @@ public abstract class AbstractGraphTraversal implements PathFinder {
 			return IntStream.empty();
 		}
 		List<Integer> path = new LinkedList<>();
-		for (int vertex = target; vertex != -1; vertex = getParent(vertex)) {
-			path.add(0, vertex);
+		for (int v = target; v != -1; v = getParent(v)) {
+			path.add(0, v);
 		}
 		return path.stream().mapToInt(Integer::intValue);
 	}

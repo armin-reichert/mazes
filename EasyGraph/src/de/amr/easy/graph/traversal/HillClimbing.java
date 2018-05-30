@@ -21,18 +21,21 @@ import de.amr.easy.graph.api.TraversalState;
  */
 public class HillClimbing extends AbstractGraphTraversal implements ObservableDFSPathFinder {
 
+	private final Stack<Integer> stack;
 	private final Graph<?> graph;
 	private final int source;
 	private final int target;
-	private final Stack<Integer> stack;
 
+	/**
+	 * A vertex comparison which determines the order how children of a vertex are traversed.
+	 */
 	public Comparator<Integer> vertexValuation = Integer::compare;
 
 	public HillClimbing(Graph<?> graph, int source, int target) {
+		this.stack = new Stack<>();
 		this.graph = graph;
 		this.source = source;
 		this.target = target;
-		this.stack = new Stack<>();
 	}
 
 	@Override
