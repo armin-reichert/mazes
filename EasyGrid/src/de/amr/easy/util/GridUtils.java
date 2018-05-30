@@ -28,13 +28,40 @@ public class GridUtils {
 	 */
 	public static BiFunction<Integer, Integer, Integer> manhattanDistance(BareGrid2D<?> grid, int target) {
 		return (u, v) -> {
-			int[] coord_u = { grid.col(u), grid.row(u) };
-			int[] coord_v = { grid.col(v), grid.row(v) };
-			int[] coord_target = { grid.col(target), grid.row(target) };
+			int[] coord_u = coord(grid, u);
+			int[] coord_v = coord(grid, v);
+			int[] coord_target = coord(grid, target);
 			int dist_u = abs(coord_u[0] - coord_target[0]) + abs(coord_u[1] - coord_target[1]);
 			int dist_v = abs(coord_v[0] - coord_target[0]) + abs(coord_v[1] - coord_target[1]);
 			return Integer.compare(dist_u, dist_v);
 		};
+	}
+
+	/**
+	 * Returns a function which compares two grid cells according to their Euclidian distance from the
+	 * given target cell.
+	 * 
+	 * @param grid
+	 *          a grid
+	 * @param target
+	 *          the target cell
+	 * @return a function comparing two cells according to their Manhattan distance to the target cell
+	 */
+	public static BiFunction<Integer, Integer, Integer> euclidianDistance(BareGrid2D<?> grid, int target) {
+		return (u, v) -> {
+			int[] coord_u = coord(grid, u);
+			int[] coord_v = coord(grid, v);
+			int[] coord_target = coord(grid, target);
+			int dist_u = (coord_u[0] - coord_target[0]) * (coord_u[0] - coord_target[0])
+					+ (coord_u[1] - coord_target[1]) * (coord_u[1] - coord_target[1]);
+			int dist_v = (coord_v[0] - coord_target[0]) * (coord_v[0] - coord_target[0])
+					+ (coord_v[1] - coord_target[1]) * (coord_v[1] - coord_target[1]);
+			return Integer.compare(dist_u, dist_v);
+		};
+	}
+
+	private static int[] coord(BareGrid2D<?> grid, int v) {
+		return new int[] { grid.col(v), grid.row(v) };
 	}
 
 	public static Multigraph<WeightedEdge<Integer>> dualGraphOfGrid(int cols, int rows) {

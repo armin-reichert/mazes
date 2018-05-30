@@ -1,5 +1,5 @@
 package de.amr.demos.maze.swingapp.model;
 
 public enum AlgorithmTag {
-	Traversal, MST, UST, Slow, SmallGrid, HillClimbing;
+	Traversal, MST, UST, Slow, SmallGrid, HillClimbingManhattan, HillClimbingEuclidian;
 }
