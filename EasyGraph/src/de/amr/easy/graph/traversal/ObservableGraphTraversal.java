@@ -20,7 +20,7 @@ import de.amr.easy.graph.api.event.GraphTraversalListener;
  * 
  * @author Armin Reichert
  */
-public abstract class AbstractGraphTraversal implements PathFinder {
+public abstract class ObservableGraphTraversal implements PathFinder {
 
 	protected final Map<Integer, Integer> parentMap = new HashMap<>();
 	protected final Map<Integer, TraversalState> stateMap = new HashMap<>();

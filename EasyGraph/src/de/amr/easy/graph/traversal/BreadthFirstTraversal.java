@@ -25,21 +25,21 @@ import de.amr.easy.graph.api.PathFinder;
  * 
  * @author Armin Reichert
  */
-public class BreadthFirstTraversal extends AbstractGraphTraversal implements PathFinder {
+public class BreadthFirstTraversal extends ObservableGraphTraversal implements PathFinder {
 
+	private final Queue<Integer> q;
 	private final Graph<?> graph;
 	private final int source;
-	private final Queue<Integer> q;
 	private final int[] distances;
 	private int maxDistance;
 	private int farest;
 	private int stopAt;
 
 	public BreadthFirstTraversal(Graph<?> graph, int source) {
+		this.q = new ArrayDeque<>();
 		this.graph = graph;
 		this.source = source;
-		q = new ArrayDeque<>();
-		distances = new int[graph.vertexCount()];
+		this.distances = new int[graph.vertexCount()];
 		clear();
 	}
 
@@ -60,31 +60,35 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal implements Pat
 	@Override
 	public void traverseGraph() {
 		clear();
-		visit(source, -1, 0);
-		q.add(source);
+		visit(source, -1);
 		while (!q.isEmpty()) {
 			int current = q.poll();
-			graph.adjVertices(current).filter(v -> getState(v) == UNVISITED).forEach(neighbor -> {
-				visit(neighbor, current, getDistance(current) + 1);
-				q.add(neighbor);
-			});
-			setState(current, COMPLETED);
 			if (current == stopAt) {
 				break;
 			}
+			///*@formatter:off*/
+			graph.adjVertices(current)
+				.filter(v -> getState(v) == UNVISITED)
+				.forEach(child -> {
+					visit(child, current);
+				});
+			/*@formatter:on*/
+			setState(current, COMPLETED);
 		}
 	}
 
-	private void visit(int v, int parent, int distance) {
-		distances[v] = distance;
-		if (distance > maxDistance) {
-			maxDistance = distance;
-			farest = v;
-		}
+	private void visit(int v, int parent) {
 		setState(v, VISITED);
 		setParent(v, parent);
+		int d = parent != -1 ? distances[parent] + 1 : 0;
+		distances[v] = d;
+		if (d > maxDistance) {
+			maxDistance = d;
+			farest = v;
+		}
+		q.add(v);
 		if (parent != -1) {
-			observers.forEach(observer -> observer.edgeTouched(parent, v));
+			edgeTouched(parent, v);
 		}
 	}
 
@@ -114,5 +118,4 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal implements Pat
 	public int getMaxDistanceVertex() {
 		return farest;
 	}
-
 }

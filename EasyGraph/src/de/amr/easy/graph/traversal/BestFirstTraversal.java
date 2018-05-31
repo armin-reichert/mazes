@@ -11,7 +11,7 @@ import java.util.PriorityQueue;
 import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.PathFinder;
 
-public class BestFirstTraversal extends AbstractGraphTraversal implements PathFinder {
+public class BestFirstTraversal extends ObservableGraphTraversal implements PathFinder {
 
 	private final Graph<?> graph;
 	private final int source;

@@ -23,7 +23,7 @@ import de.amr.easy.graph.api.PathFinder;
  * 
  * @author Armin Reichert
  */
-public class DepthFirstTraversal extends AbstractGraphTraversal implements ObservableDFSPathFinder {
+public class DepthFirstTraversal extends ObservableGraphTraversal implements ObservableDFSPathFinder {
 
 	private final Graph<?> graph;
 	private final int source;
