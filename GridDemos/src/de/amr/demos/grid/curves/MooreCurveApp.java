@@ -4,6 +4,7 @@ import static de.amr.easy.grid.curves.CurveUtils.traverse;
 
 import java.util.stream.IntStream;
 
+import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.curves.MooreLCurve;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
@@ -37,7 +38,7 @@ public class MooreCurveApp extends SwingGridSampleApp {
 			traverse(curve, grid, startCell, this::addEdge);
 			SwingBFSAnimation bfs = new SwingBFSAnimation(grid);
 			bfs.setDistancesVisible(false);
-			bfs.runBFSAnimation(canvas, startCell);
+			bfs.run(canvas, new BreadthFirstTraversal(grid, startCell));
 			sleep(1000);
 		});
 	}

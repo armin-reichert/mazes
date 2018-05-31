@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.curves.HilbertCurve;
 import de.amr.easy.grid.impl.Top4;
@@ -62,7 +63,7 @@ public class HilbertCurveApp extends SwingGridSampleApp {
 				traverse(hilbert, grid, startCell, this::addEdge);
 				SwingBFSAnimation bfs = new SwingBFSAnimation(grid);
 				bfs.setDistancesVisible(false);
-				bfs.runBFSAnimation(canvas, startCell);
+				bfs.run(canvas, new BreadthFirstTraversal(grid, startCell));
 				sleep(1000);
 			});
 		});

@@ -15,6 +15,8 @@ import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.PathFinderTag;
 import de.amr.demos.maze.swingapp.view.ControlPanel;
+import de.amr.easy.graph.traversal.BestFirstTraversal;
+import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.traversal.DepthFirstTraversal;
 import de.amr.easy.graph.traversal.HillClimbing;
 import de.amr.easy.grid.api.Grid2D;
@@ -112,8 +114,26 @@ public class CreateSingleMazeAction extends AbstractAction {
 		if (pathFinderInfo.getAlgorithmClass() == SwingBFSAnimation.class) {
 			SwingBFSAnimation bfsAnimation = new SwingBFSAnimation(app.model.getGrid());
 			bfsAnimation.setPathColor(app.model.getPathColor());
-			watch.runAndMeasure(() -> bfsAnimation.runBFSAnimation(app.getCanvas(), source));
-			app.showMessage(format("BFS time: %.6f seconds.", watch.getSeconds()));
+			if (pathFinderInfo.isTagged(PathFinderTag.BestFSManhattan)) {
+				bfsAnimation.setFloodFill(false);
+				BestFirstTraversal best = new BestFirstTraversal(app.model.getGrid(), source,
+						(u, v) -> manhattanDistance(app.model.getGrid(), target).apply(u, v));
+				best.setTarget(target);
+				watch.runAndMeasure(() -> bfsAnimation.run(app.getCanvas(), best));
+				app.showMessage(format("BestFS (Manhattan) time: %.6f seconds.", watch.getSeconds()));
+			} else if (pathFinderInfo.isTagged(PathFinderTag.BestFSEuclidian)) {
+				bfsAnimation.setFloodFill(false);
+				BestFirstTraversal best = new BestFirstTraversal(app.model.getGrid(), source,
+						(u, v) -> euclidianDistance(app.model.getGrid(), target).apply(u, v));
+				best.setTarget(target);
+				watch.runAndMeasure(() -> bfsAnimation.run(app.getCanvas(), best));
+				app.showMessage(format("BestFS (Euclidian) time: %.6f seconds.", watch.getSeconds()));
+			} else {
+				BreadthFirstTraversal bfs = new BreadthFirstTraversal(app.model.getGrid(), source);
+				bfs.setTarget(target);
+				watch.runAndMeasure(() -> bfsAnimation.run(app.getCanvas(), bfs));
+				app.showMessage(format("BFS time: %.6f seconds.", watch.getSeconds()));
+			}
 			if (app.model.isLongestPathHighlighted()) {
 				bfsAnimation.showPath(app.getCanvas(), bfsAnimation.getMaxDistanceCell());
 			} else {

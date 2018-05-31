@@ -4,6 +4,7 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
 import java.util.stream.IntStream;
 
+import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
@@ -26,7 +27,7 @@ public class BoruvkaMSTApp extends SwingGridSampleApp {
 		IntStream.of(64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			resizeGrid(cellSize);
 			new BoruvkaMST(grid).run(-1);
-			new SwingBFSAnimation(grid).runBFSAnimation(canvas,grid.cell(TOP_LEFT));
+			new SwingBFSAnimation(grid).run(canvas, new BreadthFirstTraversal(grid, grid.cell(TOP_LEFT)));
 			sleep(1000);
 		});
 	}

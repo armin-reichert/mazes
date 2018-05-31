@@ -25,6 +25,7 @@ public class SwingBFSAnimation {
 	private int maxDistanceCell;
 	private boolean distancesVisible;
 	private Color pathColor;
+	private boolean floodFill;
 
 	public SwingBFSAnimation(BareGrid2D<?> grid) {
 		this.grid = grid;
@@ -32,6 +33,11 @@ public class SwingBFSAnimation {
 		maxDistanceCell = -1;
 		distancesVisible = true;
 		pathColor = Color.RED;
+		floodFill = true;
+	}
+
+	public void setFloodFill(boolean floodFill) {
+		this.floodFill = floodFill;
 	}
 
 	private ConfigurableGridRenderer createRenderer(GridRenderer oldRenderer, BitSet inPath) {
@@ -60,13 +66,23 @@ public class SwingBFSAnimation {
 		return renderer;
 	}
 
-	public void runBFSAnimation(GridCanvas<?> canvas, int source) {
-		// 1. run without events for computing maximum distance (cell) from source
-		bfs = new BreadthFirstTraversal(grid, source);
-		bfs.traverseGraph();
-		maxDistance = bfs.getMaxDistance();
-		maxDistanceCell = bfs.getMaxDistanceVertex();
+	public void run(GridCanvas<?> canvas, BreadthFirstTraversal bfs, int target) {
+		bfs.setTarget(target);
+		run(canvas, bfs);
+	}
 
+	public void run(GridCanvas<?> canvas, BreadthFirstTraversal bfs) {
+		this.bfs = bfs;
+
+		if (floodFill) {
+			// 1. run without events for computing maximum distance (cell) from source
+			bfs.traverseGraph();
+			maxDistance = bfs.getMaxDistance();
+			maxDistanceCell = bfs.getMaxDistanceVertex();
+		} else {
+			distancesVisible = false;
+		}
+		
 		// 2. run with events
 		ConfigurableGridRenderer renderer = createRenderer(canvas.getRenderer().get(), new BitSet());
 		canvas.pushRenderer(renderer);

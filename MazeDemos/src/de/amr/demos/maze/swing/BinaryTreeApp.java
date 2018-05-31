@@ -4,6 +4,7 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
 import java.util.stream.IntStream;
 
+import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
@@ -17,7 +18,7 @@ public class BinaryTreeApp extends SwingGridSampleApp {
 
 	public BinaryTreeApp() {
 		super(128, Top4.get());
-		setAppName("Binary Tree Maze"); 
+		setAppName("Binary Tree Maze");
 	}
 
 	@Override
@@ -25,7 +26,7 @@ public class BinaryTreeApp extends SwingGridSampleApp {
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			resizeGrid(cellSize);
 			new BinaryTree(grid).run(grid.cell(TOP_LEFT));
-			new SwingBFSAnimation(grid).runBFSAnimation(canvas,grid.cell(TOP_LEFT));
+			new SwingBFSAnimation(grid).run(canvas, new BreadthFirstTraversal(grid, grid.cell(TOP_LEFT)));
 			sleep(1000);
 		});
 		System.exit(0);
