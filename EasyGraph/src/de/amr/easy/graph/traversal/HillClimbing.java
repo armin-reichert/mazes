@@ -1,6 +1,5 @@
 package de.amr.easy.graph.traversal;
 
-import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
@@ -15,7 +14,7 @@ import de.amr.easy.graph.api.TraversalState;
  * A heuristic depth-first-search where the children of the current vertex are visited in the order
  * given by a vertex valuation, for example the Euclidian distance from a given target.
  * <p>
- * From: Patrick Henry Winston, Artificial Intelligence, p.93, Addison-Wesley, 1984
+ * Taken from: Patrick Henry Winston, Artificial Intelligence 2nd ed., Addison-Wesley, 1984
  * 
  * @author Armin Reichert
  */
@@ -63,10 +62,10 @@ public class HillClimbing extends AbstractGraphTraversal implements ObservableDF
 	public void traverseGraph() {
 		visit(-1, source);
 		while (!stack.isEmpty()) {
-			if (stack.top().get() == target) {
+			int current = stack.pop();
+			if (current == target) {
 				break;
 			}
-			int current = stack.pop();
 			/*@formatter:off*/
 			graph.adjVertices(current)
 				.filter(child -> getState(child) == UNVISITED)
@@ -74,10 +73,9 @@ public class HillClimbing extends AbstractGraphTraversal implements ObservableDF
 				.sorted(vertexValuation.reversed())
 				.forEach(child -> visit(current, child));
 			/*@formatter:on*/
-//			setState(current, COMPLETED);
 		}
 		while (!stack.isEmpty()) {
-			setState(stack.pop(), COMPLETED);
+			stack.pop();
 		}
 	}
 

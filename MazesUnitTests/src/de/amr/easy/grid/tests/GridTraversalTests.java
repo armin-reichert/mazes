@@ -92,7 +92,7 @@ public class GridTraversalTests {
 		assertState(grid.vertexStream(), dfs::getState, UNVISITED);
 		dfs.traverseGraph();
 		IntStream path = dfs.findPath(target);
-		path.forEach(cell -> assertTrue(dfs.getState(cell) == COMPLETED));
+		path.forEach(cell -> assertTrue(dfs.getState(cell) != UNVISITED));
 	}
 
 	@Test
