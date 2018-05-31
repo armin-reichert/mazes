@@ -1,8 +1,8 @@
 package de.amr.demos.maze.swingapp.view;
 
-import static de.amr.demos.maze.swingapp.model.AlgorithmTag.MST;
-import static de.amr.demos.maze.swingapp.model.AlgorithmTag.Traversal;
-import static de.amr.demos.maze.swingapp.model.AlgorithmTag.UST;
+import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.MST;
+import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.Traversal;
+import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.UST;
 
 import java.util.Enumeration;
 import java.util.Optional;

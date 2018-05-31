@@ -9,10 +9,8 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.grid.api.GridPosition.TOP_RIGHT;
 import static de.amr.easy.grid.curves.CurveUtils.cells;
 import static de.amr.easy.grid.curves.CurveUtils.traverse;
-import static java.lang.Math.abs;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Comparator;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 
@@ -98,30 +96,15 @@ public class GridTraversalTests {
 	@Test
 	public void testBestFS() {
 		int target = grid.cell(BOTTOM_RIGHT);
-		Comparator<Integer> manhattan = (u, v) -> {
-			int ux = grid.col(u), uy = grid.row(u), vx = grid.col(v), vy = grid.row(v);
-			int tx = grid.col(target), ty = grid.row(target);
-			return Integer.compare(abs(ux - tx) + abs(uy - ty), abs(vx - tx) + abs(vy - ty));
-		};
-
 		grid.removeEdges();
 		new IterativeDFS(grid).run(target);
-
-		{
-			BestFirstTraversal bfs = new BestFirstTraversal(grid, grid.cell(TOP_LEFT), manhattan);
-			assertState(grid.vertexStream(), bfs::getState, UNVISITED);
-			bfs.traverseGraph();
-			assertState(grid.vertexStream(), bfs::getState, COMPLETED);
-			long length = bfs.findPath(target).count();
-			System.out.println("Best-first search found path of length " + length);
-		}
-
-		{
-			BreadthFirstTraversal best = new BreadthFirstTraversal(grid, grid.cell(TOP_LEFT));
-			best.traverseGraph();
-			long length = best.findPath(target).count();
-			System.out.println("Breadth-first search found path of length " + length);
-		}
+		BestFirstTraversal best = new BestFirstTraversal(grid, grid.cell(TOP_LEFT),
+				(u, v) -> GridUtils.manhattanDistance(grid, target).apply(u, v));
+		assertState(grid.vertexStream(), best::getState, UNVISITED);
+		best.traverseGraph();
+		assertState(grid.vertexStream(), best::getState, COMPLETED);
+		long length = best.findPath(target).count();
+		System.out.println("Best-first search found path of length " + length);
 	}
 
 	@Test

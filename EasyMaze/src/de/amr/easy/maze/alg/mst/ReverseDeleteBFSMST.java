@@ -20,7 +20,7 @@ public class ReverseDeleteBFSMST extends ReverseDeleteMST {
 	@Override
 	protected boolean disconnected(int u, int v) {
 		BreadthFirstTraversal bfs = new BreadthFirstTraversal(grid, u);
-		bfs.setStopAt(v);
+		bfs.setTarget(v);
 		bfs.traverseGraph();
 		return bfs.getDistance(v) == -1;
 	}

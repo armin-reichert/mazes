@@ -13,7 +13,7 @@ import javax.swing.AbstractAction;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
-import de.amr.demos.maze.swingapp.model.AlgorithmTag;
+import de.amr.demos.maze.swingapp.model.PathFinderTag;
 import de.amr.demos.maze.swingapp.view.ControlPanel;
 import de.amr.easy.graph.traversal.DepthFirstTraversal;
 import de.amr.easy.graph.traversal.HillClimbing;
@@ -122,12 +122,12 @@ public class CreateSingleMazeAction extends AbstractAction {
 		} else if (pathFinderInfo.getAlgorithmClass() == SwingDFSAnimation.class) {
 			SwingDFSAnimation dfsAnimation = new SwingDFSAnimation(app.model.getGrid());
 			dfsAnimation.setPathColor(app.model.getPathColor());
-			if (pathFinderInfo.isTagged(AlgorithmTag.HillClimbingManhattan)) {
+			if (pathFinderInfo.isTagged(PathFinderTag.HillClimbingManhattan)) {
 				HillClimbing hillClimbing = new HillClimbing(app.model.getGrid(), source, target);
 				hillClimbing.vertexValuation = (u, v) -> manhattanDistance(app.model.getGrid(), target).apply(u, v);
 				watch.runAndMeasure(() -> dfsAnimation.run(app.getCanvas(), hillClimbing, source, target));
 				app.showMessage(format("Hill Climbing (Manhattan) time: %.6f seconds.", watch.getSeconds()));
-			} else if (pathFinderInfo.isTagged(AlgorithmTag.HillClimbingEuclidian)) {
+			} else if (pathFinderInfo.isTagged(PathFinderTag.HillClimbingEuclidian)) {
 				HillClimbing hillClimbing = new HillClimbing(app.model.getGrid(), source, target);
 				hillClimbing.vertexValuation = (u, v) -> euclidianDistance(app.model.getGrid(), target).apply(u, v);
 				watch.runAndMeasure(() -> dfsAnimation.run(app.getCanvas(), hillClimbing, source, target));

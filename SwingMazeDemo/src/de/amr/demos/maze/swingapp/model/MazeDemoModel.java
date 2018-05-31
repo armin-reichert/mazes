@@ -1,11 +1,10 @@
 package de.amr.demos.maze.swingapp.model;
 
-import static de.amr.demos.maze.swingapp.model.AlgorithmTag.*;
-import static de.amr.demos.maze.swingapp.model.AlgorithmTag.MST;
-import static de.amr.demos.maze.swingapp.model.AlgorithmTag.Slow;
-import static de.amr.demos.maze.swingapp.model.AlgorithmTag.SmallGrid;
-import static de.amr.demos.maze.swingapp.model.AlgorithmTag.Traversal;
-import static de.amr.demos.maze.swingapp.model.AlgorithmTag.UST;
+import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.MST;
+import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.Slow;
+import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.SmallGrid;
+import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.Traversal;
+import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.UST;
 
 import java.awt.Color;
 import java.util.Arrays;
@@ -105,9 +104,12 @@ public class MazeDemoModel {
 
 	public static final AlgorithmInfo[] PATHFINDER_ALGORITHMS = {
 			new AlgorithmInfo(SwingDFSAnimation.class, "Depth-First-Search"),
-			new AlgorithmInfo(SwingDFSAnimation.class, "Hill Climbing (Manhattan)", HillClimbingManhattan),
-			new AlgorithmInfo(SwingDFSAnimation.class, "Hill Climbing (Euclidian)", HillClimbingEuclidian),
+			new AlgorithmInfo(SwingDFSAnimation.class, "Hill Climbing (Manhattan)", PathFinderTag.HillClimbingManhattan),
+			new AlgorithmInfo(SwingDFSAnimation.class, "Hill Climbing (Euclidian)", PathFinderTag.HillClimbingEuclidian),
 			new AlgorithmInfo(SwingBFSAnimation.class, "Breadth-First-Search"),
+			new AlgorithmInfo(SwingBFSAnimation.class, "Best-First-Search (Manhattan)", PathFinderTag.BestFSManhattan),
+			new AlgorithmInfo(SwingBFSAnimation.class, "Best-First-Search (Euclidian)", PathFinderTag.BestFSEuclidian),
+
 	};
 
 	private ObservableGrid<TraversalState, Integer> grid;

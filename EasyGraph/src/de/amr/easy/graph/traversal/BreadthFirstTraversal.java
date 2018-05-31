@@ -27,34 +27,38 @@ import de.amr.easy.graph.api.PathFinder;
  */
 public class BreadthFirstTraversal extends ObservableGraphTraversal implements PathFinder {
 
-	private final Queue<Integer> q;
-	private final Graph<?> graph;
-	private final int source;
-	private final int[] distances;
-	private int maxDistance;
-	private int farest;
-	private int stopAt;
+	protected final Queue<Integer> q;
+	protected final Graph<?> graph;
+	protected final int source;
+	protected final int[] distanceMap;
+	protected int maxDistance;
+	protected int farest;
+	protected int target;
 
-	public BreadthFirstTraversal(Graph<?> graph, int source) {
-		this.q = new ArrayDeque<>();
+	protected BreadthFirstTraversal(Graph<?> graph, int source, Queue<Integer> queue) {
+		this.q = queue;
 		this.graph = graph;
 		this.source = source;
-		this.distances = new int[graph.vertexCount()];
+		this.distanceMap = new int[graph.vertexCount()];
 		clear();
 	}
 
-	public void setStopAt(int vertex) {
-		this.stopAt = vertex;
+	public BreadthFirstTraversal(Graph<?> graph, int source) {
+		this(graph, source, new ArrayDeque<>());
+	}
+
+	public void setTarget(int vertex) {
+		this.target = vertex;
 	}
 
 	@Override
 	public void clear() {
 		super.clear();
 		q.clear();
-		Arrays.fill(distances, -1);
+		Arrays.fill(distanceMap, -1);
 		maxDistance = -1;
 		farest = -1;
-		stopAt = -1;
+		target = -1;
 	}
 
 	@Override
@@ -63,16 +67,10 @@ public class BreadthFirstTraversal extends ObservableGraphTraversal implements P
 		visit(source, -1);
 		while (!q.isEmpty()) {
 			int current = q.poll();
-			if (current == stopAt) {
+			if (current == target) {
 				break;
 			}
-			///*@formatter:off*/
-			graph.adjVertices(current)
-				.filter(v -> getState(v) == UNVISITED)
-				.forEach(child -> {
-					visit(child, current);
-				});
-			/*@formatter:on*/
+			graph.adjVertices(current).filter(v -> getState(v) == UNVISITED).forEach(child -> visit(child, current));
 			setState(current, COMPLETED);
 		}
 	}
@@ -80,8 +78,8 @@ public class BreadthFirstTraversal extends ObservableGraphTraversal implements P
 	private void visit(int v, int parent) {
 		setState(v, VISITED);
 		setParent(v, parent);
-		int d = parent != -1 ? distances[parent] + 1 : 0;
-		distances[v] = d;
+		int d = parent != -1 ? distanceMap[parent] + 1 : 0;
+		distanceMap[v] = d;
 		if (d > maxDistance) {
 			maxDistance = d;
 			farest = v;
@@ -100,7 +98,7 @@ public class BreadthFirstTraversal extends ObservableGraphTraversal implements P
 	 * @return the distance from the source
 	 */
 	public int getDistance(int v) {
-		return distances[v];
+		return distanceMap[v];
 	}
 
 	/**

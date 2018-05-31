@@ -1,7 +1,7 @@
 package de.amr.demos.maze.swingapp.action;
 
-import static de.amr.demos.maze.swingapp.model.AlgorithmTag.Slow;
-import static de.amr.demos.maze.swingapp.model.AlgorithmTag.SmallGrid;
+import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.Slow;
+import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.SmallGrid;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;

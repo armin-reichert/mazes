@@ -1,104 +1,23 @@
 package de.amr.easy.graph.traversal;
 
-import static de.amr.easy.graph.api.TraversalState.COMPLETED;
-import static de.amr.easy.graph.api.TraversalState.UNVISITED;
-import static de.amr.easy.graph.api.TraversalState.VISITED;
-
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
 import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.PathFinder;
 
-public class BestFirstTraversal extends ObservableGraphTraversal implements PathFinder {
+/**
+ * A heuristic variant of Breadth-First-Traversal which sorts the entire queue when children of the
+ * current element are added. The sorting order is determined by the vertex valuation comparator.
+ * 
+ * <p>
+ * Taken from: Patrick Henry Winston, Artificial Intelligence 2nd ed., Addison-Wesley, 1984
+ * 
+ * @author Armin Reichert
+ */
+public class BestFirstTraversal extends BreadthFirstTraversal implements PathFinder {
 
-	private final Graph<?> graph;
-	private final int source;
-	private final PriorityQueue<Integer> q;
-	private final int[] distances;
-	private int maxDistance;
-	private int farest;
-	private int stopAt;
-
-	public BestFirstTraversal(Graph<?> graph, int source, Comparator<Integer> vertexComparator) {
-		this.graph = graph;
-		this.source = source;
-		q = new PriorityQueue<>(vertexComparator);
-		distances = new int[graph.vertexCount()];
-		clear();
+	public BestFirstTraversal(Graph<?> graph, int source, Comparator<Integer> vertexValuation) {
+		super(graph, source, new PriorityQueue<>(vertexValuation));
 	}
-
-	public void setStopAt(int vertex) {
-		this.stopAt = vertex;
-	}
-
-	@Override
-	public void clear() {
-		super.clear();
-		q.clear();
-		Arrays.fill(distances, -1);
-		maxDistance = -1;
-		farest = -1;
-		stopAt = -1;
-	}
-
-	@Override
-	public void traverseGraph() {
-		clear();
-		visit(source, -1, 0);
-		q.add(source);
-		while (!q.isEmpty()) {
-			int current = q.poll();
-			graph.adjVertices(current).filter(v -> getState(v) == UNVISITED).forEach(neighbor -> {
-				visit(neighbor, current, getDistance(current) + 1);
-				q.add(neighbor);
-			});
-			setState(current, COMPLETED);
-			if (current == stopAt) {
-				break;
-			}
-		}
-	}
-
-	private void visit(int v, int parent, int distance) {
-		distances[v] = distance;
-		if (distance > maxDistance) {
-			maxDistance = distance;
-			farest = v;
-		}
-		setState(v, VISITED);
-		setParent(v, parent);
-		if (parent != -1) {
-			observers.forEach(observer -> observer.edgeTouched(parent, v));
-		}
-	}
-
-	/**
-	 * The distance of the given vertex from the source.
-	 * 
-	 * @param v
-	 *          some vertex
-	 * @return the distance from the source
-	 */
-	public int getDistance(int v) {
-		return distances[v];
-	}
-
-	/**
-	 * The maximum distance from the source to any reachable vertex.
-	 * 
-	 * @return the maximum distance
-	 */
-	public int getMaxDistance() {
-		return maxDistance;
-	}
-
-	/**
-	 * @return a vertex with maximal distance from the source
-	 */
-	public int getMaxDistanceVertex() {
-		return farest;
-	}
-
 }
