@@ -53,14 +53,12 @@ public class RunPathFinderAction extends MazeDemoAction {
 			SwingBFSAnimation bfsAnimation = new SwingBFSAnimation(app.model.getGrid(), app.getCanvas());
 			bfsAnimation.setPathColor(app.model.getPathColor());
 			if (pathFinderInfo.isTagged(PathFinderTag.BestFSManhattan)) {
-				bfsAnimation.setFloodFill(false);
 				BestFirstTraversal best = new BestFirstTraversal(app.model.getGrid(), source,
 						(u, v) -> manhattanValuation(app.model.getGrid(), target).apply(u, v));
 				best.setTarget(target);
 				watch.runAndMeasure(() -> bfsAnimation.run(best));
 				app.showMessage(format("BestFS (Manhattan) time: %.6f seconds.", watch.getSeconds()));
 			} else if (pathFinderInfo.isTagged(PathFinderTag.BestFSEuclidian)) {
-				bfsAnimation.setFloodFill(false);
 				BestFirstTraversal best = new BestFirstTraversal(app.model.getGrid(), source,
 						(u, v) -> euclidianValuation(app.model.getGrid(), target).apply(u, v));
 				best.setTarget(target);
