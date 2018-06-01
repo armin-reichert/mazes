@@ -36,9 +36,9 @@ public class MooreCurveApp extends SwingGridSampleApp {
 			int startCell = grid.cell(startCol, startRow);
 			MooreLCurve curve = new MooreLCurve(GraphUtils.log(2, n));
 			traverse(curve, grid, startCell, this::addEdge);
-			SwingBFSAnimation bfs = new SwingBFSAnimation(grid);
+			SwingBFSAnimation bfs = new SwingBFSAnimation(grid, canvas);
 			bfs.setDistancesVisible(false);
-			bfs.run(canvas, new BreadthFirstTraversal(grid, startCell));
+			bfs.run(new BreadthFirstTraversal(grid, startCell));
 			sleep(1000);
 		});
 	}

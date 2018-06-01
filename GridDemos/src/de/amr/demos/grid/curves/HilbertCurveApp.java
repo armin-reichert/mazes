@@ -61,9 +61,9 @@ public class HilbertCurveApp extends SwingGridSampleApp {
 				System.out.println("Curve start: " + startPos);
 				// System.out.println(CurveUtils.cellsAsString(hilbert, grid, startCell));
 				traverse(hilbert, grid, startCell, this::addEdge);
-				SwingBFSAnimation bfs = new SwingBFSAnimation(grid);
+				SwingBFSAnimation bfs = new SwingBFSAnimation(grid, canvas);
 				bfs.setDistancesVisible(false);
-				bfs.run(canvas, new BreadthFirstTraversal(grid, startCell));
+				bfs.run(new BreadthFirstTraversal(grid, startCell));
 				sleep(1000);
 			});
 		});

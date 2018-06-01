@@ -20,27 +20,31 @@ import de.amr.easy.grid.api.BareGrid2D;
 public class SwingBFSAnimation {
 
 	private final BareGrid2D<?> grid;
+	private final GridCanvas<?> canvas;
 	private BreadthFirstTraversal bfs;
+	private ConfigurableGridRenderer renderer;
 	private int maxDistance;
 	private int maxDistanceCell;
 	private boolean distancesVisible;
 	private Color pathColor;
 	private boolean floodFill;
 
-	public SwingBFSAnimation(BareGrid2D<?> grid) {
+	public SwingBFSAnimation(BareGrid2D<?> grid, GridCanvas<?> canvas) {
 		this.grid = grid;
+		this.canvas = canvas;
 		maxDistance = -1;
 		maxDistanceCell = -1;
 		distancesVisible = true;
 		pathColor = Color.RED;
 		floodFill = true;
+		createRenderer(canvas.getRenderer().get(), new BitSet());
 	}
 
 	public void setFloodFill(boolean floodFill) {
 		this.floodFill = floodFill;
 	}
 
-	private ConfigurableGridRenderer createRenderer(GridRenderer oldRenderer, BitSet inPath) {
+	private void createRenderer(GridRenderer oldRenderer, BitSet inPath) {
 
 		Function<Integer, Color> distanceColor = cell -> {
 			if (maxDistance == -1) {
@@ -53,7 +57,7 @@ public class SwingBFSAnimation {
 			return Color.getHSBColor(hue, 0.5f, 1f);
 		};
 
-		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
+		renderer = new ConfigurableGridRenderer();
 		renderer.fnCellSize = oldRenderer::getCellSize;
 		renderer.fnPassageWidth = oldRenderer::getPassageWidth;
 		renderer.fnTextFont = () -> new Font(Font.SANS_SERIF, Font.PLAIN, renderer.getPassageWidth() / 2);
@@ -63,15 +67,14 @@ public class SwingBFSAnimation {
 			int neighbor = grid.neighbor(cell, dir).getAsInt();
 			return inPath.get(cell) && inPath.get(neighbor) ? pathColor : distanceColor.apply(cell);
 		};
-		return renderer;
 	}
 
-	public void run(GridCanvas<?> canvas, BreadthFirstTraversal bfs, int target) {
+	public void run(BreadthFirstTraversal bfs, int target) {
 		bfs.setTarget(target);
-		run(canvas, bfs);
+		run(bfs);
 	}
 
-	public void run(GridCanvas<?> canvas, BreadthFirstTraversal bfs) {
+	public void run(BreadthFirstTraversal bfs) {
 		this.bfs = bfs;
 
 		if (floodFill) {
@@ -82,9 +85,8 @@ public class SwingBFSAnimation {
 		} else {
 			distancesVisible = false;
 		}
-		
+
 		// 2. run with events
-		ConfigurableGridRenderer renderer = createRenderer(canvas.getRenderer().get(), new BitSet());
 		canvas.pushRenderer(renderer);
 		bfs.addObserver(new GraphTraversalListener() {
 
@@ -102,14 +104,14 @@ public class SwingBFSAnimation {
 		canvas.popRenderer();
 	}
 
-	public void showPath(GridCanvas<?> canvas, int target) {
+	public void showPath(int target) {
 		if (bfs == null) {
 			throw new IllegalStateException("Must run BFS before showing path");
 		}
 		int[] path = bfs.findPath(target).toArray();
 		BitSet inPath = new BitSet();
 		IntStream.of(path).forEach(inPath::set);
-		ConfigurableGridRenderer renderer = createRenderer(canvas.getRenderer().get(), inPath);
+		createRenderer(canvas.getRenderer().get(), inPath);
 		int passageWidth = renderer.getPassageWidth();
 		renderer.fnPassageWidth = () -> passageWidth > 5 ? passageWidth / 2 : passageWidth;
 		renderer.fnTextColor = () -> Color.WHITE;

@@ -86,7 +86,7 @@ public class GridTraversalTests {
 	public void testHillClimbing() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
 		HillClimbing dfs = new HillClimbing(grid, source, target);
-		dfs.vertexValuation = (u, v) -> GridUtils.manhattanDistance(grid, target).apply(u, v);
+		dfs.vertexValuation = (u, v) -> GridUtils.manhattanValuation(grid, target).apply(u, v);
 		assertState(grid.vertexStream(), dfs::getState, UNVISITED);
 		dfs.traverseGraph();
 		IntStream path = dfs.findPath(target);
@@ -99,7 +99,7 @@ public class GridTraversalTests {
 		grid.removeEdges();
 		new IterativeDFS(grid).run(target);
 		BestFirstTraversal best = new BestFirstTraversal(grid, grid.cell(TOP_LEFT),
-				(u, v) -> GridUtils.manhattanDistance(grid, target).apply(u, v));
+				(u, v) -> GridUtils.manhattanValuation(grid, target).apply(u, v));
 		assertState(grid.vertexStream(), best::getState, UNVISITED);
 		best.traverseGraph();
 		assertState(grid.vertexStream(), best::getState, COMPLETED);

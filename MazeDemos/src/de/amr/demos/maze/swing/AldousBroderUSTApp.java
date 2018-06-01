@@ -26,7 +26,7 @@ public class AldousBroderUSTApp extends SwingGridSampleApp {
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			resizeGrid(cellSize);
 			new AldousBroderUST(grid).run(grid.cell(TOP_LEFT));
-			new SwingBFSAnimation(grid).run(canvas, new BreadthFirstTraversal(grid, grid.cell(TOP_LEFT)));
+			new SwingBFSAnimation(grid, canvas).run(new BreadthFirstTraversal(grid, grid.cell(TOP_LEFT)));
 			sleep(1000);
 		});
 		System.exit(0);
