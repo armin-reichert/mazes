@@ -35,6 +35,7 @@ public class ControlPanel extends JPanel {
 	private JButton btnCreateAllMazes;
 	private JButton btnStop;
 	private JLabel lblGenerationAlgorithm;
+	private JButton btnFindPath;
 
 	public ControlPanel() {
 		setPreferredSize(new Dimension(450, 350));
@@ -100,6 +101,9 @@ public class ControlPanel extends JPanel {
 
 		btnCreateAllMazes = new JButton("Create All Mazes");
 		buttonPanel.add(btnCreateAllMazes);
+		
+		btnFindPath = new JButton("Find Path");
+		buttonPanel.add(btnFindPath);
 
 		btnStop = new JButton("Stop");
 		buttonPanel.add(btnStop);
@@ -141,5 +145,8 @@ public class ControlPanel extends JPanel {
 
 	public JLabel getLblGenerationAlgorithm() {
 		return lblGenerationAlgorithm;
+	}
+	public JButton getBtnFindPath() {
+		return btnFindPath;
 	}
 }

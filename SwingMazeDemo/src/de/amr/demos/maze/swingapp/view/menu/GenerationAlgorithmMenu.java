@@ -1,4 +1,4 @@
-package de.amr.demos.maze.swingapp.view;
+package de.amr.demos.maze.swingapp.view.menu;
 
 import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.MST;
 import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.Traversal;

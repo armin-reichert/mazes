@@ -1,4 +1,4 @@
-package de.amr.demos.maze.swingapp.view;
+package de.amr.demos.maze.swingapp.view.menu;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;

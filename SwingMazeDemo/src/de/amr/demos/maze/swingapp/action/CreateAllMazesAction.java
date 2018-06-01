@@ -11,6 +11,12 @@ import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 
+/**
+ * Action for running a sequence of all (without restricted/slow ones) available maze generation
+ * algorithms in sequence.
+ * 
+ * @author Armin Reichert
+ */
 public class CreateAllMazesAction extends CreateSingleMazeAction {
 
 	private boolean readyForNext;
@@ -66,11 +72,11 @@ public class CreateAllMazesAction extends CreateSingleMazeAction {
 		app.settingsWindow.getControlPanel().getLblGenerationAlgorithm().setText(algorithm.getDescription());
 		app.settingsWindow.getAlgorithmMenu().setSelectedAlgorithm(algorithm);
 		try {
-			generateMaze(algorithm);
-			app.settingsWindow.getPathFinderMenu().getSelectedAlgorithm().ifPresent(this::runPathFinder);
-		} catch (Exception e) {
-			e.printStackTrace();
+			runMazeGenerator(algorithm, app.model.getGrid().cell(app.model.getGenerationStart()));
+		} catch (Throwable x) {
+			x.printStackTrace();
+		} finally {
+			readyForNext = true;
 		}
-		readyForNext = true;
 	}
 }
