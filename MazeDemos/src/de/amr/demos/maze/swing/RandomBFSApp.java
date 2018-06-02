@@ -7,7 +7,7 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.ObservableGraphTraversal;
-import de.amr.easy.graph.traversal.HillClimbing;
+import de.amr.easy.graph.traversal.DepthFirstTraversal;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.SwingDFSAnimation;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
@@ -31,7 +31,7 @@ public class RandomBFSApp extends SwingGridSampleApp {
 			resizeGrid(cellSize);
 			int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
 			new RandomBFS(grid).run(grid.cell(CENTER));
-			ObservableGraphTraversal dfs = new HillClimbing(grid);
+			ObservableGraphTraversal dfs = new DepthFirstTraversal(grid);
 			new SwingDFSAnimation(grid).run(canvas, dfs, source, target);
 			sleep(1000);
 		});

@@ -1,7 +1,7 @@
 package de.amr.easy.maze.alg.mst;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.traversal.DepthFirstTraversal;
+import de.amr.easy.graph.traversal.DepthFirstTraversal2;
 import de.amr.easy.grid.api.Grid2D;
 
 /**
@@ -19,7 +19,7 @@ public class ReverseDeleteDFSMST extends ReverseDeleteMST {
 
 	@Override
 	protected boolean disconnected(int u, int v) {
-		DepthFirstTraversal dfs = new DepthFirstTraversal(grid);
+		DepthFirstTraversal2 dfs = new DepthFirstTraversal2(grid);
 		dfs.traverseGraph(u, -1);
 		return dfs.getParent(v) == -1;
 	}

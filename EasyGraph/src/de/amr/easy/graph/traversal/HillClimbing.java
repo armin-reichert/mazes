@@ -1,73 +1,46 @@
 package de.amr.easy.graph.traversal;
 
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
-import static de.amr.easy.graph.api.TraversalState.VISITED;
 
 import java.util.Comparator;
+import java.util.stream.IntStream;
 
-import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Graph;
 
 /**
- * A heuristic depth-first-search where the children of the current vertex are visited in the order
- * given by a vertex valuation, for example the Euclidian distance from a given target.
+ * Implementation of a heuristic depth-first-search ("hill climbing") where the children of the
+ * current vertex are visited in the order defined by a vertex valuation, for example the Manhattan
+ * distance from some target vertex.
  * <p>
- * Taken from: Patrick Henry Winston, Artificial Intelligence 2nd ed., Addison-Wesley, 1984
+ * From the book: Patrick Henry Winston, <b>Artificial Intelligence</b>, 2nd ed., Addison-Wesley,
+ * 1984
  * 
  * @author Armin Reichert
  */
-public class HillClimbing extends AbstractGraphTraversal {
+public class HillClimbing extends DepthFirstTraversal {
 
-	private final Stack<Integer> stack;
+	private final Comparator<Integer> vertexValueComparator;
 
 	/**
-	 * A vertex comparison which determines the order how children of a vertex are traversed.
+	 * @param graph
+	 *          a graph
+	 * @param vertexValueComparator
+	 *          a vertex comparator which defines {@code u < v} if vertex {@code u} has a lower value
+	 *          than vertex {@code v} so {@code v} will be put onto the stack before {@code u}
 	 */
-	public Comparator<Integer> vertexValuation = Integer::compare;
-
-	public HillClimbing(Graph<?> graph) {
+	public HillClimbing(Graph<?> graph, Comparator<Integer> vertexValueComparator) {
 		super(graph);
-		this.stack = new Stack<>();
+		this.vertexValueComparator = vertexValueComparator;
 	}
 
 	@Override
-	protected void clear() {
-		super.clear();
-		stack.clear();
-	}
-
-	@Override
-	public boolean inQ(int vertex) {
-		return stack.contains(vertex);
-	}
-
-	@Override
-	public void traverseGraph(int source, int target) {
-		visit(source, -1);
-		while (!stack.isEmpty()) {
-			int current = stack.pop();
-			if (current == target) {
-				break;
-			}
-			/*@formatter:off*/
-			graph.adjVertices(current)
-				.filter(child -> getState(child) == UNVISITED)
-				.boxed()
-				.sorted(vertexValuation.reversed())
-				.forEach(child -> visit(child, current));
-			/*@formatter:on*/
-		}
-		while (!stack.isEmpty()) {
-			stack.pop();
-		}
-	}
-
-	private void visit(int child, int parent) {
-		setState(child, VISITED);
-		setParent(child, parent);
-		stack.push(child);
-		if (parent != -1) {
-			edgeTouched(parent, child);
-		}
+	protected IntStream childrenInStackingOrder(int v) {
+		/*@formatter:off*/
+		return graph.adjVertices(v)
+			.filter(child -> getState(child) == UNVISITED)
+			.boxed()
+			.sorted(vertexValueComparator.reversed()) // vertices with higher values are processed first
+			.mapToInt(Integer::intValue);
+		/*@formatter:on*/
 	}
 }

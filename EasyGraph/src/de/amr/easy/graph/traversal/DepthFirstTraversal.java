@@ -1,20 +1,16 @@
 package de.amr.easy.graph.traversal;
 
-import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
-import java.util.OptionalInt;
+import java.util.stream.IntStream;
 
 import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Graph;
 
 /**
- * Depth-first-traversal of an undirected graph.
- * 
- * <p>
- * During the traversal events are fired which can be processed by a listener, for example an
- * animation.
+ * Base class for Depth-first-traversal classes. Subclasses my change the order in which the
+ * children of the currently visited vertex are put onto the stack.
  * 
  * @author Armin Reichert
  */
@@ -33,51 +29,48 @@ public class DepthFirstTraversal extends AbstractGraphTraversal {
 	}
 
 	@Override
-	public boolean inQ(int v) {
-		return stack.contains(v);
+	public boolean inQ(int vertex) {
+		return stack.contains(vertex);
 	}
 
 	@Override
 	public void traverseGraph(int source, int target) {
-		clear();
-		int current = source;
-		stack.push(current);
-		visit(current, -1);
+		visit(source, -1);
 		while (!stack.isEmpty()) {
+			int current = stack.pop();
 			if (current == target) {
 				break;
 			}
-			OptionalInt neighbor = findUnvisitedNeighbour(current);
-			if (neighbor.isPresent()) {
-				visit(neighbor.getAsInt(), current);
-				if (findUnvisitedNeighbour(neighbor.getAsInt()).isPresent()) {
-					stack.push(neighbor.getAsInt());
-				}
-				current = neighbor.getAsInt();
-			} else {
-				setState(current, COMPLETED);
-				if (!stack.isEmpty()) {
-					current = stack.pop();
-				}
-				if (getState(current) == VISITED) {
-					stack.push(current);
-				}
-			}
+			childrenInStackingOrder(current).forEach(child -> visit(child, current));
 		}
 		while (!stack.isEmpty()) {
-			setState(stack.pop(), COMPLETED);
+			stack.pop();
 		}
 	}
 
-	private void visit(int child, int parent) {
+	/**
+	 * @param v
+	 *          a vertex
+	 * @return the children of this vertex in the order they are pushed onto the stack
+	 */
+	protected IntStream childrenInStackingOrder(int v) {
+		return graph.adjVertices(v).filter(child -> getState(child) == UNVISITED);
+	}
+
+	/**
+	 * Visits child vertex by following an edge from the parent vertex.
+	 * 
+	 * @param child
+	 *          child vertex
+	 * @param parent
+	 *          parent vertex or {@code -1} for first visited vertex
+	 */
+	protected void visit(int child, int parent) {
+		stack.push(child);
 		setState(child, VISITED);
 		setParent(child, parent);
 		if (parent != -1) {
 			edgeTouched(parent, child);
 		}
-	}
-
-	private OptionalInt findUnvisitedNeighbour(int v) {
-		return graph.adjVertices(v).filter(neighbor -> getState(neighbor) == UNVISITED).findAny();
 	}
 }

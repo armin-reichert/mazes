@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.traversal.DepthFirstTraversal;
+import de.amr.easy.graph.traversal.DepthFirstTraversal2;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.Grid;
@@ -140,7 +140,7 @@ public class DepthFirstSearchApp {
 	}
 
 	private void dfs() {
-		DepthFirstTraversal dfs = new DepthFirstTraversal(grid);
+		DepthFirstTraversal2 dfs = new DepthFirstTraversal2(grid);
 		dfs.traverseGraph(grid.cell(GridPosition.TOP_LEFT), grid.cell(GridPosition.BOTTOM_RIGHT));
 		solution = dfs.findPath(grid.cell(GridPosition.BOTTOM_RIGHT)).toArray();
 	}

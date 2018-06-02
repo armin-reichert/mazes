@@ -1,6 +1,6 @@
 package de.amr.easy.grid.tests;
 
-import static de.amr.easy.graph.api.TraversalState.COMPLETED;
+import static de.amr.easy.graph.api.TraversalState.*;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
@@ -9,6 +9,7 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.grid.api.GridPosition.TOP_RIGHT;
 import static de.amr.easy.grid.curves.CurveUtils.cells;
 import static de.amr.easy.grid.curves.CurveUtils.traverse;
+import static de.amr.easy.util.GridUtils.manhattanValuation;
 import static org.junit.Assert.assertTrue;
 
 import java.util.function.Function;
@@ -22,6 +23,7 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.traversal.BestFirstTraversal;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.traversal.DepthFirstTraversal;
+import de.amr.easy.graph.traversal.DepthFirstTraversal2;
 import de.amr.easy.graph.traversal.HillClimbing;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.curves.HilbertCurve;
@@ -94,18 +96,26 @@ public class GridTraversalTests {
 		DepthFirstTraversal dfs = new DepthFirstTraversal(grid);
 		assertState(grid.vertexStream(), dfs::getState, UNVISITED);
 		dfs.traverseGraph(source, target);
+		assertState(dfs.findPath(target), dfs::getState, VISITED);
+	}
+
+	@Test
+	public void testDFS2() {
+		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
+		DepthFirstTraversal2 dfs = new DepthFirstTraversal2(grid);
+		assertState(grid.vertexStream(), dfs::getState, UNVISITED);
+		dfs.traverseGraph(source, target);
 		assertState(dfs.findPath(target), dfs::getState, COMPLETED);
 	}
 
 	@Test
 	public void testHillClimbing() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		HillClimbing dfs = new HillClimbing(grid);
-		dfs.vertexValuation = (u, v) -> GridUtils.manhattanValuation(grid, target).apply(u, v);
-		assertState(grid.vertexStream(), dfs::getState, UNVISITED);
-		dfs.traverseGraph(source, target);
-		IntStream path = dfs.findPath(target);
-		path.forEach(cell -> assertTrue(dfs.getState(cell) != UNVISITED));
+		HillClimbing hillClimbing = new HillClimbing(grid, (u, v) -> manhattanValuation(grid, target).apply(u, v));
+		assertState(grid.vertexStream(), hillClimbing::getState, UNVISITED);
+		hillClimbing.traverseGraph(source, target);
+		IntStream path = hillClimbing.findPath(target);
+		path.forEach(cell -> assertTrue(hillClimbing.getState(cell) != UNVISITED));
 	}
 
 	@Test
