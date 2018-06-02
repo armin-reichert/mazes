@@ -20,21 +20,10 @@ import de.amr.easy.graph.api.Graph;
  */
 public class DepthFirstTraversal extends AbstractGraphTraversal {
 
-	private final Stack<Integer> stack;
+	private final Stack<Integer> stack = new Stack<>();
 
-	/**
-	 * Constructs an instance without executing the traversal.
-	 * 
-	 * @param graph
-	 *          the graph
-	 * @param source
-	 *          the source vertex
-	 * @param target
-	 *          the target vertex
-	 */
 	public DepthFirstTraversal(Graph<?> graph) {
 		super(graph);
-		stack = new Stack<>();
 	}
 
 	@Override
@@ -80,11 +69,11 @@ public class DepthFirstTraversal extends AbstractGraphTraversal {
 		}
 	}
 
-	private void visit(int v, int parent) {
-		setState(v, VISITED);
-		setParent(v, parent);
+	private void visit(int child, int parent) {
+		setState(child, VISITED);
+		setParent(child, parent);
 		if (parent != -1) {
-			edgeTouched(parent, v);
+			edgeTouched(parent, child);
 		}
 	}
 

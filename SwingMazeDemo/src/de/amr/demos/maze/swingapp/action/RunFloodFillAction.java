@@ -1,5 +1,7 @@
 package de.amr.demos.maze.swingapp.action;
 
+import static java.lang.String.format;
+
 import java.awt.event.ActionEvent;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
@@ -24,7 +26,8 @@ public class RunFloodFillAction extends MazeDemoAction {
 		app.startTask(() -> {
 			try {
 				int source = app.model.getGrid().cell(app.model.getPathFinderSource());
-				new SwingFloodFill(app.model.getGrid(), app.getCanvas()).run(source);
+				watch.runAndMeasure(() -> new SwingFloodFill(app.model.getGrid(), app.getCanvas()).run(source));
+				app.showMessage(format("Flood-fill: %.6f seconds.", watch.getSeconds()));
 			} catch (Throwable x) {
 				x.printStackTrace();
 			} finally {

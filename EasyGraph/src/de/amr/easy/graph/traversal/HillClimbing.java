@@ -8,7 +8,6 @@ import java.util.Comparator;
 import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.ObservableGraphTraversal;
-import de.amr.easy.graph.api.TraversalState;
 
 /**
  * A heuristic depth-first-search where the children of the current vertex are visited in the order
@@ -45,7 +44,7 @@ public class HillClimbing extends AbstractGraphTraversal implements ObservableGr
 
 	@Override
 	public void traverseGraph(int source, int target) {
-		visit(-1, source);
+		visit(source, -1);
 		while (!stack.isEmpty()) {
 			int current = stack.pop();
 			if (current == target) {
@@ -56,7 +55,7 @@ public class HillClimbing extends AbstractGraphTraversal implements ObservableGr
 				.filter(child -> getState(child) == UNVISITED)
 				.boxed()
 				.sorted(vertexValuation.reversed())
-				.forEach(child -> visit(current, child));
+				.forEach(child -> visit(child, current));
 			/*@formatter:on*/
 		}
 		while (!stack.isEmpty()) {
@@ -64,12 +63,10 @@ public class HillClimbing extends AbstractGraphTraversal implements ObservableGr
 		}
 	}
 
-	private void visit(int parent, int child) {
-		TraversalState oldState = getState(child);
+	private void visit(int child, int parent) {
 		setState(child, VISITED);
 		setParent(child, parent);
 		stack.push(child);
-		vertexTouched(child, oldState, getState(child));
 		if (parent != -1) {
 			edgeTouched(parent, child);
 		}

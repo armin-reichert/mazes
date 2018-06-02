@@ -2,10 +2,9 @@ package de.amr.easy.graph.traversal;
 
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 
+import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.IntStream;
@@ -86,9 +85,9 @@ public abstract class AbstractGraphTraversal implements ObservableGraphTraversal
 		if (getParent(target) == -1) {
 			return IntStream.empty();
 		}
-		List<Integer> path = new LinkedList<>();
+		ArrayDeque<Integer> path = new ArrayDeque<>();
 		for (int v = target; v != -1; v = getParent(v)) {
-			path.add(0, v);
+			path.addFirst(v);
 		}
 		return path.stream().mapToInt(Integer::intValue);
 	}
