@@ -25,7 +25,7 @@ public class BoruvkaMSTApp extends SwingGridSampleApp {
 		IntStream.of(64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			resizeGrid(cellSize);
 			new BoruvkaMST(grid).run(-1);
-			new SwingBFSAnimation(grid, canvas).run(new BreadthFirstTraversal(grid, 0), 0, -1);
+			new SwingBFSAnimation(grid, canvas).run(new BreadthFirstTraversal(grid), 0, -1);
 			sleep(1000);
 		});
 	}

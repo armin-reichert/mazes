@@ -26,7 +26,7 @@ public class WilsonExpandingCircleApp extends SwingGridSampleApp {
 		IntStream.of(64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			resizeGrid(cellSize);
 			new WilsonUSTExpandingCircle(grid).run(grid.cell(CENTER));
-			new SwingBFSAnimation(grid, canvas).run(new BreadthFirstTraversal(grid, 0), 0, -1);
+			new SwingBFSAnimation(grid, canvas).run(new BreadthFirstTraversal(grid), 0, -1);
 			sleep(1000);
 		});
 		System.exit(0);

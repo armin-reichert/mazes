@@ -26,7 +26,7 @@ public class RecursiveDFSApp extends SwingGridSampleApp {
 		IntStream.of(256, 128, 64, 32).forEach(cellSize -> {
 			resizeGrid(cellSize);
 			new RecursiveDFS(grid).run(grid.cell(TOP_LEFT));
-			new SwingBFSAnimation(grid, canvas).run(new BreadthFirstTraversal(grid, 0), 0, -1);
+			new SwingBFSAnimation(grid, canvas).run(new BreadthFirstTraversal(grid), 0, -1);
 			sleep(1000);
 		});
 		System.exit(0);

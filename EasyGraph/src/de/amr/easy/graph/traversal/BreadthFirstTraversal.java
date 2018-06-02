@@ -30,26 +30,20 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal implements BFS
 
 	protected final Queue<Integer> q;
 	protected final Graph<?> graph;
-	protected final int source;
 	protected final int[] distanceMap;
 	protected int maxDistance;
 	protected int farest;
 	protected int target;
 
-	protected BreadthFirstTraversal(Graph<?> graph, int source, Queue<Integer> queue) {
+	protected BreadthFirstTraversal(Graph<?> graph, Queue<Integer> queue) {
 		this.q = queue;
 		this.graph = graph;
-		this.source = source;
 		this.distanceMap = new int[graph.vertexCount()];
 		clear();
 	}
 
-	public BreadthFirstTraversal(Graph<?> graph, int source) {
-		this(graph, source, new ArrayDeque<>());
-	}
-
-	public void setTarget(int vertex) {
-		this.target = vertex;
+	public BreadthFirstTraversal(Graph<?> graph) {
+		this(graph, new ArrayDeque<>());
 	}
 
 	@Override

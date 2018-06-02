@@ -17,7 +17,7 @@ import de.amr.easy.graph.api.PathFinder;
  */
 public class BestFirstTraversal extends BreadthFirstTraversal implements PathFinder {
 
-	public BestFirstTraversal(Graph<?> graph, int source, Comparator<Integer> vertexValuation) {
-		super(graph, source, new PriorityQueue<>(vertexValuation));
+	public BestFirstTraversal(Graph<?> graph, Comparator<Integer> vertexValuation) {
+		super(graph, new PriorityQueue<>(vertexValuation));
 	}
 }

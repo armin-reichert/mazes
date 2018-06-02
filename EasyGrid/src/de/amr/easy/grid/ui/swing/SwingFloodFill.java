@@ -36,7 +36,7 @@ public class SwingFloodFill {
 
 	public void run(int source) {
 		canvas.stopListening();
-		bfs = new BreadthFirstTraversal(grid, source);
+		bfs = new BreadthFirstTraversal(grid);
 		bfs.traverseGraph(source, -1);
 		createRenderer(canvas.getRenderer().get(), new BitSet(), bfs.getMaxDistance());
 		canvas.pushRenderer(renderer);
