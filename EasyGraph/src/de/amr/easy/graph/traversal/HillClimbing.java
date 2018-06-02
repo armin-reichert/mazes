@@ -7,7 +7,6 @@ import java.util.Comparator;
 
 import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Graph;
-import de.amr.easy.graph.api.ObservableGraphTraversal;
 
 /**
  * A heuristic depth-first-search where the children of the current vertex are visited in the order
@@ -17,7 +16,7 @@ import de.amr.easy.graph.api.ObservableGraphTraversal;
  * 
  * @author Armin Reichert
  */
-public class HillClimbing extends AbstractGraphTraversal implements ObservableGraphTraversal {
+public class HillClimbing extends AbstractGraphTraversal {
 
 	private final Stack<Integer> stack;
 
