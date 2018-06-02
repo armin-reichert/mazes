@@ -1,11 +1,10 @@
 package de.amr.demos.maze.swingapp.view.menu;
 
 import static de.amr.demos.maze.swingapp.model.MazeDemoModel.PATHFINDER_ALGORITHMS;
-import static java.util.Arrays.stream;
 
-import java.awt.event.ActionListener;
 import java.util.Enumeration;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
@@ -26,12 +25,12 @@ public class PathFinderMenu extends JMenu {
 
 	private final ButtonGroup group = new ButtonGroup();
 
-	public PathFinderMenu(MazeDemoApp app, ActionListener itemSelected) {
+	public PathFinderMenu(MazeDemoApp app) {
 		super("Pathfinders");
 		add(new RunFloodFillAction(app));
 		addSeparator();
-		JMenuItem noPathFinder = addItem(AlgorithmInfo.NONE, itemSelected);
-		stream(PATHFINDER_ALGORITHMS).forEach(alg -> addItem(alg, itemSelected));
+		JMenuItem noPathFinder = addItem(app, AlgorithmInfo.NONE);
+		Stream.of(PATHFINDER_ALGORITHMS).forEach(alg -> addItem(app, alg));
 		noPathFinder.setSelected(true);
 	}
 
@@ -41,14 +40,14 @@ public class PathFinderMenu extends JMenu {
 			if (item == null) {
 				continue;
 			}
-			AlgorithmInfo info = (AlgorithmInfo) item.getClientProperty("algorithm"); 
+			AlgorithmInfo info = (AlgorithmInfo) item.getClientProperty("algorithm");
 			if (info != null && info.equals(algInfo)) {
 				return Optional.of(item);
 			}
 		}
 		return Optional.empty();
 	}
-	
+
 	public Optional<AlgorithmInfo> getSelectedAlgorithm() {
 		for (Enumeration<AbstractButton> items = group.getElements(); items.hasMoreElements();) {
 			AbstractButton item = items.nextElement();
@@ -59,9 +58,9 @@ public class PathFinderMenu extends JMenu {
 		return Optional.empty();
 	}
 
-	private JRadioButtonMenuItem addItem(AlgorithmInfo alg, ActionListener itemSelected) {
+	private JRadioButtonMenuItem addItem(MazeDemoApp app, AlgorithmInfo alg) {
 		JRadioButtonMenuItem item = new JRadioButtonMenuItem(alg.getDescription());
-		item.addActionListener(itemSelected);
+		item.addActionListener(evt -> app.runPathFinderAction.setEnabled(alg != AlgorithmInfo.NONE));
 		item.putClientProperty("algorithm", alg);
 		add(item);
 		group.add(item);

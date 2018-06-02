@@ -98,15 +98,15 @@ public class ControlPanel extends JPanel {
 
 		btnCreateMaze = new JButton("Create Maze");
 		buttonPanel.add(btnCreateMaze);
-
-		btnCreateAllMazes = new JButton("Create All Mazes");
-		buttonPanel.add(btnCreateAllMazes);
 		
-		btnFindPath = new JButton("Find Path");
+		btnFindPath = new JButton("Solve");
 		buttonPanel.add(btnFindPath);
-
-		btnStop = new JButton("Stop");
-		buttonPanel.add(btnStop);
+		
+				btnCreateAllMazes = new JButton("Create All Mazes");
+				buttonPanel.add(btnCreateAllMazes);
+				
+						btnStop = new JButton("Stop");
+						buttonPanel.add(btnStop);
 	}
 
 	public void showMessage(String msg) {

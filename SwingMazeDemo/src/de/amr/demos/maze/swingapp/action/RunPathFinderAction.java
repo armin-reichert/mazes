@@ -24,7 +24,7 @@ import de.amr.easy.grid.ui.swing.SwingDFSAnimation;
 public class RunPathFinderAction extends MazeDemoAction {
 
 	public RunPathFinderAction(MazeDemoApp app) {
-		super(app, "Solve Maze");
+		super(app, "Solve");
 	}
 
 	@Override

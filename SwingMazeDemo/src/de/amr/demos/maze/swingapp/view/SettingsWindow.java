@@ -13,15 +13,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JSlider;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
-import de.amr.demos.maze.swingapp.action.CreateAllMazesAction;
-import de.amr.demos.maze.swingapp.action.CreateSingleMazeAction;
-import de.amr.demos.maze.swingapp.action.RunPathFinderAction;
-import de.amr.demos.maze.swingapp.action.StopTaskAction;
-import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.demos.maze.swingapp.view.menu.GenerationAlgorithmMenu;
 import de.amr.demos.maze.swingapp.view.menu.OptionMenu;
@@ -92,10 +86,10 @@ public class SettingsWindow extends JFrame {
 			}
 		});
 
-		controlPanel.getBtnCreateMaze().setAction(new CreateSingleMazeAction(app));
-		controlPanel.getBtnCreateAllMazes().setAction(new CreateAllMazesAction(app));
-		controlPanel.getBtnFindPath().setAction(new RunPathFinderAction(app));
-		controlPanel.getBtnStop().setAction(new StopTaskAction(app));
+		controlPanel.getBtnCreateMaze().setAction(app.createSingleMazeAction);
+		controlPanel.getBtnCreateAllMazes().setAction(app.createAllMazesAction);
+		controlPanel.getBtnFindPath().setAction(app.runPathFinderAction);
+		controlPanel.getBtnStop().setAction(app.stopTaskAction);
 
 		getContentPane().add(controlPanel, BorderLayout.CENTER);
 
@@ -109,14 +103,7 @@ public class SettingsWindow extends JFrame {
 		});
 		getJMenuBar().add(generationAlgorithmMenu);
 
-		pathFinderMenu = new PathFinderMenu(app, evt -> {
-			JMenuItem item = (JMenuItem) evt.getSource();
-			AlgorithmInfo algInfo = (AlgorithmInfo) item.getClientProperty("algorithm");
-			getControlPanel().getBtnFindPath().setEnabled(algInfo != AlgorithmInfo.NONE);
-		});
-		pathFinderMenu.findItemByInfo(AlgorithmInfo.NONE).ifPresent(item -> {
-			getControlPanel().getBtnFindPath().setEnabled(!item.isSelected());
-		});
+		pathFinderMenu = new PathFinderMenu(app);
 		getJMenuBar().add(pathFinderMenu);
 
 		optionMenu = new OptionMenu(app);

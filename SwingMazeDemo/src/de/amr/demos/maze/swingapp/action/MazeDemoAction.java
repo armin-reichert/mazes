@@ -23,9 +23,6 @@ public abstract class MazeDemoAction extends AbstractAction {
 
 	protected void enableControls(boolean b) {
 		ControlPanel controls = app.settingsWindow.getControlPanel();
-		controls.getBtnCreateMaze().setEnabled(b);
-		controls.getBtnCreateAllMazes().setEnabled(b);
-		controls.getBtnFindPath().setEnabled(b);
 		controls.getSliderPassageWidth().setEnabled(b);
 		controls.getComboGridResolution().setEnabled(b);
 	}
