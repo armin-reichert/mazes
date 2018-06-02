@@ -41,7 +41,7 @@ public class KruskalMST extends MazeAlgorithm {
 Here, the edges of a full grid are processed in permuted order (the Kruskal MST algorithm would process the edges in order of increasing weight).
 
 
-Also included is a [demo application](https://github.com/armin-reichert/mazes/releases/download/mai2018/mazedemoapp.jar) demonstrating all implemented maze generators and path finders. Using a control panel one can interactively select the generation algorithm, path finder algorithm, grid resolution and rendering style ("walls", "passages").
+Also included is a [demo application](https://github.com/armin-reichert/mazes/releases/download/june2018/mazedemoapp.jar) demonstrating all implemented maze generators and path finders. Using a control panel one can interactively select the generation algorithm, path finder algorithm, grid resolution and rendering style ("walls", "passages").
 
 <img style="width:100%; height=auto" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/mazedemoapp.png">
 
@@ -128,8 +128,11 @@ Implemented algorithms:
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_RecursiveDivision.gif">
 
 ### Path finding algorithms:
-- The [EasyGraph](EasyGraph) library contains the following path finder algorithms:
-  - Breadth-first-search
-  - Hill climbing with Manhattan distance
-  - Hill climbing with Euclidian distance
-  - Depth-first-search
+The [EasyGraph](EasyGraph) library currently contains the following path finder implementations:
+- Plain Breadth-first-search
+- Best-first-search with Manhattan distance heuristics
+- Best-first-search with Euclidian distance heuristics
+- Plain Depth-first-search
+- Hill climbing with Manhattan distance heuristics
+- Hill climbing with Euclidian distance heuristics
+
