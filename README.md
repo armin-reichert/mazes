@@ -128,11 +128,11 @@ Implemented algorithms:
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_RecursiveDivision.gif">
 
 ### Path finding algorithms:
-- The [EasyGraph](EasyGraph) library currently contains the following path finder algorithms:
-  - Plain Breadth-first-search
-    - Best-first-search with Manhattan distance heuristics
-    - Best-first-search with Euclidian distance heuristics
-  - Plain Depth-first-search
-    - Hill climbing with Manhattan distance heuristics
-    - Hill climbing with Euclidian distance heuristics
+The [EasyGraph](EasyGraph) library currently contains the following path finder implementations:
+- Plain Breadth-first-search
+- Best-first-search with Manhattan distance heuristics
+- Best-first-search with Euclidian distance heuristics
+- Plain Depth-first-search
+- Hill climbing with Manhattan distance heuristics
+- Hill climbing with Euclidian distance heuristics
 
