@@ -66,8 +66,8 @@ public class SwingBFSAnimation {
 	public void run(BreadthFirstTraversal bfs, int source, int target) {
 		this.bfs = bfs;
 
-		// 1. run without events for computing maximum distance (cell) from source
-		bfs.traverseGraph(source, -1);
+		// 1. traverse whole graph without events for computing maximum distance from source
+		bfs.traverseGraph(source);
 		maxDistance = bfs.getMaxDistance();
 		maxDistanceCell = bfs.getMaxDistanceVertex();
 

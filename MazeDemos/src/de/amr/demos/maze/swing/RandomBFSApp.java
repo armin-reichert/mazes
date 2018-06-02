@@ -31,8 +31,7 @@ public class RandomBFSApp extends SwingGridSampleApp {
 			resizeGrid(cellSize);
 			int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
 			new RandomBFS(grid).run(grid.cell(CENTER));
-			// new SwingBFSAnimation(grid).runBFSAnimation(canvas, source);
-			ObservableGraphTraversal dfs = new HillClimbing(grid, source, target);
+			ObservableGraphTraversal dfs = new HillClimbing(grid);
 			new SwingDFSAnimation(grid).run(canvas, dfs, source, target);
 			sleep(1000);
 		});

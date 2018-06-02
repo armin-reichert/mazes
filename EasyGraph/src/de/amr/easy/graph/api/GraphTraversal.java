@@ -19,6 +19,16 @@ public interface GraphTraversal {
 	void traverseGraph(int source, int target);
 
 	/**
+	 * Traverses the complete graph (connected component) starting from the given source vertex.
+	 * 
+	 * @param source
+	 *          source vertex
+	 */
+	default void traverseGraph(int source) {
+		traverseGraph(source, -1);
+	}
+
+	/**
 	 * Returns the parent vertex of the given vertex i.e. the vertex from which the given vertex was
 	 * reached over an edge.
 	 * 

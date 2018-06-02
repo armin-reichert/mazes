@@ -76,17 +76,17 @@ public class RunPathFinderAction extends MazeDemoAction {
 			SwingDFSAnimation dfsAnimation = new SwingDFSAnimation(app.model.getGrid());
 			dfsAnimation.setPathColor(app.model.getPathColor());
 			if (pathFinderInfo.isTagged(PathFinderTag.HillClimbingManhattan)) {
-				HillClimbing hillClimbing = new HillClimbing(app.model.getGrid(), source, target);
+				HillClimbing hillClimbing = new HillClimbing(app.model.getGrid());
 				hillClimbing.vertexValuation = (u, v) -> manhattanValuation(app.model.getGrid(), target).apply(u, v);
 				watch.runAndMeasure(() -> dfsAnimation.run(app.getCanvas(), hillClimbing, source, target));
 				app.showMessage(format("Hill Climbing (Manhattan) time: %.6f seconds.", watch.getSeconds()));
 			} else if (pathFinderInfo.isTagged(PathFinderTag.HillClimbingEuclidian)) {
-				HillClimbing hillClimbing = new HillClimbing(app.model.getGrid(), source, target);
+				HillClimbing hillClimbing = new HillClimbing(app.model.getGrid());
 				hillClimbing.vertexValuation = (u, v) -> euclidianValuation(app.model.getGrid(), target).apply(u, v);
 				watch.runAndMeasure(() -> dfsAnimation.run(app.getCanvas(), hillClimbing, source, target));
 				app.showMessage(format("Hill Climbing (Euclidian) time: %.6f seconds.", watch.getSeconds()));
 			} else {
-				DepthFirstTraversal dfs = new DepthFirstTraversal(app.model.getGrid(), source, target);
+				DepthFirstTraversal dfs = new DepthFirstTraversal(app.model.getGrid());
 				watch.runAndMeasure(() -> dfsAnimation.run(app.getCanvas(), dfs, source, target));
 				app.showMessage(format("DFS time: %.6f seconds.", watch.getSeconds()));
 			}

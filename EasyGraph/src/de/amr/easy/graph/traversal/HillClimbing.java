@@ -21,16 +21,15 @@ import de.amr.easy.graph.api.TraversalState;
 public class HillClimbing extends AbstractGraphTraversal implements ObservableGraphTraversal {
 
 	private final Stack<Integer> stack;
-	private final Graph<?> graph;
 
 	/**
 	 * A vertex comparison which determines the order how children of a vertex are traversed.
 	 */
 	public Comparator<Integer> vertexValuation = Integer::compare;
 
-	public HillClimbing(Graph<?> graph, int source, int target) {
+	public HillClimbing(Graph<?> graph) {
+		super(graph);
 		this.stack = new Stack<>();
-		this.graph = graph;
 	}
 
 	@Override

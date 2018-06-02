@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.IntStream;
 
+import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.ObservableGraphTraversal;
 import de.amr.easy.graph.api.PathFinder;
 import de.amr.easy.graph.api.TraversalState;
@@ -24,8 +25,16 @@ import de.amr.easy.graph.api.event.GraphTraversalListener;
 public abstract class AbstractGraphTraversal implements ObservableGraphTraversal, PathFinder {
 
 	protected final Map<Integer, Integer> parentMap = new HashMap<>();
+
 	protected final Map<Integer, TraversalState> stateMap = new HashMap<>();
+
 	protected final Set<GraphTraversalListener> observers = new HashSet<>(3);
+
+	protected final Graph<?> graph;
+
+	public AbstractGraphTraversal(Graph<?> graph) {
+		this.graph = graph;
+	}
 
 	protected void clear() {
 		parentMap.clear();

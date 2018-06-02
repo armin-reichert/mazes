@@ -29,15 +29,14 @@ import de.amr.easy.graph.api.GraphTraversal;
 public class BreadthFirstTraversal extends AbstractGraphTraversal implements GraphTraversal {
 
 	protected final Queue<Integer> q;
-	protected final Graph<?> graph;
 	protected final int[] distanceMap;
 	protected int maxDistance;
 	protected int farest;
 	protected int target;
 
 	protected BreadthFirstTraversal(Graph<?> graph, Queue<Integer> queue) {
+		super(graph);
 		this.q = queue;
-		this.graph = graph;
 		this.distanceMap = new int[graph.vertexCount()];
 		clear();
 	}

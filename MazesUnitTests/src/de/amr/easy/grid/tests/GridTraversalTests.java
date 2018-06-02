@@ -69,7 +69,7 @@ public class GridTraversalTests {
 	public void testBFS() {
 		BreadthFirstTraversal bfs = new BreadthFirstTraversal(grid);
 		assertState(grid.vertexStream(), bfs::getState, UNVISITED);
-		bfs.traverseGraph(grid.cell(CENTER), -1);
+		bfs.traverseGraph(grid.cell(CENTER));
 		assertState(grid.vertexStream(), bfs::getState, COMPLETED);
 	}
 
@@ -81,7 +81,7 @@ public class GridTraversalTests {
 		BestFirstTraversal best = new BestFirstTraversal(grid,
 				(u, v) -> GridUtils.manhattanValuation(grid, target).apply(u, v));
 		assertState(grid.vertexStream(), best::getState, UNVISITED);
-		best.traverseGraph(source, -1);
+		best.traverseGraph(source);
 		assertState(grid.vertexStream(), best::getState, COMPLETED);
 		best.traverseGraph(source, target);
 		long length = best.findPath(target).count();
@@ -91,16 +91,16 @@ public class GridTraversalTests {
 	@Test
 	public void testDFS() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		DepthFirstTraversal dfs = new DepthFirstTraversal(grid, source, target);
+		DepthFirstTraversal dfs = new DepthFirstTraversal(grid);
 		assertState(grid.vertexStream(), dfs::getState, UNVISITED);
-		dfs.traverseGraph(grid.cell(CENTER), grid.cell(BOTTOM_RIGHT));
+		dfs.traverseGraph(source, target);
 		assertState(dfs.findPath(target), dfs::getState, COMPLETED);
 	}
 
 	@Test
 	public void testHillClimbing() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		HillClimbing dfs = new HillClimbing(grid, source, target);
+		HillClimbing dfs = new HillClimbing(grid);
 		dfs.vertexValuation = (u, v) -> GridUtils.manhattanValuation(grid, target).apply(u, v);
 		assertState(grid.vertexStream(), dfs::getState, UNVISITED);
 		dfs.traverseGraph(source, target);
