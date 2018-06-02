@@ -12,9 +12,9 @@ import de.amr.easy.grid.ui.swing.SwingFloodFill;
  * 
  * @author Armin Reichert
  */
-public class RunFloodFillAction extends MazeDemoAction {
+public class FloodFillAction extends MazeDemoAction {
 
-	public RunFloodFillAction(MazeDemoApp app) {
+	public FloodFillAction(MazeDemoApp app) {
 		super(app, "Flood-fill");
 	}
 

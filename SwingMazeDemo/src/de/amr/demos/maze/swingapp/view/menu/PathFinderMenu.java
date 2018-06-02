@@ -13,7 +13,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
-import de.amr.demos.maze.swingapp.action.RunFloodFillAction;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 
 /**
@@ -27,11 +26,10 @@ public class PathFinderMenu extends JMenu {
 
 	public PathFinderMenu(MazeDemoApp app) {
 		super("Pathfinders");
-		add(new RunFloodFillAction(app));
+		add(app.floodFillAction);
+		add(app.clearCanvasAction);
 		addSeparator();
-		JMenuItem noPathFinder = addItem(app, AlgorithmInfo.NONE);
 		Stream.of(PATHFINDER_ALGORITHMS).forEach(alg -> addItem(app, alg));
-		noPathFinder.setSelected(true);
 	}
 
 	public Optional<JMenuItem> findItemByInfo(AlgorithmInfo algInfo) {
@@ -60,7 +58,6 @@ public class PathFinderMenu extends JMenu {
 
 	private JRadioButtonMenuItem addItem(MazeDemoApp app, AlgorithmInfo alg) {
 		JRadioButtonMenuItem item = new JRadioButtonMenuItem(alg.getDescription());
-		item.addActionListener(evt -> app.runPathFinderAction.setEnabled(alg != AlgorithmInfo.NONE));
 		item.putClientProperty("algorithm", alg);
 		add(item);
 		group.add(item);

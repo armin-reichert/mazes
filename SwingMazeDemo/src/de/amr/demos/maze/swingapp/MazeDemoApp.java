@@ -14,8 +14,10 @@ import javax.swing.Action;
 import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
+import de.amr.demos.maze.swingapp.action.ClearCanvasAction;
 import de.amr.demos.maze.swingapp.action.CreateAllMazesAction;
 import de.amr.demos.maze.swingapp.action.CreateSingleMazeAction;
+import de.amr.demos.maze.swingapp.action.FloodFillAction;
 import de.amr.demos.maze.swingapp.action.RunPathFinderAction;
 import de.amr.demos.maze.swingapp.action.StopTaskAction;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
@@ -50,6 +52,8 @@ public class MazeDemoApp {
 	public final Action createAllMazesAction = new CreateAllMazesAction(this);
 	public final Action runPathFinderAction = new RunPathFinderAction(this);
 	public final Action stopTaskAction = new StopTaskAction(this);
+	public final Action floodFillAction = new FloodFillAction(this);
+	public final Action clearCanvasAction = new ClearCanvasAction(this);
 
 	private Thread taskThread;
 	private volatile boolean taskStopped;
@@ -75,12 +79,11 @@ public class MazeDemoApp {
 		int numCols = displayMode.getWidth() / model.getGridCellSize();
 		int numRows = displayMode.getHeight() / model.getGridCellSize();
 		model.setGrid(new ObservableGrid<>(numCols, numRows, Top4.get(), UNVISITED, false));
-		
-		runPathFinderAction.setEnabled(false);
 
 		mazeWindow = new MazeWindow(this);
 		settingsWindow = new SettingsWindow(this);
-
+		settingsWindow.getPathFinderMenu().findItemByInfo(MazeDemoModel.PATHFINDER_ALGORITHMS[0])
+				.ifPresent(item -> item.setSelected(true));
 		settingsWindow.setAlwaysOnTop(true);
 		settingsWindow.pack();
 		settingsWindow.setLocationRelativeTo(null);
