@@ -43,12 +43,10 @@ public class HillClimbing extends AbstractGraphTraversal implements ObservableDF
 		stack.clear();
 	}
 
-	@Override
 	public int getSource() {
 		return source;
 	}
 
-	@Override
 	public int getTarget() {
 		return target;
 	}
@@ -59,7 +57,7 @@ public class HillClimbing extends AbstractGraphTraversal implements ObservableDF
 	}
 
 	@Override
-	public void traverseGraph() {
+	public void traverseGraph(int source, int target) {
 		visit(-1, source);
 		while (!stack.isEmpty()) {
 			int current = stack.pop();

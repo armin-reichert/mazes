@@ -53,12 +53,10 @@ public class DepthFirstTraversal extends AbstractGraphTraversal implements Obser
 		stack.clear();
 	}
 
-	@Override
 	public int getSource() {
 		return source;
 	}
 
-	@Override
 	public int getTarget() {
 		return target;
 	}
@@ -69,7 +67,7 @@ public class DepthFirstTraversal extends AbstractGraphTraversal implements Obser
 	}
 
 	@Override
-	public void traverseGraph() {
+	public void traverseGraph(int source, int target) {
 		clear();
 		int current = source;
 		stack.push(current);

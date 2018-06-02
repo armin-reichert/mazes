@@ -63,16 +63,11 @@ public class SwingBFSAnimation {
 		};
 	}
 
-	public void run(BreadthFirstTraversal bfs, int target) {
-		bfs.setTarget(target);
-		run(bfs);
-	}
-
-	public void run(BreadthFirstTraversal bfs) {
+	public void run(BreadthFirstTraversal bfs, int source, int target) {
 		this.bfs = bfs;
 
 		// 1. run without events for computing maximum distance (cell) from source
-		bfs.traverseGraph();
+		bfs.traverseGraph(source, -1);
 		maxDistance = bfs.getMaxDistance();
 		maxDistanceCell = bfs.getMaxDistanceVertex();
 
@@ -90,7 +85,7 @@ public class SwingBFSAnimation {
 				canvas.drawGridCell(vertex);
 			}
 		});
-		bfs.traverseGraph();
+		bfs.traverseGraph(source, target);
 		canvas.popRenderer();
 	}
 

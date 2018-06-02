@@ -1,7 +1,5 @@
 package de.amr.easy.graph.api;
 
-import java.util.stream.IntStream;
-
 /**
  * Interface for DFS-traversal implementations.
  * 
@@ -9,13 +7,7 @@ import java.util.stream.IntStream;
  */
 public interface DFSTraversal {
 
-	IntStream findPath(int target);
-
-	void traverseGraph();
-
-	int getSource();
-
-	int getTarget();
+	void traverseGraph(int source, int target);
 
 	TraversalState getState(int cell);
 

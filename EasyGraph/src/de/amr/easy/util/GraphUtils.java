@@ -46,7 +46,7 @@ public class GraphUtils {
 	public static <E extends Edge> boolean areConnected(Graph<E> g, int u, int v) {
 		BreadthFirstTraversal bfs = new BreadthFirstTraversal(g, u);
 		bfs.setTarget(v);
-		bfs.traverseGraph();
+		bfs.traverseGraph(u, v);
 		return bfs.getDistance(v) != -1;
 	}
 

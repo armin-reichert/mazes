@@ -26,8 +26,6 @@ public abstract class AbstractGraphTraversal implements PathFinder {
 	protected final Map<Integer, TraversalState> stateMap = new HashMap<>();
 	protected final Set<GraphTraversalListener> observers = new HashSet<>(3);
 
-	public abstract void traverseGraph();
-
 	public void clear() {
 		parentMap.clear();
 		stateMap.clear();

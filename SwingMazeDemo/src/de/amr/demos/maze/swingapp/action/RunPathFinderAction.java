@@ -56,18 +56,18 @@ public class RunPathFinderAction extends MazeDemoAction {
 				BestFirstTraversal best = new BestFirstTraversal(app.model.getGrid(), source,
 						(u, v) -> manhattanValuation(app.model.getGrid(), target).apply(u, v));
 				best.setTarget(target);
-				watch.runAndMeasure(() -> bfsAnimation.run(best));
+				watch.runAndMeasure(() -> bfsAnimation.run(best, source, target));
 				app.showMessage(format("BestFS (Manhattan) time: %.6f seconds.", watch.getSeconds()));
 			} else if (pathFinderInfo.isTagged(PathFinderTag.BestFSEuclidian)) {
 				BestFirstTraversal best = new BestFirstTraversal(app.model.getGrid(), source,
 						(u, v) -> euclidianValuation(app.model.getGrid(), target).apply(u, v));
 				best.setTarget(target);
-				watch.runAndMeasure(() -> bfsAnimation.run(best));
+				watch.runAndMeasure(() -> bfsAnimation.run(best, source, target));
 				app.showMessage(format("BestFS (Euclidian) time: %.6f seconds.", watch.getSeconds()));
 			} else {
 				BreadthFirstTraversal bfs = new BreadthFirstTraversal(app.model.getGrid(), source);
 				bfs.setTarget(target);
-				watch.runAndMeasure(() -> bfsAnimation.run(bfs));
+				watch.runAndMeasure(() -> bfsAnimation.run(bfs, source, target));
 				app.showMessage(format("BFS time: %.6f seconds.", watch.getSeconds()));
 			}
 			if (app.model.isLongestPathHighlighted()) {

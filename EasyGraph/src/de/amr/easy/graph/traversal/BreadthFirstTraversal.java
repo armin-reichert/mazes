@@ -8,6 +8,7 @@ import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Queue;
 
+import de.amr.easy.graph.api.BFSTraversal;
 import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.PathFinder;
 
@@ -25,7 +26,7 @@ import de.amr.easy.graph.api.PathFinder;
  * 
  * @author Armin Reichert
  */
-public class BreadthFirstTraversal extends AbstractGraphTraversal {
+public class BreadthFirstTraversal extends AbstractGraphTraversal implements BFSTraversal {
 
 	protected final Queue<Integer> q;
 	protected final Graph<?> graph;
@@ -62,7 +63,7 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal {
 	}
 
 	@Override
-	public void traverseGraph() {
+	public void traverseGraph(int source, int target) {
 		clear();
 		visit(source, -1);
 		while (!q.isEmpty()) {

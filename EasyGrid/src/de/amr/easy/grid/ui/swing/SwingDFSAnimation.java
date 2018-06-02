@@ -7,6 +7,7 @@ import java.util.BitSet;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.ObservableDFSTraversal;
+import de.amr.easy.graph.api.PathFinder;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalListener;
 import de.amr.easy.grid.api.BareGrid2D;
@@ -27,8 +28,7 @@ public class SwingDFSAnimation {
 		this.grid = grid;
 	}
 
-	private ConfigurableGridRenderer createRenderer(ObservableDFSTraversal dfs, BitSet inPath,
-			GridRenderer oldRenderer) {
+	private ConfigurableGridRenderer createRenderer(ObservableDFSTraversal dfs, BitSet inPath, GridRenderer oldRenderer) {
 		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
 		renderer.fnCellSize = oldRenderer::getCellSize;
 		renderer.fnPassageWidth = () -> oldRenderer.getPassageWidth() > 5 ? oldRenderer.getPassageWidth() / 2
@@ -73,8 +73,8 @@ public class SwingDFSAnimation {
 		});
 		BitSet inPath = new BitSet();
 		canvas.pushRenderer(createRenderer(dfs, inPath, canvas.getRenderer().get()));
-		dfs.traverseGraph();
-		path = dfs.findPath(dfs.getTarget()).toArray();
+		dfs.traverseGraph(source, target);
+		path = ((PathFinder) dfs).findPath(target).toArray();// TODO
 		IntStream.of(path).forEach(inPath::set);
 		IntStream.of(path).forEach(canvas::drawGridCell);
 		canvas.popRenderer();

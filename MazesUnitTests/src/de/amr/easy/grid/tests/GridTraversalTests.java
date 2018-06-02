@@ -69,8 +69,23 @@ public class GridTraversalTests {
 	public void testBFS() {
 		BreadthFirstTraversal bfs = new BreadthFirstTraversal(grid, grid.cell(CENTER));
 		assertState(grid.vertexStream(), bfs::getState, UNVISITED);
-		bfs.traverseGraph();
+		bfs.traverseGraph(grid.cell(CENTER), -1);
 		assertState(grid.vertexStream(), bfs::getState, COMPLETED);
+	}
+
+	@Test
+	public void testBestFS() {
+		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
+		grid.removeEdges();
+		new IterativeDFS(grid).run(target);
+		BestFirstTraversal best = new BestFirstTraversal(grid, source,
+				(u, v) -> GridUtils.manhattanValuation(grid, target).apply(u, v));
+		assertState(grid.vertexStream(), best::getState, UNVISITED);
+		best.traverseGraph(source, -1);
+		assertState(grid.vertexStream(), best::getState, COMPLETED);
+		best.traverseGraph(source, target);
+		long length = best.findPath(target).count();
+		System.out.println("Best-first search found path of length " + length);
 	}
 
 	@Test
@@ -78,7 +93,7 @@ public class GridTraversalTests {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
 		DepthFirstTraversal dfs = new DepthFirstTraversal(grid, source, target);
 		assertState(grid.vertexStream(), dfs::getState, UNVISITED);
-		dfs.traverseGraph();
+		dfs.traverseGraph(grid.cell(CENTER), grid.cell(BOTTOM_RIGHT));
 		assertState(dfs.findPath(target), dfs::getState, COMPLETED);
 	}
 
@@ -88,23 +103,9 @@ public class GridTraversalTests {
 		HillClimbing dfs = new HillClimbing(grid, source, target);
 		dfs.vertexValuation = (u, v) -> GridUtils.manhattanValuation(grid, target).apply(u, v);
 		assertState(grid.vertexStream(), dfs::getState, UNVISITED);
-		dfs.traverseGraph();
+		dfs.traverseGraph(source, target);
 		IntStream path = dfs.findPath(target);
 		path.forEach(cell -> assertTrue(dfs.getState(cell) != UNVISITED));
-	}
-
-	@Test
-	public void testBestFS() {
-		int target = grid.cell(BOTTOM_RIGHT);
-		grid.removeEdges();
-		new IterativeDFS(grid).run(target);
-		BestFirstTraversal best = new BestFirstTraversal(grid, grid.cell(TOP_LEFT),
-				(u, v) -> GridUtils.manhattanValuation(grid, target).apply(u, v));
-		assertState(grid.vertexStream(), best::getState, UNVISITED);
-		best.traverseGraph();
-		assertState(grid.vertexStream(), best::getState, COMPLETED);
-		long length = best.findPath(target).count();
-		System.out.println("Best-first search found path of length " + length);
 	}
 
 	@Test

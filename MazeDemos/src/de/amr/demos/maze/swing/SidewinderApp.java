@@ -1,7 +1,5 @@
 package de.amr.demos.maze.swing;
 
-import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
-
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
@@ -26,7 +24,7 @@ public class SidewinderApp extends SwingGridSampleApp {
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			resizeGrid(cellSize);
 			new Sidewinder(grid).run(-1);
-			new SwingBFSAnimation(grid, canvas).run( new BreadthFirstTraversal(grid, grid.cell(TOP_LEFT)));
+			new SwingBFSAnimation(grid, canvas).run(new BreadthFirstTraversal(grid, 0), 0, -1);
 			sleep(1000);
 		});
 		System.exit(0);

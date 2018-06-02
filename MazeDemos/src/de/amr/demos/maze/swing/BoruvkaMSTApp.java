@@ -1,7 +1,5 @@
 package de.amr.demos.maze.swing;
 
-import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
-
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
@@ -27,7 +25,7 @@ public class BoruvkaMSTApp extends SwingGridSampleApp {
 		IntStream.of(64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			resizeGrid(cellSize);
 			new BoruvkaMST(grid).run(-1);
-			new SwingBFSAnimation(grid, canvas).run( new BreadthFirstTraversal(grid, grid.cell(TOP_LEFT)));
+			new SwingBFSAnimation(grid, canvas).run(new BreadthFirstTraversal(grid, 0), 0, -1);
 			sleep(1000);
 		});
 	}
