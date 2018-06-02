@@ -9,35 +9,28 @@ import java.util.Arrays;
 import java.util.Queue;
 
 import de.amr.easy.graph.api.Graph;
-import de.amr.easy.graph.api.PathFinder;
-import de.amr.easy.graph.api.GraphTraversal;
 
 /**
  * Breadth-first-traversal of an undirected graph from a given source vertex. After being executed,
  * the distance of each vertex from the source can be queried, as well as the maximal distance of a
  * reachable vertex from the source.
  * <p>
- * Implements the {@link PathFinder} interface such that the traversal state of each vertex can be
- * queried and a path from the source to any target vertex can be asked for.
- * 
- * <p>
  * During the traversal, events are fired which can be processed by a listener, for example an
  * animation.
  * 
  * @author Armin Reichert
  */
-public class BreadthFirstTraversal extends AbstractGraphTraversal implements GraphTraversal {
+public class BreadthFirstTraversal extends AbstractGraphTraversal {
 
 	protected final Queue<Integer> q;
-	protected final int[] distanceMap;
+	protected final int[] distance;
 	protected int maxDistance;
-	protected int farest;
-	protected int target;
+	protected int maxDistanceVertex;
 
 	protected BreadthFirstTraversal(Graph<?> graph, Queue<Integer> queue) {
 		super(graph);
 		this.q = queue;
-		this.distanceMap = new int[graph.vertexCount()];
+		this.distance = new int[graph.vertexCount()];
 		clear();
 	}
 
@@ -49,10 +42,9 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal implements Gra
 	protected void clear() {
 		super.clear();
 		q.clear();
-		Arrays.fill(distanceMap, -1);
+		Arrays.fill(distance, -1);
 		maxDistance = -1;
-		farest = -1;
-		target = -1;
+		maxDistanceVertex = -1;
 	}
 
 	@Override
@@ -68,7 +60,7 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal implements Gra
 			setState(current, COMPLETED);
 		}
 	}
-	
+
 	@Override
 	public boolean inQ(int vertex) {
 		return q.contains(vertex);
@@ -77,11 +69,11 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal implements Gra
 	private void visit(int v, int parent) {
 		setState(v, VISITED);
 		setParent(v, parent);
-		int d = parent != -1 ? distanceMap[parent] + 1 : 0;
-		distanceMap[v] = d;
+		int d = parent != -1 ? distance[parent] + 1 : 0;
+		distance[v] = d;
 		if (d > maxDistance) {
 			maxDistance = d;
-			farest = v;
+			maxDistanceVertex = v;
 		}
 		q.add(v);
 		if (parent != -1) {
@@ -97,7 +89,7 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal implements Gra
 	 * @return the distance from the source
 	 */
 	public int getDistance(int v) {
-		return distanceMap[v];
+		return distance[v];
 	}
 
 	/**
@@ -113,6 +105,6 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal implements Gra
 	 * @return a vertex with maximal distance from the source
 	 */
 	public int getMaxDistanceVertex() {
-		return farest;
+		return maxDistanceVertex;
 	}
 }
