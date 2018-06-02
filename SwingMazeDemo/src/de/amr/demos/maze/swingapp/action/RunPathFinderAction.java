@@ -57,20 +57,18 @@ public class RunPathFinderAction extends MazeDemoAction {
 						(u, v) -> manhattanValuation(app.model.getGrid(), target).apply(u, v));
 				watch.runAndMeasure(() -> bfsAnimation.run(best, source, target));
 				app.showMessage(format("BestFS (Manhattan) time: %.6f seconds.", watch.getSeconds()));
+				bfsAnimation.showPath(best, target);
 			} else if (pathFinderInfo.isTagged(PathFinderTag.BestFSEuclidian)) {
 				BestFirstTraversal best = new BestFirstTraversal(app.model.getGrid(),
 						(u, v) -> euclidianValuation(app.model.getGrid(), target).apply(u, v));
 				watch.runAndMeasure(() -> bfsAnimation.run(best, source, target));
 				app.showMessage(format("BestFS (Euclidian) time: %.6f seconds.", watch.getSeconds()));
+				bfsAnimation.showPath(best, target);
 			} else {
 				BreadthFirstTraversal bfs = new BreadthFirstTraversal(app.model.getGrid());
 				watch.runAndMeasure(() -> bfsAnimation.run(bfs, source, target));
 				app.showMessage(format("BFS time: %.6f seconds.", watch.getSeconds()));
-			}
-			if (app.model.isLongestPathHighlighted()) {
-				bfsAnimation.showPath(bfsAnimation.getMaxDistanceCell());
-			} else {
-				bfsAnimation.showPath(target);
+				bfsAnimation.showPath(bfs, target);
 			}
 		} else if (pathFinderInfo.getAlgorithmClass() == SwingDFSAnimation.class) {
 			SwingDFSAnimation dfsAnimation = new SwingDFSAnimation(app.model.getGrid());

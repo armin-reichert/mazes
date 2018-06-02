@@ -105,18 +105,6 @@ public class OptionMenu extends JMenu {
 			item.setSelected(app.model.isGenerationAnimated());
 		}
 		{
-			final JCheckBoxMenuItem item = new JCheckBoxMenuItem("Show Longest Path");
-			add(item);
-			item.addActionListener(new AbstractAction() {
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					app.model.setLongestPathHighlighted(item.isSelected());
-				}
-			});
-			item.setSelected(app.model.isLongestPathHighlighted());
-		}
-		{
 			final JCheckBoxMenuItem item = new JCheckBoxMenuItem("Hide this dialog when running");
 			add(item);
 			item.addActionListener(new AbstractAction() {

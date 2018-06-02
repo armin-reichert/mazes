@@ -118,7 +118,6 @@ public class MazeDemoModel {
 	private int passageWidthPercentage;
 	private boolean generationAnimated;
 	private boolean hidingControlsWhenRunning;
-	private boolean longestPathHighlighted;
 	private int delay;
 	private GridPosition generationStart;
 	private GridPosition pathFinderStart;
@@ -166,14 +165,6 @@ public class MazeDemoModel {
 
 	public void setHidingControlsWhenRunning(boolean hidingControlsWhenRunning) {
 		this.hidingControlsWhenRunning = hidingControlsWhenRunning;
-	}
-
-	public boolean isLongestPathHighlighted() {
-		return longestPathHighlighted;
-	}
-
-	public void setLongestPathHighlighted(boolean longestPathHighlighted) {
-		this.longestPathHighlighted = longestPathHighlighted;
 	}
 
 	public ObservableGrid<TraversalState, Integer> getGrid() {

@@ -21,7 +21,6 @@ public class SwingBFSAnimation {
 
 	private final BareGrid2D<?> grid;
 	private final GridCanvas<?> canvas;
-	private BreadthFirstTraversal bfs;
 	private ConfigurableGridRenderer renderer;
 	private int maxDistance;
 	private int maxDistanceCell;
@@ -35,10 +34,9 @@ public class SwingBFSAnimation {
 		maxDistanceCell = -1;
 		distancesVisible = true;
 		pathColor = Color.RED;
-		createRenderer(canvas.getRenderer().get(), new BitSet());
 	}
 
-	private void createRenderer(GridRenderer oldRenderer, BitSet inPath) {
+	private void createRenderer(GridRenderer oldRenderer, BreadthFirstTraversal bfs, BitSet inPath) {
 
 		Function<Integer, Color> distanceColor = cell -> {
 			if (maxDistance == -1) {
@@ -64,8 +62,7 @@ public class SwingBFSAnimation {
 	}
 
 	public void run(BreadthFirstTraversal bfs, int source, int target) {
-		this.bfs = bfs;
-
+		createRenderer(canvas.getRenderer().get(), bfs, new BitSet());
 		// 1. traverse whole graph without events for computing maximum distance from source
 		bfs.traverseGraph(source);
 		maxDistance = bfs.getMaxDistance();
@@ -89,14 +86,11 @@ public class SwingBFSAnimation {
 		canvas.popRenderer();
 	}
 
-	public void showPath(int target) {
-		if (bfs == null) {
-			throw new IllegalStateException("Must run BFS before showing path");
-		}
+	public void showPath(BreadthFirstTraversal bfs, int target) {
 		int[] path = bfs.findPath(target).toArray();
 		BitSet inPath = new BitSet();
 		IntStream.of(path).forEach(inPath::set);
-		createRenderer(canvas.getRenderer().get(), inPath);
+		createRenderer(canvas.getRenderer().get(), bfs, inPath);
 		int passageWidth = renderer.getPassageWidth();
 		renderer.fnPassageWidth = () -> passageWidth > 5 ? passageWidth / 2 : passageWidth;
 		renderer.fnTextColor = () -> Color.WHITE;

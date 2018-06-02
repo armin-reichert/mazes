@@ -59,7 +59,6 @@ public class MazeDemoApp {
 		model.setPathFinderTarget(BOTTOM_RIGHT);
 		model.setGenerationAnimated(true);
 		model.setHidingControlsWhenRunning(false);
-		model.setLongestPathHighlighted(false);
 
 		DisplayMode displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
 				.getDisplayMode();
