@@ -18,7 +18,7 @@ import de.amr.easy.graph.api.TraversalState;
  * 
  * @author Armin Reichert
  */
-public class HillClimbing extends ObservableGraphTraversal implements ObservableDFSPathFinder {
+public class HillClimbing extends AbstractGraphTraversal implements ObservableDFSPathFinder {
 
 	private final Stack<Integer> stack;
 	private final Graph<?> graph;

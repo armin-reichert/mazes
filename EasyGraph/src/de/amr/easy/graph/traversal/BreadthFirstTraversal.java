@@ -25,7 +25,7 @@ import de.amr.easy.graph.api.PathFinder;
  * 
  * @author Armin Reichert
  */
-public class BreadthFirstTraversal extends ObservableGraphTraversal implements PathFinder {
+public class BreadthFirstTraversal extends AbstractGraphTraversal {
 
 	protected final Queue<Integer> q;
 	protected final Graph<?> graph;
