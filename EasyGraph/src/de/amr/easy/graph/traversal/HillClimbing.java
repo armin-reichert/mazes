@@ -7,7 +7,7 @@ import java.util.Comparator;
 
 import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Graph;
-import de.amr.easy.graph.api.ObservableDFSPathFinder;
+import de.amr.easy.graph.api.ObservableDFSTraversal;
 import de.amr.easy.graph.api.TraversalState;
 
 /**
@@ -18,7 +18,7 @@ import de.amr.easy.graph.api.TraversalState;
  * 
  * @author Armin Reichert
  */
-public class HillClimbing extends AbstractGraphTraversal implements ObservableDFSPathFinder {
+public class HillClimbing extends AbstractGraphTraversal implements ObservableDFSTraversal {
 
 	private final Stack<Integer> stack;
 	private final Graph<?> graph;

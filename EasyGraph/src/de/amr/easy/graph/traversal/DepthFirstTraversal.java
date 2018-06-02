@@ -8,7 +8,7 @@ import java.util.OptionalInt;
 
 import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Graph;
-import de.amr.easy.graph.api.ObservableDFSPathFinder;
+import de.amr.easy.graph.api.ObservableDFSTraversal;
 import de.amr.easy.graph.api.PathFinder;
 
 /**
@@ -23,7 +23,7 @@ import de.amr.easy.graph.api.PathFinder;
  * 
  * @author Armin Reichert
  */
-public class DepthFirstTraversal extends AbstractGraphTraversal implements ObservableDFSPathFinder {
+public class DepthFirstTraversal extends AbstractGraphTraversal implements ObservableDFSTraversal {
 
 	private final Graph<?> graph;
 	private final int source;
