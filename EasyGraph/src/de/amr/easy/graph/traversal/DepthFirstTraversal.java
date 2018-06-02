@@ -8,7 +8,7 @@ import java.util.OptionalInt;
 
 import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Graph;
-import de.amr.easy.graph.api.ObservableDFSTraversal;
+import de.amr.easy.graph.api.ObservableGraphTraversal;
 import de.amr.easy.graph.api.PathFinder;
 
 /**
@@ -23,7 +23,7 @@ import de.amr.easy.graph.api.PathFinder;
  * 
  * @author Armin Reichert
  */
-public class DepthFirstTraversal extends AbstractGraphTraversal implements ObservableDFSTraversal {
+public class DepthFirstTraversal extends AbstractGraphTraversal implements ObservableGraphTraversal {
 
 	private final Graph<?> graph;
 	private final int source;
@@ -48,7 +48,7 @@ public class DepthFirstTraversal extends AbstractGraphTraversal implements Obser
 	}
 
 	@Override
-	public void clear() {
+	protected void clear() {
 		super.clear();
 		stack.clear();
 	}
@@ -62,7 +62,7 @@ public class DepthFirstTraversal extends AbstractGraphTraversal implements Obser
 	}
 
 	@Override
-	public boolean isStacked(int v) {
+	public boolean inQ(int v) {
 		return stack.contains(v);
 	}
 

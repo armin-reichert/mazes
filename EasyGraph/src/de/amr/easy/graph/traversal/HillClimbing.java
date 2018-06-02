@@ -7,7 +7,7 @@ import java.util.Comparator;
 
 import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Graph;
-import de.amr.easy.graph.api.ObservableDFSTraversal;
+import de.amr.easy.graph.api.ObservableGraphTraversal;
 import de.amr.easy.graph.api.TraversalState;
 
 /**
@@ -18,12 +18,10 @@ import de.amr.easy.graph.api.TraversalState;
  * 
  * @author Armin Reichert
  */
-public class HillClimbing extends AbstractGraphTraversal implements ObservableDFSTraversal {
+public class HillClimbing extends AbstractGraphTraversal implements ObservableGraphTraversal {
 
 	private final Stack<Integer> stack;
 	private final Graph<?> graph;
-	private final int source;
-	private final int target;
 
 	/**
 	 * A vertex comparison which determines the order how children of a vertex are traversed.
@@ -33,27 +31,17 @@ public class HillClimbing extends AbstractGraphTraversal implements ObservableDF
 	public HillClimbing(Graph<?> graph, int source, int target) {
 		this.stack = new Stack<>();
 		this.graph = graph;
-		this.source = source;
-		this.target = target;
 	}
 
 	@Override
-	public void clear() {
+	protected void clear() {
 		super.clear();
 		stack.clear();
 	}
 
-	public int getSource() {
-		return source;
-	}
-
-	public int getTarget() {
-		return target;
-	}
-
 	@Override
-	public boolean isStacked(int cell) {
-		return stack.contains(cell);
+	public boolean inQ(int vertex) {
+		return stack.contains(vertex);
 	}
 
 	@Override

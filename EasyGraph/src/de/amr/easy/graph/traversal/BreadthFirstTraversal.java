@@ -8,9 +8,9 @@ import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Queue;
 
-import de.amr.easy.graph.api.BFSTraversal;
 import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.PathFinder;
+import de.amr.easy.graph.api.GraphTraversal;
 
 /**
  * Breadth-first-traversal of an undirected graph from a given source vertex. After being executed,
@@ -26,7 +26,7 @@ import de.amr.easy.graph.api.PathFinder;
  * 
  * @author Armin Reichert
  */
-public class BreadthFirstTraversal extends AbstractGraphTraversal implements BFSTraversal {
+public class BreadthFirstTraversal extends AbstractGraphTraversal implements GraphTraversal {
 
 	protected final Queue<Integer> q;
 	protected final Graph<?> graph;
@@ -47,7 +47,7 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal implements BFS
 	}
 
 	@Override
-	public void clear() {
+	protected void clear() {
 		super.clear();
 		q.clear();
 		Arrays.fill(distanceMap, -1);
@@ -68,6 +68,11 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal implements BFS
 			graph.adjVertices(current).filter(v -> getState(v) == UNVISITED).forEach(child -> visit(child, current));
 			setState(current, COMPLETED);
 		}
+	}
+	
+	@Override
+	public boolean inQ(int vertex) {
+		return q.contains(vertex);
 	}
 
 	private void visit(int v, int parent) {

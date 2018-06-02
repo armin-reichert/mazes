@@ -16,6 +16,14 @@ import de.amr.easy.graph.api.Graph;
  */
 public class BestFirstTraversal extends BreadthFirstTraversal {
 
+	/**
+	 * Creates a Best-first-traversal instance for the given graph and vertex valuation.
+	 * 
+	 * @param graph
+	 *          a graph
+	 * @param vertexValuation
+	 *          a comparator which defines the value of vertices.
+	 */
 	public BestFirstTraversal(Graph<?> graph, Comparator<Integer> vertexValuation) {
 		super(graph, new PriorityQueue<>(vertexValuation));
 	}

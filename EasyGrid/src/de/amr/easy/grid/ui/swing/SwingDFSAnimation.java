@@ -6,7 +6,7 @@ import java.awt.Color;
 import java.util.BitSet;
 import java.util.stream.IntStream;
 
-import de.amr.easy.graph.api.ObservableDFSTraversal;
+import de.amr.easy.graph.api.ObservableGraphTraversal;
 import de.amr.easy.graph.api.PathFinder;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalListener;
@@ -28,7 +28,7 @@ public class SwingDFSAnimation {
 		this.grid = grid;
 	}
 
-	private ConfigurableGridRenderer createRenderer(ObservableDFSTraversal dfs, BitSet inPath, GridRenderer oldRenderer) {
+	private ConfigurableGridRenderer createRenderer(ObservableGraphTraversal dfs, BitSet inPath, GridRenderer oldRenderer) {
 		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
 		renderer.fnCellSize = oldRenderer::getCellSize;
 		renderer.fnPassageWidth = () -> oldRenderer.getPassageWidth() > 5 ? oldRenderer.getPassageWidth() / 2
@@ -37,7 +37,7 @@ public class SwingDFSAnimation {
 			if (inPath.get(cell)) {
 				return pathColor;
 			}
-			if (dfs.getState(cell) == VISITED || dfs.isStacked(cell)) {
+			if (dfs.getState(cell) == VISITED || dfs.inQ(cell)) {
 				return visitedCellColor;
 			}
 			return oldRenderer.getCellBgColor(cell);
@@ -58,7 +58,7 @@ public class SwingDFSAnimation {
 		return renderer;
 	}
 
-	public void run(GridCanvas<?> canvas, ObservableDFSTraversal dfs, int source, int target) {
+	public void run(GridCanvas<?> canvas, ObservableGraphTraversal dfs, int source, int target) {
 		dfs.addObserver(new GraphTraversalListener() {
 
 			@Override

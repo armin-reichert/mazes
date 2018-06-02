@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.IntStream;
 
+import de.amr.easy.graph.api.ObservableGraphTraversal;
 import de.amr.easy.graph.api.PathFinder;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalListener;
@@ -20,27 +21,29 @@ import de.amr.easy.graph.api.event.GraphTraversalListener;
  * 
  * @author Armin Reichert
  */
-public abstract class AbstractGraphTraversal implements PathFinder {
+public abstract class AbstractGraphTraversal implements ObservableGraphTraversal, PathFinder {
 
 	protected final Map<Integer, Integer> parentMap = new HashMap<>();
 	protected final Map<Integer, TraversalState> stateMap = new HashMap<>();
 	protected final Set<GraphTraversalListener> observers = new HashSet<>(3);
 
-	public void clear() {
+	protected void clear() {
 		parentMap.clear();
 		stateMap.clear();
 	}
 
+	@Override
 	public TraversalState getState(int v) {
 		return stateMap.containsKey(v) ? stateMap.get(v) : UNVISITED;
 	}
 
-	public void setState(int v, TraversalState newState) {
+	protected void setState(int v, TraversalState newState) {
 		TraversalState oldState = getState(v);
 		stateMap.put(v, newState);
 		vertexTouched(v, oldState, newState);
 	}
 
+	@Override
 	public int getParent(int v) {
 		return parentMap.containsKey(v) ? parentMap.get(v) : -1;
 	}
@@ -49,23 +52,25 @@ public abstract class AbstractGraphTraversal implements PathFinder {
 		parentMap.put(v, parent);
 	}
 
+	@Override
 	public void addObserver(GraphTraversalListener observer) {
 		observers.add(observer);
 	}
 
+	@Override
 	public void removeObserver(GraphTraversalListener observer) {
 		observers.remove(observer);
 	}
 
-	protected void edgeTouched(int u, int v) {
+	@Override
+	public void edgeTouched(int u, int v) {
 		observers.forEach(observer -> observer.edgeTouched(u, v));
 	}
 
-	protected void vertexTouched(int u, TraversalState oldState, TraversalState newState) {
+	@Override
+	public void vertexTouched(int u, TraversalState oldState, TraversalState newState) {
 		observers.forEach(observer -> observer.vertexTouched(u, oldState, newState));
 	}
-
-	// {PathFinder} interface
 
 	@Override
 	public IntStream findPath(int target) {
