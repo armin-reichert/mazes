@@ -4,7 +4,6 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 
 import de.amr.easy.graph.api.Graph;
-import de.amr.easy.graph.api.PathFinder;
 
 /**
  * A heuristic variant of Breadth-First-Traversal which sorts the entire queue when children of the
@@ -15,7 +14,7 @@ import de.amr.easy.graph.api.PathFinder;
  * 
  * @author Armin Reichert
  */
-public class BestFirstTraversal extends BreadthFirstTraversal implements PathFinder {
+public class BestFirstTraversal extends BreadthFirstTraversal {
 
 	public BestFirstTraversal(Graph<?> graph, Comparator<Integer> vertexValuation) {
 		super(graph, new PriorityQueue<>(vertexValuation));
