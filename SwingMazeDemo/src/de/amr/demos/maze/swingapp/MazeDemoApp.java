@@ -82,7 +82,7 @@ public class MazeDemoApp {
 
 		mazeWindow = new MazeWindow(this);
 		settingsWindow = new SettingsWindow(this);
-		settingsWindow.getPathFinderMenu().findItemByInfo(MazeDemoModel.PATHFINDER_ALGORITHMS[0])
+		settingsWindow.getPathFinderMenu().findItem(MazeDemoModel.PATHFINDER_ALGORITHMS[0])
 				.ifPresent(item -> item.setSelected(true));
 		settingsWindow.setAlwaysOnTop(true);
 		settingsWindow.pack();

@@ -35,7 +35,7 @@ public class RunPathFinderAction extends MazeDemoAction {
 		app.startTask(() -> {
 			try {
 				app.getCanvas().drawGrid();
-				app.settingsWindow.getPathFinderMenu().getSelectedAlgorithm().ifPresent(this::runPathFinder);
+				app.settingsWindow.getPathFinderMenu().selectedAlgorithm().ifPresent(this::runPathFinder);
 			} catch (Throwable x) {
 				x.printStackTrace();
 			} finally {

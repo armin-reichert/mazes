@@ -29,10 +29,26 @@ public class PathFinderMenu extends JMenu {
 		add(app.floodFillAction);
 		add(app.clearCanvasAction);
 		addSeparator();
-		Stream.of(PATHFINDER_ALGORITHMS).forEach(alg -> addItem(app, alg));
+		Stream.of(PATHFINDER_ALGORITHMS).forEach(alg -> group.add(add(newItem(app, alg))));
 	}
 
-	public Optional<JMenuItem> findItemByInfo(AlgorithmInfo algInfo) {
+	private JRadioButtonMenuItem newItem(MazeDemoApp app, AlgorithmInfo alg) {
+		JRadioButtonMenuItem item = new JRadioButtonMenuItem(alg.getDescription());
+		item.putClientProperty("algorithm", alg);
+		return item;
+	}
+
+	public Optional<AlgorithmInfo> selectedAlgorithm() {
+		for (Enumeration<AbstractButton> items = group.getElements(); items.hasMoreElements();) {
+			AbstractButton item = items.nextElement();
+			if (item.isSelected()) {
+				return Optional.of((AlgorithmInfo) item.getClientProperty("algorithm"));
+			}
+		}
+		return Optional.empty();
+	}
+
+	public Optional<JMenuItem> findItem(AlgorithmInfo algInfo) {
 		for (int i = 0; i < getItemCount(); ++i) {
 			JMenuItem item = getItem(i);
 			if (item == null) {
@@ -44,23 +60,5 @@ public class PathFinderMenu extends JMenu {
 			}
 		}
 		return Optional.empty();
-	}
-
-	public Optional<AlgorithmInfo> getSelectedAlgorithm() {
-		for (Enumeration<AbstractButton> items = group.getElements(); items.hasMoreElements();) {
-			AbstractButton item = items.nextElement();
-			if (item.isSelected()) {
-				return Optional.of((AlgorithmInfo) item.getClientProperty("algorithm"));
-			}
-		}
-		return Optional.empty();
-	}
-
-	private JRadioButtonMenuItem addItem(MazeDemoApp app, AlgorithmInfo alg) {
-		JRadioButtonMenuItem item = new JRadioButtonMenuItem(alg.getDescription());
-		item.putClientProperty("algorithm", alg);
-		add(item);
-		group.add(item);
-		return item;
 	}
 }
