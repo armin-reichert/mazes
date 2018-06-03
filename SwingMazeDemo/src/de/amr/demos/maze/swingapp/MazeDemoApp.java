@@ -17,7 +17,7 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import de.amr.demos.maze.swingapp.action.ChangeGridResolutionAction;
 import de.amr.demos.maze.swingapp.action.ClearCanvasAction;
 import de.amr.demos.maze.swingapp.action.CreateAllMazesAction;
-import de.amr.demos.maze.swingapp.action.CreateSingleMazeAction;
+import de.amr.demos.maze.swingapp.action.CreateMazeAction;
 import de.amr.demos.maze.swingapp.action.FloodFillAction;
 import de.amr.demos.maze.swingapp.action.RunPathFinderAction;
 import de.amr.demos.maze.swingapp.action.StopTaskAction;
@@ -54,14 +54,14 @@ public class MazeDemoApp {
 	public final SettingsWindow settingsWindow;
 	public final MazeWindow mazeWindow;
 
-	public final Action createSingleMazeAction = new CreateSingleMazeAction(this);
+	public final Action createSingleMazeAction = new CreateMazeAction(this);
 	public final Action createAllMazesAction = new CreateAllMazesAction(this);
 	public final Action runPathFinderAction = new RunPathFinderAction(this);
 	public final Action stopTaskAction = new StopTaskAction(this);
 	public final Action floodFillAction = new FloodFillAction(this);
 	public final Action clearCanvasAction = new ClearCanvasAction(this);
 	public final Action changeGridResolutionAction = new ChangeGridResolutionAction(this);
-	
+
 	private Thread taskThread;
 	private volatile boolean taskStopped;
 

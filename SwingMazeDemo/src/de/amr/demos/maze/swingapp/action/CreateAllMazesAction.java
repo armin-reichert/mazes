@@ -1,7 +1,6 @@
 package de.amr.demos.maze.swingapp.action;
 
 import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.Slow;
-import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.SmallGrid;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -12,14 +11,13 @@ import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 
 /**
- * Action for running a sequence of all (without restricted/slow ones) available maze generation
- * algorithms in sequence.
+ * Action for running a sequence of all (except very slow ones) maze generators in sequence.
  * 
  * @author Armin Reichert
  */
-public class CreateAllMazesAction extends CreateSingleMazeAction {
+public class CreateAllMazesAction extends CreateMazeAction {
 
-	private boolean readyForNext;
+	private boolean ready;
 
 	public CreateAllMazesAction(MazeDemoApp app) {
 		super(app);
@@ -28,11 +26,9 @@ public class CreateAllMazesAction extends CreateSingleMazeAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (app.model.isHidingControlsWhenRunning()) {
-			app.settingsWindow.setVisible(false);
-		}
-		app.getCanvas().setDelay(app.model.getDelay());
+		app.settingsWindow.setVisible(!app.model.isHidingControlsWhenRunning());
 		app.mazeWindow.setVisible(true);
+		app.getCanvas().fill(Color.BLACK);
 		app.startTask(() -> {
 			enableUI(false);
 			try {
@@ -45,16 +41,17 @@ public class CreateAllMazesAction extends CreateSingleMazeAction {
 	}
 
 	private void generateAllMazes() {
-		readyForNext = true;
+		ready = true;
+		int startCell = app.model.getGrid().cell(app.model.getGenerationStart());
 		/*@formatter:off*/
 		Stream.of(MazeDemoModel.GENERATOR_ALGORITHMS)
-			.filter(alg -> !(alg.isTagged(Slow) || alg.isTagged(SmallGrid)))
-			.forEachOrdered(alg -> {
+			.filter(generatorInfo -> !(generatorInfo.isTagged(Slow)))
+			.forEach(generatorInfo -> {
 				if (app.isTaskStopped()) {
 					return;
 				}
-				if (readyForNext) {
-					createNextMaze(alg);
+				if (ready) {
+					createNextMaze(generatorInfo, startCell);
 					try {
 						Thread.sleep(1500);
 					} catch (InterruptedException e) {
@@ -66,17 +63,19 @@ public class CreateAllMazesAction extends CreateSingleMazeAction {
 		app.showMessage("Done.");
 	}
 
-	private void createNextMaze(AlgorithmInfo algorithm) {
-		readyForNext = false;
+	private void createNextMaze(AlgorithmInfo generatorInfo, int startCell) {
+		ready = false;
 		app.getCanvas().fill(Color.BLACK);
-		app.settingsWindow.getControlPanel().getLblGenerationAlgorithm().setText(algorithm.getDescription());
-		app.settingsWindow.getGeneratorMenu().setSelectedAlgorithm(algorithm);
+		app.settingsWindow.getControlPanel().getLblGenerationAlgorithm().setText(generatorInfo.getDescription());
+		app.settingsWindow.getGeneratorMenu().setSelectedAlgorithm(generatorInfo);
 		try {
-			runMazeGenerator(algorithm, app.model.getGrid().cell(app.model.getGenerationStart()));
-		} catch (Throwable x) {
-			x.printStackTrace();
+			runMazeGenerator(generatorInfo, startCell);
+		} catch (Exception | StackOverflowError x) {
+			app.showMessage("Maze generation aborted: " + x.getClass().getSimpleName());
+			app.model.setGrid(app.newGrid());
+			app.newCanvas();
 		} finally {
-			readyForNext = true;
+			ready = true;
 		}
 	}
 }

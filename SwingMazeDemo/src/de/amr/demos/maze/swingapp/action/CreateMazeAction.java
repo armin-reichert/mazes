@@ -9,8 +9,6 @@ import java.awt.event.ActionEvent;
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.grid.impl.ObservableGrid;
-import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.maze.alg.MazeAlgorithm;
 
 /**
@@ -18,9 +16,9 @@ import de.amr.easy.maze.alg.MazeAlgorithm;
  * 
  * @author Armin Reichert
  */
-public class CreateSingleMazeAction extends MazeDemoAction {
+public class CreateMazeAction extends MazeDemoAction {
 
-	public CreateSingleMazeAction(MazeDemoApp app) {
+	public CreateMazeAction(MazeDemoApp app) {
 		super(app, "Create Maze");
 	}
 
@@ -30,33 +28,31 @@ public class CreateSingleMazeAction extends MazeDemoAction {
 	}
 
 	private void createMaze(AlgorithmInfo generatorInfo) {
-		app.getCanvas().fill(Color.BLACK);
+		enableUI(false);
 		app.settingsWindow.setVisible(!app.model.isHidingControlsWhenRunning());
 		app.mazeWindow.setVisible(true);
-		enableUI(false);
+		app.getCanvas().fill(Color.BLACK);
 		app.startTask(() -> {
 			try {
 				runMazeGenerator(generatorInfo, app.model.getGrid().cell(app.model.getGenerationStart()));
-			} catch (Throwable x) {
+			} catch (Exception | StackOverflowError x) {
 				x.printStackTrace(System.err);
-				app.showMessage("An exception occured: " + x);
-				app.model.setGrid(new ObservableGrid<>(app.model.getGrid().numCols(), app.model.getGrid().numRows(), Top4.get(),
-						UNVISITED, false));
+				app.showMessage("Maze generation aborted: " + x.getClass().getSimpleName());
+				app.model.setGrid(app.newGrid());
 				app.newCanvas();
-
 			} finally {
-				enableUI(true);
 				app.settingsWindow.setVisible(true);
 				app.settingsWindow.requestFocus();
+				enableUI(true);
 			}
 		});
 	}
 
 	protected void runMazeGenerator(AlgorithmInfo generatorInfo, int startCell) throws Exception, StackOverflowError {
 		app.showMessage(format("\n%s (%d cells)", generatorInfo.getDescription(), app.model.getGrid().numCells()));
-		app.model.getGrid().setEventsEnabled(false);
 		app.model.getGrid().clearContent();
 		app.model.getGrid().setDefaultContent(UNVISITED);
+		app.model.getGrid().setEventsEnabled(false);
 		app.model.getGrid().removeEdges();
 		app.model.getGrid().setEventsEnabled(true);
 		MazeAlgorithm generator = (MazeAlgorithm) generatorInfo.getAlgorithmClass().getConstructor(Grid2D.class)
@@ -67,10 +63,9 @@ public class CreateSingleMazeAction extends MazeDemoAction {
 			app.getCanvas().stopListening();
 			watch.runAndMeasure(() -> generator.run(startCell));
 			app.showMessage(format("Maze generation: %.6f seconds.", watch.getSeconds()));
-			// no event handling, so we must explicitly render grid
+			app.getCanvas().startListening();
 			watch.runAndMeasure(() -> app.getCanvas().drawGrid());
 			app.showMessage(format("Grid rendering:  %.6f seconds.", watch.getSeconds()));
-			app.getCanvas().startListening();
 		}
 	}
 }
