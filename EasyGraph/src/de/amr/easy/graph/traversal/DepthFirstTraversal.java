@@ -35,6 +35,7 @@ public class DepthFirstTraversal extends AbstractGraphTraversal {
 
 	@Override
 	public void traverseGraph(int source, int target) {
+		clear();
 		visit(source, -1);
 		while (!stack.isEmpty()) {
 			int current = stack.pop();
