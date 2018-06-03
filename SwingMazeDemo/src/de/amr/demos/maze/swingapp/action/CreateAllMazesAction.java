@@ -47,7 +47,7 @@ public class CreateAllMazesAction extends CreateSingleMazeAction {
 	private void generateAllMazes() {
 		readyForNext = true;
 		/*@formatter:off*/
-		Stream.of(MazeDemoModel.ALGORITHMS)
+		Stream.of(MazeDemoModel.GENERATOR_ALGORITHMS)
 			.filter(alg -> !(alg.isTagged(Slow) || alg.isTagged(SmallGrid)))
 			.forEachOrdered(alg -> {
 				if (app.isTaskStopped()) {

@@ -62,7 +62,7 @@ import de.amr.easy.maze.alg.ust.WilsonUSTRowsTopDown;
  */
 public class MazeDemoModel {
 
-	public static final AlgorithmInfo[] ALGORITHMS = {
+	public static final AlgorithmInfo[] GENERATOR_ALGORITHMS = {
 		/*@formatter:off*/
 		new AlgorithmInfo(RecursiveDFS.class, "Depth-First-Traversal (recursive, small grids only!)", Traversal, SmallGrid),
 		new AlgorithmInfo(IterativeDFS.class, "Depth-First-Traversal (non-recursive)", Traversal),
@@ -102,10 +102,6 @@ public class MazeDemoModel {
 		/*@formatter:on*/
 	};
 
-	public static Optional<AlgorithmInfo> findAlgorithm(Class<?> generatorClass) {
-		return Arrays.stream(ALGORITHMS).filter(alg -> alg.getAlgorithmClass().equals(generatorClass)).findFirst();
-	}
-
 	public static final AlgorithmInfo[] PATHFINDER_ALGORITHMS = {
 			new AlgorithmInfo(DepthFirstTraversal2.class, "Depth-First-Search"),
 			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Manhattan)", Manhattan),
@@ -115,6 +111,10 @@ public class MazeDemoModel {
 			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Euclidian)", Euclidian),
 
 	};
+
+	public static Optional<AlgorithmInfo> findAlgorithm(AlgorithmInfo[] algorithms, Class<?> clazz) {
+		return Arrays.stream(algorithms).filter(alg -> alg.getAlgorithmClass() == clazz).findFirst();
+	}
 
 	private ObservableGrid<TraversalState, Integer> grid;
 	private int[] gridCellSizes;

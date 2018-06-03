@@ -97,7 +97,7 @@ public class SettingsWindow extends JFrame {
 
 		generationAlgorithmMenu = new GenerationAlgorithmMenu(
 				item -> controlPanel.getLblGenerationAlgorithm().setText(item.getText()));
-		MazeDemoModel.findAlgorithm(IterativeDFS.class).ifPresent(alg -> {
+		MazeDemoModel.findAlgorithm(MazeDemoModel.GENERATOR_ALGORITHMS, IterativeDFS.class).ifPresent(alg -> {
 			generationAlgorithmMenu.setSelectedAlgorithm(alg);
 			controlPanel.getLblGenerationAlgorithm().setText(alg.getDescription());
 		});

@@ -38,7 +38,7 @@ public class GenerationAlgorithmMenu extends JMenu {
 
 	private void addMenu(String title, Predicate<AlgorithmInfo> algorithmFilter, Consumer<JMenuItem> itemAction) {
 		JMenu menu = new JMenu(title);
-		Stream.of(MazeDemoModel.ALGORITHMS).filter(algorithmFilter).forEach(alg -> {
+		Stream.of(MazeDemoModel.GENERATOR_ALGORITHMS).filter(algorithmFilter).forEach(alg -> {
 			JRadioButtonMenuItem item = new JRadioButtonMenuItem(alg.getDescription());
 			item.addActionListener(e -> itemAction.accept(item));
 			item.putClientProperty("algorithm", alg);
