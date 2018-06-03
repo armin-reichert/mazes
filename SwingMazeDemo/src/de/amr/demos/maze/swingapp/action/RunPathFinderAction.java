@@ -36,7 +36,7 @@ public class RunPathFinderAction extends MazeDemoAction {
 	public void actionPerformed(ActionEvent e) {
 		app.settingsWindow.setVisible(!app.model.isHidingControlsWhenRunning());
 		app.mazeWindow.setVisible(true);
-		enableControls(false);
+		enableUI(false);
 		app.startTask(() -> {
 			try {
 				app.getCanvas().drawGrid();
@@ -44,7 +44,7 @@ public class RunPathFinderAction extends MazeDemoAction {
 			} catch (Throwable x) {
 				x.printStackTrace();
 			} finally {
-				enableControls(true);
+				enableUI(true);
 				app.settingsWindow.setVisible(true);
 				app.settingsWindow.requestFocus();
 			}

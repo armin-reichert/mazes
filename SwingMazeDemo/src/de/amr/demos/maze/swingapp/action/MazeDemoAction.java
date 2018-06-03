@@ -16,12 +16,15 @@ public abstract class MazeDemoAction extends AbstractAction {
 	protected final StopWatch watch = new StopWatch();
 	protected final MazeDemoApp app;
 
-	public MazeDemoAction(MazeDemoApp app, String name) {
+	protected MazeDemoAction(MazeDemoApp app, String name) {
 		super(name);
 		this.app = app;
 	}
 
-	protected void enableControls(boolean b) {
+	protected void enableUI(boolean b) {
+		app.settingsWindow.getGeneratorMenu().setEnabled(b);
+		app.settingsWindow.getPathFinderMenu().setEnabled(b);
+		app.settingsWindow.getOptionMenu().setEnabled(b);
 		ControlPanel controls = app.settingsWindow.getControlPanel();
 		controls.getSliderPassageWidth().setEnabled(b);
 		controls.getComboGridResolution().setEnabled(b);

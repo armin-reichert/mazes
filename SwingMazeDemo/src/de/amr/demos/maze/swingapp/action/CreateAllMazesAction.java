@@ -34,11 +34,11 @@ public class CreateAllMazesAction extends CreateSingleMazeAction {
 		app.getCanvas().setDelay(app.model.getDelay());
 		app.mazeWindow.setVisible(true);
 		app.startTask(() -> {
-			enableControls(false);
+			enableUI(false);
 			try {
 				generateAllMazes();
 			} finally {
-				enableControls(true);
+				enableUI(true);
 				app.settingsWindow.setVisible(true);
 			}
 		});
@@ -70,7 +70,7 @@ public class CreateAllMazesAction extends CreateSingleMazeAction {
 		readyForNext = false;
 		app.getCanvas().fill(Color.BLACK);
 		app.settingsWindow.getControlPanel().getLblGenerationAlgorithm().setText(algorithm.getDescription());
-		app.settingsWindow.getAlgorithmMenu().setSelectedAlgorithm(algorithm);
+		app.settingsWindow.getGeneratorMenu().setSelectedAlgorithm(algorithm);
 		try {
 			runMazeGenerator(algorithm, app.model.getGrid().cell(app.model.getGenerationStart()));
 		} catch (Throwable x) {

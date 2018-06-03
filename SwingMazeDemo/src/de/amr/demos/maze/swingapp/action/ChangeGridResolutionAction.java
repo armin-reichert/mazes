@@ -6,6 +6,11 @@ import javax.swing.JComboBox;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 
+/**
+ * Action for changing the grid resolution.
+ * 
+ * @author Armin Reichert
+ */
 public class ChangeGridResolutionAction extends MazeDemoAction {
 
 	public ChangeGridResolutionAction(MazeDemoApp app) {
@@ -20,5 +25,4 @@ public class ChangeGridResolutionAction extends MazeDemoAction {
 		app.model.setGrid(app.newGrid());
 		app.newCanvas();
 	}
-
 }

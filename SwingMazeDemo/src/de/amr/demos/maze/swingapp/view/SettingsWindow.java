@@ -4,7 +4,6 @@ import static java.lang.String.format;
 
 import java.awt.BorderLayout;
 import java.awt.DisplayMode;
-import java.awt.GraphicsEnvironment;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
@@ -36,15 +35,13 @@ public class SettingsWindow extends JFrame {
 
 	public SettingsWindow(MazeDemoApp app) {
 		final MazeDemoModel model = app.model;
-		final DisplayMode displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
-				.getDisplayMode();
-
 		setTitle("Maze Generation Algorithms");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		controlPanel = new ControlPanel();
 		ComboBoxModel<String> comboModel = new DefaultComboBoxModel<>(
 				Arrays.stream(model.getGridCellSizes()).mapToObj(cellSize -> {
+					DisplayMode displayMode = MazeDemoApp.getDisplayMode();
 					int numCols = displayMode.getWidth() / cellSize;
 					int numRows = displayMode.getHeight() / cellSize;
 					return format("%d cells (%d cols x %d rows, cell size %d)", numCols * numRows, numCols, numRows, cellSize);
@@ -81,6 +78,8 @@ public class SettingsWindow extends JFrame {
 
 		getContentPane().add(controlPanel, BorderLayout.CENTER);
 
+		// Menus
+
 		setJMenuBar(new JMenuBar());
 
 		generatorMenu = new GeneratorMenu(item -> controlPanel.getLblGenerationAlgorithm().setText(item.getText()));
@@ -95,14 +94,13 @@ public class SettingsWindow extends JFrame {
 
 		optionMenu = new OptionMenu(app);
 		getJMenuBar().add(optionMenu);
-
 	}
 
 	public ControlPanel getControlPanel() {
 		return controlPanel;
 	}
 
-	public GeneratorMenu getAlgorithmMenu() {
+	public GeneratorMenu getGeneratorMenu() {
 		return generatorMenu;
 	}
 

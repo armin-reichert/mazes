@@ -26,14 +26,14 @@ public class CreateSingleMazeAction extends MazeDemoAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app.settingsWindow.getAlgorithmMenu().getSelectedAlgorithm().ifPresent(this::createMaze);
+		app.settingsWindow.getGeneratorMenu().getSelectedAlgorithm().ifPresent(this::createMaze);
 	}
 
 	private void createMaze(AlgorithmInfo generatorInfo) {
 		app.getCanvas().fill(Color.BLACK);
 		app.settingsWindow.setVisible(!app.model.isHidingControlsWhenRunning());
 		app.mazeWindow.setVisible(true);
-		enableControls(false);
+		enableUI(false);
 		app.startTask(() -> {
 			try {
 				runMazeGenerator(generatorInfo, app.model.getGrid().cell(app.model.getGenerationStart()));
@@ -45,7 +45,7 @@ public class CreateSingleMazeAction extends MazeDemoAction {
 				app.newCanvas();
 
 			} finally {
-				enableControls(true);
+				enableUI(true);
 				app.settingsWindow.setVisible(true);
 				app.settingsWindow.requestFocus();
 			}
