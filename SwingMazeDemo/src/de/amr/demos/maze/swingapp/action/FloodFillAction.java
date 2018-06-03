@@ -18,17 +18,22 @@ public class FloodFillAction extends MazeDemoAction {
 		super(app, "Flood-fill");
 	}
 
+	private void runFloodFill() {
+		int source = app.model.getGrid().cell(app.model.getPathFinderSource());
+		new SwingFloodFill(app.model.getGrid(), app.getCanvas()).run(source);
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		app.settingsWindow.setVisible(!app.model.isHidingControlsWhenRunning());
 		app.mazeWindow.setVisible(true);
 		enableControls(false);
+		app.getCanvas().drawGrid();
 		app.startTask(() -> {
 			try {
-				int source = app.model.getGrid().cell(app.model.getPathFinderSource());
-				watch.runAndMeasure(() -> new SwingFloodFill(app.model.getGrid(), app.getCanvas()).run(source));
+				watch.runAndMeasure(this::runFloodFill);
 				app.showMessage(format("Flood-fill: %.6f seconds.", watch.getSeconds()));
-			} catch (Throwable x) {
+			} catch (Exception x) {
 				x.printStackTrace();
 			} finally {
 				enableControls(true);
