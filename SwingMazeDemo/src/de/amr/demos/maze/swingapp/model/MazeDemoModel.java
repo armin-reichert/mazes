@@ -70,8 +70,8 @@ public class MazeDemoModel {
 		new AlgorithmInfo(KruskalMST.class, "Kruskal MST", MST),
 		new AlgorithmInfo(PrimMST.class, "Prim MST", MST),
 		new AlgorithmInfo(BoruvkaMST.class, "Boruvka MST", MST),
-		new AlgorithmInfo(ReverseDeleteBFSMST.class, "Reverse-Delete MST (BFS, very slow)", MST, SmallGrid),
-		new AlgorithmInfo(ReverseDeleteDFSMST.class, "Reverse-Delete MST (DFS, very slow)", MST, SmallGrid),
+		new AlgorithmInfo(ReverseDeleteBFSMST.class, "Reverse-Delete MST (BFS, very slow)", MST, Slow),
+		new AlgorithmInfo(ReverseDeleteDFSMST.class, "Reverse-Delete MST (DFS, very slow)", MST, Slow),
 		new AlgorithmInfo(AldousBroderUST.class, "Aldous-Broder UST (rather slow)", UST, Slow),
 		new AlgorithmInfo(AldousBroderWilsonUST.class, "Houston UST (rather slow)", UST, Slow),
 		new AlgorithmInfo(WilsonUSTRandomCell.class, "Wilson UST (random)", UST, Slow),
@@ -97,7 +97,7 @@ public class MazeDemoModel {
 		new AlgorithmInfo(EllerInsideOut.class, "Armin's Algorithm"), 
 		new AlgorithmInfo(HuntAndKill.class, "Hunt-And-Kill"),
 		new AlgorithmInfo(HuntAndKillRandom.class, "Hunt-And-Kill (random)"),
-		new AlgorithmInfo(GrowingTree.class, "Growing Tree", Slow),
+		new AlgorithmInfo(GrowingTree.class, "Growing Tree"),
 		new AlgorithmInfo(RecursiveDivision.class, "Recursive Division"),
 		/*@formatter:on*/
 	};

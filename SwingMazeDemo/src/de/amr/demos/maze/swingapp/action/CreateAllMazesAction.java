@@ -45,7 +45,7 @@ public class CreateAllMazesAction extends CreateMazeAction {
 		int startCell = app.model.getGrid().cell(app.model.getGenerationStart());
 		/*@formatter:off*/
 		Stream.of(MazeDemoModel.GENERATOR_ALGORITHMS)
-			.filter(generatorInfo -> !(generatorInfo.isTagged(Slow)))
+			.filter(generatorInfo -> !generatorInfo.isTagged(Slow))
 			.forEach(generatorInfo -> {
 				if (app.isTaskStopped()) {
 					return;
