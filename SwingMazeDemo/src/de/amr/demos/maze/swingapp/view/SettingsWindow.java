@@ -10,19 +10,15 @@ import java.util.stream.IntStream;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JSlider;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
-import de.amr.demos.maze.swingapp.view.menu.GenerationAlgorithmMenu;
+import de.amr.demos.maze.swingapp.view.menu.GeneratorMenu;
 import de.amr.demos.maze.swingapp.view.menu.OptionMenu;
 import de.amr.demos.maze.swingapp.view.menu.PathFinderMenu;
-import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.impl.ObservableGrid;
-import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
 
 /**
@@ -34,7 +30,7 @@ import de.amr.easy.maze.alg.traversal.IterativeDFS;
 public class SettingsWindow extends JFrame {
 
 	private final ControlPanel controlPanel;
-	private final GenerationAlgorithmMenu generationAlgorithmMenu;
+	private final GeneratorMenu generatorMenu;
 	private final PathFinderMenu pathFinderMenu;
 	private final OptionMenu optionMenu;
 
@@ -60,15 +56,7 @@ public class SettingsWindow extends JFrame {
 				.orElse(-1);
 		controlPanel.getComboGridResolution().setSelectedIndex(selectedIndex);
 
-		controlPanel.getComboGridResolution().addActionListener(e -> {
-			JComboBox<?> selector = (JComboBox<?>) e.getSource();
-			int cellSize = model.getGridCellSizes()[selector.getSelectedIndex()];
-			model.setGridCellSize(cellSize);
-			int width = displayMode.getWidth() / cellSize;
-			int height = displayMode.getHeight() / cellSize;
-			model.setGrid(new ObservableGrid<>(width, height, Top4.get(), TraversalState.UNVISITED, false));
-			app.newCanvas();
-		});
+		controlPanel.getComboGridResolution().setAction(app.changeGridResolutionAction);
 
 		controlPanel.getSliderPassageWidth().setValue(model.getPassageWidthPercentage());
 		controlPanel.getSliderPassageWidth().addChangeListener(e -> {
@@ -95,13 +83,12 @@ public class SettingsWindow extends JFrame {
 
 		setJMenuBar(new JMenuBar());
 
-		generationAlgorithmMenu = new GenerationAlgorithmMenu(
-				item -> controlPanel.getLblGenerationAlgorithm().setText(item.getText()));
+		generatorMenu = new GeneratorMenu(item -> controlPanel.getLblGenerationAlgorithm().setText(item.getText()));
 		MazeDemoModel.findAlgorithm(MazeDemoModel.GENERATOR_ALGORITHMS, IterativeDFS.class).ifPresent(alg -> {
-			generationAlgorithmMenu.setSelectedAlgorithm(alg);
+			generatorMenu.setSelectedAlgorithm(alg);
 			controlPanel.getLblGenerationAlgorithm().setText(alg.getDescription());
 		});
-		getJMenuBar().add(generationAlgorithmMenu);
+		getJMenuBar().add(generatorMenu);
 
 		pathFinderMenu = new PathFinderMenu(app);
 		getJMenuBar().add(pathFinderMenu);
@@ -115,8 +102,8 @@ public class SettingsWindow extends JFrame {
 		return controlPanel;
 	}
 
-	public GenerationAlgorithmMenu getAlgorithmMenu() {
-		return generationAlgorithmMenu;
+	public GeneratorMenu getAlgorithmMenu() {
+		return generatorMenu;
 	}
 
 	public OptionMenu getOptionMenu() {

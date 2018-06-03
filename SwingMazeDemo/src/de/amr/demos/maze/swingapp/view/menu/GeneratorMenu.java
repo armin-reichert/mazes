@@ -24,11 +24,11 @@ import de.amr.demos.maze.swingapp.model.MazeDemoModel;
  * 
  * @author Armin Reichert
  */
-public class GenerationAlgorithmMenu extends JMenu {
+public class GeneratorMenu extends JMenu {
 
 	private final ButtonGroup group = new ButtonGroup();
 
-	public GenerationAlgorithmMenu(Consumer<JMenuItem> action) {
+	public GeneratorMenu(Consumer<JMenuItem> action) {
 		super("Algorithms");
 		addMenu("Graph Traversals", alg -> alg.isTagged(Traversal), action);
 		addMenu("Minimum Spanning Tree", alg -> alg.isTagged(MST), action);

@@ -14,6 +14,7 @@ import javax.swing.Action;
 import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
+import de.amr.demos.maze.swingapp.action.ChangeGridResolutionAction;
 import de.amr.demos.maze.swingapp.action.ClearCanvasAction;
 import de.amr.demos.maze.swingapp.action.CreateAllMazesAction;
 import de.amr.demos.maze.swingapp.action.CreateSingleMazeAction;
@@ -23,6 +24,7 @@ import de.amr.demos.maze.swingapp.action.StopTaskAction;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.demos.maze.swingapp.view.MazeWindow;
 import de.amr.demos.maze.swingapp.view.SettingsWindow;
+import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.ObservingGridCanvas;
@@ -44,6 +46,10 @@ public class MazeDemoApp {
 		EventQueue.invokeLater(MazeDemoApp::new);
 	}
 
+	public static DisplayMode getDisplayMode() {
+		return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
+	}
+
 	public final MazeDemoModel model;
 	public final SettingsWindow settingsWindow;
 	public final MazeWindow mazeWindow;
@@ -54,7 +60,8 @@ public class MazeDemoApp {
 	public final Action stopTaskAction = new StopTaskAction(this);
 	public final Action floodFillAction = new FloodFillAction(this);
 	public final Action clearCanvasAction = new ClearCanvasAction(this);
-
+	public final Action changeGridResolutionAction = new ChangeGridResolutionAction(this);
+	
 	private Thread taskThread;
 	private volatile boolean taskStopped;
 
@@ -73,12 +80,7 @@ public class MazeDemoApp {
 		model.setPathFinderTarget(BOTTOM_RIGHT);
 		model.setGenerationAnimated(true);
 		model.setHidingControlsWhenRunning(false);
-
-		DisplayMode displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
-				.getDisplayMode();
-		int numCols = displayMode.getWidth() / model.getGridCellSize();
-		int numRows = displayMode.getHeight() / model.getGridCellSize();
-		model.setGrid(new ObservableGrid<>(numCols, numRows, Top4.get(), UNVISITED, false));
+		model.setGrid(newGrid());
 
 		mazeWindow = new MazeWindow(this);
 		settingsWindow = new SettingsWindow(this);
@@ -90,6 +92,13 @@ public class MazeDemoApp {
 		settingsWindow.setVisible(true);
 
 		mazeWindow.setVisible(true);
+	}
+
+	public ObservableGrid<TraversalState, Integer> newGrid() {
+		DisplayMode displayMode = getDisplayMode();
+		int numCols = displayMode.getWidth() / model.getGridCellSize();
+		int numRows = displayMode.getHeight() / model.getGridCellSize();
+		return new ObservableGrid<>(numCols, numRows, Top4.get(), UNVISITED, false);
 	}
 
 	public ObservingGridCanvas getCanvas() {
