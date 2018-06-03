@@ -42,7 +42,7 @@ public class DepthFirstTraversal extends AbstractGraphTraversal {
 			if (current == target) {
 				break;
 			}
-			childrenInStackingOrder(current).forEach(child -> visit(child, current));
+			childrenOrdered(current).forEach(child -> visit(child, current));
 		}
 		while (!stack.isEmpty()) {
 			stack.pop();
@@ -52,9 +52,9 @@ public class DepthFirstTraversal extends AbstractGraphTraversal {
 	/**
 	 * @param v
 	 *          a vertex
-	 * @return the children of this vertex in the order they are pushed onto the stack
+	 * @return the children of this vertex in the order they will be expanded
 	 */
-	protected IntStream childrenInStackingOrder(int v) {
+	protected IntStream childrenOrdered(int v) {
 		return graph.adjVertices(v).filter(child -> getState(child) == UNVISITED);
 	}
 

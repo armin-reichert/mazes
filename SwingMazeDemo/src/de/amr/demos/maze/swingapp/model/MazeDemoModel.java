@@ -5,16 +5,20 @@ import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.Slow;
 import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.SmallGrid;
 import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.Traversal;
 import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.UST;
+import static de.amr.demos.maze.swingapp.model.PathFinderTag.Euclidian;
+import static de.amr.demos.maze.swingapp.model.PathFinderTag.Manhattan;
 
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.Optional;
 
 import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.graph.traversal.BestFirstTraversal;
+import de.amr.easy.graph.traversal.BreadthFirstTraversal;
+import de.amr.easy.graph.traversal.DepthFirstTraversal2;
+import de.amr.easy.graph.traversal.HillClimbing;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.ObservableGrid;
-import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
-import de.amr.easy.grid.ui.swing.SwingDFSAnimation;
 import de.amr.easy.maze.alg.BinaryTree;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
 import de.amr.easy.maze.alg.Eller;
@@ -103,12 +107,12 @@ public class MazeDemoModel {
 	}
 
 	public static final AlgorithmInfo[] PATHFINDER_ALGORITHMS = {
-			new AlgorithmInfo(SwingDFSAnimation.class, "Depth-First-Search"),
-			new AlgorithmInfo(SwingDFSAnimation.class, "Hill Climbing (Manhattan)", PathFinderTag.HillClimbingManhattan),
-			new AlgorithmInfo(SwingDFSAnimation.class, "Hill Climbing (Euclidian)", PathFinderTag.HillClimbingEuclidian),
-			new AlgorithmInfo(SwingBFSAnimation.class, "Breadth-First-Search"),
-			new AlgorithmInfo(SwingBFSAnimation.class, "Best-First-Search (Manhattan)", PathFinderTag.BestFSManhattan),
-			new AlgorithmInfo(SwingBFSAnimation.class, "Best-First-Search (Euclidian)", PathFinderTag.BestFSEuclidian),
+			new AlgorithmInfo(DepthFirstTraversal2.class, "Depth-First-Search"),
+			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Manhattan)", Manhattan),
+			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Euclidian)", Euclidian),
+			new AlgorithmInfo(BreadthFirstTraversal.class, "Breadth-First-Search"),
+			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Manhattan)", Manhattan),
+			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Euclidian)", Euclidian),
 
 	};
 

@@ -2,7 +2,7 @@ package de.amr.easy.util;
 
 import static java.lang.Math.abs;
 
-import java.util.function.BiFunction;
+import java.util.Comparator;
 
 import de.amr.easy.graph.api.Multigraph;
 import de.amr.easy.graph.api.WeightedEdge;
@@ -16,6 +16,17 @@ import de.amr.easy.grid.api.BareGrid2D;
  */
 public class GridUtils {
 
+	private static class Coord {
+
+		final int x;
+		final int y;
+
+		public Coord(BareGrid2D<?> grid, int v) {
+			x = grid.col(v);
+			y = grid.row(v);
+		}
+	}
+
 	/**
 	 * @param grid
 	 *          a grid
@@ -26,9 +37,8 @@ public class GridUtils {
 	 * @return the Manhattan distance (L1 norm) between the cells
 	 */
 	public static int manhattanDist(BareGrid2D<?> grid, int u, int v) {
-		int[] coord_u = coord(grid, u);
-		int[] coord_v = coord(grid, v);
-		return abs(coord_u[0] - coord_v[0]) + abs(coord_u[1] - coord_v[1]);
+		Coord cu = new Coord(grid, u), cv = new Coord(grid, v);
+		return abs(cu.x - cv.x) + abs(cu.y - cv.y);
 	}
 
 	/**
@@ -41,44 +51,37 @@ public class GridUtils {
 	 * @return the squared Euclidian distance (L2 norm) between the cells
 	 */
 	public static int euclidianDistSq(BareGrid2D<?> grid, int u, int v) {
-		int[] coord_u = coord(grid, u);
-		int[] coord_v = coord(grid, v);
-		int dx = coord_u[0] - coord_v[0], dy = coord_u[0] - coord_v[0];
+		Coord cu = new Coord(grid, u), cv = new Coord(grid, v);
+		int dx = cu.x - cv.x, dy = cu.y - cv.y;
 		return dx * dx + dy * dy;
 	}
 
 	/**
-	 * Returns a function which evaluates two grid cells according to their Manhattan distance from
-	 * the given target cell.
+	 * Returns a function which compares two grid cells by their Manhattan distance from the given
+	 * target cell.
 	 * 
 	 * @param grid
 	 *          a grid
 	 * @param target
 	 *          the target cell
-	 * @return a function that evaluates two cells according to their Manhattan distance to the target
-	 *         cell
+	 * @return a function which compares two cells by their Manhattan distance to the target cell
 	 */
-	public static BiFunction<Integer, Integer, Integer> manhattanValuation(BareGrid2D<?> grid, int target) {
+	public static Comparator<Integer> byManhattanDistFrom(BareGrid2D<?> grid, int target) {
 		return (u, v) -> Integer.compare(manhattanDist(grid, u, target), manhattanDist(grid, v, target));
 	}
 
 	/**
-	 * Returns a function which evaluates grid cells according to (the square of) their Euclidian
-	 * distance from the given target cell.
+	 * Returns a function which compares two grid cells by their Euclidian distance from the given
+	 * target cell.
 	 * 
 	 * @param grid
 	 *          a grid
 	 * @param target
 	 *          the target cell
-	 * @return a function that evaluates two cells according to their Euclidian distance to the target
-	 *         cell
+	 * @return a function which compares two cells by their Euclidian distance to the target cell
 	 */
-	public static BiFunction<Integer, Integer, Integer> euclidianValuation(BareGrid2D<?> grid, int target) {
-		return (u, v) -> Integer.compare(euclidianDistSq(grid, u, target), manhattanDist(grid, v, target));
-	}
-
-	private static int[] coord(BareGrid2D<?> grid, int v) {
-		return new int[] { grid.col(v), grid.row(v) };
+	public static Comparator<Integer> byEuclidianDistFrom(BareGrid2D<?> grid, int target) {
+		return (u, v) -> Integer.compare(euclidianDistSq(grid, u, target), euclidianDistSq(grid, v, target));
 	}
 
 	public static Multigraph<WeightedEdge<Integer>> dualGraphOfGrid(int cols, int rows) {

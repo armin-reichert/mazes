@@ -34,12 +34,12 @@ public class HillClimbing extends DepthFirstTraversal {
 	}
 
 	@Override
-	protected IntStream childrenInStackingOrder(int v) {
+	protected IntStream childrenOrdered(int v) {
 		/*@formatter:off*/
 		return graph.adjVertices(v)
 			.filter(child -> getState(child) == UNVISITED)
 			.boxed()
-			.sorted(vertexValueComparator.reversed()) // vertices with higher values are processed first
+			.sorted(vertexValueComparator)
 			.mapToInt(Integer::intValue);
 		/*@formatter:on*/
 	}

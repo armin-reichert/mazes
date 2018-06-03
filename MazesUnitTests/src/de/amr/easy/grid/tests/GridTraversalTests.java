@@ -1,7 +1,8 @@
 package de.amr.easy.grid.tests;
 
-import static de.amr.easy.graph.api.TraversalState.*;
+import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
+import static de.amr.easy.graph.api.TraversalState.VISITED;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
@@ -9,7 +10,7 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.grid.api.GridPosition.TOP_RIGHT;
 import static de.amr.easy.grid.curves.CurveUtils.cells;
 import static de.amr.easy.grid.curves.CurveUtils.traverse;
-import static de.amr.easy.util.GridUtils.manhattanValuation;
+import static de.amr.easy.util.GridUtils.byManhattanDistFrom;
 import static org.junit.Assert.assertTrue;
 
 import java.util.function.Function;
@@ -81,7 +82,7 @@ public class GridTraversalTests {
 		grid.removeEdges();
 		new IterativeDFS(grid).run(target);
 		BestFirstTraversal best = new BestFirstTraversal(grid,
-				(u, v) -> GridUtils.manhattanValuation(grid, target).apply(u, v));
+				(u, v) -> GridUtils.byManhattanDistFrom(grid, target).compare(u, v));
 		assertState(grid.vertexStream(), best::getState, UNVISITED);
 		best.traverseGraph(source);
 		assertState(grid.vertexStream(), best::getState, COMPLETED);
@@ -111,7 +112,7 @@ public class GridTraversalTests {
 	@Test
 	public void testHillClimbing() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		HillClimbing hillClimbing = new HillClimbing(grid, (u, v) -> manhattanValuation(grid, target).apply(u, v));
+		HillClimbing hillClimbing = new HillClimbing(grid, (u, v) -> byManhattanDistFrom(grid, target).compare(u, v));
 		assertState(grid.vertexStream(), hillClimbing::getState, UNVISITED);
 		hillClimbing.traverseGraph(source, target);
 		IntStream path = hillClimbing.findPath(target);
