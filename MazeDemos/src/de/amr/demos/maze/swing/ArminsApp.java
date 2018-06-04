@@ -25,7 +25,7 @@ public class ArminsApp extends SwingGridSampleApp {
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			resizeGrid(cellSize);
 			new EllerInsideOut(grid).run(-1);
-			new SwingFloodFill(grid, canvas).run(grid.cell(TOP_LEFT));
+			new SwingFloodFill().run(canvas, grid, grid.cell(TOP_LEFT), true);
 			sleep(1000);
 		});
 		System.exit(0);
