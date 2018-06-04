@@ -25,8 +25,8 @@ public class FloodFillAction extends MazeDemoAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app.settingsWindow.setVisible(!app.model.isHidingControlsWhenRunning());
-		app.mazeWindow.setVisible(true);
+		app.wndSettings.setVisible(!app.model.isHidingControlsWhenRunning());
+		app.wndMaze.setVisible(true);
 		enableUI(false);
 		app.getCanvas().drawGrid();
 		app.startTask(() -> {
@@ -37,8 +37,8 @@ public class FloodFillAction extends MazeDemoAction {
 				x.printStackTrace();
 			} finally {
 				enableUI(true);
-				app.settingsWindow.setVisible(true);
-				app.settingsWindow.requestFocus();
+				app.wndSettings.setVisible(true);
+				app.wndSettings.requestFocus();
 			}
 		});
 	}

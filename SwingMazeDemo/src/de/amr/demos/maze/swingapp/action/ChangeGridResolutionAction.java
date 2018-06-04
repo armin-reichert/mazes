@@ -22,7 +22,7 @@ public class ChangeGridResolutionAction extends MazeDemoAction {
 		JComboBox<?> selector = (JComboBox<?>) e.getSource();
 		int cellSize = app.model.getGridCellSizes()[selector.getSelectedIndex()];
 		app.model.setGridCellSize(cellSize);
-		app.model.setGrid(app.newGrid());
+		app.newGrid();
 		app.newCanvas();
 	}
 }

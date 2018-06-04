@@ -26,8 +26,8 @@ public class CreateAllMazesAction extends CreateMazeAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app.settingsWindow.setVisible(!app.model.isHidingControlsWhenRunning());
-		app.mazeWindow.setVisible(true);
+		app.wndSettings.setVisible(!app.model.isHidingControlsWhenRunning());
+		app.wndMaze.setVisible(true);
 		app.getCanvas().fill(Color.BLACK);
 		app.startTask(() -> {
 			enableUI(false);
@@ -35,7 +35,7 @@ public class CreateAllMazesAction extends CreateMazeAction {
 				generateAllMazes();
 			} finally {
 				enableUI(true);
-				app.settingsWindow.setVisible(true);
+				app.wndSettings.setVisible(true);
 			}
 		});
 	}
@@ -66,13 +66,13 @@ public class CreateAllMazesAction extends CreateMazeAction {
 	private void createNextMaze(AlgorithmInfo generatorInfo, int startCell) {
 		ready = false;
 		app.getCanvas().fill(Color.BLACK);
-		app.settingsWindow.getControlPanel().getLblGenerationAlgorithm().setText(generatorInfo.getDescription());
-		app.settingsWindow.getGeneratorMenu().setSelectedAlgorithm(generatorInfo);
+		app.wndSettings.getControlPanel().getLblGenerationAlgorithm().setText(generatorInfo.getDescription());
+		app.wndSettings.getGeneratorMenu().setSelectedAlgorithm(generatorInfo);
 		try {
 			runMazeGenerator(generatorInfo, startCell);
 		} catch (Exception | StackOverflowError x) {
 			app.showMessage("Maze generation aborted: " + x.getClass().getSimpleName());
-			app.model.setGrid(app.newGrid());
+			app.newGrid();
 			app.newCanvas();
 		} finally {
 			ready = true;

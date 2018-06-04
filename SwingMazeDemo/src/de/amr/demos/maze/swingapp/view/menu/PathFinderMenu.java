@@ -26,8 +26,8 @@ public class PathFinderMenu extends JMenu {
 
 	public PathFinderMenu(MazeDemoApp app) {
 		super("Pathfinders");
-		add(app.floodFillAction);
-		add(app.clearCanvasAction);
+		add(app.actionFloodFill);
+		add(app.actionClearCanvas);
 		addSeparator();
 		Stream.of(PATHFINDER_ALGORITHMS).forEach(alg -> group.add(add(newItem(app, alg))));
 	}

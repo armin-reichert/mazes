@@ -24,13 +24,13 @@ public class CreateMazeAction extends MazeDemoAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app.settingsWindow.getGeneratorMenu().getSelectedAlgorithm().ifPresent(this::createMaze);
+		app.wndSettings.getGeneratorMenu().getSelectedAlgorithm().ifPresent(this::createMaze);
 	}
 
 	private void createMaze(AlgorithmInfo generatorInfo) {
 		enableUI(false);
-		app.settingsWindow.setVisible(!app.model.isHidingControlsWhenRunning());
-		app.mazeWindow.setVisible(true);
+		app.wndSettings.setVisible(!app.model.isHidingControlsWhenRunning());
+		app.wndMaze.setVisible(true);
 		app.getCanvas().fill(Color.BLACK);
 		app.startTask(() -> {
 			try {
@@ -38,11 +38,11 @@ public class CreateMazeAction extends MazeDemoAction {
 			} catch (Exception | StackOverflowError x) {
 				x.printStackTrace(System.err);
 				app.showMessage("Maze generation aborted: " + x.getClass().getSimpleName());
-				app.model.setGrid(app.newGrid());
+				app.newGrid();
 				app.newCanvas();
 			} finally {
-				app.settingsWindow.setVisible(true);
-				app.settingsWindow.requestFocus();
+				app.wndSettings.setVisible(true);
+				app.wndSettings.requestFocus();
 				enableUI(true);
 			}
 		});

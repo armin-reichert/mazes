@@ -53,7 +53,7 @@ public class SettingsWindow extends JFrame {
 				.orElse(-1);
 		controlPanel.getComboGridResolution().setSelectedIndex(selectedIndex);
 
-		controlPanel.getComboGridResolution().setAction(app.changeGridResolutionAction);
+		controlPanel.getComboGridResolution().setAction(app.actionChangeGridResolution);
 
 		controlPanel.getSliderPassageWidth().setValue(model.getPassageWidthPercentage());
 		controlPanel.getSliderPassageWidth().addChangeListener(e -> {
@@ -71,10 +71,10 @@ public class SettingsWindow extends JFrame {
 			}
 		});
 
-		controlPanel.getBtnCreateMaze().setAction(app.createSingleMazeAction);
-		controlPanel.getBtnCreateAllMazes().setAction(app.createAllMazesAction);
-		controlPanel.getBtnFindPath().setAction(app.runPathFinderAction);
-		controlPanel.getBtnStop().setAction(app.stopTaskAction);
+		controlPanel.getBtnCreateMaze().setAction(app.actionCreateMaze);
+		controlPanel.getBtnCreateAllMazes().setAction(app.actionCreateAllMazes);
+		controlPanel.getBtnFindPath().setAction(app.actionRunPathFinder);
+		controlPanel.getBtnStop().setAction(app.actionStopTask);
 
 		getContentPane().add(controlPanel, BorderLayout.CENTER);
 
@@ -83,7 +83,7 @@ public class SettingsWindow extends JFrame {
 		setJMenuBar(new JMenuBar());
 
 		generatorMenu = new GeneratorMenu(item -> controlPanel.getLblGenerationAlgorithm().setText(item.getText()));
-		MazeDemoModel.findAlgorithm(MazeDemoModel.GENERATOR_ALGORITHMS, IterativeDFS.class).ifPresent(alg -> {
+		MazeDemoModel.find(MazeDemoModel.GENERATOR_ALGORITHMS, IterativeDFS.class).ifPresent(alg -> {
 			generatorMenu.setSelectedAlgorithm(alg);
 			controlPanel.getLblGenerationAlgorithm().setText(alg.getDescription());
 		});

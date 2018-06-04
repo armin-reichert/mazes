@@ -22,10 +22,10 @@ public abstract class MazeDemoAction extends AbstractAction {
 	}
 
 	protected void enableUI(boolean b) {
-		app.settingsWindow.getGeneratorMenu().setEnabled(b);
-		app.settingsWindow.getPathFinderMenu().setEnabled(b);
-		app.settingsWindow.getOptionMenu().setEnabled(b);
-		ControlPanel controls = app.settingsWindow.getControlPanel();
+		app.wndSettings.getGeneratorMenu().setEnabled(b);
+		app.wndSettings.getPathFinderMenu().setEnabled(b);
+		app.wndSettings.getOptionMenu().setEnabled(b);
+		ControlPanel controls = app.wndSettings.getControlPanel();
 		controls.getSliderPassageWidth().setEnabled(b);
 		controls.getComboGridResolution().setEnabled(b);
 	}

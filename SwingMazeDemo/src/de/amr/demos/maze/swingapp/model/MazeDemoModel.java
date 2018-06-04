@@ -112,7 +112,7 @@ public class MazeDemoModel {
 
 	};
 
-	public static Optional<AlgorithmInfo> findAlgorithm(AlgorithmInfo[] algorithms, Class<?> clazz) {
+	public static Optional<AlgorithmInfo> find(AlgorithmInfo[] algorithms, Class<?> clazz) {
 		return Arrays.stream(algorithms).filter(alg -> alg.getAlgorithmClass() == clazz).findFirst();
 	}
 

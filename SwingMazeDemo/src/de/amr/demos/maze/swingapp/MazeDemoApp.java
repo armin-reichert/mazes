@@ -1,5 +1,6 @@
 package de.amr.demos.maze.swingapp;
 
+import static de.amr.demos.maze.swingapp.model.MazeDemoModel.PATHFINDER_ALGORITHMS;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
@@ -24,7 +25,7 @@ import de.amr.demos.maze.swingapp.action.StopTaskAction;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.demos.maze.swingapp.view.MazeWindow;
 import de.amr.demos.maze.swingapp.view.SettingsWindow;
-import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.ObservingGridCanvas;
@@ -51,16 +52,16 @@ public class MazeDemoApp {
 	}
 
 	public final MazeDemoModel model;
-	public final SettingsWindow settingsWindow;
-	public final MazeWindow mazeWindow;
+	public final SettingsWindow wndSettings;
+	public final MazeWindow wndMaze;
 
-	public final Action createSingleMazeAction = new CreateMazeAction(this);
-	public final Action createAllMazesAction = new CreateAllMazesAction(this);
-	public final Action runPathFinderAction = new RunPathFinderAction(this);
-	public final Action stopTaskAction = new StopTaskAction(this);
-	public final Action floodFillAction = new FloodFillAction(this);
-	public final Action clearCanvasAction = new ClearCanvasAction(this);
-	public final Action changeGridResolutionAction = new ChangeGridResolutionAction(this);
+	public final Action actionCreateMaze = new CreateMazeAction(this);
+	public final Action actionCreateAllMazes = new CreateAllMazesAction(this);
+	public final Action actionRunPathFinder = new RunPathFinderAction(this);
+	public final Action actionStopTask = new StopTaskAction(this);
+	public final Action actionFloodFill = new FloodFillAction(this);
+	public final Action actionClearCanvas = new ClearCanvasAction(this);
+	public final Action actionChangeGridResolution = new ChangeGridResolutionAction(this);
 
 	private Thread taskThread;
 	private volatile boolean taskStopped;
@@ -80,43 +81,42 @@ public class MazeDemoApp {
 		model.setPathFinderTarget(BOTTOM_RIGHT);
 		model.setGenerationAnimated(true);
 		model.setHidingControlsWhenRunning(false);
-		model.setGrid(newGrid());
+		newGrid();
 
-		mazeWindow = new MazeWindow(this);
-		settingsWindow = new SettingsWindow(this);
-		settingsWindow.getPathFinderMenu().findItem(MazeDemoModel.PATHFINDER_ALGORITHMS[0])
-				.ifPresent(item -> item.setSelected(true));
-		settingsWindow.setAlwaysOnTop(true);
-		settingsWindow.pack();
-		settingsWindow.setLocationRelativeTo(null);
-		settingsWindow.setVisible(true);
-
-		mazeWindow.setVisible(true);
+		wndMaze = new MazeWindow(this);
+		wndSettings = new SettingsWindow(this);
+		MazeDemoModel.find(PATHFINDER_ALGORITHMS, BreadthFirstTraversal.class).ifPresent(
+				pathFinder -> wndSettings.getPathFinderMenu().findItem(pathFinder).ifPresent(item -> item.setSelected(true)));
+		wndSettings.setAlwaysOnTop(true);
+		wndSettings.pack();
+		wndSettings.setLocationRelativeTo(null);
+		wndSettings.setVisible(true);
+		wndMaze.setVisible(true);
 	}
 
-	public ObservableGrid<TraversalState, Integer> newGrid() {
+	public void newGrid() {
 		DisplayMode displayMode = getDisplayMode();
 		int numCols = displayMode.getWidth() / model.getGridCellSize();
 		int numRows = displayMode.getHeight() / model.getGridCellSize();
-		return new ObservableGrid<>(numCols, numRows, Top4.get(), UNVISITED, false);
+		model.setGrid(new ObservableGrid<>(numCols, numRows, Top4.get(), UNVISITED, false));
 	}
 
 	public ObservingGridCanvas getCanvas() {
-		return mazeWindow.getCanvas();
+		return wndMaze.getCanvas();
 	}
 
 	public void newCanvas() {
-		mazeWindow.createCanvas();
-		mazeWindow.repaint();
+		wndMaze.createCanvas();
+		wndMaze.repaint();
 	}
 
 	public void showMessage(String msg) {
-		settingsWindow.getControlPanel().showMessage(msg + "\n");
+		wndSettings.getControlPanel().showMessage(msg + "\n");
 	}
 
 	public void showSettingsWindow() {
-		settingsWindow.setVisible(true);
-		settingsWindow.requestFocus();
+		wndSettings.setVisible(true);
+		wndSettings.requestFocus();
 	}
 
 	public void setGridPassageThickness(int percent) {
