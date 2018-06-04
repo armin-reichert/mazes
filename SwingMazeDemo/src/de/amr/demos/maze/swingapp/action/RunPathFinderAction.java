@@ -83,31 +83,31 @@ public class RunPathFinderAction extends MazeDemoAction {
 		}
 
 		if (pathFinderInfo.getAlgorithmClass() == BreadthFirstTraversal.class) {
-			SwingBFSAnimation bfsAnimation = new SwingBFSAnimation(grid, canvas);
-			bfsAnimation.setPathColor(app.model.getPathColor());
+			SwingBFSAnimation animator = new SwingBFSAnimation(grid, canvas);
+			animator.setPathColor(app.model.getPathColor());
 			BreadthFirstTraversal bfs = new BreadthFirstTraversal(grid);
-			watch.runAndMeasure(() -> bfsAnimation.run(bfs, source, target));
-			bfsAnimation.showPath(bfs, target);
+			watch.runAndMeasure(() -> animator.run(bfs, source, target));
+			animator.showPath(bfs, target);
 			app.showMessage(format("Breadth-first search: %.6f seconds.", watch.getSeconds()));
 			return;
 		}
 
 		if (pathFinderInfo.getAlgorithmClass() == BestFirstTraversal.class) {
-			SwingBFSAnimation bfsAnimation = new SwingBFSAnimation(grid, canvas);
-			bfsAnimation.setPathColor(app.model.getPathColor());
+			SwingBFSAnimation animator = new SwingBFSAnimation(grid, canvas);
+			animator.setPathColor(app.model.getPathColor());
 			if (pathFinderInfo.isTagged(Manhattan)) {
 				Comparator<Integer> cmp = (u, v) -> byManhattanDistFrom(grid, target).compare(u, v);
 				BestFirstTraversal best = new BestFirstTraversal(grid, cmp);
-				watch.runAndMeasure(() -> bfsAnimation.run(best, source, target));
-				bfsAnimation.showPath(best, target);
+				watch.runAndMeasure(() -> animator.run(best, source, target));
+				animator.showPath(best, target);
 				app.showMessage(format("Best-first search (Manhattan): %.6f seconds.", watch.getSeconds()));
 				return;
 			}
 			if (pathFinderInfo.isTagged(Euclidian)) {
 				Comparator<Integer> cmp = (u, v) -> byEuclidianDistFrom(grid, target).compare(u, v);
 				BestFirstTraversal best = new BestFirstTraversal(grid, cmp);
-				watch.runAndMeasure(() -> bfsAnimation.run(best, source, target));
-				bfsAnimation.showPath(best, target);
+				watch.runAndMeasure(() -> animator.run(best, source, target));
+				animator.showPath(best, target);
 				app.showMessage(format("Best-first search (Euclidian): %.6f seconds.", watch.getSeconds()));
 				return;
 			}
