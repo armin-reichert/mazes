@@ -1,5 +1,7 @@
 package de.amr.easy.grid.ui.swing;
 
+import static java.lang.String.format;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.util.BitSet;
@@ -36,8 +38,8 @@ public class SwingFloodFill {
 		renderer.fnCellSize = base::getCellSize;
 		renderer.fnPassageWidth = base::getPassageWidth;
 		Font font = new Font(Font.SANS_SERIF, Font.PLAIN, renderer.getPassageWidth() / 2);
-		renderer.fnTextFont = () -> distancesVisible ? font : null;
-		renderer.fnText = cell -> distancesVisible && bfs.getDistance(cell) != -1 ? "" + bfs.getDistance(cell) : "";
+		renderer.fnTextFont = () -> font;
+		renderer.fnText = cell -> distancesVisible ? format("%d", bfs.getDistance(cell)) : "";
 		renderer.fnCellBgColor = cell -> cellBgColor.apply(cell);
 		renderer.fnPassageColor = (u, v) -> cellBgColor.apply(u);
 		return renderer;
