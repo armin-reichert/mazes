@@ -10,7 +10,7 @@ import de.amr.easy.graph.api.Graph;
  * current element are added. The sorting order is determined by the vertex valuation comparator.
  * 
  * <p>
- * Taken from: Patrick Henry Winston, Artificial Intelligence 2nd ed., Addison-Wesley, 1984
+ * Reference: Patrick Henry Winston, Artificial Intelligence, Addison-Wesley, 1984
  * 
  * @author Armin Reichert
  */
@@ -27,4 +27,5 @@ public class BestFirstTraversal extends BreadthFirstTraversal {
 	public BestFirstTraversal(Graph<?> graph, Comparator<Integer> vertexValuation) {
 		super(graph, new PriorityQueue<>(vertexValuation));
 	}
+
 }

@@ -1,7 +1,6 @@
 package de.amr.easy.graph.traversal;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
-import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
 import java.util.ArrayDeque;
@@ -52,11 +51,11 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal {
 		clear();
 		visit(source, -1);
 		while (!q.isEmpty()) {
-			int current = q.poll();
-			if (current == target) {
+			if (q.peek() == target) {
 				break;
 			}
-			graph.adjVertices(current).filter(v -> getState(v) == UNVISITED).forEach(child -> visit(child, current));
+			int current = q.poll();
+			childrenInQueuingOrder(current).forEach(child -> visit(child, current));
 			setState(current, COMPLETED);
 		}
 	}
@@ -67,6 +66,7 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal {
 	}
 
 	private void visit(int v, int parent) {
+		q.add(v);
 		setState(v, VISITED);
 		setParent(v, parent);
 		int d = parent != -1 ? distance[parent] + 1 : 0;
@@ -75,7 +75,6 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal {
 			maxDistance = d;
 			maxDistanceVertex = v;
 		}
-		q.add(v);
 		if (parent != -1) {
 			edgeTouched(parent, v);
 		}

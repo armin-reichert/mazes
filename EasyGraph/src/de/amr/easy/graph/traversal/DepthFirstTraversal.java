@@ -1,9 +1,6 @@
 package de.amr.easy.graph.traversal;
 
-import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
-
-import java.util.stream.IntStream;
 
 import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Graph;
@@ -42,20 +39,11 @@ public class DepthFirstTraversal extends AbstractGraphTraversal {
 			if (current == target) {
 				break;
 			}
-			childrenOrdered(current).forEach(child -> visit(child, current));
+			childrenInQueuingOrder(current).forEach(child -> visit(child, current));
 		}
 		while (!stack.isEmpty()) {
 			stack.pop();
 		}
-	}
-
-	/**
-	 * @param v
-	 *          a vertex
-	 * @return the children of this vertex in the order they will be expanded
-	 */
-	protected IntStream childrenOrdered(int v) {
-		return graph.adjVertices(v).filter(child -> getState(child) == UNVISITED);
 	}
 
 	/**

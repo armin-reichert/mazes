@@ -35,6 +35,15 @@ public abstract class AbstractGraphTraversal implements ObservableGraphTraversal
 		this.graph = graph;
 	}
 
+	/**
+	 * @param v
+	 *          a vertex
+	 * @return the children of this vertex in the order they will be added to the search queue
+	 */
+	protected IntStream childrenInQueuingOrder(int v) {
+		return graph.adjVertices(v).filter(child -> getState(child) == UNVISITED);
+	}
+
 	protected void clear() {
 		parentMap.clear();
 		stateMap.clear();
