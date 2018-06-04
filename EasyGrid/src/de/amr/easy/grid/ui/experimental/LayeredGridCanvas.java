@@ -35,6 +35,7 @@ public class LayeredGridCanvas extends LayeredCanvas implements GraphObserver<We
 	protected boolean distancesDisplayed;
 	protected ObservableGrid2D<TraversalState, Integer> grid;
 	protected BreadthFirstTraversal bfs;
+	protected int maxDistance;
 	protected Iterable<Integer> path;
 
 	public LayeredGridCanvas(int width, int height, int cellSize) {
@@ -100,6 +101,9 @@ public class LayeredGridCanvas extends LayeredCanvas implements GraphObserver<We
 
 	public void runPathFinder(int pathStartCell, int pathTargetCell) {
 		bfs = new BreadthFirstTraversal(grid);
+		bfs.traverseGraph(pathStartCell);
+		maxDistance = bfs.getMaxDistance();
+		bfs = new BreadthFirstTraversal(grid);
 		bfs.traverseGraph(pathStartCell, pathTargetCell);
 		path = bfs.findPath(pathTargetCell)::iterator;
 	}
@@ -122,12 +126,12 @@ public class LayeredGridCanvas extends LayeredCanvas implements GraphObserver<We
 				: String.format("%d", bfs.getDistance(cell));
 		renderer.fnTextFont = () -> new Font("Sans", Font.PLAIN, cellSize / 2);
 		renderer.fnCellBgColor = cell -> {
-			if (bfs.getMaxDistance() == -1) {
+			if (maxDistance == -1) {
 				return Color.BLACK;
 			}
 			float hue = 0.16f;
-			if (bfs.getMaxDistance() > 0) {
-				hue += 0.7f * bfs.getDistance(cell) / bfs.getMaxDistance();
+			if (maxDistance > 0) {
+				hue += 0.7f * bfs.getDistance(cell) / maxDistance;
 			}
 			return Color.getHSBColor(hue, 0.5f, 1f);
 		};

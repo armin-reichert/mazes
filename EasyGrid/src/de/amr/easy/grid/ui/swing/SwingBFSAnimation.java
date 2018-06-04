@@ -23,7 +23,6 @@ public class SwingBFSAnimation {
 	private final GridCanvas<?> canvas;
 	private ConfigurableGridRenderer renderer;
 	private int maxDistance;
-	private int maxDistanceCell;
 	private boolean distancesVisible;
 	private Color pathColor;
 
@@ -31,7 +30,6 @@ public class SwingBFSAnimation {
 		this.grid = grid;
 		this.canvas = canvas;
 		maxDistance = -1;
-		maxDistanceCell = -1;
 		distancesVisible = true;
 		pathColor = Color.RED;
 	}
@@ -66,7 +64,6 @@ public class SwingBFSAnimation {
 		// 1. traverse whole graph without events for computing maximum distance from source
 		bfs.traverseGraph(source);
 		maxDistance = bfs.getMaxDistance();
-		maxDistanceCell = bfs.getMaxDistanceVertex();
 
 		// 2. run with events
 		canvas.pushRenderer(renderer);
@@ -97,10 +94,6 @@ public class SwingBFSAnimation {
 		canvas.pushRenderer(renderer);
 		IntStream.of(path).forEach(canvas::drawGridCell);
 		canvas.popRenderer();
-	}
-
-	public int getMaxDistanceCell() {
-		return maxDistanceCell;
 	}
 
 	public boolean areDistancesVisible() {

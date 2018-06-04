@@ -5,6 +5,8 @@ import static de.amr.easy.graph.api.TraversalState.VISITED;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Optional;
 import java.util.Queue;
 
 import de.amr.easy.graph.api.Graph;
@@ -23,8 +25,6 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal {
 
 	protected final Queue<Integer> q;
 	protected final int[] distance;
-	protected int maxDistance;
-	protected int maxDistanceVertex;
 
 	protected BreadthFirstTraversal(Graph<?> graph, Queue<Integer> queue) {
 		super(graph);
@@ -42,8 +42,11 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal {
 		super.clear();
 		q.clear();
 		Arrays.fill(distance, -1);
-		maxDistance = -1;
-		maxDistanceVertex = -1;
+	}
+
+	@Override
+	public boolean inQ(int vertex) {
+		return q.contains(vertex);
 	}
 
 	@Override
@@ -60,21 +63,12 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal {
 		}
 	}
 
-	@Override
-	public boolean inQ(int vertex) {
-		return q.contains(vertex);
-	}
-
 	private void visit(int v, int parent) {
 		q.add(v);
 		setState(v, VISITED);
 		setParent(v, parent);
 		int d = parent != -1 ? distance[parent] + 1 : 0;
 		distance[v] = d;
-		if (d > maxDistance) {
-			maxDistance = d;
-			maxDistanceVertex = v;
-		}
 		if (parent != -1) {
 			edgeTouched(parent, v);
 		}
@@ -92,18 +86,20 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal {
 	}
 
 	/**
-	 * The maximum distance from the source to any reachable vertex.
+	 * Returns the maximum distance encountered in this traversal.
 	 * 
 	 * @return the maximum distance
 	 */
 	public int getMaxDistance() {
-		return maxDistance;
+		return graph.vertexStream().map(this::getDistance).max().orElse(-1);
 	}
 
 	/**
-	 * @return a vertex with maximal distance from the source
+	 * Returns a vertex with maximum distance encountered in this traversal.
+	 * 
+	 * @return a vertex with maximum distance or empty
 	 */
-	public int getMaxDistanceVertex() {
-		return maxDistanceVertex;
+	public Optional<Integer> getMaxDistanceVertex() {
+		return graph.vertexStream().boxed().max(Comparator.comparing(this::getDistance));
 	}
 }

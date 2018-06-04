@@ -22,6 +22,7 @@ public class SwingFloodFill {
 	private final ObservingGridCanvas canvas;
 	private BreadthFirstTraversal bfs;
 	private ConfigurableGridRenderer renderer;
+	private int maxDistance;
 	private boolean distancesVisible;
 
 	public SwingFloodFill(BareGrid2D<?> grid, ObservingGridCanvas canvas) {
@@ -38,7 +39,8 @@ public class SwingFloodFill {
 		canvas.stopListening();
 		bfs = new BreadthFirstTraversal(grid);
 		bfs.traverseGraph(source);
-		createRenderer(canvas.getRenderer().get(), new BitSet(), bfs.getMaxDistance());
+		maxDistance = bfs.getMaxDistance();
+		createRenderer(canvas.getRenderer().get(), new BitSet(), maxDistance);
 		canvas.pushRenderer(renderer);
 		bfs.addObserver(new GraphTraversalListener() {
 

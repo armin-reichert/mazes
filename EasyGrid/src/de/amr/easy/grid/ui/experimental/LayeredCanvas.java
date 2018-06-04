@@ -35,7 +35,11 @@ public class LayeredCanvas extends JComponent {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		layers.stream().filter(Layer::isVisible).forEach(layer -> layer.draw(gfx));
+		for (Layer layer : layers) {
+			if (layer.isVisible()) {
+				layer.draw(gfx);
+			}
+		}
 		g.drawImage(buffer, 0, 0, null);
 	}
 
