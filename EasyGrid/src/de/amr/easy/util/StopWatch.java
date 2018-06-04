@@ -26,7 +26,7 @@ public class StopWatch {
 	 * @param code
 	 *          code to be measured
 	 */
-	public void runAndMeasure(Runnable code) {
+	public void measure(Runnable code) {
 		start();
 		code.run();
 		stop();

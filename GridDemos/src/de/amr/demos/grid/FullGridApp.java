@@ -30,7 +30,7 @@ public class FullGridApp extends SwingGridSampleApp {
 				resizeGrid(cellSize);
 				grid.setDefaultContent(TraversalState.COMPLETED);
 				grid.fill();
-				watch.runAndMeasure(canvas::drawGrid);
+				watch.measure(canvas::drawGrid);
 				System.out.println(String.format("Grid (%d cells @%d) rendered in %.2f seconds", grid.numCells(), cellSize,
 						watch.getSeconds()));
 				sleep(2000);

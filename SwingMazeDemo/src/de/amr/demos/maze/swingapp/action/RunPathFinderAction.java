@@ -41,7 +41,7 @@ public class RunPathFinderAction extends MazeDemoAction {
 			try {
 				app.getCanvas().drawGrid();
 				app.wndSettings.getPathFinderMenu().selectedAlgorithm().ifPresent(this::runPathFinder);
-			} catch (Throwable x) {
+			} catch (Exception x) {
 				x.printStackTrace();
 			} finally {
 				enableUI(true);
@@ -60,7 +60,7 @@ public class RunPathFinderAction extends MazeDemoAction {
 		if (pathFinderInfo.getAlgorithmClass() == DepthFirstTraversal2.class) {
 			SwingDFSAnimation animator = new SwingDFSAnimation(grid);
 			animator.setPathColor(app.model.getPathColor());
-			watch.runAndMeasure(() -> animator.run(canvas, new DepthFirstTraversal2(grid), source, target));
+			watch.measure(() -> animator.run(canvas, new DepthFirstTraversal2(grid), source, target));
 			app.showMessage(format("Depth-first search: %.6f seconds.", watch.getSeconds()));
 			return;
 		}
@@ -70,13 +70,13 @@ public class RunPathFinderAction extends MazeDemoAction {
 			animator.setPathColor(app.model.getPathColor());
 			if (pathFinderInfo.isTagged(Manhattan)) {
 				Comparator<Integer> cmp = (u, v) -> byManhattanDistFrom(grid, target).reversed().compare(u, v);
-				watch.runAndMeasure(() -> animator.run(canvas, new HillClimbing(grid, cmp), source, target));
+				watch.measure(() -> animator.run(canvas, new HillClimbing(grid, cmp), source, target));
 				app.showMessage(format("Hill Climbing (Manhattan): %.6f seconds.", watch.getSeconds()));
 				return;
 			}
 			if (pathFinderInfo.isTagged(Euclidian)) {
 				Comparator<Integer> cmp = (u, v) -> byEuclidianDistFrom(grid, target).reversed().compare(u, v);
-				watch.runAndMeasure(() -> animator.run(canvas, new HillClimbing(grid, cmp), source, target));
+				watch.measure(() -> animator.run(canvas, new HillClimbing(grid, cmp), source, target));
 				app.showMessage(format("Hill Climbing (Euclidian): %.6f seconds.", watch.getSeconds()));
 				return;
 			}
@@ -86,7 +86,7 @@ public class RunPathFinderAction extends MazeDemoAction {
 			SwingBFSAnimation animator = new SwingBFSAnimation(grid, canvas);
 			animator.setPathColor(app.model.getPathColor());
 			BreadthFirstTraversal bfs = new BreadthFirstTraversal(grid);
-			watch.runAndMeasure(() -> animator.run(bfs, source, target));
+			watch.measure(() -> animator.run(bfs, source, target));
 			animator.showPath(bfs, target);
 			app.showMessage(format("Breadth-first search: %.6f seconds.", watch.getSeconds()));
 			return;
@@ -98,7 +98,7 @@ public class RunPathFinderAction extends MazeDemoAction {
 			if (pathFinderInfo.isTagged(Manhattan)) {
 				Comparator<Integer> cmp = (u, v) -> byManhattanDistFrom(grid, target).compare(u, v);
 				BestFirstTraversal best = new BestFirstTraversal(grid, cmp);
-				watch.runAndMeasure(() -> animator.run(best, source, target));
+				watch.measure(() -> animator.run(best, source, target));
 				animator.showPath(best, target);
 				app.showMessage(format("Best-first search (Manhattan): %.6f seconds.", watch.getSeconds()));
 				return;
@@ -106,7 +106,7 @@ public class RunPathFinderAction extends MazeDemoAction {
 			if (pathFinderInfo.isTagged(Euclidian)) {
 				Comparator<Integer> cmp = (u, v) -> byEuclidianDistFrom(grid, target).compare(u, v);
 				BestFirstTraversal best = new BestFirstTraversal(grid, cmp);
-				watch.runAndMeasure(() -> animator.run(best, source, target));
+				watch.measure(() -> animator.run(best, source, target));
 				animator.showPath(best, target);
 				app.showMessage(format("Best-first search (Euclidian): %.6f seconds.", watch.getSeconds()));
 				return;

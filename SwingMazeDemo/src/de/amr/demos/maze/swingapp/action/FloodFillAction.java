@@ -32,7 +32,7 @@ public class FloodFillAction extends MazeDemoAction {
 		app.getCanvas().drawGrid();
 		app.startTask(() -> {
 			try {
-				watch.runAndMeasure(this::runFloodFill);
+				watch.measure(this::runFloodFill);
 				app.showMessage(format("Flood-fill: %.6f seconds.", watch.getSeconds()));
 			} catch (Exception x) {
 				x.printStackTrace();

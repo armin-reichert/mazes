@@ -61,10 +61,10 @@ public class CreateMazeAction extends MazeDemoAction {
 			generator.run(startCell);
 		} else {
 			app.getCanvas().stopListening();
-			watch.runAndMeasure(() -> generator.run(startCell));
+			watch.measure(() -> generator.run(startCell));
 			app.showMessage(format("Maze generation: %.6f seconds.", watch.getSeconds()));
 			app.getCanvas().startListening();
-			watch.runAndMeasure(() -> app.getCanvas().drawGrid());
+			watch.measure(() -> app.getCanvas().drawGrid());
 			app.showMessage(format("Grid rendering:  %.6f seconds.", watch.getSeconds()));
 		}
 	}

@@ -30,7 +30,7 @@ public class GridRenderingTestApp extends SwingGridSampleApp {
 			resizeGrid(cellSize);
 			grid.setDefaultContent(COMPLETED);
 			grid.fill();
-			watch.runAndMeasure(canvas::drawGrid);
+			watch.measure(canvas::drawGrid);
 			out.println(format("Rendering grid with %d cells took %.3f seconds", grid.numCells(), watch.getSeconds()));
 			sleep(2000);
 		});

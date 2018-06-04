@@ -94,7 +94,7 @@ public class MazeGeneratorTests {
 	}
 
 	private void runTest(MazeAlgorithm algorithm) {
-		watch.runAndMeasure(() -> algorithm.run(grid.cell(CENTER)));
+		watch.measure(() -> algorithm.run(grid.cell(CENTER)));
 		results.add(format("%-30s (%6d cells): %.3f sec", algorithm.getClass().getSimpleName(), grid.numCells(),
 				watch.getSeconds()));
 	}
