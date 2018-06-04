@@ -7,7 +7,6 @@ import static de.amr.easy.util.GridUtils.byManhattanDistFrom;
 import static java.lang.String.format;
 
 import java.awt.event.ActionEvent;
-import java.util.Comparator;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
@@ -69,14 +68,14 @@ public class RunPathFinderAction extends MazeDemoAction {
 			SwingDFSAnimation animator = new SwingDFSAnimation(grid);
 			animator.setPathColor(app.model.getPathColor());
 			if (pathFinderInfo.isTagged(Manhattan)) {
-				Comparator<Integer> cmp = (u, v) -> byManhattanDistFrom(grid, target).reversed().compare(u, v);
-				watch.measure(() -> animator.run(canvas, new HillClimbing(grid, cmp), source, target));
+				watch.measure(() -> animator.run(canvas, new HillClimbing(grid, byManhattanDistFrom(grid, target).reversed()),
+						source, target));
 				app.showMessage(format("Hill Climbing (Manhattan): %.6f seconds.", watch.getSeconds()));
 				return;
 			}
 			if (pathFinderInfo.isTagged(Euclidian)) {
-				Comparator<Integer> cmp = (u, v) -> byEuclidianDistFrom(grid, target).reversed().compare(u, v);
-				watch.measure(() -> animator.run(canvas, new HillClimbing(grid, cmp), source, target));
+				watch.measure(() -> animator.run(canvas, new HillClimbing(grid, byEuclidianDistFrom(grid, target).reversed()),
+						source, target));
 				app.showMessage(format("Hill Climbing (Euclidian): %.6f seconds.", watch.getSeconds()));
 				return;
 			}
@@ -96,16 +95,14 @@ public class RunPathFinderAction extends MazeDemoAction {
 			SwingBFSAnimation animator = new SwingBFSAnimation(grid, canvas);
 			animator.setPathColor(app.model.getPathColor());
 			if (pathFinderInfo.isTagged(Manhattan)) {
-				Comparator<Integer> cmp = (u, v) -> byManhattanDistFrom(grid, target).compare(u, v);
-				BestFirstTraversal best = new BestFirstTraversal(grid, cmp);
+				BestFirstTraversal best = new BestFirstTraversal(grid, byManhattanDistFrom(grid, target));
 				watch.measure(() -> animator.run(best, source, target));
 				animator.showPath(best, target);
 				app.showMessage(format("Best-first search (Manhattan): %.6f seconds.", watch.getSeconds()));
 				return;
 			}
 			if (pathFinderInfo.isTagged(Euclidian)) {
-				Comparator<Integer> cmp = (u, v) -> byEuclidianDistFrom(grid, target).compare(u, v);
-				BestFirstTraversal best = new BestFirstTraversal(grid, cmp);
+				BestFirstTraversal best = new BestFirstTraversal(grid, byEuclidianDistFrom(grid, target));
 				watch.measure(() -> animator.run(best, source, target));
 				animator.showPath(best, target);
 				app.showMessage(format("Best-first search (Euclidian): %.6f seconds.", watch.getSeconds()));
