@@ -79,8 +79,7 @@ public class GridTraversalTests {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
 		grid.removeEdges();
 		new IterativeDFS(grid).run(target);
-		BestFirstTraversal best = new BestFirstTraversal(grid,
-				(u, v) -> Integer.compare(grid.manhattan(u, target), grid.manhattan(v, target)));
+		BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, v -> grid.manhattan(v, target));
 		assertState(grid.vertexStream(), best::getState, UNVISITED);
 		best.traverseGraph(source);
 		assertState(grid.vertexStream(), best::getState, COMPLETED);

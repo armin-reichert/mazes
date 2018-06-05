@@ -1,7 +1,7 @@
 package de.amr.easy.graph.traversal;
 
-import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.function.Function;
 
 import de.amr.easy.graph.api.Graph;
 
@@ -14,18 +14,17 @@ import de.amr.easy.graph.api.Graph;
  * 
  * @author Armin Reichert
  */
-public class BestFirstTraversal extends BreadthFirstTraversal {
+public class BestFirstTraversal<Cost extends Comparable<Cost>> extends BreadthFirstTraversal {
 
 	/**
 	 * Creates a Best-first-traversal instance for the given graph and vertex valuation.
 	 * 
 	 * @param graph
 	 *          a graph
-	 * @param vertexValuation
-	 *          a comparator which defines the value of vertices.
+	 * @param cost
+	 *          cost function for vertices
 	 */
-	public BestFirstTraversal(Graph<?> graph, Comparator<Integer> vertexValuation) {
-		super(graph, new PriorityQueue<>(vertexValuation));
+	public BestFirstTraversal(Graph<?> graph, Function<Integer, Cost> cost) {
+		super(graph, new PriorityQueue<>((u, v) -> cost.apply(u).compareTo(cost.apply(v))));
 	}
-
 }
