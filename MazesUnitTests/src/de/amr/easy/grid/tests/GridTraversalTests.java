@@ -10,7 +10,6 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.grid.api.GridPosition.TOP_RIGHT;
 import static de.amr.easy.grid.curves.CurveUtils.cells;
 import static de.amr.easy.grid.curves.CurveUtils.traverse;
-import static de.amr.easy.util.GridUtils.byManhattanDistFrom;
 import static org.junit.Assert.assertTrue;
 
 import java.util.function.Function;
@@ -35,7 +34,6 @@ import de.amr.easy.grid.curves.PeanoCurve;
 import de.amr.easy.grid.impl.Grid;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
-import de.amr.easy.util.GridUtils;
 
 public class GridTraversalTests {
 
@@ -82,7 +80,7 @@ public class GridTraversalTests {
 		grid.removeEdges();
 		new IterativeDFS(grid).run(target);
 		BestFirstTraversal best = new BestFirstTraversal(grid,
-				(u, v) -> GridUtils.byManhattanDistFrom(grid, target).compare(u, v));
+				(u, v) -> Integer.compare(grid.manhattan(u, target), grid.manhattan(v, target)));
 		assertState(grid.vertexStream(), best::getState, UNVISITED);
 		best.traverseGraph(source);
 		assertState(grid.vertexStream(), best::getState, COMPLETED);
@@ -112,7 +110,8 @@ public class GridTraversalTests {
 	@Test
 	public void testHillClimbing() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		HillClimbing hillClimbing = new HillClimbing(grid, (u, v) -> byManhattanDistFrom(grid, target).compare(u, v));
+		Function<Integer, Integer> cost = u -> grid.manhattan(u, target);
+		HillClimbing<Integer> hillClimbing = new HillClimbing<>(grid, cost);
 		assertState(grid.vertexStream(), hillClimbing::getState, UNVISITED);
 		hillClimbing.traverseGraph(source, target);
 		IntStream path = hillClimbing.findPath(target);

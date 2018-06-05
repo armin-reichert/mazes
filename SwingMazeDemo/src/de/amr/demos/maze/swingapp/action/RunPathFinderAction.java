@@ -2,11 +2,11 @@ package de.amr.demos.maze.swingapp.action;
 
 import static de.amr.demos.maze.swingapp.model.PathFinderTag.Euclidian;
 import static de.amr.demos.maze.swingapp.model.PathFinderTag.Manhattan;
-import static de.amr.easy.util.GridUtils.byEuclidianDistFrom;
-import static de.amr.easy.util.GridUtils.byManhattanDistFrom;
 import static java.lang.String.format;
 
 import java.awt.event.ActionEvent;
+import java.util.Comparator;
+import java.util.function.Function;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
@@ -50,7 +50,7 @@ public class RunPathFinderAction extends MazeDemoAction {
 		});
 	}
 
-	protected void runPathFinder(AlgorithmInfo pathFinderInfo) {
+	private void runPathFinder(AlgorithmInfo pathFinderInfo) {
 		final ObservableGrid<TraversalState, Integer> grid = app.model.getGrid();
 		final ObservingGridCanvas canvas = app.getCanvas();
 		final int source = grid.cell(app.model.getPathFinderSource());
@@ -68,14 +68,14 @@ public class RunPathFinderAction extends MazeDemoAction {
 			SwingDFSAnimation animator = new SwingDFSAnimation(grid);
 			animator.setPathColor(app.model.getPathColor());
 			if (pathFinderInfo.isTagged(Manhattan)) {
-				watch.measure(() -> animator.run(canvas, new HillClimbing(grid, byManhattanDistFrom(grid, target).reversed()),
-						source, target));
+				Function<Integer, Integer> cost = u -> grid.manhattan(u, target);
+				watch.measure(() -> animator.run(canvas, new HillClimbing<>(grid, cost), source, target));
 				app.showMessage(format("Hill Climbing (Manhattan): %.6f seconds.", watch.getSeconds()));
 				return;
 			}
 			if (pathFinderInfo.isTagged(Euclidian)) {
-				watch.measure(() -> animator.run(canvas, new HillClimbing(grid, byEuclidianDistFrom(grid, target).reversed()),
-						source, target));
+				Function<Integer, Integer> cost = u -> grid.euclidean2(u, target);
+				watch.measure(() -> animator.run(canvas, new HillClimbing<>(grid, cost), source, target));
 				app.showMessage(format("Hill Climbing (Euclidian): %.6f seconds.", watch.getSeconds()));
 				return;
 			}
@@ -95,14 +95,16 @@ public class RunPathFinderAction extends MazeDemoAction {
 			SwingBFSAnimation animator = new SwingBFSAnimation(grid, canvas);
 			animator.setPathColor(app.model.getPathColor());
 			if (pathFinderInfo.isTagged(Manhattan)) {
-				BestFirstTraversal best = new BestFirstTraversal(grid, byManhattanDistFrom(grid, target));
+				Comparator<Integer> cmp = (u, v) -> Integer.compare(grid.manhattan(u, target), grid.manhattan(v, target));
+				BestFirstTraversal best = new BestFirstTraversal(grid, cmp);
 				watch.measure(() -> animator.run(best, source, target));
 				animator.showPath(best, target);
 				app.showMessage(format("Best-first search (Manhattan): %.6f seconds.", watch.getSeconds()));
 				return;
 			}
 			if (pathFinderInfo.isTagged(Euclidian)) {
-				BestFirstTraversal best = new BestFirstTraversal(grid, byEuclidianDistFrom(grid, target));
+				Comparator<Integer> cmp = (u, v) -> Integer.compare(grid.euclidean2(u, target), grid.euclidean2(v, target));
+				BestFirstTraversal best = new BestFirstTraversal(grid, cmp);
 				watch.measure(() -> animator.run(best, source, target));
 				animator.showPath(best, target);
 				app.showMessage(format("Best-first search (Euclidian): %.6f seconds.", watch.getSeconds()));
