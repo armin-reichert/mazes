@@ -32,7 +32,7 @@ public abstract class ReverseDeleteMST extends MazeAlgorithm {
 			}
 			int u = edge.either(), v = edge.other(u);
 			grid.removeEdge(edge);
-			if (disconnected(u, v)) {
+			if (!connected(u, v)) {
 				grid.addEdge(u, v);
 			}
 		}
@@ -44,7 +44,7 @@ public abstract class ReverseDeleteMST extends MazeAlgorithm {
 	 *          a cell
 	 * @param v
 	 *          a cell
-	 * @return {@code true} if given cells are not connected by some path
+	 * @return {@code true} if given cells are connected by some path
 	 */
-	protected abstract boolean disconnected(int u, int v);
+	protected abstract boolean connected(int u, int v);
 }

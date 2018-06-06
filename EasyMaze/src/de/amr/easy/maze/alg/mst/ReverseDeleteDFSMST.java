@@ -18,9 +18,9 @@ public class ReverseDeleteDFSMST extends ReverseDeleteMST {
 	}
 
 	@Override
-	protected boolean disconnected(int u, int v) {
+	protected boolean connected(int u, int v) {
 		DepthFirstTraversal2 dfs = new DepthFirstTraversal2(grid);
-		dfs.traverseGraph(u, -1);
-		return dfs.getParent(v) == -1;
+		dfs.traverseGraph(u);
+		return dfs.getParent(v) != -1;
 	}
 }
