@@ -9,9 +9,8 @@ import java.util.stream.IntStream;
 import de.amr.easy.graph.api.Graph;
 
 /**
- * Implementation of a heuristic depth-first-search ("hill climbing") where the children of the
- * current vertex are visited in the order defined by a cost function, for example the Manhattan
- * distance from some target vertex.
+ * Implementation of a heuristic Depth-First-Search ("Hill Climbing") where the children of the
+ * current vertex are visited in the order defined by a cost function.
  * <p>
  * Reference: Patrick Henry Winston, Artificial Intelligence, Addison-Wesley, 1984
  * 
@@ -19,7 +18,7 @@ import de.amr.easy.graph.api.Graph;
  */
 public class HillClimbing<Cost extends Comparable<Cost>> extends DepthFirstTraversal {
 
-	private final Comparator<Integer> byIncreasingCost;
+	private final Comparator<Integer> byDecreasingCost;
 
 	/**
 	 * @param graph
@@ -29,7 +28,7 @@ public class HillClimbing<Cost extends Comparable<Cost>> extends DepthFirstTrave
 	 */
 	public HillClimbing(Graph<?> graph, Function<Integer, Cost> cost) {
 		super(graph);
-		byIncreasingCost = (u, v) -> cost.apply(u).compareTo(cost.apply(v));
+		byDecreasingCost = (u, v) -> cost.apply(v).compareTo(cost.apply(u));
 	}
 
 	@Override
@@ -38,8 +37,8 @@ public class HillClimbing<Cost extends Comparable<Cost>> extends DepthFirstTrave
 		return graph.adjVertices(parent)
 			.filter(c -> getState(c) == UNVISITED)
 			.boxed()
-			// push vertex with lower cost *after* vertex with higher cost to the stack!
-			.sorted(byIncreasingCost.reversed())
+			// push vertex with higher cost *before* vertex with lower cost onto the stack!
+			.sorted(byDecreasingCost)
 			.mapToInt(Integer::intValue);
 		/*@formatter:on*/
 	}
