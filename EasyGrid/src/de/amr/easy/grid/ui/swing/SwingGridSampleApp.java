@@ -28,7 +28,7 @@ import de.amr.easy.grid.impl.ObservableGrid;
  * 
  * @author Armin Reichert
  */
-public abstract class SwingGridSampleApp extends JFrame implements Runnable {
+public abstract class SwingGridSampleApp implements Runnable {
 
 	public static void launch(SwingGridSampleApp app) {
 		try {
@@ -39,6 +39,7 @@ public abstract class SwingGridSampleApp extends JFrame implements Runnable {
 		invokeLater(app::createAndShowUI);
 	}
 
+	protected final JFrame window = new JFrame();
 	protected final Dimension canvasSize;
 	protected String appName;
 	protected boolean fullscreen;
@@ -46,7 +47,8 @@ public abstract class SwingGridSampleApp extends JFrame implements Runnable {
 	protected ObservingGridCanvas canvas;
 	protected ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
 
-	private void configureRenderer() {
+	private void configureRenderer(int cellSize) {
+		renderer.fnCellSize = () -> cellSize;
 		renderer.fnCellBgColor = cell -> {
 			switch (grid.get(cell)) {
 			case VISITED:
@@ -77,7 +79,7 @@ public abstract class SwingGridSampleApp extends JFrame implements Runnable {
 		fullscreen = false;
 		canvasSize = new Dimension(canvasWidth, canvasHeight);
 		grid = new ObservableGrid<>(canvasWidth / cellSize, canvasHeight / cellSize, top, UNVISITED, false);
-		configureRenderer();
+		configureRenderer(cellSize);
 	}
 
 	/**
@@ -93,10 +95,11 @@ public abstract class SwingGridSampleApp extends JFrame implements Runnable {
 				.getDisplayMode();
 		canvasSize = new Dimension(displayMode.getWidth(), displayMode.getHeight());
 		grid = new ObservableGrid<>(canvasSize.width / cellSize, canvasSize.height / cellSize, top, UNVISITED, false);
-		configureRenderer();
+		configureRenderer(cellSize);
 	}
 
 	private void createAndShowUI() {
+
 		canvas = new ObservingGridCanvas(grid, renderer);
 		canvas.setBackground(Color.BLACK);
 		canvas.setDelay(0);
@@ -108,22 +111,22 @@ public abstract class SwingGridSampleApp extends JFrame implements Runnable {
 				System.exit(0);
 			}
 		});
-		add(canvas, BorderLayout.CENTER);
+		window.add(canvas, BorderLayout.CENTER);
 
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setTitle(createTitle());
-		setBackground(Color.BLACK);
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setTitle(createTitle());
+		window.setBackground(Color.BLACK);
 		if (fullscreen) {
-			setPreferredSize(canvasSize);
-			setSize(canvasSize);
-			setUndecorated(true);
-			setAlwaysOnTop(true);
+			window.setPreferredSize(canvasSize);
+			window.setSize(canvasSize);
+			window.setUndecorated(true);
+			window.setAlwaysOnTop(true);
 		} else {
 			canvas.setPreferredSize(canvasSize);
-			pack();
+			window.pack();
 		}
-		setLocationRelativeTo(null);
-		setVisible(true);
+		window.setLocationRelativeTo(null);
+		window.setVisible(true);
 
 		// start animation
 		new Thread(this).start();
@@ -135,7 +138,7 @@ public abstract class SwingGridSampleApp extends JFrame implements Runnable {
 
 	public void setAppName(String appName) {
 		this.appName = appName;
-		setTitle(createTitle());
+		window.setTitle(createTitle());
 	}
 
 	private String createTitle() {
@@ -159,7 +162,7 @@ public abstract class SwingGridSampleApp extends JFrame implements Runnable {
 		canvas.setGrid(grid);
 		renderer.fnCellSize = () -> cellSize;
 		canvas.adaptSize(cellSize);
-		setTitle(createTitle());
+		window.setTitle(createTitle());
 	}
 
 	public void sleep(int millis) {

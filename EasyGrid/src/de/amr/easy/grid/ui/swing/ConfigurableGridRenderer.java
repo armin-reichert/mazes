@@ -14,15 +14,39 @@ import java.util.function.Supplier;
  */
 public class ConfigurableGridRenderer extends GridRenderer {
 
-	public IntSupplier fnCellSize = () -> 8;
-	public IntSupplier fnPassageWidth = () -> fnCellSize.getAsInt() / 2;
-	public Supplier<Color> fnGridBgColor = () -> Color.BLACK;
-	public BiFunction<Integer, Integer, Color> fnPassageColor = (cell, dir) -> getCellBgColor(cell);
-	public Function<Integer, Color> fnCellBgColor = cell -> Color.WHITE;
-	public Function<Integer, String> fnText = cell -> "";
-	public IntSupplier fnMinFontSize = () -> 6;
-	public Supplier<Font> fnTextFont = () -> new Font("Sans", Font.PLAIN, 10);
-	public Supplier<Color> fnTextColor = () -> Color.BLUE;
+	public IntSupplier fnCellSize;
+	public IntSupplier fnPassageWidth;
+	public Supplier<Color> fnGridBgColor;
+	public BiFunction<Integer, Integer, Color> fnPassageColor;
+	public Function<Integer, Color> fnCellBgColor;
+	public Function<Integer, String> fnText;
+	public IntSupplier fnMinFontSize;
+	public Supplier<Font> fnTextFont;
+	public Supplier<Color> fnTextColor;
+
+	public ConfigurableGridRenderer() {
+		fnCellSize = () -> 8;
+		fnPassageWidth = () -> fnCellSize.getAsInt() / 2;
+		fnGridBgColor = () -> Color.BLACK;
+		fnPassageColor = (cell, dir) -> getCellBgColor(cell);
+		fnCellBgColor = cell -> Color.WHITE;
+		fnText = cell -> "";
+		fnMinFontSize = () -> 6;
+		fnTextFont = () -> new Font("Sans", Font.PLAIN, 10);
+		fnTextColor = () -> Color.BLUE;
+	}
+
+	public ConfigurableGridRenderer(ConfigurableGridRenderer base) {
+		fnCellSize = base.fnCellSize;
+		fnPassageWidth = base.fnPassageWidth;
+		fnGridBgColor = base.fnGridBgColor;
+		fnPassageColor = base.fnPassageColor;
+		fnCellBgColor = base.fnCellBgColor;
+		fnText = base.fnText;
+		fnMinFontSize = base.fnMinFontSize;
+		fnTextFont = base.fnTextFont;
+		fnTextColor = base.fnTextColor;
+	}
 
 	@Override
 	public int getCellSize() {
