@@ -20,8 +20,7 @@ public class FloodFillAction extends MazeDemoAction {
 
 	private void runFloodFill() {
 		int source = app.model.getGrid().cell(app.model.getPathFinderSource());
-		FloodFillAnimation ff = new FloodFillAnimation();
-		ff.run(app.getCanvas(), app.model.getGrid(), source, true);
+		new FloodFillAnimation<>().run(app.getCanvas(), app.model.getGrid(), source, true);
 	}
 
 	@Override

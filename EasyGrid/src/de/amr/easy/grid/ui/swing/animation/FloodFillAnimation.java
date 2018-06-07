@@ -21,9 +21,9 @@ import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
  * 
  * @author Armin Reichert
  */
-public class FloodFillAnimation {
+public class FloodFillAnimation<G extends BareGrid2D<?>> {
 
-	private static GridRenderer createRenderer(GridRenderer base, BreadthFirstTraversal bfs, BitSet solution,
+	private GridRenderer createRenderer(GridRenderer base, BreadthFirstTraversal<G> bfs, BitSet solution,
 			boolean distancesVisible, int maxDistance) {
 
 		Function<Integer, Color> cellBgColor = cell -> {
@@ -48,8 +48,8 @@ public class FloodFillAnimation {
 		return renderer;
 	}
 
-	public void run(ObservingGridCanvas canvas, BareGrid2D<?> grid, int source, boolean distancesVisible) {
-		BreadthFirstTraversal bfs = new BreadthFirstTraversal(grid);
+	public void run(ObservingGridCanvas canvas, G grid, int source, boolean distancesVisible) {
+		BreadthFirstTraversal<G> bfs = new BreadthFirstTraversal<>(grid);
 		bfs.addObserver(new GraphTraversalListener() {
 
 			@Override

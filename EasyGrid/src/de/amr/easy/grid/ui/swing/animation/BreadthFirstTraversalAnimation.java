@@ -19,17 +19,17 @@ import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
  * 
  * @author Armin Reichert
  */
-public class BreadthFirstTraversalAnimation {
+public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
 
-	private final BareGrid2D<?> grid;
-	private final BreadthFirstTraversal bfs;
+	private final G grid;
+	private final BreadthFirstTraversal<G> bfs;
 	private GridRenderer floodFillRenderer;
 	private boolean distanceVisible;
 	private Color pathColor;
 
-	public BreadthFirstTraversalAnimation(BareGrid2D<?> grid, BreadthFirstTraversal bfs) {
-		this.grid = grid;
+	public BreadthFirstTraversalAnimation(BreadthFirstTraversal<G> bfs) {
 		this.bfs = bfs;
+		grid = bfs.getGraph();
 		distanceVisible = true;
 		pathColor = Color.RED;
 	}
@@ -62,7 +62,7 @@ public class BreadthFirstTraversalAnimation {
 		canvas.getRenderer().ifPresent(canvasRenderer -> {
 
 			// 1. traverse complete graph for computing maximum distance from source
-			BreadthFirstTraversal distanceMeter = new BreadthFirstTraversal(grid);
+			BreadthFirstTraversal<G> distanceMeter = new BreadthFirstTraversal<>(grid);
 			distanceMeter.traverseGraph(source);
 
 			// Create renderer from distance measurement results
@@ -89,7 +89,7 @@ public class BreadthFirstTraversalAnimation {
 		});
 	}
 
-	private GridRenderer createFloodFillRenderer(GridRenderer baseRenderer, BreadthFirstTraversal distanceMeter) {
+	private GridRenderer createFloodFillRenderer(GridRenderer baseRenderer, BreadthFirstTraversal<?> distanceMeter) {
 		ConfigurableGridRenderer r = new ConfigurableGridRenderer();
 		r.fnCellBgColor = cell -> colorByDist(cell, distanceMeter);
 		r.fnCellSize = () -> baseRenderer.getModel().getCellSize();
@@ -134,7 +134,7 @@ public class BreadthFirstTraversalAnimation {
 		return r;
 	}
 
-	private static Color colorByDist(int cell, BreadthFirstTraversal distanceMeter) {
+	private static Color colorByDist(int cell, BreadthFirstTraversal<?> distanceMeter) {
 		float hue = 0.16f;
 		if (distanceMeter.getMaxDistance() > 0) {
 			hue += 0.7f * distanceMeter.getDistance(cell) / distanceMeter.getMaxDistance();

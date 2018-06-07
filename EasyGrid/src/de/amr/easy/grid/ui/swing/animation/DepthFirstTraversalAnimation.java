@@ -20,14 +20,14 @@ import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
  * 
  * @author Armin Reichert
  */
-public class DepthFirstTraversalAnimation {
+public class DepthFirstTraversalAnimation<G extends BareGrid2D<?>> {
 
-	private final BareGrid2D<?> grid;
+	private final G grid;
 	private int[] path;
 	private Color pathColor = Color.RED;
 	private Color visitedCellColor = Color.BLUE;
 
-	public DepthFirstTraversalAnimation(BareGrid2D<?> grid) {
+	public DepthFirstTraversalAnimation(G grid) {
 		this.grid = grid;
 	}
 

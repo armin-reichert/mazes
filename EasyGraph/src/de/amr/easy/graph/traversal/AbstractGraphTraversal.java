@@ -20,8 +20,11 @@ import de.amr.easy.graph.api.event.GraphTraversalListener;
  * allows to register observers for vertex and edge visits.
  * 
  * @author Armin Reichert
+ * 
+ * @param <G>
+ *          the graph type
  */
-public abstract class AbstractGraphTraversal implements ObservableGraphTraversal, PathFinder {
+public abstract class AbstractGraphTraversal<G extends Graph<?>> implements ObservableGraphTraversal, PathFinder {
 
 	protected final Map<Integer, Integer> parentMap = new HashMap<>();
 
@@ -29,10 +32,17 @@ public abstract class AbstractGraphTraversal implements ObservableGraphTraversal
 
 	protected final Set<GraphTraversalListener> observers = new HashSet<>(3);
 
-	protected final Graph<?> graph;
+	protected final G graph;
 
-	public AbstractGraphTraversal(Graph<?> graph) {
+	public AbstractGraphTraversal(G graph) {
 		this.graph = graph;
+	}
+
+	/**
+	 * @return the traversed graph
+	 */
+	public G getGraph() {
+		return graph;
 	}
 
 	/**

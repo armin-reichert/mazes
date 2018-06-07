@@ -17,9 +17,11 @@ import java.util.Map;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.curves.HilbertCurve;
+import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
@@ -61,7 +63,8 @@ public class HilbertCurveApp extends SwingGridSampleApp {
 				System.out.println("Curve start: " + startPos);
 				// System.out.println(CurveUtils.cellsAsString(hilbert, grid, startCell));
 				traverse(hilbert, grid, startCell, this::addEdge);
-				BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid, new BreadthFirstTraversal(grid));
+				BreadthFirstTraversal<ObservableGrid<TraversalState, Integer>> bfs = new BreadthFirstTraversal<>(grid);
+				BreadthFirstTraversalAnimation<?> anim = new BreadthFirstTraversalAnimation<>(bfs);
 				anim.setDistanceVisible(false);
 				anim.run(canvas, startCell, -1);
 				sleep(1000);

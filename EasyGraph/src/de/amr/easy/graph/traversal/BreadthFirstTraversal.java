@@ -20,20 +20,23 @@ import de.amr.easy.graph.api.Graph;
  * animation.
  * 
  * @author Armin Reichert
+ * 
+ * @param <G>
+ *          graph type
  */
-public class BreadthFirstTraversal extends AbstractGraphTraversal {
+public class BreadthFirstTraversal<G extends Graph<?>> extends AbstractGraphTraversal<G> {
 
 	protected final Queue<Integer> q;
 	protected final int[] distance;
 
-	protected BreadthFirstTraversal(Graph<?> graph, Queue<Integer> queue) {
+	protected BreadthFirstTraversal(G graph, Queue<Integer> queue) {
 		super(graph);
 		this.q = queue;
 		this.distance = new int[graph.vertexCount()];
 		clear();
 	}
 
-	public BreadthFirstTraversal(Graph<?> graph) {
+	public BreadthFirstTraversal(G graph) {
 		this(graph, new ArrayDeque<>());
 	}
 

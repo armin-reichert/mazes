@@ -13,8 +13,13 @@ import de.amr.easy.graph.api.Graph;
  * Reference: Patrick Henry Winston, Artificial Intelligence, Addison-Wesley, 1984
  * 
  * @author Armin Reichert
+ * 
+ * @param <G>
+ *          graph type
+ * @param <C>
+ *          vertex cost type
  */
-public class BestFirstTraversal<Cost extends Comparable<Cost>> extends BreadthFirstTraversal {
+public class BestFirstTraversal<G extends Graph<?>, C extends Comparable<C>> extends BreadthFirstTraversal<G> {
 
 	/**
 	 * Creates a Best-first-traversal instance for the given graph and vertex valuation.
@@ -24,7 +29,7 @@ public class BestFirstTraversal<Cost extends Comparable<Cost>> extends BreadthFi
 	 * @param cost
 	 *          cost function for vertices
 	 */
-	public BestFirstTraversal(Graph<?> graph, Function<Integer, Cost> cost) {
+	public BestFirstTraversal(G graph, Function<Integer, C> cost) {
 		super(graph, new PriorityQueue<>((u, v) -> cost.apply(u).compareTo(cost.apply(v))));
 	}
 }

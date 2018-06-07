@@ -34,7 +34,7 @@ public class LayeredGridCanvas extends LayeredCanvas implements GraphObserver<We
 	protected boolean pathDisplayed;
 	protected boolean distancesDisplayed;
 	protected ObservableGrid2D<TraversalState, Integer> grid;
-	protected BreadthFirstTraversal bfs;
+	protected BreadthFirstTraversal<?> bfs;
 	protected int maxDistance;
 	protected Iterable<Integer> path;
 
@@ -100,10 +100,10 @@ public class LayeredGridCanvas extends LayeredCanvas implements GraphObserver<We
 	}
 
 	public void runPathFinder(int pathStartCell, int pathTargetCell) {
-		bfs = new BreadthFirstTraversal(grid);
+		bfs = new BreadthFirstTraversal<>(grid);
 		bfs.traverseGraph(pathStartCell);
 		maxDistance = bfs.getMaxDistance();
-		bfs = new BreadthFirstTraversal(grid);
+		bfs = new BreadthFirstTraversal<>(grid);
 		bfs.traverseGraph(pathStartCell, pathTargetCell);
 		path = bfs.findPath(pathTargetCell)::iterator;
 	}

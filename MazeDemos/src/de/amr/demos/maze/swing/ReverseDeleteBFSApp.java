@@ -24,7 +24,7 @@ public class ReverseDeleteBFSApp extends SwingGridSampleApp {
 		IntStream.of(128, 64, 32).forEach(cellSize -> {
 			resizeGrid(cellSize);
 			new ReverseDeleteBFSMST(grid).run(-1);
-			new BreadthFirstTraversalAnimation(grid, new BreadthFirstTraversal(grid)).run(canvas, 0, -1);
+			new BreadthFirstTraversalAnimation<>(new BreadthFirstTraversal<>(grid)).run(canvas, 0, -1);
 			sleep(1000);
 		});
 		System.exit(0);

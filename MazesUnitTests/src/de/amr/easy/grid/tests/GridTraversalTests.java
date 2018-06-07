@@ -68,7 +68,7 @@ public class GridTraversalTests {
 
 	@Test
 	public void testBFS() {
-		BreadthFirstTraversal bfs = new BreadthFirstTraversal(grid);
+		BreadthFirstTraversal<Grid2D<TraversalState, Integer>> bfs = new BreadthFirstTraversal<>(grid);
 		assertState(grid.vertexStream(), bfs::getState, UNVISITED);
 		bfs.traverseGraph(grid.cell(CENTER));
 		assertState(grid.vertexStream(), bfs::getState, COMPLETED);
@@ -79,7 +79,8 @@ public class GridTraversalTests {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
 		grid.removeEdges();
 		new IterativeDFS(grid).run(target);
-		BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, v -> grid.manhattan(v, target));
+		BestFirstTraversal<Grid2D<TraversalState, Integer>, Integer> best = new BestFirstTraversal<>(grid,
+				v -> grid.manhattan(v, target));
 		assertState(grid.vertexStream(), best::getState, UNVISITED);
 		best.traverseGraph(source);
 		assertState(grid.vertexStream(), best::getState, COMPLETED);
@@ -91,7 +92,7 @@ public class GridTraversalTests {
 	@Test
 	public void testDFS() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		DepthFirstTraversal dfs = new DepthFirstTraversal(grid);
+		DepthFirstTraversal<Grid2D<TraversalState, Integer>> dfs = new DepthFirstTraversal<>(grid);
 		assertState(grid.vertexStream(), dfs::getState, UNVISITED);
 		dfs.traverseGraph(source, target);
 		assertState(dfs.findPath(target), dfs::getState, VISITED);
@@ -100,7 +101,7 @@ public class GridTraversalTests {
 	@Test
 	public void testDFS2() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		DepthFirstTraversal2 dfs = new DepthFirstTraversal2(grid);
+		DepthFirstTraversal2<Grid2D<TraversalState, Integer>> dfs = new DepthFirstTraversal2<>(grid);
 		assertState(grid.vertexStream(), dfs::getState, UNVISITED);
 		dfs.traverseGraph(source, target);
 		assertState(dfs.findPath(target), dfs::getState, COMPLETED);
@@ -110,7 +111,7 @@ public class GridTraversalTests {
 	public void testHillClimbing() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
 		Function<Integer, Integer> cost = u -> grid.manhattan(u, target);
-		HillClimbing<Integer> hillClimbing = new HillClimbing<>(grid, cost);
+		HillClimbing<Grid2D<TraversalState, Integer>, Integer> hillClimbing = new HillClimbing<>(grid, cost);
 		assertState(grid.vertexStream(), hillClimbing::getState, UNVISITED);
 		hillClimbing.traverseGraph(source, target);
 		IntStream path = hillClimbing.findPath(target);

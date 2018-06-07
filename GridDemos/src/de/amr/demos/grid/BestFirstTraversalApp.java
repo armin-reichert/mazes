@@ -7,7 +7,9 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import java.awt.Color;
 import java.util.stream.IntStream;
 
+import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.traversal.BestFirstTraversal;
+import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
@@ -45,8 +47,10 @@ public class BestFirstTraversalApp extends SwingGridSampleApp {
 			int target = grid.cell(BOTTOM_RIGHT);
 			sleep(2000);
 
-			BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, v -> grid.euclidean2(v, target));
-			BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid, best);
+			BestFirstTraversal<ObservableGrid<TraversalState, Integer>, Integer> best = new BestFirstTraversal<>(grid,
+					v -> grid.euclidean2(v, target));
+			BreadthFirstTraversalAnimation<ObservableGrid<TraversalState, Integer>> anim = new BreadthFirstTraversalAnimation<>(
+					best);
 			anim.run(canvas, source, target);
 			anim.showPath(canvas, target);
 

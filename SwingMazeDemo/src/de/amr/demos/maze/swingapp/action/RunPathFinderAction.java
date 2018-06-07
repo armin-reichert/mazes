@@ -55,15 +55,15 @@ public class RunPathFinderAction extends MazeDemoAction {
 		final int tgt = grid.cell(app.model.getPathFinderTarget());
 
 		if (pathFinderInfo.getAlgorithmClass() == DepthFirstTraversal2.class) {
-			DepthFirstTraversalAnimation anim = new DepthFirstTraversalAnimation(grid);
+			DepthFirstTraversalAnimation<?> anim = new DepthFirstTraversalAnimation<>(grid);
 			anim.setPathColor(app.model.getPathColor());
-			watch.measure(() -> anim.run(canvas, new DepthFirstTraversal2(grid), src, tgt));
+			watch.measure(() -> anim.run(canvas, new DepthFirstTraversal2<>(grid), src, tgt));
 			app.showMessage(format("Depth-first search: %.6f seconds.", watch.getSeconds()));
 			return;
 		}
 
 		if (pathFinderInfo.getAlgorithmClass() == HillClimbing.class) {
-			DepthFirstTraversalAnimation anim = new DepthFirstTraversalAnimation(grid);
+			DepthFirstTraversalAnimation<?> anim = new DepthFirstTraversalAnimation<>(grid);
 			anim.setPathColor(app.model.getPathColor());
 			if (pathFinderInfo.isTagged(Manhattan)) {
 				watch.measure(() -> anim.run(canvas, new HillClimbing<>(grid, v -> grid.manhattan(v, tgt)), src, tgt));
@@ -78,8 +78,8 @@ public class RunPathFinderAction extends MazeDemoAction {
 		}
 
 		if (pathFinderInfo.getAlgorithmClass() == BreadthFirstTraversal.class) {
-			BreadthFirstTraversal bfs = new BreadthFirstTraversal(grid);
-			BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid, bfs);
+			BreadthFirstTraversal<ObservableGrid<TraversalState, Integer>> bfs = new BreadthFirstTraversal<>(grid);
+			BreadthFirstTraversalAnimation<?> anim = new BreadthFirstTraversalAnimation<>(bfs);
 			anim.setPathColor(app.model.getPathColor());
 			watch.measure(() -> anim.run(canvas, src, tgt));
 			anim.showPath(canvas, tgt);
@@ -89,8 +89,9 @@ public class RunPathFinderAction extends MazeDemoAction {
 
 		if (pathFinderInfo.getAlgorithmClass() == BestFirstTraversal.class) {
 			if (pathFinderInfo.isTagged(Manhattan)) {
-				BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, v -> grid.manhattan(v, tgt));
-				BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid, best);
+				BestFirstTraversal<ObservableGrid<TraversalState, Integer>, Integer> best = new BestFirstTraversal<>(grid,
+						v -> grid.manhattan(v, tgt));
+				BreadthFirstTraversalAnimation<?> anim = new BreadthFirstTraversalAnimation<>(best);
 				anim.setPathColor(app.model.getPathColor());
 				watch.measure(() -> anim.run(canvas, src, tgt));
 				anim.showPath(canvas, tgt);
@@ -98,8 +99,9 @@ public class RunPathFinderAction extends MazeDemoAction {
 				return;
 			}
 			if (pathFinderInfo.isTagged(Euclidian)) {
-				BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, v -> grid.euclidean2(v, tgt));
-				BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid, best);
+				BestFirstTraversal<ObservableGrid<TraversalState, Integer>, Integer> best = new BestFirstTraversal<>(grid,
+						v -> grid.euclidean2(v, tgt));
+				BreadthFirstTraversalAnimation<?> anim = new BreadthFirstTraversalAnimation<>(best);
 				anim.setPathColor(app.model.getPathColor());
 				watch.measure(() -> anim.run(canvas, src, tgt));
 				anim.showPath(canvas, tgt);

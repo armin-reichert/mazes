@@ -15,8 +15,13 @@ import de.amr.easy.graph.api.Graph;
  * Reference: Patrick Henry Winston, Artificial Intelligence, Addison-Wesley, 1984
  * 
  * @author Armin Reichert
+ * 
+ * @param <G>
+ *          graph type
+ * @param <C>
+ *          vertex cost type
  */
-public class HillClimbing<Cost extends Comparable<Cost>> extends DepthFirstTraversal {
+public class HillClimbing<G extends Graph<?>, C extends Comparable<C>> extends DepthFirstTraversal<G> {
 
 	private final Comparator<Integer> byDecreasingCost;
 
@@ -26,7 +31,7 @@ public class HillClimbing<Cost extends Comparable<Cost>> extends DepthFirstTrave
 	 * @param cost
 	 *          cost function for vertices
 	 */
-	public HillClimbing(Graph<?> graph, Function<Integer, Cost> cost) {
+	public HillClimbing(G graph, Function<Integer, C> cost) {
 		super(graph);
 		byDecreasingCost = (u, v) -> cost.apply(v).compareTo(cost.apply(u));
 	}
