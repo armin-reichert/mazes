@@ -1,4 +1,4 @@
-package de.amr.easy.grid.ui.swing;
+package de.amr.easy.grid.ui.swing.rendering;
 
 import static java.lang.Math.ceil;
 import static java.lang.Math.round;
@@ -22,35 +22,49 @@ import de.amr.easy.grid.impl.Top8;
  * 
  * @author Armin Reichert
  */
-public abstract class GridRenderer implements GridRenderingModel {
+public class WallPassageGridRenderer implements GridRenderer {
 
+	private final GridRenderingModel model;
+
+	public WallPassageGridRenderer(GridRenderingModel model) {
+		this.model = model;
+	}
+
+	@Override
+	public GridRenderingModel getModel() {
+		return model;
+	}
+
+	@Override
 	public void drawGrid(Graphics2D g, BareGrid2D<?> grid) {
 		grid.edgeStream().forEach(passage -> drawPassage(g, grid, passage, true));
 		grid.vertexStream().filter(cell -> grid.degree(cell) == 0).forEach(cell -> drawCell(g, grid, cell));
 	}
 
+	@Override
 	public void drawPassage(Graphics2D g, BareGrid2D<?> grid, Edge passage, boolean visible) {
 		final int p = passage.either();
 		final int q = passage.other(p);
 		final int dir = grid.direction(p, q).getAsInt();
 		final int inv = grid.getTopology().inv(dir);
-		drawHalfPassage(g, grid, p, dir, visible ? getPassageColor(p, dir) : getGridBgColor());
-		drawHalfPassage(g, grid, q, inv, visible ? getPassageColor(q, inv) : getGridBgColor());
+		drawHalfPassage(g, grid, p, dir, visible ? getModel().getPassageColor(p, dir) : getModel().getGridBgColor());
+		drawHalfPassage(g, grid, q, inv, visible ? getModel().getPassageColor(q, inv) : getModel().getGridBgColor());
 	}
 
+	@Override
 	public void drawCell(Graphics2D g, BareGrid2D<?> grid, int cell) {
 		grid.getTopology().dirs().filter(dir -> grid.isConnected(cell, dir))
-				.forEach(dir -> drawHalfPassage(g, grid, cell, dir, getPassageColor(cell, dir)));
+				.forEach(dir -> drawHalfPassage(g, grid, cell, dir, getModel().getPassageColor(cell, dir)));
 		drawCellContent(g, grid, cell);
 	}
 
 	private void drawHalfPassage(Graphics2D g, BareGrid2D<?> grid, int cell, int dir, Color passageColor) {
-		final int cellX = grid.col(cell) * getCellSize();
-		final int cellY = grid.row(cell) * getCellSize();
-		final int centerX = cellX + getCellSize() / 2;
-		final int centerY = cellY + getCellSize() / 2;
-		final int longside = (getCellSize() + getPassageWidth()) / 2;
-		final int shortside = getPassageWidth();
+		final int cellX = grid.col(cell) * getModel().getCellSize();
+		final int cellY = grid.row(cell) * getModel().getCellSize();
+		final int centerX = cellX + getModel().getCellSize() / 2;
+		final int centerY = cellY + getModel().getCellSize() / 2;
+		final int longside = (getModel().getCellSize() + getModel().getPassageWidth()) / 2;
+		final int shortside = getModel().getPassageWidth();
 		g.setColor(passageColor);
 		if (grid.getTopology() == Top4.get()) {
 			switch (dir) {
@@ -65,14 +79,14 @@ public abstract class GridRenderer implements GridRenderingModel {
 				g.translate(-centerX + shortside / 2, -centerY + shortside / 2);
 				break;
 			case Top4.W:
-				g.translate(centerX - getCellSize() / 2, centerY - shortside / 2);
+				g.translate(centerX - getModel().getCellSize() / 2, centerY - shortside / 2);
 				g.fillRect(0, 0, longside, shortside);
-				g.translate(-centerX + getCellSize() / 2, -centerY + shortside / 2);
+				g.translate(-centerX + getModel().getCellSize() / 2, -centerY + shortside / 2);
 				break;
 			case Top4.N:
-				g.translate(centerX - shortside / 2, centerY - getCellSize() / 2);
+				g.translate(centerX - shortside / 2, centerY - getModel().getCellSize() / 2);
 				g.fillRect(0, 0, shortside, longside);
-				g.translate(-centerX + shortside / 2, -centerY + getCellSize() / 2);
+				g.translate(-centerX + shortside / 2, -centerY + getModel().getCellSize() / 2);
 				break;
 			}
 		} else if (grid.getTopology() == Top8.get()) {
@@ -86,9 +100,9 @@ public abstract class GridRenderer implements GridRenderingModel {
 				g.translate(-centerX + shortside / 2, -centerY + shortside / 2);
 				break;
 			case Top8.N:
-				g.translate(centerX - shortside / 2, centerY - getCellSize() / 2);
+				g.translate(centerX - shortside / 2, centerY - getModel().getCellSize() / 2);
 				g.fillRect(0, 0, shortside, longside);
-				g.translate(-centerX + shortside / 2, -centerY + getCellSize() / 2);
+				g.translate(-centerX + shortside / 2, -centerY + getModel().getCellSize() / 2);
 				break;
 			case Top8.NE:
 				g.translate(centerX, centerY);
@@ -116,9 +130,9 @@ public abstract class GridRenderer implements GridRenderingModel {
 				g.translate(-centerX, -centerY);
 				break;
 			case Top8.W:
-				g.translate(centerX - getCellSize() / 2, centerY - shortside / 2);
+				g.translate(centerX - getModel().getCellSize() / 2, centerY - shortside / 2);
 				g.fillRect(0, 0, longside, shortside);
-				g.translate(-centerX + getCellSize() / 2, -centerY + shortside / 2);
+				g.translate(-centerX + getModel().getCellSize() / 2, -centerY + shortside / 2);
 				break;
 			}
 		}
@@ -126,31 +140,32 @@ public abstract class GridRenderer implements GridRenderingModel {
 	}
 
 	private void drawCellContent(Graphics2D g, BareGrid2D<?> grid, int cell) {
-		final int cellX = grid.col(cell) * getCellSize();
-		final int cellY = grid.row(cell) * getCellSize();
-		final int offset = (int) ceil((getCellSize() / 2 - getPassageWidth() / 2));
+		final int cellX = grid.col(cell) * getModel().getCellSize();
+		final int cellY = grid.row(cell) * getModel().getCellSize();
+		final int offset = (int) ceil((getModel().getCellSize() / 2 - getModel().getPassageWidth() / 2));
 		g.translate(cellX, cellY);
-		g.setColor(getCellBgColor(cell));
-		g.fillRect(offset, offset, getPassageWidth(), getPassageWidth());
+		g.setColor(getModel().getCellBgColor(cell));
+		g.fillRect(offset, offset, getModel().getPassageWidth(), getModel().getPassageWidth());
 		drawCellText(g, grid, cell);
 		g.translate(-cellX, -cellY);
 	}
 
 	private void drawCellText(Graphics2D g, BareGrid2D<?> grid, int cell) {
-		int fontSize = getTextFont().getSize();
-		if (fontSize < getMinFontSize()) {
+		int fontSize = getModel().getTextFont().getSize();
+		if (fontSize < getModel().getMinFontSize()) {
 			return;
 		}
-		String text = getText(cell);
+		String text = getModel().getText(cell);
 		text = (text == null) ? "" : text.trim();
 		if (text.length() == 0) {
 			return;
 		}
-		g.setColor(getTextColor());
-		g.setFont(getTextFont().deriveFont(Font.PLAIN, fontSize));
+		g.setColor(getModel().getTextColor());
+		g.setFont(getModel().getTextFont().deriveFont(Font.PLAIN, fontSize));
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		Rectangle textBox = g.getFontMetrics().getStringBounds(text, g).getBounds();
-		g.drawString(text, (getCellSize() - textBox.width) / 2, (getCellSize() + textBox.height / 2) / 2);
+		g.drawString(text, (getModel().getCellSize() - textBox.width) / 2,
+				(getModel().getCellSize() + textBox.height / 2) / 2);
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
 	}
 }

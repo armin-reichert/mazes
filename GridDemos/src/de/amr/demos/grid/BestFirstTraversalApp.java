@@ -8,10 +8,12 @@ import java.awt.Color;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.traversal.BestFirstTraversal;
+import de.amr.easy.graph.traversal.HillClimbing;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.ui.swing.ConfigurableGridRenderer;
-import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
+import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
+import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
+import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 
 public class BestFirstTraversalApp extends SwingGridSampleApp {
 
@@ -31,21 +33,32 @@ public class BestFirstTraversalApp extends SwingGridSampleApp {
 			ConfigurableGridRenderer r = new ConfigurableGridRenderer(renderer);
 			r.fnCellBgColor = cell -> grid.get(cell) == UNVISITED ? Color.WHITE : renderer.getCellBgColor(cell);
 			r.fnPassageColor = (cell, dir) -> grid.get(cell) == UNVISITED ? Color.WHITE : renderer.getPassageColor(cell, dir);
-			r.fnPassageWidth = () -> renderer.getCellSize() -1;
+			r.fnPassageWidth = () -> 1;
 			canvas.pushRenderer(r);
 			grid.fill();
 			removeArea(6, 6, 3, 6);
 			removeArea(0, 15, 20, 1);
+			removeArea(0, 16, 10, 1);
+			removeArea(10, 16, 10, 1);
 			grid.setDefaultContent(UNVISITED);
 			canvas.drawGrid();
 			canvas.setDelay(6);
 			int source = grid.cell(TOP_LEFT);
 			int target = grid.cell(BOTTOM_RIGHT);
-			BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, v -> grid.euclidean2(v, target));
-			SwingBFSAnimation anim = new SwingBFSAnimation(grid, canvas);
 			sleep(2000);
+			
+			BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, v -> grid.euclidean2(v, target));
+			BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid, canvas);
 			anim.run(best, source, target);
 			anim.showPath(best, target);
+			
+			sleep(3000);
+			canvas.drawGrid();
+			
+//			HillClimbing<Integer> hill = new HillClimbing<>(grid, v -> grid.euclidean2(v, target));
+//			SwingDFSAnimation dfsAnim = new SwingDFSAnimation(grid);
+//			dfsAnim.run(canvas, hill, source, target);
+			
 			canvas.popRenderer();
 			sleep(6000);
 		} while (true);

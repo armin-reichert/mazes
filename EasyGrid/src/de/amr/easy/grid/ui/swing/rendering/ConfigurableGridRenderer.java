@@ -1,18 +1,22 @@
-package de.amr.easy.grid.ui.swing;
+package de.amr.easy.grid.ui.swing.rendering;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.IntSupplier;
 import java.util.function.Supplier;
+
+import de.amr.easy.graph.api.Edge;
+import de.amr.easy.grid.api.BareGrid2D;
 
 /**
  * Renderer that can be configured without sub-classing.
  * 
  * @author Armin Reichert
  */
-public class ConfigurableGridRenderer extends GridRenderer {
+public class ConfigurableGridRenderer implements GridRenderer, GridRenderingModel {
 
 	public IntSupplier fnCellSize;
 	public IntSupplier fnPassageWidth;
@@ -24,6 +28,8 @@ public class ConfigurableGridRenderer extends GridRenderer {
 	public Supplier<Font> fnTextFont;
 	public Supplier<Color> fnTextColor;
 
+	private GridRenderer style;
+
 	public ConfigurableGridRenderer() {
 		fnCellSize = () -> 8;
 		fnPassageWidth = () -> fnCellSize.getAsInt() / 2;
@@ -34,6 +40,8 @@ public class ConfigurableGridRenderer extends GridRenderer {
 		fnMinFontSize = () -> 6;
 		fnTextFont = () -> new Font("Sans", Font.PLAIN, 10);
 		fnTextColor = () -> Color.BLUE;
+
+		style = new WallPassageGridRenderer(this);
 	}
 
 	public ConfigurableGridRenderer(ConfigurableGridRenderer base) {
@@ -46,6 +54,13 @@ public class ConfigurableGridRenderer extends GridRenderer {
 		fnMinFontSize = base.fnMinFontSize;
 		fnTextFont = base.fnTextFont;
 		fnTextColor = base.fnTextColor;
+
+		style = base.style;
+	}
+
+	@Override
+	public GridRenderingModel getModel() {
+		return this;
 	}
 
 	@Override
@@ -91,5 +106,15 @@ public class ConfigurableGridRenderer extends GridRenderer {
 	@Override
 	public Color getTextColor() {
 		return fnTextColor.get();
+	}
+
+	@Override
+	public void drawPassage(Graphics2D g, BareGrid2D<?> grid, Edge passage, boolean visible) {
+		style.drawPassage(g, grid, passage, visible);
+	}
+
+	@Override
+	public void drawCell(Graphics2D g, BareGrid2D<?> grid, int cell) {
+		style.drawCell(g, grid, cell);
 	}
 }

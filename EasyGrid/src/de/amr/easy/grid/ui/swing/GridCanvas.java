@@ -14,6 +14,7 @@ import javax.swing.JComponent;
 import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.grid.api.BareGrid2D;
+import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
 
 /**
  * A Swing component for displaying a grid.
@@ -98,8 +99,8 @@ public class GridCanvas<G extends BareGrid2D<?>> extends JComponent {
 
 	public void pushRenderer(GridRenderer newRenderer) {
 		getRenderer().ifPresent(oldRenderer -> {
-			if (oldRenderer.getCellSize() != newRenderer.getCellSize()) {
-				adaptSize(newRenderer.getCellSize());
+			if (oldRenderer.getModel().getCellSize() != newRenderer.getModel().getCellSize()) {
+				adaptSize(newRenderer.getModel().getCellSize());
 			}
 		});
 		rendererStack.push(newRenderer);
@@ -112,8 +113,8 @@ public class GridCanvas<G extends BareGrid2D<?>> extends JComponent {
 		}
 		GridRenderer oldRenderer = rendererStack.pop();
 		getRenderer().ifPresent(newRenderer -> {
-			if (oldRenderer.getCellSize() != newRenderer.getCellSize()) {
-				adaptSize(newRenderer.getCellSize());
+			if (oldRenderer.getModel().getCellSize() != newRenderer.getModel().getCellSize()) {
+				adaptSize(newRenderer.getModel().getCellSize());
 			}
 		});
 		repaint();

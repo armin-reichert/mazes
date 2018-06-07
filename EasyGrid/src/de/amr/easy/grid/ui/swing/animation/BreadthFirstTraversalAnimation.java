@@ -1,4 +1,4 @@
-package de.amr.easy.grid.ui.swing;
+package de.amr.easy.grid.ui.swing.animation;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -10,14 +10,17 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalListener;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.api.BareGrid2D;
+import de.amr.easy.grid.ui.swing.GridCanvas;
+import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
+import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
 
 /**
- * Animation of breadth-first-search with path finding. Shows the distances as the BFS traverses the
- * graph and colors the cells according to their distance from the source ("flood-fill").
+ * Animation of breadth-first traversal. Shows the distances as the BFS traverses the graph and
+ * colors the cells according to their distance from the source ("flood-fill").
  * 
  * @author Armin Reichert
  */
-public class SwingBFSAnimation {
+public class BreadthFirstTraversalAnimation {
 
 	private final BareGrid2D<?> grid;
 	private final GridCanvas<?> canvas;
@@ -26,7 +29,7 @@ public class SwingBFSAnimation {
 	private boolean distancesVisible;
 	private Color pathColor;
 
-	public SwingBFSAnimation(BareGrid2D<?> grid, GridCanvas<?> canvas) {
+	public BreadthFirstTraversalAnimation(BareGrid2D<?> grid, GridCanvas<?> canvas) {
 		this.grid = grid;
 		this.canvas = canvas;
 		maxDistance = -1;
@@ -38,7 +41,7 @@ public class SwingBFSAnimation {
 
 		Function<Integer, Color> distanceColor = cell -> {
 			if (maxDistance == -1) {
-				return oldRenderer.getCellBgColor(cell);
+				return oldRenderer.getModel().getCellBgColor(cell);
 			}
 			float hue = 0.16f;
 			if (maxDistance > 0) {
@@ -48,8 +51,8 @@ public class SwingBFSAnimation {
 		};
 
 		renderer = new ConfigurableGridRenderer();
-		renderer.fnCellSize = oldRenderer::getCellSize;
-		renderer.fnPassageWidth = oldRenderer::getPassageWidth;
+		renderer.fnCellSize = oldRenderer.getModel()::getCellSize;
+		renderer.fnPassageWidth = oldRenderer.getModel()::getPassageWidth;
 		renderer.fnTextFont = () -> new Font(Font.SANS_SERIF, Font.PLAIN, renderer.getPassageWidth() / 2);
 		renderer.fnText = cell -> distancesVisible && bfs.getDistance(cell) != -1 ? "" + bfs.getDistance(cell) : "";
 		renderer.fnCellBgColor = cell -> inPath.get(cell) ? pathColor : distanceColor.apply(cell);

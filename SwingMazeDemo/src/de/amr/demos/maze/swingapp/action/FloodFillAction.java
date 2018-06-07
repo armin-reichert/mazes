@@ -5,7 +5,7 @@ import static java.lang.String.format;
 import java.awt.event.ActionEvent;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
-import de.amr.easy.grid.ui.swing.SwingFloodFill;
+import de.amr.easy.grid.ui.swing.animation.FloodFillAnimation;
 
 /**
  * Action for running a "flood-fill" on the current maze.
@@ -20,7 +20,7 @@ public class FloodFillAction extends MazeDemoAction {
 
 	private void runFloodFill() {
 		int source = app.model.getGrid().cell(app.model.getPathFinderSource());
-		SwingFloodFill ff = new SwingFloodFill();
+		FloodFillAnimation ff = new FloodFillAnimation();
 		ff.run(app.getCanvas(), app.model.getGrid(), source, true);
 	}
 

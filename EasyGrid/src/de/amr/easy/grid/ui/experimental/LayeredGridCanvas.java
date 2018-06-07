@@ -17,7 +17,7 @@ import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.ObservableGrid2D;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.ui.swing.ConfigurableGridRenderer;
+import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 
 /**
  * Canvas that can display a grid, a colored distance map and a path between two cells.

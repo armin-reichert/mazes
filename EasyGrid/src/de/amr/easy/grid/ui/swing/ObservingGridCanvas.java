@@ -10,6 +10,7 @@ import de.amr.easy.graph.api.event.EdgeRemovedEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.VertexChangeEvent;
 import de.amr.easy.grid.api.ObservableGrid2D;
+import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
 
 /**
  * This class displays an observable grid and reacts on grid change events. It can be used for
@@ -23,7 +24,7 @@ public class ObservingGridCanvas extends GridCanvas<ObservableGrid2D<TraversalSt
 	private int delayMillis;
 
 	public ObservingGridCanvas(ObservableGrid2D<TraversalState, Integer> grid, GridRenderer renderer) {
-		super(grid, renderer.getCellSize());
+		super(grid, renderer.getModel().getCellSize());
 		grid.addGraphObserver(this);
 		pushRenderer(renderer);
 	}

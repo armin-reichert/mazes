@@ -6,8 +6,8 @@ import java.util.stream.IntStream;
 
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
+import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.maze.alg.GrowingTree;
 
 public class GrowingTreeApp extends SwingGridSampleApp {
@@ -26,7 +26,7 @@ public class GrowingTreeApp extends SwingGridSampleApp {
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			resizeGrid(cellSize);
 			new GrowingTree(grid).run(grid.cell(TOP_LEFT));
-			new SwingBFSAnimation(grid, canvas).run(new BreadthFirstTraversal(grid), 0, -1);
+			new BreadthFirstTraversalAnimation(grid, canvas).run(new BreadthFirstTraversal(grid), 0, -1);
 			sleep(1000);
 		});
 		System.exit(0);

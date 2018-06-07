@@ -8,8 +8,8 @@ import java.util.stream.IntStream;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.curves.HilbertLCurve;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
+import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.util.GraphUtils;
 
 public class HilbertLCurveApp extends SwingGridSampleApp {
@@ -30,7 +30,7 @@ public class HilbertLCurveApp extends SwingGridSampleApp {
 			int startCell = grid.cell(BOTTOM_LEFT);
 			HilbertLCurve hilbertCurve = new HilbertLCurve(GraphUtils.log(2, grid.numCols()));
 			traverse(hilbertCurve, grid, startCell, this::addEdge);
-			SwingBFSAnimation bfs = new SwingBFSAnimation(grid, canvas);
+			BreadthFirstTraversalAnimation bfs = new BreadthFirstTraversalAnimation(grid, canvas);
 			bfs.setDistancesVisible(false);
 			bfs.run(new BreadthFirstTraversal(grid), startCell, -1);
 			sleep(1000);

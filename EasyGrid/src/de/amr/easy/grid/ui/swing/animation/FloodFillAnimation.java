@@ -1,4 +1,4 @@
-package de.amr.easy.grid.ui.swing;
+package de.amr.easy.grid.ui.swing.animation;
 
 import static java.lang.String.format;
 
@@ -11,6 +11,9 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalListener;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.api.BareGrid2D;
+import de.amr.easy.grid.ui.swing.ObservingGridCanvas;
+import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
+import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
 
 /**
  * Executes a breadth-first traversal on a grid and draws a color map ("flood-fill") visualizing the
@@ -18,14 +21,14 @@ import de.amr.easy.grid.api.BareGrid2D;
  * 
  * @author Armin Reichert
  */
-public class SwingFloodFill {
+public class FloodFillAnimation {
 
 	private static GridRenderer createRenderer(GridRenderer base, BreadthFirstTraversal bfs, BitSet solution,
 			boolean distancesVisible, int maxDistance) {
 
 		Function<Integer, Color> cellBgColor = cell -> {
 			if (maxDistance == -1) {
-				return base.getCellBgColor(cell);
+				return base.getModel().getCellBgColor(cell);
 			} else if (maxDistance == 0) {
 				return Color.getHSBColor(0.16f, 0.5f, 1f);
 			} else {
@@ -35,8 +38,8 @@ public class SwingFloodFill {
 		};
 
 		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
-		renderer.fnCellSize = base::getCellSize;
-		renderer.fnPassageWidth = base::getPassageWidth;
+		renderer.fnCellSize = base.getModel()::getCellSize;
+		renderer.fnPassageWidth = base.getModel()::getPassageWidth;
 		Font font = new Font(Font.SANS_SERIF, Font.PLAIN, renderer.getPassageWidth() / 2);
 		renderer.fnTextFont = () -> font;
 		renderer.fnText = cell -> distancesVisible ? format("%d", bfs.getDistance(cell)) : "";

@@ -21,8 +21,8 @@ import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.curves.HilbertCurve;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
+import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.util.GraphUtils;
 
 /**
@@ -61,7 +61,7 @@ public class HilbertCurveApp extends SwingGridSampleApp {
 				System.out.println("Curve start: " + startPos);
 				// System.out.println(CurveUtils.cellsAsString(hilbert, grid, startCell));
 				traverse(hilbert, grid, startCell, this::addEdge);
-				SwingBFSAnimation bfs = new SwingBFSAnimation(grid, canvas);
+				BreadthFirstTraversalAnimation bfs = new BreadthFirstTraversalAnimation(grid, canvas);
 				bfs.setDistancesVisible(false);
 				bfs.run(new BreadthFirstTraversal(grid), startCell, -1);
 				sleep(1000);

@@ -21,7 +21,7 @@ import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.Grid;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.ui.swing.ConfigurableGridRenderer;
+import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 
 /**

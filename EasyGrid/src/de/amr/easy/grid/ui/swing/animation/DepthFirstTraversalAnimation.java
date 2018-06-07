@@ -1,4 +1,4 @@
-package de.amr.easy.grid.ui.swing;
+package de.amr.easy.grid.ui.swing.animation;
 
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 
@@ -11,28 +11,33 @@ import de.amr.easy.graph.api.PathFinder;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalListener;
 import de.amr.easy.grid.api.BareGrid2D;
+import de.amr.easy.grid.ui.swing.GridCanvas;
+import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
+import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
 
 /**
- * Animation of depth-first-search path finding.
+ * Animation of depth-first traversal.
  * 
  * @author Armin Reichert
  */
-public class SwingDFSAnimation {
+public class DepthFirstTraversalAnimation {
 
 	private final BareGrid2D<?> grid;
 	private int[] path;
 	private Color pathColor = Color.RED;
 	private Color visitedCellColor = Color.BLUE;
 
-	public SwingDFSAnimation(BareGrid2D<?> grid) {
+	public DepthFirstTraversalAnimation(BareGrid2D<?> grid) {
 		this.grid = grid;
 	}
 
-	private ConfigurableGridRenderer createRenderer(ObservableGraphTraversal dfs, BitSet inPath, GridRenderer oldRenderer) {
+	private ConfigurableGridRenderer createRenderer(ObservableGraphTraversal dfs, BitSet inPath,
+			GridRenderer oldRenderer) {
 		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
-		renderer.fnCellSize = oldRenderer::getCellSize;
-		renderer.fnPassageWidth = () -> oldRenderer.getPassageWidth() > 5 ? oldRenderer.getPassageWidth() / 2
-				: oldRenderer.getPassageWidth();
+		renderer.fnCellSize = oldRenderer.getModel()::getCellSize;
+		renderer.fnPassageWidth = () -> oldRenderer.getModel().getPassageWidth() > 5
+				? oldRenderer.getModel().getPassageWidth() / 2
+				: oldRenderer.getModel().getPassageWidth();
 		renderer.fnCellBgColor = cell -> {
 			if (inPath.get(cell)) {
 				return pathColor;
@@ -40,7 +45,7 @@ public class SwingDFSAnimation {
 			if (dfs.getState(cell) == VISITED || dfs.inQ(cell)) {
 				return visitedCellColor;
 			}
-			return oldRenderer.getCellBgColor(cell);
+			return oldRenderer.getModel().getCellBgColor(cell);
 		};
 		renderer.fnPassageColor = (cell, dir) -> {
 			int neighbor = grid.neighbor(cell, dir).getAsInt();
@@ -53,7 +58,7 @@ public class SwingDFSAnimation {
 			if (renderer.getCellBgColor(cell) == visitedCellColor && renderer.getCellBgColor(neighbor) == visitedCellColor) {
 				return visitedCellColor;
 			}
-			return oldRenderer.getCellBgColor(cell);
+			return oldRenderer.getModel().getCellBgColor(cell);
 		};
 		return renderer;
 	}

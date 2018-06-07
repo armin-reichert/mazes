@@ -8,8 +8,8 @@ import java.util.stream.IntStream;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.curves.PeanoCurve;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
+import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.util.GraphUtils;
 
 public class PeanoCurveApp extends SwingGridSampleApp {
@@ -30,7 +30,7 @@ public class PeanoCurveApp extends SwingGridSampleApp {
 			int startCell = grid.cell(BOTTOM_LEFT);
 			PeanoCurve curve = new PeanoCurve(GraphUtils.log(3, n));
 			traverse(curve, grid, startCell, this::addEdge);
-			SwingBFSAnimation bfs = new SwingBFSAnimation(grid, canvas);
+			BreadthFirstTraversalAnimation bfs = new BreadthFirstTraversalAnimation(grid, canvas);
 			bfs.setDistancesVisible(false);
 			bfs.run(new BreadthFirstTraversal(grid), startCell, -1);
 			sleep(1000);

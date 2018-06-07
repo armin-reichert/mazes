@@ -22,6 +22,7 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Topology;
 import de.amr.easy.grid.impl.ObservableGrid;
+import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 
 /**
  * Base class for grid sample applications.

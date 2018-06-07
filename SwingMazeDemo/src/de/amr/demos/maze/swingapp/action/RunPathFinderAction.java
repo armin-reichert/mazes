@@ -15,8 +15,8 @@ import de.amr.easy.graph.traversal.DepthFirstTraversal2;
 import de.amr.easy.graph.traversal.HillClimbing;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.ui.swing.ObservingGridCanvas;
-import de.amr.easy.grid.ui.swing.SwingBFSAnimation;
-import de.amr.easy.grid.ui.swing.SwingDFSAnimation;
+import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
+import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
 
 /**
  * Action for running the selected path finding algorithm on the current maze.
@@ -55,7 +55,7 @@ public class RunPathFinderAction extends MazeDemoAction {
 		final int tgt = grid.cell(app.model.getPathFinderTarget());
 
 		if (pathFinderInfo.getAlgorithmClass() == DepthFirstTraversal2.class) {
-			SwingDFSAnimation anim = new SwingDFSAnimation(grid);
+			DepthFirstTraversalAnimation anim = new DepthFirstTraversalAnimation(grid);
 			anim.setPathColor(app.model.getPathColor());
 			watch.measure(() -> anim.run(canvas, new DepthFirstTraversal2(grid), src, tgt));
 			app.showMessage(format("Depth-first search: %.6f seconds.", watch.getSeconds()));
@@ -63,7 +63,7 @@ public class RunPathFinderAction extends MazeDemoAction {
 		}
 
 		if (pathFinderInfo.getAlgorithmClass() == HillClimbing.class) {
-			SwingDFSAnimation anim = new SwingDFSAnimation(grid);
+			DepthFirstTraversalAnimation anim = new DepthFirstTraversalAnimation(grid);
 			anim.setPathColor(app.model.getPathColor());
 			if (pathFinderInfo.isTagged(Manhattan)) {
 				watch.measure(() -> anim.run(canvas, new HillClimbing<>(grid, v -> grid.manhattan(v, tgt)), src, tgt));
@@ -78,7 +78,7 @@ public class RunPathFinderAction extends MazeDemoAction {
 		}
 
 		if (pathFinderInfo.getAlgorithmClass() == BreadthFirstTraversal.class) {
-			SwingBFSAnimation anim = new SwingBFSAnimation(grid, canvas);
+			BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid, canvas);
 			anim.setPathColor(app.model.getPathColor());
 			BreadthFirstTraversal bfs = new BreadthFirstTraversal(grid);
 			watch.measure(() -> anim.run(bfs, src, tgt));
@@ -88,7 +88,7 @@ public class RunPathFinderAction extends MazeDemoAction {
 		}
 
 		if (pathFinderInfo.getAlgorithmClass() == BestFirstTraversal.class) {
-			SwingBFSAnimation anim = new SwingBFSAnimation(grid, canvas);
+			BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid, canvas);
 			anim.setPathColor(app.model.getPathColor());
 			if (pathFinderInfo.isTagged(Manhattan)) {
 				BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, v -> grid.manhattan(v, tgt));

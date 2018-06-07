@@ -9,8 +9,8 @@ import javax.swing.KeyStroke;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.ui.swing.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.ObservingGridCanvas;
+import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 
 /**
  * Full-screen window displaying the the grid and maze creation.
