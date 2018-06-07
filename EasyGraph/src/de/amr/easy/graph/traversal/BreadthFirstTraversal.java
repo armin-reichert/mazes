@@ -28,6 +28,7 @@ public class BreadthFirstTraversal<G extends Graph<?>> extends AbstractGraphTrav
 
 	protected final Queue<Integer> q;
 	protected final int[] distance;
+	private int maxDistance;
 
 	protected BreadthFirstTraversal(G graph, Queue<Integer> queue) {
 		super(graph);
@@ -45,6 +46,7 @@ public class BreadthFirstTraversal<G extends Graph<?>> extends AbstractGraphTrav
 		super.clear();
 		q.clear();
 		Arrays.fill(distance, -1);
+		maxDistance = -1;
 	}
 
 	@Override
@@ -71,6 +73,9 @@ public class BreadthFirstTraversal<G extends Graph<?>> extends AbstractGraphTrav
 		setState(v, VISITED);
 		setParent(v, parent);
 		int d = parent != -1 ? distance[parent] + 1 : 0;
+		if (d > maxDistance) {
+			maxDistance = d;
+		}
 		distance[v] = d;
 		if (parent != -1) {
 			edgeTouched(parent, v);
@@ -94,7 +99,7 @@ public class BreadthFirstTraversal<G extends Graph<?>> extends AbstractGraphTrav
 	 * @return the maximum distance
 	 */
 	public int getMaxDistance() {
-		return graph.vertexStream().map(this::getDistance).max().orElse(-1);
+		return maxDistance;
 	}
 
 	/**

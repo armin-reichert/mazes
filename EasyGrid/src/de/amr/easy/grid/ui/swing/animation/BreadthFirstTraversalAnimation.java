@@ -1,5 +1,7 @@
 package de.amr.easy.grid.ui.swing.animation;
 
+import static java.lang.String.format;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.util.BitSet;
@@ -20,6 +22,10 @@ import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
  * @author Armin Reichert
  */
 public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
+
+	public static <G extends BareGrid2D<Integer>> void floodFill(ObservingGridCanvas canvas, G grid, int source) {
+		new BreadthFirstTraversalAnimation<>(new BreadthFirstTraversal<>(grid)).run(canvas, source, -1);
+	}
 
 	private final G grid;
 	private final BreadthFirstTraversal<G> bfs;
@@ -63,7 +69,9 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
 
 			// 1. traverse complete graph for computing maximum distance from source
 			BreadthFirstTraversal<G> distanceMeter = new BreadthFirstTraversal<>(grid);
+			canvas.stopListening();
 			distanceMeter.traverseGraph(source);
+			canvas.startListening();
 
 			// Create renderer from distance measurement results
 			floodFillRenderer = createFloodFillRenderer(canvasRenderer, distanceMeter);
@@ -89,16 +97,16 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
 		});
 	}
 
-	private GridRenderer createFloodFillRenderer(GridRenderer baseRenderer, BreadthFirstTraversal<?> distanceMeter) {
-		ConfigurableGridRenderer r = new ConfigurableGridRenderer();
-		r.fnCellBgColor = cell -> colorByDist(cell, distanceMeter);
-		r.fnCellSize = () -> baseRenderer.getModel().getCellSize();
-		r.fnGridBgColor = () -> baseRenderer.getModel().getGridBgColor();
-		r.fnPassageColor = (cell, dir) -> colorByDist(cell, distanceMeter);
-		r.fnPassageWidth = () -> baseRenderer.getModel().getPassageWidth();
-		r.fnTextFont = () -> new Font(Font.SANS_SERIF, Font.PLAIN, r.getPassageWidth() / 2);
-		r.fnText = cell -> distanceVisible && bfs.getDistance(cell) != -1 ? "" + distanceMeter.getDistance(cell) : "";
-		return r;
+	private GridRenderer createFloodFillRenderer(GridRenderer base, BreadthFirstTraversal<?> distanceMeter) {
+		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
+		renderer.fnCellSize = base.getModel()::getCellSize;
+		renderer.fnPassageWidth = base.getModel()::getPassageWidth;
+		Font font = new Font(Font.SANS_SERIF, Font.PLAIN, renderer.getPassageWidth() / 2);
+		renderer.fnTextFont = () -> font;
+		renderer.fnText = cell -> distanceVisible ? format("%d", bfs.getDistance(cell)) : "";
+		renderer.fnCellBgColor = cell -> colorByDist(cell, distanceMeter);
+		renderer.fnPassageColor = (u, v) -> colorByDist(u, distanceMeter);
+		return renderer;
 	}
 
 	public void showPath(ObservingGridCanvas canvas, int target) {
