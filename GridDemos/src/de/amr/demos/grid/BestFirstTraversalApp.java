@@ -8,11 +8,9 @@ import java.awt.Color;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.traversal.BestFirstTraversal;
-import de.amr.easy.graph.traversal.HillClimbing;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
-import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 
 public class BestFirstTraversalApp extends SwingGridSampleApp {
@@ -46,19 +44,19 @@ public class BestFirstTraversalApp extends SwingGridSampleApp {
 			int source = grid.cell(TOP_LEFT);
 			int target = grid.cell(BOTTOM_RIGHT);
 			sleep(2000);
-			
+
 			BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, v -> grid.euclidean2(v, target));
-			BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid, canvas);
-			anim.run(best, source, target);
-			anim.showPath(best, target);
-			
+			BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid);
+			anim.run(canvas, best, source, target);
+			anim.showPath(canvas, best, target);
+
 			sleep(3000);
 			canvas.drawGrid();
-			
-//			HillClimbing<Integer> hill = new HillClimbing<>(grid, v -> grid.euclidean2(v, target));
-//			SwingDFSAnimation dfsAnim = new SwingDFSAnimation(grid);
-//			dfsAnim.run(canvas, hill, source, target);
-			
+
+			// HillClimbing<Integer> hill = new HillClimbing<>(grid, v -> grid.euclidean2(v, target));
+			// SwingDFSAnimation dfsAnim = new SwingDFSAnimation(grid);
+			// dfsAnim.run(canvas, hill, source, target);
+
 			canvas.popRenderer();
 			sleep(6000);
 		} while (true);

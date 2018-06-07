@@ -17,7 +17,7 @@ public class LargeMazesTests {
 		Grid2D<TraversalState, Integer> grid = new Grid<>(cols, rows, Top4.get(), UNVISITED, false);
 		new KruskalMST(grid).run(-1);
 	}
-	
+
 	private void test_RecursiveDivision(int cols, int rows) {
 		Grid2D<TraversalState, Integer> grid = new Grid<>(cols, rows, Top4.get(), UNVISITED, false);
 		new RecursiveDivision(grid).run(-1);

@@ -23,7 +23,7 @@ public interface GridRenderingModel {
 	public String getText(int cell);
 
 	public int getMinFontSize();
-	
+
 	public Font getTextFont();
 
 	public Color getTextColor();

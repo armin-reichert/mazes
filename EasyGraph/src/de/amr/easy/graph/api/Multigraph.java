@@ -16,22 +16,22 @@ public interface Multigraph<E extends Edge> {
 	/**
 	 * @return a stream of the vertices of this graph
 	 */
-	 IntStream vertexStream();
+	IntStream vertexStream();
 
 	/**
 	 * @return the number of vertices of this graph
 	 */
-	 int vertexCount();
+	int vertexCount();
 
 	/**
 	 * @return a stream of the edges of this graph
 	 */
-	 Stream<E> edgeStream();
+	Stream<E> edgeStream();
 
 	/**
 	 * @return the number of edges of this graph
 	 */
-	 int edgeCount();
+	int edgeCount();
 
 	/**
 	 * Adds the given vertex to this graph.
@@ -39,7 +39,7 @@ public interface Multigraph<E extends Edge> {
 	 * @param vertex
 	 *          a vertex
 	 */
-	 void addVertex(int vertex);
+	void addVertex(int vertex);
 
 	/**
 	 * Connects the given vertices.
@@ -47,7 +47,7 @@ public interface Multigraph<E extends Edge> {
 	 * @param edge
 	 *          an edge
 	 */
-	 void addEdge(E edge);
+	void addEdge(E edge);
 
 	/**
 	 * @param v
@@ -56,7 +56,7 @@ public interface Multigraph<E extends Edge> {
 	 *          a vertex
 	 * @return the edges between the vertices if any
 	 */
-	 Stream<E> edges(int v, int w);
+	Stream<E> edges(int v, int w);
 
 	/**
 	 * Removes the edge between the given vertices.
@@ -66,19 +66,19 @@ public interface Multigraph<E extends Edge> {
 	 * @param v
 	 *          a vertex
 	 */
-	 void removeEdge(int u, int v);
+	void removeEdge(int u, int v);
 
 	/**
 	 * Removes all edges from this graph.
 	 */
-	 void removeEdges();
+	void removeEdges();
 
 	/**
 	 * @param v
 	 *          a vertex
 	 * @return all vertices adjacent to the given vertex
 	 */
-	 IntStream adjVertices(int v);
+	IntStream adjVertices(int v);
 
 	/**
 	 * Tells if the given vertices are "adjacent" that is connected by an edge.
@@ -89,12 +89,12 @@ public interface Multigraph<E extends Edge> {
 	 *          a vertex
 	 * @return <code>true</code> if there exists an edge between the vertices
 	 */
-	 boolean adjacent(int v, int w);
+	boolean adjacent(int v, int w);
 
 	/**
 	 * @param v
 	 *          a vertex
 	 * @return the number of vertices adjacent to <code>v</code>
 	 */
-	 int degree(int v);
+	int degree(int v);
 }

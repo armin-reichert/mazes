@@ -23,15 +23,13 @@ import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
 public class BreadthFirstTraversalAnimation {
 
 	private final BareGrid2D<?> grid;
-	private final GridCanvas<?> canvas;
 	private ConfigurableGridRenderer renderer;
 	private int maxDistance;
 	private boolean distancesVisible;
 	private Color pathColor;
 
-	public BreadthFirstTraversalAnimation(BareGrid2D<?> grid, GridCanvas<?> canvas) {
+	public BreadthFirstTraversalAnimation(BareGrid2D<?> grid) {
 		this.grid = grid;
-		this.canvas = canvas;
 		maxDistance = -1;
 		distancesVisible = true;
 		pathColor = Color.RED;
@@ -62,7 +60,7 @@ public class BreadthFirstTraversalAnimation {
 		};
 	}
 
-	public void run(BreadthFirstTraversal bfs, int source, int target) {
+	public void run(GridCanvas<?> canvas, BreadthFirstTraversal bfs, int source, int target) {
 		createRenderer(canvas.getRenderer().get(), bfs, new BitSet());
 		// 1. traverse whole graph without events for computing maximum distance from source
 		bfs.traverseGraph(source);
@@ -86,7 +84,7 @@ public class BreadthFirstTraversalAnimation {
 		canvas.popRenderer();
 	}
 
-	public void showPath(BreadthFirstTraversal bfs, int target) {
+	public void showPath(GridCanvas<?> canvas, BreadthFirstTraversal bfs, int target) {
 		int[] path = bfs.findPath(target).toArray();
 		BitSet inPath = new BitSet();
 		IntStream.of(path).forEach(inPath::set);

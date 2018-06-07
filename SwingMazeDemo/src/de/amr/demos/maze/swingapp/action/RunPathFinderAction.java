@@ -78,29 +78,29 @@ public class RunPathFinderAction extends MazeDemoAction {
 		}
 
 		if (pathFinderInfo.getAlgorithmClass() == BreadthFirstTraversal.class) {
-			BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid, canvas);
+			BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid);
 			anim.setPathColor(app.model.getPathColor());
 			BreadthFirstTraversal bfs = new BreadthFirstTraversal(grid);
-			watch.measure(() -> anim.run(bfs, src, tgt));
-			anim.showPath(bfs, tgt);
+			watch.measure(() -> anim.run(canvas, bfs, src, tgt));
+			anim.showPath(canvas, bfs, tgt);
 			app.showMessage(format("Breadth-first search: %.6f seconds.", watch.getSeconds()));
 			return;
 		}
 
 		if (pathFinderInfo.getAlgorithmClass() == BestFirstTraversal.class) {
-			BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid, canvas);
+			BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid);
 			anim.setPathColor(app.model.getPathColor());
 			if (pathFinderInfo.isTagged(Manhattan)) {
 				BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, v -> grid.manhattan(v, tgt));
-				watch.measure(() -> anim.run(best, src, tgt));
-				anim.showPath(best, tgt);
+				watch.measure(() -> anim.run(canvas, best, src, tgt));
+				anim.showPath(canvas, best, tgt);
 				app.showMessage(format("Best-first search (Manhattan): %.6f seconds.", watch.getSeconds()));
 				return;
 			}
 			if (pathFinderInfo.isTagged(Euclidian)) {
 				BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, v -> grid.euclidean2(v, tgt));
-				watch.measure(() -> anim.run(best, src, tgt));
-				anim.showPath(best, tgt);
+				watch.measure(() -> anim.run(canvas, best, src, tgt));
+				anim.showPath(canvas, best, tgt);
 				app.showMessage(format("Best-first search (Euclidian): %.6f seconds.", watch.getSeconds()));
 				return;
 			}

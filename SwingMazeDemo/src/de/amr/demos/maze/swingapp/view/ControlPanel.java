@@ -98,15 +98,15 @@ public class ControlPanel extends JPanel {
 
 		btnCreateMaze = new JButton("Create Maze");
 		buttonPanel.add(btnCreateMaze);
-		
+
 		btnFindPath = new JButton("Solve");
 		buttonPanel.add(btnFindPath);
-		
-				btnCreateAllMazes = new JButton("Create All Mazes");
-				buttonPanel.add(btnCreateAllMazes);
-				
-						btnStop = new JButton("Stop");
-						buttonPanel.add(btnStop);
+
+		btnCreateAllMazes = new JButton("Create All Mazes");
+		buttonPanel.add(btnCreateAllMazes);
+
+		btnStop = new JButton("Stop");
+		buttonPanel.add(btnStop);
 	}
 
 	public void showMessage(String msg) {
@@ -146,6 +146,7 @@ public class ControlPanel extends JPanel {
 	public JLabel getLblGenerationAlgorithm() {
 		return lblGenerationAlgorithm;
 	}
+
 	public JButton getBtnFindPath() {
 		return btnFindPath;
 	}

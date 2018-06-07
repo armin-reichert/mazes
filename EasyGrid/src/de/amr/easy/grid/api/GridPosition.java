@@ -6,7 +6,8 @@ package de.amr.easy.grid.api;
  * @author Armin Reichert
  */
 public enum GridPosition {
-	TOP_LEFT("Top Left"),
+	TOP_LEFT(
+			"Top Left"),
 	TOP_RIGHT("Top Right"),
 	CENTER("Center"),
 	BOTTOM_LEFT("Bottom Left"),

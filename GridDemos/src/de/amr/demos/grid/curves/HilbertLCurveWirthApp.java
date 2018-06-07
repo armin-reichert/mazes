@@ -30,9 +30,9 @@ public class HilbertLCurveWirthApp extends SwingGridSampleApp {
 			int startCell = grid.cell(TOP_RIGHT);
 			HilbertLCurveWirth hilbertCurve = new HilbertLCurveWirth(GraphUtils.log(2, grid.numCols()));
 			traverse(hilbertCurve, grid, startCell, this::addEdge);
-			BreadthFirstTraversalAnimation bfs = new BreadthFirstTraversalAnimation(grid, canvas);
+			BreadthFirstTraversalAnimation bfs = new BreadthFirstTraversalAnimation(grid);
 			bfs.setDistancesVisible(false);
-			bfs.run(new BreadthFirstTraversal(grid), startCell, -1);
+			bfs.run(canvas, new BreadthFirstTraversal(grid), startCell, -1);
 			sleep(1000);
 		});
 	}

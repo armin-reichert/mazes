@@ -132,10 +132,10 @@ public class MultigraphTests {
 		assertEquals(0, g.degree(42));
 		assertEquals(0, g.degree(43));
 	}
-	
+
 	@Test
 	public void testDualOfGrid() {
-		Multigraph<WeightedEdge<Integer>> g = GridUtils.dualGraphOfGrid(4,  3);
+		Multigraph<WeightedEdge<Integer>> g = GridUtils.dualGraphOfGrid(4, 3);
 		assertEquals(7, g.vertexCount());
 		assertEquals(10, g.degree(-1));
 		assertTrue(g.adjacent(-1, 0));
