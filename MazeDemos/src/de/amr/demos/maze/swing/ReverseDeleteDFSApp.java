@@ -2,7 +2,6 @@ package de.amr.demos.maze.swing;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
@@ -24,7 +23,7 @@ public class ReverseDeleteDFSApp extends SwingGridSampleApp {
 		IntStream.of(128, 64, 32).forEach(cellSize -> {
 			resizeGrid(cellSize);
 			new ReverseDeleteDFSMST(grid).run(-1);
-			new BreadthFirstTraversalAnimation<>(new BreadthFirstTraversal<>(grid)).run(canvas, 0, -1);
+			BreadthFirstTraversalAnimation.floodFill(canvas, grid, 0);
 			sleep(1000);
 		});
 		System.exit(0);

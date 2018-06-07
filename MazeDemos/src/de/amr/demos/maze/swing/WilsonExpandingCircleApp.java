@@ -4,7 +4,6 @@ import static de.amr.easy.grid.api.GridPosition.CENTER;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
@@ -26,7 +25,7 @@ public class WilsonExpandingCircleApp extends SwingGridSampleApp {
 		IntStream.of(64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			resizeGrid(cellSize);
 			new WilsonUSTExpandingCircle(grid).run(grid.cell(CENTER));
-			new BreadthFirstTraversalAnimation<>(new BreadthFirstTraversal<>(grid)).run(canvas, 0, -1);
+			BreadthFirstTraversalAnimation.floodFill(canvas, grid, 0);
 			sleep(1000);
 		});
 		System.exit(0);

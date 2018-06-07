@@ -5,7 +5,6 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
@@ -30,7 +29,7 @@ public class RecursiveDivisionApp extends SwingGridSampleApp {
 			grid.fill();
 			grid.setDefaultContent(COMPLETED);
 			new RecursiveDivision(grid).run(grid.cell(TOP_LEFT));
-			new BreadthFirstTraversalAnimation<>(new BreadthFirstTraversal<>(grid)).run(canvas, 0, -1);
+			BreadthFirstTraversalAnimation.floodFill(canvas, grid, 0);
 			sleep(1000);
 		});
 		System.exit(0);

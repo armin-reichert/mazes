@@ -23,6 +23,16 @@ import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
  */
 public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
 
+	/**
+	 * Runs a "flood-fill" on the given grid.
+	 * 
+	 * @param canvas
+	 *          grid canvas
+	 * @param grid
+	 *          grid
+	 * @param source
+	 *          cell where flood-fill starts
+	 */
 	public static <G extends BareGrid2D<Integer>> void floodFill(ObservingGridCanvas canvas, G grid, int source) {
 		new BreadthFirstTraversalAnimation<>(new BreadthFirstTraversal<>(grid)).run(canvas, source, -1);
 	}
