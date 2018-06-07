@@ -28,7 +28,7 @@ public class BestFirstTraversalApp extends SwingGridSampleApp {
 	@Override
 	public void run() {
 		do {
-			ConfigurableGridRenderer r = new ConfigurableGridRenderer(renderer);
+			ConfigurableGridRenderer r = new ConfigurableGridRenderer();
 			r.fnCellBgColor = cell -> grid.get(cell) == UNVISITED ? Color.WHITE : renderer.getCellBgColor(cell);
 			r.fnPassageColor = (cell, dir) -> grid.get(cell) == UNVISITED ? Color.WHITE : renderer.getPassageColor(cell, dir);
 			r.fnPassageWidth = () -> 1;
@@ -46,9 +46,9 @@ public class BestFirstTraversalApp extends SwingGridSampleApp {
 			sleep(2000);
 
 			BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, v -> grid.euclidean2(v, target));
-			BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid);
-			anim.run(canvas, best, source, target);
-			anim.showPath(canvas, best, target);
+			BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid, best);
+			anim.run(canvas, source, target);
+			anim.showPath(canvas, target);
 
 			sleep(3000);
 			canvas.drawGrid();

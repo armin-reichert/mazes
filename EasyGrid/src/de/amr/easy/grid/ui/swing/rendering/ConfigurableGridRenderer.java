@@ -28,7 +28,7 @@ public class ConfigurableGridRenderer implements GridRenderer, GridRenderingMode
 	public Supplier<Font> fnTextFont;
 	public Supplier<Color> fnTextColor;
 
-	private GridRenderer style;
+	private GridRenderer renderer;
 
 	public ConfigurableGridRenderer() {
 		fnCellSize = () -> 8;
@@ -40,22 +40,7 @@ public class ConfigurableGridRenderer implements GridRenderer, GridRenderingMode
 		fnMinFontSize = () -> 6;
 		fnTextFont = () -> new Font("Sans", Font.PLAIN, 10);
 		fnTextColor = () -> Color.BLUE;
-
-		style = new WallPassageGridRenderer(this);
-	}
-
-	public ConfigurableGridRenderer(ConfigurableGridRenderer base) {
-		fnCellSize = base.fnCellSize;
-		fnPassageWidth = base.fnPassageWidth;
-		fnGridBgColor = base.fnGridBgColor;
-		fnPassageColor = base.fnPassageColor;
-		fnCellBgColor = base.fnCellBgColor;
-		fnText = base.fnText;
-		fnMinFontSize = base.fnMinFontSize;
-		fnTextFont = base.fnTextFont;
-		fnTextColor = base.fnTextColor;
-
-		style = base.style;
+		renderer = new WallPassageGridRenderer(this);
 	}
 
 	@Override
@@ -110,11 +95,11 @@ public class ConfigurableGridRenderer implements GridRenderer, GridRenderingMode
 
 	@Override
 	public void drawPassage(Graphics2D g, BareGrid2D<?> grid, Edge passage, boolean visible) {
-		style.drawPassage(g, grid, passage, visible);
+		renderer.drawPassage(g, grid, passage, visible);
 	}
 
 	@Override
 	public void drawCell(Graphics2D g, BareGrid2D<?> grid, int cell) {
-		style.drawCell(g, grid, cell);
+		renderer.drawCell(g, grid, cell);
 	}
 }
