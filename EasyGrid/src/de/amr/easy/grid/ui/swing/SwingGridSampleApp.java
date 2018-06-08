@@ -46,23 +46,25 @@ public abstract class SwingGridSampleApp implements Runnable {
 	protected boolean fullscreen;
 	protected ObservableGrid<TraversalState, Integer> grid;
 	protected ObservingGridCanvas canvas;
-	protected ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
+	protected ConfigurableGridRenderer renderer;
 
-	private void configureRenderer(int cellSize) {
-		renderer.fnCellSize = () -> cellSize;
-		renderer.fnCellBgColor = cell -> {
+	private ConfigurableGridRenderer createRenderer(ConfigurableGridRenderer.Style style, int cellSize) {
+		ConfigurableGridRenderer r = new ConfigurableGridRenderer(style);
+		r.fnCellSize = () -> cellSize;
+		r.fnCellBgColor = cell -> {
 			switch (grid.get(cell)) {
 			case VISITED:
 				return Color.BLUE;
 			case COMPLETED:
 				return Color.WHITE;
 			case UNVISITED:
-				return renderer.getGridBgColor();
+				return r.getGridBgColor();
 			default:
 				return Color.BLACK;
 			}
 		};
-		renderer.fnPassageWidth = () -> Math.max(1, renderer.getCellSize() / 4);
+		r.fnPassageWidth = () -> Math.max(1, r.getCellSize() / 4);
+		return r;
 	}
 
 	/**
@@ -80,7 +82,7 @@ public abstract class SwingGridSampleApp implements Runnable {
 		fullscreen = false;
 		canvasSize = new Dimension(canvasWidth, canvasHeight);
 		grid = new ObservableGrid<>(canvasWidth / cellSize, canvasHeight / cellSize, top, UNVISITED, false);
-		configureRenderer(cellSize);
+		renderer = createRenderer(ConfigurableGridRenderer.Style.WallPassage, cellSize);
 	}
 
 	/**
@@ -96,11 +98,15 @@ public abstract class SwingGridSampleApp implements Runnable {
 				.getDisplayMode();
 		canvasSize = new Dimension(displayMode.getWidth(), displayMode.getHeight());
 		grid = new ObservableGrid<>(canvasSize.width / cellSize, canvasSize.height / cellSize, top, UNVISITED, false);
-		configureRenderer(cellSize);
+		renderer = createRenderer(ConfigurableGridRenderer.Style.WallPassage, cellSize);
+	}
+
+	public void setRenderingStyle(ConfigurableGridRenderer.Style style) {
+		ConfigurableGridRenderer oldRenderer = renderer;
+		renderer = createRenderer(style, oldRenderer.getCellSize());
 	}
 
 	private void createAndShowUI() {
-
 		canvas = new ObservingGridCanvas(grid, renderer);
 		canvas.setBackground(Color.BLACK);
 		canvas.setDelay(0);

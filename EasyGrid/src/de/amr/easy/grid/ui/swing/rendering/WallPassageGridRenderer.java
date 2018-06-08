@@ -24,7 +24,10 @@ import de.amr.easy.grid.impl.Top8;
  */
 public class WallPassageGridRenderer implements GridRenderer {
 
-	private final GridRenderingModel model;
+	private GridRenderingModel model;
+
+	public WallPassageGridRenderer() {
+	}
 
 	public WallPassageGridRenderer(GridRenderingModel model) {
 		this.model = model;
@@ -33,6 +36,10 @@ public class WallPassageGridRenderer implements GridRenderer {
 	@Override
 	public GridRenderingModel getModel() {
 		return model;
+	}
+
+	public void setModel(GridRenderingModel model) {
+		this.model = model;
 	}
 
 	@Override

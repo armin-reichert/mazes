@@ -90,21 +90,21 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
 			canvas.pushRenderer(floodFillRenderer);
 
 			// 2. traverse again with events enabled
-			GraphTraversalListener bfsObserver = new GraphTraversalListener() {
+			GraphTraversalListener canvasUpdater = new GraphTraversalListener() {
 
 				@Override
-				public void edgeTouched(int source, int target) {
-					canvas.drawGridPassage(grid.edge(source, target).get(), true);
+				public void edgeTouched(int u, int v) {
+					grid.edge(u, v).ifPresent(edge -> canvas.drawGridPassage(edge, true));
 				}
 
 				@Override
-				public void vertexTouched(int vertex, TraversalState oldState, TraversalState newState) {
-					canvas.drawGridCell(vertex);
+				public void vertexTouched(int v, TraversalState oldState, TraversalState newState) {
+					canvas.drawGridCell(v);
 				}
 			};
-			bfs.addObserver(bfsObserver);
+			bfs.addObserver(canvasUpdater);
 			bfs.traverseGraph(source, target);
-			bfs.removeObserver(bfsObserver);
+			bfs.removeObserver(canvasUpdater);
 			canvas.popRenderer();
 		});
 	}

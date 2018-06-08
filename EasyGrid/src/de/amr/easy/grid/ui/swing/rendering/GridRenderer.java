@@ -11,7 +11,7 @@ public interface GridRenderer {
 
 	default void drawGrid(Graphics2D g, BareGrid2D<?> grid) {
 		grid.edgeStream().forEach(passage -> drawPassage(g, grid, passage, true));
-		grid.vertexStream().filter(cell -> grid.degree(cell) == 0).forEach(cell -> drawCell(g, grid, cell));
+		grid.vertexStream().forEach(cell -> drawCell(g, grid, cell));
 	}
 
 	void drawPassage(Graphics2D g, BareGrid2D<?> grid, Edge passage, boolean visible);

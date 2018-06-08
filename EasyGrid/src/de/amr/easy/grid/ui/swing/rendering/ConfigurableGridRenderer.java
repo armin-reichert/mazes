@@ -18,6 +18,12 @@ import de.amr.easy.grid.api.BareGrid2D;
  */
 public class ConfigurableGridRenderer implements GridRenderer, GridRenderingModel {
 
+	public enum Style {
+		WallPassage, CircleLine
+	};
+
+	private GridRenderer renderer;
+
 	public IntSupplier fnCellSize;
 	public IntSupplier fnPassageWidth;
 	public Supplier<Color> fnGridBgColor;
@@ -28,9 +34,11 @@ public class ConfigurableGridRenderer implements GridRenderer, GridRenderingMode
 	public Supplier<Font> fnTextFont;
 	public Supplier<Color> fnTextColor;
 
-	private GridRenderer renderer;
-
 	public ConfigurableGridRenderer() {
+		this(Style.WallPassage);
+	}
+
+	public ConfigurableGridRenderer(Style style) {
 		fnCellSize = () -> 8;
 		fnPassageWidth = () -> fnCellSize.getAsInt() / 2;
 		fnGridBgColor = () -> Color.BLACK;
@@ -40,7 +48,11 @@ public class ConfigurableGridRenderer implements GridRenderer, GridRenderingMode
 		fnMinFontSize = () -> 6;
 		fnTextFont = () -> new Font("Sans", Font.PLAIN, 10);
 		fnTextColor = () -> Color.BLUE;
-		renderer = new WallPassageGridRenderer(this);
+		if (style == Style.WallPassage) {
+			renderer = new WallPassageGridRenderer(this);
+		} else if (style == Style.CircleLine) {
+			renderer = new CircleLineGridRenderer(this);
+		}
 	}
 
 	@Override
