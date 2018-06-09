@@ -1,15 +1,14 @@
 package de.amr.demos.grid.curves;
 
 import static de.amr.easy.grid.curves.CurveUtils.traverse;
+import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation.floodFill;
+import static de.amr.easy.util.GraphUtils.log;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.curves.MooreLCurve;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
-import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
-import de.amr.easy.util.GraphUtils;
 
 /**
  * Creates Moore curves of different sizes and shows an animation of the creation and BFS-traversal
@@ -34,11 +33,8 @@ public class MooreCurveApp extends SwingGridSampleApp {
 			resizeGrid(canvasSize.width / n);
 			int startCol = n / 2, startRow = n - 1;
 			int startCell = grid.cell(startCol, startRow);
-			MooreLCurve curve = new MooreLCurve(GraphUtils.log(2, n));
-			traverse(curve, grid, startCell, this::addEdge);
-			BreadthFirstTraversalAnimation<?> anim = new BreadthFirstTraversalAnimation<>(new BreadthFirstTraversal<>(grid));
-			anim.setDistanceVisible(false);
-			anim.run(canvas, startCell, -1);
+			traverse(new MooreLCurve(log(2, n)), grid, startCell, this::addEdge);
+			floodFill(canvas, grid, startCell, false);
 			sleep(1000);
 		});
 	}

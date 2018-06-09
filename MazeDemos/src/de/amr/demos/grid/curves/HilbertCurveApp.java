@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import de.amr.easy.grid.api.Curve;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.curves.HilbertCurve;
 import de.amr.easy.grid.impl.Top4;
@@ -51,15 +52,13 @@ public class HilbertCurveApp extends SwingGridSampleApp {
 
 	@Override
 	public void run() {
-		Stream.of(TOP_RIGHT, TOP_LEFT, BOTTOM_LEFT, BOTTOM_RIGHT).forEach(startPos -> {
-			List<Integer> dirs = ORIENTATION.get(startPos);
+		Stream.of(TOP_RIGHT, TOP_LEFT, BOTTOM_LEFT, BOTTOM_RIGHT).forEach(start -> {
 			IntStream.of(256, 128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 				resizeGrid(cellSize);
-				HilbertCurve hilbert = new HilbertCurve(log(2, grid.numCols()), dirs.get(0), dirs.get(1), dirs.get(2),
-						dirs.get(3));
-				int startCell = grid.cell(startPos);
-				traverse(hilbert, grid, startCell, this::addEdge);
-				floodFill(canvas, grid, startCell, false);
+				List<Integer> dir = ORIENTATION.get(start);
+				Curve hilbert = new HilbertCurve(log(2, grid.numCols()), dir.get(0), dir.get(1), dir.get(2), dir.get(3));
+				traverse(hilbert, grid, grid.cell(start), this::addEdge);
+				floodFill(canvas, grid, grid.cell(start), false);
 				sleep(1000);
 			});
 		});
