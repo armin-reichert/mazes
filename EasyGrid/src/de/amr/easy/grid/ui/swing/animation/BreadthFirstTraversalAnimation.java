@@ -37,7 +37,26 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
 	 *          cell where flood-fill starts
 	 */
 	public static <G extends BareGrid2D<Integer>> void floodFill(ObservingGridCanvas canvas, G grid, int source) {
-		new BreadthFirstTraversalAnimation<>(new BreadthFirstTraversal<>(grid)).run(canvas, source, -1);
+		floodFill(canvas, grid, source, true);
+	}
+
+	/**
+	 * Runs a "flood-fill" on the given grid.
+	 * 
+	 * @param canvas
+	 *          grid canvas
+	 * @param grid
+	 *          grid
+	 * @param source
+	 *          cell where flood-fill starts
+	 * @param distanceVisible
+	 *          if distances should be displayed as text
+	 */
+	public static <G extends BareGrid2D<Integer>> void floodFill(ObservingGridCanvas canvas, G grid, int source,
+			boolean distanceVisible) {
+		BreadthFirstTraversalAnimation<G> anim = new BreadthFirstTraversalAnimation<>(new BreadthFirstTraversal<>(grid));
+		anim.setDistanceVisible(distanceVisible);
+		anim.run(canvas, source, -1);
 	}
 
 	private final G grid;
