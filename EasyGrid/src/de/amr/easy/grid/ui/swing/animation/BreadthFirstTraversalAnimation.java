@@ -147,6 +147,9 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
 		r.fnText = cell -> distanceVisible ? format("%d", bfs.getDistance(cell)) : "";
 		r.fnTextFont = () -> new Font(Font.SANS_SERIF, Font.PLAIN, r.getPassageWidth() / 2);
 		r.fnTextColor = () -> Color.BLACK;
+		if (base instanceof ConfigurableGridRenderer) {
+			r.setStyle(((ConfigurableGridRenderer) base).getStyle());
+		}
 		return r;
 	}
 
@@ -165,6 +168,7 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
 		r.fnText = cell -> distanceVisible ? format("%d", bfs.getDistance(cell)) : "";
 		r.fnTextFont = () -> new Font(Font.SANS_SERIF, Font.PLAIN, r.getPassageWidth() / 2);
 		r.fnTextColor = () -> Color.WHITE;
+		r.setStyle(base.getStyle());
 		return r;
 	}
 

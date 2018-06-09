@@ -1,5 +1,7 @@
 package de.amr.demos.grid;
 
+import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation.floodFill;
+
 import java.awt.Color;
 
 import de.amr.easy.graph.api.TraversalState;
@@ -31,10 +33,9 @@ public class CircleLineTestApp extends SwingGridSampleApp {
 		canvas.startListening();
 		canvas.setDelay(10);
 		new WilsonUSTHilbertCurve(grid).run(0);
-		// TODO make BFS animation use correct style
-//		BreadthFirstTraversalAnimation.floodFill(canvas, grid, 0);
+		floodFill(canvas, grid, 0);
 	}
-	
+
 	private void clear() {
 		grid.removeEdges();
 		grid.clearContent();

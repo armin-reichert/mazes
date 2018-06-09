@@ -22,6 +22,7 @@ public class ConfigurableGridRenderer implements GridRenderer, GridRenderingMode
 		WallPassage, CircleLine
 	};
 
+	private Style style;
 	private GridRenderer renderer;
 
 	public IntSupplier fnCellSize;
@@ -48,11 +49,25 @@ public class ConfigurableGridRenderer implements GridRenderer, GridRenderingMode
 		fnMinFontSize = () -> 6;
 		fnTextFont = () -> new Font("Sans", Font.PLAIN, 10);
 		fnTextColor = () -> Color.BLUE;
+		setStyle(style);
+	}
+
+	public Style getStyle() {
+		return style;
+	}
+
+	public void setStyle(Style style) {
+		this.style = style;
+		this.renderer = createRenderer(style);
+	}
+
+	private GridRenderer createRenderer(Style style) {
 		if (style == Style.WallPassage) {
-			renderer = new WallPassageGridRenderer(this);
+			return new WallPassageGridRenderer(this);
 		} else if (style == Style.CircleLine) {
-			renderer = new CircleLineGridRenderer(this);
+			return new CircleLineGridRenderer(this);
 		}
+		throw new IllegalArgumentException();
 	}
 
 	@Override

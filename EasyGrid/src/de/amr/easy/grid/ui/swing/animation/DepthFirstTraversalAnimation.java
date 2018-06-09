@@ -33,12 +33,11 @@ public class DepthFirstTraversalAnimation<G extends BareGrid2D<?>> {
 
 	private ConfigurableGridRenderer createRenderer(ObservableGraphTraversal dfs, BitSet inPath,
 			GridRenderer oldRenderer) {
-		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
-		renderer.fnCellSize = oldRenderer.getModel()::getCellSize;
-		renderer.fnPassageWidth = () -> oldRenderer.getModel().getPassageWidth() > 5
-				? oldRenderer.getModel().getPassageWidth() / 2
+		ConfigurableGridRenderer r = new ConfigurableGridRenderer();
+		r.fnCellSize = oldRenderer.getModel()::getCellSize;
+		r.fnPassageWidth = () -> oldRenderer.getModel().getPassageWidth() > 5 ? oldRenderer.getModel().getPassageWidth() / 2
 				: oldRenderer.getModel().getPassageWidth();
-		renderer.fnCellBgColor = cell -> {
+		r.fnCellBgColor = cell -> {
 			if (inPath.get(cell)) {
 				return pathColor;
 			}
@@ -47,7 +46,7 @@ public class DepthFirstTraversalAnimation<G extends BareGrid2D<?>> {
 			}
 			return oldRenderer.getModel().getCellBgColor(cell);
 		};
-		renderer.fnPassageColor = (cell, dir) -> {
+		r.fnPassageColor = (cell, dir) -> {
 			int neighbor = grid.neighbor(cell, dir).getAsInt();
 			if (inPath.get(cell) && inPath.get(neighbor)) {
 				return pathColor;
@@ -55,12 +54,15 @@ public class DepthFirstTraversalAnimation<G extends BareGrid2D<?>> {
 			if (dfs.getState(cell) == VISITED && dfs.getState(neighbor) == VISITED) {
 				return visitedCellColor;
 			}
-			if (renderer.getCellBgColor(cell) == visitedCellColor && renderer.getCellBgColor(neighbor) == visitedCellColor) {
+			if (r.getCellBgColor(cell) == visitedCellColor && r.getCellBgColor(neighbor) == visitedCellColor) {
 				return visitedCellColor;
 			}
 			return oldRenderer.getModel().getCellBgColor(cell);
 		};
-		return renderer;
+		if (oldRenderer instanceof ConfigurableGridRenderer) {
+			r.setStyle(((ConfigurableGridRenderer) oldRenderer).getStyle());
+		}
+		return r;
 	}
 
 	public void run(GridCanvas<?> canvas, ObservableGraphTraversal dfs, int source, int target) {
