@@ -4,7 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/EasyGrid"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/EasyMaze"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/GridDemos"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/EasyGraph"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
