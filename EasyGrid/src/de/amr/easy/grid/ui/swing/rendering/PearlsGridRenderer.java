@@ -6,11 +6,11 @@ import java.awt.RenderingHints;
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.grid.api.BareGrid2D;
 
-public class CircleLineGridRenderer implements GridRenderer {
+public class PearlsGridRenderer implements GridRenderer {
 
 	private final GridRenderingModel model;
 
-	public CircleLineGridRenderer(GridRenderingModel model) {
+	public PearlsGridRenderer(GridRenderingModel model) {
 		this.model = model;
 	}
 

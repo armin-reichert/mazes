@@ -12,14 +12,14 @@ import de.amr.easy.graph.api.Edge;
 import de.amr.easy.grid.api.BareGrid2D;
 
 /**
- * Renderer that can be configured without sub-classing.
+ * Grid renderer that can be configured without sub-classing.
  * 
  * @author Armin Reichert
  */
 public class ConfigurableGridRenderer implements GridRenderer, GridRenderingModel {
 
 	public enum Style {
-		WallPassage, CircleLine
+		WALL_PASSAGE, PEARLS
 	};
 
 	private Style style;
@@ -35,19 +35,28 @@ public class ConfigurableGridRenderer implements GridRenderer, GridRenderingMode
 	public Supplier<Font> fnTextFont;
 	public Supplier<Color> fnTextColor;
 
+	/**
+	 * Creates a renderer with wall-passage style.
+	 */
 	public ConfigurableGridRenderer() {
-		this(Style.WallPassage);
+		this(Style.WALL_PASSAGE);
 	}
 
+	/**
+	 * Creates a renderer with the given style.
+	 * 
+	 * @param style
+	 *          the renderer style
+	 */
 	public ConfigurableGridRenderer(Style style) {
 		fnCellSize = () -> 8;
-		fnPassageWidth = () -> fnCellSize.getAsInt() / 2;
+		fnPassageWidth = () -> getCellSize() / 2;
 		fnGridBgColor = () -> Color.BLACK;
 		fnPassageColor = (cell, dir) -> getCellBgColor(cell);
 		fnCellBgColor = cell -> Color.WHITE;
 		fnText = cell -> "";
 		fnMinFontSize = () -> 6;
-		fnTextFont = () -> new Font("Sans", Font.PLAIN, 10);
+		fnTextFont = () -> new Font("Sans", Font.PLAIN, getCellSize() / 2);
 		fnTextColor = () -> Color.BLUE;
 		setStyle(style);
 	}
@@ -62,10 +71,11 @@ public class ConfigurableGridRenderer implements GridRenderer, GridRenderingMode
 	}
 
 	private GridRenderer createRenderer(Style style) {
-		if (style == Style.WallPassage) {
+		switch (style) {
+		case PEARLS:
+			return new PearlsGridRenderer(this);
+		case WALL_PASSAGE:
 			return new WallPassageGridRenderer(this);
-		} else if (style == Style.CircleLine) {
-			return new CircleLineGridRenderer(this);
 		}
 		throw new IllegalArgumentException();
 	}

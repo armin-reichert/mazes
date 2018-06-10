@@ -11,6 +11,7 @@ import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.ui.swing.ObservingGridCanvas;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
+import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer.Style;
 
 /**
  * Full-screen window displaying the the grid and maze creation.
@@ -49,15 +50,15 @@ public class MazeWindow extends JFrame {
 	}
 
 	private ConfigurableGridRenderer createRenderer() {
-		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
-		renderer.fnCellSize = () -> app.model.getGridCellSize();
-		renderer.fnPassageWidth = () -> {
+		ConfigurableGridRenderer r = new ConfigurableGridRenderer();
+		r.fnCellSize = () -> app.model.getGridCellSize();
+		r.fnPassageWidth = () -> {
 			int passageWidth = app.model.getGridCellSize() * app.model.getPassageWidthPercentage() / 100;
 			passageWidth = Math.max(1, passageWidth);
 			passageWidth = Math.min(app.model.getGridCellSize() - 1, passageWidth);
 			return passageWidth;
 		};
-		renderer.fnCellBgColor = cell -> {
+		r.fnCellBgColor = cell -> {
 			TraversalState state = app.model.getGrid().get(cell);
 			switch (state) {
 			case COMPLETED:
@@ -67,9 +68,10 @@ public class MazeWindow extends JFrame {
 			case VISITED:
 				return app.model.getVisitedCellColor();
 			default:
-				return renderer.getGridBgColor();
+				return r.getGridBgColor();
 			}
 		};
-		return renderer;
+//		r.setStyle(Style.CircleLine);
+		return r;
 	}
 }

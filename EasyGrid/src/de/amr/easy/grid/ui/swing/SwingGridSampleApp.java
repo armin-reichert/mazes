@@ -82,7 +82,7 @@ public abstract class SwingGridSampleApp implements Runnable {
 		fullscreen = false;
 		canvasSize = new Dimension(canvasWidth, canvasHeight);
 		grid = new ObservableGrid<>(canvasWidth / cellSize, canvasHeight / cellSize, top, UNVISITED, false);
-		renderer = createRenderer(ConfigurableGridRenderer.Style.WallPassage, cellSize);
+		renderer = createRenderer(ConfigurableGridRenderer.Style.WALL_PASSAGE, cellSize);
 	}
 
 	/**
@@ -98,7 +98,7 @@ public abstract class SwingGridSampleApp implements Runnable {
 				.getDisplayMode();
 		canvasSize = new Dimension(displayMode.getWidth(), displayMode.getHeight());
 		grid = new ObservableGrid<>(canvasSize.width / cellSize, canvasSize.height / cellSize, top, UNVISITED, false);
-		renderer = createRenderer(ConfigurableGridRenderer.Style.WallPassage, cellSize);
+		renderer = createRenderer(ConfigurableGridRenderer.Style.WALL_PASSAGE, cellSize);
 	}
 
 	public void setRenderingStyle(ConfigurableGridRenderer.Style style) {
