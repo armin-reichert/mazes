@@ -14,6 +14,8 @@ import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.ui.swing.GridCanvas;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
+import de.amr.easy.grid.ui.swing.rendering.PearlsGridRenderer;
+import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
 
 /**
  * Animation of depth-first traversal.
@@ -32,11 +34,12 @@ public class DepthFirstTraversalAnimation<G extends BareGrid2D<?>> {
 	}
 
 	private ConfigurableGridRenderer createRenderer(ObservableGraphTraversal dfs, BitSet inPath,
-			GridRenderer oldRenderer) {
-		ConfigurableGridRenderer r = new ConfigurableGridRenderer();
-		r.fnCellSize = oldRenderer.getModel()::getCellSize;
-		r.fnPassageWidth = () -> oldRenderer.getModel().getPassageWidth() > 5 ? oldRenderer.getModel().getPassageWidth() / 2
-				: oldRenderer.getModel().getPassageWidth();
+			GridRenderer base) {
+		ConfigurableGridRenderer r = base instanceof PearlsGridRenderer ? new PearlsGridRenderer()
+				: new WallPassageGridRenderer();
+		r.fnCellSize = base.getModel()::getCellSize;
+		r.fnPassageWidth = () -> base.getModel().getPassageWidth() > 5 ? base.getModel().getPassageWidth() / 2
+				: base.getModel().getPassageWidth();
 		r.fnCellBgColor = cell -> {
 			if (inPath.get(cell)) {
 				return pathColor;
@@ -44,7 +47,7 @@ public class DepthFirstTraversalAnimation<G extends BareGrid2D<?>> {
 			if (dfs.getState(cell) == VISITED || dfs.inQ(cell)) {
 				return visitedCellColor;
 			}
-			return oldRenderer.getModel().getCellBgColor(cell);
+			return base.getModel().getCellBgColor(cell);
 		};
 		r.fnPassageColor = (cell, dir) -> {
 			int neighbor = grid.neighbor(cell, dir).getAsInt();
@@ -57,11 +60,8 @@ public class DepthFirstTraversalAnimation<G extends BareGrid2D<?>> {
 			if (r.getCellBgColor(cell) == visitedCellColor && r.getCellBgColor(neighbor) == visitedCellColor) {
 				return visitedCellColor;
 			}
-			return oldRenderer.getModel().getCellBgColor(cell);
+			return base.getModel().getCellBgColor(cell);
 		};
-		if (oldRenderer instanceof ConfigurableGridRenderer) {
-			r.setStyle(((ConfigurableGridRenderer) oldRenderer).getStyle());
-		}
 		return r;
 	}
 

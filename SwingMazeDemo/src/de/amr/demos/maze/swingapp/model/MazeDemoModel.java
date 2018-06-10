@@ -61,6 +61,8 @@ import de.amr.easy.maze.alg.ust.WilsonUSTRowsTopDown;
  * @author Armin Reichert
  */
 public class MazeDemoModel {
+	
+	public enum Style { WALL_PASSAGES, PEARLS };
 
 	public static final AlgorithmInfo[] GENERATOR_ALGORITHMS = {
 		/*@formatter:off*/
@@ -130,6 +132,7 @@ public class MazeDemoModel {
 	private Color visitedCellColor;
 	private Color completedCellColor;
 	private Color pathColor;
+	private Style style;
 
 	public int[] getGridCellSizes() {
 		return gridCellSizes;
@@ -153,6 +156,16 @@ public class MazeDemoModel {
 
 	public void setPassageWidthPercentage(int percent) {
 		this.passageWidthPercentage = percent;
+	}
+
+	
+	public Style getStyle() {
+		return style;
+	}
+
+	
+	public void setStyle(Style style) {
+		this.style = style;
 	}
 
 	public boolean isGenerationAnimated() {

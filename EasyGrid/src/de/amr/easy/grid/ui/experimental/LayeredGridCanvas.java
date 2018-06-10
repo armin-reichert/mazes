@@ -18,6 +18,7 @@ import de.amr.easy.grid.api.ObservableGrid2D;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
+import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
 
 /**
  * Canvas that can display a grid, a colored distance map and a path between two cells.
@@ -113,14 +114,14 @@ public class LayeredGridCanvas extends LayeredCanvas implements GraphObserver<We
 	}
 
 	private void addGridLayer() {
-		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
+		ConfigurableGridRenderer renderer = new WallPassageGridRenderer();
 		renderer.fnPassageWidth = () -> cellSize * 9 / 10;
 		renderer.fnCellSize = () -> cellSize;
 		pushLayer(Layers.Grid.name(), g -> renderer.drawGrid(g, grid));
 	}
 
 	private void addDistanceLayer() {
-		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
+		ConfigurableGridRenderer renderer = new WallPassageGridRenderer();
 		renderer.fnPassageWidth = () -> cellSize * 9 / 10;
 		renderer.fnText = cell -> cellSize / 2 < renderer.getMinFontSize() ? ""
 				: String.format("%d", bfs.getDistance(cell));
@@ -145,7 +146,7 @@ public class LayeredGridCanvas extends LayeredCanvas implements GraphObserver<We
 	}
 
 	private void addPathLayer() {
-		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
+		ConfigurableGridRenderer renderer = new WallPassageGridRenderer();
 		renderer.fnPassageWidth = () -> Math.max(cellSize * 10 / 100, 1);
 		renderer.fnCellBgColor = cell -> Color.RED;
 		renderer.fnCellSize = () -> cellSize;

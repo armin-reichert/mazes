@@ -6,10 +6,13 @@ import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation
 
 import java.awt.Color;
 
+import de.amr.easy.graph.traversal.DepthFirstTraversal2;
+import de.amr.easy.grid.api.GridPosition;
+import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
-import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer.Style;
-import de.amr.easy.maze.alg.ust.WilsonUSTHilbertCurve;
+import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
+import de.amr.easy.maze.alg.ust.WilsonUSTRecursiveCrosses;
 
 public class PearlsRendererTestApp extends SwingGridSampleApp {
 
@@ -18,7 +21,7 @@ public class PearlsRendererTestApp extends SwingGridSampleApp {
 	}
 
 	public PearlsRendererTestApp() {
-		super(800, 800, 20, Top4.get());
+		super(750, 750, 30, Top4.get());
 		setAppName("Full Grid");
 		setRenderingStyle(Style.PEARLS);
 	}
@@ -32,8 +35,11 @@ public class PearlsRendererTestApp extends SwingGridSampleApp {
 		sleep(2000);
 		clear();
 		canvas.startListening();
-		canvas.setDelay(2);
-		new WilsonUSTHilbertCurve(grid).run(0);
+		canvas.setDelay(20);
+		new WilsonUSTRecursiveCrosses(grid).run(0);
+		canvas.setDelay(10);
+		new DepthFirstTraversalAnimation<>(grid).run(canvas, new DepthFirstTraversal2<ObservableGrid<?, ?>>(grid), 0,
+				grid.cell(GridPosition.BOTTOM_RIGHT));
 		floodFill(canvas, grid, 0);
 	}
 

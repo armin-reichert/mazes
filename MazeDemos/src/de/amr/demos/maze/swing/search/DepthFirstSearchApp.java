@@ -22,6 +22,7 @@ import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.Grid;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
+import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 
 /**
@@ -80,7 +81,7 @@ public class DepthFirstSearchApp {
 		canvas = new DrawingArea();
 		canvas.setPreferredSize(new Dimension(800, 800));
 
-		renderer = new ConfigurableGridRenderer();
+		renderer = new WallPassageGridRenderer();
 		renderer.fnCellBgColor = cell -> Color.WHITE;
 		renderer.fnCellSize = () -> Math.min(canvas.getHeight(), canvas.getWidth()) / grid.numRows();
 		renderer.fnGridBgColor = () -> Color.BLACK;

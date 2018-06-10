@@ -23,6 +23,8 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Topology;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
+import de.amr.easy.grid.ui.swing.rendering.PearlsGridRenderer;
+import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
 
 /**
  * Base class for grid sample applications.
@@ -30,6 +32,10 @@ import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
  * @author Armin Reichert
  */
 public abstract class SwingGridSampleApp implements Runnable {
+
+	public enum Style {
+		WALL_PASSAGE, PEARLS
+	};
 
 	public static void launch(SwingGridSampleApp app) {
 		try {
@@ -48,8 +54,15 @@ public abstract class SwingGridSampleApp implements Runnable {
 	protected ObservingGridCanvas canvas;
 	protected ConfigurableGridRenderer renderer;
 
-	private ConfigurableGridRenderer createRenderer(ConfigurableGridRenderer.Style style, int cellSize) {
-		ConfigurableGridRenderer r = new ConfigurableGridRenderer(style);
+	private ConfigurableGridRenderer createRenderer(Style style, int cellSize) {
+		ConfigurableGridRenderer r;
+		if (style == Style.WALL_PASSAGE) {
+			r = new WallPassageGridRenderer();
+		} else if (style == Style.PEARLS) {
+			r = new PearlsGridRenderer();
+		} else {
+			throw new IllegalArgumentException();
+		}
 		r.fnCellSize = () -> cellSize;
 		r.fnCellBgColor = cell -> {
 			switch (grid.get(cell)) {
@@ -82,7 +95,7 @@ public abstract class SwingGridSampleApp implements Runnable {
 		fullscreen = false;
 		canvasSize = new Dimension(canvasWidth, canvasHeight);
 		grid = new ObservableGrid<>(canvasWidth / cellSize, canvasHeight / cellSize, top, UNVISITED, false);
-		renderer = createRenderer(ConfigurableGridRenderer.Style.WALL_PASSAGE, cellSize);
+		renderer = createRenderer(Style.WALL_PASSAGE, cellSize);
 	}
 
 	/**
@@ -98,10 +111,10 @@ public abstract class SwingGridSampleApp implements Runnable {
 				.getDisplayMode();
 		canvasSize = new Dimension(displayMode.getWidth(), displayMode.getHeight());
 		grid = new ObservableGrid<>(canvasSize.width / cellSize, canvasSize.height / cellSize, top, UNVISITED, false);
-		renderer = createRenderer(ConfigurableGridRenderer.Style.WALL_PASSAGE, cellSize);
+		renderer = createRenderer(Style.WALL_PASSAGE, cellSize);
 	}
 
-	public void setRenderingStyle(ConfigurableGridRenderer.Style style) {
+	public void setRenderingStyle(Style style) {
 		ConfigurableGridRenderer oldRenderer = renderer;
 		renderer = createRenderer(style, oldRenderer.getCellSize());
 	}

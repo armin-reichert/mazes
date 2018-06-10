@@ -15,6 +15,8 @@ import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.ui.swing.ObservingGridCanvas;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
+import de.amr.easy.grid.ui.swing.rendering.PearlsGridRenderer;
+import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
 
 /**
  * Animation of breadth-first traversal on a grid.
@@ -138,7 +140,8 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
 	}
 
 	private ConfigurableGridRenderer createFloodFillRenderer(GridRenderer base, BreadthFirstTraversal<?> distanceMap) {
-		ConfigurableGridRenderer r = new ConfigurableGridRenderer();
+		ConfigurableGridRenderer r = base instanceof PearlsGridRenderer ? new PearlsGridRenderer()
+				: new WallPassageGridRenderer();
 		r.fnCellBgColor = cell -> colorByDist(cell, distanceMap);
 		r.fnCellSize = base.getModel()::getCellSize;
 		r.fnGridBgColor = () -> base.getModel().getGridBgColor();
@@ -147,16 +150,14 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
 		r.fnText = cell -> distanceVisible ? format("%d", bfs.getDistance(cell)) : "";
 		r.fnTextFont = () -> new Font(Font.SANS_SERIF, Font.PLAIN, r.getPassageWidth() / 2);
 		r.fnTextColor = () -> Color.BLACK;
-		if (base instanceof ConfigurableGridRenderer) {
-			r.setStyle(((ConfigurableGridRenderer) base).getStyle());
-		}
 		return r;
 	}
 
 	private ConfigurableGridRenderer createPathRenderer(ConfigurableGridRenderer base, int[] path) {
 		BitSet inPath = new BitSet();
 		IntStream.of(path).forEach(inPath::set);
-		ConfigurableGridRenderer r = new ConfigurableGridRenderer();
+		ConfigurableGridRenderer r = base instanceof PearlsGridRenderer ? new PearlsGridRenderer()
+				: new WallPassageGridRenderer();
 		r.fnCellBgColor = cell -> inPath.get(cell) ? pathColor : base.getCellBgColor(cell);
 		r.fnCellSize = () -> base.getCellSize();
 		r.fnGridBgColor = () -> base.getGridBgColor();
@@ -168,7 +169,6 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
 		r.fnText = cell -> distanceVisible ? format("%d", bfs.getDistance(cell)) : "";
 		r.fnTextFont = () -> new Font(Font.SANS_SERIF, Font.PLAIN, r.getPassageWidth() / 2);
 		r.fnTextColor = () -> Color.WHITE;
-		r.setStyle(base.getStyle());
 		return r;
 	}
 

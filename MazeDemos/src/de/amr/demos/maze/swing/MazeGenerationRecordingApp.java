@@ -19,6 +19,7 @@ import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.ObservingGridCanvas;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
+import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
 import de.amr.easy.maze.alg.BinaryTree;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
 import de.amr.easy.maze.alg.Eller;
@@ -120,7 +121,7 @@ public class MazeGenerationRecordingApp {
 	}
 
 	private GridRenderer createRenderer(int cellSize) {
-		ConfigurableGridRenderer renderer = new ConfigurableGridRenderer();
+		ConfigurableGridRenderer renderer = new WallPassageGridRenderer();
 		renderer.fnCellBgColor = cell -> {
 			if (grid.get(cell) == TraversalState.COMPLETED)
 				return Color.WHITE;

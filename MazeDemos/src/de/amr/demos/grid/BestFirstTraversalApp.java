@@ -14,6 +14,7 @@ import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
+import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
 
 public class BestFirstTraversalApp extends SwingGridSampleApp {
 
@@ -30,7 +31,7 @@ public class BestFirstTraversalApp extends SwingGridSampleApp {
 	@Override
 	public void run() {
 		do {
-			ConfigurableGridRenderer r = new ConfigurableGridRenderer();
+			ConfigurableGridRenderer r = new WallPassageGridRenderer();
 			r.fnCellBgColor = cell -> grid.get(cell) == UNVISITED ? Color.WHITE : renderer.getCellBgColor(cell);
 			r.fnPassageColor = (cell, dir) -> grid.get(cell) == UNVISITED ? Color.WHITE : renderer.getPassageColor(cell, dir);
 			r.fnPassageWidth = () -> 1;

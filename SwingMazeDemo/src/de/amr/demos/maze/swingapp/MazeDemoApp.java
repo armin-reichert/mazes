@@ -23,6 +23,7 @@ import de.amr.demos.maze.swingapp.action.FloodFillAction;
 import de.amr.demos.maze.swingapp.action.RunPathFinderAction;
 import de.amr.demos.maze.swingapp.action.StopTaskAction;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
+import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
 import de.amr.demos.maze.swingapp.view.MazeWindow;
 import de.amr.demos.maze.swingapp.view.SettingsWindow;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
@@ -71,6 +72,7 @@ public class MazeDemoApp {
 		model.setGridCellSizes(256, 128, 64, 32, 16, 8, 4, 2);
 		model.setGridCellSize(32);
 		model.setPassageWidthPercentage(50);
+		model.setStyle(Style.PEARLS);
 		model.setDelay(0);
 		model.setCompletedCellColor(Color.WHITE);
 		model.setVisitedCellColor(Color.BLUE);
