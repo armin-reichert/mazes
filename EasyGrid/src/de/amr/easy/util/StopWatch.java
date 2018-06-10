@@ -2,14 +2,14 @@ package de.amr.easy.util;
 
 public class StopWatch {
 
-	private long startMillis;
+	private long startNanos;
 	private float duration; // milliseconds
 
 	/**
 	 * Starts the watch.
 	 */
 	public void start() {
-		startMillis = System.currentTimeMillis();
+		startNanos = System.nanoTime();
 		duration = 0;
 	}
 
@@ -17,14 +17,14 @@ public class StopWatch {
 	 * Stops the watch and stores the time elapsed since last start.
 	 */
 	public void stop() {
-		duration = System.currentTimeMillis() - startMillis;
+		duration = System.nanoTime() - startNanos;
 	}
 
 	/**
-	 * Runs the given code and measure its execution time.
+	 * Measures execution of given code.
 	 * 
 	 * @param code
-	 *          code to be measured
+	 *          code that is executed and measured
 	 */
 	public void measure(Runnable code) {
 		start();
@@ -33,17 +33,16 @@ public class StopWatch {
 	}
 
 	/**
-	 * 
 	 * @return measured time in seconds
 	 */
 	public float getSeconds() {
-		return duration / 1000f;
+		return duration / 1000000000f;
 	}
 
 	/**
-	 * @return measured time in ms
+	 * @return measured time in nanoseconds
 	 */
-	public float getMilliseconds() {
+	public float getNanos() {
 		return duration;
 	}
 }
