@@ -2,7 +2,6 @@ package de.amr.demos.maze.swingapp.action;
 
 import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.Slow;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.stream.Stream;
 

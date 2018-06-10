@@ -3,7 +3,6 @@ package de.amr.demos.maze.swingapp.action;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static java.lang.String.format;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;

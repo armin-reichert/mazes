@@ -21,25 +21,33 @@ public class PearlsRendererTestApp extends SwingGridSampleApp {
 	}
 
 	public PearlsRendererTestApp() {
-		super(750, 750, 30, Top4.get());
-		setAppName("Full Grid");
+		super(750, 750, 15, Top4.get());
+		setAppName("Pearls Renderer Test");
 		setRenderingStyle(Style.PEARLS);
+		renderer.fnGridBgColor = () -> Color.DARK_GRAY;
 	}
 
 	@Override
 	public void run() {
-		grid.setDefaultContent(COMPLETED);
+		clear();
 		canvas.stopListening();
+		grid.setDefaultContent(COMPLETED);
 		grid.fill();
 		canvas.drawGrid();
+
 		sleep(2000);
 		clear();
 		canvas.startListening();
-		canvas.setDelay(20);
+		canvas.setDelay(1);
 		new WilsonUSTRecursiveCrosses(grid).run(0);
+		
+		sleep(2000);
 		canvas.setDelay(10);
 		new DepthFirstTraversalAnimation<>(grid).run(canvas, new DepthFirstTraversal2<ObservableGrid<?, ?>>(grid), 0,
 				grid.cell(GridPosition.BOTTOM_RIGHT));
+
+		sleep(2000);
+		clear();
 		floodFill(canvas, grid, 0);
 	}
 
@@ -47,6 +55,6 @@ public class PearlsRendererTestApp extends SwingGridSampleApp {
 		grid.removeEdges();
 		grid.clearContent();
 		grid.setDefaultContent(UNVISITED);
-		canvas.fill(Color.BLACK);
+		canvas.clear();
 	}
 }
