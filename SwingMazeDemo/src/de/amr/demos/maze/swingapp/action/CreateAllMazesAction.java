@@ -28,7 +28,7 @@ public class CreateAllMazesAction extends CreateMazeAction {
 	public void actionPerformed(ActionEvent e) {
 		app.wndSettings.setVisible(!app.model.isHidingControlsWhenRunning());
 		app.wndMaze.setVisible(true);
-		app.getCanvas().fill(Color.BLACK);
+		app.getCanvas().clear();
 		app.startTask(() -> {
 			enableUI(false);
 			try {
@@ -65,7 +65,7 @@ public class CreateAllMazesAction extends CreateMazeAction {
 
 	private void createNextMaze(AlgorithmInfo generatorInfo, int startCell) {
 		ready = false;
-		app.getCanvas().fill(Color.BLACK);
+		app.getCanvas().clear();
 		app.wndSettings.getControlPanel().getLblGenerationAlgorithm().setText(generatorInfo.getDescription());
 		app.wndSettings.getGeneratorMenu().setSelectedAlgorithm(generatorInfo);
 		try {

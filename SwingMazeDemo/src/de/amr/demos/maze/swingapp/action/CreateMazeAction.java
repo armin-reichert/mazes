@@ -31,7 +31,7 @@ public class CreateMazeAction extends MazeDemoAction {
 		enableUI(false);
 		app.wndSettings.setVisible(!app.model.isHidingControlsWhenRunning());
 		app.wndMaze.setVisible(true);
-		app.getCanvas().fill(Color.BLACK);
+		app.getCanvas().clear();
 		app.startTask(() -> {
 			try {
 				runMazeGenerator(generatorInfo, app.model.getGrid().cell(app.model.getGenerationStart()));

@@ -1,6 +1,5 @@
 package de.amr.demos.maze.swingapp.action;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
@@ -13,8 +12,7 @@ public class ClearCanvasAction extends MazeDemoAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app.getCanvas().fill(Color.BLACK);
+		app.getCanvas().clear();
 		app.getCanvas().drawGrid();
 	}
-
 }
