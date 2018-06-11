@@ -27,6 +27,17 @@ import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
  */
 public class RunPathFinderAction extends MazeDemoAction {
 
+	private class Heuristics {
+
+		private final String name;
+		private final Function<Integer, Integer> fn;
+
+		public Heuristics(String name, Function<Integer, Integer> fn) {
+			this.name = name;
+			this.fn = fn;
+		}
+	}
+
 	public RunPathFinderAction(MazeDemoApp app) {
 		super(app, "Solve");
 	}
@@ -65,24 +76,20 @@ public class RunPathFinderAction extends MazeDemoAction {
 		}
 
 		if (pathFinderInfo.getAlgorithmClass() == HillClimbing.class) {
-			Function<Integer, Integer> h;
-			String name;
+			Heuristics heuristics;
 			if (pathFinderInfo.isTagged(CHEBYSHEV)) {
-				h = v -> grid.chebyshev(v, tgt);
-				name = "Chebyshev";
+				heuristics = new Heuristics("Chebyshev", v -> grid.chebyshev(v, tgt));
 			} else if (pathFinderInfo.isTagged(EUCLIDEAN)) {
-				h = v -> grid.euclidean2(v, tgt);
-				name = "Euclidean";
+				heuristics = new Heuristics("Euclidean", v -> grid.euclidean2(v, tgt));
 			} else if (pathFinderInfo.isTagged(MANHATTAN)) {
-				h = v -> grid.manhattan(v, tgt);
-				name = "Manhattan";
+				heuristics = new Heuristics("Manhattan", v -> grid.manhattan(v, tgt));
 			} else {
 				return;
 			}
 			DepthFirstTraversalAnimation<?> anim = new DepthFirstTraversalAnimation<>(grid);
 			anim.setPathColor(app.model.getPathColor());
-			watch.measure(() -> anim.run(canvas, new HillClimbing<>(grid, h), src, tgt));
-			app.showMessage(format("Hill Climbing (%s): %.6f seconds.", name, watch.getSeconds()));
+			watch.measure(() -> anim.run(canvas, new HillClimbing<>(grid, heuristics.fn), src, tgt));
+			app.showMessage(format("Hill Climbing (%s): %.6f seconds.", heuristics.name, watch.getSeconds()));
 			return;
 		}
 
@@ -97,26 +104,23 @@ public class RunPathFinderAction extends MazeDemoAction {
 		}
 
 		if (pathFinderInfo.getAlgorithmClass() == BestFirstTraversal.class) {
-			Function<Integer, Integer> h;
-			String name;
+			Heuristics heuristics;
 			if (pathFinderInfo.isTagged(CHEBYSHEV)) {
-				h = v -> grid.chebyshev(v, tgt);
-				name = "Chebyshev";
+				heuristics = new Heuristics("Chebyshev", v -> grid.chebyshev(v, tgt));
 			} else if (pathFinderInfo.isTagged(EUCLIDEAN)) {
-				h = v -> grid.euclidean2(v, tgt);
-				name = "Euclidean";
+				heuristics = new Heuristics("Euclidean", v -> grid.euclidean2(v, tgt));
 			} else if (pathFinderInfo.isTagged(MANHATTAN)) {
-				h = v -> grid.manhattan(v, tgt);
-				name = "Manhattan";
+				heuristics = new Heuristics("Manhattan", v -> grid.manhattan(v, tgt));
 			} else {
 				return;
 			}
-			BestFirstTraversal<ObservableGrid<TraversalState, Integer>, Integer> best = new BestFirstTraversal<>(grid, h);
+			BestFirstTraversal<ObservableGrid<TraversalState, Integer>, Integer> best = new BestFirstTraversal<>(grid,
+					heuristics.fn);
 			BreadthFirstTraversalAnimation<?> anim = new BreadthFirstTraversalAnimation<>(grid);
 			anim.setPathColor(app.model.getPathColor());
 			watch.measure(() -> anim.run(canvas, best, src, tgt));
 			anim.showPath(canvas, best, tgt);
-			app.showMessage(format("Best-first search (%s): %.6f seconds.", name, watch.getSeconds()));
+			app.showMessage(format("Best-first search (%s): %.6f seconds.", heuristics.name, watch.getSeconds()));
 			return;
 		}
 	}
