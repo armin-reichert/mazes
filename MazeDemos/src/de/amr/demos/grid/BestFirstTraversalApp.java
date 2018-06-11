@@ -50,10 +50,9 @@ public class BestFirstTraversalApp extends SwingGridSampleApp {
 
 			BestFirstTraversal<ObservableGrid<TraversalState, Integer>, Integer> best = new BestFirstTraversal<>(grid,
 					v -> grid.euclidean2(v, target));
-			BreadthFirstTraversalAnimation<ObservableGrid<TraversalState, Integer>> anim = new BreadthFirstTraversalAnimation<>(
-					best);
-			anim.run(canvas, source, target);
-			anim.showPath(canvas, target);
+			BreadthFirstTraversalAnimation<?> anim = new BreadthFirstTraversalAnimation<>(grid);
+			anim.run(canvas, best, source, target);
+			anim.showPath(canvas, best, target);
 
 			sleep(3000);
 			canvas.drawGrid();

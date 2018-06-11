@@ -88,10 +88,10 @@ public class RunPathFinderAction extends MazeDemoAction {
 
 		if (pathFinderInfo.getAlgorithmClass() == BreadthFirstTraversal.class) {
 			BreadthFirstTraversal<ObservableGrid<TraversalState, Integer>> bfs = new BreadthFirstTraversal<>(grid);
-			BreadthFirstTraversalAnimation<?> anim = new BreadthFirstTraversalAnimation<>(bfs);
+			BreadthFirstTraversalAnimation<?> anim = new BreadthFirstTraversalAnimation<>(grid);
 			anim.setPathColor(app.model.getPathColor());
-			watch.measure(() -> anim.run(canvas, src, tgt));
-			anim.showPath(canvas, tgt);
+			watch.measure(() -> anim.run(canvas, bfs, src, tgt));
+			anim.showPath(canvas, bfs, tgt);
 			app.showMessage(format("Breadth-first search: %.6f seconds.", watch.getSeconds()));
 			return;
 		}
@@ -112,10 +112,10 @@ public class RunPathFinderAction extends MazeDemoAction {
 				return;
 			}
 			BestFirstTraversal<ObservableGrid<TraversalState, Integer>, Integer> best = new BestFirstTraversal<>(grid, h);
-			BreadthFirstTraversalAnimation<?> anim = new BreadthFirstTraversalAnimation<>(best);
+			BreadthFirstTraversalAnimation<?> anim = new BreadthFirstTraversalAnimation<>(grid);
 			anim.setPathColor(app.model.getPathColor());
-			watch.measure(() -> anim.run(canvas, src, tgt));
-			anim.showPath(canvas, tgt);
+			watch.measure(() -> anim.run(canvas, best, src, tgt));
+			anim.showPath(canvas, best, tgt);
 			app.showMessage(format("Best-first search (%s): %.6f seconds.", name, watch.getSeconds()));
 			return;
 		}

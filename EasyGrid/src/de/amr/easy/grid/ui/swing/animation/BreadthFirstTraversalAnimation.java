@@ -56,20 +56,19 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
 	 */
 	public static <G extends BareGrid2D<Integer>> void floodFill(ObservingGridCanvas canvas, G grid, int source,
 			boolean distanceVisible) {
-		BreadthFirstTraversalAnimation<G> anim = new BreadthFirstTraversalAnimation<>(new BreadthFirstTraversal<>(grid));
+		BreadthFirstTraversal<G> bfs = new BreadthFirstTraversal<>(grid);
+		BreadthFirstTraversalAnimation<G> anim = new BreadthFirstTraversalAnimation<>(grid);
 		anim.setDistanceVisible(distanceVisible);
-		anim.run(canvas, source, -1);
+		anim.run(canvas, bfs, source, -1);
 	}
 
 	private final G grid;
-	private final BreadthFirstTraversal<G> bfs;
 	private ConfigurableGridRenderer floodFillRenderer;
 	private boolean distanceVisible;
 	private Color pathColor;
 
-	public BreadthFirstTraversalAnimation(BreadthFirstTraversal<G> bfs) {
-		this.bfs = bfs;
-		grid = bfs.getGraph();
+	public BreadthFirstTraversalAnimation(G grid) {
+		this.grid = grid;
 		distanceVisible = true;
 		pathColor = Color.RED;
 	}
@@ -98,7 +97,7 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
 	 * @param target
 	 *          the target cell
 	 */
-	public void run(ObservingGridCanvas canvas, int source, int target) {
+	public void run(ObservingGridCanvas canvas, BreadthFirstTraversal<G> bfs, int source, int target) {
 		canvas.getRenderer().ifPresent(canvasRenderer -> {
 			// 1. traverse complete graph for computing maximum distance from source
 			BreadthFirstTraversal<G> distanceMap = new BreadthFirstTraversal<>(grid);
@@ -130,10 +129,10 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
 		});
 	}
 
-	public void showPath(ObservingGridCanvas canvas, int target) {
+	public void showPath(ObservingGridCanvas canvas, BreadthFirstTraversal<G> bfs, int target) {
 		canvas.getRenderer().ifPresent(canvasRenderer -> {
 			int[] path = bfs.findPath(target).toArray();
-			canvas.pushRenderer(createPathRenderer(floodFillRenderer, path));
+			canvas.pushRenderer(createPathRenderer(floodFillRenderer, bfs, path));
 			Arrays.stream(path).forEach(canvas::drawGridCell);
 			canvas.popRenderer();
 		});
@@ -147,13 +146,14 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
 		r.fnGridBgColor = () -> base.getModel().getGridBgColor();
 		r.fnPassageColor = (u, v) -> colorByDist(u, distanceMap);
 		r.fnPassageWidth = base.getModel()::getPassageWidth;
-		r.fnText = cell -> distanceVisible ? format("%d", bfs.getDistance(cell)) : "";
+		r.fnText = cell -> distanceVisible ? format("%d", distanceMap.getDistance(cell)) : "";
 		r.fnTextFont = () -> new Font(Font.SANS_SERIF, Font.PLAIN, r.getPassageWidth() / 2);
 		r.fnTextColor = () -> Color.BLACK;
 		return r;
 	}
 
-	private ConfigurableGridRenderer createPathRenderer(ConfigurableGridRenderer base, int[] path) {
+	private ConfigurableGridRenderer createPathRenderer(ConfigurableGridRenderer base,
+			BreadthFirstTraversal<?> distanceMap, int[] path) {
 		BitSet inPath = new BitSet();
 		IntStream.of(path).forEach(inPath::set);
 		ConfigurableGridRenderer r = base instanceof PearlsGridRenderer ? new PearlsGridRenderer()
@@ -166,7 +166,7 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
 			return inPath.get(cell) && inPath.get(neighbor) ? pathColor : base.getCellBgColor(cell);
 		};
 		r.fnPassageWidth = () -> base.getPassageWidth() > 5 ? base.getPassageWidth() / 2 : base.getPassageWidth();
-		r.fnText = cell -> distanceVisible ? format("%d", bfs.getDistance(cell)) : "";
+		r.fnText = cell -> distanceVisible ? format("%d", distanceMap.getDistance(cell)) : "";
 		r.fnTextFont = () -> new Font(Font.SANS_SERIF, Font.PLAIN, r.getPassageWidth() / 2);
 		r.fnTextColor = () -> Color.WHITE;
 		return r;
