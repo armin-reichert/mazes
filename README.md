@@ -129,10 +129,8 @@ Implemented algorithms:
 
 ### Path finding algorithms:
 The [EasyGraph](EasyGraph) library currently contains the following path finder implementations:
-- Plain [Breadth-First Search](EasyGraph/src/de/amr/easy/graph/traversal/BreadthFirstTraversal.java)
-- [Best-First Search](EasyGraph/src/de/amr/easy/graph/traversal/BestFirstTraversal.java) with Manhattan distance heuristics
-- Best-First Search with Euclidian distance heuristics
-- Plain [Depth-First Search](EasyGraph/src/de/amr/easy/graph/traversal/DepthFirstTraversal.java)
-- [Hill Climbing](EasyGraph/src/de/amr/easy/graph/traversal/HillClimbing.java) with Manhattan distance heuristics
-- Hill Climbing with Euclidian distance heuristics
+- [Breadth-First Search](EasyGraph/src/de/amr/easy/graph/traversal/BreadthFirstTraversal.java)
+- [Depth-First Search](EasyGraph/src/de/amr/easy/graph/traversal/DepthFirstTraversal.java)
+- [Best-First Search](EasyGraph/src/de/amr/easy/graph/traversal/BestFirstTraversal.java) with Euclidean, Manhattan and Chebyshev distance heuristics
+- [Hill Climbing](EasyGraph/src/de/amr/easy/graph/traversal/HillClimbing.java)  with Euclidean, Manhattan and Chebyshev distance heuristics
 
