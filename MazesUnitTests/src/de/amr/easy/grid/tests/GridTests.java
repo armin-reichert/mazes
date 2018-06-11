@@ -267,4 +267,31 @@ public class GridTests {
 
 		assertTrue(GraphUtils.areConnected(grid, 0, 0));
 	}
+
+	@Test
+	public void testManhattanDist() {
+		int u = grid.cell(GridPosition.TOP_LEFT);
+		int v = grid.cell(GridPosition.BOTTOM_RIGHT);
+		int dist = grid.manhattan(u, v);
+		assertEquals((grid.numRows() - 1) + (grid.numCols() - 1), dist);
+		assertEquals(0, grid.manhattan(u, u));
+	}
+
+	@Test
+	public void testEuclidian2Dist() {
+		int u = grid.cell(GridPosition.TOP_LEFT);
+		int v = grid.cell(GridPosition.BOTTOM_RIGHT);
+		int dist = grid.euclidean2(u, v);
+		assertEquals((grid.numRows() - 1) * (grid.numRows() - 1) + (grid.numCols() - 1) * (grid.numCols() - 1), dist);
+		assertEquals(0, grid.euclidean2(u, u));
+	}
+
+	@Test
+	public void testChebyshevDist() {
+		int u = grid.cell(GridPosition.TOP_LEFT);
+		int v = grid.cell(GridPosition.BOTTOM_RIGHT);
+		int dist = grid.chebyshev(u, v);
+		assertEquals(Math.max(grid.numRows() - 1, grid.numCols() - 1), dist);
+		assertEquals(0, grid.chebyshev(u, u));
+	}
 }

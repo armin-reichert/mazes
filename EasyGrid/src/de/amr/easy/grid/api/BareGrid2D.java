@@ -1,5 +1,8 @@
 package de.amr.easy.grid.api;
 
+import static java.lang.Math.abs;
+import static java.lang.Math.max;
+
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
 
@@ -73,6 +76,20 @@ public interface BareGrid2D<W extends Comparable<W>> extends Graph<WeightedEdge<
 	int row(int cell);
 
 	/**
+	 * Returns the Chebyshev distance between the given grid cells.
+	 * 
+	 * @param u
+	 *          grid cell
+	 * @param v
+	 *          grid cell
+	 * @return Chebyshev distance between cells
+	 */
+	default int chebyshev(int u, int v) {
+		int x1 = col(u), y1 = row(u), x2 = col(v), y2 = row(v);
+		return max(abs(x1 - x2), abs(y1 - y2));
+	}
+
+	/**
 	 * Returns the Manhattan distance between the given grid cells.
 	 * 
 	 * @param u
@@ -83,9 +100,9 @@ public interface BareGrid2D<W extends Comparable<W>> extends Graph<WeightedEdge<
 	 */
 	default int manhattan(int u, int v) {
 		int x1 = col(u), y1 = row(u), x2 = col(v), y2 = row(v);
-		return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+		return abs(x1 - x2) + abs(y1 - y2);
 	}
-
+	
 	/**
 	 * Returns the (squared) Euclidean distance between the given grid cells.
 	 * 
