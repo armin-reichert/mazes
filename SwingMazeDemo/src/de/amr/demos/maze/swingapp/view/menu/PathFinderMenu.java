@@ -29,13 +29,17 @@ public class PathFinderMenu extends JMenu {
 		add(app.actionFloodFill);
 		add(app.actionClearCanvas);
 		addSeparator();
-		Stream.of(PATHFINDER_ALGORITHMS).forEach(alg -> group.add(add(newItem(app, alg))));
+		Stream.of(PATHFINDER_ALGORITHMS).forEach(this::addMenuItem);
 	}
 
-	private JRadioButtonMenuItem newItem(MazeDemoApp app, AlgorithmInfo alg) {
-		JRadioButtonMenuItem item = new JRadioButtonMenuItem(alg.getDescription());
-		item.putClientProperty("algorithm", alg);
-		return item;
+	private void addMenuItem(AlgorithmInfo alg) {
+		if (alg == null) {
+			addSeparator();
+		} else {
+			JRadioButtonMenuItem item = new JRadioButtonMenuItem(alg.getDescription());
+			item.putClientProperty("algorithm", alg);
+			group.add(add(item));
+		}
 	}
 
 	public Optional<AlgorithmInfo> selectedAlgorithm() {

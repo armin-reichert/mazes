@@ -1,10 +1,12 @@
 package de.amr.demos.maze.swingapp.action;
 
-import static de.amr.demos.maze.swingapp.model.PathFinderTag.Euclidian;
-import static de.amr.demos.maze.swingapp.model.PathFinderTag.Manhattan;
+import static de.amr.demos.maze.swingapp.model.PathFinderTag.CHEBYSHEV;
+import static de.amr.demos.maze.swingapp.model.PathFinderTag.EUCLIDEAN;
+import static de.amr.demos.maze.swingapp.model.PathFinderTag.MANHATTAN;
 import static java.lang.String.format;
 
 import java.awt.event.ActionEvent;
+import java.util.function.Function;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
@@ -63,18 +65,25 @@ public class RunPathFinderAction extends MazeDemoAction {
 		}
 
 		if (pathFinderInfo.getAlgorithmClass() == HillClimbing.class) {
+			Function<Integer, Integer> h;
+			String name;
+			if (pathFinderInfo.isTagged(CHEBYSHEV)) {
+				h = v -> grid.chebyshev(v, tgt);
+				name = "Chebyshev";
+			} else if (pathFinderInfo.isTagged(EUCLIDEAN)) {
+				h = v -> grid.euclidean2(v, tgt);
+				name = "Euclidean";
+			} else if (pathFinderInfo.isTagged(MANHATTAN)) {
+				h = v -> grid.manhattan(v, tgt);
+				name = "Manhattan";
+			} else {
+				return;
+			}
 			DepthFirstTraversalAnimation<?> anim = new DepthFirstTraversalAnimation<>(grid);
 			anim.setPathColor(app.model.getPathColor());
-			if (pathFinderInfo.isTagged(Manhattan)) {
-				watch.measure(() -> anim.run(canvas, new HillClimbing<>(grid, v -> grid.manhattan(v, tgt)), src, tgt));
-				app.showMessage(format("Hill Climbing (Manhattan): %.6f seconds.", watch.getSeconds()));
-				return;
-			}
-			if (pathFinderInfo.isTagged(Euclidian)) {
-				watch.measure(() -> anim.run(canvas, new HillClimbing<>(grid, v -> grid.euclidean2(v, tgt)), src, tgt));
-				app.showMessage(format("Hill Climbing (Euclidian): %.6f seconds.", watch.getSeconds()));
-				return;
-			}
+			watch.measure(() -> anim.run(canvas, new HillClimbing<>(grid, h), src, tgt));
+			app.showMessage(format("Hill Climbing (%s): %.6f seconds.", name, watch.getSeconds()));
+			return;
 		}
 
 		if (pathFinderInfo.getAlgorithmClass() == BreadthFirstTraversal.class) {
@@ -88,26 +97,27 @@ public class RunPathFinderAction extends MazeDemoAction {
 		}
 
 		if (pathFinderInfo.getAlgorithmClass() == BestFirstTraversal.class) {
-			if (pathFinderInfo.isTagged(Manhattan)) {
-				BestFirstTraversal<ObservableGrid<TraversalState, Integer>, Integer> best = new BestFirstTraversal<>(grid,
-						v -> grid.manhattan(v, tgt));
-				BreadthFirstTraversalAnimation<?> anim = new BreadthFirstTraversalAnimation<>(best);
-				anim.setPathColor(app.model.getPathColor());
-				watch.measure(() -> anim.run(canvas, src, tgt));
-				anim.showPath(canvas, tgt);
-				app.showMessage(format("Best-first search (Manhattan): %.6f seconds.", watch.getSeconds()));
+			Function<Integer, Integer> h;
+			String name;
+			if (pathFinderInfo.isTagged(CHEBYSHEV)) {
+				h = v -> grid.chebyshev(v, tgt);
+				name = "Chebyshev";
+			} else if (pathFinderInfo.isTagged(EUCLIDEAN)) {
+				h = v -> grid.euclidean2(v, tgt);
+				name = "Euclidean";
+			} else if (pathFinderInfo.isTagged(MANHATTAN)) {
+				h = v -> grid.manhattan(v, tgt);
+				name = "Manhattan";
+			} else {
 				return;
 			}
-			if (pathFinderInfo.isTagged(Euclidian)) {
-				BestFirstTraversal<ObservableGrid<TraversalState, Integer>, Integer> best = new BestFirstTraversal<>(grid,
-						v -> grid.euclidean2(v, tgt));
-				BreadthFirstTraversalAnimation<?> anim = new BreadthFirstTraversalAnimation<>(best);
-				anim.setPathColor(app.model.getPathColor());
-				watch.measure(() -> anim.run(canvas, src, tgt));
-				anim.showPath(canvas, tgt);
-				app.showMessage(format("Best-first search (Euclidian): %.6f seconds.", watch.getSeconds()));
-				return;
-			}
+			BestFirstTraversal<ObservableGrid<TraversalState, Integer>, Integer> best = new BestFirstTraversal<>(grid, h);
+			BreadthFirstTraversalAnimation<?> anim = new BreadthFirstTraversalAnimation<>(best);
+			anim.setPathColor(app.model.getPathColor());
+			watch.measure(() -> anim.run(canvas, src, tgt));
+			anim.showPath(canvas, tgt);
+			app.showMessage(format("Best-first search (%s): %.6f seconds.", name, watch.getSeconds()));
+			return;
 		}
 	}
 }

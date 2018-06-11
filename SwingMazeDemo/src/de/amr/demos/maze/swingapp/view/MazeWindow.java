@@ -8,9 +8,11 @@ import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
+import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.ui.swing.ObservingGridCanvas;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
+import de.amr.easy.grid.ui.swing.rendering.PearlsGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
 
 /**
@@ -50,7 +52,8 @@ public class MazeWindow extends JFrame {
 	}
 
 	private ConfigurableGridRenderer createRenderer() {
-		ConfigurableGridRenderer r = new WallPassageGridRenderer();
+		ConfigurableGridRenderer r = app.model.getStyle() == Style.PEARLS ? new PearlsGridRenderer()
+				: new WallPassageGridRenderer();
 		r.fnCellSize = () -> app.model.getGridCellSize();
 		r.fnPassageWidth = () -> {
 			int passageWidth = app.model.getGridCellSize() * app.model.getPassageWidthPercentage() / 100;

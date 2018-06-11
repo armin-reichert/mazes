@@ -72,7 +72,7 @@ public class MazeDemoApp {
 		model.setGridCellSizes(256, 128, 64, 32, 16, 8, 4, 2);
 		model.setGridCellSize(32);
 		model.setPassageWidthPercentage(50);
-		model.setStyle(Style.PEARLS);
+		model.setStyle(Style.WALL_PASSAGES);
 		model.setDelay(0);
 		model.setCompletedCellColor(Color.WHITE);
 		model.setVisitedCellColor(Color.BLUE);

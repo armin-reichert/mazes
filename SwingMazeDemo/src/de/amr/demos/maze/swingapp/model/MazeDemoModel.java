@@ -5,8 +5,9 @@ import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.Slow;
 import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.SmallGrid;
 import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.Traversal;
 import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.UST;
-import static de.amr.demos.maze.swingapp.model.PathFinderTag.Euclidian;
-import static de.amr.demos.maze.swingapp.model.PathFinderTag.Manhattan;
+import static de.amr.demos.maze.swingapp.model.PathFinderTag.CHEBYSHEV;
+import static de.amr.demos.maze.swingapp.model.PathFinderTag.EUCLIDEAN;
+import static de.amr.demos.maze.swingapp.model.PathFinderTag.MANHATTAN;
 
 import java.awt.Color;
 import java.util.Arrays;
@@ -61,8 +62,10 @@ import de.amr.easy.maze.alg.ust.WilsonUSTRowsTopDown;
  * @author Armin Reichert
  */
 public class MazeDemoModel {
-	
-	public enum Style { WALL_PASSAGES, PEARLS };
+
+	public enum Style {
+		WALL_PASSAGES, PEARLS
+	};
 
 	public static final AlgorithmInfo[] GENERATOR_ALGORITHMS = {
 		/*@formatter:off*/
@@ -105,12 +108,16 @@ public class MazeDemoModel {
 	};
 
 	public static final AlgorithmInfo[] PATHFINDER_ALGORITHMS = {
-			new AlgorithmInfo(DepthFirstTraversal2.class, "Depth-First-Search"),
-			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Manhattan)", Manhattan),
-			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Euclidian)", Euclidian),
 			new AlgorithmInfo(BreadthFirstTraversal.class, "Breadth-First-Search"),
-			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Manhattan)", Manhattan),
-			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Euclidian)", Euclidian),
+			new AlgorithmInfo(DepthFirstTraversal2.class, "Depth-First-Search"),
+			null,
+			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Manhattan)", MANHATTAN),
+			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Euclidean)", EUCLIDEAN),
+			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Chebyshev)", CHEBYSHEV),
+			null,
+			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Manhattan)", MANHATTAN),
+			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Euclidean)", EUCLIDEAN),
+			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Chebyshev)", CHEBYSHEV),
 
 	};
 
@@ -158,12 +165,10 @@ public class MazeDemoModel {
 		this.passageWidthPercentage = percent;
 	}
 
-	
 	public Style getStyle() {
 		return style;
 	}
 
-	
 	public void setStyle(Style style) {
 		this.style = style;
 	}
