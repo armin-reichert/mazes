@@ -42,7 +42,7 @@ public class BestFirstTraversalApp extends SwingGridSampleApp {
 			removeArea(10, 16, 10, 1);
 			grid.setDefaultContent(UNVISITED);
 			canvas.drawGrid();
-			canvas.setDelay(6);
+			canvasAnimation.setDelay(6);
 			int source = grid.cell(TOP_LEFT);
 			int target = grid.cell(BOTTOM_RIGHT);
 			sleep(2000);

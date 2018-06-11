@@ -18,7 +18,6 @@ import de.amr.easy.graph.traversal.HillClimbing;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
-import de.amr.easy.grid.ui.swing.animation.ObservingGridCanvas;
 
 /**
  * Action for running the selected path finding algorithm on the current maze.
@@ -45,7 +44,7 @@ public class RunPathFinderAction extends MazeDemoAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		app.wndSettings.setVisible(!app.model.isHidingControlsWhenRunning());
-		app.wndMaze.setVisible(true);
+		app.wndCanvas.setVisible(true);
 		enableUI(false);
 		app.startTask(() -> {
 			try {
@@ -62,15 +61,15 @@ public class RunPathFinderAction extends MazeDemoAction {
 	}
 
 	private void runPathFinder(AlgorithmInfo pathFinderInfo) {
+
 		final ObservableGrid<TraversalState, Integer> grid = app.model.getGrid();
-		final ObservingGridCanvas canvas = app.getCanvas();
 		final int src = grid.cell(app.model.getPathFinderSource());
 		final int tgt = grid.cell(app.model.getPathFinderTarget());
 
 		if (pathFinderInfo.getAlgorithmClass() == DepthFirstTraversal2.class) {
 			DepthFirstTraversalAnimation<?> anim = new DepthFirstTraversalAnimation<>(grid);
 			anim.setPathColor(app.model.getPathColor());
-			watch.measure(() -> anim.run(canvas, new DepthFirstTraversal2<>(grid), src, tgt));
+			watch.measure(() -> anim.run(app.getCanvas(), new DepthFirstTraversal2<>(grid), src, tgt));
 			app.showMessage(format("Depth-first search: %.6f seconds.", watch.getSeconds()));
 			return;
 		}
@@ -88,7 +87,7 @@ public class RunPathFinderAction extends MazeDemoAction {
 			}
 			DepthFirstTraversalAnimation<?> anim = new DepthFirstTraversalAnimation<>(grid);
 			anim.setPathColor(app.model.getPathColor());
-			watch.measure(() -> anim.run(canvas, new HillClimbing<>(grid, heuristics.fn), src, tgt));
+			watch.measure(() -> anim.run(app.getCanvas(), new HillClimbing<>(grid, heuristics.fn), src, tgt));
 			app.showMessage(format("Hill Climbing (%s): %.6f seconds.", heuristics.name, watch.getSeconds()));
 			return;
 		}
@@ -97,8 +96,8 @@ public class RunPathFinderAction extends MazeDemoAction {
 			BreadthFirstTraversal<ObservableGrid<TraversalState, Integer>> bfs = new BreadthFirstTraversal<>(grid);
 			BreadthFirstTraversalAnimation<?> anim = new BreadthFirstTraversalAnimation<>(grid);
 			anim.setPathColor(app.model.getPathColor());
-			watch.measure(() -> anim.run(canvas, bfs, src, tgt));
-			anim.showPath(canvas, bfs, tgt);
+			watch.measure(() -> anim.run(app.getCanvas(), bfs, src, tgt));
+			anim.showPath(app.getCanvas(), bfs, tgt);
 			app.showMessage(format("Breadth-first search: %.6f seconds.", watch.getSeconds()));
 			return;
 		}
@@ -118,8 +117,8 @@ public class RunPathFinderAction extends MazeDemoAction {
 					heuristics.fn);
 			BreadthFirstTraversalAnimation<?> anim = new BreadthFirstTraversalAnimation<>(grid);
 			anim.setPathColor(app.model.getPathColor());
-			watch.measure(() -> anim.run(canvas, best, src, tgt));
-			anim.showPath(canvas, best, tgt);
+			watch.measure(() -> anim.run(app.getCanvas(), best, src, tgt));
+			anim.showPath(app.getCanvas(), best, tgt);
 			app.showMessage(format("Best-first search (%s): %.6f seconds.", heuristics.name, watch.getSeconds()));
 			return;
 		}

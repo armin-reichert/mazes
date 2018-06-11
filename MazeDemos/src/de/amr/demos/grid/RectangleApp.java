@@ -19,7 +19,6 @@ public class RectangleApp extends SwingGridSampleApp {
 
 	@Override
 	public void run() {
-		canvas.setDelay(0);
 		Rectangle startRectangle = new Rectangle(grid, grid.cell(0, 0), 1, 1);
 		ExpandingRectangle expRect = new ExpandingRectangle(startRectangle);
 		expRect.setExpandHorizontally(true);

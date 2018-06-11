@@ -22,7 +22,8 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Topology;
 import de.amr.easy.grid.impl.ObservableGrid;
-import de.amr.easy.grid.ui.swing.animation.ObservingGridCanvas;
+import de.amr.easy.grid.ui.swing.GridCanvas;
+import de.amr.easy.grid.ui.swing.animation.GridCanvasAnimation;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.PearlsGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
@@ -52,7 +53,8 @@ public abstract class SwingGridSampleApp implements Runnable {
 	protected String appName;
 	protected boolean fullscreen;
 	protected ObservableGrid<TraversalState, Integer> grid;
-	protected ObservingGridCanvas canvas;
+	protected GridCanvas<ObservableGrid<TraversalState, Integer>> canvas;
+	protected GridCanvasAnimation<ObservableGrid<TraversalState, Integer>> canvasAnimation;
 	protected ConfigurableGridRenderer renderer;
 
 	private ConfigurableGridRenderer createRenderer(Style style, int cellSize) {
@@ -121,9 +123,9 @@ public abstract class SwingGridSampleApp implements Runnable {
 	}
 
 	private void createAndShowUI() {
-		canvas = new ObservingGridCanvas(grid, renderer);
+		canvas = new GridCanvas<>(grid, renderer.getCellSize());
+		canvas.pushRenderer(renderer);
 		canvas.setBackground(Color.BLACK);
-		canvas.setDelay(0);
 		canvas.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "exit");
 		canvas.getActionMap().put("exit", new AbstractAction() {
 
@@ -132,6 +134,11 @@ public abstract class SwingGridSampleApp implements Runnable {
 				System.exit(0);
 			}
 		});
+
+		canvasAnimation = new GridCanvasAnimation<>(canvas);
+		canvasAnimation.setDelay(0);
+		grid.addGraphObserver(canvasAnimation);
+
 		window.add(canvas, BorderLayout.CENTER);
 
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -181,6 +188,7 @@ public abstract class SwingGridSampleApp implements Runnable {
 		grid = new ObservableGrid<>(canvasSize.width / cellSize, canvasSize.height / cellSize, grid.getTopology(),
 				grid.getDefaultContent(), false);
 		canvas.setGrid(grid);
+		grid.addGraphObserver(canvasAnimation);
 		renderer.fnCellSize = () -> cellSize;
 		canvas.adaptSize(cellSize);
 		window.setTitle(createTitle());

@@ -23,12 +23,12 @@ public class RecursiveDivisionApp extends SwingGridSampleApp {
 
 	@Override
 	public void run() {
-		canvas.setDelay(0);
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			resizeGrid(cellSize);
 			grid.fill();
 			grid.setDefaultContent(COMPLETED);
 			new RecursiveDivision(grid).run(grid.cell(TOP_LEFT));
+			sleep(1000);
 			BreadthFirstTraversalAnimation.floodFill(canvas, grid, 0);
 			sleep(1000);
 		});

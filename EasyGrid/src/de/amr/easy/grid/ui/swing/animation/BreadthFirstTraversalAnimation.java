@@ -12,6 +12,7 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalListener;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.api.BareGrid2D;
+import de.amr.easy.grid.ui.swing.GridCanvas;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.PearlsGridRenderer;
@@ -37,7 +38,7 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
 	 * @param source
 	 *          cell where flood-fill starts
 	 */
-	public static <G extends BareGrid2D<Integer>> void floodFill(ObservingGridCanvas canvas, G grid, int source) {
+	public static <G extends BareGrid2D<Integer>> void floodFill(GridCanvas<G> canvas, G grid, int source) {
 		floodFill(canvas, grid, source, true);
 	}
 
@@ -53,7 +54,7 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
 	 * @param distanceVisible
 	 *          if distances should be displayed as text
 	 */
-	public static <G extends BareGrid2D<Integer>> void floodFill(ObservingGridCanvas canvas, G grid, int source,
+	public static <G extends BareGrid2D<Integer>> void floodFill(GridCanvas<G> canvas, G grid, int source,
 			boolean distanceVisible) {
 		BreadthFirstTraversal<G> bfs = new BreadthFirstTraversal<>(grid);
 		BreadthFirstTraversalAnimation<G> anim = new BreadthFirstTraversalAnimation<>(grid);
@@ -96,13 +97,11 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
 	 * @param target
 	 *          the target cell
 	 */
-	public void run(ObservingGridCanvas canvas, BreadthFirstTraversal<G> bfs, int source, int target) {
+	public void run(GridCanvas<G> canvas, BreadthFirstTraversal<G> bfs, int source, int target) {
 		canvas.getRenderer().ifPresent(canvasRenderer -> {
 			// 1. traverse complete graph for computing maximum distance from source
 			BreadthFirstTraversal<G> distanceMap = new BreadthFirstTraversal<>(grid);
-			canvas.stopListening();
 			distanceMap.traverseGraph(source);
-			canvas.startListening();
 
 			// Create renderer using distance map for coloring
 			floodFillRenderer = createFloodFillRenderer(canvasRenderer, distanceMap);
@@ -128,7 +127,7 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
 		});
 	}
 
-	public void showPath(ObservingGridCanvas canvas, BreadthFirstTraversal<G> bfs, int target) {
+	public void showPath(GridCanvas<G> canvas, BreadthFirstTraversal<G> bfs, int target) {
 		canvas.getRenderer().ifPresent(canvasRenderer -> {
 			int[] path = bfs.findPath(target).toArray();
 			canvas.pushRenderer(createPathRenderer(floodFillRenderer, bfs, path));

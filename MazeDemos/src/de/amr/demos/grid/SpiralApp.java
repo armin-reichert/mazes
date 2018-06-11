@@ -21,7 +21,6 @@ public class SpiralApp extends SwingGridSampleApp {
 
 	@Override
 	public void run() {
-		canvas.setDelay(0);
 		grid.vertexStream().forEach(cell -> {
 			grid.set(cell, COMPLETED);
 		});

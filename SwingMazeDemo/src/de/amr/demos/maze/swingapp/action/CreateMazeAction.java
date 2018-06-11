@@ -29,7 +29,7 @@ public class CreateMazeAction extends MazeDemoAction {
 	private void createMaze(AlgorithmInfo generatorInfo) {
 		enableUI(false);
 		app.wndSettings.setVisible(!app.model.isHidingControlsWhenRunning());
-		app.wndMaze.setVisible(true);
+		app.wndCanvas.setVisible(true);
 		app.getCanvas().clear();
 		app.startTask(() -> {
 			try {
@@ -37,8 +37,8 @@ public class CreateMazeAction extends MazeDemoAction {
 			} catch (Exception | StackOverflowError x) {
 				x.printStackTrace(System.err);
 				app.showMessage("Maze generation aborted: " + x.getClass().getSimpleName());
-				app.newGrid();
 				app.newCanvas();
+				app.wndCanvas.repaint();
 			} finally {
 				app.wndSettings.setVisible(true);
 				app.wndSettings.requestFocus();
@@ -59,10 +59,10 @@ public class CreateMazeAction extends MazeDemoAction {
 		if (app.model.isGenerationAnimated()) {
 			generator.run(startCell);
 		} else {
-			app.getCanvas().stopListening();
+			app.getCanvasAnimation().setEnabled(false);
 			watch.measure(() -> generator.run(startCell));
 			app.showMessage(format("Maze generation: %.6f seconds.", watch.getSeconds()));
-			app.getCanvas().startListening();
+			app.getCanvasAnimation().setEnabled(true);
 			watch.measure(() -> app.getCanvas().drawGrid());
 			app.showMessage(format("Grid rendering:  %.6f seconds.", watch.getSeconds()));
 		}

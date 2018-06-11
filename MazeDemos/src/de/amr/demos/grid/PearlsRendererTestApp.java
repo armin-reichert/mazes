@@ -29,19 +29,19 @@ public class PearlsRendererTestApp extends SwingGridSampleApp {
 	@Override
 	public void run() {
 		clear();
-		canvas.stopListening();
+		canvasAnimation.setEnabled(false);
 		grid.setDefaultContent(COMPLETED);
 		grid.fill();
 		canvas.drawGrid();
 
 		sleep(2000);
 		clear();
-		canvas.startListening();
-		canvas.setDelay(1);
+		canvasAnimation.setEnabled(true);
+		canvasAnimation.setDelay(1);
 		new WilsonUSTRecursiveCrosses(grid).run(0);
 		
 		sleep(2000);
-		canvas.setDelay(10);
+		canvasAnimation.setDelay(10);
 		new DepthFirstTraversalAnimation<>(grid).run(canvas, new DepthFirstTraversal2<ObservableGrid<?, ?>>(grid), 0,
 				grid.cell(GridPosition.BOTTOM_RIGHT));
 

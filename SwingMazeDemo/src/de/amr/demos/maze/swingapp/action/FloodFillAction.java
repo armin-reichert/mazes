@@ -28,7 +28,7 @@ public class FloodFillAction extends MazeDemoAction {
 		if (app.model.isHidingControlsWhenRunning()) {
 			app.wndSettings.setVisible(false);
 		}
-		app.wndMaze.setVisible(true);
+		app.wndCanvas.setVisible(true);
 		enableUI(false);
 		app.getCanvas().drawGrid();
 		app.startTask(() -> {

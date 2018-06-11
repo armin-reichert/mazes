@@ -12,6 +12,7 @@ import java.awt.EventQueue;
 import java.awt.GraphicsEnvironment;
 
 import javax.swing.Action;
+import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
@@ -21,15 +22,18 @@ import de.amr.demos.maze.swingapp.action.CreateAllMazesAction;
 import de.amr.demos.maze.swingapp.action.CreateMazeAction;
 import de.amr.demos.maze.swingapp.action.FloodFillAction;
 import de.amr.demos.maze.swingapp.action.RunPathFinderAction;
+import de.amr.demos.maze.swingapp.action.ShowSettingsAction;
 import de.amr.demos.maze.swingapp.action.StopTaskAction;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
-import de.amr.demos.maze.swingapp.view.MazeWindow;
+import de.amr.demos.maze.swingapp.view.CanvasWindow;
 import de.amr.demos.maze.swingapp.view.SettingsWindow;
+import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.ui.swing.animation.ObservingGridCanvas;
+import de.amr.easy.grid.ui.swing.GridCanvas;
+import de.amr.easy.grid.ui.swing.animation.GridCanvasAnimation;
 
 /**
  * This application visualizes different maze generation algorithms and path finders. The grid size
@@ -54,7 +58,8 @@ public class MazeDemoApp {
 
 	public final MazeDemoModel model;
 	public final SettingsWindow wndSettings;
-	public final MazeWindow wndMaze;
+	public final CanvasWindow wndCanvas;
+	private GridCanvasAnimation<ObservableGrid<TraversalState, Integer>> canvasAnimation;
 
 	public final Action actionCreateMaze = new CreateMazeAction(this);
 	public final Action actionCreateAllMazes = new CreateAllMazesAction(this);
@@ -63,11 +68,14 @@ public class MazeDemoApp {
 	public final Action actionFloodFill = new FloodFillAction(this);
 	public final Action actionClearCanvas = new ClearCanvasAction(this);
 	public final Action actionChangeGridResolution = new ChangeGridResolutionAction(this);
+	public final Action actionShowSettings = new ShowSettingsAction(this);
 
 	private Thread taskThread;
 	private volatile boolean taskStopped;
 
 	public MazeDemoApp() {
+		
+		// initialize data
 		model = new MazeDemoModel();
 		model.setGridCellSizes(256, 128, 64, 32, 16, 8, 4, 2);
 		model.setGridCellSize(32);
@@ -83,33 +91,54 @@ public class MazeDemoApp {
 		model.setPathFinderTarget(BOTTOM_RIGHT);
 		model.setGenerationAnimated(true);
 		model.setHidingControlsWhenRunning(false);
-		newGrid();
+		model.setGrid(createGrid(model.getGridCellSize()));
 
-		wndMaze = new MazeWindow(this);
+		// create new canvas in its own window
+		wndCanvas = new CanvasWindow(model);
+
+		// attach animation to grid
+		canvasAnimation = new GridCanvasAnimation<>(wndCanvas.getCanvas());
+		canvasAnimation.setDelay(model.getDelay());
+		model.getGrid().addGraphObserver(canvasAnimation);
+
 		wndSettings = new SettingsWindow(this);
+		getCanvas().getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
+		getCanvas().getActionMap().put("showSettings", actionShowSettings);
+		
 		MazeDemoModel.find(PATHFINDER_ALGORITHMS, BreadthFirstTraversal.class).ifPresent(
 				pathFinder -> wndSettings.getPathFinderMenu().findItem(pathFinder).ifPresent(item -> item.setSelected(true)));
 		wndSettings.setAlwaysOnTop(true);
 		wndSettings.pack();
 		wndSettings.setLocationRelativeTo(null);
+		
+		// show both windows
 		wndSettings.setVisible(true);
-		wndMaze.setVisible(true);
+		wndCanvas.setVisible(true);
 	}
 
-	public void newGrid() {
+	private static ObservableGrid<TraversalState, Integer> createGrid(int cellSize) {
 		DisplayMode displayMode = getDisplayMode();
-		int numCols = displayMode.getWidth() / model.getGridCellSize();
-		int numRows = displayMode.getHeight() / model.getGridCellSize();
-		model.setGrid(new ObservableGrid<>(numCols, numRows, Top4.get(), UNVISITED, false));
-	}
-
-	public ObservingGridCanvas getCanvas() {
-		return wndMaze.getCanvas();
+		int numCols = displayMode.getWidth() / cellSize;
+		int numRows = displayMode.getHeight() / cellSize;
+		return new ObservableGrid<>(numCols, numRows, Top4.get(), UNVISITED, false);
 	}
 
 	public void newCanvas() {
-		wndMaze.createCanvas();
-		wndMaze.repaint();
+		model.setGrid(createGrid(model.getGridCellSize()));
+		wndCanvas.newCanvas();
+		canvasAnimation = new GridCanvasAnimation<>(getCanvas());
+		canvasAnimation.setDelay(model.getDelay());
+		model.getGrid().addGraphObserver(canvasAnimation);
+		getCanvas().getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
+		getCanvas().getActionMap().put("showSettings", actionShowSettings);
+	}
+
+	public GridCanvas<ObservableGrid<TraversalState, Integer>> getCanvas() {
+		return wndCanvas.getCanvas();
+	}
+
+	public GridCanvasAnimation<ObservableGrid<TraversalState, Integer>> getCanvasAnimation() {
+		return canvasAnimation;
 	}
 
 	public void showMessage(String msg) {
@@ -129,7 +158,7 @@ public class MazeDemoApp {
 
 	public void setDelay(int delay) {
 		model.setDelay(delay);
-		getCanvas().setDelay(delay);
+		getCanvasAnimation().setDelay(delay);
 	}
 
 	public void startTask(Runnable task) {

@@ -26,7 +26,7 @@ public class CreateAllMazesAction extends CreateMazeAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		app.wndSettings.setVisible(!app.model.isHidingControlsWhenRunning());
-		app.wndMaze.setVisible(true);
+		app.wndCanvas.setVisible(true);
 		app.getCanvas().clear();
 		app.startTask(() -> {
 			enableUI(false);
@@ -71,7 +71,6 @@ public class CreateAllMazesAction extends CreateMazeAction {
 			runMazeGenerator(generatorInfo, startCell);
 		} catch (Exception | StackOverflowError x) {
 			app.showMessage("Maze generation aborted: " + x.getClass().getSimpleName());
-			app.newGrid();
 			app.newCanvas();
 		} finally {
 			ready = true;

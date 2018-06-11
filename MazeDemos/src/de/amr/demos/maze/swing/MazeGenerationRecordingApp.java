@@ -16,7 +16,7 @@ import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.ObservableGrid2D;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.ui.swing.animation.ObservingGridCanvas;
+import de.amr.easy.grid.ui.swing.GridCanvas;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
@@ -98,12 +98,13 @@ public class MazeGenerationRecordingApp {
 	};
 
 	private ObservableGrid2D<TraversalState, Integer> grid;
-	private ObservingGridCanvas canvas;
+	private GridCanvas<ObservableGrid2D<TraversalState, Integer>> canvas;
 
 	public void run(int numCols, int numRows, int cellSize, int scanRate, int delayMillis) {
 		for (Class<?> generatorClass : generatorClasses) {
 			grid = new ObservableGrid<>(numCols, numRows, Top4.get(), TraversalState.UNVISITED, false);
-			canvas = new ObservingGridCanvas(grid, createRenderer(cellSize));
+			canvas = new GridCanvas<>(grid, cellSize);
+			canvas.pushRenderer(createRenderer(cellSize));
 			try {
 				MazeAlgorithm generator = (MazeAlgorithm) generatorClass.getConstructor(Grid2D.class).newInstance(grid);
 				try (GifRecorder recorder = new GifRecorder(canvas.getDrawingBuffer().getType())) {

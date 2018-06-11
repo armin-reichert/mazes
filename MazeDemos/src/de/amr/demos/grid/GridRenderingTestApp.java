@@ -22,8 +22,7 @@ public class GridRenderingTestApp extends SwingGridSampleApp {
 
 	@Override
 	public void run() {
-		canvas.setDelay(0);
-		canvas.stopListening();
+		canvasAnimation.setEnabled(false);
 		StopWatch watch = new StopWatch();
 		IntStream.of(256, 128, 64, 32, 16, 8, 4).forEach(cellSize -> {
 			resizeGrid(cellSize);

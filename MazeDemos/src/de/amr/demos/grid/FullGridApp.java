@@ -21,8 +21,7 @@ public class FullGridApp extends SwingGridSampleApp {
 
 	@Override
 	public void run() {
-		canvas.setDelay(0);
-		canvas.stopListening();
+		canvasAnimation.setEnabled(false);
 		StopWatch watch = new StopWatch();
 		Stream.of(Top4.get(), Top8.get()).forEach(topology -> {
 			IntStream.of(512, 256, 128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
