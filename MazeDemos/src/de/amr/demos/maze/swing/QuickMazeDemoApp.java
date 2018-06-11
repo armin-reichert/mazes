@@ -23,8 +23,8 @@ import de.amr.easy.maze.alg.MazeAlgorithm;
  */
 public class QuickMazeDemoApp extends SwingGridSampleApp {
 
-	public static void launch(String appName, Class<? extends MazeAlgorithm> algorithmClass) {
-		SwingGridSampleApp.launch(new QuickMazeDemoApp(appName, algorithmClass));
+	public static void launch(Class<? extends MazeAlgorithm> algorithmClass) {
+		SwingGridSampleApp.launch(new QuickMazeDemoApp(algorithmClass.getSimpleName(), algorithmClass));
 	}
 
 	private final Class<? extends MazeAlgorithm> algorithmClass;

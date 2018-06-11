@@ -7,6 +7,6 @@ import de.amr.easy.maze.alg.ust.AldousBroderUST;
 public class AldousBroderUSTApp {
 
 	public static void main(String[] args) {
-		launch("Aldous-Broder UST Maze", AldousBroderUST.class);
+		launch(AldousBroderUST.class);
 	}
 }

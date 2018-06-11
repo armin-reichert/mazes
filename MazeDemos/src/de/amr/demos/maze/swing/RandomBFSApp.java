@@ -1,10 +1,12 @@
 package de.amr.demos.maze.swing;
 
+import static de.amr.demos.maze.swing.QuickMazeDemoApp.launch;
+
 import de.amr.easy.maze.alg.traversal.RandomBFS;
 
 public class RandomBFSApp {
 
 	public static void main(String[] args) {
-		QuickMazeDemoApp.launch("Random BFS", RandomBFS.class);
+		launch(RandomBFS.class);
 	}
 }
