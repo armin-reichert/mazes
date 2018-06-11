@@ -5,8 +5,8 @@ import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation
 
 import java.util.stream.IntStream;
 
+import de.amr.demos.grid.SwingGridSampleApp;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 import de.amr.easy.maze.alg.EllerInsideOut;
 
 public class ArminsApp extends SwingGridSampleApp {

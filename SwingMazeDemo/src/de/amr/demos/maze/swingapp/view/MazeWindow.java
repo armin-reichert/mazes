@@ -10,7 +10,7 @@ import javax.swing.KeyStroke;
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.grid.ui.swing.ObservingGridCanvas;
+import de.amr.easy.grid.ui.swing.animation.ObservingGridCanvas;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.PearlsGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;

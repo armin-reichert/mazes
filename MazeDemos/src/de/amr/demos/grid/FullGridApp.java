@@ -6,7 +6,6 @@ import java.util.stream.Stream;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.impl.Top8;
-import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 import de.amr.easy.util.StopWatch;
 
 public class FullGridApp extends SwingGridSampleApp {

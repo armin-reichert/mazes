@@ -29,7 +29,7 @@ import de.amr.demos.maze.swingapp.view.SettingsWindow;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.ui.swing.ObservingGridCanvas;
+import de.amr.easy.grid.ui.swing.animation.ObservingGridCanvas;
 
 /**
  * This application visualizes different maze generation algorithms and path finders. The grid size

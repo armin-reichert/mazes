@@ -16,9 +16,9 @@ import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.traversal.DepthFirstTraversal2;
 import de.amr.easy.graph.traversal.HillClimbing;
 import de.amr.easy.grid.impl.ObservableGrid;
-import de.amr.easy.grid.ui.swing.ObservingGridCanvas;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
+import de.amr.easy.grid.ui.swing.animation.ObservingGridCanvas;
 
 /**
  * Action for running the selected path finding algorithm on the current maze.

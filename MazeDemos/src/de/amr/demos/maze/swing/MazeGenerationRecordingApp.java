@@ -16,7 +16,7 @@ import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.ObservableGrid2D;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.ui.swing.ObservingGridCanvas;
+import de.amr.easy.grid.ui.swing.animation.ObservingGridCanvas;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;

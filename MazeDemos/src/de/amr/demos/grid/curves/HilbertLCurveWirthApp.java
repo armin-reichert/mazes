@@ -7,9 +7,9 @@ import static de.amr.easy.util.GraphUtils.log;
 
 import java.util.stream.IntStream;
 
+import de.amr.demos.grid.SwingGridSampleApp;
 import de.amr.easy.grid.curves.HilbertLCurveWirth;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 
 public class HilbertLCurveWirthApp extends SwingGridSampleApp {
 

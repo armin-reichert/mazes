@@ -5,7 +5,6 @@ import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.iterators.shapes.Rectangle;
 import de.amr.easy.grid.iterators.traversals.ExpandingRectangle;
-import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 
 public class RectangleApp extends SwingGridSampleApp {
 

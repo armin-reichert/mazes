@@ -11,7 +11,6 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.traversal.BestFirstTraversal;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;

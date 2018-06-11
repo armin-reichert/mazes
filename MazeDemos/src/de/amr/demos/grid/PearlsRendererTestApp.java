@@ -10,7 +10,6 @@ import de.amr.easy.graph.traversal.DepthFirstTraversal2;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
 import de.amr.easy.maze.alg.ust.WilsonUSTRecursiveCrosses;
 

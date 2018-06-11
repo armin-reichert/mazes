@@ -1,4 +1,4 @@
-package de.amr.easy.grid.ui.swing;
+package de.amr.demos.grid;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
@@ -22,6 +22,7 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Topology;
 import de.amr.easy.grid.impl.ObservableGrid;
+import de.amr.easy.grid.ui.swing.animation.ObservingGridCanvas;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.PearlsGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;

@@ -18,11 +18,11 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import de.amr.demos.grid.SwingGridSampleApp;
 import de.amr.easy.grid.api.Curve;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.curves.HilbertCurve;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 
 /**
  * Creates Hilbert curves of different sizes and shows an animation of the creation and

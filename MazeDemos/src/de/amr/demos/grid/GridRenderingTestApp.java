@@ -7,7 +7,6 @@ import static java.lang.System.out;
 import java.util.stream.IntStream;
 
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 import de.amr.easy.util.StopWatch;
 
 public class GridRenderingTestApp extends SwingGridSampleApp {

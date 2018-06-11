@@ -6,10 +6,10 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
 import java.util.stream.IntStream;
 
+import de.amr.demos.grid.SwingGridSampleApp;
 import de.amr.easy.graph.api.ObservableGraphTraversal;
 import de.amr.easy.graph.traversal.DepthFirstTraversal;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
 import de.amr.easy.maze.alg.traversal.RandomBFS;
 

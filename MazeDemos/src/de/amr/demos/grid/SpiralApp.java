@@ -7,7 +7,6 @@ import static de.amr.easy.grid.api.GridPosition.CENTER;
 
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.iterators.traversals.Spiral;
-import de.amr.easy.grid.ui.swing.SwingGridSampleApp;
 
 public class SpiralApp extends SwingGridSampleApp {
 

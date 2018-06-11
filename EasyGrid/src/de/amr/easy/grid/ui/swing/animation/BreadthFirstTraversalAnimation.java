@@ -12,7 +12,6 @@ import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalListener;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.api.BareGrid2D;
-import de.amr.easy.grid.ui.swing.ObservingGridCanvas;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.PearlsGridRenderer;
