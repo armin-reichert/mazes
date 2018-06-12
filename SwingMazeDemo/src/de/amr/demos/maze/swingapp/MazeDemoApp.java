@@ -7,6 +7,7 @@ import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.awt.EventQueue;
 import java.awt.GraphicsEnvironment;
@@ -52,8 +53,9 @@ public class MazeDemoApp {
 		EventQueue.invokeLater(MazeDemoApp::new);
 	}
 
-	public static DisplayMode getDisplayMode() {
-		return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
+	public static Dimension getScreenSize() {
+		DisplayMode mode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
+		return new Dimension(mode.getWidth(), mode.getHeight());
 	}
 
 	public final MazeDemoModel model;
@@ -79,7 +81,7 @@ public class MazeDemoApp {
 		model = new MazeDemoModel();
 		model.setGridCellSizes(256, 128, 64, 32, 16, 8, 4, 2);
 		model.setGridCellSize(32);
-		model.setPassageWidthPercentage(50);
+		model.setPassageWidthPercentage(100);
 		model.setStyle(Style.WALL_PASSAGES);
 		model.setDelay(0);
 		model.setCompletedCellColor(Color.WHITE);
@@ -102,12 +104,12 @@ public class MazeDemoApp {
 		model.getGrid().addGraphObserver(canvasAnimation);
 
 		wndSettings = new SettingsWindow(this);
+		MazeDemoModel.find(PATHFINDER_ALGORITHMS, BreadthFirstTraversal.class).ifPresent(alg -> {
+			wndSettings.getSolverMenu().selectAlgorithm(alg);
+			setSolverName(alg.getDescription());
+		});
 		getCanvas().getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
 		getCanvas().getActionMap().put("showSettings", actionShowSettings);
-
-		// select menu item for initial path finder
-		MazeDemoModel.find(PATHFINDER_ALGORITHMS, BreadthFirstTraversal.class)
-				.ifPresent(alg -> wndSettings.getPathFinderMenu().selectAlgorithm(alg));
 
 		wndSettings.setAlwaysOnTop(true);
 		wndSettings.pack();
@@ -116,12 +118,13 @@ public class MazeDemoApp {
 		// show both windows
 		wndSettings.setVisible(true);
 		wndCanvas.setVisible(true);
+		wndSettings.requestFocus();
 	}
 
 	private static ObservableGrid<TraversalState, Integer> createGrid(int cellSize) {
-		DisplayMode displayMode = getDisplayMode();
-		int numCols = displayMode.getWidth() / cellSize;
-		int numRows = displayMode.getHeight() / cellSize;
+		Dimension screenSize = getScreenSize();
+		int numCols = screenSize.width / cellSize;
+		int numRows = screenSize.height / cellSize;
 		return new ObservableGrid<>(numCols, numRows, Top4.get(), UNVISITED, false);
 	}
 
@@ -156,6 +159,10 @@ public class MazeDemoApp {
 		model.setPassageWidthPercentage(percent);
 		getCanvas().clear();
 		getCanvas().drawGrid();
+	}
+
+	public void setSolverName(String text) {
+		wndSettings.getControlPanel().getLblSolver().setText(text);
 	}
 
 	public void setDelay(int delay) {

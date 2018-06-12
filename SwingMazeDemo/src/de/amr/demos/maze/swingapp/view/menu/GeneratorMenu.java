@@ -10,7 +10,6 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
@@ -22,19 +21,19 @@ import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
  */
 public class GeneratorMenu extends AlgorithmMenu {
 
-	public GeneratorMenu(Consumer<JMenuItem> action) {
-		setText("Generator");
+	public GeneratorMenu(Consumer<String> action) {
+		setText("Generators");
 		addMenu("Graph Traversal", alg -> alg.isTagged(Traversal), action);
 		addMenu("Minimum Spanning Tree", alg -> alg.isTagged(MST), action);
 		addMenu("Uniform Spanning Tree", alg -> alg.isTagged(UST), action);
 		addMenu("Others", alg -> !(alg.isTagged(Traversal) || alg.isTagged(MST) || alg.isTagged(UST)), action);
 	}
 
-	private void addMenu(String title, Predicate<AlgorithmInfo> filter, Consumer<JMenuItem> itemAction) {
+	private void addMenu(String title, Predicate<AlgorithmInfo> filter, Consumer<String> itemAction) {
 		JMenu menu = new JMenu(title);
 		Stream.of(GENERATOR_ALGORITHMS).filter(filter).forEach(alg -> {
 			JRadioButtonMenuItem item = new JRadioButtonMenuItem(alg.getDescription());
-			item.addActionListener(e -> itemAction.accept(item));
+			item.addActionListener(e -> itemAction.accept(item.getText()));
 			item.putClientProperty("algorithm", alg);
 			btnGroup.add(item);
 			menu.add(item);

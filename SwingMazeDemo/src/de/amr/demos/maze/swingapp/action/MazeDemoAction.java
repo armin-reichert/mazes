@@ -23,7 +23,7 @@ public abstract class MazeDemoAction extends AbstractAction {
 
 	protected void enableUI(boolean b) {
 		app.wndSettings.getGeneratorMenu().setEnabled(b);
-		app.wndSettings.getPathFinderMenu().setEnabled(b);
+		app.wndSettings.getSolverMenu().setEnabled(b);
 		app.wndSettings.getOptionMenu().setEnabled(b);
 		ControlPanel controls = app.wndSettings.getControlPanel();
 		controls.getSliderPassageWidth().setEnabled(b);

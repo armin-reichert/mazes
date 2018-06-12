@@ -34,33 +34,49 @@ public class ControlPanel extends JPanel {
 	private JLabel lblDelay;
 	private JButton btnCreateAllMazes;
 	private JButton btnStop;
-	private JLabel lblGenerationAlgorithm;
+	private JLabel lblGenerator;
 	private JButton btnFindPath;
+	private JLabel labelSolver;
+	private JLabel lblGenerator_1;
+	private JLabel lblSolver;
 
 	public ControlPanel() {
-		setPreferredSize(new Dimension(450, 350));
+		setPreferredSize(new Dimension(535, 300));
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(new BorderLayout(0, 0));
 
 		JPanel controlsPanel = new JPanel();
 		add(controlsPanel, BorderLayout.NORTH);
-		controlsPanel.setLayout(new MigLayout("", "[center][:5px:5px,fill][grow]", "[grow,center][][][]"));
-
-		lblGenerationAlgorithm = new JLabel("Generation Algorithm");
-		lblGenerationAlgorithm.setBorder(new EmptyBorder(5, 0, 5, 0));
-		lblGenerationAlgorithm.setForeground(Color.BLUE);
-		lblGenerationAlgorithm.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		lblGenerationAlgorithm.setHorizontalAlignment(SwingConstants.CENTER);
-		controlsPanel.add(lblGenerationAlgorithm, "cell 0 0 3 1,growx,aligny center");
+		controlsPanel.setLayout(new MigLayout("", "[center][:5px:5px,fill][grow]", "[grow,center][][][][][]"));
+				
+				lblGenerator_1 = new JLabel("Generator");
+				controlsPanel.add(lblGenerator_1, "cell 0 1,alignx left");
+		
+				lblGenerator = new JLabel("Generation Algorithm");
+				lblGenerator.setBorder(new EmptyBorder(5, 0, 5, 0));
+				lblGenerator.setForeground(Color.BLUE);
+				lblGenerator.setFont(new Font("Arial Black", Font.PLAIN, 14));
+				lblGenerator.setHorizontalAlignment(SwingConstants.CENTER);
+				controlsPanel.add(lblGenerator, "flowy,cell 2 1,alignx left,aligny center");
+		
+		lblSolver = new JLabel("Solver");
+		controlsPanel.add(lblSolver, "flowx,cell 0 2,alignx left");
+		
+		labelSolver = new JLabel("Solver");
+		controlsPanel.add(labelSolver, "cell 2 2,alignx left");
+		labelSolver.setHorizontalAlignment(SwingConstants.CENTER);
+		labelSolver.setForeground(Color.BLUE);
+		labelSolver.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		labelSolver.setBorder(new EmptyBorder(5, 0, 5, 0));
 
 		JLabel lblGridResolution = new JLabel("Grid Resolution");
-		controlsPanel.add(lblGridResolution, "cell 0 1,alignx left,growy");
+		controlsPanel.add(lblGridResolution, "cell 0 3,alignx left,growy");
 
 		comboGridResolution = new JComboBox<>();
-		controlsPanel.add(comboGridResolution, "cell 2 1,grow");
+		controlsPanel.add(comboGridResolution, "cell 2 3,grow");
 
 		lblPassageWidth = new JLabel("Passage Width");
-		controlsPanel.add(lblPassageWidth, "cell 0 2,alignx left,growy");
+		controlsPanel.add(lblPassageWidth, "cell 0 4,alignx left,growy");
 		lblPassageWidth.setLabelFor(sliderPassageWidth);
 
 		sliderPassageWidth = new JSlider();
@@ -68,10 +84,10 @@ public class ControlPanel extends JPanel {
 		sliderPassageWidth.setMinimum(1);
 		sliderPassageWidth.setToolTipText("Thickness of maze passages");
 		sliderPassageWidth.setPaintTicks(true);
-		controlsPanel.add(sliderPassageWidth, "cell 2 2,grow");
+		controlsPanel.add(sliderPassageWidth, "cell 2 4,grow");
 
 		lblDelay = new JLabel("Delay");
-		controlsPanel.add(lblDelay, "cell 0 3,alignx left,growy");
+		controlsPanel.add(lblDelay, "cell 0 5,alignx left,growy");
 
 		sliderDelay = new JSlider();
 		sliderDelay.setToolTipText("Rendering Delay");
@@ -80,7 +96,7 @@ public class ControlPanel extends JPanel {
 		sliderDelay.setMaximum(50);
 		sliderDelay.setMinorTickSpacing(1);
 		sliderDelay.setMajorTickSpacing(5);
-		controlsPanel.add(sliderDelay, "cell 2 3,grow");
+		controlsPanel.add(sliderDelay, "cell 2 5,grow");
 
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, BorderLayout.CENTER);
@@ -144,10 +160,13 @@ public class ControlPanel extends JPanel {
 	}
 
 	public JLabel getLblGenerationAlgorithm() {
-		return lblGenerationAlgorithm;
+		return lblGenerator;
 	}
 
 	public JButton getBtnFindPath() {
 		return btnFindPath;
+	}
+	public JLabel getLblSolver() {
+		return labelSolver;
 	}
 }
