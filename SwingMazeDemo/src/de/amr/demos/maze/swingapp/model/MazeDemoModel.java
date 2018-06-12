@@ -5,7 +5,7 @@ import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.Slow;
 import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.SmallGrid;
 import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.Traversal;
 import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.UST;
-import static de.amr.demos.maze.swingapp.model.PathFinderTag.CHEBYSHEV;
+import static de.amr.demos.maze.swingapp.model.PathFinderTag.*;
 import static de.amr.demos.maze.swingapp.model.PathFinderTag.EUCLIDEAN;
 import static de.amr.demos.maze.swingapp.model.PathFinderTag.MANHATTAN;
 
@@ -108,16 +108,16 @@ public class MazeDemoModel {
 	};
 
 	public static final AlgorithmInfo[] PATHFINDER_ALGORITHMS = {
-			new AlgorithmInfo(BreadthFirstTraversal.class, "Breadth-First-Search"),
-			new AlgorithmInfo(DepthFirstTraversal2.class, "Depth-First-Search"),
+			new AlgorithmInfo(BreadthFirstTraversal.class, "Breadth-First-Search", BFS),
+			new AlgorithmInfo(DepthFirstTraversal2.class, "Depth-First-Search", DFS),
 			null,
-			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Manhattan)", MANHATTAN),
-			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Euclidean)", EUCLIDEAN),
-			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Chebyshev)", CHEBYSHEV),
+			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Manhattan)", BFS, MANHATTAN),
+			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Euclidean)", BFS, EUCLIDEAN),
+			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Chebyshev)", BFS, CHEBYSHEV),
 			null,
-			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Manhattan)", MANHATTAN),
-			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Euclidean)", EUCLIDEAN),
-			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Chebyshev)", CHEBYSHEV),
+			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Manhattan)", DFS, MANHATTAN),
+			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Euclidean)", DFS, EUCLIDEAN),
+			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Chebyshev)", DFS, CHEBYSHEV),
 
 	};
 

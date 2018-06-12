@@ -4,6 +4,7 @@ import static de.amr.easy.graph.api.TraversalState.VISITED;
 
 import java.awt.Color;
 import java.util.BitSet;
+import java.util.function.IntSupplier;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.ObservableGraphTraversal;
@@ -28,13 +29,13 @@ public class DepthFirstTraversalAnimation<G extends BareGrid2D<?>> {
 	private int[] path;
 	private Color pathColor = Color.RED;
 	private Color visitedCellColor = Color.BLUE;
+	public IntSupplier fnDelay = () -> 0;
 
 	public DepthFirstTraversalAnimation(G grid) {
 		this.grid = grid;
 	}
 
-	private ConfigurableGridRenderer createRenderer(ObservableGraphTraversal dfs, BitSet inPath,
-			GridRenderer base) {
+	private ConfigurableGridRenderer createRenderer(ObservableGraphTraversal dfs, BitSet inPath, GridRenderer base) {
 		ConfigurableGridRenderer r = base instanceof PearlsGridRenderer ? new PearlsGridRenderer()
 				: new WallPassageGridRenderer();
 		r.fnCellSize = base.getModel()::getCellSize;
@@ -68,14 +69,26 @@ public class DepthFirstTraversalAnimation<G extends BareGrid2D<?>> {
 	public void run(GridCanvas<?> canvas, ObservableGraphTraversal dfs, int source, int target) {
 		dfs.addObserver(new GraphTraversalListener() {
 
-			@Override
-			public void edgeTouched(int source, int target) {
-				canvas.drawGridPassage(grid.edge(source, target).get(), true);
+			private void delayed(Runnable code) {
+				if (fnDelay.getAsInt() > 0) {
+					try {
+						Thread.sleep(fnDelay.getAsInt());
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				code.run();
+				canvas.repaint();
 			}
 
 			@Override
-			public void vertexTouched(int vertex, TraversalState oldState, TraversalState newState) {
-				canvas.drawGridCell(vertex);
+			public void edgeTouched(int u, int v) {
+				grid.edge(u, v).ifPresent(edge -> delayed(() -> canvas.drawGridPassage(edge, true)));
+			}
+
+			@Override
+			public void vertexTouched(int v, TraversalState oldState, TraversalState newState) {
+				delayed(() -> canvas.drawGridCell(v));
 			}
 		});
 		BitSet inPath = new BitSet();

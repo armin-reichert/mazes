@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.Arrays;
 import java.util.BitSet;
+import java.util.function.IntSupplier;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
@@ -67,6 +68,8 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
 	private boolean distanceVisible;
 	private Color pathColor;
 
+	public IntSupplier fnDelay = () -> 0;
+
 	public BreadthFirstTraversalAnimation(G grid) {
 		this.grid = grid;
 		distanceVisible = true;
@@ -110,14 +113,26 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
 			// 2. traverse again with events enabled
 			GraphTraversalListener canvasUpdater = new GraphTraversalListener() {
 
+				private void delayed(Runnable code) {
+					if (fnDelay.getAsInt() > 0) {
+						try {
+							Thread.sleep(fnDelay.getAsInt());
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+					code.run();
+					canvas.repaint();
+				}
+
 				@Override
 				public void edgeTouched(int u, int v) {
-					grid.edge(u, v).ifPresent(edge -> canvas.drawGridPassage(edge, true));
+					grid.edge(u, v).ifPresent(edge -> delayed(() -> canvas.drawGridPassage(edge, true)));
 				}
 
 				@Override
 				public void vertexTouched(int v, TraversalState oldState, TraversalState newState) {
-					canvas.drawGridCell(v);
+					delayed(() -> canvas.drawGridCell(v));
 				}
 			};
 			bfs.addObserver(canvasUpdater);

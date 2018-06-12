@@ -73,7 +73,7 @@ public class SettingsWindow extends JFrame {
 
 		controlPanel.getBtnCreateMaze().setAction(app.actionCreateMaze);
 		controlPanel.getBtnCreateAllMazes().setAction(app.actionCreateAllMazes);
-		controlPanel.getBtnFindPath().setAction(app.actionRunPathFinder);
+		controlPanel.getBtnFindPath().setAction(app.actionRunMazeSolver);
 		controlPanel.getBtnStop().setAction(app.actionStopTask);
 
 		getContentPane().add(controlPanel, BorderLayout.CENTER);
