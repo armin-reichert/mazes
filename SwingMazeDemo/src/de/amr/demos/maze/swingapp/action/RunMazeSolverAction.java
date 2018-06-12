@@ -11,13 +11,12 @@ import java.util.function.Function;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
+import de.amr.demos.maze.swingapp.model.MazeGrid;
 import de.amr.demos.maze.swingapp.model.PathFinderTag;
-import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.traversal.BestFirstTraversal;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.traversal.DepthFirstTraversal2;
 import de.amr.easy.graph.traversal.HillClimbing;
-import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
 
@@ -71,16 +70,16 @@ public class RunMazeSolverAction extends MazeDemoAction {
 	}
 
 	private void runBFSSolverAnimation(AlgorithmInfo solver) {
-		ObservableGrid<TraversalState, Integer> grid = app.model.getGrid();
+		MazeGrid grid = app.model.getGrid();
 		int src = grid.cell(app.model.getPathFinderSource());
 		int tgt = grid.cell(app.model.getPathFinderTarget());
 
-		BreadthFirstTraversalAnimation<?> anim = new BreadthFirstTraversalAnimation<>(grid);
+		BreadthFirstTraversalAnimation<MazeGrid> anim = new BreadthFirstTraversalAnimation<>(grid);
 		anim.fnDelay = () -> app.model.getDelay();
 		anim.setPathColor(app.model.getPathColor());
 
 		if (solver.getAlgorithmClass() == BreadthFirstTraversal.class) {
-			BreadthFirstTraversal<ObservableGrid<TraversalState, Integer>> bfs = new BreadthFirstTraversal<>(grid);
+			BreadthFirstTraversal<MazeGrid> bfs = new BreadthFirstTraversal<>(grid);
 			watch.measure(() -> anim.run(app.getCanvas(), bfs, src, tgt));
 			app.showMessage(format("Breadth-first search: %.6f seconds.", watch.getSeconds()));
 			anim.showPath(app.getCanvas(), bfs, tgt);
@@ -88,8 +87,7 @@ public class RunMazeSolverAction extends MazeDemoAction {
 
 		if (solver.getAlgorithmClass() == BestFirstTraversal.class) {
 			findHeuristics(solver, grid, tgt).ifPresent(heuristics -> {
-				BestFirstTraversal<ObservableGrid<TraversalState, Integer>, Integer> best = new BestFirstTraversal<>(grid,
-						heuristics.fn);
+				BestFirstTraversal<MazeGrid, Integer> best = new BestFirstTraversal<>(grid, heuristics.fn);
 				watch.measure(() -> anim.run(app.getCanvas(), best, src, tgt));
 				anim.showPath(app.getCanvas(), best, tgt);
 				app.showMessage(format("Best-first search (%s): %.6f seconds.", heuristics.name, watch.getSeconds()));
@@ -98,11 +96,11 @@ public class RunMazeSolverAction extends MazeDemoAction {
 	}
 
 	private void runDFSSolverAnimation(AlgorithmInfo solver) {
-		ObservableGrid<TraversalState, Integer> grid = app.model.getGrid();
+		MazeGrid grid = app.model.getGrid();
 		int src = grid.cell(app.model.getPathFinderSource());
 		int tgt = grid.cell(app.model.getPathFinderTarget());
 
-		DepthFirstTraversalAnimation<?> dfsAnim = new DepthFirstTraversalAnimation<>(grid);
+		DepthFirstTraversalAnimation<MazeGrid> dfsAnim = new DepthFirstTraversalAnimation<>(grid);
 		dfsAnim.setPathColor(app.model.getPathColor());
 		dfsAnim.fnDelay = () -> app.model.getDelay();
 
@@ -119,16 +117,16 @@ public class RunMazeSolverAction extends MazeDemoAction {
 		}
 	}
 
-	private Optional<Heuristics> findHeuristics(AlgorithmInfo solver, ObservableGrid<TraversalState, Integer> grid,
-			int tgt) {
+	private Optional<Heuristics> findHeuristics(AlgorithmInfo solver, MazeGrid grid, int tgt) {
 		if (solver.isTagged(CHEBYSHEV)) {
 			return Optional.of(new Heuristics("Chebyshev", v -> grid.chebyshev(v, tgt)));
-		} else if (solver.isTagged(EUCLIDEAN)) {
-			return Optional.of(new Heuristics("Euclidean", v -> grid.euclidean2(v, tgt)));
-		} else if (solver.isTagged(MANHATTAN)) {
-			return Optional.of(new Heuristics("Manhattan", v -> grid.manhattan(v, tgt)));
-		} else {
-			return Optional.empty();
 		}
+		if (solver.isTagged(EUCLIDEAN)) {
+			return Optional.of(new Heuristics("Euclidean", v -> grid.euclidean2(v, tgt)));
+		}
+		if (solver.isTagged(MANHATTAN)) {
+			return Optional.of(new Heuristics("Manhattan", v -> grid.manhattan(v, tgt)));
+		}
+		return Optional.empty();
 	}
 }

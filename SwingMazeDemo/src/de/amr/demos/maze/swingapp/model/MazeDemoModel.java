@@ -5,7 +5,9 @@ import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.Slow;
 import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.SmallGrid;
 import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.Traversal;
 import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.UST;
-import static de.amr.demos.maze.swingapp.model.PathFinderTag.*;
+import static de.amr.demos.maze.swingapp.model.PathFinderTag.BFS;
+import static de.amr.demos.maze.swingapp.model.PathFinderTag.CHEBYSHEV;
+import static de.amr.demos.maze.swingapp.model.PathFinderTag.DFS;
 import static de.amr.demos.maze.swingapp.model.PathFinderTag.EUCLIDEAN;
 import static de.amr.demos.maze.swingapp.model.PathFinderTag.MANHATTAN;
 
@@ -13,13 +15,11 @@ import java.awt.Color;
 import java.util.Arrays;
 import java.util.Optional;
 
-import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.traversal.BestFirstTraversal;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.traversal.DepthFirstTraversal2;
 import de.amr.easy.graph.traversal.HillClimbing;
 import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.maze.alg.BinaryTree;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
 import de.amr.easy.maze.alg.Eller;
@@ -109,12 +109,10 @@ public class MazeDemoModel {
 
 	public static final AlgorithmInfo[] PATHFINDER_ALGORITHMS = {
 			new AlgorithmInfo(BreadthFirstTraversal.class, "Breadth-First-Search", BFS),
-			new AlgorithmInfo(DepthFirstTraversal2.class, "Depth-First-Search", DFS),
-			null,
+			new AlgorithmInfo(DepthFirstTraversal2.class, "Depth-First-Search", DFS), null,
 			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Manhattan)", BFS, MANHATTAN),
 			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Euclidean)", BFS, EUCLIDEAN),
-			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Chebyshev)", BFS, CHEBYSHEV),
-			null,
+			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Chebyshev)", BFS, CHEBYSHEV), null,
 			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Manhattan)", DFS, MANHATTAN),
 			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Euclidean)", DFS, EUCLIDEAN),
 			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Chebyshev)", DFS, CHEBYSHEV),
@@ -125,7 +123,7 @@ public class MazeDemoModel {
 		return Arrays.stream(algorithms).filter(alg -> alg.getAlgorithmClass() == clazz).findFirst();
 	}
 
-	private ObservableGrid<TraversalState, Integer> grid;
+	private MazeGrid grid;
 	private int[] gridCellSizes;
 	private int gridCellSize;
 	private int passageWidthPercentage;
@@ -189,11 +187,11 @@ public class MazeDemoModel {
 		this.hidingControlsWhenRunning = hidingControlsWhenRunning;
 	}
 
-	public ObservableGrid<TraversalState, Integer> getGrid() {
+	public MazeGrid getGrid() {
 		return grid;
 	}
 
-	public void setGrid(ObservableGrid<TraversalState, Integer> grid) {
+	public void setGrid(MazeGrid grid) {
 		this.grid = grid;
 	}
 

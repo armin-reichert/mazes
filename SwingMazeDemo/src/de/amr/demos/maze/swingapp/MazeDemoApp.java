@@ -27,11 +27,10 @@ import de.amr.demos.maze.swingapp.action.ShowSettingsAction;
 import de.amr.demos.maze.swingapp.action.StopTaskAction;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
+import de.amr.demos.maze.swingapp.model.MazeGrid;
 import de.amr.demos.maze.swingapp.view.CanvasWindow;
 import de.amr.demos.maze.swingapp.view.SettingsWindow;
-import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
-import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.GridCanvas;
 import de.amr.easy.grid.ui.swing.animation.GridCanvasAnimation;
@@ -61,7 +60,7 @@ public class MazeDemoApp {
 	public final MazeDemoModel model;
 	public final SettingsWindow wndSettings;
 	public final CanvasWindow wndCanvas;
-	private GridCanvasAnimation<ObservableGrid<TraversalState, Integer>> canvasAnimation;
+	private GridCanvasAnimation<MazeGrid> canvasAnimation;
 
 	public final Action actionCreateMaze = new CreateMazeAction(this);
 	public final Action actionCreateAllMazes = new CreateAllMazesAction(this);
@@ -121,11 +120,11 @@ public class MazeDemoApp {
 		wndSettings.requestFocus();
 	}
 
-	private static ObservableGrid<TraversalState, Integer> createGrid(int cellSize) {
+	private static MazeGrid createGrid(int cellSize) {
 		Dimension screenSize = getScreenSize();
 		int numCols = screenSize.width / cellSize;
 		int numRows = screenSize.height / cellSize;
-		return new ObservableGrid<>(numCols, numRows, Top4.get(), UNVISITED, false);
+		return new MazeGrid(numCols, numRows, Top4.get(), UNVISITED, false);
 	}
 
 	public void newCanvas() {
@@ -138,11 +137,11 @@ public class MazeDemoApp {
 		getCanvas().getActionMap().put("showSettings", actionShowSettings);
 	}
 
-	public GridCanvas<ObservableGrid<TraversalState, Integer>> getCanvas() {
+	public GridCanvas<MazeGrid> getCanvas() {
 		return wndCanvas.getCanvas();
 	}
 
-	public GridCanvasAnimation<ObservableGrid<TraversalState, Integer>> getCanvasAnimation() {
+	public GridCanvasAnimation<MazeGrid> getCanvasAnimation() {
 		return canvasAnimation;
 	}
 
