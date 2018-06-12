@@ -82,7 +82,7 @@ public class SettingsWindow extends JFrame {
 
 		setJMenuBar(new JMenuBar());
 
-		generatorMenu = new GeneratorMenu(this::setGeneratorName);
+		generatorMenu = new GeneratorMenu(app);
 		MazeDemoModel.find(MazeDemoModel.GENERATOR_ALGORITHMS, IterativeDFS.class).ifPresent(alg -> {
 			generatorMenu.selectAlgorithm(alg);
 			setGeneratorName(alg.getDescription());

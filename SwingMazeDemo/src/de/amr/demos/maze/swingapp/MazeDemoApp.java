@@ -161,6 +161,10 @@ public class MazeDemoApp {
 		getCanvas().drawGrid();
 	}
 
+	public void setGeneratorName(String text) {
+		wndSettings.getControlPanel().getLblGenerationAlgorithm().setText(text);
+	}
+
 	public void setSolverName(String text) {
 		wndSettings.getControlPanel().getLblSolver().setText(text);
 	}

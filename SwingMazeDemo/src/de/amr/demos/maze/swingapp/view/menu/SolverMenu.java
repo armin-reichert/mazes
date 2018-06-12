@@ -41,8 +41,7 @@ public class SolverMenu extends AlgorithmMenu {
 		if (alg == null) {
 			addSeparator();
 		} else {
-			JRadioButtonMenuItem item = new JRadioButtonMenuItem();
-			item.setAction(onSelectionAction);
+			JRadioButtonMenuItem item = new JRadioButtonMenuItem(onSelectionAction);
 			item.setText(alg.getDescription());
 			item.putClientProperty("algorithm", alg);
 			add(item);
