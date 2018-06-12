@@ -1,5 +1,6 @@
 package de.amr.demos.maze.swingapp;
 
+import static de.amr.demos.maze.swingapp.model.MazeDemoModel.GENERATOR_ALGORITHMS;
 import static de.amr.demos.maze.swingapp.model.MazeDemoModel.PATHFINDER_ALGORITHMS;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
@@ -34,6 +35,7 @@ import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.GridCanvas;
 import de.amr.easy.grid.ui.swing.animation.GridCanvasAnimation;
+import de.amr.easy.maze.alg.traversal.IterativeDFS;
 
 /**
  * This application visualizes different maze generation algorithms and path finders. The grid size
@@ -103,6 +105,10 @@ public class MazeDemoApp {
 		model.getGrid().addGraphObserver(canvasAnimation);
 
 		wndSettings = new SettingsWindow(this);
+		MazeDemoModel.find(GENERATOR_ALGORITHMS, IterativeDFS.class).ifPresent(alg -> {
+			wndSettings.getGeneratorMenu().selectAlgorithm(alg);
+			setGeneratorName(alg.getDescription());
+		});
 		MazeDemoModel.find(PATHFINDER_ALGORITHMS, BreadthFirstTraversal.class).ifPresent(alg -> {
 			wndSettings.getSolverMenu().selectAlgorithm(alg);
 			setSolverName(alg.getDescription());

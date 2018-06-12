@@ -18,7 +18,6 @@ import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.demos.maze.swingapp.view.menu.GeneratorMenu;
 import de.amr.demos.maze.swingapp.view.menu.OptionMenu;
 import de.amr.demos.maze.swingapp.view.menu.SolverMenu;
-import de.amr.easy.maze.alg.traversal.IterativeDFS;
 
 /**
  * This view enables the user to select the maze generation and path finder algorithm and all the
@@ -79,19 +78,11 @@ public class SettingsWindow extends JFrame {
 		getContentPane().add(controlPanel, BorderLayout.CENTER);
 
 		// Menus
-
 		setJMenuBar(new JMenuBar());
-
 		generatorMenu = new GeneratorMenu(app);
-		MazeDemoModel.find(MazeDemoModel.GENERATOR_ALGORITHMS, IterativeDFS.class).ifPresent(alg -> {
-			generatorMenu.selectAlgorithm(alg);
-			setGeneratorName(alg.getDescription());
-		});
 		getJMenuBar().add(generatorMenu);
-
 		solverMenu = new SolverMenu(app);
 		getJMenuBar().add(solverMenu);
-
 		optionMenu = new OptionMenu(app);
 		getJMenuBar().add(optionMenu);
 	}
