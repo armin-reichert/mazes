@@ -81,7 +81,7 @@ public class RunMazeSolverAction extends MazeDemoAction {
 		if (solver.getAlgorithmClass() == BreadthFirstTraversal.class) {
 			BreadthFirstTraversal<MazeGrid> bfs = new BreadthFirstTraversal<>(grid);
 			watch.measure(() -> anim.run(app.getCanvas(), bfs, src, tgt));
-			app.showMessage(format("Breadth-first search: %.6f seconds.", watch.getSeconds()));
+			app.showMessage(format("Breadth-first search: %.2f seconds.", watch.getSeconds()));
 			anim.showPath(app.getCanvas(), bfs, tgt);
 		}
 
@@ -89,8 +89,8 @@ public class RunMazeSolverAction extends MazeDemoAction {
 			findHeuristics(solver, grid, tgt).ifPresent(heuristics -> {
 				BestFirstTraversal<MazeGrid, Integer> best = new BestFirstTraversal<>(grid, heuristics.fn);
 				watch.measure(() -> anim.run(app.getCanvas(), best, src, tgt));
+				app.showMessage(format("Best-first search (%s): %.2f seconds.", heuristics.name, watch.getSeconds()));
 				anim.showPath(app.getCanvas(), best, tgt);
-				app.showMessage(format("Best-first search (%s): %.6f seconds.", heuristics.name, watch.getSeconds()));
 			});
 		}
 	}
@@ -100,19 +100,19 @@ public class RunMazeSolverAction extends MazeDemoAction {
 		int src = grid.cell(app.model.getPathFinderSource());
 		int tgt = grid.cell(app.model.getPathFinderTarget());
 
-		DepthFirstTraversalAnimation<MazeGrid> dfsAnim = new DepthFirstTraversalAnimation<>(grid);
-		dfsAnim.setPathColor(app.model.getPathColor());
-		dfsAnim.fnDelay = () -> app.model.getDelay();
+		DepthFirstTraversalAnimation<MazeGrid> anim = new DepthFirstTraversalAnimation<>(grid);
+		anim.fnDelay = () -> app.model.getDelay();
+		anim.setPathColor(app.model.getPathColor());
 
 		if (solver.getAlgorithmClass() == DepthFirstTraversal2.class) {
-			watch.measure(() -> dfsAnim.run(app.getCanvas(), new DepthFirstTraversal2<>(grid), src, tgt));
-			app.showMessage(format("Depth-first search: %.6f seconds.", watch.getSeconds()));
+			watch.measure(() -> anim.run(app.getCanvas(), new DepthFirstTraversal2<>(grid), src, tgt));
+			app.showMessage(format("Depth-first search: %.2f seconds.", watch.getSeconds()));
 		}
 
 		if (solver.getAlgorithmClass() == HillClimbing.class) {
 			findHeuristics(solver, grid, tgt).ifPresent(heuristics -> {
-				watch.measure(() -> dfsAnim.run(app.getCanvas(), new HillClimbing<>(grid, heuristics.fn), src, tgt));
-				app.showMessage(format("Hill Climbing (%s): %.6f seconds.", heuristics.name, watch.getSeconds()));
+				watch.measure(() -> anim.run(app.getCanvas(), new HillClimbing<>(grid, heuristics.fn), src, tgt));
+				app.showMessage(format("Hill Climbing (%s): %.2f seconds.", heuristics.name, watch.getSeconds()));
 			});
 		}
 	}
