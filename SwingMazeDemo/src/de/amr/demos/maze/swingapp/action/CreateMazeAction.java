@@ -18,7 +18,7 @@ import de.amr.easy.maze.alg.MazeAlgorithm;
 public class CreateMazeAction extends MazeDemoAction {
 
 	public CreateMazeAction(MazeDemoApp app) {
-		super(app, "Create Maze");
+		super(app, "Create");
 	}
 
 	@Override

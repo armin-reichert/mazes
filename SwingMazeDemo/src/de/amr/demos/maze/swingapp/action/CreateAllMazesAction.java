@@ -66,7 +66,7 @@ public class CreateAllMazesAction extends CreateMazeAction {
 		ready = false;
 		app.getCanvas().clear();
 		app.wndSettings.getControlPanel().getLblGenerationAlgorithm().setText(generatorInfo.getDescription());
-		app.wndSettings.getGeneratorMenu().setSelectedAlgorithm(generatorInfo);
+		app.wndSettings.getGeneratorMenu().selectAlgorithm(generatorInfo);
 		try {
 			runMazeGenerator(generatorInfo, startCell);
 		} catch (Exception | StackOverflowError x) {

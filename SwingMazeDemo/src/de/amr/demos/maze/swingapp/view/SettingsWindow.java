@@ -15,6 +15,7 @@ import javax.swing.JSlider;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
+import de.amr.demos.maze.swingapp.view.menu.AlgorithmMenu;
 import de.amr.demos.maze.swingapp.view.menu.GeneratorMenu;
 import de.amr.demos.maze.swingapp.view.menu.OptionMenu;
 import de.amr.demos.maze.swingapp.view.menu.PathFinderMenu;
@@ -29,8 +30,8 @@ import de.amr.easy.maze.alg.traversal.IterativeDFS;
 public class SettingsWindow extends JFrame {
 
 	private final ControlPanel controlPanel;
-	private final GeneratorMenu generatorMenu;
-	private final PathFinderMenu pathFinderMenu;
+	private final AlgorithmMenu generatorMenu;
+	private final AlgorithmMenu pathFinderMenu;
 	private final OptionMenu optionMenu;
 
 	public SettingsWindow(MazeDemoApp app) {
@@ -84,7 +85,7 @@ public class SettingsWindow extends JFrame {
 
 		generatorMenu = new GeneratorMenu(item -> controlPanel.getLblGenerationAlgorithm().setText(item.getText()));
 		MazeDemoModel.find(MazeDemoModel.GENERATOR_ALGORITHMS, IterativeDFS.class).ifPresent(alg -> {
-			generatorMenu.setSelectedAlgorithm(alg);
+			generatorMenu.selectAlgorithm(alg);
 			controlPanel.getLblGenerationAlgorithm().setText(alg.getDescription());
 		});
 		getJMenuBar().add(generatorMenu);
@@ -100,7 +101,7 @@ public class SettingsWindow extends JFrame {
 		return controlPanel;
 	}
 
-	public GeneratorMenu getGeneratorMenu() {
+	public AlgorithmMenu getGeneratorMenu() {
 		return generatorMenu;
 	}
 
@@ -108,7 +109,7 @@ public class SettingsWindow extends JFrame {
 		return optionMenu;
 	}
 
-	public PathFinderMenu getPathFinderMenu() {
+	public AlgorithmMenu getPathFinderMenu() {
 		return pathFinderMenu;
 	}
 }

@@ -74,7 +74,7 @@ public class MazeDemoApp {
 	private volatile boolean taskStopped;
 
 	public MazeDemoApp() {
-		
+
 		// initialize data
 		model = new MazeDemoModel();
 		model.setGridCellSizes(256, 128, 64, 32, 16, 8, 4, 2);
@@ -104,13 +104,15 @@ public class MazeDemoApp {
 		wndSettings = new SettingsWindow(this);
 		getCanvas().getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
 		getCanvas().getActionMap().put("showSettings", actionShowSettings);
-		
-		MazeDemoModel.find(PATHFINDER_ALGORITHMS, BreadthFirstTraversal.class).ifPresent(
-				pathFinder -> wndSettings.getPathFinderMenu().findItem(pathFinder).ifPresent(item -> item.setSelected(true)));
+
+		// select menu item for initial path finder
+		MazeDemoModel.find(PATHFINDER_ALGORITHMS, BreadthFirstTraversal.class)
+				.ifPresent(alg -> wndSettings.getPathFinderMenu().selectAlgorithm(alg));
+
 		wndSettings.setAlwaysOnTop(true);
 		wndSettings.pack();
 		wndSettings.setLocationRelativeTo(null);
-		
+
 		// show both windows
 		wndSettings.setVisible(true);
 		wndCanvas.setVisible(true);
