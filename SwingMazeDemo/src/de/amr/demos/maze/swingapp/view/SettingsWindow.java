@@ -14,7 +14,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JSlider;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
-import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.demos.maze.swingapp.view.menu.GeneratorMenu;
 import de.amr.demos.maze.swingapp.view.menu.OptionMenu;
 import de.amr.demos.maze.swingapp.view.menu.SolverMenu;
@@ -33,13 +32,12 @@ public class SettingsWindow extends JFrame {
 	private final OptionMenu optionMenu;
 
 	public SettingsWindow(MazeDemoApp app) {
-		final MazeDemoModel model = app.model;
 		setTitle("Mazes");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		controlPanel = new ControlPanel();
 		ComboBoxModel<String> comboModel = new DefaultComboBoxModel<>(
-				Arrays.stream(model.getGridCellSizes()).mapToObj(cellSize -> {
+				Arrays.stream(app.model.getGridCellSizes()).mapToObj(cellSize -> {
 					Dimension screenSize = MazeDemoApp.getScreenSize();
 					int numCols = screenSize.width / cellSize;
 					int numRows = screenSize.height / cellSize;
@@ -47,14 +45,14 @@ public class SettingsWindow extends JFrame {
 				}).toArray(String[]::new));
 		controlPanel.getComboGridResolution().setModel(comboModel);
 
-		int[] sizes = model.getGridCellSizes();
-		int selectedIndex = IntStream.range(0, sizes.length).filter(i -> sizes[i] == model.getGridCellSize()).findFirst()
-				.orElse(-1);
+		int[] sizes = app.model.getGridCellSizes();
+		int selectedIndex = IntStream.range(0, sizes.length).filter(i -> sizes[i] == app.model.getGridCellSize())
+				.findFirst().orElse(-1);
 		controlPanel.getComboGridResolution().setSelectedIndex(selectedIndex);
 
 		controlPanel.getComboGridResolution().setAction(app.actionChangeGridResolution);
 
-		controlPanel.getSliderPassageWidth().setValue(model.getPassageWidthPercentage());
+		controlPanel.getSliderPassageWidth().setValue(app.model.getPassageWidthPercentage());
 		controlPanel.getSliderPassageWidth().addChangeListener(e -> {
 			JSlider slider = (JSlider) e.getSource();
 			if (!slider.getValueIsAdjusting()) {
@@ -62,7 +60,7 @@ public class SettingsWindow extends JFrame {
 			}
 		});
 
-		controlPanel.getSliderDelay().setValue(model.getDelay());
+		controlPanel.getSliderDelay().setValue(app.model.getDelay());
 		controlPanel.getSliderDelay().addChangeListener(e -> {
 			JSlider slider = (JSlider) e.getSource();
 			if (!slider.getValueIsAdjusting()) {

@@ -12,6 +12,7 @@ import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
 import de.amr.demos.maze.swingapp.model.MazeGrid;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.ui.swing.GridCanvas;
+import de.amr.easy.grid.ui.swing.animation.GridCanvasAnimation;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.PearlsGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
@@ -23,28 +24,36 @@ import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
  */
 public class CanvasWindow extends JFrame {
 
-	private final MazeDemoModel model;
 	private GridCanvas<MazeGrid> canvas;
+	private GridCanvasAnimation<MazeGrid> canvasAnimation;
 
 	public CanvasWindow(MazeDemoModel model) {
-		this.model = model;
 		setBackground(Color.BLACK);
 		setExtendedState(MAXIMIZED_BOTH);
 		setUndecorated(true);
-		newCanvas();
+		newCanvas(model);
 	}
 
-	public void newCanvas() {
+	public void newCanvas(MazeDemoModel model) {
 		canvas = new GridCanvas<>(model.getGrid(), model.getGridCellSize());
-		canvas.pushRenderer(createRenderer());
+		canvas.pushRenderer(createRenderer(model));
+		canvas.clear();
+		canvasAnimation = new GridCanvasAnimation<>(canvas);
+		canvasAnimation.setDelay(model.getDelay());
+		model.getGrid().addGraphObserver(canvasAnimation);
 		setContentPane(canvas);
+		repaint();
 	}
 
 	public GridCanvas<MazeGrid> getCanvas() {
 		return canvas;
 	}
 
-	private ConfigurableGridRenderer createRenderer() {
+	public GridCanvasAnimation<MazeGrid> getCanvasAnimation() {
+		return canvasAnimation;
+	}
+
+	private static ConfigurableGridRenderer createRenderer(MazeDemoModel model) {
 		ConfigurableGridRenderer r = model.getStyle() == Style.PEARLS ? new PearlsGridRenderer()
 				: new WallPassageGridRenderer();
 		r.fnCellSize = () -> model.getGridCellSize();

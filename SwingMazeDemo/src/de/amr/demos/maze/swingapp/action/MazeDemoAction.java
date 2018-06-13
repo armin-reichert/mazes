@@ -21,12 +21,12 @@ public abstract class MazeDemoAction extends AbstractAction {
 		this.app = app;
 	}
 
-	protected void enableUI(boolean b) {
-		app.wndSettings.getGeneratorMenu().setEnabled(b);
-		app.wndSettings.getSolverMenu().setEnabled(b);
-		app.wndSettings.getOptionMenu().setEnabled(b);
-		ControlPanel controls = app.wndSettings.getControlPanel();
-		controls.getSliderPassageWidth().setEnabled(b);
-		controls.getComboGridResolution().setEnabled(b);
+	protected void setUIEnabled(boolean enabled) {
+		app.wndSettings.getGeneratorMenu().setEnabled(enabled);
+		app.wndSettings.getSolverMenu().setEnabled(enabled);
+		app.wndSettings.getOptionMenu().setEnabled(enabled);
+		ControlPanel controlPanel = app.wndSettings.getControlPanel();
+		controlPanel.getSliderPassageWidth().setEnabled(enabled);
+		controlPanel.getComboGridResolution().setEnabled(enabled);
 	}
 }

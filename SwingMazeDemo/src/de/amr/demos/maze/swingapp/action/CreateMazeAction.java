@@ -27,7 +27,7 @@ public class CreateMazeAction extends MazeDemoAction {
 	}
 
 	private void createMaze(AlgorithmInfo generatorInfo) {
-		enableUI(false);
+		setUIEnabled(false);
 		app.wndSettings.setVisible(!app.model.isHidingControlsWhenRunning());
 		app.wndCanvas.setVisible(true);
 		app.getCanvas().clear();
@@ -42,7 +42,7 @@ public class CreateMazeAction extends MazeDemoAction {
 			} finally {
 				app.wndSettings.setVisible(true);
 				app.wndSettings.requestFocus();
-				enableUI(true);
+				setUIEnabled(true);
 			}
 		});
 	}

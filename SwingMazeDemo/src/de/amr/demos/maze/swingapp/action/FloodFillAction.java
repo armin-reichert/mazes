@@ -29,7 +29,7 @@ public class FloodFillAction extends MazeDemoAction {
 			app.wndSettings.setVisible(false);
 		}
 		app.wndCanvas.setVisible(true);
-		enableUI(false);
+		setUIEnabled(false);
 		app.getCanvas().drawGrid();
 		app.startTask(() -> {
 			try {
@@ -38,7 +38,7 @@ public class FloodFillAction extends MazeDemoAction {
 			} catch (Exception x) {
 				x.printStackTrace();
 			} finally {
-				enableUI(true);
+				setUIEnabled(true);
 				app.wndSettings.setVisible(true);
 				app.wndSettings.requestFocus();
 			}

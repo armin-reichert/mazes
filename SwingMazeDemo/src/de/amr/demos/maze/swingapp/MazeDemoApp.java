@@ -62,7 +62,6 @@ public class MazeDemoApp {
 	public final MazeDemoModel model;
 	public final SettingsWindow wndSettings;
 	public final CanvasWindow wndCanvas;
-	private GridCanvasAnimation<MazeGrid> canvasAnimation;
 
 	public final Action actionCreateMaze = new CreateMazeAction(this);
 	public final Action actionCreateAllMazes = new CreateAllMazesAction(this);
@@ -98,11 +97,7 @@ public class MazeDemoApp {
 
 		// create new canvas in its own window
 		wndCanvas = new CanvasWindow(model);
-
-		// attach animation to grid
-		canvasAnimation = new GridCanvasAnimation<>(wndCanvas.getCanvas());
-		canvasAnimation.setDelay(model.getDelay());
-		model.getGrid().addGraphObserver(canvasAnimation);
+		wndCanvas.setVisible(true);
 
 		wndSettings = new SettingsWindow(this);
 		MazeDemoModel.find(GENERATOR_ALGORITHMS, IterativeDFS.class).ifPresent(alg -> {
@@ -116,14 +111,11 @@ public class MazeDemoApp {
 		getCanvas().getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
 		getCanvas().getActionMap().put("showSettings", actionShowSettings);
 
+		wndSettings.requestFocus();
 		wndSettings.setAlwaysOnTop(true);
 		wndSettings.pack();
 		wndSettings.setLocationRelativeTo(null);
-
-		// show both windows
 		wndSettings.setVisible(true);
-		wndCanvas.setVisible(true);
-		wndSettings.requestFocus();
 	}
 
 	private static MazeGrid createGrid(int cellSize) {
@@ -135,10 +127,7 @@ public class MazeDemoApp {
 
 	public void newCanvas() {
 		model.setGrid(createGrid(model.getGridCellSize()));
-		wndCanvas.newCanvas();
-		canvasAnimation = new GridCanvasAnimation<>(getCanvas());
-		canvasAnimation.setDelay(model.getDelay());
-		model.getGrid().addGraphObserver(canvasAnimation);
+		wndCanvas.newCanvas(model);
 		getCanvas().getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
 		getCanvas().getActionMap().put("showSettings", actionShowSettings);
 	}
@@ -148,7 +137,7 @@ public class MazeDemoApp {
 	}
 
 	public GridCanvasAnimation<MazeGrid> getCanvasAnimation() {
-		return canvasAnimation;
+		return wndCanvas.getCanvasAnimation();
 	}
 
 	public void showMessage(String msg) {

@@ -46,7 +46,7 @@ public class RunMazeSolverAction extends MazeDemoAction {
 	public void actionPerformed(ActionEvent e) {
 		app.wndSettings.setVisible(!app.model.isHidingControlsWhenRunning());
 		app.wndCanvas.setVisible(true);
-		enableUI(false);
+		setUIEnabled(false);
 		app.startTask(() -> {
 			try {
 				app.getCanvas().drawGrid();
@@ -54,7 +54,7 @@ public class RunMazeSolverAction extends MazeDemoAction {
 			} catch (Exception x) {
 				x.printStackTrace();
 			} finally {
-				enableUI(true);
+				setUIEnabled(true);
 				app.wndSettings.setVisible(true);
 				app.wndSettings.requestFocus();
 			}
