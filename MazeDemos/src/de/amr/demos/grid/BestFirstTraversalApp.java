@@ -21,48 +21,38 @@ public class BestFirstTraversalApp extends SwingGridSampleApp {
 		launch(new BestFirstTraversalApp());
 	}
 
+	private static int canvasSize = 800;
+	private static int cellSize = 40;
+
 	public BestFirstTraversalApp() {
-		super(800, 800, 40, Top4.get());
+		super(canvasSize, canvasSize, cellSize, Top4.get());
 		setAppName("Best First Traversal");
 		fullscreen = false;
 	}
 
 	@Override
 	public void run() {
-		do {
-			ConfigurableGridRenderer r = new WallPassageGridRenderer();
-			r.fnCellBgColor = cell -> grid.get(cell) == UNVISITED ? Color.WHITE : renderer.getCellBgColor(cell);
-			r.fnPassageColor = (cell, dir) -> grid.get(cell) == UNVISITED ? Color.WHITE : renderer.getPassageColor(cell, dir);
-			r.fnPassageWidth = () -> 1;
-			canvas.pushRenderer(r);
-			grid.fill();
-			removeArea(6, 6, 3, 6);
-			removeArea(0, 15, 20, 1);
-			removeArea(0, 16, 10, 1);
-			removeArea(10, 16, 10, 1);
-			grid.setDefaultContent(UNVISITED);
-			canvas.drawGrid();
-			canvasAnimation.fnDelay = () -> 6;
-			int source = grid.cell(TOP_LEFT);
-			int target = grid.cell(BOTTOM_RIGHT);
-			sleep(2000);
-
-			BestFirstTraversal<ObservableGrid<TraversalState, Integer>, Integer> best = new BestFirstTraversal<>(grid,
-					v -> grid.euclidean2(v, target));
-			BreadthFirstTraversalAnimation<?> anim = new BreadthFirstTraversalAnimation<>(grid);
-			anim.run(canvas, best, source, target);
-			anim.showPath(canvas, best, target);
-
-			sleep(3000);
-			canvas.drawGrid();
-
-			// HillClimbing<Integer> hill = new HillClimbing<>(grid, v -> grid.euclidean2(v, target));
-			// SwingDFSAnimation dfsAnim = new SwingDFSAnimation(grid);
-			// dfsAnim.run(canvas, hill, source, target);
-
-			canvas.popRenderer();
-			sleep(6000);
-		} while (true);
+		ConfigurableGridRenderer r = new WallPassageGridRenderer();
+		r.fnCellSize = () -> cellSize;
+		r.fnCellBgColor = cell -> grid.get(cell) == UNVISITED ? Color.WHITE : renderer.getCellBgColor(cell);
+		r.fnPassageColor = (cell, dir) -> grid.get(cell) == UNVISITED ? Color.WHITE : renderer.getPassageColor(cell, dir);
+		r.fnPassageWidth = () -> cellSize - 2;
+		canvas.pushRenderer(r);
+		grid.fill();
+		removeArea(6, 6, 3, 6);
+		removeArea(0, 15, 20, 1);
+		removeArea(0, 16, 10, 1);
+		removeArea(10, 16, 10, 1);
+		grid.setDefaultContent(UNVISITED);
+		canvas.drawGrid();
+		int source = grid.cell(TOP_LEFT);
+		int target = grid.cell(BOTTOM_RIGHT);
+		BreadthFirstTraversalAnimation<?> anim = new BreadthFirstTraversalAnimation<>(grid);
+		anim.fnDelay = () -> 50;
+		BestFirstTraversal<ObservableGrid<TraversalState, Integer>, Integer> best = new BestFirstTraversal<>(grid,
+				v -> grid.euclidean2(v, target));
+		anim.run(canvas, best, source, target);
+		anim.showPath(canvas, best, target);
 	}
 
 	private void removeArea(int x, int y, int w, int h) {
