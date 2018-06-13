@@ -8,9 +8,9 @@ import java.util.function.IntSupplier;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.ObservableGraphTraversal;
-import de.amr.easy.graph.api.PathFinder;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalListener;
+import de.amr.easy.graph.traversal.AbstractGraphTraversal;
 import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.ui.swing.GridCanvas;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
@@ -66,7 +66,7 @@ public class DepthFirstTraversalAnimation<G extends BareGrid2D<?>> {
 		return r;
 	}
 
-	public void run(GridCanvas<?> canvas, ObservableGraphTraversal dfs, int source, int target) {
+	public void run(GridCanvas<?> canvas, AbstractGraphTraversal<G> dfs, int source, int target) {
 		dfs.addObserver(new GraphTraversalListener() {
 
 			private void delayed(Runnable code) {
@@ -94,7 +94,7 @@ public class DepthFirstTraversalAnimation<G extends BareGrid2D<?>> {
 		BitSet inPath = new BitSet();
 		canvas.pushRenderer(createRenderer(dfs, inPath, canvas.getRenderer().get()));
 		dfs.traverseGraph(source, target);
-		path = ((PathFinder) dfs).findPath(target).toArray();// TODO
+		path = dfs.findPath(target).toArray();
 		IntStream.of(path).forEach(inPath::set);
 		IntStream.of(path).forEach(canvas::drawGridCell);
 		canvas.popRenderer();

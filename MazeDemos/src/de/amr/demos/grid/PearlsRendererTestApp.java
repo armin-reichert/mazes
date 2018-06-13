@@ -2,13 +2,12 @@ package de.amr.demos.grid;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
+import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation.floodFill;
 
 import java.awt.Color;
 
 import de.amr.easy.graph.traversal.DepthFirstTraversal2;
-import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
 import de.amr.easy.maze.alg.ust.WilsonUSTRecursiveCrosses;
@@ -42,8 +41,7 @@ public class PearlsRendererTestApp extends SwingGridSampleApp {
 
 		sleep(2000);
 		canvasAnimation.fnDelay = () -> 10;
-		new DepthFirstTraversalAnimation<>(grid).run(canvas, new DepthFirstTraversal2<ObservableGrid<?, ?>>(grid), 0,
-				grid.cell(GridPosition.BOTTOM_RIGHT));
+		new DepthFirstTraversalAnimation<>(grid).run(canvas, new DepthFirstTraversal2<>(grid), 0, grid.cell(BOTTOM_RIGHT));
 
 		sleep(2000);
 		canvas.clear();
