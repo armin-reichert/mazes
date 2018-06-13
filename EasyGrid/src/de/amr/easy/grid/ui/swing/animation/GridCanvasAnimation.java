@@ -1,5 +1,7 @@
 package de.amr.easy.grid.ui.swing.animation;
 
+import java.util.function.IntSupplier;
+
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.graph.api.event.EdgeAddedEvent;
@@ -14,20 +16,18 @@ public class GridCanvasAnimation<G extends BareGrid2D<Integer>> implements Graph
 
 	private final GridCanvas<G> canvas;
 	private boolean enabled;
-	private int delayMillis;
+
+	/** Function supplying the delay in milliseconds. */
+	public IntSupplier fnDelay;
 
 	public GridCanvasAnimation(GridCanvas<G> canvas) {
 		this.canvas = canvas;
 		enabled = true;
-		delayMillis = 0;
+		fnDelay = () -> 0;
 	}
 
 	public int getDelay() {
-		return delayMillis;
-	}
-
-	public void setDelay(int millis) {
-		this.delayMillis = millis;
+		return fnDelay.getAsInt();
 	}
 
 	public boolean isEnabled() {
@@ -74,9 +74,9 @@ public class GridCanvasAnimation<G extends BareGrid2D<Integer>> implements Graph
 	}
 
 	private void delayed(Runnable code) {
-		if (delayMillis > 0) {
+		if (fnDelay.getAsInt() > 0) {
 			try {
-				Thread.sleep(delayMillis);
+				Thread.sleep(fnDelay.getAsInt());
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

@@ -20,7 +20,6 @@ public class ExpandingCircleApp extends SwingGridSampleApp {
 
 	@Override
 	public void run() {
-		canvasAnimation.setDelay(0);
 		int n = min(grid.numCols(), grid.numRows());
 		new ExpandingCircle(grid, grid.cell(CENTER), 0, n).forEach(cell -> grid.set(cell, COMPLETED));
 	}

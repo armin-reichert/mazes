@@ -37,11 +37,11 @@ public class PearlsRendererTestApp extends SwingGridSampleApp {
 		sleep(2000);
 		clear();
 		canvasAnimation.setEnabled(true);
-		canvasAnimation.setDelay(1);
+		canvasAnimation.fnDelay = () -> 1;
 		new WilsonUSTRecursiveCrosses(grid).run(0);
-		
+
 		sleep(2000);
-		canvasAnimation.setDelay(10);
+		canvasAnimation.fnDelay = () -> 10;
 		new DepthFirstTraversalAnimation<>(grid).run(canvas, new DepthFirstTraversal2<ObservableGrid<?, ?>>(grid), 0,
 				grid.cell(GridPosition.BOTTOM_RIGHT));
 

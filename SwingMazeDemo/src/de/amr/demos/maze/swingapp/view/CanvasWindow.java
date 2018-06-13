@@ -39,7 +39,7 @@ public class CanvasWindow extends JFrame {
 		canvas.pushRenderer(createRenderer(model));
 		canvas.clear();
 		canvasAnimation = new GridCanvasAnimation<>(canvas);
-		canvasAnimation.setDelay(model.getDelay());
+		canvasAnimation.fnDelay = () -> model.getDelay();
 		model.getGrid().addGraphObserver(canvasAnimation);
 		setContentPane(canvas);
 		repaint();

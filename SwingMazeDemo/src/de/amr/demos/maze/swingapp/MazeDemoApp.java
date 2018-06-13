@@ -163,11 +163,6 @@ public class MazeDemoApp {
 		wndSettings.getControlPanel().getLblSolver().setText(text);
 	}
 
-	public void setDelay(int delay) {
-		model.setDelay(delay);
-		getCanvasAnimation().setDelay(delay);
-	}
-
 	public void startTask(Runnable task) {
 		taskStopped = false;
 		taskThread = new Thread(task);

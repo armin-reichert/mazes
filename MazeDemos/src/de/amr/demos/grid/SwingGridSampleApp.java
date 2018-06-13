@@ -136,7 +136,6 @@ public abstract class SwingGridSampleApp implements Runnable {
 		});
 
 		canvasAnimation = new GridCanvasAnimation<>(canvas);
-		canvasAnimation.setDelay(0);
 		grid.addGraphObserver(canvasAnimation);
 
 		window.add(canvas, BorderLayout.CENTER);

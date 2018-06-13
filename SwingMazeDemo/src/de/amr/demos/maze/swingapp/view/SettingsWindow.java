@@ -64,7 +64,7 @@ public class SettingsWindow extends JFrame {
 		controlPanel.getSliderDelay().addChangeListener(e -> {
 			JSlider slider = (JSlider) e.getSource();
 			if (!slider.getValueIsAdjusting()) {
-				app.setDelay(slider.getValue());
+				app.model.setDelay(slider.getValue());
 			}
 		});
 
