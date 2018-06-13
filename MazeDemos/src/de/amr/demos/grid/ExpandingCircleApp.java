@@ -2,7 +2,6 @@ package de.amr.demos.grid;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
-import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation.floodFill;
 import static java.lang.Math.min;
 
 import de.amr.easy.grid.impl.Top4;

@@ -27,7 +27,7 @@ import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
  * 
  * @author Armin Reichert
  */
-public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
+public class BreadthFirstTraversalAnimation<G extends BareGrid2D<?>> {
 
 	/**
 	 * Runs a "flood-fill" on the given grid.
@@ -39,7 +39,7 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
 	 * @param source
 	 *          cell where flood-fill starts
 	 */
-	public static <G extends BareGrid2D<Integer>> void floodFill(GridCanvas<G> canvas, G grid, int source) {
+	public static <G extends BareGrid2D<?>> void floodFill(GridCanvas<G> canvas, G grid, int source) {
 		floodFill(canvas, grid, source, true);
 	}
 
@@ -55,7 +55,7 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<Integer>> {
 	 * @param distanceVisible
 	 *          if distances should be displayed as text
 	 */
-	public static <G extends BareGrid2D<Integer>> void floodFill(GridCanvas<G> canvas, G grid, int source,
+	public static <G extends BareGrid2D<?>> void floodFill(GridCanvas<G> canvas, G grid, int source,
 			boolean distanceVisible) {
 		BreadthFirstTraversal<G> bfs = new BreadthFirstTraversal<>(grid);
 		BreadthFirstTraversalAnimation<G> anim = new BreadthFirstTraversalAnimation<>(grid);
