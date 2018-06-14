@@ -1,6 +1,6 @@
 package de.amr.demos.maze.swingapp.view;
 
-import static de.amr.demos.maze.swingapp.MazeDemoApp.SCREEN_SIZE;
+import static de.amr.demos.maze.swingapp.MazeDemoApp.DISPLAY_MODE;
 
 import java.awt.BorderLayout;
 import java.util.Arrays;
@@ -29,23 +29,23 @@ public class SettingsWindow extends JFrame {
 	private final OptionMenu optionMenu;
 	private final ControlPanel controlPanel;
 
-	private ComboBoxModel<String> createResolutionModel(MazeDemoModel model) {
+	private static ComboBoxModel<String> createGridResolutionModel(MazeDemoModel model) {
 		String tmpl = "%d cells (%d cols x %d rows, cell size %d)";
 		String[] entries = Arrays.stream(model.getGridCellSizes()).mapToObj(cellSize -> {
-			int numCols = SCREEN_SIZE.width / cellSize;
-			int numRows = SCREEN_SIZE.height / cellSize;
+			int numCols = DISPLAY_MODE.getWidth() / cellSize;
+			int numRows = DISPLAY_MODE.getHeight() / cellSize;
 			return String.format(tmpl, numCols * numRows, numCols, numRows, cellSize);
 		}).toArray(String[]::new);
 		return new DefaultComboBoxModel<>(entries);
 	}
 
-	private int getSelectedResolutionIndex(MazeDemoModel model) {
-		int i = 0;
+	private static int getSelectedGridResolutionIndex(MazeDemoModel model) {
+		int index = 0;
 		for (int size : model.getGridCellSizes()) {
 			if (size == model.getGridCellSize()) {
-				return i;
+				return index;
 			}
-			++i;
+			++index;
 		}
 		return -1;
 	}
@@ -57,8 +57,8 @@ public class SettingsWindow extends JFrame {
 		// Control panel
 		controlPanel = new ControlPanel();
 
-		controlPanel.getComboGridResolution().setModel(createResolutionModel(app.model));
-		controlPanel.getComboGridResolution().setSelectedIndex(getSelectedResolutionIndex(app.model));
+		controlPanel.getComboGridResolution().setModel(createGridResolutionModel(app.model));
+		controlPanel.getComboGridResolution().setSelectedIndex(getSelectedGridResolutionIndex(app.model));
 		controlPanel.getComboGridResolution().setAction(app.actionChangeGridResolution);
 
 		controlPanel.getSliderPassageWidth().setValue(app.model.getPassageWidthPercentage());

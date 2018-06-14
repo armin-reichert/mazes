@@ -8,7 +8,6 @@ import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.awt.EventQueue;
 import java.awt.GraphicsEnvironment;
@@ -56,12 +55,8 @@ public class MazeDemoApp {
 		EventQueue.invokeLater(MazeDemoApp::new);
 	}
 
-	public static final Dimension SCREEN_SIZE;
-
-	static {
-		DisplayMode mode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
-		SCREEN_SIZE = new Dimension(mode.getWidth(), mode.getHeight());
-	}
+	public static final DisplayMode DISPLAY_MODE = GraphicsEnvironment.getLocalGraphicsEnvironment()
+			.getDefaultScreenDevice().getDisplayMode();
 
 	public final MazeDemoModel model;
 	public final SettingsWindow wndSettings;
@@ -122,8 +117,8 @@ public class MazeDemoApp {
 	}
 
 	private static MazeGrid createGrid(int cellSize) {
-		int numCols = SCREEN_SIZE.width / cellSize;
-		int numRows = SCREEN_SIZE.height / cellSize;
+		int numCols = DISPLAY_MODE.getWidth() / cellSize;
+		int numRows = DISPLAY_MODE.getHeight() / cellSize;
 		return new MazeGrid(numCols, numRows, Top4.get(), UNVISITED, false);
 	}
 
