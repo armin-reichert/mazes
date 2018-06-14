@@ -75,14 +75,15 @@ public class ControlPanel extends JPanel {
 		comboGridResolution = new JComboBox<>();
 		controlsPanel.add(comboGridResolution, "cell 2 3,grow");
 
-		lblPassageWidth = new JLabel("Passage Width");
+		lblPassageWidth = new JLabel("Passage Width (%)");
 		controlsPanel.add(lblPassageWidth, "cell 0 4,alignx left,growy");
 		lblPassageWidth.setLabelFor(sliderPassageWidth);
 
 		sliderPassageWidth = new JSlider();
+		sliderPassageWidth.setMinorTickSpacing(10);
+		sliderPassageWidth.setMajorTickSpacing(50);
 		sliderPassageWidth.setPaintLabels(true);
-		sliderPassageWidth.setMinimum(1);
-		sliderPassageWidth.setToolTipText("Thickness of maze passages");
+		sliderPassageWidth.setToolTipText("Passage width (%)");
 		sliderPassageWidth.setPaintTicks(true);
 		controlsPanel.add(sliderPassageWidth, "cell 2 4,grow");
 
