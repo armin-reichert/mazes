@@ -37,7 +37,7 @@ public class RunMazeSolverAction extends MazeDemoAction {
 		app.wndSettings.setVisible(!app.model.isHidingControlsWhenRunning());
 		app.wndCanvas.setVisible(true);
 		app.enableUI(false);
-		app.startTask(() -> {
+		app.startWorkerThread(() -> {
 			try {
 				app.getCanvas().drawGrid();
 				app.wndSettings.getSolverMenu().getSelectedAlgorithm().ifPresent(this::runSolverAnimation);

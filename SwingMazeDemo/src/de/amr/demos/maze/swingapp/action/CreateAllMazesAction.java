@@ -28,7 +28,7 @@ public class CreateAllMazesAction extends CreateMazeAction {
 		app.wndSettings.setVisible(!app.model.isHidingControlsWhenRunning());
 		app.wndCanvas.setVisible(true);
 		app.getCanvas().clear();
-		app.startTask(() -> {
+		app.startWorkerThread(() -> {
 			app.enableUI(false);
 			try {
 				generateAllMazes();
@@ -46,7 +46,7 @@ public class CreateAllMazesAction extends CreateMazeAction {
 		Stream.of(MazeDemoModel.GENERATOR_ALGORITHMS)
 			.filter(generatorInfo -> !generatorInfo.isTagged(Slow))
 			.forEach(generatorInfo -> {
-				if (app.isTaskStopped()) {
+				if (app.isWorkerThreadStopped()) {
 					return;
 				}
 				if (ready) {

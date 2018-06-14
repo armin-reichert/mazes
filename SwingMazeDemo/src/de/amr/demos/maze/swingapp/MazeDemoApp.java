@@ -74,8 +74,8 @@ public class MazeDemoApp {
 	public final Action actionChangeGridResolution = new ChangeGridResolutionAction(this);
 	public final Action actionShowSettings = new ShowSettingsAction(this);
 
-	private Thread taskThread;
-	private volatile boolean taskStopped;
+	private Thread workerThread;
+	private volatile boolean threadStopped;
 
 	public MazeDemoApp() {
 
@@ -177,26 +177,22 @@ public class MazeDemoApp {
 		wndSettings.getControlPanel().getLblSolver().setText(solverInfo.getDescription());
 	}
 
-	public void startTask(Runnable task) {
-		taskStopped = false;
-		taskThread = new Thread(task);
-		taskThread.start();
+	public void startWorkerThread(Runnable work) {
+		threadStopped = false;
+		workerThread = new Thread(work);
+		workerThread.start();
 	}
 
-	public void stopTask() {
-		taskStopped = true;
+	public void stopWorkerThread() {
+		threadStopped = true;
 		try {
-			taskThread.join();
+			workerThread.join();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public boolean isTaskRunning() {
-		return taskThread != null && taskThread.isAlive();
-	}
-
-	public boolean isTaskStopped() {
-		return taskStopped;
+	public boolean isWorkerThreadStopped() {
+		return threadStopped;
 	}
 }

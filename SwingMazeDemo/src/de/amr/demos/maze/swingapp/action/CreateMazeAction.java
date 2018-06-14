@@ -32,7 +32,7 @@ public class CreateMazeAction extends MazeDemoAction {
 		app.wndSettings.setVisible(!app.model.isHidingControlsWhenRunning());
 		app.wndCanvas.setVisible(true);
 		app.getCanvas().clear();
-		app.startTask(() -> {
+		app.startWorkerThread(() -> {
 			try {
 				runMazeGenerator(generatorInfo, app.model.getGrid().cell(app.model.getGenerationStart()));
 			} catch (Exception | StackOverflowError x) {

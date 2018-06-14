@@ -32,7 +32,7 @@ public class FloodFillAction extends MazeDemoAction {
 		app.wndCanvas.setVisible(true);
 		app.enableUI(false);
 		app.getCanvas().drawGrid();
-		app.startTask(() -> {
+		app.startWorkerThread(() -> {
 			try {
 				StopWatch watch = new StopWatch();
 				watch.measure(this::runFloodFill);
