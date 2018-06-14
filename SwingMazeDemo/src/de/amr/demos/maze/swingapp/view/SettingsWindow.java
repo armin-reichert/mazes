@@ -1,7 +1,8 @@
 package de.amr.demos.maze.swingapp.view;
 
+import static de.amr.demos.maze.swingapp.MazeDemoApp.SCREEN_SIZE;
+
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.util.Arrays;
 
 import javax.swing.ComboBoxModel;
@@ -29,11 +30,10 @@ public class SettingsWindow extends JFrame {
 	private final ControlPanel controlPanel;
 
 	private ComboBoxModel<String> createResolutionModel(MazeDemoModel model) {
-		Dimension screenSize = MazeDemoApp.getScreenSize();
 		String tmpl = "%d cells (%d cols x %d rows, cell size %d)";
 		String[] entries = Arrays.stream(model.getGridCellSizes()).mapToObj(cellSize -> {
-			int numCols = screenSize.width / cellSize;
-			int numRows = screenSize.height / cellSize;
+			int numCols = SCREEN_SIZE.width / cellSize;
+			int numRows = SCREEN_SIZE.height / cellSize;
 			return String.format(tmpl, numCols * numRows, numCols, numRows, cellSize);
 		}).toArray(String[]::new);
 		return new DefaultComboBoxModel<>(entries);

@@ -56,9 +56,11 @@ public class MazeDemoApp {
 		EventQueue.invokeLater(MazeDemoApp::new);
 	}
 
-	public static Dimension getScreenSize() {
+	public static final Dimension SCREEN_SIZE;
+
+	static {
 		DisplayMode mode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
-		return new Dimension(mode.getWidth(), mode.getHeight());
+		SCREEN_SIZE = new Dimension(mode.getWidth(), mode.getHeight());
 	}
 
 	public final MazeDemoModel model;
@@ -113,7 +115,6 @@ public class MazeDemoApp {
 		getCanvas().getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
 		getCanvas().getActionMap().put("showSettings", actionShowSettings);
 
-		wndSettings.requestFocus();
 		wndSettings.setAlwaysOnTop(true);
 		wndSettings.pack();
 		wndSettings.setLocationRelativeTo(null);
@@ -121,9 +122,8 @@ public class MazeDemoApp {
 	}
 
 	private static MazeGrid createGrid(int cellSize) {
-		Dimension screenSize = getScreenSize();
-		int numCols = screenSize.width / cellSize;
-		int numRows = screenSize.height / cellSize;
+		int numCols = SCREEN_SIZE.width / cellSize;
+		int numRows = SCREEN_SIZE.height / cellSize;
 		return new MazeGrid(numCols, numRows, Top4.get(), UNVISITED, false);
 	}
 
