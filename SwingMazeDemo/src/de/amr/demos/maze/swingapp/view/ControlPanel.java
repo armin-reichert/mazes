@@ -48,20 +48,20 @@ public class ControlPanel extends JPanel {
 		JPanel controlsPanel = new JPanel();
 		add(controlsPanel, BorderLayout.NORTH);
 		controlsPanel.setLayout(new MigLayout("", "[center][:5px:5px,fill][grow]", "[grow,center][][][][][]"));
-				
-				lblGenerator_1 = new JLabel("Generator");
-				controlsPanel.add(lblGenerator_1, "cell 0 1,alignx left");
-		
-				lblGenerator = new JLabel("Generation Algorithm");
-				lblGenerator.setBorder(new EmptyBorder(5, 0, 5, 0));
-				lblGenerator.setForeground(Color.BLUE);
-				lblGenerator.setFont(new Font("Arial Black", Font.PLAIN, 14));
-				lblGenerator.setHorizontalAlignment(SwingConstants.CENTER);
-				controlsPanel.add(lblGenerator, "flowy,cell 2 1,alignx left,aligny center");
-		
+
+		lblGenerator_1 = new JLabel("Generator");
+		controlsPanel.add(lblGenerator_1, "cell 0 1,alignx left");
+
+		lblGenerator = new JLabel("Generation Algorithm");
+		lblGenerator.setBorder(new EmptyBorder(5, 0, 5, 0));
+		lblGenerator.setForeground(Color.BLUE);
+		lblGenerator.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		lblGenerator.setHorizontalAlignment(SwingConstants.CENTER);
+		controlsPanel.add(lblGenerator, "flowy,cell 2 1,alignx left,aligny center");
+
 		lblSolver = new JLabel("Solver");
 		controlsPanel.add(lblSolver, "flowx,cell 0 2,alignx left");
-		
+
 		labelSolver = new JLabel("Solver");
 		controlsPanel.add(labelSolver, "cell 2 2,alignx left");
 		labelSolver.setHorizontalAlignment(SwingConstants.CENTER);
@@ -166,6 +166,7 @@ public class ControlPanel extends JPanel {
 	public JButton getBtnFindPath() {
 		return btnFindPath;
 	}
+
 	public JLabel getLblSolver() {
 		return labelSolver;
 	}

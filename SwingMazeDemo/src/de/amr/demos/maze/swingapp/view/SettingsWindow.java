@@ -1,11 +1,8 @@
 package de.amr.demos.maze.swingapp.view;
 
-import static java.lang.String.format;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.Arrays;
-import java.util.stream.IntStream;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -14,42 +11,54 @@ import javax.swing.JMenuBar;
 import javax.swing.JSlider;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
+import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.demos.maze.swingapp.view.menu.GeneratorMenu;
 import de.amr.demos.maze.swingapp.view.menu.OptionMenu;
 import de.amr.demos.maze.swingapp.view.menu.SolverMenu;
 
 /**
- * This view enables the user to select the maze generation and path finder algorithm and all the
- * other settings.
+ * Window containing menus and control panel.
  * 
  * @author Armin Reichert
  */
 public class SettingsWindow extends JFrame {
 
-	private final ControlPanel controlPanel;
 	private final GeneratorMenu generatorMenu;
 	private final SolverMenu solverMenu;
 	private final OptionMenu optionMenu;
+	private final ControlPanel controlPanel;
+
+	private ComboBoxModel<String> createResolutionModel(MazeDemoModel model) {
+		Dimension screenSize = MazeDemoApp.getScreenSize();
+		String tmpl = "%d cells (%d cols x %d rows, cell size %d)";
+		String[] entries = Arrays.stream(model.getGridCellSizes()).mapToObj(cellSize -> {
+			int numCols = screenSize.width / cellSize;
+			int numRows = screenSize.height / cellSize;
+			return String.format(tmpl, numCols * numRows, numCols, numRows, cellSize);
+		}).toArray(String[]::new);
+		return new DefaultComboBoxModel<>(entries);
+	}
+
+	private int getSelectedResolutionIndex(MazeDemoModel model) {
+		int i = 0;
+		for (int size : model.getGridCellSizes()) {
+			if (size == model.getGridCellSize()) {
+				return i;
+			}
+			++i;
+		}
+		return -1;
+	}
 
 	public SettingsWindow(MazeDemoApp app) {
 		setTitle("Mazes");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		// Control panel
 		controlPanel = new ControlPanel();
-		ComboBoxModel<String> comboModel = new DefaultComboBoxModel<>(
-				Arrays.stream(app.model.getGridCellSizes()).mapToObj(cellSize -> {
-					Dimension screenSize = MazeDemoApp.getScreenSize();
-					int numCols = screenSize.width / cellSize;
-					int numRows = screenSize.height / cellSize;
-					return format("%d cells (%d cols x %d rows, cell size %d)", numCols * numRows, numCols, numRows, cellSize);
-				}).toArray(String[]::new));
-		controlPanel.getComboGridResolution().setModel(comboModel);
 
-		int[] sizes = app.model.getGridCellSizes();
-		int selectedIndex = IntStream.range(0, sizes.length).filter(i -> sizes[i] == app.model.getGridCellSize())
-				.findFirst().orElse(-1);
-		controlPanel.getComboGridResolution().setSelectedIndex(selectedIndex);
-
+		controlPanel.getComboGridResolution().setModel(createResolutionModel(app.model));
+		controlPanel.getComboGridResolution().setSelectedIndex(getSelectedResolutionIndex(app.model));
 		controlPanel.getComboGridResolution().setAction(app.actionChangeGridResolution);
 
 		controlPanel.getSliderPassageWidth().setValue(app.model.getPassageWidthPercentage());
