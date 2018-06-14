@@ -34,19 +34,15 @@ public class RunMazeSolverAction extends MazeDemoAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app.wndSettings.setVisible(!app.model.isHidingControlsWhenRunning());
-		app.wndCanvas.setVisible(true);
 		app.enableUI(false);
+		app.getCanvas().drawGrid();
 		app.startWorkerThread(() -> {
 			try {
-				app.getCanvas().drawGrid();
 				app.wndSettings.getSolverMenu().getSelectedAlgorithm().ifPresent(this::runSolverAnimation);
 			} catch (Exception x) {
 				x.printStackTrace();
 			} finally {
 				app.enableUI(true);
-				app.wndSettings.setVisible(true);
-				app.wndSettings.requestFocus();
 			}
 		});
 	}

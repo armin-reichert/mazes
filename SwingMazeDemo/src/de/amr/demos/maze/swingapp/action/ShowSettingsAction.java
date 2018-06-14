@@ -12,6 +12,6 @@ public class ShowSettingsAction extends MazeDemoAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app.showSettingsWindow();
+		app.wndSettings.setVisible(true);
 	}
 }

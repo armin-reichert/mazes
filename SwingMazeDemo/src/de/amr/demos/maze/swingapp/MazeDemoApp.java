@@ -146,11 +146,6 @@ public class MazeDemoApp {
 		wndSettings.getControlPanel().showMessage(msg + "\n");
 	}
 
-	public void showSettingsWindow() {
-		wndSettings.setVisible(true);
-		wndSettings.requestFocus();
-	}
-
 	public void setGridPassageThickness(int percent) {
 		model.setPassageWidthPercentage(percent);
 		getCanvas().clear();
@@ -158,6 +153,7 @@ public class MazeDemoApp {
 	}
 
 	public void enableUI(boolean enabled) {
+		wndSettings.setVisible(enabled || !model.isHidingControlsWhenRunning());
 		wndSettings.getGeneratorMenu().setEnabled(enabled);
 		wndSettings.getSolverMenu().setEnabled(enabled);
 		wndSettings.getOptionMenu().setEnabled(enabled);

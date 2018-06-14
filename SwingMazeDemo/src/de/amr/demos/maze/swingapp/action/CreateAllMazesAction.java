@@ -25,16 +25,12 @@ public class CreateAllMazesAction extends CreateMazeAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app.wndSettings.setVisible(!app.model.isHidingControlsWhenRunning());
-		app.wndCanvas.setVisible(true);
-		app.getCanvas().clear();
+		app.enableUI(false);
 		app.startWorkerThread(() -> {
-			app.enableUI(false);
 			try {
 				generateAllMazes();
 			} finally {
 				app.enableUI(true);
-				app.wndSettings.setVisible(true);
 			}
 		});
 	}
@@ -65,8 +61,8 @@ public class CreateAllMazesAction extends CreateMazeAction {
 	private void createNextMaze(AlgorithmInfo generatorInfo, int startCell) {
 		ready = false;
 		app.getCanvas().clear();
-		app.wndSettings.getControlPanel().getLblGenerationAlgorithm().setText(generatorInfo.getDescription());
 		app.wndSettings.getGeneratorMenu().selectAlgorithm(generatorInfo);
+		app.onGeneratorChange(generatorInfo);
 		try {
 			runMazeGenerator(generatorInfo, startCell);
 		} catch (Exception | StackOverflowError x) {

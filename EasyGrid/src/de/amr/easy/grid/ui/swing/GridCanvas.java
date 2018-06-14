@@ -61,11 +61,7 @@ public class GridCanvas<G extends BareGrid2D<?>> extends JComponent {
 	}
 
 	public void clear() {
-		getRenderer().ifPresent(r -> {
-			g2.setColor(r.getModel().getGridBgColor());
-			g2.fillRect(0, 0, getWidth(), getHeight());
-			repaint();
-		});
+		getRenderer().ifPresent(r -> fill(r.getModel().getGridBgColor()));
 	}
 
 	public void fill(Color bgColor) {
