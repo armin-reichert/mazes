@@ -1,31 +1,33 @@
 package de.amr.easy.graph.api.event;
 
-import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;
 
 /**
  * Event signaling adding of an edge.
  * 
  * @author Armin Reichert
- *
- * @param <E>
- *          edge type
  */
-public class EdgeAddedEvent<E extends Edge> {
+public class EdgeAddedEvent {
 
-	private final ObservableGraph<E> graph;
-	private final E edge;
+	private final ObservableGraph<?> graph;
+	private final int either;
+	private final int other;
 
-	public EdgeAddedEvent(ObservableGraph<E> graph, E edge) {
+	public EdgeAddedEvent(ObservableGraph<?> graph, int either, int other) {
 		this.graph = graph;
-		this.edge = edge;
+		this.either = either;
+		this.other = other;
 	}
 
-	public ObservableGraph<E> getGraph() {
+	public ObservableGraph<?> getGraph() {
 		return graph;
 	}
 
-	public E getEdge() {
-		return edge;
+	public int getEither() {
+		return either;
+	}
+
+	public int getOther() {
+		return other;
 	}
 }

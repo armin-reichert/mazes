@@ -6,7 +6,6 @@ import java.awt.Font;
 
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.graph.api.event.EdgeAddedEvent;
 import de.amr.easy.graph.api.event.EdgeChangeEvent;
 import de.amr.easy.graph.api.event.EdgeRemovedEvent;
@@ -25,7 +24,7 @@ import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
  * 
  * @author Armin Reichert
  */
-public class LayeredGridCanvas extends LayeredCanvas implements GraphObserver<WeightedEdge<Integer>> {
+public class LayeredGridCanvas extends LayeredCanvas implements GraphObserver {
 
 	private enum Layers {
 		Grid, Distances, Path
@@ -152,13 +151,13 @@ public class LayeredGridCanvas extends LayeredCanvas implements GraphObserver<We
 		renderer.fnCellSize = () -> cellSize;
 		pushLayer(Layers.Path.name(), g -> {
 			if (path != null) {
-				Integer from = null;
+				Integer parent = null;
 				for (Integer cell : path) {
-					if (from == null) {
-						from = cell;
+					if (parent == null) {
+						parent = cell;
 					} else {
-						renderer.drawPassage(g, grid, grid.edge(from, cell).get(), true);
-						from = cell;
+						renderer.drawPassage(g, grid, parent, cell, true);
+						parent = cell;
 					}
 				}
 			}
@@ -174,23 +173,22 @@ public class LayeredGridCanvas extends LayeredCanvas implements GraphObserver<We
 	}
 
 	@Override
-	public void edgeAdded(EdgeAddedEvent<WeightedEdge<Integer>> event) {
+	public void edgeAdded(EdgeAddedEvent event) {
 		repaint();
 	}
 
 	@Override
-	public void edgeRemoved(EdgeRemovedEvent<WeightedEdge<Integer>> event) {
+	public void edgeRemoved(EdgeRemovedEvent event) {
 		repaint();
 	}
 
 	@Override
-	public void edgeChanged(EdgeChangeEvent<WeightedEdge<Integer>> event) {
+	public void edgeChanged(EdgeChangeEvent event) {
 		repaint();
 	}
 
 	@Override
-	public void graphChanged(ObservableGraph<WeightedEdge<Integer>> graph) {
+	public void graphChanged(ObservableGraph<?> graph) {
 		repaint();
 	}
-
 }

@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import de.amr.easy.graph.api.ObservableGraph;
-import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.graph.api.event.EdgeAddedEvent;
 import de.amr.easy.graph.api.event.EdgeChangeEvent;
 import de.amr.easy.graph.api.event.EdgeRemovedEvent;
@@ -23,7 +22,7 @@ import de.amr.easy.grid.api.Topology;
  */
 public class ObservableBareGrid<W extends Comparable<W>> extends BareGrid<W> implements ObservableBareGrid2D<W> {
 
-	private final Set<GraphObserver<WeightedEdge<W>>> observers;
+	private final Set<GraphObserver> observers;
 	private boolean fireEvents;
 
 	public ObservableBareGrid(int numCols, int numRows, Topology top) {
@@ -41,8 +40,8 @@ public class ObservableBareGrid<W extends Comparable<W>> extends BareGrid<W> imp
 	public void addEdge(int p, int q) {
 		super.addEdge(p, q);
 		if (fireEvents) {
-			for (GraphObserver<WeightedEdge<W>> obs : observers) {
-				obs.edgeAdded(new EdgeAddedEvent<>(this, edge(p, q).get()));
+			for (GraphObserver obs : observers) {
+				obs.edgeAdded(new EdgeAddedEvent(this, p, q));
 			}
 		}
 	}
@@ -52,8 +51,8 @@ public class ObservableBareGrid<W extends Comparable<W>> extends BareGrid<W> imp
 		edge(p, q).ifPresent(edge -> {
 			super.removeEdge(p, q);
 			if (fireEvents) {
-				for (GraphObserver<WeightedEdge<W>> obs : observers) {
-					obs.edgeRemoved(new EdgeRemovedEvent<>(this, edge));
+				for (GraphObserver obs : observers) {
+					obs.edgeRemoved(new EdgeRemovedEvent(this, p, q));
 				}
 			}
 		});
@@ -74,12 +73,12 @@ public class ObservableBareGrid<W extends Comparable<W>> extends BareGrid<W> imp
 	/* {@link ObservableGraph} interface */
 
 	@Override
-	public void addGraphObserver(GraphObserver<WeightedEdge<W>> obs) {
+	public void addGraphObserver(GraphObserver obs) {
 		observers.add(obs);
 	}
 
 	@Override
-	public void removeGraphObserver(GraphObserver<WeightedEdge<W>> obs) {
+	public void removeGraphObserver(GraphObserver obs) {
 		observers.remove(obs);
 	}
 
@@ -92,23 +91,23 @@ public class ObservableBareGrid<W extends Comparable<W>> extends BareGrid<W> imp
 
 	protected void fireVertexChange(Integer vertex, Object oldValue, Object newValue) {
 		if (fireEvents) {
-			for (GraphObserver<WeightedEdge<W>> obs : observers) {
+			for (GraphObserver obs : observers) {
 				obs.vertexChanged(new VertexChangeEvent(this, vertex, oldValue, newValue));
 			}
 		}
 	}
 
-	protected void fireEdgeChange(WeightedEdge<W> edge, Object oldValue, Object newValue) {
+	protected void fireEdgeChange(int either, int other, Object oldValue, Object newValue) {
 		if (fireEvents) {
-			for (GraphObserver<WeightedEdge<W>> obs : observers) {
-				obs.edgeChanged(new EdgeChangeEvent<>(this, edge, oldValue, newValue));
+			for (GraphObserver obs : observers) {
+				obs.edgeChanged(new EdgeChangeEvent(this, either, other, oldValue, newValue));
 			}
 		}
 	}
 
-	protected void fireGraphChange(ObservableGraph<WeightedEdge<W>> graph) {
+	protected void fireGraphChange(ObservableGraph<?> graph) {
 		if (fireEvents) {
-			for (GraphObserver<WeightedEdge<W>> obs : observers) {
+			for (GraphObserver obs : observers) {
 				obs.graphChanged(graph);
 			}
 		}

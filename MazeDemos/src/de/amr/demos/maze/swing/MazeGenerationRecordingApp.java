@@ -6,7 +6,6 @@ import java.awt.Color;
 
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.graph.api.event.EdgeAddedEvent;
 import de.amr.easy.graph.api.event.EdgeChangeEvent;
 import de.amr.easy.graph.api.event.EdgeRemovedEvent;
@@ -142,7 +141,7 @@ public class MazeGenerationRecordingApp {
 	}
 
 	private void attachRecorderToGrid(GifRecorder recorder) {
-		canvas.getGrid().addGraphObserver(new GraphObserver<WeightedEdge<Integer>>() {
+		canvas.getGrid().addGraphObserver(new GraphObserver() {
 
 			@Override
 			public void vertexChanged(VertexChangeEvent event) {
@@ -150,22 +149,22 @@ public class MazeGenerationRecordingApp {
 			}
 
 			@Override
-			public void graphChanged(ObservableGraph<WeightedEdge<Integer>> graph) {
+			public void graphChanged(ObservableGraph<?> graph) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
-			public void edgeRemoved(EdgeRemovedEvent<WeightedEdge<Integer>> event) {
+			public void edgeRemoved(EdgeRemovedEvent event) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
-			public void edgeChanged(EdgeChangeEvent<WeightedEdge<Integer>> event) {
+			public void edgeChanged(EdgeChangeEvent event) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
-			public void edgeAdded(EdgeAddedEvent<WeightedEdge<Integer>> event) {
+			public void edgeAdded(EdgeAddedEvent event) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 		});

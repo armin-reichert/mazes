@@ -12,7 +12,6 @@ import java.util.Optional;
 import javax.swing.JComponent;
 
 import de.amr.easy.data.Stack;
-import de.amr.easy.graph.api.Edge;
 import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
 
@@ -80,8 +79,8 @@ public class GridCanvas<G extends BareGrid2D<?>> extends JComponent {
 		repaint();
 	}
 
-	public void drawGridPassage(Edge edge, boolean visible) {
-		getRenderer().ifPresent(r -> r.drawPassage(g2, grid, edge, visible));
+	public void drawGridPassage(int either, int other, boolean visible) {
+		getRenderer().ifPresent(r -> r.drawPassage(g2, grid, either, other, visible));
 		repaint();
 	}
 

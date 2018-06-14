@@ -3,6 +3,7 @@ package de.amr.easy.graph.impl;
 import java.util.HashSet;
 import java.util.Set;
 
+import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.event.EdgeChangeEvent;
@@ -19,7 +20,7 @@ import de.amr.easy.graph.api.event.VertexChangeEvent;
  */
 public class DefaultObservableGraph extends DefaultGraph implements ObservableGraph<SimpleEdge> {
 
-	private Set<GraphObserver<SimpleEdge>> listeners = new HashSet<>();
+	private Set<GraphObserver> listeners = new HashSet<>();
 	private boolean listeningSuspended = false;
 
 	public DefaultObservableGraph() {
@@ -27,12 +28,12 @@ public class DefaultObservableGraph extends DefaultGraph implements ObservableGr
 	}
 
 	@Override
-	public void addGraphObserver(GraphObserver<SimpleEdge> listener) {
+	public void addGraphObserver(GraphObserver listener) {
 		listeners.add(listener);
 	}
 
 	@Override
-	public void removeGraphObserver(GraphObserver<SimpleEdge> listener) {
+	public void removeGraphObserver(GraphObserver listener) {
 		listeners.remove(listener);
 	}
 
@@ -43,23 +44,24 @@ public class DefaultObservableGraph extends DefaultGraph implements ObservableGr
 
 	protected void fireVertexChange(int vertex, Object oldValue, Object newValue) {
 		if (!listeningSuspended) {
-			for (GraphObserver<SimpleEdge> listener : listeners) {
+			for (GraphObserver listener : listeners) {
 				listener.vertexChanged(new VertexChangeEvent(this, vertex, oldValue, newValue));
 			}
 		}
 	}
 
-	protected void fireEdgeChange(SimpleEdge edge, Object oldValue, Object newValue) {
+	protected void fireEdgeChange(Edge edge, Object oldValue, Object newValue) {
 		if (!listeningSuspended) {
-			for (GraphObserver<SimpleEdge> listener : listeners) {
-				listener.edgeChanged(new EdgeChangeEvent<>(this, edge, oldValue, newValue));
+			for (GraphObserver listener : listeners) {
+				int either = edge.either(), other = edge.other(either);
+				listener.edgeChanged(new EdgeChangeEvent(this, either, other, oldValue, newValue));
 			}
 		}
 	}
 
 	protected void fireGraphChange(ObservableGraph<SimpleEdge> graph) {
 		if (!listeningSuspended) {
-			for (GraphObserver<SimpleEdge> listener : listeners) {
+			for (GraphObserver listener : listeners) {
 				listener.graphChanged(graph);
 			}
 		}

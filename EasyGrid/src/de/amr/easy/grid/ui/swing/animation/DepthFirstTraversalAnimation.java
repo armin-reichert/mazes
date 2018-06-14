@@ -82,8 +82,8 @@ public class DepthFirstTraversalAnimation<G extends BareGrid2D<?>> {
 			}
 
 			@Override
-			public void edgeTouched(int u, int v) {
-				grid.edge(u, v).ifPresent(edge -> delayed(() -> canvas.drawGridPassage(edge, true)));
+			public void edgeTouched(int either, int other) {
+				delayed(() -> canvas.drawGridPassage(either, other, true));
 			}
 
 			@Override

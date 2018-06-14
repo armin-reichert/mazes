@@ -12,7 +12,6 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 
-import de.amr.easy.graph.api.Edge;
 import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.impl.Top8;
@@ -26,18 +25,19 @@ public class WallPassageGridRenderer extends ConfigurableGridRenderer {
 
 	@Override
 	public void drawGrid(Graphics2D g, BareGrid2D<?> grid) {
-		grid.edgeStream().forEach(passage -> drawPassage(g, grid, passage, true));
+		grid.edgeStream().forEach(passage -> {
+			int either = passage.either(), other = passage.other(either);
+			drawPassage(g, grid, either, other, true);
+		});
 		grid.vertexStream().filter(cell -> grid.degree(cell) == 0).forEach(cell -> drawCell(g, grid, cell));
 	}
 
 	@Override
-	public void drawPassage(Graphics2D g, BareGrid2D<?> grid, Edge passage, boolean visible) {
-		final int p = passage.either();
-		final int q = passage.other(p);
-		final int dir = grid.direction(p, q).getAsInt();
+	public void drawPassage(Graphics2D g, BareGrid2D<?> grid, int either, int other, boolean visible) {
+		final int dir = grid.direction(either, other).getAsInt();
 		final int inv = grid.getTopology().inv(dir);
-		drawHalfPassage(g, grid, p, dir, visible ? getPassageColor(p, dir) : getGridBgColor());
-		drawHalfPassage(g, grid, q, inv, visible ? getPassageColor(q, inv) : getGridBgColor());
+		drawHalfPassage(g, grid, either, dir, visible ? getPassageColor(either, dir) : getGridBgColor());
+		drawHalfPassage(g, grid, other, inv, visible ? getPassageColor(other, inv) : getGridBgColor());
 	}
 
 	@Override
