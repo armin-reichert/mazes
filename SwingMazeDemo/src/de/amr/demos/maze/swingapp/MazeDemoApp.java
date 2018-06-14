@@ -26,6 +26,7 @@ import de.amr.demos.maze.swingapp.action.FloodFillAction;
 import de.amr.demos.maze.swingapp.action.RunMazeSolverAction;
 import de.amr.demos.maze.swingapp.action.ShowSettingsAction;
 import de.amr.demos.maze.swingapp.action.StopTaskAction;
+import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
 import de.amr.demos.maze.swingapp.model.MazeGrid;
@@ -102,11 +103,11 @@ public class MazeDemoApp {
 		wndSettings = new SettingsWindow(this);
 		MazeDemoModel.find(GENERATOR_ALGORITHMS, IterativeDFS.class).ifPresent(alg -> {
 			wndSettings.getGeneratorMenu().selectAlgorithm(alg);
-			setGeneratorName(alg.getDescription());
+			onGeneratorChange(alg);
 		});
 		MazeDemoModel.find(PATHFINDER_ALGORITHMS, BreadthFirstTraversal.class).ifPresent(alg -> {
 			wndSettings.getSolverMenu().selectAlgorithm(alg);
-			setSolverName(alg.getDescription());
+			onSolverChange(alg);
 		});
 		getCanvas().getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
 		getCanvas().getActionMap().put("showSettings", actionShowSettings);
@@ -155,12 +156,12 @@ public class MazeDemoApp {
 		getCanvas().drawGrid();
 	}
 
-	public void setGeneratorName(String text) {
-		wndSettings.getControlPanel().getLblGenerationAlgorithm().setText(text);
+	public void onGeneratorChange(AlgorithmInfo generatorInfo) {
+		wndSettings.getControlPanel().getLblGenerationAlgorithm().setText(generatorInfo.getDescription());
 	}
 
-	public void setSolverName(String text) {
-		wndSettings.getControlPanel().getLblSolver().setText(text);
+	public void onSolverChange(AlgorithmInfo solverInfo) {
+		wndSettings.getControlPanel().getLblSolver().setText(solverInfo.getDescription());
 	}
 
 	public void startTask(Runnable task) {
