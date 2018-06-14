@@ -7,12 +7,12 @@ import static java.lang.String.format;
 
 import java.awt.event.ActionEvent;
 import java.util.Optional;
-import java.util.function.Function;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.MazeGrid;
 import de.amr.demos.maze.swingapp.model.PathFinderTag;
+import de.amr.demos.maze.swingapp.model.VertexCostHeuristics;
 import de.amr.easy.graph.traversal.BestFirstTraversal;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.traversal.DepthFirstTraversal2;
@@ -26,17 +26,6 @@ import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
  * @author Armin Reichert
  */
 public class RunMazeSolverAction extends MazeDemoAction {
-
-	private class Heuristics {
-
-		private final String name;
-		private final Function<Integer, Integer> fn;
-
-		public Heuristics(String name, Function<Integer, Integer> fn) {
-			this.name = name;
-			this.fn = fn;
-		}
-	}
 
 	public RunMazeSolverAction(MazeDemoApp app) {
 		super(app, "Solve");
@@ -86,10 +75,10 @@ public class RunMazeSolverAction extends MazeDemoAction {
 		}
 
 		if (solver.getAlgorithmClass() == BestFirstTraversal.class) {
-			findHeuristics(solver, grid, tgt).ifPresent(heuristics -> {
-				BestFirstTraversal<MazeGrid, Integer> best = new BestFirstTraversal<>(grid, heuristics.fn);
+			findHeuristics(solver, grid, tgt).ifPresent(h -> {
+				BestFirstTraversal<MazeGrid, Integer> best = new BestFirstTraversal<>(grid, h.getCostFunction());
 				watch.measure(() -> anim.run(app.getCanvas(), best, src, tgt));
-				app.showMessage(format("Best-first search (%s): %.2f seconds.", heuristics.name, watch.getSeconds()));
+				app.showMessage(format("Best-first search (%s): %.2f seconds.", h.getName(), watch.getSeconds()));
 				anim.showPath(app.getCanvas(), best, tgt);
 			});
 		}
@@ -110,22 +99,22 @@ public class RunMazeSolverAction extends MazeDemoAction {
 		}
 
 		if (solver.getAlgorithmClass() == HillClimbing.class) {
-			findHeuristics(solver, grid, tgt).ifPresent(heuristics -> {
-				watch.measure(() -> anim.run(app.getCanvas(), new HillClimbing<>(grid, heuristics.fn), src, tgt));
-				app.showMessage(format("Hill Climbing (%s): %.2f seconds.", heuristics.name, watch.getSeconds()));
+			findHeuristics(solver, grid, tgt).ifPresent(h -> {
+				watch.measure(() -> anim.run(app.getCanvas(), new HillClimbing<>(grid, h.getCostFunction()), src, tgt));
+				app.showMessage(format("Hill Climbing (%s): %.2f seconds.", h.getName(), watch.getSeconds()));
 			});
 		}
 	}
 
-	private Optional<Heuristics> findHeuristics(AlgorithmInfo solver, MazeGrid grid, int tgt) {
+	private Optional<VertexCostHeuristics> findHeuristics(AlgorithmInfo solver, MazeGrid grid, int tgt) {
 		if (solver.isTagged(CHEBYSHEV)) {
-			return Optional.of(new Heuristics("Chebyshev", v -> grid.chebyshev(v, tgt)));
+			return Optional.of(new VertexCostHeuristics("Chebyshev", v -> grid.chebyshev(v, tgt)));
 		}
 		if (solver.isTagged(EUCLIDEAN)) {
-			return Optional.of(new Heuristics("Euclidean", v -> grid.euclidean2(v, tgt)));
+			return Optional.of(new VertexCostHeuristics("Euclidean", v -> grid.euclidean2(v, tgt)));
 		}
 		if (solver.isTagged(MANHATTAN)) {
-			return Optional.of(new Heuristics("Manhattan", v -> grid.manhattan(v, tgt)));
+			return Optional.of(new VertexCostHeuristics("Manhattan", v -> grid.manhattan(v, tgt)));
 		}
 		return Optional.empty();
 	}

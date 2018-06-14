@@ -1,11 +1,11 @@
 package de.amr.demos.maze.swingapp.action;
 
+import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation.floodFill;
 import static java.lang.String.format;
 
 import java.awt.event.ActionEvent;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
-import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 
 /**
  * Action for running a "flood-fill" on the current maze.
@@ -20,7 +20,7 @@ public class FloodFillAction extends MazeDemoAction {
 
 	private void runFloodFill() {
 		int source = app.model.getGrid().cell(app.model.getPathFinderSource());
-		BreadthFirstTraversalAnimation.floodFill(app.getCanvas(), app.model.getGrid(), source);
+		floodFill(app.getCanvas(), app.model.getGrid(), source);
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class FloodFillAction extends MazeDemoAction {
 		app.startTask(() -> {
 			try {
 				watch.measure(this::runFloodFill);
-				app.showMessage(format("Flood-fill: %.6f seconds.", watch.getSeconds()));
+				app.showMessage(format("Flood-fill: %.2f seconds.", watch.getSeconds()));
 			} catch (Exception x) {
 				x.printStackTrace();
 			} finally {
