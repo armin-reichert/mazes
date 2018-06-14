@@ -31,6 +31,7 @@ import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
 import de.amr.demos.maze.swingapp.model.MazeGrid;
 import de.amr.demos.maze.swingapp.view.CanvasWindow;
+import de.amr.demos.maze.swingapp.view.ControlPanel;
 import de.amr.demos.maze.swingapp.view.SettingsWindow;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.impl.Top4;
@@ -154,6 +155,18 @@ public class MazeDemoApp {
 		model.setPassageWidthPercentage(percent);
 		getCanvas().clear();
 		getCanvas().drawGrid();
+	}
+
+	public void enableUI(boolean enabled) {
+		wndSettings.getGeneratorMenu().setEnabled(enabled);
+		wndSettings.getSolverMenu().setEnabled(enabled);
+		wndSettings.getOptionMenu().setEnabled(enabled);
+		actionChangeGridResolution.setEnabled(enabled);
+		actionCreateMaze.setEnabled(enabled);
+		actionCreateAllMazes.setEnabled(enabled);
+		actionRunMazeSolver.setEnabled(enabled);
+		ControlPanel controlPanel = wndSettings.getControlPanel();
+		controlPanel.getSliderPassageWidth().setEnabled(enabled);
 	}
 
 	public void onGeneratorChange(AlgorithmInfo generatorInfo) {

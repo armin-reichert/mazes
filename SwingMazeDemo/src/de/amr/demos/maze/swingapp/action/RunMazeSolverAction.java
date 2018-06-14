@@ -19,6 +19,7 @@ import de.amr.easy.graph.traversal.DepthFirstTraversal2;
 import de.amr.easy.graph.traversal.HillClimbing;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
+import de.amr.easy.util.StopWatch;
 
 /**
  * Action for running the selected path finding ("maze solver") algorithm on the current maze.
@@ -35,7 +36,7 @@ public class RunMazeSolverAction extends MazeDemoAction {
 	public void actionPerformed(ActionEvent e) {
 		app.wndSettings.setVisible(!app.model.isHidingControlsWhenRunning());
 		app.wndCanvas.setVisible(true);
-		enableUI(false);
+		app.enableUI(false);
 		app.startTask(() -> {
 			try {
 				app.getCanvas().drawGrid();
@@ -43,7 +44,7 @@ public class RunMazeSolverAction extends MazeDemoAction {
 			} catch (Exception x) {
 				x.printStackTrace();
 			} finally {
-				enableUI(true);
+				app.enableUI(true);
 				app.wndSettings.setVisible(true);
 				app.wndSettings.requestFocus();
 			}
@@ -62,6 +63,7 @@ public class RunMazeSolverAction extends MazeDemoAction {
 		MazeGrid grid = app.model.getGrid();
 		int src = grid.cell(app.model.getPathFinderSource());
 		int tgt = grid.cell(app.model.getPathFinderTarget());
+		StopWatch watch = new StopWatch();
 
 		BreadthFirstTraversalAnimation<MazeGrid> anim = new BreadthFirstTraversalAnimation<>(grid);
 		anim.fnDelay = () -> app.model.getDelay();
@@ -88,6 +90,7 @@ public class RunMazeSolverAction extends MazeDemoAction {
 		MazeGrid grid = app.model.getGrid();
 		int src = grid.cell(app.model.getPathFinderSource());
 		int tgt = grid.cell(app.model.getPathFinderTarget());
+		StopWatch watch = new StopWatch();
 
 		DepthFirstTraversalAnimation<MazeGrid> anim = new DepthFirstTraversalAnimation<>(grid);
 		anim.fnDelay = () -> app.model.getDelay();

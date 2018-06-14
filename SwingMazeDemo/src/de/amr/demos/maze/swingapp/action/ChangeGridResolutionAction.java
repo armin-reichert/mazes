@@ -19,8 +19,8 @@ public class ChangeGridResolutionAction extends MazeDemoAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JComboBox<?> selector = (JComboBox<?>) e.getSource();
-		int cellSize = app.model.getGridCellSizes()[selector.getSelectedIndex()];
+		JComboBox<?> combo = (JComboBox<?>) e.getSource();
+		int cellSize = app.model.getGridCellSizes()[combo.getSelectedIndex()];
 		app.model.setGridCellSize(cellSize);
 		app.newCanvas();
 	}

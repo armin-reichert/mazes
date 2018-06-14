@@ -6,6 +6,7 @@ import static java.lang.String.format;
 import java.awt.event.ActionEvent;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
+import de.amr.easy.util.StopWatch;
 
 /**
  * Action for running a "flood-fill" on the current maze.
@@ -29,16 +30,17 @@ public class FloodFillAction extends MazeDemoAction {
 			app.wndSettings.setVisible(false);
 		}
 		app.wndCanvas.setVisible(true);
-		enableUI(false);
+		app.enableUI(false);
 		app.getCanvas().drawGrid();
 		app.startTask(() -> {
 			try {
+				StopWatch watch = new StopWatch();
 				watch.measure(this::runFloodFill);
 				app.showMessage(format("Flood-fill: %.2f seconds.", watch.getSeconds()));
 			} catch (Exception x) {
 				x.printStackTrace();
 			} finally {
-				enableUI(true);
+				app.enableUI(true);
 				app.wndSettings.setVisible(true);
 				app.wndSettings.requestFocus();
 			}

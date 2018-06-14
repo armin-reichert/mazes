@@ -29,11 +29,11 @@ public class CreateAllMazesAction extends CreateMazeAction {
 		app.wndCanvas.setVisible(true);
 		app.getCanvas().clear();
 		app.startTask(() -> {
-			enableUI(false);
+			app.enableUI(false);
 			try {
 				generateAllMazes();
 			} finally {
-				enableUI(true);
+				app.enableUI(true);
 				app.wndSettings.setVisible(true);
 			}
 		});

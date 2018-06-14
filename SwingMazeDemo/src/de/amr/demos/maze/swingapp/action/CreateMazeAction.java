@@ -9,6 +9,7 @@ import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.maze.alg.MazeAlgorithm;
+import de.amr.easy.util.StopWatch;
 
 /**
  * Action for creating a maze using the selected generation algorithm.
@@ -27,7 +28,7 @@ public class CreateMazeAction extends MazeDemoAction {
 	}
 
 	private void createMaze(AlgorithmInfo generatorInfo) {
-		enableUI(false);
+		app.enableUI(false);
 		app.wndSettings.setVisible(!app.model.isHidingControlsWhenRunning());
 		app.wndCanvas.setVisible(true);
 		app.getCanvas().clear();
@@ -42,7 +43,7 @@ public class CreateMazeAction extends MazeDemoAction {
 			} finally {
 				app.wndSettings.setVisible(true);
 				app.wndSettings.requestFocus();
-				enableUI(true);
+				app.enableUI(true);
 			}
 		});
 	}
@@ -59,6 +60,7 @@ public class CreateMazeAction extends MazeDemoAction {
 		if (app.model.isGenerationAnimated()) {
 			generator.run(startCell);
 		} else {
+			StopWatch watch = new StopWatch();
 			app.getCanvasAnimation().setEnabled(false);
 			watch.measure(() -> generator.run(startCell));
 			app.showMessage(format("Maze generation: %.6f seconds.", watch.getSeconds()));
