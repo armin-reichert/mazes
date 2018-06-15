@@ -28,38 +28,37 @@ import de.amr.easy.util.StopWatch;
  */
 public class RunMazeSolverAction extends MazeDemoAction {
 
+	private final StopWatch watch = new StopWatch();
+
 	public RunMazeSolverAction(MazeDemoApp app) {
 		super(app, "Solve");
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app.enableUI(false);
-		app.getCanvas().drawGrid();
-		app.startWorkerThread(() -> {
-			try {
-				app.wndSettings.getSolverMenu().getSelectedAlgorithm().ifPresent(this::runSolverAnimation);
-			} catch (Exception x) {
-				x.printStackTrace();
-			} finally {
-				app.enableUI(true);
-			}
+		app.wndSettings.getSolverMenu().getSelectedAlgorithm().ifPresent(solver -> {
+			app.enableUI(false);
+			app.getCanvas().drawGrid();
+			app.startWorkerThread(() -> {
+				try {
+					if (solver.isTagged(PathFinderTag.DFS)) {
+						runDFSSolverAnimation(solver);
+					} else if (solver.isTagged(PathFinderTag.BFS)) {
+						runBFSSolverAnimation(solver);
+					}
+				} catch (Exception x) {
+					x.printStackTrace();
+				} finally {
+					app.enableUI(true);
+				}
+			});
 		});
-	}
-
-	private void runSolverAnimation(AlgorithmInfo solver) {
-		if (solver.isTagged(PathFinderTag.DFS)) {
-			runDFSSolverAnimation(solver);
-		} else if (solver.isTagged(PathFinderTag.BFS)) {
-			runBFSSolverAnimation(solver);
-		}
 	}
 
 	private void runBFSSolverAnimation(AlgorithmInfo solver) {
 		MazeGrid grid = app.model.getGrid();
 		int src = grid.cell(app.model.getPathFinderSource());
 		int tgt = grid.cell(app.model.getPathFinderTarget());
-		StopWatch watch = new StopWatch();
 
 		BreadthFirstTraversalAnimation<MazeGrid> anim = new BreadthFirstTraversalAnimation<>(grid);
 		anim.fnDelay = () -> app.model.getDelay();
@@ -72,7 +71,7 @@ public class RunMazeSolverAction extends MazeDemoAction {
 			anim.showPath(app.getCanvas(), bfs, tgt);
 		}
 
-		if (solver.getAlgorithmClass() == BestFirstTraversal.class) {
+		else if (solver.getAlgorithmClass() == BestFirstTraversal.class) {
 			findHeuristics(solver, grid, tgt).ifPresent(h -> {
 				BestFirstTraversal<MazeGrid, Integer> best = new BestFirstTraversal<>(grid, h.getCostFunction());
 				watch.measure(() -> anim.run(app.getCanvas(), best, src, tgt));
@@ -86,7 +85,6 @@ public class RunMazeSolverAction extends MazeDemoAction {
 		MazeGrid grid = app.model.getGrid();
 		int src = grid.cell(app.model.getPathFinderSource());
 		int tgt = grid.cell(app.model.getPathFinderTarget());
-		StopWatch watch = new StopWatch();
 
 		DepthFirstTraversalAnimation<MazeGrid> anim = new DepthFirstTraversalAnimation<>(grid);
 		anim.fnDelay = () -> app.model.getDelay();
@@ -97,7 +95,7 @@ public class RunMazeSolverAction extends MazeDemoAction {
 			app.showMessage(format("Depth-first search: %.2f seconds.", watch.getSeconds()));
 		}
 
-		if (solver.getAlgorithmClass() == HillClimbing.class) {
+		else if (solver.getAlgorithmClass() == HillClimbing.class) {
 			findHeuristics(solver, grid, tgt).ifPresent(h -> {
 				watch.measure(() -> anim.run(app.getCanvas(), new HillClimbing<>(grid, h.getCostFunction()), src, tgt));
 				app.showMessage(format("Hill Climbing (%s): %.2f seconds.", h.getName(), watch.getSeconds()));
@@ -106,15 +104,14 @@ public class RunMazeSolverAction extends MazeDemoAction {
 	}
 
 	private Optional<VertexCostHeuristics> findHeuristics(AlgorithmInfo solver, MazeGrid grid, int tgt) {
+		VertexCostHeuristics h = null;
 		if (solver.isTagged(CHEBYSHEV)) {
-			return Optional.of(new VertexCostHeuristics("Chebyshev", v -> grid.chebyshev(v, tgt)));
+			h = new VertexCostHeuristics("Chebyshev", v -> grid.chebyshev(v, tgt));
+		} else if (solver.isTagged(EUCLIDEAN)) {
+			h = new VertexCostHeuristics("Euclidean", v -> grid.euclidean2(v, tgt));
+		} else if (solver.isTagged(MANHATTAN)) {
+			h = new VertexCostHeuristics("Manhattan", v -> grid.manhattan(v, tgt));
 		}
-		if (solver.isTagged(EUCLIDEAN)) {
-			return Optional.of(new VertexCostHeuristics("Euclidean", v -> grid.euclidean2(v, tgt)));
-		}
-		if (solver.isTagged(MANHATTAN)) {
-			return Optional.of(new VertexCostHeuristics("Manhattan", v -> grid.manhattan(v, tgt)));
-		}
-		return Optional.empty();
+		return Optional.ofNullable(h);
 	}
 }
