@@ -21,7 +21,7 @@ public class SpiralApp extends SwingGridSampleApp {
 
 	@Override
 	public void run() {
-		grid.vertexStream().forEach(cell -> {
+		grid.vertices().forEach(cell -> {
 			grid.set(cell, COMPLETED);
 		});
 		Spiral spiral = new Spiral(grid, grid.cell(CENTER));

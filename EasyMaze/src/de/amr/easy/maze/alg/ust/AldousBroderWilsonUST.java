@@ -39,7 +39,7 @@ public class AldousBroderWilsonUST extends MazeAlgorithm {
 		}
 		// continue with Wilson
 		WilsonUSTRandomCell wilson = new WilsonUSTRandomCell(grid);
-		permute(grid.vertexStream().filter(isCellUnvisited)).forEach(wilson::loopErasedRandomWalk);
+		permute(grid.vertices().filter(isCellUnvisited)).forEach(wilson::loopErasedRandomWalk);
 
 	}
 

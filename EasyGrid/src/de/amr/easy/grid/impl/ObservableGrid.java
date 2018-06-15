@@ -47,7 +47,7 @@ public class ObservableGrid<C, W extends Comparable<W>> extends ObservableBareGr
 	 */
 	public ObservableGrid(ObservableGrid<C, W> grid) {
 		this(grid.numCols(), grid.numRows(), grid.getTopology(), grid.getDefaultContent(), grid.isSparse());
-		vertexStream().forEach(v -> {
+		vertices().forEach(v -> {
 			C content = grid.get(v);
 			if (!content.equals(grid.getDefaultContent())) {
 				set(v, content);

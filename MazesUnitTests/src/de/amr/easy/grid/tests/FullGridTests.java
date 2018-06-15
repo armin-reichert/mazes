@@ -45,7 +45,7 @@ public class FullGridTests {
 
 	@Test
 	public void testGridEdgeStream() {
-		assertTrue(grid.edgeStream().count() == 2 * WIDTH * HEIGHT - (WIDTH + HEIGHT));
+		assertTrue(grid.edges().count() == 2 * WIDTH * HEIGHT - (WIDTH + HEIGHT));
 	}
 
 	private void assertContainsExactly(IntStream numbers, Integer... cells) {

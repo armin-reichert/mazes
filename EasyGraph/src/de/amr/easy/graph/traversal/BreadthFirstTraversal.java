@@ -108,6 +108,6 @@ public class BreadthFirstTraversal<G extends Graph<?>> extends AbstractGraphTrav
 	 * @return a vertex with maximum distance or empty
 	 */
 	public Optional<Integer> getMaxDistanceVertex() {
-		return graph.vertexStream().boxed().max(Comparator.comparing(this::getDistance));
+		return graph.vertices().boxed().max(Comparator.comparing(this::getDistance));
 	}
 }

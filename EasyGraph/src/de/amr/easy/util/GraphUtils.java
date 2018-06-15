@@ -23,7 +23,7 @@ public class GraphUtils {
 	 */
 	public static <E extends Edge> boolean containsCycle(Graph<E> g) {
 		Partition<Integer> p = new Partition<>();
-		Iterable<E> edges = g.edgeStream()::iterator;
+		Iterable<E> edges = g.edges()::iterator;
 		for (E edge : edges) {
 			int u = edge.either(), v = edge.other();
 			if (p.find(u) == p.find(v)) {

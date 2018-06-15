@@ -78,7 +78,7 @@ public abstract class WilsonUST extends MazeAlgorithm {
 	 * @return iterator defining the cell order used by the maze generator
 	 */
 	protected IntStream cellStream() {
-		return grid.vertexStream();
+		return grid.vertices();
 	}
 
 	/**

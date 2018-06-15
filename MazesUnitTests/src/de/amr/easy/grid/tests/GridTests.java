@@ -59,13 +59,13 @@ public class GridTests {
 		assertEquals(grid.vertexCount(), WIDTH * HEIGHT);
 		assertEquals(grid.numCols(), WIDTH);
 		assertEquals(grid.numRows(), HEIGHT);
-		assertEquals(grid.numCells(), grid.vertexStream().count());
-		assertEquals(grid.edgeCount(), grid.edgeStream().count());
+		assertEquals(grid.numCells(), grid.vertices().count());
+		assertEquals(grid.edgeCount(), grid.edges().count());
 	}
 
 	@Test
 	public void testInitialContent() {
-		assertEquals(grid.vertexStream().filter(cell -> grid.get(cell) == UNVISITED).count(), grid.numCells());
+		assertEquals(grid.vertices().filter(cell -> grid.get(cell) == UNVISITED).count(), grid.numCells());
 	}
 
 	@Test
@@ -77,14 +77,14 @@ public class GridTests {
 		assertEquals(grid.numRows(), copy.numRows());
 		assertEquals(grid.getTopology(), copy.getTopology());
 		assertEquals(grid.getDefaultContent(), copy.getDefaultContent());
-		grid.vertexStream().forEach(v -> assertEquals(grid.get(v), copy.get(v)));
+		grid.vertices().forEach(v -> assertEquals(grid.get(v), copy.get(v)));
 	}
 
 	@Test
 	public void testGridCopyRandomContent() {
-		grid.vertexStream().forEach(v -> grid.set(v, randomTraversalState()));
+		grid.vertices().forEach(v -> grid.set(v, randomTraversalState()));
 		Grid<TraversalState, Integer> copy = new Grid<>(grid);
-		grid.vertexStream().forEach(v -> assertEquals(grid.get(v), copy.get(v)));
+		grid.vertices().forEach(v -> assertEquals(grid.get(v), copy.get(v)));
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
@@ -236,7 +236,7 @@ public class GridTests {
 
 		// Find vertex with non-adjacent neighbor. Adding an edge to this neighbor produces a cycle.
 		///*@formatter:off*/
-		grid.vertexStream()
+		grid.vertices()
 			.filter(cell -> grid.neighbors(cell).anyMatch(neighbor -> !grid.adjacent(cell, neighbor)))
 			.findAny()
 			.ifPresent(cell -> 	

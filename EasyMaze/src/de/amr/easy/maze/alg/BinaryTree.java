@@ -36,6 +36,6 @@ public class BinaryTree extends MazeAlgorithm {
 	}
 
 	protected IntStream cellStream() {
-		return grid.vertexStream();
+		return grid.vertices();
 	}
 }

@@ -19,6 +19,6 @@ public class WilsonUSTRandomCell extends WilsonUST {
 	@Override
 	public void run(int start) {
 		addToTree(start);
-		permute(grid.vertexStream()).forEach(this::loopErasedRandomWalk);
+		permute(grid.vertices()).forEach(this::loopErasedRandomWalk);
 	}
 }

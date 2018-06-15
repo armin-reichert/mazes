@@ -25,7 +25,7 @@ public abstract class ReverseDeleteMST extends MazeAlgorithm {
 	public void run(int start) {
 		grid.setDefaultContent(COMPLETED);
 		grid.fill();
-		Iterable<WeightedEdge<Integer>> edges = permute(grid.edgeStream())::iterator;
+		Iterable<WeightedEdge<Integer>> edges = permute(grid.edges())::iterator;
 		for (WeightedEdge<Integer> edge : edges) {
 			if (grid.edgeCount() == grid.vertexCount() - 1) {
 				break;

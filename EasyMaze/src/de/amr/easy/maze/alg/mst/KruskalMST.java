@@ -30,7 +30,7 @@ public class KruskalMST extends MazeAlgorithm {
 	@Override
 	public void run(int start) {
 		grid.fill();
-		Stream<WeightedEdge<Integer>> edges = permute(grid.edgeStream());
+		Stream<WeightedEdge<Integer>> edges = permute(grid.edges());
 		grid.removeEdges();
 		Partition<Integer> forest = new Partition<>();
 		edges.forEach(edge -> {

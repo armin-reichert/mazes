@@ -14,10 +14,10 @@ public interface GridRenderer {
 	GridRenderingModel getModel();
 
 	default void drawGrid(Graphics2D g, BareGrid2D<?> grid) {
-		grid.edgeStream().forEach(passage -> {
+		grid.edges().forEach(passage -> {
 			drawPassage(g, grid, passage.either(), passage.other(), true);
 		});
-		grid.vertexStream().forEach(cell -> drawCell(g, grid, cell));
+		grid.vertices().forEach(cell -> drawCell(g, grid, cell));
 	}
 
 	void drawPassage(Graphics2D g, BareGrid2D<?> grid, int either, int other, boolean visible);

@@ -144,7 +144,7 @@ public class MazeDemoFX extends Application {
 		gc.translate(cellSize, cellSize);
 		gc.setStroke(Color.WHITE);
 		gc.setLineWidth(cellSize / 2);
-		maze.edgeStream().forEach(edge -> {
+		maze.edges().forEach(edge -> {
 			int u = edge.either(), v = edge.other();
 			drawPassage(u, v);
 		});

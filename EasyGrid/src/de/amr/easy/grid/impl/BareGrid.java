@@ -95,7 +95,7 @@ public class BareGrid<W extends Comparable<W>> implements BareGrid2D<W> {
 	// Implement {@link Graph} interface
 
 	@Override
-	public IntStream vertexStream() {
+	public IntStream vertices() {
 		return range(0, cellCount);
 	}
 
@@ -105,10 +105,10 @@ public class BareGrid<W extends Comparable<W>> implements BareGrid2D<W> {
 	}
 
 	@Override
-	public Stream<WeightedEdge<W>> edgeStream() {
+	public Stream<WeightedEdge<W>> edges() {
 		List<WeightedEdge<W>> edgeList = new ArrayList<>();
 		///*@formatter:off*/
-		vertexStream().forEach(cell -> {
+		vertices().forEach(cell -> {
 			top.dirs()
 				.filter(dir -> isConnected(cell, dir))
 				.mapToObj(dir -> neighbor(cell, dir))

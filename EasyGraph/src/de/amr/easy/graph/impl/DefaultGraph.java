@@ -92,7 +92,7 @@ public class DefaultGraph implements Graph<SimpleEdge> {
 	}
 
 	@Override
-	public IntStream vertexStream() {
+	public IntStream vertices() {
 		return vertexSet.stream().mapToInt(Integer::intValue);
 	}
 
@@ -112,7 +112,7 @@ public class DefaultGraph implements Graph<SimpleEdge> {
 	}
 
 	@Override
-	public Stream<SimpleEdge> edgeStream() {
+	public Stream<SimpleEdge> edges() {
 		return createEdgeSet().stream(); // TODO more efficient way possible?
 	}
 

@@ -40,7 +40,7 @@ public class EmptyGridTests {
 
 	@Test
 	public void testGridEdgeStream() {
-		assertTrue(grid.edgeStream().count() == 0);
+		assertTrue(grid.edges().count() == 0);
 	}
 
 	@Test(expected = IllegalArgumentException.class)

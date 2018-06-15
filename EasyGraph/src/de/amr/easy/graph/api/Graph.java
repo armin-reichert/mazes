@@ -17,7 +17,7 @@ public interface Graph<E extends Edge> {
 	/**
 	 * @return a stream of the vertices of this graph
 	 */
-	IntStream vertexStream();
+	IntStream vertices();
 
 	/**
 	 * @return the number of vertices of this graph
@@ -27,7 +27,7 @@ public interface Graph<E extends Edge> {
 	/**
 	 * @return a stream of the edges of this graph
 	 */
-	Stream<E> edgeStream();
+	Stream<E> edges();
 
 	/**
 	 * @return the number of edges of this graph

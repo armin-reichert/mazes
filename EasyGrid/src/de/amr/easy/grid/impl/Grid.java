@@ -46,7 +46,7 @@ public class Grid<C, W extends Comparable<W>> extends BareGrid<W> implements Gri
 	 */
 	public Grid(Grid2D<C, W> grid) {
 		this(grid.numCols(), grid.numRows(), grid.getTopology(), grid.getDefaultContent(), grid.isSparse());
-		vertexStream().forEach(v -> {
+		vertices().forEach(v -> {
 			C content = grid.get(v);
 			if (!content.equals(grid.getDefaultContent())) {
 				set(v, content);
