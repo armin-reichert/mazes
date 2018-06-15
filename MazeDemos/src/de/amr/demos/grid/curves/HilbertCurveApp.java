@@ -19,6 +19,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.grid.api.Curve;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.curves.HilbertCurve;
@@ -30,7 +31,7 @@ import de.amr.easy.grid.impl.Top4;
  * 
  * @author Armin Reichert
  */
-public class HilbertCurveApp extends SwingGridSampleApp {
+public class HilbertCurveApp extends SwingGridSampleApp<SimpleEdge> {
 
 	private static final EnumMap<GridPosition, List<Integer>> ORIENTATION = new EnumMap<>(GridPosition.class);
 
@@ -46,7 +47,7 @@ public class HilbertCurveApp extends SwingGridSampleApp {
 	}
 
 	private HilbertCurveApp() {
-		super(512, 512, 256, Top4.get());
+		super(512, 512, 256, Top4.get(), SimpleEdge::new);
 		setAppName("Hilbert Curve");
 	}
 

@@ -4,17 +4,18 @@ import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 
 import java.util.stream.IntStream;
 
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.iterators.traversals.RecursiveCrosses;
 
-public class RecursiveCrossesApp extends SwingGridSampleApp {
+public class RecursiveCrossesApp extends SwingGridSampleApp<SimpleEdge> {
 
 	public static void main(String[] args) {
 		launch(new RecursiveCrossesApp());
 	}
 
 	public RecursiveCrossesApp() {
-		super(64, Top4.get());
+		super(64, Top4.get(), SimpleEdge::new);
 		setAppName("Recursive Crosses");
 	}
 

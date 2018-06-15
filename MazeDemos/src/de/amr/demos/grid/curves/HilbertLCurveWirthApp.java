@@ -8,17 +8,18 @@ import static de.amr.easy.util.GraphUtils.log;
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.grid.curves.HilbertLCurveWirth;
 import de.amr.easy.grid.impl.Top4;
 
-public class HilbertLCurveWirthApp extends SwingGridSampleApp {
+public class HilbertLCurveWirthApp extends SwingGridSampleApp<SimpleEdge> {
 
 	public static void main(String[] args) {
 		launch(new HilbertLCurveWirthApp());
 	}
 
 	public HilbertLCurveWirthApp() {
-		super(512, 512, 256, Top4.get());
+		super(512, 512, 256, Top4.get(), SimpleEdge::new);
 		setAppName("Hilbert Curve (L-system, Wirth)");
 	}
 

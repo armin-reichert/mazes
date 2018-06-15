@@ -12,6 +12,7 @@ import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
+import java.util.function.BiFunction;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
@@ -19,6 +20,7 @@ import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
+import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Topology;
 import de.amr.easy.grid.impl.ObservableGrid;
@@ -33,13 +35,13 @@ import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
  * 
  * @author Armin Reichert
  */
-public abstract class SwingGridSampleApp implements Runnable {
+public abstract class SwingGridSampleApp<E extends Edge> implements Runnable {
 
 	public enum Style {
 		WALL_PASSAGE, PEARLS
 	};
 
-	public static void launch(SwingGridSampleApp app) {
+	public static void launch(SwingGridSampleApp<?> app) {
 		try {
 			UIManager.setLookAndFeel(NimbusLookAndFeel.class.getName());
 		} catch (Exception e) {
@@ -48,13 +50,14 @@ public abstract class SwingGridSampleApp implements Runnable {
 		invokeLater(app::createAndShowUI);
 	}
 
+	private final BiFunction<Integer, Integer, E> fnEdgeFactory;
 	protected final JFrame window = new JFrame();
 	protected final Dimension canvasSize;
 	protected String appName;
 	protected boolean fullscreen;
-	protected ObservableGrid<TraversalState, Integer> grid;
-	protected GridCanvas<ObservableGrid<TraversalState, Integer>> canvas;
-	protected GridCanvasAnimation<ObservableGrid<TraversalState, Integer>> canvasAnimation;
+	protected ObservableGrid<TraversalState, E> grid;
+	protected GridCanvas<ObservableGrid<TraversalState, E>> canvas;
+	protected GridCanvasAnimation<ObservableGrid<TraversalState, E>> canvasAnimation;
 	protected ConfigurableGridRenderer renderer;
 
 	private ConfigurableGridRenderer createRenderer(Style style, int cellSize) {
@@ -94,10 +97,12 @@ public abstract class SwingGridSampleApp implements Runnable {
 	 * @param cellSize
 	 *          the grid cell size
 	 */
-	public SwingGridSampleApp(int canvasWidth, int canvasHeight, int cellSize, Topology top) {
+	public SwingGridSampleApp(int canvasWidth, int canvasHeight, int cellSize, Topology top,
+			BiFunction<Integer, Integer, E> fnEdgeFactory) {
+		this.fnEdgeFactory = fnEdgeFactory;
 		fullscreen = false;
 		canvasSize = new Dimension(canvasWidth, canvasHeight);
-		grid = new ObservableGrid<>(canvasWidth / cellSize, canvasHeight / cellSize, top, UNVISITED, false);
+		grid = new ObservableGrid<>(canvasWidth / cellSize, canvasHeight / cellSize, top, UNVISITED, false, fnEdgeFactory);
 		renderer = createRenderer(Style.WALL_PASSAGE, cellSize);
 	}
 
@@ -108,12 +113,14 @@ public abstract class SwingGridSampleApp implements Runnable {
 	 * @param cellSize
 	 *          the grid cell size
 	 */
-	public SwingGridSampleApp(int cellSize, Topology top) {
+	public SwingGridSampleApp(int cellSize, Topology top, BiFunction<Integer, Integer, E> fnEdgeFactory) {
+		this.fnEdgeFactory = fnEdgeFactory;
 		fullscreen = true;
 		DisplayMode displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
 				.getDisplayMode();
 		canvasSize = new Dimension(displayMode.getWidth(), displayMode.getHeight());
-		grid = new ObservableGrid<>(canvasSize.width / cellSize, canvasSize.height / cellSize, top, UNVISITED, false);
+		grid = new ObservableGrid<>(canvasSize.width / cellSize, canvasSize.height / cellSize, top, UNVISITED, false,
+				fnEdgeFactory);
 		renderer = createRenderer(Style.WALL_PASSAGE, cellSize);
 	}
 
@@ -185,7 +192,7 @@ public abstract class SwingGridSampleApp implements Runnable {
 			return;
 		}
 		grid = new ObservableGrid<>(canvasSize.width / cellSize, canvasSize.height / cellSize, grid.getTopology(),
-				grid.getDefaultContent(), false);
+				grid.getDefaultContent(), false, fnEdgeFactory);
 		canvas.setGrid(grid);
 		grid.addGraphObserver(canvasAnimation);
 		renderer.fnCellSize = () -> cellSize;

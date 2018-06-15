@@ -6,18 +6,19 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.maze.alg.RecursiveDivision;
 
-public class RecursiveDivisionApp extends SwingGridSampleApp {
+public class RecursiveDivisionApp extends SwingGridSampleApp<SimpleEdge> {
 
 	public static void main(String[] args) {
 		launch(new RecursiveDivisionApp());
 	}
 
 	public RecursiveDivisionApp() {
-		super(128, Top4.get());
+		super(128, Top4.get(), SimpleEdge::new);
 		setAppName("Recursive Division Maze");
 	}
 

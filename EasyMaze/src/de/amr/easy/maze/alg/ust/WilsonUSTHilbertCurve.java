@@ -10,6 +10,7 @@ import static java.util.Arrays.stream;
 
 import java.util.stream.IntStream;
 
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.api.Grid2D;
@@ -26,11 +27,11 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 
 	private final int[] walkStartCells;
 
-	public WilsonUSTHilbertCurve(Grid2D<TraversalState, Integer> grid) {
+	public WilsonUSTHilbertCurve(Grid2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 		walkStartCells = new int[grid.numCells()];
 		int n = GraphUtils.nextPow(2, max(grid.numCols(), grid.numRows()));
-		BareGrid2D<?> square = new BareGrid<>(n, n, grid.getTopology());
+		BareGrid2D<?> square = new BareGrid<>(n, n, grid.getTopology(), SimpleEdge::new);
 		int cell = square.cell(TOP_LEFT);
 		int i = 0;
 		walkStartCells[i++] = cell;

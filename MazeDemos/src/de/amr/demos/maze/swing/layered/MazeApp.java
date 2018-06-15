@@ -26,6 +26,7 @@ import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.ui.experimental.LayeredGridCanvas;
@@ -68,7 +69,7 @@ public class MazeApp {
 	}
 
 	private final JFrame window;
-	private final LayeredGridCanvas canvas;
+	private final LayeredGridCanvas<WeightedEdge<Integer>> canvas;
 	private GridPosition pathStart;
 	private GridPosition pathTarget;
 	private Timer timer;
@@ -77,7 +78,7 @@ public class MazeApp {
 		pathStart = TOP_LEFT;
 		pathTarget = BOTTOM_RIGHT;
 
-		canvas = new LayeredGridCanvas(1024, 768, 8);
+		canvas = new LayeredGridCanvas<>(1024, 768, 8, WeightedEdge::new);
 		canvas.getInputMap().put(KeyStroke.getKeyStroke("SPACE"), "stopStartTimer");
 		canvas.getActionMap().put("stopStartTimer", stopStartTimer);
 
@@ -120,13 +121,13 @@ public class MazeApp {
 		}
 	};
 
-	private void runRandomMazeAlgorithm(Grid2D<TraversalState, Integer> grid) {
+	private void runRandomMazeAlgorithm(Grid2D<TraversalState, WeightedEdge<Integer>> grid) {
 		grid.setDefaultContent(TraversalState.UNVISITED);
 		int index = new Random().nextInt(GENERATORS.length);
 		try {
 			@SuppressWarnings("unchecked")
-			Class<? extends MazeAlgorithm> generatorClass = (Class<? extends MazeAlgorithm>) GENERATORS[index];
-			MazeAlgorithm generator = generatorClass.getConstructor(Grid2D.class).newInstance(grid);
+			Class<? extends MazeAlgorithm<WeightedEdge<Integer>>> generatorClass = (Class<? extends MazeAlgorithm<WeightedEdge<Integer>>>) GENERATORS[index];
+			MazeAlgorithm<WeightedEdge<Integer>> generator = generatorClass.getConstructor(Grid2D.class).newInstance(grid);
 			window.setTitle(generatorClass.getSimpleName());
 			generator.run(grid.cell(CENTER));
 		} catch (Exception e) {
@@ -189,7 +190,7 @@ public class MazeApp {
 				JMenuItem item = (JMenuItem) e.getSource();
 				pathStart = (GridPosition) item.getClientProperty("position");
 				canvas.clear();
-				final Grid2D<TraversalState, Integer> grid = canvas.getGrid();
+				final Grid2D<TraversalState, WeightedEdge<Integer>> grid = canvas.getGrid();
 				canvas.runPathFinder(grid.cell(pathStart), grid.cell(pathTarget));
 				canvas.repaint();
 			}
@@ -204,7 +205,7 @@ public class MazeApp {
 				JMenuItem item = (JMenuItem) e.getSource();
 				pathTarget = (GridPosition) item.getClientProperty("position");
 				canvas.clear();
-				final Grid2D<TraversalState, Integer> grid = canvas.getGrid();
+				final Grid2D<TraversalState, WeightedEdge<Integer>> grid = canvas.getGrid();
 				canvas.runPathFinder(grid.cell(pathStart), grid.cell(pathTarget));
 				canvas.repaint();
 			}

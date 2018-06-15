@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.api.Grid2D;
@@ -42,7 +43,6 @@ import javafx.stage.Stage;
  * By pressing the PLUS-/MINUS-key the user can change the grid resolution.
  * 
  * @author Armin Reichert
- *
  */
 public class MazeDemoFX extends Application {
 
@@ -111,9 +111,9 @@ public class MazeDemoFX extends Application {
 	}
 
 	private void nextMaze() {
-		maze = new ObservableGrid<>(cols, rows, Top4.get(), UNVISITED, false);
+		maze = new ObservableGrid<>(cols, rows, Top4.get(), UNVISITED, false, SimpleEdge::new);
 		canvas.resize((cols + 1) * cellSize, (rows + 1) * cellSize);
-		MazeAlgorithm generator = randomMazeGenerator();
+		MazeAlgorithm<?> generator = randomMazeGenerator();
 		generator.run(maze.cell(0, 0));
 		drawGrid();
 		BreadthFirstTraversal<?> bfs = new BreadthFirstTraversal<>(maze);
@@ -121,10 +121,10 @@ public class MazeDemoFX extends Application {
 		drawPath(bfs.findPath(maze.cell(BOTTOM_RIGHT))::iterator);
 	}
 
-	private MazeAlgorithm randomMazeGenerator() {
+	private MazeAlgorithm<?> randomMazeGenerator() {
 		Class<?> generatorClass = GENERATOR_CLASSES[RAND.nextInt(GENERATOR_CLASSES.length)];
 		try {
-			return (MazeAlgorithm) generatorClass.getConstructor(Grid2D.class).newInstance(maze);
+			return (MazeAlgorithm<?>) generatorClass.getConstructor(Grid2D.class).newInstance(maze);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Could not create maze generator instance");

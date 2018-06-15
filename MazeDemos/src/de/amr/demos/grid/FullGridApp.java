@@ -3,19 +3,20 @@ package de.amr.demos.grid;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.impl.Top8;
 import de.amr.easy.util.StopWatch;
 
-public class FullGridApp extends SwingGridSampleApp {
+public class FullGridApp extends SwingGridSampleApp<SimpleEdge> {
 
 	public static void main(String[] args) {
 		launch(new FullGridApp());
 	}
 
 	public FullGridApp() {
-		super(512, Top4.get());
+		super(512, Top4.get(), SimpleEdge::new);
 		setAppName("Full Grid");
 	}
 

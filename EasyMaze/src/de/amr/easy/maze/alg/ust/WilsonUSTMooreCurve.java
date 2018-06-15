@@ -5,6 +5,7 @@ import static java.util.Arrays.stream;
 
 import java.util.stream.IntStream;
 
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Curve;
 import de.amr.easy.grid.api.Grid2D;
@@ -22,11 +23,11 @@ public class WilsonUSTMooreCurve extends WilsonUST {
 
 	private final int[] walkStartCells;
 
-	public WilsonUSTMooreCurve(Grid2D<TraversalState, Integer> grid) {
+	public WilsonUSTMooreCurve(Grid2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 		walkStartCells = new int[grid.numCells()];
 		int n = GraphUtils.nextPow(2, max(grid.numCols(), grid.numRows()));
-		BareGrid<?> square = new BareGrid<>(n, n, Top4.get());
+		BareGrid<?> square = new BareGrid<>(n, n, Top4.get(), SimpleEdge::new);
 		Curve mooreCurve = new MooreLCurve(GraphUtils.log(2, n));
 		int cell = square.cell(n / 2, n - 1);
 		int i = 0;

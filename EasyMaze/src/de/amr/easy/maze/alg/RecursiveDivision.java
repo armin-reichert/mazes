@@ -4,6 +4,7 @@ import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static java.lang.Math.min;
 import static java.util.stream.IntStream.range;
 
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 
@@ -16,9 +17,9 @@ import de.amr.easy.grid.api.Grid2D;
  *      "http://weblog.jamisbuck.org/2011/1/12/maze-generation-recursive-division-algorithm.html">Maze
  *      Generation: Recursive Division</a>
  */
-public class RecursiveDivision extends MazeAlgorithm {
+public class RecursiveDivision extends MazeAlgorithm<SimpleEdge> {
 
-	public RecursiveDivision(Grid2D<TraversalState, Integer> grid) {
+	public RecursiveDivision(Grid2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 	}
 

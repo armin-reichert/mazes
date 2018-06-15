@@ -3,7 +3,9 @@ package de.amr.easy.grid.ui.experimental;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.function.BiFunction;
 
+import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.EdgeAddedEvent;
@@ -24,22 +26,25 @@ import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
  * 
  * @author Armin Reichert
  */
-public class LayeredGridCanvas extends LayeredCanvas implements GraphObserver {
+public class LayeredGridCanvas<E extends Edge> extends LayeredCanvas implements GraphObserver {
 
 	private enum Layers {
 		Grid, Distances, Path
 	};
 
+	private final BiFunction<Integer, Integer, E> fnEdgeFactory;
+
 	protected int cellSize;
 	protected boolean pathDisplayed;
 	protected boolean distancesDisplayed;
-	protected ObservableGrid2D<TraversalState, Integer> grid;
+	protected ObservableGrid2D<TraversalState, E> grid;
 	protected BreadthFirstTraversal<?> bfs;
 	protected int maxDistance;
 	protected Iterable<Integer> path;
 
-	public LayeredGridCanvas(int width, int height, int cellSize) {
+	public LayeredGridCanvas(int width, int height, int cellSize, BiFunction<Integer, Integer, E> fnEdgeFactory) {
 		super(width, height);
+		this.fnEdgeFactory = fnEdgeFactory;
 		this.cellSize = cellSize;
 		pathDisplayed = true;
 		distancesDisplayed = true;
@@ -56,7 +61,7 @@ public class LayeredGridCanvas extends LayeredCanvas implements GraphObserver {
 		if (grid != null) {
 			grid.removeGraphObserver(this);
 		}
-		grid = new ObservableGrid<>(cols, rows, Top4.get(), TraversalState.UNVISITED, false);
+		grid = new ObservableGrid<>(cols, rows, Top4.get(), TraversalState.UNVISITED, false, fnEdgeFactory);
 		grid.addGraphObserver(this);
 	}
 
@@ -95,7 +100,7 @@ public class LayeredGridCanvas extends LayeredCanvas implements GraphObserver {
 		this.distancesDisplayed = distancesDisplayed;
 	}
 
-	public Grid2D<TraversalState, Integer> getGrid() {
+	public Grid2D<TraversalState, E> getGrid() {
 		return grid;
 	}
 

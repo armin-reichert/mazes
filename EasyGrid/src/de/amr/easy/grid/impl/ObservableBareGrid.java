@@ -2,7 +2,9 @@ package de.amr.easy.grid.impl;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.BiFunction;
 
+import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.event.EdgeAddedEvent;
 import de.amr.easy.graph.api.event.EdgeChangeEvent;
@@ -16,23 +18,20 @@ import de.amr.easy.grid.api.Topology;
  * A grid which can be observed.
  * 
  * @author Armin Reichert
- * 
- * @param <W>
- *          passage weight type
  */
-public class ObservableBareGrid<W extends Comparable<W>> extends BareGrid<W> implements ObservableBareGrid2D<W> {
+public class ObservableBareGrid<E extends Edge> extends BareGrid<E> implements ObservableBareGrid2D<E> {
 
 	private final Set<GraphObserver> observers;
 	private boolean fireEvents;
 
-	public ObservableBareGrid(int numCols, int numRows, Topology top) {
-		super(numCols, numRows, top);
+	public ObservableBareGrid(int numCols, int numRows, Topology top, BiFunction<Integer, Integer, E> fnEdgeFactory) {
+		super(numCols, numRows, top, fnEdgeFactory);
 		observers = new HashSet<>();
 		fireEvents = true;
 	}
 
-	public ObservableBareGrid(ObservableBareGrid<W> grid) {
-		this(grid.numCols(), grid.numRows(), grid.getTopology());
+	public ObservableBareGrid(ObservableBareGrid<E> grid, BiFunction<Integer, Integer, E> fnEdgeFactory) {
+		this(grid.numCols(), grid.numRows(), grid.getTopology(), fnEdgeFactory);
 		this.fireEvents = grid.fireEvents;
 	}
 

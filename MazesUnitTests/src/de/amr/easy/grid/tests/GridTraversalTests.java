@@ -19,6 +19,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.traversal.BestFirstTraversal;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
@@ -45,11 +46,11 @@ public class GridTraversalTests {
 		cells.forEach(cell -> assertTrue(getState.apply(cell) == expected));
 	}
 
-	private Grid2D<TraversalState, Integer> grid;
+	private Grid2D<TraversalState, SimpleEdge> grid;
 
 	@Before
 	public void setUp() {
-		grid = new Grid<>(N, N, Top4.get(), UNVISITED, false);
+		grid = new Grid<>(N, N, Top4.get(), UNVISITED, false, SimpleEdge::new);
 		grid.fill();
 	}
 
@@ -68,7 +69,7 @@ public class GridTraversalTests {
 
 	@Test
 	public void testBFS() {
-		BreadthFirstTraversal<Grid2D<TraversalState, Integer>> bfs = new BreadthFirstTraversal<>(grid);
+		BreadthFirstTraversal<Grid2D<TraversalState, SimpleEdge>> bfs = new BreadthFirstTraversal<>(grid);
 		assertState(grid.vertices(), bfs::getState, UNVISITED);
 		bfs.traverseGraph(grid.cell(CENTER));
 		assertState(grid.vertices(), bfs::getState, COMPLETED);
@@ -79,7 +80,7 @@ public class GridTraversalTests {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
 		grid.removeEdges();
 		new IterativeDFS(grid).run(target);
-		BestFirstTraversal<Grid2D<TraversalState, Integer>, Integer> best = new BestFirstTraversal<>(grid,
+		BestFirstTraversal<Grid2D<TraversalState, SimpleEdge>, Integer> best = new BestFirstTraversal<>(grid,
 				v -> grid.manhattan(v, target));
 		assertState(grid.vertices(), best::getState, UNVISITED);
 		best.traverseGraph(source);
@@ -92,7 +93,7 @@ public class GridTraversalTests {
 	@Test
 	public void testDFS() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		DepthFirstTraversal<Grid2D<TraversalState, Integer>> dfs = new DepthFirstTraversal<>(grid);
+		DepthFirstTraversal<Grid2D<TraversalState, SimpleEdge>> dfs = new DepthFirstTraversal<>(grid);
 		assertState(grid.vertices(), dfs::getState, UNVISITED);
 		dfs.traverseGraph(source, target);
 		assertState(dfs.findPath(target), dfs::getState, VISITED);
@@ -101,7 +102,7 @@ public class GridTraversalTests {
 	@Test
 	public void testDFS2() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		DepthFirstTraversal2<Grid2D<TraversalState, Integer>> dfs = new DepthFirstTraversal2<>(grid);
+		DepthFirstTraversal2<Grid2D<TraversalState, SimpleEdge>> dfs = new DepthFirstTraversal2<>(grid);
 		assertState(grid.vertices(), dfs::getState, UNVISITED);
 		dfs.traverseGraph(source, target);
 		assertState(dfs.findPath(target), dfs::getState, COMPLETED);
@@ -111,7 +112,7 @@ public class GridTraversalTests {
 	public void testHillClimbing() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
 		Function<Integer, Integer> cost = u -> grid.manhattan(u, target);
-		HillClimbing<Grid2D<TraversalState, Integer>, Integer> hillClimbing = new HillClimbing<>(grid, cost);
+		HillClimbing<Grid2D<TraversalState, SimpleEdge>, Integer> hillClimbing = new HillClimbing<>(grid, cost);
 		assertState(grid.vertices(), hillClimbing::getState, UNVISITED);
 		hillClimbing.traverseGraph(source, target);
 		IntStream path = hillClimbing.findPath(target);
@@ -148,7 +149,7 @@ public class GridTraversalTests {
 
 	@Test
 	public void testPeanoCurve() {
-		grid = new Grid<>(243, 243, Top4.get(), UNVISITED, false);
+		grid = new Grid<>(243, 243, Top4.get(), UNVISITED, false, SimpleEdge::new);
 		assertAllCells(UNVISITED);
 		traverse(new PeanoCurve(5), grid, grid.cell(BOTTOM_LEFT), this::setCompleted);
 		assertAllCells(COMPLETED);

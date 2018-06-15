@@ -8,17 +8,18 @@ import static java.lang.System.out;
 
 import java.util.stream.IntStream;
 
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.util.StopWatch;
 
-public class GridRenderingTestApp extends SwingGridSampleApp {
+public class GridRenderingTestApp extends SwingGridSampleApp<SimpleEdge> {
 
 	public static void main(String[] args) {
 		launch(new GridRenderingTestApp());
 	}
 
 	public GridRenderingTestApp() {
-		super(256, Top4.get());
+		super(256, Top4.get(), SimpleEdge::new);
 		setAppName("Full Grid");
 	}
 

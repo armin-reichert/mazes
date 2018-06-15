@@ -11,6 +11,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.BareGrid;
@@ -22,11 +23,11 @@ public class FullGridTests {
 	private static final int WIDTH = 15;
 	private static final int HEIGHT = 10;
 
-	private BareGrid2D<Integer> grid;
+	private BareGrid2D<SimpleEdge> grid;
 
 	@Before
 	public void setUp() {
-		grid = new BareGrid<>(WIDTH, HEIGHT, Top4.get());
+		grid = new BareGrid<>(WIDTH, HEIGHT, Top4.get(), SimpleEdge::new);
 		grid.fill();
 	}
 
@@ -126,7 +127,7 @@ public class FullGridTests {
 
 	@Test
 	public void testFullGrid8() {
-		grid = new BareGrid<>(WIDTH, HEIGHT, Top8.get());
+		grid = new BareGrid<>(WIDTH, HEIGHT, Top8.get(), SimpleEdge::new);
 		grid.fill();
 		int c = grid.numCols(), r = grid.numRows();
 		assertEquals(4 * c * r - 3 * c - 3 * r + 2, grid.edgeCount());

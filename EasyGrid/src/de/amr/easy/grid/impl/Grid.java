@@ -1,5 +1,8 @@
 package de.amr.easy.grid.impl;
 
+import java.util.function.BiFunction;
+
+import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.VertexContent;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.Topology;
@@ -8,15 +11,10 @@ import de.amr.easy.grid.api.Topology;
  * A grid with cell content.
  * 
  * @author Armin Reichert
- * 
- * @param <C>
- *          vertex content type
- * @param <W>
- *          edge weight type
  */
-public class Grid<C, W extends Comparable<W>> extends BareGrid<W> implements Grid2D<C, W> {
+public class Grid<V, E extends Edge> extends BareGrid<E> implements Grid2D<V, E> {
 
-	private final VertexContent<C> content;
+	private final VertexContent<V> content;
 
 	/**
 	 * Creates a grid with the given properties.
@@ -32,8 +30,9 @@ public class Grid<C, W extends Comparable<W>> extends BareGrid<W> implements Gri
 	 * @param sparse
 	 *          if the grid has sparse content
 	 */
-	public Grid(int numCols, int numRows, Topology top, C defaultContent, boolean sparse) {
-		super(numCols, numRows, top);
+	public Grid(int numCols, int numRows, Topology top, V defaultContent, boolean sparse,
+			BiFunction<Integer, Integer, E> fnEdgeFactory) {
+		super(numCols, numRows, top, fnEdgeFactory);
 		content = sparse ? new SparseGridContent<>() : new DenseGridContent<>(numCols * numRows);
 		content.setDefaultContent(defaultContent);
 	}
@@ -44,10 +43,10 @@ public class Grid<C, W extends Comparable<W>> extends BareGrid<W> implements Gri
 	 * @param grid
 	 *          the grid to copy
 	 */
-	public Grid(Grid2D<C, W> grid) {
-		this(grid.numCols(), grid.numRows(), grid.getTopology(), grid.getDefaultContent(), grid.isSparse());
+	public Grid(Grid2D<V, E> grid, BiFunction<Integer, Integer, E> fnEdgeFactory) {
+		this(grid.numCols(), grid.numRows(), grid.getTopology(), grid.getDefaultContent(), grid.isSparse(), fnEdgeFactory);
 		vertices().forEach(v -> {
-			C content = grid.get(v);
+			V content = grid.get(v);
 			if (!content.equals(grid.getDefaultContent())) {
 				set(v, content);
 			}
@@ -62,22 +61,22 @@ public class Grid<C, W extends Comparable<W>> extends BareGrid<W> implements Gri
 	}
 
 	@Override
-	public C getDefaultContent() {
+	public V getDefaultContent() {
 		return content.getDefaultContent();
 	}
 
 	@Override
-	public void setDefaultContent(C cellContent) {
+	public void setDefaultContent(V cellContent) {
 		content.setDefaultContent(cellContent);
 	}
 
 	@Override
-	public C get(int cell) {
+	public V get(int cell) {
 		return content.get(cell);
 	}
 
 	@Override
-	public void set(int cell, C cellContent) {
+	public void set(int cell, V cellContent) {
 		content.set(cell, cellContent);
 	}
 

@@ -5,6 +5,7 @@ import static de.amr.easy.util.StreamUtils.permute;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 
@@ -17,9 +18,9 @@ import de.amr.easy.grid.api.Grid2D;
  *      "http://weblog.jamisbuck.org/2011/1/27/maze-generation-growing-tree-algorithm.html">Maze
  *      Generation: Growing Tree algorithm</a>
  */
-public class GrowingTree extends MazeAlgorithm {
+public class GrowingTree extends MazeAlgorithm<SimpleEdge> {
 
-	public GrowingTree(Grid2D<TraversalState, Integer> grid) {
+	public GrowingTree(Grid2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 	}
 

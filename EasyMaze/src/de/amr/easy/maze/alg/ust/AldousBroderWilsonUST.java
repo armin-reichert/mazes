@@ -5,6 +5,7 @@ import static de.amr.easy.graph.api.TraversalState.VISITED;
 import static de.amr.easy.util.StreamUtils.permute;
 import static de.amr.easy.util.StreamUtils.randomElement;
 
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.maze.alg.MazeAlgorithm;
@@ -17,12 +18,12 @@ import de.amr.easy.maze.alg.MazeAlgorithm;
  * 
  * @author Armin Reichert
  */
-public class AldousBroderWilsonUST extends MazeAlgorithm {
+public class AldousBroderWilsonUST extends MazeAlgorithm<SimpleEdge> {
 
 	private int numVisitedCells;
 	private int currentCell;
 
-	public AldousBroderWilsonUST(Grid2D<TraversalState, Integer> grid) {
+	public AldousBroderWilsonUST(Grid2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 	}
 

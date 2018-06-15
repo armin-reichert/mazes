@@ -2,6 +2,7 @@ package de.amr.easy.maze.alg.ust;
 
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.iterators.shapes.Rectangle;
@@ -13,7 +14,7 @@ import de.amr.easy.grid.iterators.shapes.Rectangle;
  */
 public class WilsonUSTCollapsingRectangle extends WilsonUST {
 
-	public WilsonUSTCollapsingRectangle(Grid2D<TraversalState, Integer> grid) {
+	public WilsonUSTCollapsingRectangle(Grid2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 	}
 

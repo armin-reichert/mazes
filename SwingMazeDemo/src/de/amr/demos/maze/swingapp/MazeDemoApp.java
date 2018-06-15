@@ -2,7 +2,6 @@ package de.amr.demos.maze.swingapp;
 
 import static de.amr.demos.maze.swingapp.model.MazeDemoModel.GENERATOR_ALGORITHMS;
 import static de.amr.demos.maze.swingapp.model.MazeDemoModel.PATHFINDER_ALGORITHMS;
-import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
@@ -33,7 +32,6 @@ import de.amr.demos.maze.swingapp.view.CanvasWindow;
 import de.amr.demos.maze.swingapp.view.ControlPanel;
 import de.amr.demos.maze.swingapp.view.SettingsWindow;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
-import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.GridCanvas;
 import de.amr.easy.grid.ui.swing.animation.GridCanvasAnimation;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
@@ -119,7 +117,7 @@ public class MazeDemoApp {
 	private static MazeGrid createGrid(int cellSize) {
 		int numCols = DISPLAY_MODE.getWidth() / cellSize;
 		int numRows = DISPLAY_MODE.getHeight() / cellSize;
-		return new MazeGrid(numCols, numRows, Top4.get(), UNVISITED, false);
+		return new MazeGrid(numCols, numRows);
 	}
 
 	public void newCanvas() {

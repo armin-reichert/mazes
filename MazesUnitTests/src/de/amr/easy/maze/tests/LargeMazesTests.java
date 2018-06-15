@@ -4,6 +4,7 @@ import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 
 import org.junit.Test;
 
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.Grid;
@@ -14,12 +15,12 @@ import de.amr.easy.maze.alg.mst.KruskalMST;
 public class LargeMazesTests {
 
 	private void test_Kruskal(int cols, int rows) {
-		Grid2D<TraversalState, Integer> grid = new Grid<>(cols, rows, Top4.get(), UNVISITED, false);
+		Grid2D<TraversalState, SimpleEdge> grid = new Grid<>(cols, rows, Top4.get(), UNVISITED, false, SimpleEdge::new);
 		new KruskalMST(grid).run(-1);
 	}
 
 	private void test_RecursiveDivision(int cols, int rows) {
-		Grid2D<TraversalState, Integer> grid = new Grid<>(cols, rows, Top4.get(), UNVISITED, false);
+		Grid2D<TraversalState, SimpleEdge> grid = new Grid<>(cols, rows, Top4.get(), UNVISITED, false, SimpleEdge::new);
 		new RecursiveDivision(grid).run(-1);
 	}
 

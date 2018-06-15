@@ -7,19 +7,20 @@ import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation
 
 import java.awt.Color;
 
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.traversal.DepthFirstTraversal2;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
 import de.amr.easy.maze.alg.ust.WilsonUSTRecursiveCrosses;
 
-public class PearlsRendererTestApp extends SwingGridSampleApp {
+public class PearlsRendererTestApp extends SwingGridSampleApp<SimpleEdge> {
 
 	public static void main(String[] args) {
 		launch(new PearlsRendererTestApp());
 	}
 
 	public PearlsRendererTestApp() {
-		super(750, 750, 15, Top4.get());
+		super(750, 750, 15, Top4.get(), SimpleEdge::new);
 		setAppName("Pearls Renderer Test");
 		setRenderingStyle(Style.PEARLS);
 		renderer.fnGridBgColor = () -> Color.DARK_GRAY;

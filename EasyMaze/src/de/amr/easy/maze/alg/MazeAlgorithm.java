@@ -7,6 +7,7 @@ import static de.amr.easy.graph.api.TraversalState.VISITED;
 import java.util.Random;
 import java.util.function.IntPredicate;
 
+import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 
@@ -15,10 +16,10 @@ import de.amr.easy.grid.api.Grid2D;
  * 
  * @author Armin Reichert
  */
-public abstract class MazeAlgorithm {
+public abstract class MazeAlgorithm<E extends Edge> {
 
 	/** The grid this algorithm works on. */
-	protected final Grid2D<TraversalState, Integer> grid;
+	protected final Grid2D<TraversalState, E> grid;
 
 	/** A random number generator. */
 	protected final Random rnd;
@@ -33,7 +34,7 @@ public abstract class MazeAlgorithm {
 	 * @param grid
 	 *          the grid this generator works on
 	 */
-	public MazeAlgorithm(Grid2D<TraversalState, Integer> grid) {
+	public MazeAlgorithm(Grid2D<TraversalState, E> grid) {
 		this.grid = grid;
 		this.rnd = new Random();
 		this.isCellUnvisited = cell -> grid.get(cell) == UNVISITED;

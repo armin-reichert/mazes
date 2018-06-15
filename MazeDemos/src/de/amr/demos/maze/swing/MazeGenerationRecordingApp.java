@@ -5,6 +5,7 @@ import static java.lang.String.format;
 import java.awt.Color;
 
 import de.amr.easy.graph.api.ObservableGraph;
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.EdgeAddedEvent;
 import de.amr.easy.graph.api.event.EdgeChangeEvent;
@@ -96,16 +97,17 @@ public class MazeGenerationRecordingApp {
 	/*@formatter:on*/
 	};
 
-	private ObservableGrid2D<TraversalState, Integer> grid;
-	private GridCanvas<ObservableGrid2D<TraversalState, Integer>> canvas;
+	private ObservableGrid2D<TraversalState, SimpleEdge> grid;
+	private GridCanvas<ObservableGrid2D<TraversalState, SimpleEdge>> canvas;
 
 	public void run(int numCols, int numRows, int cellSize, int scanRate, int delayMillis) {
 		for (Class<?> generatorClass : generatorClasses) {
-			grid = new ObservableGrid<>(numCols, numRows, Top4.get(), TraversalState.UNVISITED, false);
+			grid = new ObservableGrid<>(numCols, numRows, Top4.get(), TraversalState.UNVISITED, false, SimpleEdge::new);
 			canvas = new GridCanvas<>(grid, cellSize);
 			canvas.pushRenderer(createRenderer(cellSize));
 			try {
-				MazeAlgorithm generator = (MazeAlgorithm) generatorClass.getConstructor(Grid2D.class).newInstance(grid);
+				MazeAlgorithm<SimpleEdge> generator = (MazeAlgorithm<SimpleEdge>) generatorClass.getConstructor(Grid2D.class)
+						.newInstance(grid);
 				try (GifRecorder recorder = new GifRecorder(canvas.getDrawingBuffer().getType())) {
 					attachRecorderToGrid(recorder);
 					recorder.setDelayMillis(delayMillis);

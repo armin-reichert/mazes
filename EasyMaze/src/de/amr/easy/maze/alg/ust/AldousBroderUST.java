@@ -4,6 +4,7 @@ import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 import static de.amr.easy.util.StreamUtils.randomElement;
 
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.maze.alg.MazeAlgorithm;
@@ -30,12 +31,12 @@ import de.amr.easy.maze.alg.MazeAlgorithm;
  *        Generation: Aldous-Broder algorithm</a>
  * 
  */
-public class AldousBroderUST extends MazeAlgorithm {
+public class AldousBroderUST extends MazeAlgorithm<SimpleEdge> {
 
 	private int numVisitedCells;
 	private int currentCell;
 
-	public AldousBroderUST(Grid2D<TraversalState, Integer> grid) {
+	public AldousBroderUST(Grid2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 	}
 

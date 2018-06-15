@@ -18,11 +18,11 @@ import de.amr.easy.maze.alg.MazeAlgorithm;
  *      Generation: Prim's Algorithm</a>
  * @see <a href="https://en.wikipedia.org/wiki/Prim%27s_algorithm">Wikipedia: Prim's Algorithm</a>
  */
-public class PrimMST extends MazeAlgorithm {
+public class PrimMST extends MazeAlgorithm<WeightedEdge<Integer>> {
 
 	private final PriorityQueue<WeightedEdge<Integer>> cut = new PriorityQueue<>();
 
-	public PrimMST(Grid2D<TraversalState, Integer> grid) {
+	public PrimMST(Grid2D<TraversalState, WeightedEdge<Integer>> grid) {
 		super(grid);
 	}
 

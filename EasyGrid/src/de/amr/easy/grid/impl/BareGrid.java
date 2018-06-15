@@ -7,10 +7,11 @@ import java.util.BitSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
+import java.util.function.BiFunction;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import de.amr.easy.graph.api.WeightedEdge;
+import de.amr.easy.graph.api.Edge;
 import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.api.Topology;
@@ -19,11 +20,11 @@ import de.amr.easy.grid.api.Topology;
  * An implementation of the {@link BareGrid2D} interface.
  * 
  * @author Armin Reichert
- * 
- * @param <W>
- *          passage weight type
  */
-public class BareGrid<W extends Comparable<W>> implements BareGrid2D<W> {
+public class BareGrid<E extends Edge> implements BareGrid2D<E> {
+
+	// TODO
+	protected final BiFunction<Integer, Integer, E> fnEdgeFactory;
 
 	protected Topology top;
 	protected BitSet bits;
@@ -68,7 +69,7 @@ public class BareGrid<W extends Comparable<W>> implements BareGrid2D<W> {
 	 * @param top
 	 *          the topology of this grid
 	 */
-	public BareGrid(int colCount, int rowCount, Topology top) {
+	public BareGrid(int colCount, int rowCount, Topology top, BiFunction<Integer, Integer, E> fnEdgeFactory) {
 		if (colCount < 0) {
 			throw new IllegalArgumentException("Illegal number of columns: " + colCount);
 		}
@@ -80,6 +81,7 @@ public class BareGrid<W extends Comparable<W>> implements BareGrid2D<W> {
 		this.cellCount = colCount * rowCount;
 		this.top = top;
 		this.bits = new BitSet(top.dirCount() * cellCount);
+		this.fnEdgeFactory = fnEdgeFactory;
 	}
 
 	/**
@@ -88,8 +90,8 @@ public class BareGrid<W extends Comparable<W>> implements BareGrid2D<W> {
 	 * @param grid
 	 *          the grid to copy
 	 */
-	public BareGrid(BareGrid<W> grid) {
-		this(grid.colCount, grid.rowCount, grid.top);
+	public BareGrid(BareGrid<E> grid, BiFunction<Integer, Integer, E> fnEdgeFactory) {
+		this(grid.colCount, grid.rowCount, grid.top, fnEdgeFactory);
 	}
 
 	// Implement {@link Graph} interface
@@ -105,8 +107,8 @@ public class BareGrid<W extends Comparable<W>> implements BareGrid2D<W> {
 	}
 
 	@Override
-	public Stream<WeightedEdge<W>> edges() {
-		List<WeightedEdge<W>> edgeList = new ArrayList<>();
+	public Stream<E> edges() {
+		List<E> edgeList = new ArrayList<>();
 		///*@formatter:off*/
 		vertices().forEach(cell -> {
 			top.dirs()
@@ -115,7 +117,7 @@ public class BareGrid<W extends Comparable<W>> implements BareGrid2D<W> {
 				.filter(OptionalInt::isPresent)
 				.map(OptionalInt::getAsInt)
 				.filter(neighbor -> cell < neighbor)
-				.forEach(neighbor -> edgeList.add(new WeightedEdge<>(cell, neighbor)));
+				.forEach(neighbor -> edgeList.add(fnEdgeFactory.apply(cell, neighbor)));
 		});
 		///*@formatter:on*/
 		return edgeList.stream();
@@ -132,10 +134,10 @@ public class BareGrid<W extends Comparable<W>> implements BareGrid2D<W> {
 	}
 
 	@Override
-	public Optional<WeightedEdge<W>> edge(int p, int q) {
+	public Optional<E> edge(int p, int q) {
 		checkCell(p);
 		checkCell(q);
-		return adjacent(p, q) ? Optional.of(new WeightedEdge<>(p, q)) : Optional.empty();
+		return adjacent(p, q) ? Optional.of(fnEdgeFactory.apply(p, q)) : Optional.empty();
 	}
 
 	@Override

@@ -20,11 +20,11 @@ import de.amr.easy.maze.alg.MazeAlgorithm;
  * @see <a href="http://iss.ices.utexas.edu/?p=projects/galois/benchmarks/mst">Boruvka's
  *      Algorithm</a>
  */
-public class BoruvkaMST extends MazeAlgorithm {
+public class BoruvkaMST extends MazeAlgorithm<SimpleEdge> {
 
 	private Partition<Integer> forest;
 
-	public BoruvkaMST(Grid2D<TraversalState, Integer> grid) {
+	public BoruvkaMST(Grid2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 	}
 

@@ -6,8 +6,8 @@ import static java.lang.Math.max;
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
 
+import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
-import de.amr.easy.graph.api.WeightedEdge;
 
 /**
  * A two-dimensional grid of "cells" with weighted "passages".
@@ -16,12 +16,12 @@ import de.amr.easy.graph.api.WeightedEdge;
  * This interface extends the {@link Graph} interface such that generic graph algorithms can be
  * applied to objects of this type.
  * 
- * @param <W>
- *          passage weight type
+ * @param <E>
+ *          edge type
  * 
  * @author Armin Reichert
  */
-public interface BareGrid2D<W extends Comparable<W>> extends Graph<WeightedEdge<W>> {
+public interface BareGrid2D<E extends Edge> extends Graph<E> {
 
 	/**
 	 * @return the number of columns (width) of the grid
@@ -102,7 +102,7 @@ public interface BareGrid2D<W extends Comparable<W>> extends Graph<WeightedEdge<
 		int x1 = col(u), y1 = row(u), x2 = col(v), y2 = row(v);
 		return abs(x1 - x2) + abs(y1 - y2);
 	}
-	
+
 	/**
 	 * Returns the (squared) Euclidean distance between the given grid cells.
 	 * 

@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 
 import de.amr.easy.data.Partition;
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.BareGrid;
@@ -31,7 +32,7 @@ import de.amr.easy.grid.iterators.shapes.Square;
  * 
  * @author Armin Reichert
  */
-public class EllerInsideOut extends MazeAlgorithm {
+public class EllerInsideOut extends MazeAlgorithm<SimpleEdge> {
 
 	private final BareGrid<?> squareGrid;
 	private final Partition<Integer> mazeParts = new Partition<>();
@@ -41,12 +42,12 @@ public class EllerInsideOut extends MazeAlgorithm {
 	private final int offsetX;
 	private final int offsetY;
 
-	public EllerInsideOut(Grid2D<TraversalState, Integer> grid) {
+	public EllerInsideOut(Grid2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 		int n = max(grid.numCols(), grid.numRows());
 		offsetX = (n - grid.numCols()) / 2;
 		offsetY = (n - grid.numRows()) / 2;
-		squareGrid = new BareGrid<>(n, n, Top4.get());
+		squareGrid = new BareGrid<>(n, n, Top4.get(), SimpleEdge::new);
 	}
 
 	@Override

@@ -5,17 +5,18 @@ import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.TraversalState.VISITED;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.iterators.traversals.Spiral;
 
-public class SpiralApp extends SwingGridSampleApp {
+public class SpiralApp extends SwingGridSampleApp<SimpleEdge> {
 
 	public static void main(String[] args) {
 		launch(new SpiralApp());
 	}
 
 	public SpiralApp() {
-		super(2, Top4.get());
+		super(2, Top4.get(), SimpleEdge::new);
 		setAppName("Spiral");
 	}
 

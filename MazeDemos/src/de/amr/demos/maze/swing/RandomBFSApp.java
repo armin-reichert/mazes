@@ -2,11 +2,12 @@ package de.amr.demos.maze.swing;
 
 import static de.amr.demos.maze.swing.QuickMazeDemoApp.launch;
 
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.maze.alg.traversal.RandomBFS;
 
 public class RandomBFSApp {
 
 	public static void main(String[] args) {
-		launch(RandomBFS.class);
+		launch(RandomBFS.class, SimpleEdge::new);
 	}
 }

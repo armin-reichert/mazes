@@ -11,7 +11,7 @@ import de.amr.easy.graph.api.event.VertexChangeEvent;
 import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.ui.swing.GridCanvas;
 
-public class GridCanvasAnimation<G extends BareGrid2D<Integer>> implements GraphObserver {
+public class GridCanvasAnimation<G extends BareGrid2D<?>> implements GraphObserver {
 
 	private final GridCanvas<G> canvas;
 	private boolean enabled;

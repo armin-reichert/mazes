@@ -5,6 +5,7 @@ import static de.amr.easy.util.StreamUtils.randomElement;
 
 import java.util.stream.IntStream;
 
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.maze.alg.MazeAlgorithm;
@@ -29,12 +30,12 @@ import de.amr.easy.maze.alg.MazeAlgorithm;
  *      wikipedia.org/wiki/Loop -erased_random_walk</>
  * 
  */
-public abstract class WilsonUST extends MazeAlgorithm {
+public abstract class WilsonUST extends MazeAlgorithm<SimpleEdge> {
 
 	private int current;
 	private int[] lastWalkDir;
 
-	protected WilsonUST(Grid2D<TraversalState, Integer> grid) {
+	protected WilsonUST(Grid2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 		lastWalkDir = new int[grid.numCells()];
 	}

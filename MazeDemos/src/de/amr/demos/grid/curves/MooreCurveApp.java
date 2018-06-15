@@ -7,6 +7,7 @@ import static de.amr.easy.util.GraphUtils.log;
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.grid.curves.MooreLCurve;
 import de.amr.easy.grid.impl.Top4;
 
@@ -16,14 +17,14 @@ import de.amr.easy.grid.impl.Top4;
  * 
  * @author Armin Reichert
  */
-public class MooreCurveApp extends SwingGridSampleApp {
+public class MooreCurveApp extends SwingGridSampleApp<SimpleEdge> {
 
 	public static void main(String[] args) {
 		launch(new MooreCurveApp());
 	}
 
 	public MooreCurveApp() {
-		super(512, 512, 512, Top4.get());
+		super(512, 512, 512, Top4.get(), SimpleEdge::new);
 		setAppName("Moore Curve");
 	}
 

@@ -7,6 +7,7 @@ import static de.amr.easy.util.StreamUtils.randomElement;
 import java.util.OptionalInt;
 
 import de.amr.easy.data.Stack;
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.maze.alg.MazeAlgorithm;
@@ -16,9 +17,9 @@ import de.amr.easy.maze.alg.MazeAlgorithm;
  * 
  * @author Armin Reichert
  */
-public class IterativeDFS extends MazeAlgorithm {
+public class IterativeDFS extends MazeAlgorithm<SimpleEdge> {
 
-	public IterativeDFS(Grid2D<TraversalState, Integer> grid) {
+	public IterativeDFS(Grid2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 	}
 

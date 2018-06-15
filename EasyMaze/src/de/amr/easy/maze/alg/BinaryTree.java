@@ -6,6 +6,7 @@ import static de.amr.easy.grid.impl.Top4.S;
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
 
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 
@@ -18,9 +19,9 @@ import de.amr.easy.grid.api.Grid2D;
  *      "http://weblog.jamisbuck.org/2011/2/1/maze-generation-binary-tree-algorithm.html">Maze
  *      Generation: Binary Tree algorithm</a>
  */
-public class BinaryTree extends MazeAlgorithm {
+public class BinaryTree extends MazeAlgorithm<SimpleEdge> {
 
-	public BinaryTree(Grid2D<TraversalState, Integer> grid) {
+	public BinaryTree(Grid2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 	}
 

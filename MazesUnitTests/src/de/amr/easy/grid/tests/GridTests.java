@@ -16,6 +16,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.GridPosition;
@@ -36,7 +37,7 @@ public class GridTests {
 	private static final int WIDTH = 100;
 	private static final int HEIGHT = 100;
 
-	private Grid2D<TraversalState, Integer> grid;
+	private Grid2D<TraversalState, SimpleEdge> grid;
 	private Random rnd = new Random();
 
 	private TraversalState randomTraversalState() {
@@ -46,7 +47,7 @@ public class GridTests {
 
 	@Before
 	public void setUp() {
-		grid = new Grid<>(WIDTH, HEIGHT, Top4.get(), UNVISITED, false);
+		grid = new Grid<>(WIDTH, HEIGHT, Top4.get(), UNVISITED, false, SimpleEdge::new);
 	}
 
 	@After
@@ -70,7 +71,7 @@ public class GridTests {
 
 	@Test
 	public void testGridCopyConstructor() {
-		Grid<TraversalState, Integer> copy = new Grid<>(grid);
+		Grid<TraversalState, SimpleEdge> copy = new Grid<>(grid, SimpleEdge::new);
 		assertEquals(grid.edgeCount(), copy.edgeCount());
 		assertEquals(grid.vertexCount(), copy.vertexCount());
 		assertEquals(grid.numCols(), copy.numCols());
@@ -83,7 +84,7 @@ public class GridTests {
 	@Test
 	public void testGridCopyRandomContent() {
 		grid.vertices().forEach(v -> grid.set(v, randomTraversalState()));
-		Grid<TraversalState, Integer> copy = new Grid<>(grid);
+		Grid<TraversalState, SimpleEdge> copy = new Grid<>(grid, SimpleEdge::new);
 		grid.vertices().forEach(v -> assertEquals(grid.get(v), copy.get(v)));
 	}
 

@@ -3,8 +3,8 @@ package de.amr.easy.maze.alg.mst;
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.util.StreamUtils.permute;
 
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.maze.alg.MazeAlgorithm;
 
@@ -15,9 +15,9 @@ import de.amr.easy.maze.alg.MazeAlgorithm;
  *
  * @see <a href="https://en.wikipedia.org/wiki/Reverse-delete_algorithm">Wikipedia</a>
  */
-public abstract class ReverseDeleteMST extends MazeAlgorithm {
+public abstract class ReverseDeleteMST extends MazeAlgorithm<SimpleEdge> {
 
-	public ReverseDeleteMST(Grid2D<TraversalState, Integer> grid) {
+	public ReverseDeleteMST(Grid2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 	}
 
@@ -25,8 +25,8 @@ public abstract class ReverseDeleteMST extends MazeAlgorithm {
 	public void run(int start) {
 		grid.setDefaultContent(COMPLETED);
 		grid.fill();
-		Iterable<WeightedEdge<Integer>> edges = permute(grid.edges())::iterator;
-		for (WeightedEdge<Integer> edge : edges) {
+		Iterable<SimpleEdge> edges = permute(grid.edges())::iterator;
+		for (SimpleEdge edge : edges) {
 			if (grid.edgeCount() == grid.vertexCount() - 1) {
 				break;
 			}

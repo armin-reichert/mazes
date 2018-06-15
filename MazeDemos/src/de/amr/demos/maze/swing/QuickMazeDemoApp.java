@@ -1,8 +1,10 @@
 package de.amr.demos.maze.swing;
 
+import java.util.function.BiFunction;
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
+import de.amr.easy.graph.api.Edge;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
@@ -21,21 +23,24 @@ import de.amr.easy.maze.alg.MazeAlgorithm;
  * 
  * @author Armin Reichert
  */
-public class QuickMazeDemoApp extends SwingGridSampleApp {
+public class QuickMazeDemoApp<E extends Edge> extends SwingGridSampleApp<E> {
 
-	public static void launch(Class<? extends MazeAlgorithm> algorithmClass) {
-		SwingGridSampleApp.launch(new QuickMazeDemoApp(algorithmClass.getSimpleName(), algorithmClass));
+	public static <T extends Edge> void launch(Class<? extends MazeAlgorithm<T>> algorithmClass,
+			BiFunction<Integer, Integer, T> fnEdgeFactory) {
+		QuickMazeDemoApp<?> app = new QuickMazeDemoApp<>(algorithmClass.getSimpleName(), algorithmClass, fnEdgeFactory);
+		SwingGridSampleApp.launch(app);
 	}
 
-	private final Class<? extends MazeAlgorithm> algorithmClass;
+	private final Class<? extends MazeAlgorithm<E>> algorithmClass;
 
-	public QuickMazeDemoApp(String appName, Class<? extends MazeAlgorithm> algorithmClass) {
-		super(128, Top4.get());
+	public QuickMazeDemoApp(String appName, Class<? extends MazeAlgorithm<E>> algorithmClass,
+			BiFunction<Integer, Integer, E> fnEdgeFactory) {
+		super(128, Top4.get(), fnEdgeFactory);
 		this.algorithmClass = algorithmClass;
 		setAppName(appName);
 	}
 
-	private MazeAlgorithm createAlgorithm() {
+	private MazeAlgorithm<E> createAlgorithm() {
 		try {
 			return algorithmClass.getConstructor(Grid2D.class).newInstance(grid);
 		} catch (Exception x) {
