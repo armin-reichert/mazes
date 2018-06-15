@@ -9,7 +9,7 @@ import java.util.OptionalInt;
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.maze.alg.MazeAlgorithm;
+import de.amr.easy.maze.alg.core.MazeAlgorithm;
 
 /**
  * Maze generator using randomized recursive depth-first-search. Not suited for larger grids because

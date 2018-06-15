@@ -8,7 +8,7 @@ import de.amr.easy.graph.api.Edge;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
-import de.amr.easy.maze.alg.MazeAlgorithm;
+import de.amr.easy.maze.alg.core.MazeAlgorithm;
 
 /**
  * Helper class for quick maze generation / flood-fill demo. Subclasses just implement a main method

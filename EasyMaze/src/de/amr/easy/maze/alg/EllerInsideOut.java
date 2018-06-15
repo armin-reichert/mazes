@@ -25,6 +25,7 @@ import de.amr.easy.grid.impl.BareGrid;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.iterators.shapes.Rectangle;
 import de.amr.easy.grid.iterators.shapes.Square;
+import de.amr.easy.maze.alg.core.MazeAlgorithm;
 
 /**
  * Maze generator similar to Eller's algorithm but growing the maze inside-out. To my knowledge this

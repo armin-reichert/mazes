@@ -8,7 +8,7 @@ import static de.amr.easy.util.StreamUtils.randomElement;
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.maze.alg.MazeAlgorithm;
+import de.amr.easy.maze.alg.core.MazeAlgorithm;
 
 /**
  * A hybrid algorithm that first uses Aldous/Broder until some fraction of cells are visited and

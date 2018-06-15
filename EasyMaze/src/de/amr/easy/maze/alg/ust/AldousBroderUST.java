@@ -7,7 +7,7 @@ import static de.amr.easy.util.StreamUtils.randomElement;
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.maze.alg.MazeAlgorithm;
+import de.amr.easy.maze.alg.core.MazeAlgorithm;
 
 /**
  * Let G = (V,E) be a graph with vertices V and edge set E.

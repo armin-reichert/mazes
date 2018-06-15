@@ -10,7 +10,7 @@ import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.maze.alg.MazeAlgorithm;
+import de.amr.easy.maze.alg.core.MazeAlgorithm;
 
 /**
  * Generates a maze by iterative random depth-first-traversal of a grid.

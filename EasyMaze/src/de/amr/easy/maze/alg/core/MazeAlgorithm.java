@@ -1,4 +1,4 @@
-package de.amr.easy.maze.alg;
+package de.amr.easy.maze.alg.core;
 
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;

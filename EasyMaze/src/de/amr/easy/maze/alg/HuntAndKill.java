@@ -10,6 +10,7 @@ import java.util.function.IntPredicate;
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.maze.alg.core.MazeAlgorithm;
 
 /**
  * Generates a maze similar to the "hunt-and-kill" algorithm.

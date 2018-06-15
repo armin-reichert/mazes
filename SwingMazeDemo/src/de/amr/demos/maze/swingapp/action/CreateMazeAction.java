@@ -9,7 +9,7 @@ import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.maze.alg.MazeAlgorithm;
+import de.amr.easy.maze.alg.core.MazeAlgorithm;
 import de.amr.easy.util.StopWatch;
 
 /**
