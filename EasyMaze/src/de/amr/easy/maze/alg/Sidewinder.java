@@ -31,11 +31,11 @@ public class Sidewinder extends MazeAlgorithm<SimpleEdge> {
 				if (row > 0 && (col == grid.numCols() - 1 || rnd.nextBoolean())) {
 					int passageCol = start + rnd.nextInt(col - start + 1);
 					int north = grid.cell(passageCol, row - 1), south = grid.cell(passageCol, row);
-					addEdge(north, south);
+					addTreeEdge(north, south);
 					start = col + 1;
 				} else if (col + 1 < grid.numCols()) {
 					int west = grid.cell(col, row), east = grid.cell(col + 1, row);
-					addEdge(west, east);
+					addTreeEdge(west, east);
 				}
 			});
 		});

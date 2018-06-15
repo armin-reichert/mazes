@@ -15,10 +15,13 @@ import de.amr.easy.grid.api.Grid2D;
  * Abstract base class for maze generation algorithms.
  * 
  * @author Armin Reichert
+ * 
+ * @param <E>
+ *          edge type
  */
 public abstract class MazeAlgorithm<E extends Edge> {
 
-	/** The grid this algorithm works on. */
+	/** The grid this algorithm operates on. */
 	protected final Grid2D<TraversalState, E> grid;
 
 	/** A random number generator. */
@@ -64,14 +67,14 @@ public abstract class MazeAlgorithm<E extends Edge> {
 	}
 
 	/**
-	 * Adds an edge between the given vertices and marks the vertices as completed.
+	 * Adds an edge to the spanning tree and marks the vertices as completed.
 	 * 
 	 * @param u
 	 *          some vertex (cell)
 	 * @param v
 	 *          another vertex (cell)
 	 */
-	protected final void addEdge(int u, int v) {
+	protected final void addTreeEdge(int u, int v) {
 		grid.addEdge(u, v);
 		grid.set(u, COMPLETED);
 		grid.set(v, COMPLETED);

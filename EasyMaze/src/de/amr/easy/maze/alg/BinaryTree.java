@@ -27,7 +27,7 @@ public class BinaryTree extends MazeAlgorithm<SimpleEdge> {
 
 	@Override
 	public void run(int start) {
-		cellStream().forEach(u -> randomParent(u, S, E).ifPresent(v -> addEdge(u, v)));
+		cellStream().forEach(u -> randomParent(u, S, E).ifPresent(v -> addTreeEdge(u, v)));
 	}
 
 	private OptionalInt randomParent(int cell, int dir1, int dir2) {

@@ -100,7 +100,7 @@ public class EllerInsideOut extends MazeAlgorithm<SimpleEdge> {
 		if (grid.adjacent(u, v)) {
 			return;
 		}
-		addEdge(u, v);
+		addTreeEdge(u, v);
 		mazeParts.union(u, v);
 	}
 

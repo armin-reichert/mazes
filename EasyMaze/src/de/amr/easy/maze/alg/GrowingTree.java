@@ -32,7 +32,7 @@ public class GrowingTree extends MazeAlgorithm<SimpleEdge> {
 			int index = rnd.nextBoolean() ? cells.size() - 1 : rnd.nextInt(cells.size());
 			int cell = cells.remove(index);
 			permute(grid.neighbors(cell)).filter(isCellUnvisited).forEach(neighbor -> {
-				addEdge(cell, neighbor);
+				addTreeEdge(cell, neighbor);
 				cells.add(neighbor);
 			});
 		} while (!cells.isEmpty());

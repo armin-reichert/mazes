@@ -41,7 +41,7 @@ public class BoruvkaMST extends MazeAlgorithm<SimpleEdge> {
 	private void addEdge(Edge edge) {
 		int u = edge.either(), v = edge.other();
 		if (forest.find(u) != forest.find(v)) {
-			addEdge(u, v);
+			addTreeEdge(u, v);
 			forest.union(u, v);
 		}
 	}

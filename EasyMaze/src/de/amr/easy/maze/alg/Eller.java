@@ -40,7 +40,7 @@ public class Eller extends MazeAlgorithm<SimpleEdge> {
 	}
 
 	private void connectCells(int u, int v) {
-		addEdge(u, v);
+		addTreeEdge(u, v);
 		parts.union(u, v);
 	}
 

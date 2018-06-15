@@ -5,7 +5,6 @@ import static de.amr.easy.util.StreamUtils.permute;
 import java.util.stream.Stream;
 
 import de.amr.easy.data.Partition;
-import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
@@ -32,12 +31,12 @@ public class KruskalMST extends MazeAlgorithm<SimpleEdge> {
 	public void run(int start) {
 		Partition<Integer> forest = new Partition<>();
 		grid.fill();
-		Stream<? extends Edge> edges = permute(grid.edges());
+		Stream<SimpleEdge> edges = permute(grid.edges());
 		grid.removeEdges();
 		edges.forEach(edge -> {
 			int u = edge.either(), v = edge.other();
 			if (forest.find(u) != forest.find(v)) {
-				addEdge(u, v);
+				addTreeEdge(u, v);
 				forest.union(u, v);
 			}
 		});
