@@ -24,7 +24,7 @@ import de.amr.easy.graph.api.event.GraphTraversalListener;
  * @param <G>
  *          the graph type
  */
-public abstract class AbstractGraphTraversal<G extends Graph<?>> implements ObservableGraphTraversal, PathFinder {
+public abstract class AbstractGraphTraversal implements ObservableGraphTraversal, PathFinder {
 
 	protected final Map<Integer, Integer> parentMap = new HashMap<>();
 
@@ -32,16 +32,16 @@ public abstract class AbstractGraphTraversal<G extends Graph<?>> implements Obse
 
 	protected final Set<GraphTraversalListener> observers = new HashSet<>(3);
 
-	protected final G graph;
+	protected final Graph<?> graph;
 
-	public AbstractGraphTraversal(G graph) {
+	public AbstractGraphTraversal(Graph<?> graph) {
 		this.graph = graph;
 	}
 
 	/**
 	 * @return the traversed graph
 	 */
-	public G getGraph() {
+	public Graph<?> getGraph() {
 		return graph;
 	}
 

@@ -24,7 +24,7 @@ import de.amr.easy.graph.api.Graph;
  * @param <G>
  *          graph type
  */
-public class BreadthFirstTraversal<G extends Graph<?>> extends AbstractGraphTraversal<G> {
+public class BreadthFirstTraversal<G extends Graph<?>> extends AbstractGraphTraversal {
 
 	protected final Queue<Integer> q;
 	protected final int[] distance;

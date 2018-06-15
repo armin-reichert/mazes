@@ -14,7 +14,7 @@ import de.amr.easy.graph.api.Graph;
  * @param <G>
  *          graph type
  */
-public class DepthFirstTraversal<G extends Graph<?>> extends AbstractGraphTraversal<G> {
+public class DepthFirstTraversal<G extends Graph<?>> extends AbstractGraphTraversal {
 
 	private final Stack<Integer> stack = new Stack<>();
 
