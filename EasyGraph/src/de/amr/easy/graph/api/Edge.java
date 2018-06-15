@@ -11,9 +11,7 @@ public interface Edge {
 	int either();
 
 	/**
-	 * @param either
-	 *          one vertex of this edge
-	 * @return the vertex opposite to the given vertex
+	 * @return the other vertex of this edge
 	 */
-	int other(int either);
+	int other();
 }

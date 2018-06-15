@@ -34,7 +34,7 @@ public class KruskalMST extends MazeAlgorithm {
 		grid.removeEdges();
 		Partition<Integer> forest = new Partition<>();
 		edges.forEach(edge -> {
-			int u = edge.either(), v = edge.other(u);
+			int u = edge.either(), v = edge.other();
 			if (forest.find(u) != forest.find(v)) {
 				addEdge(u, v);
 				forest.union(u, v);

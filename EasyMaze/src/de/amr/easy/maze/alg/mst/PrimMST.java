@@ -31,7 +31,7 @@ public class PrimMST extends MazeAlgorithm {
 		extendMazeAt(start);
 		while (!cut.isEmpty()) {
 			WeightedEdge<Integer> edge = cut.poll();
-			int either = edge.either(), other = edge.other(either);
+			int either = edge.either(), other = edge.other();
 			if (outsideMaze(either) || outsideMaze(other)) {
 				grid.addEdge(either, other);
 				extendMazeAt(outsideMaze(either) ? either : other);

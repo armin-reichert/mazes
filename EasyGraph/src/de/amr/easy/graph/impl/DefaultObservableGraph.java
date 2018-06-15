@@ -53,8 +53,7 @@ public class DefaultObservableGraph extends DefaultGraph implements ObservableGr
 	protected void fireEdgeChange(Edge edge, Object oldValue, Object newValue) {
 		if (!listeningSuspended) {
 			for (GraphObserver listener : listeners) {
-				int either = edge.either(), other = edge.other(either);
-				listener.edgeChanged(new EdgeChangeEvent(this, either, other, oldValue, newValue));
+				listener.edgeChanged(new EdgeChangeEvent(this, edge.either(), edge.other(), oldValue, newValue));
 			}
 		}
 	}

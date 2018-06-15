@@ -33,7 +33,7 @@ public class DefaultMultigraph<E extends Edge> implements Multigraph<E> {
 
 	@Override
 	public void addEdge(E edge) {
-		int u = edge.either(), v = edge.other(u);
+		int u = edge.either(), v = edge.other();
 		assertVertexExists(u);
 		assertVertexExists(v);
 		edgeList.add(edge);
@@ -44,7 +44,7 @@ public class DefaultMultigraph<E extends Edge> implements Multigraph<E> {
 		assertVertexExists(v);
 		assertVertexExists(w);
 		return edgeList.stream().filter(edge -> {
-			int either = edge.either(), other = edge.other(either);
+			int either = edge.either(), other = edge.other();
 			return v == either && w == other || v == other && w == either;
 		});
 	}
@@ -90,7 +90,7 @@ public class DefaultMultigraph<E extends Edge> implements Multigraph<E> {
 	public int degree(int w) {
 		assertVertexExists(w);
 		return (int) edgeList.stream().filter(edge -> {
-			int u = edge.either(), v = edge.other(u);
+			int u = edge.either(), v = edge.other();
 			return u == w || v == w;
 		}).count();
 	}
@@ -99,10 +99,10 @@ public class DefaultMultigraph<E extends Edge> implements Multigraph<E> {
 	public IntStream adjVertices(int w) {
 		assertVertexExists(w);
 		return edgeList.stream().filter(edge -> {
-			int u = edge.either(), v = edge.other(u);
+			int u = edge.either(), v = edge.other();
 			return u == w || v == w;
 		}).map(edge -> {
-			int u = edge.either(), v = edge.other(u);
+			int u = edge.either(), v = edge.other();
 			return u == w ? v : u;
 		}).mapToInt(Integer::intValue);
 	}
@@ -116,9 +116,7 @@ public class DefaultMultigraph<E extends Edge> implements Multigraph<E> {
 			s.append(v).append("\n");
 		}
 		for (E e : edgeList) {
-			int v = e.either();
-			int w = e.other(v);
-			s.append(v).append(" ").append(w).append("\n");
+			s.append(e.either()).append(" ").append(e.other()).append("\n");
 		}
 		return s.toString();
 	}

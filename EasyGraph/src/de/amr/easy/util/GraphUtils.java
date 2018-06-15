@@ -25,7 +25,7 @@ public class GraphUtils {
 		Partition<Integer> p = new Partition<>();
 		Iterable<E> edges = g.edgeStream()::iterator;
 		for (E edge : edges) {
-			int u = edge.either(), v = edge.other(u);
+			int u = edge.either(), v = edge.other();
 			if (p.find(u) == p.find(v)) {
 				return true;
 			}

@@ -21,11 +21,8 @@ public class SimpleEdge implements Edge {
 	}
 
 	@Override
-	public int other(int either) {
-		if (either != u && either != v) {
-			throw new IllegalStateException();
-		}
-		return either == u ? v : u;
+	public int other() {
+		return v;
 	}
 
 	@Override

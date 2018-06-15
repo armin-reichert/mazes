@@ -30,7 +30,7 @@ public abstract class ReverseDeleteMST extends MazeAlgorithm {
 			if (grid.edgeCount() == grid.vertexCount() - 1) {
 				break;
 			}
-			int u = edge.either(), v = edge.other(u);
+			int u = edge.either(), v = edge.other();
 			grid.removeEdge(edge);
 			if (!connected(u, v)) {
 				grid.addEdge(u, v);

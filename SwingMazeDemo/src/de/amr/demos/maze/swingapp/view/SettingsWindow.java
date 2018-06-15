@@ -94,14 +94,6 @@ public class SettingsWindow extends JFrame {
 		getJMenuBar().add(optionMenu);
 	}
 
-	public void setGeneratorName(String name) {
-		controlPanel.getLblGenerationAlgorithm().setText(name);
-	}
-
-	public void setSolverName(String name) {
-		controlPanel.getLblSolver().setText(name);
-	}
-
 	public ControlPanel getControlPanel() {
 		return controlPanel;
 	}

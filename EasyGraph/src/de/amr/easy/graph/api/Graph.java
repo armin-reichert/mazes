@@ -76,8 +76,7 @@ public interface Graph<E extends Edge> {
 	 *          an edge
 	 */
 	default void removeEdge(E edge) {
-		int either = edge.either(), other = edge.other(either);
-		removeEdge(either, other);
+		removeEdge(edge.either(), edge.other());
 	}
 
 	/**

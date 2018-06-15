@@ -52,7 +52,7 @@ public class DefaultGraph implements Graph<SimpleEdge> {
 		assertVertexExists(v);
 		assertVertexExists(w);
 		for (SimpleEdge edge : adjEdges.get(v)) {
-			if (w == edge.either() || w == edge.other(v)) {
+			if (w == edge.either() || w == edge.other()) {
 				return Optional.of(edge);
 			}
 		}
@@ -84,7 +84,7 @@ public class DefaultGraph implements Graph<SimpleEdge> {
 		assertVertexExists(v);
 		assertVertexExists(w);
 		for (SimpleEdge edge : adjEdges.get(v)) {
-			if (w == edge.either() || w == edge.other(v)) {
+			if (w == edge.either() || w == edge.other()) {
 				return true;
 			}
 		}
@@ -133,7 +133,7 @@ public class DefaultGraph implements Graph<SimpleEdge> {
 		List<Integer> result = new ArrayList<>();
 		for (SimpleEdge e : adjEdges.get(v)) {
 			if (e.either() == v) {
-				result.add(e.other(v));
+				result.add(e.other());
 			} else {
 				result.add(e.either());
 			}
@@ -150,9 +150,7 @@ public class DefaultGraph implements Graph<SimpleEdge> {
 			s.append(v).append("\n");
 		}
 		for (SimpleEdge e : createEdgeSet()) {
-			int v = e.either();
-			int w = e.other(v);
-			s.append(v).append(" ").append(w).append("\n");
+			s.append(e.either()).append(" ").append(e.other()).append("\n");
 		}
 		return s.toString();
 	}

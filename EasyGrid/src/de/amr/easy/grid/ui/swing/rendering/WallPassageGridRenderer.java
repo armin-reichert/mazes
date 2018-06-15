@@ -26,8 +26,7 @@ public class WallPassageGridRenderer extends ConfigurableGridRenderer {
 	@Override
 	public void drawGrid(Graphics2D g, BareGrid2D<?> grid) {
 		grid.edgeStream().forEach(passage -> {
-			int either = passage.either(), other = passage.other(either);
-			drawPassage(g, grid, either, other, true);
+			drawPassage(g, grid, passage.either(), passage.other(), true);
 		});
 		grid.vertexStream().filter(cell -> grid.degree(cell) == 0).forEach(cell -> drawCell(g, grid, cell));
 	}
