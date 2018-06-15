@@ -24,12 +24,12 @@ public class KruskalMST extends MazeAlgorithm {
 
 	@Override
 	public void run(int start) {
-		grid.fill();
-		Stream<WeightedEdge<Integer>> edges = permute(grid.edgeStream());
-		grid.removeEdges();
 		Partition<Integer> forest = new Partition<>();
+		grid.fill();
+		Stream<? extends Edge> edges = permute(grid.edges());
+		grid.removeEdges();
 		edges.forEach(edge -> {
-			int u = edge.either(), v = edge.other(u);
+			int u = edge.either(), v = edge.other();
 			if (forest.find(u) != forest.find(v)) {
 				addEdge(u, v);
 				forest.union(u, v);
