@@ -22,7 +22,7 @@ import de.amr.easy.graph.api.Graph;
 public class BestFirstTraversal<G extends Graph<?>, C extends Comparable<C>> extends BreadthFirstTraversal<G> {
 
 	/**
-	 * Creates a Best-first-traversal instance for the given graph and vertex valuation.
+	 * Creates a Best-First traversal instance for the given graph and vertex cost function.
 	 * 
 	 * @param graph
 	 *          a graph
