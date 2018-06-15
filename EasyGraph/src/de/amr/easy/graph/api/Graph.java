@@ -15,24 +15,28 @@ import java.util.stream.Stream;
 public interface Graph<E extends Edge> {
 
 	/**
-	 * @return a stream of the vertices of this graph
+	 * @return stream of the vertices of this graph
 	 */
 	IntStream vertices();
 
 	/**
 	 * @return the number of vertices of this graph
 	 */
-	int vertexCount();
+	default int vertexCount() {
+		return (int) vertices().count();
+	}
 
 	/**
-	 * @return a stream of the edges of this graph
+	 * @return stream of the edges of this graph
 	 */
 	Stream<E> edges();
 
 	/**
 	 * @return the number of edges of this graph
 	 */
-	int edgeCount();
+	default int edgeCount() {
+		return (int) edges().count();
+	}
 
 	/**
 	 * Adds the given vertex to this graph.

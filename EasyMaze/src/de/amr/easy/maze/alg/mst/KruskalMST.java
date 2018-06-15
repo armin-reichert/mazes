@@ -5,8 +5,8 @@ import static de.amr.easy.util.StreamUtils.permute;
 import java.util.stream.Stream;
 
 import de.amr.easy.data.Partition;
+import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.maze.alg.MazeAlgorithm;
 
@@ -29,10 +29,10 @@ public class KruskalMST extends MazeAlgorithm {
 
 	@Override
 	public void run(int start) {
-		grid.fill();
-		Stream<WeightedEdge<Integer>> edges = permute(grid.edges());
-		grid.removeEdges();
 		Partition<Integer> forest = new Partition<>();
+		grid.fill();
+		Stream<? extends Edge> edges = permute(grid.edges());
+		grid.removeEdges();
 		edges.forEach(edge -> {
 			int u = edge.either(), v = edge.other();
 			if (forest.find(u) != forest.find(v)) {

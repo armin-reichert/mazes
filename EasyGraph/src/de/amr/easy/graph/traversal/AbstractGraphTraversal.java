@@ -67,7 +67,7 @@ public abstract class AbstractGraphTraversal<G extends Graph<?>> implements Obse
 	protected void setState(int v, TraversalState newState) {
 		TraversalState oldState = getState(v);
 		stateMap.put(v, newState);
-		vertexTouched(v, oldState, newState);
+		vertexVisited(v, oldState, newState);
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public abstract class AbstractGraphTraversal<G extends Graph<?>> implements Obse
 	}
 
 	@Override
-	public void vertexTouched(int u, TraversalState oldState, TraversalState newState) {
+	public void vertexVisited(int u, TraversalState oldState, TraversalState newState) {
 		observers.forEach(observer -> observer.vertexTouched(u, oldState, newState));
 	}
 
