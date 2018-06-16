@@ -9,6 +9,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public class StreamUtils {
 
@@ -55,4 +56,25 @@ public class StreamUtils {
 		return permute(source).findFirst();
 	}
 
+	/**
+	 * Converts an iterable sequence to a stream.
+	 * 
+	 * @param sequence
+	 *          an iterable sequence
+	 * @return a stream of the sequence elements
+	 */
+	public static <T> Stream<T> toStream(Iterable<T> sequence) {
+		return StreamSupport.stream(sequence.spliterator(), false);
+	}
+
+	/**
+	 * Converts an iterable sequence of integers to a stream.
+	 * 
+	 * @param sequence
+	 *          an iterable sequence of integers
+	 * @return a stream of the sequence elements
+	 */
+	public static IntStream toIntStream(Iterable<Integer> sequence) {
+		return toStream(sequence).mapToInt(Integer::intValue);
+	}
 }

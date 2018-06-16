@@ -2,21 +2,27 @@ package de.amr.easy.data;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A small wrapper around {@link Deque} providing a minimal set of stack operations.
+ * Another stack implementation.
  * 
  * @author Armin Reichert
  *
  * @param <T>
  *          stack element type
  */
-public class Stack<T> {
+public class Stack<T> implements Iterable<T> {
 
 	private final Deque<T> stack = new ArrayDeque<>();
+
+	@Override
+	public Iterator<T> iterator() {
+		return stack.iterator();
+	}
 
 	/**
 	 * @return {@code true} if the stack is empty

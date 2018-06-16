@@ -38,7 +38,7 @@ public class DepthFirstSearchApp {
 	}
 
 	private Grid2D<TraversalState, SimpleEdge> grid;
-	private int[] solution;
+	private Iterable<Integer> solution;
 	private DrawingArea canvas;
 	private ConfigurableGridRenderer renderer;
 
@@ -144,6 +144,6 @@ public class DepthFirstSearchApp {
 	private void dfs() {
 		DepthFirstTraversal2 dfs = new DepthFirstTraversal2(grid);
 		dfs.traverseGraph(grid.cell(GridPosition.TOP_LEFT), grid.cell(GridPosition.BOTTOM_RIGHT));
-		solution = dfs.path(grid.cell(GridPosition.BOTTOM_RIGHT)).toArray();
+		solution = dfs.path(grid.cell(GridPosition.BOTTOM_RIGHT));
 	}
 }

@@ -35,6 +35,7 @@ import de.amr.easy.grid.curves.PeanoCurve;
 import de.amr.easy.grid.impl.Grid;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
+import de.amr.easy.util.StreamUtils;
 
 public class GridTraversalTests {
 
@@ -85,7 +86,7 @@ public class GridTraversalTests {
 		best.traverseGraph(source);
 		assertState(grid.vertices(), best::getState, COMPLETED);
 		best.traverseGraph(source, target);
-		long length = best.path(target).count();
+		long length = StreamUtils.toIntStream(best.path(target)).count();
 		System.out.println("Best-first search found path of length " + length);
 	}
 
@@ -95,7 +96,7 @@ public class GridTraversalTests {
 		DepthFirstTraversal dfs = new DepthFirstTraversal(grid);
 		assertState(grid.vertices(), dfs::getState, UNVISITED);
 		dfs.traverseGraph(source, target);
-		assertState(dfs.path(target), dfs::getState, VISITED);
+		assertState(StreamUtils.toIntStream(dfs.path(target)), dfs::getState, VISITED);
 	}
 
 	@Test
@@ -104,7 +105,7 @@ public class GridTraversalTests {
 		DepthFirstTraversal2 dfs = new DepthFirstTraversal2(grid);
 		assertState(grid.vertices(), dfs::getState, UNVISITED);
 		dfs.traverseGraph(source, target);
-		assertState(dfs.path(target), dfs::getState, COMPLETED);
+		assertState(StreamUtils.toIntStream(dfs.path(target)), dfs::getState, COMPLETED);
 	}
 
 	@Test
@@ -114,8 +115,7 @@ public class GridTraversalTests {
 		HillClimbing<Integer> hillClimbing = new HillClimbing<>(grid, cost);
 		assertState(grid.vertices(), hillClimbing::getState, UNVISITED);
 		hillClimbing.traverseGraph(source, target);
-		IntStream path = hillClimbing.path(target);
-		path.forEach(cell -> assertTrue(hillClimbing.getState(cell) != UNVISITED));
+		hillClimbing.path(target).forEach(cell -> assertTrue(hillClimbing.getState(cell) != UNVISITED));
 	}
 
 	@Test

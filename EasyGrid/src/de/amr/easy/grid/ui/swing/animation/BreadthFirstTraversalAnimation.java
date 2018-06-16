@@ -4,10 +4,8 @@ import static java.lang.String.format;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.util.Arrays;
 import java.util.BitSet;
 import java.util.function.IntSupplier;
-import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalObserver;
@@ -143,9 +141,9 @@ public class BreadthFirstTraversalAnimation {
 
 	public void showPath(GridCanvas canvas, BreadthFirstTraversal bfs, int target) {
 		canvas.getRenderer().ifPresent(canvasRenderer -> {
-			int[] path = bfs.path(target).toArray();
+			Iterable<Integer> path = bfs.path(target);
 			canvas.pushRenderer(createPathRenderer(floodFillRenderer, bfs, path));
-			Arrays.stream(path).forEach(canvas::drawGridCell);
+			path.forEach(canvas::drawGridCell);
 			canvas.popRenderer();
 		});
 	}
@@ -165,9 +163,9 @@ public class BreadthFirstTraversalAnimation {
 	}
 
 	private ConfigurableGridRenderer createPathRenderer(ConfigurableGridRenderer base, BreadthFirstTraversal distanceMap,
-			int[] path) {
+			Iterable<Integer> path) {
 		BitSet inPath = new BitSet();
-		IntStream.of(path).forEach(inPath::set);
+		path.forEach(inPath::set);
 		ConfigurableGridRenderer r = base instanceof PearlsGridRenderer ? new PearlsGridRenderer()
 				: new WallPassageGridRenderer();
 		r.fnCellBgColor = cell -> inPath.get(cell) ? pathColor : base.getCellBgColor(cell);

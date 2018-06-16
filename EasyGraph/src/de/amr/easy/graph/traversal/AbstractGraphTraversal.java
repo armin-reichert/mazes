@@ -2,14 +2,13 @@ package de.amr.easy.graph.traversal;
 
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.IntStream;
 
+import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.ObservableGraphTraversal;
 import de.amr.easy.graph.api.TraversalState;
@@ -39,12 +38,12 @@ public abstract class AbstractGraphTraversal implements ObservableGraphTraversal
 	 *          target vertex
 	 * @return path from source to target
 	 */
-	public IntStream path(int target) {
-		Deque<Integer> path = new ArrayDeque<>();
+	public Iterable<Integer> path(int target) {
+		Stack<Integer> path = new Stack<>();
 		for (int v = target; v != -1; v = getParent(v)) {
 			path.push(v);
 		}
-		return path.stream().mapToInt(Integer::intValue);
+		return path;
 	}
 
 	/**

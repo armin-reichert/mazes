@@ -5,7 +5,6 @@ import static de.amr.easy.graph.api.TraversalState.VISITED;
 import java.awt.Color;
 import java.util.BitSet;
 import java.util.function.IntSupplier;
-import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.ObservableGraphTraversal;
 import de.amr.easy.graph.api.TraversalState;
@@ -26,7 +25,7 @@ import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
 public class DepthFirstTraversalAnimation {
 
 	private final BareGrid2D<?> grid;
-	private int[] path;
+	private Iterable<Integer> path;
 	private Color pathColor = Color.RED;
 	private Color visitedCellColor = Color.BLUE;
 	public IntSupplier fnDelay = () -> 0;
@@ -94,9 +93,9 @@ public class DepthFirstTraversalAnimation {
 		BitSet inPath = new BitSet();
 		canvas.pushRenderer(createRenderer(dfs, inPath, canvas.getRenderer().get()));
 		dfs.traverseGraph(source, target);
-		path = dfs.path(target).toArray();
-		IntStream.of(path).forEach(inPath::set);
-		IntStream.of(path).forEach(canvas::drawGridCell);
+		path = dfs.path(target);
+		path.forEach(inPath::set);
+		path.forEach(canvas::drawGridCell);
 		canvas.popRenderer();
 	}
 
