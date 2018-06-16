@@ -16,12 +16,10 @@ import de.amr.easy.graph.api.Graph;
  * 
  * @author Armin Reichert
  * 
- * @param <G>
- *          graph type
  * @param <C>
  *          vertex cost type
  */
-public class HillClimbing<G extends Graph<?>, C extends Comparable<C>> extends DepthFirstTraversal<G> {
+public class HillClimbing<C extends Comparable<C>> extends DepthFirstTraversal {
 
 	private final Comparator<Integer> byDecreasingCost;
 
@@ -31,7 +29,7 @@ public class HillClimbing<G extends Graph<?>, C extends Comparable<C>> extends D
 	 * @param cost
 	 *          cost function for vertices
 	 */
-	public HillClimbing(G graph, Function<Integer, C> cost) {
+	public HillClimbing(Graph<?> graph, Function<Integer, C> cost) {
 		super(graph);
 		byDecreasingCost = (u, v) -> cost.apply(v).compareTo(cost.apply(u));
 	}

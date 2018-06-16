@@ -23,15 +23,15 @@ import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
  * 
  * @author Armin Reichert
  */
-public class DepthFirstTraversalAnimation<G extends BareGrid2D<?>> {
+public class DepthFirstTraversalAnimation {
 
-	private final G grid;
+	private final BareGrid2D<?> grid;
 	private int[] path;
 	private Color pathColor = Color.RED;
 	private Color visitedCellColor = Color.BLUE;
 	public IntSupplier fnDelay = () -> 0;
 
-	public DepthFirstTraversalAnimation(G grid) {
+	public DepthFirstTraversalAnimation(BareGrid2D<?> grid) {
 		this.grid = grid;
 	}
 

@@ -10,15 +10,12 @@ import de.amr.easy.graph.api.Graph;
  * children of the currently visited vertex are put onto the stack.
  * 
  * @author Armin Reichert
- * 
- * @param <G>
- *          graph type
  */
-public class DepthFirstTraversal<G extends Graph<?>> extends AbstractGraphTraversal {
+public class DepthFirstTraversal extends AbstractGraphTraversal {
 
 	private final Stack<Integer> stack = new Stack<>();
 
-	public DepthFirstTraversal(G graph) {
+	public DepthFirstTraversal(Graph<?> graph) {
 		super(graph);
 	}
 

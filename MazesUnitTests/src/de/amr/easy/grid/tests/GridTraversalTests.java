@@ -92,7 +92,7 @@ public class GridTraversalTests {
 	@Test
 	public void testDFS() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		DepthFirstTraversal<Grid2D<TraversalState, SimpleEdge>> dfs = new DepthFirstTraversal<>(grid);
+		DepthFirstTraversal dfs = new DepthFirstTraversal(grid);
 		assertState(grid.vertices(), dfs::getState, UNVISITED);
 		dfs.traverseGraph(source, target);
 		assertState(dfs.findPath(target), dfs::getState, VISITED);
@@ -111,7 +111,7 @@ public class GridTraversalTests {
 	public void testHillClimbing() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
 		Function<Integer, Integer> cost = u -> grid.manhattan(u, target);
-		HillClimbing<Grid2D<TraversalState, SimpleEdge>, Integer> hillClimbing = new HillClimbing<>(grid, cost);
+		HillClimbing<Integer> hillClimbing = new HillClimbing<>(grid, cost);
 		assertState(grid.vertices(), hillClimbing::getState, UNVISITED);
 		hillClimbing.traverseGraph(source, target);
 		IntStream path = hillClimbing.findPath(target);

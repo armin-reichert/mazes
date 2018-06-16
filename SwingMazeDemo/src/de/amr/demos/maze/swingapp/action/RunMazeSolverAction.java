@@ -86,7 +86,7 @@ public class RunMazeSolverAction extends MazeDemoAction {
 		int src = grid.cell(app.model.getPathFinderSource());
 		int tgt = grid.cell(app.model.getPathFinderTarget());
 
-		DepthFirstTraversalAnimation<MazeGrid> anim = new DepthFirstTraversalAnimation<>(grid);
+		DepthFirstTraversalAnimation anim = new DepthFirstTraversalAnimation(grid);
 		anim.fnDelay = () -> app.model.getDelay();
 		anim.setPathColor(app.model.getPathColor());
 

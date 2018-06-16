@@ -42,7 +42,7 @@ public class PearlsRendererTestApp extends SwingGridSampleApp<SimpleEdge> {
 
 		sleep(2000);
 		canvasAnimation.fnDelay = () -> 10;
-		new DepthFirstTraversalAnimation<>(grid).run(canvas, new DepthFirstTraversal2<>(grid), 0, grid.cell(BOTTOM_RIGHT));
+		new DepthFirstTraversalAnimation(grid).run(canvas, new DepthFirstTraversal2<>(grid), 0, grid.cell(BOTTOM_RIGHT));
 
 		sleep(2000);
 		canvas.clear();
