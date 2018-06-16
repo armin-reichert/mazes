@@ -38,7 +38,7 @@ public class DefaultObservableGraph extends DefaultGraph implements ObservableGr
 	}
 
 	@Override
-	public void setEventsEnabled(boolean enabled) {
+	public void setObservationEnabled(boolean enabled) {
 		listeningSuspended = enabled;
 	}
 

@@ -80,7 +80,7 @@ public class ObservableBareGrid<E extends Edge> extends BareGrid<E> implements O
 	}
 
 	@Override
-	public void setEventsEnabled(boolean enabled) {
+	public void setObservationEnabled(boolean enabled) {
 		fireEvents = enabled;
 	}
 

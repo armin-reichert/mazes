@@ -48,9 +48,9 @@ public class CreateMazeAction extends MazeDemoAction {
 		app.showMessage(format("\n%s (%d cells)", generatorInfo.getDescription(), app.model.getGrid().numCells()));
 		app.model.getGrid().clearContent();
 		app.model.getGrid().setDefaultContent(UNVISITED);
-		app.model.getGrid().setEventsEnabled(false);
+		app.model.getGrid().setObservationEnabled(false);
 		app.model.getGrid().removeEdges();
-		app.model.getGrid().setEventsEnabled(true);
+		app.model.getGrid().setObservationEnabled(true);
 		MazeAlgorithm<SimpleEdge> generator = (MazeAlgorithm<SimpleEdge>) generatorInfo.getAlgorithmClass()
 				.getConstructor(Grid2D.class).newInstance(app.model.getGrid());
 		if (app.model.isGenerationAnimated()) {
