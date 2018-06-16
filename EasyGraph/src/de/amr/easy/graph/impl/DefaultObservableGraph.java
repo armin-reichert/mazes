@@ -8,7 +8,7 @@ import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.event.EdgeEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
-import de.amr.easy.graph.api.event.VertexChangeEvent;
+import de.amr.easy.graph.api.event.VertexEvent;
 
 /**
  * Adjacency set based implementation of an undirected, observable graph.
@@ -45,7 +45,7 @@ public class DefaultObservableGraph extends DefaultGraph implements ObservableGr
 	protected void fireVertexChange(int vertex, Object oldValue, Object newValue) {
 		if (!listeningSuspended) {
 			for (GraphObserver listener : listeners) {
-				listener.vertexChanged(new VertexChangeEvent(this, vertex, oldValue, newValue));
+				listener.vertexChanged(new VertexEvent(this, vertex, oldValue, newValue));
 			}
 		}
 	}

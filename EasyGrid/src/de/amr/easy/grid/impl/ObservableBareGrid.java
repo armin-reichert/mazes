@@ -8,7 +8,7 @@ import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.event.EdgeEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
-import de.amr.easy.graph.api.event.VertexChangeEvent;
+import de.amr.easy.graph.api.event.VertexEvent;
 import de.amr.easy.grid.api.ObservableBareGrid2D;
 import de.amr.easy.grid.api.Topology;
 
@@ -89,7 +89,7 @@ public class ObservableBareGrid<E extends Edge> extends BareGrid<E> implements O
 	protected void fireVertexChange(Integer vertex, Object oldValue, Object newValue) {
 		if (fireEvents) {
 			for (GraphObserver obs : observers) {
-				obs.vertexChanged(new VertexChangeEvent(this, vertex, oldValue, newValue));
+				obs.vertexChanged(new VertexEvent(this, vertex, oldValue, newValue));
 			}
 		}
 	}

@@ -9,7 +9,7 @@ import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.EdgeEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
-import de.amr.easy.graph.api.event.VertexChangeEvent;
+import de.amr.easy.graph.api.event.VertexEvent;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.ObservableGrid2D;
 import de.amr.easy.grid.impl.ObservableGrid;
@@ -144,7 +144,7 @@ public class MazeGenerationRecordingApp {
 		grid.addGraphObserver(new GraphObserver() {
 
 			@Override
-			public void vertexChanged(VertexChangeEvent event) {
+			public void vertexChanged(VertexEvent event) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 

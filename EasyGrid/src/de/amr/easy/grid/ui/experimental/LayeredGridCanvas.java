@@ -10,7 +10,7 @@ import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.EdgeEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
-import de.amr.easy.graph.api.event.VertexChangeEvent;
+import de.amr.easy.graph.api.event.VertexEvent;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.ObservableGrid2D;
@@ -171,7 +171,7 @@ public class LayeredGridCanvas<E extends Edge> extends LayeredCanvas implements 
 	// implement GraphObserver interface
 
 	@Override
-	public void vertexChanged(VertexChangeEvent event) {
+	public void vertexChanged(VertexEvent event) {
 		repaint();
 	}
 

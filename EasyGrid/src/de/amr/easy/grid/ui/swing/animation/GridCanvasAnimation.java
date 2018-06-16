@@ -5,7 +5,7 @@ import java.util.function.IntSupplier;
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.event.EdgeEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
-import de.amr.easy.graph.api.event.VertexChangeEvent;
+import de.amr.easy.graph.api.event.VertexEvent;
 import de.amr.easy.grid.ui.swing.rendering.GridCanvas;
 
 public class GridCanvasAnimation implements GraphObserver {
@@ -35,7 +35,7 @@ public class GridCanvasAnimation implements GraphObserver {
 	}
 
 	@Override
-	public void vertexChanged(VertexChangeEvent event) {
+	public void vertexChanged(VertexEvent event) {
 		if (enabled) {
 			delayed(() -> canvas.drawGridCell(event.getVertex()));
 		}

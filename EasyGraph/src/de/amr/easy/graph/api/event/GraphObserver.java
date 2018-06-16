@@ -15,7 +15,7 @@ public interface GraphObserver {
 	 * @param event
 	 *          information about the vertex change
 	 */
-	void vertexChanged(VertexChangeEvent event);
+	void vertexChanged(VertexEvent event);
 
 	/**
 	 * Called when an edge has changed or was touched.
