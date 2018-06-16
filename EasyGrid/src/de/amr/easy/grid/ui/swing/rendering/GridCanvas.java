@@ -1,4 +1,4 @@
-package de.amr.easy.grid.ui.swing;
+package de.amr.easy.grid.ui.swing.rendering;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,7 +13,6 @@ import javax.swing.JComponent;
 
 import de.amr.easy.data.Stack;
 import de.amr.easy.grid.api.BareGrid2D;
-import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
 
 /**
  * A Swing component for displaying a grid.
@@ -28,10 +27,7 @@ public class GridCanvas extends JComponent {
 	protected Graphics2D g2;
 
 	public GridCanvas(BareGrid2D<?> grid, int cellSize) {
-		if (grid == null) {
-			throw new IllegalArgumentException("NULL grid not allowed");
-		}
-		this.grid = grid;
+		setGrid(grid);
 		setDoubleBuffered(false);
 		adaptSize(cellSize);
 	}
@@ -42,7 +38,7 @@ public class GridCanvas extends JComponent {
 
 	public void setGrid(BareGrid2D<?> grid) {
 		if (grid == null) {
-			throw new IllegalArgumentException("Canvas must have a grid");
+			throw new IllegalArgumentException("No grid specified");
 		}
 		this.grid = grid;
 	}
@@ -86,9 +82,9 @@ public class GridCanvas extends JComponent {
 		Dimension size = new Dimension(grid.numCols() * cellSize, grid.numRows() * cellSize);
 		setSize(size);
 		setPreferredSize(size);
-		GraphicsConfiguration config = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
+		GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
 				.getDefaultConfiguration();
-		drawingBuffer = config.createCompatibleImage(size.width, size.height);
+		drawingBuffer = gc.createCompatibleImage(size.width, size.height);
 		g2 = drawingBuffer.createGraphics();
 		repaint();
 	}
