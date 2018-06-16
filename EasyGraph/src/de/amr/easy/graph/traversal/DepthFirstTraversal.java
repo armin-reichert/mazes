@@ -59,7 +59,7 @@ public class DepthFirstTraversal extends AbstractGraphTraversal {
 		setState(child, VISITED);
 		setParent(child, parent);
 		if (parent != -1) {
-			edgeTouched(parent, child);
+			edgeTraversed(parent, child);
 		}
 	}
 }

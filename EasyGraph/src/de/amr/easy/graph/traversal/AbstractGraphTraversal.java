@@ -67,7 +67,7 @@ public abstract class AbstractGraphTraversal implements ObservableGraphTraversal
 	protected void setState(int v, TraversalState newState) {
 		TraversalState oldState = getState(v);
 		stateMap.put(v, newState);
-		vertexVisited(v, oldState, newState);
+		vertexTraversed(v, oldState, newState);
 	}
 
 	@Override
@@ -90,13 +90,13 @@ public abstract class AbstractGraphTraversal implements ObservableGraphTraversal
 	}
 
 	@Override
-	public void edgeTouched(int u, int v) {
-		observers.forEach(observer -> observer.edgeTraversed(u, v));
+	public void edgeTraversed(int either, int other) {
+		observers.forEach(observer -> observer.edgeTraversed(either, other));
 	}
 
 	@Override
-	public void vertexVisited(int u, TraversalState oldState, TraversalState newState) {
-		observers.forEach(observer -> observer.vertexTraversed(u, oldState, newState));
+	public void vertexTraversed(int v, TraversalState oldState, TraversalState newState) {
+		observers.forEach(observer -> observer.vertexTraversed(v, oldState, newState));
 	}
 
 	@Override

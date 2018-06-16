@@ -13,7 +13,7 @@ public interface ObservableGraphTraversal extends GraphTraversal {
 
 	void removeObserver(GraphTraversalObserver observer);
 
-	void edgeTouched(int u, int v);
+	void edgeTraversed(int either, int other);
 
-	void vertexVisited(int u, TraversalState oldState, TraversalState newState);
+	void vertexTraversed(int v, TraversalState oldState, TraversalState newState);
 }

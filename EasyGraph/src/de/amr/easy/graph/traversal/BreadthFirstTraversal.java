@@ -75,7 +75,7 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal {
 		}
 		distance[v] = d;
 		if (parent != -1) {
-			edgeTouched(parent, v);
+			edgeTraversed(parent, v);
 		}
 	}
 
