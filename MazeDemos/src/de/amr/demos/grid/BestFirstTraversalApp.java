@@ -8,9 +8,7 @@ import java.awt.Color;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.SimpleEdge;
-import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.traversal.BestFirstTraversal;
-import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
@@ -48,10 +46,9 @@ public class BestFirstTraversalApp extends SwingGridSampleApp<SimpleEdge> {
 		canvas.drawGrid();
 		int source = grid.cell(TOP_LEFT);
 		int target = grid.cell(BOTTOM_RIGHT);
-		BreadthFirstTraversalAnimation<?> anim = new BreadthFirstTraversalAnimation<>(grid);
+		BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid);
 		anim.fnDelay = () -> 50;
-		BestFirstTraversal<ObservableGrid<TraversalState, SimpleEdge>, Integer> best = new BestFirstTraversal<>(grid,
-				v -> grid.euclidean2(v, target));
+		BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, v -> grid.euclidean2(v, target));
 		anim.run(canvas, best, source, target);
 		anim.showPath(canvas, best, target);
 	}
@@ -67,5 +64,4 @@ public class BestFirstTraversalApp extends SwingGridSampleApp<SimpleEdge> {
 			});
 		});
 	}
-
 }

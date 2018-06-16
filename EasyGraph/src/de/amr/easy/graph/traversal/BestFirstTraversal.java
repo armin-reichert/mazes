@@ -14,12 +14,10 @@ import de.amr.easy.graph.api.Graph;
  * 
  * @author Armin Reichert
  * 
- * @param <G>
- *          graph type
  * @param <C>
  *          vertex cost type
  */
-public class BestFirstTraversal<G extends Graph<?>, C extends Comparable<C>> extends BreadthFirstTraversal<G> {
+public class BestFirstTraversal<C extends Comparable<C>> extends BreadthFirstTraversal {
 
 	/**
 	 * Creates a Best-First traversal instance for the given graph and vertex cost function.
@@ -29,7 +27,7 @@ public class BestFirstTraversal<G extends Graph<?>, C extends Comparable<C>> ext
 	 * @param cost
 	 *          cost function for vertices
 	 */
-	public BestFirstTraversal(G graph, Function<Integer, C> cost) {
+	public BestFirstTraversal(Graph<?> graph, Function<Integer, C> cost) {
 		super(graph, new PriorityQueue<>((u, v) -> cost.apply(u).compareTo(cost.apply(v))));
 	}
 }

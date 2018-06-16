@@ -69,7 +69,7 @@ public class GridTraversalTests {
 
 	@Test
 	public void testBFS() {
-		BreadthFirstTraversal<Grid2D<TraversalState, SimpleEdge>> bfs = new BreadthFirstTraversal<>(grid);
+		BreadthFirstTraversal bfs = new BreadthFirstTraversal(grid);
 		assertState(grid.vertices(), bfs::getState, UNVISITED);
 		bfs.traverseGraph(grid.cell(CENTER));
 		assertState(grid.vertices(), bfs::getState, COMPLETED);
@@ -80,8 +80,7 @@ public class GridTraversalTests {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
 		grid.removeEdges();
 		new IterativeDFS(grid).run(target);
-		BestFirstTraversal<Grid2D<TraversalState, SimpleEdge>, Integer> best = new BestFirstTraversal<>(grid,
-				v -> grid.manhattan(v, target));
+		BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, v -> grid.manhattan(v, target));
 		assertState(grid.vertices(), best::getState, UNVISITED);
 		best.traverseGraph(source);
 		assertState(grid.vertices(), best::getState, COMPLETED);

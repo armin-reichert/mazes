@@ -20,7 +20,7 @@ public class ReverseDeleteBestFSMST extends ReverseDeleteMST {
 
 	@Override
 	protected boolean connected(int u, int v) {
-		BestFirstTraversal<?, Integer> bfs = new BestFirstTraversal<>(grid, x -> grid.manhattan(x, v));
+		BestFirstTraversal<Integer> bfs = new BestFirstTraversal<>(grid, x -> grid.manhattan(x, v));
 		bfs.traverseGraph(u, v);
 		return bfs.getParent(v) != -1;
 	}

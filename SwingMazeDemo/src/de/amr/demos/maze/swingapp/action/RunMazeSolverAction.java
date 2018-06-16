@@ -60,12 +60,12 @@ public class RunMazeSolverAction extends MazeDemoAction {
 		int src = grid.cell(app.model.getPathFinderSource());
 		int tgt = grid.cell(app.model.getPathFinderTarget());
 
-		BreadthFirstTraversalAnimation<MazeGrid> anim = new BreadthFirstTraversalAnimation<>(grid);
+		BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid);
 		anim.fnDelay = () -> app.model.getDelay();
 		anim.setPathColor(app.model.getPathColor());
 
 		if (solver.getAlgorithmClass() == BreadthFirstTraversal.class) {
-			BreadthFirstTraversal<MazeGrid> bfs = new BreadthFirstTraversal<>(grid);
+			BreadthFirstTraversal bfs = new BreadthFirstTraversal(grid);
 			watch.measure(() -> anim.run(app.getCanvas(), bfs, src, tgt));
 			app.showMessage(format("Breadth-first search: %.2f seconds.", watch.getSeconds()));
 			anim.showPath(app.getCanvas(), bfs, tgt);
@@ -73,7 +73,7 @@ public class RunMazeSolverAction extends MazeDemoAction {
 
 		else if (solver.getAlgorithmClass() == BestFirstTraversal.class) {
 			findHeuristics(solver, grid, tgt).ifPresent(h -> {
-				BestFirstTraversal<MazeGrid, Integer> best = new BestFirstTraversal<>(grid, h.getCostFunction());
+				BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, h.getCostFunction());
 				watch.measure(() -> anim.run(app.getCanvas(), best, src, tgt));
 				app.showMessage(format("Best-first search (%s): %.2f seconds.", h.getName(), watch.getSeconds()));
 				anim.showPath(app.getCanvas(), best, tgt);

@@ -27,7 +27,7 @@ import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
  * 
  * @author Armin Reichert
  */
-public class BreadthFirstTraversalAnimation<G extends BareGrid2D<?>> {
+public class BreadthFirstTraversalAnimation {
 
 	/**
 	 * Runs a "flood-fill" on the given grid.
@@ -39,7 +39,7 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<?>> {
 	 * @param source
 	 *          cell where flood-fill starts
 	 */
-	public static <G extends BareGrid2D<?>> void floodFill(GridCanvas<G> canvas, G grid, int source) {
+	public static void floodFill(GridCanvas<?> canvas, BareGrid2D<?> grid, int source) {
 		floodFill(canvas, grid, source, true);
 	}
 
@@ -55,22 +55,21 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<?>> {
 	 * @param distanceVisible
 	 *          if distances should be displayed as text
 	 */
-	public static <G extends BareGrid2D<?>> void floodFill(GridCanvas<G> canvas, G grid, int source,
-			boolean distanceVisible) {
-		BreadthFirstTraversal<G> bfs = new BreadthFirstTraversal<>(grid);
-		BreadthFirstTraversalAnimation<G> anim = new BreadthFirstTraversalAnimation<>(grid);
+	public static void floodFill(GridCanvas<?> canvas, BareGrid2D<?> grid, int source, boolean distanceVisible) {
+		BreadthFirstTraversal bfs = new BreadthFirstTraversal(grid);
+		BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid);
 		anim.setDistanceVisible(distanceVisible);
 		anim.run(canvas, bfs, source, -1);
 	}
 
-	private final G grid;
+	private final BareGrid2D<?> grid;
 	private ConfigurableGridRenderer floodFillRenderer;
 	private boolean distanceVisible;
 	private Color pathColor;
 
 	public IntSupplier fnDelay = () -> 0;
 
-	public BreadthFirstTraversalAnimation(G grid) {
+	public BreadthFirstTraversalAnimation(BareGrid2D<?> grid) {
 		this.grid = grid;
 		distanceVisible = true;
 		pathColor = Color.RED;
@@ -100,10 +99,10 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<?>> {
 	 * @param target
 	 *          the target cell
 	 */
-	public void run(GridCanvas<G> canvas, BreadthFirstTraversal<G> bfs, int source, int target) {
+	public void run(GridCanvas<?> canvas, BreadthFirstTraversal bfs, int source, int target) {
 		canvas.getRenderer().ifPresent(canvasRenderer -> {
 			// 1. traverse complete graph for computing maximum distance from source
-			BreadthFirstTraversal<G> distanceMap = new BreadthFirstTraversal<>(grid);
+			BreadthFirstTraversal distanceMap = new BreadthFirstTraversal(grid);
 			distanceMap.traverseGraph(source);
 
 			// Create renderer using distance map for coloring
@@ -142,7 +141,7 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<?>> {
 		});
 	}
 
-	public void showPath(GridCanvas<G> canvas, BreadthFirstTraversal<G> bfs, int target) {
+	public void showPath(GridCanvas<?> canvas, BreadthFirstTraversal bfs, int target) {
 		canvas.getRenderer().ifPresent(canvasRenderer -> {
 			int[] path = bfs.findPath(target).toArray();
 			canvas.pushRenderer(createPathRenderer(floodFillRenderer, bfs, path));
@@ -151,7 +150,7 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<?>> {
 		});
 	}
 
-	private ConfigurableGridRenderer createFloodFillRenderer(GridRenderer base, BreadthFirstTraversal<?> distanceMap) {
+	private ConfigurableGridRenderer createFloodFillRenderer(GridRenderer base, BreadthFirstTraversal distanceMap) {
 		ConfigurableGridRenderer r = base instanceof PearlsGridRenderer ? new PearlsGridRenderer()
 				: new WallPassageGridRenderer();
 		r.fnCellBgColor = cell -> colorByDist(cell, distanceMap);
@@ -166,7 +165,7 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<?>> {
 	}
 
 	private ConfigurableGridRenderer createPathRenderer(ConfigurableGridRenderer base,
-			BreadthFirstTraversal<?> distanceMap, int[] path) {
+			BreadthFirstTraversal distanceMap, int[] path) {
 		BitSet inPath = new BitSet();
 		IntStream.of(path).forEach(inPath::set);
 		ConfigurableGridRenderer r = base instanceof PearlsGridRenderer ? new PearlsGridRenderer()
@@ -185,7 +184,7 @@ public class BreadthFirstTraversalAnimation<G extends BareGrid2D<?>> {
 		return r;
 	}
 
-	private static Color colorByDist(int cell, BreadthFirstTraversal<?> distanceMap) {
+	private static Color colorByDist(int cell, BreadthFirstTraversal distanceMap) {
 		float hue = 0.16f;
 		if (distanceMap.getMaxDistance() > 0) {
 			hue += 0.7f * distanceMap.getDistance(cell) / distanceMap.getMaxDistance();
