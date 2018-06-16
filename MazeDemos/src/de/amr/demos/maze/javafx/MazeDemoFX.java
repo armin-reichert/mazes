@@ -118,7 +118,7 @@ public class MazeDemoFX extends Application {
 		drawGrid();
 		BreadthFirstTraversal bfs = new BreadthFirstTraversal(maze);
 		bfs.traverseGraph(maze.cell(0, 0), maze.cell(BOTTOM_RIGHT));
-		drawPath(bfs.findPath(maze.cell(BOTTOM_RIGHT))::iterator);
+		drawPath(bfs.path(maze.cell(BOTTOM_RIGHT))::iterator);
 	}
 
 	private MazeAlgorithm<?> randomMazeGenerator() {

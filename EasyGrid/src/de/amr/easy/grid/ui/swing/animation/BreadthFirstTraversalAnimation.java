@@ -143,7 +143,7 @@ public class BreadthFirstTraversalAnimation {
 
 	public void showPath(GridCanvas canvas, BreadthFirstTraversal bfs, int target) {
 		canvas.getRenderer().ifPresent(canvasRenderer -> {
-			int[] path = bfs.findPath(target).toArray();
+			int[] path = bfs.path(target).toArray();
 			canvas.pushRenderer(createPathRenderer(floodFillRenderer, bfs, path));
 			Arrays.stream(path).forEach(canvas::drawGridCell);
 			canvas.popRenderer();

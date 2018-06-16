@@ -19,9 +19,9 @@ public class DepthFirstTraversal extends AbstractGraphTraversal {
 		super(graph);
 	}
 
-	@Override
 	protected void clear() {
-		super.clear();
+		parentMap.clear();
+		stateMap.clear();
 		stack.clear();
 	}
 

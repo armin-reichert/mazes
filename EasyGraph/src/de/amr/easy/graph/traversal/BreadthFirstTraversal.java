@@ -38,9 +38,9 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal {
 		this(graph, new ArrayDeque<>());
 	}
 
-	@Override
 	protected void clear() {
-		super.clear();
+		stateMap.clear();
+		parentMap.clear();
 		q.clear();
 		Arrays.fill(distance, -1);
 		maxDistance = -1;

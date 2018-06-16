@@ -94,7 +94,7 @@ public class DepthFirstTraversalAnimation {
 		BitSet inPath = new BitSet();
 		canvas.pushRenderer(createRenderer(dfs, inPath, canvas.getRenderer().get()));
 		dfs.traverseGraph(source, target);
-		path = dfs.findPath(target).toArray();
+		path = dfs.path(target).toArray();
 		IntStream.of(path).forEach(inPath::set);
 		IntStream.of(path).forEach(canvas::drawGridCell);
 		canvas.popRenderer();

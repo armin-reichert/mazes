@@ -108,7 +108,7 @@ public class LayeredGridCanvas<E extends Edge> extends LayeredCanvas implements 
 		maxDistance = bfs.getMaxDistance();
 		bfs = new BreadthFirstTraversal(grid);
 		bfs.traverseGraph(pathStartCell, pathTargetCell);
-		path = bfs.findPath(pathTargetCell)::iterator;
+		path = bfs.path(pathTargetCell)::iterator;
 	}
 
 	public Iterable<Integer> getPath() {

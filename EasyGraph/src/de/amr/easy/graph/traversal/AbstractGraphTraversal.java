@@ -3,6 +3,7 @@ package de.amr.easy.graph.traversal;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 
 import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -11,31 +12,39 @@ import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.ObservableGraphTraversal;
-import de.amr.easy.graph.api.PathFinder;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalObserver;
 
 /**
- * Base class for graph traversals. Stores traversal state and parent vertex of each vertex and
- * allows to register observers for vertex and edge visits.
+ * Abstract base class for graph traversals. Stores traversal state and parent link for each vertex
+ * and allows to register observers for vertex and edge traversals.
  * 
  * @author Armin Reichert
- * 
- * @param <G>
- *          the graph type
  */
-public abstract class AbstractGraphTraversal implements ObservableGraphTraversal, PathFinder {
-
-	protected final Map<Integer, Integer> parentMap = new HashMap<>();
-
-	protected final Map<Integer, TraversalState> stateMap = new HashMap<>();
-
-	protected final Set<GraphTraversalObserver> observers = new HashSet<>(3);
+public abstract class AbstractGraphTraversal implements ObservableGraphTraversal {
 
 	protected final Graph<?> graph;
+	protected final Map<Integer, Integer> parentMap = new HashMap<>();
+	protected final Map<Integer, TraversalState> stateMap = new HashMap<>();
+	protected final Set<GraphTraversalObserver> observers = new HashSet<>(5);
 
-	public AbstractGraphTraversal(Graph<?> graph) {
+	protected AbstractGraphTraversal(Graph<?> graph) {
 		this.graph = graph;
+	}
+
+	/**
+	 * Builds and returns the path from the source of this traversal to the given target vertex.
+	 * 
+	 * @param target
+	 *          target vertex
+	 * @return path from source to target
+	 */
+	public IntStream path(int target) {
+		Deque<Integer> path = new ArrayDeque<>();
+		for (int v = target; v != -1; v = getParent(v)) {
+			path.push(v);
+		}
+		return path.stream().mapToInt(Integer::intValue);
 	}
 
 	/**
@@ -52,11 +61,6 @@ public abstract class AbstractGraphTraversal implements ObservableGraphTraversal
 	 */
 	protected IntStream childrenInQueuingOrder(int v) {
 		return graph.adjVertices(v).filter(child -> getState(child) == UNVISITED);
-	}
-
-	protected void clear() {
-		parentMap.clear();
-		stateMap.clear();
 	}
 
 	@Override
@@ -97,17 +101,5 @@ public abstract class AbstractGraphTraversal implements ObservableGraphTraversal
 	@Override
 	public void vertexTraversed(int v, TraversalState oldState, TraversalState newState) {
 		observers.forEach(observer -> observer.vertexTraversed(v, oldState, newState));
-	}
-
-	@Override
-	public IntStream findPath(int target) {
-		if (getParent(target) == -1) {
-			return IntStream.empty();
-		}
-		ArrayDeque<Integer> path = new ArrayDeque<>();
-		for (int v = target; v != -1; v = getParent(v)) {
-			path.addFirst(v);
-		}
-		return path.stream().mapToInt(Integer::intValue);
 	}
 }
