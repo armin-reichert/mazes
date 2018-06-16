@@ -6,7 +6,7 @@ import java.util.Set;
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.SimpleEdge;
-import de.amr.easy.graph.api.event.EdgeChangeEvent;
+import de.amr.easy.graph.api.event.EdgeEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.VertexChangeEvent;
 
@@ -53,7 +53,7 @@ public class DefaultObservableGraph extends DefaultGraph implements ObservableGr
 	protected void fireEdgeChange(Edge edge, Object oldValue, Object newValue) {
 		if (!listeningSuspended) {
 			for (GraphObserver listener : listeners) {
-				listener.edgeChanged(new EdgeChangeEvent(this, edge.either(), edge.other(), oldValue, newValue));
+				listener.edgeChanged(new EdgeEvent(this, edge.either(), edge.other(), oldValue, newValue));
 			}
 		}
 	}

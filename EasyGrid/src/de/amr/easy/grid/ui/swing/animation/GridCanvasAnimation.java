@@ -3,9 +3,7 @@ package de.amr.easy.grid.ui.swing.animation;
 import java.util.function.IntSupplier;
 
 import de.amr.easy.graph.api.ObservableGraph;
-import de.amr.easy.graph.api.event.EdgeAddedEvent;
-import de.amr.easy.graph.api.event.EdgeChangeEvent;
-import de.amr.easy.graph.api.event.EdgeRemovedEvent;
+import de.amr.easy.graph.api.event.EdgeEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.VertexChangeEvent;
 import de.amr.easy.grid.ui.swing.rendering.GridCanvas;
@@ -44,21 +42,21 @@ public class GridCanvasAnimation implements GraphObserver {
 	}
 
 	@Override
-	public void edgeAdded(EdgeAddedEvent event) {
+	public void edgeAdded(EdgeEvent event) {
 		if (enabled) {
 			delayed(() -> canvas.drawGridPassage(event.getEither(), event.getOther(), true));
 		}
 	}
 
 	@Override
-	public void edgeRemoved(EdgeRemovedEvent event) {
+	public void edgeRemoved(EdgeEvent event) {
 		if (enabled) {
 			delayed(() -> canvas.drawGridPassage(event.getEither(), event.getOther(), false));
 		}
 	}
 
 	@Override
-	public void edgeChanged(EdgeChangeEvent event) {
+	public void edgeChanged(EdgeEvent event) {
 		if (enabled) {
 			delayed(() -> canvas.drawGridPassage(event.getEither(), event.getOther(), true));
 		}

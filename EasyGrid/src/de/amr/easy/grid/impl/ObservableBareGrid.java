@@ -6,9 +6,7 @@ import java.util.function.BiFunction;
 
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;
-import de.amr.easy.graph.api.event.EdgeAddedEvent;
-import de.amr.easy.graph.api.event.EdgeChangeEvent;
-import de.amr.easy.graph.api.event.EdgeRemovedEvent;
+import de.amr.easy.graph.api.event.EdgeEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.VertexChangeEvent;
 import de.amr.easy.grid.api.ObservableBareGrid2D;
@@ -40,7 +38,7 @@ public class ObservableBareGrid<E extends Edge> extends BareGrid<E> implements O
 		super.addEdge(p, q);
 		if (fireEvents) {
 			for (GraphObserver obs : observers) {
-				obs.edgeAdded(new EdgeAddedEvent(this, p, q));
+				obs.edgeAdded(new EdgeEvent(this, p, q));
 			}
 		}
 	}
@@ -51,7 +49,7 @@ public class ObservableBareGrid<E extends Edge> extends BareGrid<E> implements O
 			super.removeEdge(p, q);
 			if (fireEvents) {
 				for (GraphObserver obs : observers) {
-					obs.edgeRemoved(new EdgeRemovedEvent(this, p, q));
+					obs.edgeRemoved(new EdgeEvent(this, p, q));
 				}
 			}
 		});
@@ -99,7 +97,7 @@ public class ObservableBareGrid<E extends Edge> extends BareGrid<E> implements O
 	protected void fireEdgeChange(int either, int other, Object oldValue, Object newValue) {
 		if (fireEvents) {
 			for (GraphObserver obs : observers) {
-				obs.edgeChanged(new EdgeChangeEvent(this, either, other, oldValue, newValue));
+				obs.edgeChanged(new EdgeEvent(this, either, other, oldValue, newValue));
 			}
 		}
 	}

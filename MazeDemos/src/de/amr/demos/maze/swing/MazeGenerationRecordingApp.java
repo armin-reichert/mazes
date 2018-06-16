@@ -7,9 +7,7 @@ import java.awt.Color;
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.api.event.EdgeAddedEvent;
-import de.amr.easy.graph.api.event.EdgeChangeEvent;
-import de.amr.easy.graph.api.event.EdgeRemovedEvent;
+import de.amr.easy.graph.api.event.EdgeEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.VertexChangeEvent;
 import de.amr.easy.grid.api.Grid2D;
@@ -156,17 +154,17 @@ public class MazeGenerationRecordingApp {
 			}
 
 			@Override
-			public void edgeRemoved(EdgeRemovedEvent event) {
+			public void edgeRemoved(EdgeEvent event) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
-			public void edgeChanged(EdgeChangeEvent event) {
+			public void edgeChanged(EdgeEvent event) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
-			public void edgeAdded(EdgeAddedEvent event) {
+			public void edgeAdded(EdgeEvent event) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 		});

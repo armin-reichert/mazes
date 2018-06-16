@@ -1,6 +1,6 @@
 package de.amr.easy.graph.api;
 
-import de.amr.easy.graph.api.event.GraphTraversalListener;
+import de.amr.easy.graph.api.event.GraphTraversalObserver;
 
 /**
  * Interface for observable graph traversals.
@@ -9,9 +9,9 @@ import de.amr.easy.graph.api.event.GraphTraversalListener;
  */
 public interface ObservableGraphTraversal extends GraphTraversal {
 
-	void addObserver(GraphTraversalListener observer);
+	void addObserver(GraphTraversalObserver observer);
 
-	void removeObserver(GraphTraversalListener observer);
+	void removeObserver(GraphTraversalObserver observer);
 
 	void edgeTouched(int u, int v);
 

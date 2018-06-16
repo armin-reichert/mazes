@@ -8,9 +8,7 @@ import java.util.function.BiFunction;
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.api.event.EdgeAddedEvent;
-import de.amr.easy.graph.api.event.EdgeChangeEvent;
-import de.amr.easy.graph.api.event.EdgeRemovedEvent;
+import de.amr.easy.graph.api.event.EdgeEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.VertexChangeEvent;
 import de.amr.easy.graph.traversal.BreadthFirstTraversal;
@@ -178,17 +176,17 @@ public class LayeredGridCanvas<E extends Edge> extends LayeredCanvas implements 
 	}
 
 	@Override
-	public void edgeAdded(EdgeAddedEvent event) {
+	public void edgeAdded(EdgeEvent event) {
 		repaint();
 	}
 
 	@Override
-	public void edgeRemoved(EdgeRemovedEvent event) {
+	public void edgeRemoved(EdgeEvent event) {
 		repaint();
 	}
 
 	@Override
-	public void edgeChanged(EdgeChangeEvent event) {
+	public void edgeChanged(EdgeEvent event) {
 		repaint();
 	}
 

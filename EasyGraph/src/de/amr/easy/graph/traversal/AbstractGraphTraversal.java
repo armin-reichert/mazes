@@ -13,7 +13,7 @@ import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.ObservableGraphTraversal;
 import de.amr.easy.graph.api.PathFinder;
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.api.event.GraphTraversalListener;
+import de.amr.easy.graph.api.event.GraphTraversalObserver;
 
 /**
  * Base class for graph traversals. Stores traversal state and parent vertex of each vertex and
@@ -30,7 +30,7 @@ public abstract class AbstractGraphTraversal implements ObservableGraphTraversal
 
 	protected final Map<Integer, TraversalState> stateMap = new HashMap<>();
 
-	protected final Set<GraphTraversalListener> observers = new HashSet<>(3);
+	protected final Set<GraphTraversalObserver> observers = new HashSet<>(3);
 
 	protected final Graph<?> graph;
 
@@ -80,23 +80,23 @@ public abstract class AbstractGraphTraversal implements ObservableGraphTraversal
 	}
 
 	@Override
-	public void addObserver(GraphTraversalListener observer) {
+	public void addObserver(GraphTraversalObserver observer) {
 		observers.add(observer);
 	}
 
 	@Override
-	public void removeObserver(GraphTraversalListener observer) {
+	public void removeObserver(GraphTraversalObserver observer) {
 		observers.remove(observer);
 	}
 
 	@Override
 	public void edgeTouched(int u, int v) {
-		observers.forEach(observer -> observer.edgeTouched(u, v));
+		observers.forEach(observer -> observer.edgeTraversed(u, v));
 	}
 
 	@Override
 	public void vertexVisited(int u, TraversalState oldState, TraversalState newState) {
-		observers.forEach(observer -> observer.vertexTouched(u, oldState, newState));
+		observers.forEach(observer -> observer.vertexTraversed(u, oldState, newState));
 	}
 
 	@Override

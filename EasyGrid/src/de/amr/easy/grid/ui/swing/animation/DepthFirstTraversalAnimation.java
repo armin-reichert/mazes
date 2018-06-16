@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.ObservableGraphTraversal;
 import de.amr.easy.graph.api.TraversalState;
-import de.amr.easy.graph.api.event.GraphTraversalListener;
+import de.amr.easy.graph.api.event.GraphTraversalObserver;
 import de.amr.easy.graph.traversal.AbstractGraphTraversal;
 import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
@@ -67,7 +67,7 @@ public class DepthFirstTraversalAnimation {
 	}
 
 	public void run(GridCanvas canvas, AbstractGraphTraversal dfs, int source, int target) {
-		dfs.addObserver(new GraphTraversalListener() {
+		dfs.addObserver(new GraphTraversalObserver() {
 
 			private void delayed(Runnable code) {
 				if (fnDelay.getAsInt() > 0) {
@@ -82,12 +82,12 @@ public class DepthFirstTraversalAnimation {
 			}
 
 			@Override
-			public void edgeTouched(int either, int other) {
+			public void edgeTraversed(int either, int other) {
 				delayed(() -> canvas.drawGridPassage(either, other, true));
 			}
 
 			@Override
-			public void vertexTouched(int v, TraversalState oldState, TraversalState newState) {
+			public void vertexTraversed(int v, TraversalState oldState, TraversalState newState) {
 				delayed(() -> canvas.drawGridCell(v));
 			}
 		});

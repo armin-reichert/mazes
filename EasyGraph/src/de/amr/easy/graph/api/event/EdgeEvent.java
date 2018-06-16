@@ -3,11 +3,11 @@ package de.amr.easy.graph.api.event;
 import de.amr.easy.graph.api.ObservableGraph;
 
 /**
- * Event for edge changes.
+ * Event for edge related changes of a graph.
  * 
  * @author Armin Reichert
  */
-public class EdgeChangeEvent {
+public class EdgeEvent {
 
 	private final ObservableGraph<?> graph;
 	private final int either;
@@ -15,12 +15,19 @@ public class EdgeChangeEvent {
 	private final Object oldValue;
 	private final Object newValue;
 
-	public EdgeChangeEvent(ObservableGraph<?> graph, int either, int other, Object oldValue, Object newValue) {
+	public EdgeEvent(ObservableGraph<?> graph, int either, int other, Object oldValue, Object newValue) {
 		this.graph = graph;
 		this.either = either;
 		this.other = other;
 		this.oldValue = oldValue;
 		this.newValue = newValue;
+	}
+
+	public EdgeEvent(ObservableGraph<?> graph, int either, int other) {
+		this.graph = graph;
+		this.either = either;
+		this.other = other;
+		oldValue = newValue = null;
 	}
 
 	public ObservableGraph<?> getGraph() {
