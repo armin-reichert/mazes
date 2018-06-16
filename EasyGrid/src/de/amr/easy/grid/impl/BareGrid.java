@@ -165,7 +165,7 @@ public class BareGrid<E extends Edge> implements BareGrid2D<E> {
 	}
 
 	@Override
-	public IntStream adjVertices(int cell) {
+	public IntStream adj(int cell) {
 		checkCell(cell);
 		/*@formatter:off*/
 		return top.dirs()
@@ -177,12 +177,12 @@ public class BareGrid<E extends Edge> implements BareGrid2D<E> {
 	@Override
 	public boolean adjacent(int either, int other) {
 		checkCell(other);
-		return adjVertices(either).anyMatch(vertex -> vertex == other);
+		return adj(either).anyMatch(vertex -> vertex == other);
 	}
 
 	@Override
 	public int degree(int cell) {
-		return (int) adjVertices(cell).count();
+		return (int) adj(cell).count();
 	}
 
 	// Implement {@link BareGrid2D} interface

@@ -93,7 +93,7 @@ public interface Graph<E extends Edge> {
 	 *          a vertex
 	 * @return all vertices adjacent to the given vertex
 	 */
-	IntStream adjVertices(int v);
+	IntStream adj(int v);
 
 	/**
 	 * Tells if the given vertices are "adjacent" that is connected by an edge.

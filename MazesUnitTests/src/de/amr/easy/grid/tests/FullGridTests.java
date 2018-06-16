@@ -61,20 +61,20 @@ public class FullGridTests {
 	@Test
 	public void testAdjVertices() {
 		Integer cell = grid.cell(1, 1);
-		assertContainsExactly(grid.adjVertices(cell), grid.cell(1, 0), grid.cell(1, 2), grid.cell(2, 1), grid.cell(0, 1));
+		assertContainsExactly(grid.adj(cell), grid.cell(1, 0), grid.cell(1, 2), grid.cell(2, 1), grid.cell(0, 1));
 	}
 
 	@Test
 	public void testAdjVerticesAtCorners() {
 		Integer cell;
 		cell = grid.cell(GridPosition.TOP_LEFT);
-		assertContainsExactly(grid.adjVertices(cell), grid.cell(1, 0), grid.cell(0, 1));
+		assertContainsExactly(grid.adj(cell), grid.cell(1, 0), grid.cell(0, 1));
 		cell = grid.cell(GridPosition.TOP_RIGHT);
-		assertContainsExactly(grid.adjVertices(cell), grid.cell(WIDTH - 2, 0), grid.cell(WIDTH - 1, 1));
+		assertContainsExactly(grid.adj(cell), grid.cell(WIDTH - 2, 0), grid.cell(WIDTH - 1, 1));
 		cell = grid.cell(GridPosition.BOTTOM_LEFT);
-		assertContainsExactly(grid.adjVertices(cell), grid.cell(0, HEIGHT - 2), grid.cell(1, HEIGHT - 1));
+		assertContainsExactly(grid.adj(cell), grid.cell(0, HEIGHT - 2), grid.cell(1, HEIGHT - 1));
 		cell = grid.cell(GridPosition.BOTTOM_RIGHT);
-		assertContainsExactly(grid.adjVertices(cell), grid.cell(WIDTH - 1, HEIGHT - 2), grid.cell(WIDTH - 2, HEIGHT - 1));
+		assertContainsExactly(grid.adj(cell), grid.cell(WIDTH - 1, HEIGHT - 2), grid.cell(WIDTH - 2, HEIGHT - 1));
 	}
 
 	@Test

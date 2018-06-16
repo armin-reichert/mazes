@@ -37,7 +37,7 @@ public class HillClimbing<C extends Comparable<C>> extends DepthFirstTraversal {
 	@Override
 	protected IntStream childrenInQueuingOrder(int parent) {
 		/*@formatter:off*/
-		return graph.adjVertices(parent)
+		return graph.adj(parent)
 			.filter(c -> getState(c) == UNVISITED)
 			.boxed()
 			// push vertex with higher cost *before* vertex with lower cost onto the stack!

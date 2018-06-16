@@ -128,7 +128,7 @@ public class DefaultGraph implements Graph<SimpleEdge> {
 	}
 
 	@Override
-	public IntStream adjVertices(int v) {
+	public IntStream adj(int v) {
 		assertVertexExists(v);
 		List<Integer> result = new ArrayList<>();
 		for (SimpleEdge e : adjEdges.get(v)) {

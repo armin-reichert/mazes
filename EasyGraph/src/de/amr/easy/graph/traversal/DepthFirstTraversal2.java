@@ -75,6 +75,6 @@ public class DepthFirstTraversal2 extends AbstractGraphTraversal {
 	}
 
 	protected IntStream children(int v) {
-		return graph.adjVertices(v).filter(child -> getState(child) == UNVISITED);
+		return graph.adj(v).filter(child -> getState(child) == UNVISITED);
 	}
 }
