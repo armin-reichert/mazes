@@ -47,13 +47,6 @@ public abstract class AbstractGraphTraversal implements ObservableGraphTraversal
 	}
 
 	/**
-	 * @return the traversed graph
-	 */
-	public Graph<?> getGraph() {
-		return graph;
-	}
-
-	/**
 	 * @param v
 	 *          a vertex
 	 * @return the children of this vertex in the order they will be added to the search queue
@@ -76,10 +69,6 @@ public abstract class AbstractGraphTraversal implements ObservableGraphTraversal
 	@Override
 	public int getParent(int v) {
 		return parentMap.containsKey(v) ? parentMap.get(v) : -1;
-	}
-
-	public void setParent(int v, int parent) {
-		parentMap.put(v, parent);
 	}
 
 	@Override

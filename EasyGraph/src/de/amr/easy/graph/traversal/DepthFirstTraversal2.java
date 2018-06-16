@@ -44,10 +44,10 @@ public class DepthFirstTraversal2 extends AbstractGraphTraversal {
 			if (current == target) {
 				break;
 			}
-			OptionalInt neighbor = children(current).findAny();
+			OptionalInt neighbor = unvisitedChildren(current).findAny();
 			if (neighbor.isPresent()) {
 				visit(neighbor.getAsInt(), current);
-				if (children(neighbor.getAsInt()).findAny().isPresent()) {
+				if (unvisitedChildren(neighbor.getAsInt()).findAny().isPresent()) {
 					stack.push(neighbor.getAsInt());
 				}
 				current = neighbor.getAsInt();
@@ -68,13 +68,13 @@ public class DepthFirstTraversal2 extends AbstractGraphTraversal {
 
 	private void visit(int child, int parent) {
 		setState(child, VISITED);
-		setParent(child, parent);
+		parentMap.put(child, parent);
 		if (parent != -1) {
 			edgeTraversed(parent, child);
 		}
 	}
 
-	protected IntStream children(int v) {
+	private IntStream unvisitedChildren(int v) {
 		return graph.adj(v).filter(child -> getState(child) == UNVISITED);
 	}
 }

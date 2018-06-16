@@ -12,11 +12,11 @@ import java.util.Queue;
 import de.amr.easy.graph.api.Graph;
 
 /**
- * Breadth-first-traversal of an undirected graph from a given source vertex. After being executed,
+ * Breadth-first traversal of an undirected graph from a given source vertex. After being executed,
  * the distance of each vertex from the source can be queried, as well as the maximal distance of a
  * reachable vertex from the source.
  * <p>
- * During the traversal, events are fired which can be processed by a listener, for example an
+ * During the traversal, events are fired which can be processed by observers, for example an
  * animation.
  * 
  * @author Armin Reichert
@@ -56,10 +56,10 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal {
 		clear();
 		visit(source, -1);
 		while (!q.isEmpty()) {
-			if (q.peek() == target) {
+			int current = q.poll();
+			if (current == target) {
 				break;
 			}
-			int current = q.poll();
 			childrenInQueuingOrder(current).forEach(child -> visit(child, current));
 			setState(current, COMPLETED);
 		}
@@ -68,7 +68,7 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal {
 	private void visit(int v, int parent) {
 		q.add(v);
 		setState(v, VISITED);
-		setParent(v, parent);
+		parentMap.put(v, parent);
 		int d = parent != -1 ? distance[parent] + 1 : 0;
 		if (d > maxDistance) {
 			maxDistance = d;

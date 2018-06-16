@@ -6,8 +6,8 @@ import java.util.function.Function;
 import de.amr.easy.graph.api.Graph;
 
 /**
- * A heuristic variant of Breadth-First-Traversal which sorts the entire queue when children of the
- * current element are added. The sorting order is determined by the vertex valuation comparator.
+ * A heuristic variant of breadth-first traversal which sorts the entire queue when children of the
+ * current element are expanded. The sorting order is determined by the vertex cost function.
  * 
  * <p>
  * Reference: Patrick Henry Winston, Artificial Intelligence, Addison-Wesley, 1984
@@ -20,7 +20,7 @@ import de.amr.easy.graph.api.Graph;
 public class BestFirstTraversal<C extends Comparable<C>> extends BreadthFirstTraversal {
 
 	/**
-	 * Creates a Best-First traversal instance for the given graph and vertex cost function.
+	 * Creates a best-first traversal instance for the given graph and vertex cost function.
 	 * 
 	 * @param graph
 	 *          a graph

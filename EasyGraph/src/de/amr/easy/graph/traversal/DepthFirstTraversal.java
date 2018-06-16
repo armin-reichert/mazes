@@ -6,7 +6,7 @@ import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Graph;
 
 /**
- * Base class for Depth-first-traversal classes. Subclasses my change the order in which the
+ * Base class for depth-first traversal classes. Subclasses my change the order in which the
  * children of the currently visited vertex are put onto the stack.
  * 
  * @author Armin Reichert
@@ -47,7 +47,7 @@ public class DepthFirstTraversal extends AbstractGraphTraversal {
 	}
 
 	/**
-	 * Visits child vertex by following an edge from the parent vertex.
+	 * Visits child vertex traversing edge from parent vertex.
 	 * 
 	 * @param child
 	 *          child vertex
@@ -57,7 +57,7 @@ public class DepthFirstTraversal extends AbstractGraphTraversal {
 	protected void visit(int child, int parent) {
 		stack.push(child);
 		setState(child, VISITED);
-		setParent(child, parent);
+		parentMap.put(child, parent);
 		if (parent != -1) {
 			edgeTraversed(parent, child);
 		}
