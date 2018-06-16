@@ -91,7 +91,7 @@ public class RunMazeSolverAction extends MazeDemoAction {
 		anim.setPathColor(app.model.getPathColor());
 
 		if (solver.getAlgorithmClass() == DepthFirstTraversal2.class) {
-			watch.measure(() -> anim.run(app.getCanvas(), new DepthFirstTraversal2<>(grid), src, tgt));
+			watch.measure(() -> anim.run(app.getCanvas(), new DepthFirstTraversal2(grid), src, tgt));
 			app.showMessage(format("Depth-first search: %.2f seconds.", watch.getSeconds()));
 		}
 

@@ -101,7 +101,7 @@ public class GridTraversalTests {
 	@Test
 	public void testDFS2() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		DepthFirstTraversal2<Grid2D<TraversalState, SimpleEdge>> dfs = new DepthFirstTraversal2<>(grid);
+		DepthFirstTraversal2 dfs = new DepthFirstTraversal2(grid);
 		assertState(grid.vertices(), dfs::getState, UNVISITED);
 		dfs.traverseGraph(source, target);
 		assertState(dfs.findPath(target), dfs::getState, COMPLETED);

@@ -14,15 +14,12 @@ import de.amr.easy.graph.api.Graph;
  * Alternative implementation of Depth-first-traversal of an undirected graph.
  * 
  * @author Armin Reichert
- * 
- * @param <G>
- *          graph type
  */
-public class DepthFirstTraversal2<G extends Graph<?>> extends AbstractGraphTraversal {
+public class DepthFirstTraversal2 extends AbstractGraphTraversal {
 
 	private final Stack<Integer> stack = new Stack<>();
 
-	public DepthFirstTraversal2(G graph) {
+	public DepthFirstTraversal2(Graph<?> graph) {
 		super(graph);
 	}
 
