@@ -41,14 +41,14 @@ public class PearlsGridRenderer extends ConfigurableGridRenderer {
 		int y = grid.row(cell) * cs;
 		int ps = getPearlSize();
 		int offset = cs / 4;
-		int arc = ps/2;
+		int arc = ps / 2;
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g.translate(x + offset, y + offset);
 		g.setColor(getCellBgColor(cell));
-//		 g.fillOval(0, 0, ps, ps);
+		// g.fillOval(0, 0, ps, ps);
 		g.fillRoundRect(0, 0, ps, ps, arc, arc);
 		g.translate(-x - offset, -y - offset);
-		// drawCellContent(g, grid, cell);
+		drawCellContent(g, grid, cell);
 	}
 
 	private void drawCellContent(Graphics2D g, BareGrid2D<?> grid, int cell) {

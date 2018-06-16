@@ -3,6 +3,7 @@ package de.amr.demos.grid;
 import static de.amr.easy.graph.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
+import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation.floodFill;
 
 import java.awt.Color;
@@ -19,7 +20,7 @@ public class PearlsRendererTestApp extends SwingGridSampleApp<SimpleEdge> {
 		launch(new PearlsRendererTestApp());
 	}
 
-	static final int GRID_SIZE = 20;
+	static final int GRID_SIZE = 10;
 	static final int CANVAS_SIZE = 800;
 	static final int GRID_CELL_SIZE = CANVAS_SIZE / GRID_SIZE;
 
@@ -38,19 +39,19 @@ public class PearlsRendererTestApp extends SwingGridSampleApp<SimpleEdge> {
 		grid.fill();
 		canvas.drawGrid();
 
-		sleep(2000);
+		sleep(5000);
 		clear();
 		canvasAnimation.setEnabled(true);
 		canvasAnimation.fnDelay = () -> 1;
 		new WilsonUSTRecursiveCrosses(grid).run(0);
 
-		sleep(2000);
+		sleep(5000);
 		canvasAnimation.fnDelay = () -> 10;
 		new DepthFirstTraversalAnimation(grid).run(canvas, new DepthFirstTraversal2<>(grid), 0, grid.cell(BOTTOM_RIGHT));
 
-		sleep(2000);
+		sleep(5000);
 		canvas.clear();
-		floodFill(canvas, grid, 0);
+		floodFill(canvas, grid, grid.cell(TOP_LEFT), true);
 	}
 
 	private void clear() {
