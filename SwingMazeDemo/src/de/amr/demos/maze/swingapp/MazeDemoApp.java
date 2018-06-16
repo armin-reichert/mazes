@@ -127,11 +127,11 @@ public class MazeDemoApp {
 		getCanvas().getActionMap().put("showSettings", actionShowSettings);
 	}
 
-	public GridCanvas<MazeGrid> getCanvas() {
+	public GridCanvas getCanvas() {
 		return wndCanvas.getCanvas();
 	}
 
-	public GridCanvasAnimation<MazeGrid> getCanvasAnimation() {
+	public GridCanvasAnimation getCanvasAnimation() {
 		return wndCanvas.getCanvasAnimation();
 	}
 

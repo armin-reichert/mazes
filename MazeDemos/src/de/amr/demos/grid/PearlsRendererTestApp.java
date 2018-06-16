@@ -12,6 +12,7 @@ import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.traversal.DepthFirstTraversal2;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
+import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.maze.alg.ust.WilsonUSTRecursiveCrosses;
 
 public class PearlsRendererTestApp extends SwingGridSampleApp<SimpleEdge> {
@@ -28,6 +29,7 @@ public class PearlsRendererTestApp extends SwingGridSampleApp<SimpleEdge> {
 		super(CANVAS_SIZE, CANVAS_SIZE, GRID_CELL_SIZE, Top4.get(), SimpleEdge::new);
 		setAppName("Pearls Renderer Test");
 		setRenderingStyle(Style.PEARLS);
+		ConfigurableGridRenderer renderer = (ConfigurableGridRenderer) canvas.getRenderer().get();
 		renderer.fnGridBgColor = () -> Color.DARK_GRAY;
 	}
 

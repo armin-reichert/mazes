@@ -21,6 +21,7 @@ public class GridRenderingTestApp extends SwingGridSampleApp<SimpleEdge> {
 	public GridRenderingTestApp() {
 		super(256, Top4.get(), SimpleEdge::new);
 		setAppName("Full Grid");
+		fullscreen = false;
 	}
 
 	@Override

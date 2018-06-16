@@ -9,7 +9,6 @@ import javax.swing.JFrame;
 
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
-import de.amr.demos.maze.swingapp.model.MazeGrid;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.grid.ui.swing.GridCanvas;
 import de.amr.easy.grid.ui.swing.animation.GridCanvasAnimation;
@@ -24,8 +23,8 @@ import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
  */
 public class CanvasWindow extends JFrame {
 
-	private GridCanvas<MazeGrid> canvas;
-	private GridCanvasAnimation<MazeGrid> canvasAnimation;
+	private GridCanvas canvas;
+	private GridCanvasAnimation canvasAnimation;
 
 	public CanvasWindow(MazeDemoModel model) {
 		setBackground(Color.BLACK);
@@ -35,21 +34,21 @@ public class CanvasWindow extends JFrame {
 	}
 
 	public void newCanvas(MazeDemoModel model) {
-		canvas = new GridCanvas<>(model.getGrid(), model.getGridCellSize());
+		canvas = new GridCanvas(model.getGrid(), model.getGridCellSize());
 		canvas.pushRenderer(createRenderer(model));
 		canvas.clear();
-		canvasAnimation = new GridCanvasAnimation<>(canvas);
+		canvasAnimation = new GridCanvasAnimation(canvas);
 		canvasAnimation.fnDelay = () -> model.getDelay();
 		model.getGrid().addGraphObserver(canvasAnimation);
 		setContentPane(canvas);
 		repaint();
 	}
 
-	public GridCanvas<MazeGrid> getCanvas() {
+	public GridCanvas getCanvas() {
 		return canvas;
 	}
 
-	public GridCanvasAnimation<MazeGrid> getCanvasAnimation() {
+	public GridCanvasAnimation getCanvasAnimation() {
 		return canvasAnimation;
 	}
 

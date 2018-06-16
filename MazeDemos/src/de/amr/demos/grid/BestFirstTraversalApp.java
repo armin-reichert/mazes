@@ -1,17 +1,17 @@
 package de.amr.demos.grid;
 
 import static de.amr.easy.graph.api.TraversalState.UNVISITED;
-import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
-import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
 import java.awt.Color;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.traversal.BestFirstTraversal;
+import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
+import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
 
 public class BestFirstTraversalApp extends SwingGridSampleApp<SimpleEdge> {
@@ -31,10 +31,12 @@ public class BestFirstTraversalApp extends SwingGridSampleApp<SimpleEdge> {
 
 	@Override
 	public void run() {
+		GridRenderer renderer = canvas.getRenderer().get();
 		ConfigurableGridRenderer r = new WallPassageGridRenderer();
 		r.fnCellSize = () -> cellSize;
-		r.fnCellBgColor = cell -> grid.get(cell) == UNVISITED ? Color.WHITE : renderer.getCellBgColor(cell);
-		r.fnPassageColor = (cell, dir) -> grid.get(cell) == UNVISITED ? Color.WHITE : renderer.getPassageColor(cell, dir);
+		r.fnCellBgColor = cell -> grid.get(cell) == UNVISITED ? Color.WHITE : renderer.getModel().getCellBgColor(cell);
+		r.fnPassageColor = (cell, dir) -> grid.get(cell) == UNVISITED ? Color.WHITE
+				: renderer.getModel().getPassageColor(cell, dir);
 		r.fnPassageWidth = () -> cellSize - 2;
 		canvas.pushRenderer(r);
 		grid.fill();
@@ -44,8 +46,8 @@ public class BestFirstTraversalApp extends SwingGridSampleApp<SimpleEdge> {
 		removeArea(10, 16, 10, 1);
 		grid.setDefaultContent(UNVISITED);
 		canvas.drawGrid();
-		int source = grid.cell(TOP_LEFT);
-		int target = grid.cell(BOTTOM_RIGHT);
+		int source = grid.cell(GridPosition.TOP_LEFT);
+		int target = grid.cell(GridPosition.BOTTOM_RIGHT);
 		BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid);
 		anim.fnDelay = () -> 50;
 		BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, v -> grid.euclidean2(v, target));

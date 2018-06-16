@@ -39,7 +39,7 @@ public class BreadthFirstTraversalAnimation {
 	 * @param source
 	 *          cell where flood-fill starts
 	 */
-	public static void floodFill(GridCanvas<?> canvas, BareGrid2D<?> grid, int source) {
+	public static void floodFill(GridCanvas canvas, BareGrid2D<?> grid, int source) {
 		floodFill(canvas, grid, source, true);
 	}
 
@@ -55,7 +55,7 @@ public class BreadthFirstTraversalAnimation {
 	 * @param distanceVisible
 	 *          if distances should be displayed as text
 	 */
-	public static void floodFill(GridCanvas<?> canvas, BareGrid2D<?> grid, int source, boolean distanceVisible) {
+	public static void floodFill(GridCanvas canvas, BareGrid2D<?> grid, int source, boolean distanceVisible) {
 		BreadthFirstTraversal bfs = new BreadthFirstTraversal(grid);
 		BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid);
 		anim.setDistanceVisible(distanceVisible);
@@ -99,7 +99,7 @@ public class BreadthFirstTraversalAnimation {
 	 * @param target
 	 *          the target cell
 	 */
-	public void run(GridCanvas<?> canvas, BreadthFirstTraversal bfs, int source, int target) {
+	public void run(GridCanvas canvas, BreadthFirstTraversal bfs, int source, int target) {
 		canvas.getRenderer().ifPresent(canvasRenderer -> {
 			// 1. traverse complete graph for computing maximum distance from source
 			BreadthFirstTraversal distanceMap = new BreadthFirstTraversal(grid);
@@ -141,7 +141,7 @@ public class BreadthFirstTraversalAnimation {
 		});
 	}
 
-	public void showPath(GridCanvas<?> canvas, BreadthFirstTraversal bfs, int target) {
+	public void showPath(GridCanvas canvas, BreadthFirstTraversal bfs, int target) {
 		canvas.getRenderer().ifPresent(canvasRenderer -> {
 			int[] path = bfs.findPath(target).toArray();
 			canvas.pushRenderer(createPathRenderer(floodFillRenderer, bfs, path));
@@ -164,8 +164,8 @@ public class BreadthFirstTraversalAnimation {
 		return r;
 	}
 
-	private ConfigurableGridRenderer createPathRenderer(ConfigurableGridRenderer base,
-			BreadthFirstTraversal distanceMap, int[] path) {
+	private ConfigurableGridRenderer createPathRenderer(ConfigurableGridRenderer base, BreadthFirstTraversal distanceMap,
+			int[] path) {
 		BitSet inPath = new BitSet();
 		IntStream.of(path).forEach(inPath::set);
 		ConfigurableGridRenderer r = base instanceof PearlsGridRenderer ? new PearlsGridRenderer()

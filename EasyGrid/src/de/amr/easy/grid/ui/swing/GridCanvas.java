@@ -19,18 +19,15 @@ import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
  * A Swing component for displaying a grid.
  * 
  * @author Armin Reichert
- *
- * @param <G>
- *          the Grid type
  */
-public class GridCanvas<G extends BareGrid2D<?>> extends JComponent {
+public class GridCanvas extends JComponent {
 
-	protected G grid;
 	protected final Stack<GridRenderer> rendererStack = new Stack<>();
+	protected BareGrid2D<?> grid;
 	protected BufferedImage drawingBuffer;
 	protected Graphics2D g2;
 
-	public GridCanvas(G grid, int cellSize) {
+	public GridCanvas(BareGrid2D<?> grid, int cellSize) {
 		if (grid == null) {
 			throw new IllegalArgumentException("NULL grid not allowed");
 		}
@@ -39,11 +36,11 @@ public class GridCanvas<G extends BareGrid2D<?>> extends JComponent {
 		adaptSize(cellSize);
 	}
 
-	public G getGrid() {
+	public BareGrid2D<?> getGrid() {
 		return grid;
 	}
 
-	public void setGrid(G grid) {
+	public void setGrid(BareGrid2D<?> grid) {
 		if (grid == null) {
 			throw new IllegalArgumentException("Canvas must have a grid");
 		}
@@ -110,7 +107,7 @@ public class GridCanvas<G extends BareGrid2D<?>> extends JComponent {
 		repaint();
 	}
 
-	public void popRenderer() {
+	public GridRenderer popRenderer() {
 		if (rendererStack.isEmpty()) {
 			throw new IllegalStateException("Cannot remove last renderer");
 		}
@@ -121,5 +118,6 @@ public class GridCanvas<G extends BareGrid2D<?>> extends JComponent {
 			}
 		});
 		repaint();
+		return oldRenderer;
 	}
 }

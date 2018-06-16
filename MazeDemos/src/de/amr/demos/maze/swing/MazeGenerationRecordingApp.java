@@ -98,12 +98,12 @@ public class MazeGenerationRecordingApp {
 	};
 
 	private ObservableGrid2D<TraversalState, SimpleEdge> grid;
-	private GridCanvas<ObservableGrid2D<TraversalState, SimpleEdge>> canvas;
+	private GridCanvas canvas;
 
 	public void run(int numCols, int numRows, int cellSize, int scanRate, int delayMillis) {
 		for (Class<?> generatorClass : generatorClasses) {
 			grid = new ObservableGrid<>(numCols, numRows, Top4.get(), TraversalState.UNVISITED, false, SimpleEdge::new);
-			canvas = new GridCanvas<>(grid, cellSize);
+			canvas = new GridCanvas(grid, cellSize);
 			canvas.pushRenderer(createRenderer(cellSize));
 			try {
 				MazeAlgorithm<SimpleEdge> generator = (MazeAlgorithm<SimpleEdge>) generatorClass.getConstructor(Grid2D.class)
@@ -143,7 +143,7 @@ public class MazeGenerationRecordingApp {
 	}
 
 	private void attachRecorderToGrid(GifRecorder recorder) {
-		canvas.getGrid().addGraphObserver(new GraphObserver() {
+		grid.addGraphObserver(new GraphObserver() {
 
 			@Override
 			public void vertexChanged(VertexChangeEvent event) {

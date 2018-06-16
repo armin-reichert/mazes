@@ -8,18 +8,17 @@ import de.amr.easy.graph.api.event.EdgeChangeEvent;
 import de.amr.easy.graph.api.event.EdgeRemovedEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.VertexChangeEvent;
-import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.ui.swing.GridCanvas;
 
-public class GridCanvasAnimation<G extends BareGrid2D<?>> implements GraphObserver {
+public class GridCanvasAnimation implements GraphObserver {
 
-	private final GridCanvas<G> canvas;
+	private final GridCanvas canvas;
 	private boolean enabled;
 
 	/** Function supplying the delay in milliseconds. */
 	public IntSupplier fnDelay;
 
-	public GridCanvasAnimation(GridCanvas<G> canvas) {
+	public GridCanvasAnimation(GridCanvas canvas) {
 		this.canvas = canvas;
 		enabled = true;
 		fnDelay = () -> 0;

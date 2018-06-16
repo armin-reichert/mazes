@@ -56,9 +56,8 @@ public abstract class SwingGridSampleApp<E extends Edge> implements Runnable {
 	protected String appName;
 	protected boolean fullscreen;
 	protected ObservableGrid<TraversalState, E> grid;
-	protected GridCanvas<ObservableGrid<TraversalState, E>> canvas;
-	protected GridCanvasAnimation<ObservableGrid<TraversalState, E>> canvasAnimation;
-	protected ConfigurableGridRenderer renderer;
+	protected GridCanvas canvas;
+	protected GridCanvasAnimation canvasAnimation;
 
 	private ConfigurableGridRenderer createRenderer(Style style, int cellSize) {
 		ConfigurableGridRenderer r;
@@ -103,7 +102,8 @@ public abstract class SwingGridSampleApp<E extends Edge> implements Runnable {
 		fullscreen = false;
 		canvasSize = new Dimension(canvasWidth, canvasHeight);
 		grid = new ObservableGrid<>(canvasWidth / cellSize, canvasHeight / cellSize, top, UNVISITED, false, fnEdgeFactory);
-		renderer = createRenderer(Style.WALL_PASSAGE, cellSize);
+		canvas = new GridCanvas(grid, cellSize);
+		canvas.pushRenderer(createRenderer(Style.WALL_PASSAGE, cellSize));
 	}
 
 	/**
@@ -121,17 +121,15 @@ public abstract class SwingGridSampleApp<E extends Edge> implements Runnable {
 		canvasSize = new Dimension(displayMode.getWidth(), displayMode.getHeight());
 		grid = new ObservableGrid<>(canvasSize.width / cellSize, canvasSize.height / cellSize, top, UNVISITED, false,
 				fnEdgeFactory);
-		renderer = createRenderer(Style.WALL_PASSAGE, cellSize);
+		canvas = new GridCanvas(grid, cellSize);
+		canvas.pushRenderer(createRenderer(Style.WALL_PASSAGE, cellSize));
 	}
 
 	public void setRenderingStyle(Style style) {
-		ConfigurableGridRenderer oldRenderer = renderer;
-		renderer = createRenderer(style, oldRenderer.getCellSize());
+		canvas.pushRenderer(createRenderer(style, canvas.popRenderer().getModel().getCellSize()));
 	}
 
 	private void createAndShowUI() {
-		canvas = new GridCanvas<>(grid, renderer.getCellSize());
-		canvas.pushRenderer(renderer);
 		canvas.setBackground(Color.BLACK);
 		canvas.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "exit");
 		canvas.getActionMap().put("exit", new AbstractAction() {
@@ -141,14 +139,15 @@ public abstract class SwingGridSampleApp<E extends Edge> implements Runnable {
 				System.exit(0);
 			}
 		});
+		int cellSize = canvas.getRenderer().get().getModel().getCellSize();
 
-		canvasAnimation = new GridCanvasAnimation<>(canvas);
+		canvasAnimation = new GridCanvasAnimation(canvas);
 		grid.addGraphObserver(canvasAnimation);
 
 		window.add(canvas, BorderLayout.CENTER);
 
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setTitle(createTitle());
+		window.setTitle(createTitle(cellSize));
 		window.setBackground(Color.BLACK);
 		if (fullscreen) {
 			window.setPreferredSize(canvasSize);
@@ -172,12 +171,12 @@ public abstract class SwingGridSampleApp<E extends Edge> implements Runnable {
 
 	public void setAppName(String appName) {
 		this.appName = appName;
-		window.setTitle(createTitle());
+		window.setTitle(createTitle(canvas.getRenderer().get().getModel().getCellSize()));
 	}
 
-	private String createTitle() {
+	private String createTitle(int cellSize) {
 		return format("%s [%d cols %d rows %d cells @%d px]", appName, grid.numCols(), grid.numRows(), grid.numCells(),
-				renderer.getCellSize());
+				cellSize);
 	}
 
 	/**
@@ -188,7 +187,8 @@ public abstract class SwingGridSampleApp<E extends Edge> implements Runnable {
 	 *          new grid cell size
 	 */
 	public void resizeGrid(int cellSize) {
-		if (renderer.getCellSize() == cellSize) {
+		ConfigurableGridRenderer renderer = (ConfigurableGridRenderer) canvas.getRenderer().get();
+		if (renderer.getModel().getCellSize() == cellSize) {
 			return;
 		}
 		grid = new ObservableGrid<>(canvasSize.width / cellSize, canvasSize.height / cellSize, grid.getTopology(),
@@ -197,7 +197,7 @@ public abstract class SwingGridSampleApp<E extends Edge> implements Runnable {
 		grid.addGraphObserver(canvasAnimation);
 		renderer.fnCellSize = () -> cellSize;
 		canvas.adaptSize(cellSize);
-		window.setTitle(createTitle());
+		window.setTitle(createTitle(cellSize));
 	}
 
 	public void sleep(int millis) {

@@ -66,7 +66,7 @@ public class DepthFirstTraversalAnimation {
 		return r;
 	}
 
-	public void run(GridCanvas<?> canvas, AbstractGraphTraversal dfs, int source, int target) {
+	public void run(GridCanvas canvas, AbstractGraphTraversal dfs, int source, int target) {
 		dfs.addObserver(new GraphTraversalListener() {
 
 			private void delayed(Runnable code) {
