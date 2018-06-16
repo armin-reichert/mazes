@@ -80,7 +80,7 @@ public class DefaultGraph implements Graph<SimpleEdge> {
 	}
 
 	@Override
-	public boolean adjacent(int v, int w) {
+	public boolean hasEdge(int v, int w) {
 		assertVertexExists(v);
 		assertVertexExists(w);
 		for (SimpleEdge edge : adjEdges.get(v)) {

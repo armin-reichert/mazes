@@ -98,7 +98,7 @@ public class EllerInsideOut extends MazeAlgorithm<SimpleEdge> {
 	}
 
 	private void connectCells(int u, int v) {
-		if (grid.adjacent(u, v)) {
+		if (grid.hasEdge(u, v)) {
 			return;
 		}
 		addTreeEdge(u, v);
@@ -121,7 +121,7 @@ public class EllerInsideOut extends MazeAlgorithm<SimpleEdge> {
 			prevCell = cell;
 		}
 		if (prevCell != -1 && firstCell != -1 && prevCell != firstCell && grid.areNeighbors(prevCell, firstCell)
-				&& !grid.adjacent(prevCell, firstCell)) {
+				&& !grid.hasEdge(prevCell, firstCell)) {
 			if (all || rnd.nextBoolean()) {
 				if (mazeParts.find(prevCell) != mazeParts.find(firstCell)) {
 					connectCells(prevCell, firstCell);

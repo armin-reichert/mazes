@@ -137,7 +137,7 @@ public class BareGrid<E extends Edge> implements BareGrid2D<E> {
 	public Optional<E> edge(int p, int q) {
 		checkCell(p);
 		checkCell(q);
-		return adjacent(p, q) ? Optional.of(fnEdgeFactory.apply(p, q)) : Optional.empty();
+		return hasEdge(p, q) ? Optional.of(fnEdgeFactory.apply(p, q)) : Optional.empty();
 	}
 
 	@Override
@@ -145,7 +145,7 @@ public class BareGrid<E extends Edge> implements BareGrid2D<E> {
 		if (!areNeighbors(p, q)) {
 			throw new IllegalStateException("Cannot add edge between cells which are not neighbors");
 		}
-		if (adjacent(p, q)) {
+		if (hasEdge(p, q)) {
 			throw new IllegalStateException("Cannot add edge (" + p + "," + q + ") twice");
 		}
 		direction(p, q).ifPresent(dir -> connect(p, q, dir, true));
@@ -153,7 +153,7 @@ public class BareGrid<E extends Edge> implements BareGrid2D<E> {
 
 	@Override
 	public void removeEdge(int p, int q) {
-		if (!adjacent(p, q)) {
+		if (!hasEdge(p, q)) {
 			throw new IllegalStateException("Cannot remove non-existing edge");
 		}
 		direction(p, q).ifPresent(dir -> connect(p, q, dir, false));
@@ -175,7 +175,7 @@ public class BareGrid<E extends Edge> implements BareGrid2D<E> {
 	}
 
 	@Override
-	public boolean adjacent(int either, int other) {
+	public boolean hasEdge(int either, int other) {
 		checkCell(other);
 		return adj(either).anyMatch(vertex -> vertex == other);
 	}

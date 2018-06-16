@@ -96,15 +96,15 @@ public interface Graph<E extends Edge> {
 	IntStream adj(int v);
 
 	/**
-	 * Tells if the given vertices are "adjacent" that is connected by an edge.
+	 * Tells if the given vertices are connected by an edge.
 	 * 
 	 * @param v
-	 *          a vertex
+	 *          some vertex
 	 * @param w
-	 *          a vertex
-	 * @return <code>true</code> if there exists an edge between the vertices
+	 *          some vertex
+	 * @return {@code true} if there exists an edge between the vertices
 	 */
-	boolean adjacent(int v, int w);
+	boolean hasEdge(int v, int w);
 
 	/**
 	 * @param v

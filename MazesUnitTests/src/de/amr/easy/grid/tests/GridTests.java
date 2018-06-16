@@ -164,17 +164,17 @@ public class GridTests {
 
 	@Test
 	public void testAdjVertices() {
-		assertFalse(grid.adjacent(0, 1));
-		assertFalse(grid.adjacent(1, 0));
+		assertFalse(grid.hasEdge(0, 1));
+		assertFalse(grid.hasEdge(1, 0));
 		grid.addEdge(0, 1);
-		assertTrue(grid.adjacent(0, 1));
-		assertTrue(grid.adjacent(1, 0));
+		assertTrue(grid.hasEdge(0, 1));
+		assertTrue(grid.hasEdge(1, 0));
 		grid.removeEdge(0, 1);
-		assertFalse(grid.adjacent(0, 1));
-		assertFalse(grid.adjacent(1, 0));
+		assertFalse(grid.hasEdge(0, 1));
+		assertFalse(grid.hasEdge(1, 0));
 		grid.addEdge(1, 0);
-		assertTrue(grid.adjacent(1, 0));
-		assertTrue(grid.adjacent(0, 1));
+		assertTrue(grid.hasEdge(1, 0));
+		assertTrue(grid.hasEdge(0, 1));
 	}
 
 	@Test
@@ -238,11 +238,11 @@ public class GridTests {
 		// Find vertex with non-adjacent neighbor. Adding an edge to this neighbor produces a cycle.
 		///*@formatter:off*/
 		grid.vertices()
-			.filter(cell -> grid.neighbors(cell).anyMatch(neighbor -> !grid.adjacent(cell, neighbor)))
+			.filter(cell -> grid.neighbors(cell).anyMatch(neighbor -> !grid.hasEdge(cell, neighbor)))
 			.findAny()
 			.ifPresent(cell -> 	
 				grid.neighbors(cell)
-					.filter(neighbor -> !grid.adjacent(cell, neighbor))
+					.filter(neighbor -> !grid.hasEdge(cell, neighbor))
 					.findAny()
 					.ifPresent(neighbor -> grid.addEdge(cell, neighbor)));
 		///*@formatter:on*/
