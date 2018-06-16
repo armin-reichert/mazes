@@ -19,8 +19,12 @@ public class PearlsRendererTestApp extends SwingGridSampleApp<SimpleEdge> {
 		launch(new PearlsRendererTestApp());
 	}
 
+	static final int GRID_SIZE = 20;
+	static final int CANVAS_SIZE = 800;
+	static final int GRID_CELL_SIZE = CANVAS_SIZE / GRID_SIZE;
+
 	public PearlsRendererTestApp() {
-		super(750, 750, 15, Top4.get(), SimpleEdge::new);
+		super(CANVAS_SIZE, CANVAS_SIZE, GRID_CELL_SIZE, Top4.get(), SimpleEdge::new);
 		setAppName("Pearls Renderer Test");
 		setRenderingStyle(Style.PEARLS);
 		renderer.fnGridBgColor = () -> Color.DARK_GRAY;
