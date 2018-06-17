@@ -3,16 +3,16 @@ package de.amr.demos.maze.swingapp.model;
 import java.util.function.Function;
 
 /**
- * Heuristic for estimating the cost of a vertex.
+ * Vertex cost function.
  * 
  * @author Armin Reichert
  */
-public class VertexCostHeuristics {
+public class VertexCost {
 
 	private final String name;
 	private final Function<Integer, Integer> costFunction;
 
-	public VertexCostHeuristics(String name, Function<Integer, Integer> costFunction) {
+	public VertexCost(String name, Function<Integer, Integer> costFunction) {
 		this.name = name;
 		this.costFunction = costFunction;
 	}

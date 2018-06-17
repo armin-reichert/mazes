@@ -12,7 +12,7 @@ import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.MazeGrid;
 import de.amr.demos.maze.swingapp.model.PathFinderTag;
-import de.amr.demos.maze.swingapp.model.VertexCostHeuristics;
+import de.amr.demos.maze.swingapp.model.VertexCost;
 import de.amr.easy.graph.impl.traversal.BestFirstTraversal;
 import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
@@ -72,7 +72,7 @@ public class RunMazeSolverAction extends MazeDemoAction {
 		}
 
 		else if (solver.getAlgorithmClass() == BestFirstTraversal.class) {
-			findHeuristics(solver, grid, tgt).ifPresent(h -> {
+			getHeuristics(solver, grid, tgt).ifPresent(h -> {
 				BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, h.getCostFunction());
 				watch.measure(() -> anim.run(app.getCanvas(), best, src, tgt));
 				app.showMessage(format("Best-first search (%s): %.2f seconds.", h.getName(), watch.getSeconds()));
@@ -96,21 +96,21 @@ public class RunMazeSolverAction extends MazeDemoAction {
 		}
 
 		else if (solver.getAlgorithmClass() == HillClimbing.class) {
-			findHeuristics(solver, grid, tgt).ifPresent(h -> {
+			getHeuristics(solver, grid, tgt).ifPresent(h -> {
 				watch.measure(() -> anim.run(app.getCanvas(), new HillClimbing<>(grid, h.getCostFunction()), src, tgt));
 				app.showMessage(format("Hill Climbing (%s): %.2f seconds.", h.getName(), watch.getSeconds()));
 			});
 		}
 	}
 
-	private Optional<VertexCostHeuristics> findHeuristics(AlgorithmInfo solver, MazeGrid grid, int tgt) {
-		VertexCostHeuristics h = null;
+	private Optional<VertexCost> getHeuristics(AlgorithmInfo solver, MazeGrid grid, int tgt) {
+		VertexCost h = null;
 		if (solver.isTagged(CHEBYSHEV)) {
-			h = new VertexCostHeuristics("Chebyshev", v -> grid.chebyshev(v, tgt));
+			h = new VertexCost("Chebyshev", v -> grid.chebyshev(v, tgt));
 		} else if (solver.isTagged(EUCLIDEAN)) {
-			h = new VertexCostHeuristics("Euclidean", v -> grid.euclidean2(v, tgt));
+			h = new VertexCost("Euclidean", v -> grid.euclidean2(v, tgt));
 		} else if (solver.isTagged(MANHATTAN)) {
-			h = new VertexCostHeuristics("Manhattan", v -> grid.manhattan(v, tgt));
+			h = new VertexCost("Manhattan", v -> grid.manhattan(v, tgt));
 		}
 		return Optional.ofNullable(h);
 	}
