@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import de.amr.easy.grid.api.BareGrid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.api.CellSequence;
 
 /**
@@ -16,10 +16,10 @@ import de.amr.easy.grid.api.CellSequence;
  */
 public class RecursiveCrosses implements CellSequence {
 
-	private final BareGrid2D<?> grid;
+	private final GridGraph2D<?> grid;
 	private final List<Integer> path = new ArrayList<>();
 
-	public RecursiveCrosses(BareGrid2D<?> grid) {
+	public RecursiveCrosses(GridGraph2D<?> grid) {
 		this.grid = grid;
 		cross(grid.numCols(), grid.numRows(), 0, 0);
 	}

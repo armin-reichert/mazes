@@ -8,17 +8,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.amr.easy.graph.api.SimpleEdge;
-import de.amr.easy.grid.api.BareGrid2D;
-import de.amr.easy.grid.impl.BareGrid;
+import de.amr.easy.grid.api.GridGraph2D;
+import de.amr.easy.grid.impl.GridGraph;
 import de.amr.easy.grid.impl.Top4;
 
 public class EmptyGridTests {
 
-	private BareGrid2D<SimpleEdge> grid;
+	private GridGraph2D<SimpleEdge> grid;
 
 	@Before
 	public void setUp() {
-		grid = new BareGrid<>(0, 0, Top4.get(), SimpleEdge::new);
+		grid = new GridGraph<>(0, 0, Top4.get(), SimpleEdge::new);
 	}
 
 	@After

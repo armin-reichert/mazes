@@ -12,7 +12,7 @@ import java.util.Optional;
 import javax.swing.JComponent;
 
 import de.amr.easy.data.Stack;
-import de.amr.easy.grid.api.BareGrid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 
 /**
  * A Swing component for displaying a grid.
@@ -22,21 +22,21 @@ import de.amr.easy.grid.api.BareGrid2D;
 public class GridCanvas extends JComponent {
 
 	protected final Stack<GridRenderer> rendererStack = new Stack<>();
-	protected BareGrid2D<?> grid;
+	protected GridGraph2D<?> grid;
 	protected BufferedImage drawingBuffer;
 	protected Graphics2D g2;
 
-	public GridCanvas(BareGrid2D<?> grid, int cellSize) {
+	public GridCanvas(GridGraph2D<?> grid, int cellSize) {
 		setGrid(grid);
 		setDoubleBuffered(false);
 		adaptSize(cellSize);
 	}
 
-	public BareGrid2D<?> getGrid() {
+	public GridGraph2D<?> getGrid() {
 		return grid;
 	}
 
-	public void setGrid(BareGrid2D<?> grid) {
+	public void setGrid(GridGraph2D<?> grid) {
 		if (grid == null) {
 			throw new IllegalArgumentException("No grid specified");
 		}

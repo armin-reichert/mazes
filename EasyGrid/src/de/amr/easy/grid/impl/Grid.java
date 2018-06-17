@@ -19,7 +19,7 @@ import de.amr.easy.grid.api.Topology;
  * @param E
  *          edge type
  */
-public class Grid<V, E extends Edge> extends BareGrid<E> implements Grid2D<V, E> {
+public class Grid<V, E extends Edge> extends GridGraph<E> implements Grid2D<V, E> {
 
 	private final Vertex<V> vertexTable;
 

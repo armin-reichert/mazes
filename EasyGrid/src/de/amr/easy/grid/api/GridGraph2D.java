@@ -18,7 +18,7 @@ import de.amr.easy.graph.api.Graph;
  * @author Armin Reichert
  * 
  */
-public interface BareGrid2D<E extends Edge> extends Graph<E> {
+public interface GridGraph2D<E extends Edge> extends Graph<E> {
 
 	/**
 	 * @return the number of columns (width) of the grid

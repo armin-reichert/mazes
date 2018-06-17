@@ -18,14 +18,14 @@ import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.grid.impl.BareGrid;
+import de.amr.easy.grid.impl.GridGraph;
 import de.amr.easy.grid.impl.Grid;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.maze.alg.traversal.RandomBFS;
 import de.amr.easy.util.GraphUtils;
 
 /**
- * Test case for {@link BareGrid}
+ * Test case for {@link GridGraph}
  * 
  * @author Armin Reichert
  *

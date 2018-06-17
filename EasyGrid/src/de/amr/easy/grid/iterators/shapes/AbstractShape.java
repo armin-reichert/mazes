@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import de.amr.easy.grid.api.BareGrid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.api.CellSequence;
 
 /**
@@ -19,11 +19,11 @@ import de.amr.easy.grid.api.CellSequence;
  */
 public abstract class AbstractShape implements CellSequence {
 
-	public final BareGrid2D<?> grid;
+	public final GridGraph2D<?> grid;
 
 	protected final List<Integer> cells = new ArrayList<>();
 
-	protected AbstractShape(BareGrid2D<?> grid) {
+	protected AbstractShape(GridGraph2D<?> grid) {
 		this.grid = grid;
 	}
 

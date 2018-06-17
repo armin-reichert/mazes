@@ -12,16 +12,16 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.grid.api.BareGrid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.api.Topology;
 
 /**
- * An implementation of the {@link BareGrid2D} interface.
+ * An implementation of the {@link GridGraph2D} interface.
  * 
  * @author Armin Reichert
  */
-public class BareGrid<E extends Edge> implements BareGrid2D<E> {
+public class GridGraph<E extends Edge> implements GridGraph2D<E> {
 
 	protected final int numCols;
 	protected final int numRows;
@@ -69,7 +69,7 @@ public class BareGrid<E extends Edge> implements BareGrid2D<E> {
 	 * @param fnEdgeFactory
 	 *          function for creating edges of the correct type
 	 */
-	public BareGrid(int numCols, int numRows, Topology top, BiFunction<Integer, Integer, E> fnEdgeFactory) {
+	public GridGraph(int numCols, int numRows, Topology top, BiFunction<Integer, Integer, E> fnEdgeFactory) {
 		if (numCols < 0) {
 			throw new IllegalArgumentException("Illegal number of columns: " + numCols);
 		}

@@ -12,7 +12,7 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 
-import de.amr.easy.grid.api.BareGrid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.impl.Top8;
 
@@ -24,7 +24,7 @@ import de.amr.easy.grid.impl.Top8;
 public class WallPassageGridRenderer extends ConfigurableGridRenderer {
 
 	@Override
-	public void drawGrid(Graphics2D g, BareGrid2D<?> grid) {
+	public void drawGrid(Graphics2D g, GridGraph2D<?> grid) {
 		grid.edges().forEach(passage -> {
 			drawPassage(g, grid, passage.either(), passage.other(), true);
 		});
@@ -32,7 +32,7 @@ public class WallPassageGridRenderer extends ConfigurableGridRenderer {
 	}
 
 	@Override
-	public void drawPassage(Graphics2D g, BareGrid2D<?> grid, int either, int other, boolean visible) {
+	public void drawPassage(Graphics2D g, GridGraph2D<?> grid, int either, int other, boolean visible) {
 		final int dir = grid.direction(either, other).getAsInt();
 		final int inv = grid.getTopology().inv(dir);
 		drawHalfPassage(g, grid, either, dir, visible ? getPassageColor(either, dir) : getGridBgColor());
@@ -40,13 +40,13 @@ public class WallPassageGridRenderer extends ConfigurableGridRenderer {
 	}
 
 	@Override
-	public void drawCell(Graphics2D g, BareGrid2D<?> grid, int cell) {
+	public void drawCell(Graphics2D g, GridGraph2D<?> grid, int cell) {
 		grid.getTopology().dirs().filter(dir -> grid.isConnected(cell, dir))
 				.forEach(dir -> drawHalfPassage(g, grid, cell, dir, getPassageColor(cell, dir)));
 		drawCellContent(g, grid, cell);
 	}
 
-	private void drawHalfPassage(Graphics2D g, BareGrid2D<?> grid, int cell, int dir, Color passageColor) {
+	private void drawHalfPassage(Graphics2D g, GridGraph2D<?> grid, int cell, int dir, Color passageColor) {
 		final int cellX = grid.col(cell) * getCellSize();
 		final int cellY = grid.row(cell) * getCellSize();
 		final int centerX = cellX + getCellSize() / 2;
@@ -127,7 +127,7 @@ public class WallPassageGridRenderer extends ConfigurableGridRenderer {
 		drawCellContent(g, grid, cell);
 	}
 
-	private void drawCellContent(Graphics2D g, BareGrid2D<?> grid, int cell) {
+	private void drawCellContent(Graphics2D g, GridGraph2D<?> grid, int cell) {
 		final int cellX = grid.col(cell) * getCellSize();
 		final int cellY = grid.row(cell) * getCellSize();
 		final int offset = (int) ceil((getCellSize() / 2 - getPassageWidth() / 2));
@@ -138,7 +138,7 @@ public class WallPassageGridRenderer extends ConfigurableGridRenderer {
 		g.translate(-cellX, -cellY);
 	}
 
-	private void drawCellText(Graphics2D g, BareGrid2D<?> grid, int cell) {
+	private void drawCellText(Graphics2D g, GridGraph2D<?> grid, int cell) {
 		int fontSize = getTextFont().getSize();
 		if (fontSize < getMinFontSize()) {
 			return;

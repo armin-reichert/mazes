@@ -13,7 +13,7 @@ import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.curves.Curve;
 import de.amr.easy.grid.curves.PeanoCurve;
-import de.amr.easy.grid.impl.BareGrid;
+import de.amr.easy.grid.impl.GridGraph;
 import de.amr.easy.grid.impl.Top4;
 
 /**
@@ -30,7 +30,7 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 		super(grid);
 		walkStartCells = new int[grid.numVertices()];
 		int n = nextPow(3, max(grid.numCols(), grid.numRows()));
-		BareGrid<?> square = new BareGrid<>(n, n, Top4.get(), SimpleEdge::new);
+		GridGraph<?> square = new GridGraph<>(n, n, Top4.get(), SimpleEdge::new);
 		Curve peano = new PeanoCurve(log(3, n));
 		int current = square.cell(BOTTOM_LEFT);
 		addWalkStartCell(square.col(current), square.row(current));

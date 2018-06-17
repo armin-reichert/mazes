@@ -8,7 +8,7 @@ import static de.amr.easy.grid.impl.Top4.W;
 import java.util.Arrays;
 import java.util.List;
 
-import de.amr.easy.grid.api.BareGrid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.impl.Top4;
 
 /**
@@ -22,7 +22,7 @@ public class Square extends AbstractShape {
 	private final Integer topLeft;
 	private final int size;
 
-	public Square(BareGrid2D<?> grid, Integer topLeft, int size) {
+	public Square(GridGraph2D<?> grid, Integer topLeft, int size) {
 		super(grid);
 
 		this.topLeft = topLeft;

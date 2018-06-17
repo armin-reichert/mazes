@@ -10,7 +10,7 @@ import java.util.function.IntSupplier;
 import de.amr.easy.graph.api.event.GraphTraversalObserver;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
-import de.amr.easy.grid.api.BareGrid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.GridCanvas;
 import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
@@ -37,7 +37,7 @@ public class BreadthFirstTraversalAnimation {
 	 * @param source
 	 *          cell where flood-fill starts
 	 */
-	public static void floodFill(GridCanvas canvas, BareGrid2D<?> grid, int source) {
+	public static void floodFill(GridCanvas canvas, GridGraph2D<?> grid, int source) {
 		floodFill(canvas, grid, source, true);
 	}
 
@@ -53,21 +53,21 @@ public class BreadthFirstTraversalAnimation {
 	 * @param distanceVisible
 	 *          if distances should be displayed as text
 	 */
-	public static void floodFill(GridCanvas canvas, BareGrid2D<?> grid, int source, boolean distanceVisible) {
+	public static void floodFill(GridCanvas canvas, GridGraph2D<?> grid, int source, boolean distanceVisible) {
 		BreadthFirstTraversal bfs = new BreadthFirstTraversal(grid);
 		BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid);
 		anim.setDistanceVisible(distanceVisible);
 		anim.run(canvas, bfs, source, -1);
 	}
 
-	private final BareGrid2D<?> grid;
+	private final GridGraph2D<?> grid;
 	private ConfigurableGridRenderer floodFillRenderer;
 	private boolean distanceVisible;
 	private Color pathColor;
 
 	public IntSupplier fnDelay = () -> 0;
 
-	public BreadthFirstTraversalAnimation(BareGrid2D<?> grid) {
+	public BreadthFirstTraversalAnimation(GridGraph2D<?> grid) {
 		this.grid = grid;
 		distanceVisible = true;
 		pathColor = Color.RED;

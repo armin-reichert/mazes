@@ -9,7 +9,7 @@ import java.util.function.IntSupplier;
 import de.amr.easy.graph.api.event.GraphTraversalObserver;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.graph.impl.traversal.AbstractGraphTraversal;
-import de.amr.easy.grid.api.BareGrid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.GridCanvas;
 import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
@@ -23,13 +23,13 @@ import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
  */
 public class DepthFirstTraversalAnimation {
 
-	private final BareGrid2D<?> grid;
+	private final GridGraph2D<?> grid;
 	private Iterable<Integer> path;
 	private Color pathColor = Color.RED;
 	private Color visitedCellColor = Color.BLUE;
 	public IntSupplier fnDelay = () -> 0;
 
-	public DepthFirstTraversalAnimation(BareGrid2D<?> grid) {
+	public DepthFirstTraversalAnimation(GridGraph2D<?> grid) {
 		this.grid = grid;
 	}
 

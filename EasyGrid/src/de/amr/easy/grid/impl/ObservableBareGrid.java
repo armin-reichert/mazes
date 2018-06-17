@@ -17,7 +17,7 @@ import de.amr.easy.grid.api.Topology;
  * 
  * @author Armin Reichert
  */
-public class ObservableBareGrid<E extends Edge> extends BareGrid<E> implements ObservableBareGrid2D<E> {
+public class ObservableBareGrid<E extends Edge> extends GridGraph<E> implements ObservableBareGrid2D<E> {
 
 	private final Set<GraphObserver> observers;
 	private boolean eventsEnabled;

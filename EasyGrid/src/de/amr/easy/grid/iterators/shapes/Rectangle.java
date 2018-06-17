@@ -1,6 +1,6 @@
 package de.amr.easy.grid.iterators.shapes;
 
-import de.amr.easy.grid.api.BareGrid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 
 /**
  * A rectangle with given cell as left upper corner.
@@ -16,7 +16,7 @@ public class Rectangle extends AbstractShape {
 	private final int width;
 	private final int height;
 
-	public Rectangle(BareGrid2D<?> grid, int leftUpperCorner, int width, int height) {
+	public Rectangle(GridGraph2D<?> grid, int leftUpperCorner, int width, int height) {
 		super(grid);
 
 		this.leftUpperCorner = leftUpperCorner;

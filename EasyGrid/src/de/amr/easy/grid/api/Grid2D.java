@@ -13,5 +13,5 @@ import de.amr.easy.graph.api.Vertex;
  * @param <E>
  *          edge type
  */
-public interface Grid2D<V, E extends Edge> extends BareGrid2D<E>, Vertex<V> {
+public interface Grid2D<V, E extends Edge> extends GridGraph2D<E>, Vertex<V> {
 }

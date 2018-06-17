@@ -2,7 +2,7 @@ package de.amr.easy.grid.iterators.traversals;
 
 import java.util.Iterator;
 
-import de.amr.easy.grid.api.BareGrid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.api.CellSequence;
 
 /**
@@ -12,9 +12,9 @@ import de.amr.easy.grid.api.CellSequence;
  */
 public class RightToLeftSweep implements CellSequence {
 
-	private final BareGrid2D<?> grid;
+	private final GridGraph2D<?> grid;
 
-	public RightToLeftSweep(BareGrid2D<?> grid) {
+	public RightToLeftSweep(GridGraph2D<?> grid) {
 		this.grid = grid;
 	}
 
