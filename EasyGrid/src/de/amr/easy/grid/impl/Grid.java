@@ -3,7 +3,9 @@ package de.amr.easy.grid.impl;
 import java.util.function.BiFunction;
 
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.graph.api.VertexContent;
+import de.amr.easy.graph.api.Vertex;
+import de.amr.easy.graph.impl.DenseSymbolTable;
+import de.amr.easy.graph.impl.SparseSymbolTable;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.Topology;
 
@@ -14,7 +16,7 @@ import de.amr.easy.grid.api.Topology;
  */
 public class Grid<V, E extends Edge> extends BareGrid<E> implements Grid2D<V, E> {
 
-	private final VertexContent<V> content;
+	private final Vertex<V> symbolTable;
 
 	/**
 	 * Creates a grid with the given properties.
@@ -33,8 +35,8 @@ public class Grid<V, E extends Edge> extends BareGrid<E> implements Grid2D<V, E>
 	public Grid(int numCols, int numRows, Topology top, V defaultContent, boolean sparse,
 			BiFunction<Integer, Integer, E> fnEdgeFactory) {
 		super(numCols, numRows, top, fnEdgeFactory);
-		content = sparse ? new SparseGridContent<>() : new DenseGridContent<>(numCols * numRows);
-		content.setDefaultContent(defaultContent);
+		symbolTable = sparse ? new SparseSymbolTable<>() : new DenseSymbolTable<>(numCols * numRows);
+		symbolTable.setDefaultVertex(defaultContent);
 	}
 
 	/**
@@ -44,44 +46,44 @@ public class Grid<V, E extends Edge> extends BareGrid<E> implements Grid2D<V, E>
 	 *          the grid to copy
 	 */
 	public Grid(Grid2D<V, E> grid, BiFunction<Integer, Integer, E> fnEdgeFactory) {
-		this(grid.numCols(), grid.numRows(), grid.getTopology(), grid.getDefaultContent(), grid.isSparse(), fnEdgeFactory);
+		this(grid.numCols(), grid.numRows(), grid.getTopology(), grid.getDefaultVertex(), grid.isSparse(), fnEdgeFactory);
 		vertices().forEach(v -> {
-			V content = grid.get(v);
-			if (!content.equals(grid.getDefaultContent())) {
-				set(v, content);
+			V vertex = grid.get(v);
+			if (!vertex.equals(grid.getDefaultVertex())) {
+				set(v, vertex);
 			}
 		});
 	}
 
-	// --- {@link VertexContent} interface ---
+	// --- {@link Vertex} interface ---
 
 	@Override
-	public void clearContent() {
-		content.clearContent();
+	public void clearVertexObjects() {
+		symbolTable.clearVertexObjects();
 	}
 
 	@Override
-	public V getDefaultContent() {
-		return content.getDefaultContent();
+	public V getDefaultVertex() {
+		return symbolTable.getDefaultVertex();
 	}
 
 	@Override
-	public void setDefaultContent(V cellContent) {
-		content.setDefaultContent(cellContent);
+	public void setDefaultVertex(V vertex) {
+		symbolTable.setDefaultVertex(vertex);
 	}
 
 	@Override
-	public V get(int cell) {
-		return content.get(cell);
+	public V get(int v) {
+		return symbolTable.get(v);
 	}
 
 	@Override
-	public void set(int cell, V cellContent) {
-		content.set(cell, cellContent);
+	public void set(int v, V vertex) {
+		symbolTable.set(v, vertex);
 	}
 
 	@Override
 	public boolean isSparse() {
-		return content.isSparse();
+		return symbolTable.isSparse();
 	}
 }

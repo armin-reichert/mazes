@@ -3,7 +3,9 @@ package de.amr.easy.grid.impl;
 import java.util.function.BiFunction;
 
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.graph.api.VertexContent;
+import de.amr.easy.graph.api.Vertex;
+import de.amr.easy.graph.impl.DenseSymbolTable;
+import de.amr.easy.graph.impl.SparseSymbolTable;
 import de.amr.easy.grid.api.ObservableGrid2D;
 import de.amr.easy.grid.api.Topology;
 
@@ -14,7 +16,7 @@ import de.amr.easy.grid.api.Topology;
  */
 public class ObservableGrid<V, E extends Edge> extends ObservableBareGrid<E> implements ObservableGrid2D<V, E> {
 
-	private final VertexContent<V> content;
+	private final Vertex<V> content;
 
 	/**
 	 * Creates an observable grid with the given properties.
@@ -33,8 +35,8 @@ public class ObservableGrid<V, E extends Edge> extends ObservableBareGrid<E> imp
 	public ObservableGrid(int numCols, int numRows, Topology top, V defaultContent, boolean sparse,
 			BiFunction<Integer, Integer, E> fnEdgeFactory) {
 		super(numCols, numRows, top, fnEdgeFactory);
-		content = sparse ? new SparseGridContent<>() : new DenseGridContent<>(numCols * numRows);
-		content.setDefaultContent(defaultContent);
+		content = sparse ? new SparseSymbolTable<>() : new DenseSymbolTable<>(numCols * numRows);
+		content.setDefaultVertex(defaultContent);
 	}
 
 	/**
@@ -44,10 +46,10 @@ public class ObservableGrid<V, E extends Edge> extends ObservableBareGrid<E> imp
 	 *          an observable grid
 	 */
 	public ObservableGrid(ObservableGrid<V, E> grid, BiFunction<Integer, Integer, E> fnEdgeFactory) {
-		this(grid.numCols(), grid.numRows(), grid.getTopology(), grid.getDefaultContent(), grid.isSparse(), fnEdgeFactory);
+		this(grid.numCols(), grid.numRows(), grid.getTopology(), grid.getDefaultVertex(), grid.isSparse(), fnEdgeFactory);
 		vertices().forEach(v -> {
 			V content = grid.get(v);
-			if (!content.equals(grid.getDefaultContent())) {
+			if (!content.equals(grid.getDefaultVertex())) {
 				set(v, content);
 			}
 		});
@@ -56,18 +58,18 @@ public class ObservableGrid<V, E extends Edge> extends ObservableBareGrid<E> imp
 	// --- {@link VertexContent} interface ---
 
 	@Override
-	public void clearContent() {
-		content.clearContent();
+	public void clearVertexObjects() {
+		content.clearVertexObjects();
 	}
 
 	@Override
-	public V getDefaultContent() {
-		return content.getDefaultContent();
+	public V getDefaultVertex() {
+		return content.getDefaultVertex();
 	}
 
 	@Override
-	public void setDefaultContent(V defaultContent) {
-		content.setDefaultContent(defaultContent);
+	public void setDefaultVertex(V defaultContent) {
+		content.setDefaultVertex(defaultContent);
 		fireGraphChange(this);
 	}
 

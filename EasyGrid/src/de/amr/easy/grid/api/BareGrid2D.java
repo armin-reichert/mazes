@@ -10,16 +10,13 @@ import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
 
 /**
- * A two-dimensional grid of "cells" with weighted "passages".
- * 
- * <p>
- * This interface extends the {@link Graph} interface such that generic graph algorithms can be
- * applied to objects of this type.
+ * Interface for two-dimensional grid graph.
  * 
  * @param <E>
  *          edge type
  * 
  * @author Armin Reichert
+ * 
  */
 public interface BareGrid2D<E extends Edge> extends Graph<E> {
 
@@ -32,13 +29,6 @@ public interface BareGrid2D<E extends Edge> extends Graph<E> {
 	 * @return the number of rows (height) of the grid
 	 */
 	int numRows();
-
-	/**
-	 * @return the number of cells of the grid
-	 */
-	default int numCells() {
-		return numCols() * numRows();
-	}
 
 	/**
 	 * @return the topology of this grid

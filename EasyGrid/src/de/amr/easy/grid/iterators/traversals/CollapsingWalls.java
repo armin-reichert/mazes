@@ -37,7 +37,7 @@ public class CollapsingWalls implements CellSequence {
 
 			@Override
 			public boolean hasNext() {
-				return visited < grid.vertexCount();
+				return visited < grid.numVertices();
 			}
 
 			@Override

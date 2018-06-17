@@ -30,10 +30,10 @@ public class GridRenderingTestApp extends SwingGridSampleApp<SimpleEdge> {
 		StopWatch watch = new StopWatch();
 		IntStream.of(256, 128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			resizeGrid(cellSize);
-			grid.setDefaultContent(COMPLETED);
+			grid.setDefaultVertex(COMPLETED);
 			grid.fill();
 			watch.measure(canvas::drawGrid);
-			out.println(format("Rendering grid with %d cells took %.3f seconds", grid.numCells(), watch.getSeconds()));
+			out.println(format("Rendering grid with %d cells took %.3f seconds", grid.numVertices(), watch.getSeconds()));
 			floodFill(canvas, grid, grid.cell(CENTER));
 			sleep(2000);
 		});

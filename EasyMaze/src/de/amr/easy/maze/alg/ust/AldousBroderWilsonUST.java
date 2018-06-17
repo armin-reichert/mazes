@@ -29,7 +29,7 @@ public class AldousBroderWilsonUST extends MazeAlgorithm<SimpleEdge> {
 
 	@Override
 	public void run(int start) {
-		int threshold = grid.numCells() * 30 / 100;
+		int threshold = grid.numVertices() * 30 / 100;
 
 		// start with Aldous/Broder
 		currentCell = start;

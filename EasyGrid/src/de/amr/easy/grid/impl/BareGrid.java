@@ -102,7 +102,7 @@ public class BareGrid<E extends Edge> implements BareGrid2D<E> {
 	}
 
 	@Override
-	public int vertexCount() {
+	public int numVertices() {
 		return cellCount;
 	}
 
@@ -124,7 +124,7 @@ public class BareGrid<E extends Edge> implements BareGrid2D<E> {
 	}
 
 	@Override
-	public int edgeCount() {
+	public int numEdges() {
 		return bits.cardinality() / 2; // two bits used to store one edge
 	}
 

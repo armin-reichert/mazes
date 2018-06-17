@@ -175,7 +175,7 @@ public abstract class SwingGridSampleApp<E extends Edge> implements Runnable {
 	}
 
 	private String createTitle(int cellSize) {
-		return format("%s [%d cols %d rows %d cells @%d px]", appName, grid.numCols(), grid.numRows(), grid.numCells(),
+		return format("%s [%d cols %d rows %d cells @%d px]", appName, grid.numCols(), grid.numRows(), grid.numVertices(),
 				cellSize);
 	}
 
@@ -192,7 +192,7 @@ public abstract class SwingGridSampleApp<E extends Edge> implements Runnable {
 			return;
 		}
 		grid = new ObservableGrid<>(canvasSize.width / cellSize, canvasSize.height / cellSize, grid.getTopology(),
-				grid.getDefaultContent(), false, fnEdgeFactory);
+				grid.getDefaultVertex(), false, fnEdgeFactory);
 		canvas.setGrid(grid);
 		grid.addGraphObserver(canvasAnimation);
 		renderer.fnCellSize = () -> cellSize;

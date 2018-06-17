@@ -45,7 +45,7 @@ public class AldousBroderUST extends MazeAlgorithm<SimpleEdge> {
 		currentCell = start;
 		grid.set(currentCell, COMPLETED);
 		numVisitedCells = 1;
-		while (numVisitedCells < grid.numCells()) {
+		while (numVisitedCells < grid.numVertices()) {
 			visitRandomNeighbor();
 		}
 	}

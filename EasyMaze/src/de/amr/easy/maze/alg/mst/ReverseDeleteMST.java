@@ -23,11 +23,11 @@ public abstract class ReverseDeleteMST extends MazeAlgorithm<SimpleEdge> {
 
 	@Override
 	public void run(int start) {
-		grid.setDefaultContent(COMPLETED);
+		grid.setDefaultVertex(COMPLETED);
 		grid.fill();
 		Iterable<SimpleEdge> edges = permute(grid.edges())::iterator;
 		for (SimpleEdge edge : edges) {
-			if (grid.edgeCount() == grid.vertexCount() - 1) {
+			if (grid.numEdges() == grid.numVertices() - 1) {
 				break;
 			}
 			int u = edge.either(), v = edge.other();

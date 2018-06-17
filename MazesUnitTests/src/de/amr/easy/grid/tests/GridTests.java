@@ -56,28 +56,28 @@ public class GridTests {
 
 	@Test
 	public void testGridInitialization() {
-		assertEquals(grid.edgeCount(), 0);
-		assertEquals(grid.vertexCount(), WIDTH * HEIGHT);
+		assertEquals(grid.numEdges(), 0);
+		assertEquals(grid.numVertices(), WIDTH * HEIGHT);
 		assertEquals(grid.numCols(), WIDTH);
 		assertEquals(grid.numRows(), HEIGHT);
-		assertEquals(grid.numCells(), grid.vertices().count());
-		assertEquals(grid.edgeCount(), grid.edges().count());
+		assertEquals(grid.numVertices(), grid.vertices().count());
+		assertEquals(grid.numEdges(), grid.edges().count());
 	}
 
 	@Test
 	public void testInitialContent() {
-		assertEquals(grid.vertices().filter(cell -> grid.get(cell) == UNVISITED).count(), grid.numCells());
+		assertEquals(grid.vertices().filter(cell -> grid.get(cell) == UNVISITED).count(), grid.numVertices());
 	}
 
 	@Test
 	public void testGridCopyConstructor() {
 		Grid<TraversalState, SimpleEdge> copy = new Grid<>(grid, SimpleEdge::new);
-		assertEquals(grid.edgeCount(), copy.edgeCount());
-		assertEquals(grid.vertexCount(), copy.vertexCount());
+		assertEquals(grid.numEdges(), copy.numEdges());
+		assertEquals(grid.numVertices(), copy.numVertices());
 		assertEquals(grid.numCols(), copy.numCols());
 		assertEquals(grid.numRows(), copy.numRows());
 		assertEquals(grid.getTopology(), copy.getTopology());
-		assertEquals(grid.getDefaultContent(), copy.getDefaultContent());
+		assertEquals(grid.getDefaultVertex(), copy.getDefaultVertex());
 		grid.vertices().forEach(v -> assertEquals(grid.get(v), copy.get(v)));
 	}
 
@@ -100,10 +100,10 @@ public class GridTests {
 
 	@Test
 	public void testAddEdge() {
-		int numEdges = grid.edgeCount();
+		int numEdges = grid.numEdges();
 		assert (!grid.edge(0, 1).isPresent());
 		grid.addEdge(0, 1);
-		assertEquals(numEdges + 1, grid.edgeCount());
+		assertEquals(numEdges + 1, grid.numEdges());
 	}
 
 	@Test(expected = IllegalStateException.class)
@@ -131,18 +131,18 @@ public class GridTests {
 
 	@Test
 	public void testFillAllEdges() {
-		assertEquals(grid.edgeCount(), 0);
+		assertEquals(grid.numEdges(), 0);
 		grid.fill();
-		assertEquals(grid.edgeCount(), 2 * WIDTH * HEIGHT - (WIDTH + HEIGHT));
+		assertEquals(grid.numEdges(), 2 * WIDTH * HEIGHT - (WIDTH + HEIGHT));
 	}
 
 	@Test
 	public void testRemoveEdge() {
-		int numEdges = grid.edgeCount();
+		int numEdges = grid.numEdges();
 		grid.addEdge(0, 1);
-		assertEquals(grid.edgeCount(), numEdges + 1);
+		assertEquals(grid.numEdges(), numEdges + 1);
 		grid.removeEdge(0, 1);
-		assertEquals(grid.edgeCount(), numEdges);
+		assertEquals(grid.numEdges(), numEdges);
 		assertFalse(grid.edge(0, 1).isPresent());
 	}
 
@@ -155,11 +155,11 @@ public class GridTests {
 
 	@Test
 	public void testRemoveAllEdges() {
-		assertEquals(grid.edgeCount(), 0);
+		assertEquals(grid.numEdges(), 0);
 		grid.fill();
-		assertEquals(grid.edgeCount(), 2 * WIDTH * HEIGHT - (WIDTH + HEIGHT));
+		assertEquals(grid.numEdges(), 2 * WIDTH * HEIGHT - (WIDTH + HEIGHT));
 		grid.removeEdges();
-		assertEquals(grid.edgeCount(), 0);
+		assertEquals(grid.numEdges(), 0);
 	}
 
 	@Test

@@ -6,6 +6,8 @@ import java.util.stream.Stream;
 
 /**
  * Undirected Graph.
+ * <p>
+ * Vertices are stored as indices. Vertex objects may be introduced by implementing classes.
  * 
  * @author Armin Reichert
  * 
@@ -15,14 +17,14 @@ import java.util.stream.Stream;
 public interface Graph<E extends Edge> {
 
 	/**
-	 * @return stream of the vertices of this graph
+	 * @return stream of the vertex indices of this graph
 	 */
 	IntStream vertices();
 
 	/**
 	 * @return the number of vertices of this graph
 	 */
-	default int vertexCount() {
+	default int numVertices() {
 		return (int) vertices().count();
 	}
 
@@ -34,17 +36,17 @@ public interface Graph<E extends Edge> {
 	/**
 	 * @return the number of edges of this graph
 	 */
-	default int edgeCount() {
+	default int numEdges() {
 		return (int) edges().count();
 	}
 
 	/**
-	 * Adds the given vertex to this graph.
+	 * Adds the given vertex (index) to this graph.
 	 * 
-	 * @param vertex
-	 *          a vertex
+	 * @param v
+	 *          a vertex index
 	 */
-	void addVertex(int vertex);
+	void addVertex(int v);
 
 	/**
 	 * Connects the given vertices.

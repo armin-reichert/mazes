@@ -27,7 +27,7 @@ public class RecursiveDivisionApp extends SwingGridSampleApp<SimpleEdge> {
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			resizeGrid(cellSize);
 			grid.fill();
-			grid.setDefaultContent(COMPLETED);
+			grid.setDefaultVertex(COMPLETED);
 			new RecursiveDivision(grid).run(grid.cell(TOP_LEFT));
 			sleep(1000);
 			BreadthFirstTraversalAnimation.floodFill(canvas, grid, 0);

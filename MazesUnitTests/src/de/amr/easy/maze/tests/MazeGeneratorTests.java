@@ -91,13 +91,13 @@ public class MazeGeneratorTests {
 
 	@After
 	public void tearDown() {
-		assertEquals(grid.edgeCount(), grid.vertexCount() - 1);
+		assertEquals(grid.numEdges(), grid.numVertices() - 1);
 		assertFalse(GraphUtils.containsCycle(grid));
 	}
 
 	private void runTest(MazeAlgorithm<SimpleEdge> algorithm) {
 		watch.measure(() -> algorithm.run(grid.cell(CENTER)));
-		results.add(format("%-30s (%6d cells): %.3f sec", algorithm.getClass().getSimpleName(), grid.numCells(),
+		results.add(format("%-30s (%6d cells): %.3f sec", algorithm.getClass().getSimpleName(), grid.numVertices(),
 				watch.getSeconds()));
 	}
 
@@ -161,7 +161,7 @@ public class MazeGeneratorTests {
 		runTest(new KruskalMST(grid));
 	}
 
-//	@Test
+	// @Test
 	public void testPrim() {
 		// runTest(new PrimMST(grid));
 		Grid2D<TraversalState, WeightedEdge<Integer>> grid = new Grid<>(WIDTH, HEIGHT, Top4.get(), UNVISITED, false,
@@ -170,7 +170,7 @@ public class MazeGeneratorTests {
 		MazeAlgorithm<WeightedEdge<Integer>> prim = new PrimMST(grid);
 		watch.measure(() -> prim.run(grid.cell(CENTER)));
 		results.add(
-				format("%-30s (%6d cells): %.3f sec", prim.getClass().getSimpleName(), grid.numCells(), watch.getSeconds()));
+				format("%-30s (%6d cells): %.3f sec", prim.getClass().getSimpleName(), grid.numVertices(), watch.getSeconds()));
 	}
 
 	@Test

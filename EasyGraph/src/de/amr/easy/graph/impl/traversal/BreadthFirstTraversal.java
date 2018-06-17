@@ -30,7 +30,7 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal {
 	protected BreadthFirstTraversal(Graph<?> graph, Queue<Integer> queue) {
 		super(graph);
 		this.q = queue;
-		this.distance = new int[graph.vertexCount()];
+		this.distance = new int[graph.numVertices()];
 		clear();
 	}
 

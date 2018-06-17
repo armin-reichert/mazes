@@ -112,7 +112,7 @@ public class MazeApp {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			canvas.getGrid().clearContent();
+			canvas.getGrid().clearVertexObjects();
 			canvas.getGrid().removeEdges();
 			canvas.clear();
 			runRandomMazeAlgorithm(canvas.getGrid());
@@ -122,7 +122,7 @@ public class MazeApp {
 	};
 
 	private void runRandomMazeAlgorithm(Grid2D<TraversalState, WeightedEdge<Integer>> grid) {
-		grid.setDefaultContent(TraversalState.UNVISITED);
+		grid.setDefaultVertex(TraversalState.UNVISITED);
 		int index = new Random().nextInt(GENERATORS.length);
 		try {
 			@SuppressWarnings("unchecked")

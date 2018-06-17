@@ -1,6 +1,8 @@
 package de.amr.easy.maze.alg.ust;
 
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
+import static de.amr.easy.util.GraphUtils.log;
+import static de.amr.easy.util.GraphUtils.nextPow;
 import static java.lang.Math.max;
 import static java.util.Arrays.stream;
 
@@ -13,7 +15,6 @@ import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.curves.PeanoCurve;
 import de.amr.easy.grid.impl.BareGrid;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.util.GraphUtils;
 
 /**
  * Wilson's algorithm where the random walks start in the order defined by a Peano curve.
@@ -27,10 +28,10 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 
 	public WilsonUSTPeanoCurve(Grid2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
-		walkStartCells = new int[grid.numCells()];
-		int n = GraphUtils.nextPow(3, max(grid.numCols(), grid.numRows()));
+		walkStartCells = new int[grid.numVertices()];
+		int n = nextPow(3, max(grid.numCols(), grid.numRows()));
 		BareGrid<?> square = new BareGrid<>(n, n, Top4.get(), SimpleEdge::new);
-		Curve peano = new PeanoCurve(GraphUtils.log(3, n));
+		Curve peano = new PeanoCurve(log(3, n));
 		int current = square.cell(BOTTOM_LEFT);
 		addWalkStartCell(square.col(current), square.row(current));
 		for (int dir : peano) {

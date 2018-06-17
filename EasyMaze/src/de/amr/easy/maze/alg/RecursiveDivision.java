@@ -27,7 +27,7 @@ public class RecursiveDivision extends MazeAlgorithm<SimpleEdge> {
 	@Override
 	public void run(int start) {
 		grid.fill();
-		grid.setDefaultContent(COMPLETED);
+		grid.setDefaultVertex(COMPLETED);
 		divide(0, 0, grid.numCols(), grid.numRows());
 	}
 

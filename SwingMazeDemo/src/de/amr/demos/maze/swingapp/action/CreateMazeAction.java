@@ -45,9 +45,9 @@ public class CreateMazeAction extends MazeDemoAction {
 	}
 
 	protected void runMazeGenerator(AlgorithmInfo generatorInfo, int startCell) throws Exception, StackOverflowError {
-		app.showMessage(format("\n%s (%d cells)", generatorInfo.getDescription(), app.model.getGrid().numCells()));
-		app.model.getGrid().clearContent();
-		app.model.getGrid().setDefaultContent(UNVISITED);
+		app.showMessage(format("\n%s (%d cells)", generatorInfo.getDescription(), app.model.getGrid().numVertices()));
+		app.model.getGrid().clearVertexObjects();
+		app.model.getGrid().setDefaultVertex(UNVISITED);
 		app.model.getGrid().setObservationEnabled(false);
 		app.model.getGrid().removeEdges();
 		app.model.getGrid().setObservationEnabled(true);

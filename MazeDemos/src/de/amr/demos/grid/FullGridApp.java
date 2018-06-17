@@ -27,10 +27,10 @@ public class FullGridApp extends SwingGridSampleApp<SimpleEdge> {
 		Stream.of(Top4.get(), Top8.get()).forEach(topology -> {
 			IntStream.of(512, 256, 128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 				resizeGrid(cellSize);
-				grid.setDefaultContent(TraversalState.COMPLETED);
+				grid.setDefaultVertex(TraversalState.COMPLETED);
 				grid.fill();
 				watch.measure(canvas::drawGrid);
-				System.out.println(String.format("Grid (%d cells @%d) rendered in %.2f seconds", grid.numCells(), cellSize,
+				System.out.println(String.format("Grid (%d cells @%d) rendered in %.2f seconds", grid.numVertices(), cellSize,
 						watch.getSeconds()));
 				sleep(2000);
 			});

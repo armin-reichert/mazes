@@ -97,7 +97,7 @@ public class DefaultGraph implements Graph<SimpleEdge> {
 	}
 
 	@Override
-	public int vertexCount() {
+	public int numVertices() {
 		return vertexSet.size();
 	}
 
@@ -117,7 +117,7 @@ public class DefaultGraph implements Graph<SimpleEdge> {
 	}
 
 	@Override
-	public int edgeCount() {
+	public int numEdges() {
 		return numEdges;
 	}
 
@@ -144,8 +144,8 @@ public class DefaultGraph implements Graph<SimpleEdge> {
 	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();
-		s.append(vertexCount()).append("\n");
-		s.append(edgeCount()).append("\n");
+		s.append(numVertices()).append("\n");
+		s.append(numEdges()).append("\n");
 		for (int v : vertexSet) {
 			s.append(v).append("\n");
 		}

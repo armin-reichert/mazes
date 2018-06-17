@@ -44,7 +44,7 @@ public class BestFirstTraversalApp extends SwingGridSampleApp<SimpleEdge> {
 		removeArea(0, 15, 20, 1);
 		removeArea(0, 16, 10, 1);
 		removeArea(10, 16, 10, 1);
-		grid.setDefaultContent(UNVISITED);
+		grid.setDefaultVertex(UNVISITED);
 		canvas.drawGrid();
 		int source = grid.cell(GridPosition.TOP_LEFT);
 		int target = grid.cell(GridPosition.BOTTOM_RIGHT);

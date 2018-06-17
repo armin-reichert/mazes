@@ -37,7 +37,7 @@ public abstract class WilsonUST extends MazeAlgorithm<SimpleEdge> {
 
 	protected WilsonUST(Grid2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
-		lastWalkDir = new int[grid.numCells()];
+		lastWalkDir = new int[grid.numVertices()];
 	}
 
 	@Override

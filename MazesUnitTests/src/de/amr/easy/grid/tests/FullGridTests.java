@@ -38,8 +38,8 @@ public class FullGridTests {
 
 	@Test
 	public void testGridSize() {
-		assertEquals(grid.edgeCount(), 2 * WIDTH * HEIGHT - (WIDTH + HEIGHT));
-		assertEquals(grid.vertexCount(), WIDTH * HEIGHT);
+		assertEquals(grid.numEdges(), 2 * WIDTH * HEIGHT - (WIDTH + HEIGHT));
+		assertEquals(grid.numVertices(), WIDTH * HEIGHT);
 		assertEquals(grid.numCols(), WIDTH);
 		assertEquals(grid.numRows(), HEIGHT);
 	}
@@ -122,7 +122,7 @@ public class FullGridTests {
 	@Test
 	public void testFullGrid4() {
 		int c = grid.numCols(), r = grid.numRows();
-		assertEquals(r * (c - 1) + c * (r - 1), grid.edgeCount());
+		assertEquals(r * (c - 1) + c * (r - 1), grid.numEdges());
 	}
 
 	@Test
@@ -130,6 +130,6 @@ public class FullGridTests {
 		grid = new BareGrid<>(WIDTH, HEIGHT, Top8.get(), SimpleEdge::new);
 		grid.fill();
 		int c = grid.numCols(), r = grid.numRows();
-		assertEquals(4 * c * r - 3 * c - 3 * r + 2, grid.edgeCount());
+		assertEquals(4 * c * r - 3 * c - 3 * r + 2, grid.numEdges());
 	}
 }

@@ -29,7 +29,7 @@ public class HuntAndKill extends MazeAlgorithm<SimpleEdge> {
 
 	public HuntAndKill(Grid2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
-		targets = new BitSet(grid.numCells());
+		targets = new BitSet(grid.numVertices());
 	}
 
 	@Override

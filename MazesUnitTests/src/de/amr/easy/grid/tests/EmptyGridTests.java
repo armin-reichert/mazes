@@ -28,8 +28,8 @@ public class EmptyGridTests {
 
 	@Test
 	public void testGridSize() {
-		assertEquals(grid.edgeCount(), 0);
-		assertEquals(grid.vertexCount(), 0);
+		assertEquals(grid.numEdges(), 0);
+		assertEquals(grid.numVertices(), 0);
 		assertEquals(grid.numCols(), 0);
 		assertEquals(grid.numRows(), 0);
 	}
