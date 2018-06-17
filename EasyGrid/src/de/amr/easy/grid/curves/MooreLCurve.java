@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import de.amr.easy.grid.api.Curve;
-
 /**
  * Computes a Moore curve from the following L-system:
  * <p>

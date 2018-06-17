@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import de.amr.easy.grid.api.Curve;
-
 /**
  * Sierpinski curve (as defined in Niklaus Wirth, "Algorithmen und Datenstrukturen").
  * 

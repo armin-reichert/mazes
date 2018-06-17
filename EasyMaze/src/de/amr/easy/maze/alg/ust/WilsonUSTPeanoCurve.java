@@ -10,8 +10,8 @@ import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.Curve;
 import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.curves.Curve;
 import de.amr.easy.grid.curves.PeanoCurve;
 import de.amr.easy.grid.impl.BareGrid;
 import de.amr.easy.grid.impl.Top4;

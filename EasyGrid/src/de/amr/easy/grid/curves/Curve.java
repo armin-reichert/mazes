@@ -1,4 +1,4 @@
-package de.amr.easy.grid.api;
+package de.amr.easy.grid.curves;
 
 import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;

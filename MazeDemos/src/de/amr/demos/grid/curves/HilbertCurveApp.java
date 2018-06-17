@@ -20,8 +20,8 @@ import java.util.stream.Stream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
 import de.amr.easy.graph.api.SimpleEdge;
-import de.amr.easy.grid.api.Curve;
 import de.amr.easy.grid.api.GridPosition;
+import de.amr.easy.grid.curves.Curve;
 import de.amr.easy.grid.curves.HilbertCurve;
 import de.amr.easy.grid.impl.Top4;
 
