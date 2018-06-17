@@ -14,7 +14,7 @@ import de.amr.easy.grid.api.Topology;
  * 
  * @author Armin Reichert
  */
-public class ObservableGrid<V, E extends Edge> extends ObservableBareGrid<E> implements ObservableGrid2D<V, E> {
+public class ObservableGrid<V, E extends Edge> extends ObservableGridGraph<E> implements ObservableGrid2D<V, E> {
 
 	private final Vertex<V> vertexTable;
 

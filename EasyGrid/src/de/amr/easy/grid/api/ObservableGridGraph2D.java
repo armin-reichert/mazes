@@ -8,5 +8,5 @@ import de.amr.easy.graph.api.event.ObservableGraph;
  * 
  * @author Armin Reichert
  */
-public interface ObservableBareGrid2D<E extends Edge> extends GridGraph2D<E>, ObservableGraph<E> {
+public interface ObservableGridGraph2D<E extends Edge> extends GridGraph2D<E>, ObservableGraph<E> {
 }

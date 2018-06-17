@@ -9,7 +9,7 @@ import de.amr.easy.graph.api.event.EdgeEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.ObservableGraph;
 import de.amr.easy.graph.api.event.VertexEvent;
-import de.amr.easy.grid.api.ObservableBareGrid2D;
+import de.amr.easy.grid.api.ObservableGridGraph2D;
 import de.amr.easy.grid.api.Topology;
 
 /**
@@ -17,18 +17,18 @@ import de.amr.easy.grid.api.Topology;
  * 
  * @author Armin Reichert
  */
-public class ObservableBareGrid<E extends Edge> extends GridGraph<E> implements ObservableBareGrid2D<E> {
+public class ObservableGridGraph<E extends Edge> extends GridGraph<E> implements ObservableGridGraph2D<E> {
 
 	private final Set<GraphObserver> observers;
 	private boolean eventsEnabled;
 
-	public ObservableBareGrid(int numCols, int numRows, Topology top, BiFunction<Integer, Integer, E> fnEdgeFactory) {
+	public ObservableGridGraph(int numCols, int numRows, Topology top, BiFunction<Integer, Integer, E> fnEdgeFactory) {
 		super(numCols, numRows, top, fnEdgeFactory);
 		observers = new HashSet<>();
 		eventsEnabled = true;
 	}
 
-	public ObservableBareGrid(ObservableBareGrid<E> grid, BiFunction<Integer, Integer, E> fnEdgeFactory) {
+	public ObservableGridGraph(ObservableGridGraph<E> grid, BiFunction<Integer, Integer, E> fnEdgeFactory) {
 		this(grid.numCols(), grid.numRows(), grid.getTopology(), fnEdgeFactory);
 		this.eventsEnabled = grid.eventsEnabled;
 	}
