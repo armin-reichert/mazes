@@ -5,8 +5,8 @@ Maze generation algorithms got my attention when I found a series of [blog posts
 As an exercise for learning the new Java 8 language features (lambda expressions, streams etc.) I started to reimplement some of these algorithms. Apart from using Java 8 style, my intent was to make the underlying graph algorithm (creation of a spanning tree of a 2D grid graph) more explicit in the code. On the web one can find a large number of maze implementations, but many of them are not very interesting because they are not so well coded, use ad-hoc data structures or mix the essentials of the maze creation algorithm with UI or animation related code. In contrast, I wanted to provide implementations that just change the edge set of a 2D grid graph and emphasize the underlying graph algorithm. The generator classes have no dependencies to any UI frameworks (Swing, JavaFX) which makes them easily reusable.
 
 To achieve these goals, there is
-- an API for graph and 2D-grid data structures 
-- an implementation of a 2D-grid with cell and edge content
+- an API for [graph](EasyGraph/src/de/amr/easy/graph/api/Graph.java) and 2D-grid data structures 
+- an implementation of a [2D-grid](EasyGrid/src/de/amr/easy/grid/api/Grid2D.java) with cell and edge content
 - a publish-subscribe mechanism for observing graph/grid operations and traversal algorithms
 
 The maze generation algorithms operate strictly on the grid API. For drawing and animation, graph and graph traversal listeners are used.
