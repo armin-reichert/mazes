@@ -2,6 +2,7 @@ package de.amr.demos.maze.swingapp;
 
 import static de.amr.demos.maze.swingapp.model.MazeDemoModel.GENERATOR_ALGORITHMS;
 import static de.amr.demos.maze.swingapp.model.MazeDemoModel.PATHFINDER_ALGORITHMS;
+import static de.amr.demos.maze.swingapp.model.PathFinderTag.MANHATTAN;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
@@ -31,7 +32,7 @@ import de.amr.demos.maze.swingapp.model.MazeGrid;
 import de.amr.demos.maze.swingapp.view.CanvasWindow;
 import de.amr.demos.maze.swingapp.view.ControlPanel;
 import de.amr.demos.maze.swingapp.view.SettingsWindow;
-import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
+import de.amr.easy.graph.impl.traversal.BestFirstTraversal;
 import de.amr.easy.grid.ui.swing.animation.GridCanvasAnimation;
 import de.amr.easy.grid.ui.swing.rendering.GridCanvas;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
@@ -101,10 +102,11 @@ public class MazeDemoApp {
 			wndSettings.getGeneratorMenu().selectAlgorithm(alg);
 			onGeneratorChange(alg);
 		});
-		MazeDemoModel.find(PATHFINDER_ALGORITHMS, BreadthFirstTraversal.class).ifPresent(alg -> {
-			wndSettings.getSolverMenu().selectAlgorithm(alg);
-			onSolverChange(alg);
-		});
+		MazeDemoModel.find(PATHFINDER_ALGORITHMS,
+				alg -> alg.getAlgorithmClass() == BestFirstTraversal.class && alg.isTagged(MANHATTAN)).ifPresent(alg -> {
+					wndSettings.getSolverMenu().selectAlgorithm(alg);
+					onSolverChange(alg);
+				});
 		getCanvas().getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
 		getCanvas().getActionMap().put("showSettings", actionShowSettings);
 

@@ -14,6 +14,7 @@ import static de.amr.demos.maze.swingapp.model.PathFinderTag.MANHATTAN;
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import de.amr.easy.graph.impl.traversal.BestFirstTraversal;
 import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
@@ -112,19 +113,26 @@ public class MazeDemoModel {
 	};
 
 	public static final AlgorithmInfo[] PATHFINDER_ALGORITHMS = {
+			/*@formatter:off*/
 			new AlgorithmInfo(BreadthFirstTraversal.class, "Breadth-First-Search", BFS),
-			new AlgorithmInfo(DepthFirstTraversal2.class, "Depth-First-Search", DFS), null,
+			new AlgorithmInfo(DepthFirstTraversal2.class, "Depth-First-Search", DFS), 
+			null,
 			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Manhattan)", BFS, MANHATTAN),
 			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Euclidean)", BFS, EUCLIDEAN),
-			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Chebyshev)", BFS, CHEBYSHEV), null,
+			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Chebyshev)", BFS, CHEBYSHEV), 
+			null,
 			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Manhattan)", DFS, MANHATTAN),
 			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Euclidean)", DFS, EUCLIDEAN),
 			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Chebyshev)", DFS, CHEBYSHEV),
-
+			/*@formatter:on*/
 	};
 
 	public static Optional<AlgorithmInfo> find(AlgorithmInfo[] algorithms, Class<?> clazz) {
-		return Arrays.stream(algorithms).filter(alg -> alg.getAlgorithmClass() == clazz).findFirst();
+		return find(algorithms, alg -> alg.getAlgorithmClass() == clazz);
+	}
+
+	public static Optional<AlgorithmInfo> find(AlgorithmInfo[] algorithms, Predicate<AlgorithmInfo> filter) {
+		return Arrays.stream(algorithms).filter(alg -> alg != null).filter(filter).findFirst();
 	}
 
 	private MazeGrid grid;
