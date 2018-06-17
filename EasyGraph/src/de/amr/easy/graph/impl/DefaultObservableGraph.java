@@ -2,9 +2,9 @@ package de.amr.easy.graph.impl;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.BiFunction;
 
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.event.EdgeEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.ObservableGraph;
@@ -18,12 +18,13 @@ import de.amr.easy.graph.api.event.VertexEvent;
  * @param <E>
  *          edge type
  */
-public class DefaultObservableGraph extends DefaultGraph implements ObservableGraph<SimpleEdge> {
+public class DefaultObservableGraph<E extends Edge> extends DefaultGraph<E> implements ObservableGraph<E> {
 
 	private Set<GraphObserver> listeners = new HashSet<>();
 	private boolean listeningSuspended = false;
 
-	public DefaultObservableGraph() {
+	public DefaultObservableGraph(BiFunction<Integer, Integer, E> fnEdgeFactory) {
+		super(fnEdgeFactory);
 		this.listeningSuspended = false;
 	}
 
@@ -58,7 +59,7 @@ public class DefaultObservableGraph extends DefaultGraph implements ObservableGr
 		}
 	}
 
-	protected void fireGraphChange(ObservableGraph<SimpleEdge> graph) {
+	protected void fireGraphChange(ObservableGraph<E> graph) {
 		if (!listeningSuspended) {
 			for (GraphObserver listener : listeners) {
 				listener.graphChanged(graph);
