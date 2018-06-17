@@ -33,5 +33,5 @@ public interface ObservableGraph<E extends Edge> extends Graph<E> {
 	 * @param enabled
 	 *          tells if events are raised
 	 */
-	void setObservationEnabled(boolean enabled);
+	void setEventsEnabled(boolean enabled);
 }

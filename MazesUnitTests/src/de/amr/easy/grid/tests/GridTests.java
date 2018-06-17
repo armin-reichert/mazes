@@ -10,8 +10,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Random;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,12 +36,6 @@ public class GridTests {
 	private static final int HEIGHT = 100;
 
 	private Grid2D<TraversalState, SimpleEdge> grid;
-	private Random rnd = new Random();
-
-	private TraversalState randomTraversalState() {
-		TraversalState values[] = TraversalState.values();
-		return values[rnd.nextInt(values.length)];
-	}
 
 	@Before
 	public void setUp() {
@@ -67,25 +59,6 @@ public class GridTests {
 	@Test
 	public void testInitialContent() {
 		assertEquals(grid.vertices().filter(cell -> grid.get(cell) == UNVISITED).count(), grid.numVertices());
-	}
-
-	@Test
-	public void testGridCopyConstructor() {
-		Grid<TraversalState, SimpleEdge> copy = new Grid<>(grid, SimpleEdge::new);
-		assertEquals(grid.numEdges(), copy.numEdges());
-		assertEquals(grid.numVertices(), copy.numVertices());
-		assertEquals(grid.numCols(), copy.numCols());
-		assertEquals(grid.numRows(), copy.numRows());
-		assertEquals(grid.getTopology(), copy.getTopology());
-		assertEquals(grid.getDefaultVertex(), copy.getDefaultVertex());
-		grid.vertices().forEach(v -> assertEquals(grid.get(v), copy.get(v)));
-	}
-
-	@Test
-	public void testGridCopyRandomContent() {
-		grid.vertices().forEach(v -> grid.set(v, randomTraversalState()));
-		Grid<TraversalState, SimpleEdge> copy = new Grid<>(grid, SimpleEdge::new);
-		grid.vertices().forEach(v -> assertEquals(grid.get(v), copy.get(v)));
 	}
 
 	@Test(expected = UnsupportedOperationException.class)

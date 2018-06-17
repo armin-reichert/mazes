@@ -10,13 +10,18 @@ import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.Topology;
 
 /**
- * A grid with cell content.
+ * A 2D-grid graph with vertex objects.
  * 
  * @author Armin Reichert
+ * 
+ * @param V
+ *          vertex type
+ * @param E
+ *          edge type
  */
 public class Grid<V, E extends Edge> extends BareGrid<E> implements Grid2D<V, E> {
 
-	private final Vertex<V> symbolTable;
+	private final Vertex<V> vertexTable;
 
 	/**
 	 * Creates a grid with the given properties.
@@ -27,63 +32,47 @@ public class Grid<V, E extends Edge> extends BareGrid<E> implements Grid2D<V, E>
 	 *          the number of rows ("height")
 	 * @param top
 	 *          the topology of the grid
-	 * @param defaultContent
-	 *          the default content of grid cells
+	 * @param defaultVertex
+	 *          the default vertex
 	 * @param sparse
 	 *          if the grid has sparse content
 	 */
-	public Grid(int numCols, int numRows, Topology top, V defaultContent, boolean sparse,
+	public Grid(int numCols, int numRows, Topology top, V defaultVertex, boolean sparse,
 			BiFunction<Integer, Integer, E> fnEdgeFactory) {
 		super(numCols, numRows, top, fnEdgeFactory);
-		symbolTable = sparse ? new SparseSymbolTable<>() : new DenseSymbolTable<>(numCols * numRows);
-		symbolTable.setDefaultVertex(defaultContent);
-	}
-
-	/**
-	 * Creates a copy of the given grid.
-	 * 
-	 * @param grid
-	 *          the grid to copy
-	 */
-	public Grid(Grid2D<V, E> grid, BiFunction<Integer, Integer, E> fnEdgeFactory) {
-		this(grid.numCols(), grid.numRows(), grid.getTopology(), grid.getDefaultVertex(), grid.isSparse(), fnEdgeFactory);
-		vertices().forEach(v -> {
-			V vertex = grid.get(v);
-			if (!vertex.equals(grid.getDefaultVertex())) {
-				set(v, vertex);
-			}
-		});
+		vertexTable = sparse ? new SparseSymbolTable<>() : new DenseSymbolTable<>(numCols * numRows);
+		vertexTable.setDefaultVertex(defaultVertex);
 	}
 
 	// --- {@link Vertex} interface ---
 
 	@Override
 	public void clearVertexObjects() {
-		symbolTable.clearVertexObjects();
+		vertexTable.clearVertexObjects();
 	}
 
 	@Override
 	public V getDefaultVertex() {
-		return symbolTable.getDefaultVertex();
+		return vertexTable.getDefaultVertex();
 	}
 
 	@Override
 	public void setDefaultVertex(V vertex) {
-		symbolTable.setDefaultVertex(vertex);
+		vertexTable.setDefaultVertex(vertex);
 	}
 
 	@Override
 	public V get(int v) {
-		return symbolTable.get(v);
+		return vertexTable.get(v);
 	}
 
 	@Override
 	public void set(int v, V vertex) {
-		symbolTable.set(v, vertex);
+		vertexTable.set(v, vertex);
 	}
 
 	@Override
 	public boolean isSparse() {
-		return symbolTable.isSparse();
+		return vertexTable.isSparse();
 	}
 }

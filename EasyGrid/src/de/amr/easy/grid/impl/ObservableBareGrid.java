@@ -13,30 +13,30 @@ import de.amr.easy.grid.api.ObservableBareGrid2D;
 import de.amr.easy.grid.api.Topology;
 
 /**
- * A grid which can be observed.
+ * A bare grid which can be observed.
  * 
  * @author Armin Reichert
  */
 public class ObservableBareGrid<E extends Edge> extends BareGrid<E> implements ObservableBareGrid2D<E> {
 
 	private final Set<GraphObserver> observers;
-	private boolean fireEvents;
+	private boolean eventsEnabled;
 
 	public ObservableBareGrid(int numCols, int numRows, Topology top, BiFunction<Integer, Integer, E> fnEdgeFactory) {
 		super(numCols, numRows, top, fnEdgeFactory);
 		observers = new HashSet<>();
-		fireEvents = true;
+		eventsEnabled = true;
 	}
 
 	public ObservableBareGrid(ObservableBareGrid<E> grid, BiFunction<Integer, Integer, E> fnEdgeFactory) {
 		this(grid.numCols(), grid.numRows(), grid.getTopology(), fnEdgeFactory);
-		this.fireEvents = grid.fireEvents;
+		this.eventsEnabled = grid.eventsEnabled;
 	}
 
 	@Override
 	public void addEdge(int p, int q) {
 		super.addEdge(p, q);
-		if (fireEvents) {
+		if (eventsEnabled) {
 			for (GraphObserver obs : observers) {
 				obs.edgeAdded(new EdgeEvent(this, p, q));
 			}
@@ -47,7 +47,7 @@ public class ObservableBareGrid<E extends Edge> extends BareGrid<E> implements O
 	public void removeEdge(int p, int q) {
 		edge(p, q).ifPresent(edge -> {
 			super.removeEdge(p, q);
-			if (fireEvents) {
+			if (eventsEnabled) {
 				for (GraphObserver obs : observers) {
 					obs.edgeRemoved(new EdgeEvent(this, p, q));
 				}
@@ -80,33 +80,27 @@ public class ObservableBareGrid<E extends Edge> extends BareGrid<E> implements O
 	}
 
 	@Override
-	public void setObservationEnabled(boolean enabled) {
-		fireEvents = enabled;
+	public void setEventsEnabled(boolean enabled) {
+		eventsEnabled = enabled;
 	}
 
 	// helper methods
 
-	protected void fireVertexChange(Integer vertex, Object oldValue, Object newValue) {
-		if (fireEvents) {
-			for (GraphObserver obs : observers) {
-				obs.vertexChanged(new VertexEvent(this, vertex, oldValue, newValue));
-			}
+	protected void fireVertexChange(int v, Object oldValue, Object newValue) {
+		if (eventsEnabled) {
+			observers.forEach(o -> o.vertexChanged(new VertexEvent(this, v, oldValue, newValue)));
 		}
 	}
 
-	protected void fireEdgeChange(int either, int other, Object oldValue, Object newValue) {
-		if (fireEvents) {
-			for (GraphObserver obs : observers) {
-				obs.edgeChanged(new EdgeEvent(this, either, other, oldValue, newValue));
-			}
+	protected void fireEdgeChange(int u, int v, Object oldValue, Object newValue) {
+		if (eventsEnabled) {
+			observers.forEach(o -> o.edgeChanged(new EdgeEvent(this, u, v, oldValue, newValue)));
 		}
 	}
 
 	protected void fireGraphChange(ObservableGraph<?> graph) {
-		if (fireEvents) {
-			for (GraphObserver obs : observers) {
-				obs.graphChanged(graph);
-			}
+		if (eventsEnabled) {
+			observers.forEach(o -> o.graphChanged(graph));
 		}
 	}
 }
