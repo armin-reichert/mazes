@@ -10,13 +10,13 @@ import de.amr.easy.grid.api.ObservableGrid2D;
 import de.amr.easy.grid.api.Topology;
 
 /**
- * An observable grid with cell content.
+ * An observable 2D-grid graph with vertex objects.
  * 
  * @author Armin Reichert
  */
 public class ObservableGrid<V, E extends Edge> extends ObservableBareGrid<E> implements ObservableGrid2D<V, E> {
 
-	private final Vertex<V> content;
+	private final Vertex<V> vertexTable;
 
 	/**
 	 * Creates an observable grid with the given properties.
@@ -27,66 +27,68 @@ public class ObservableGrid<V, E extends Edge> extends ObservableBareGrid<E> imp
 	 *          the number of rows ("height")
 	 * @param top
 	 *          the topology
-	 * @param defaultContent
-	 *          the default vertex content
+	 * @param defaultVertex
+	 *          the default vertex object
 	 * @param sparse
 	 *          if the vertex content will be sparse
 	 */
-	public ObservableGrid(int numCols, int numRows, Topology top, V defaultContent, boolean sparse,
+	public ObservableGrid(int numCols, int numRows, Topology top, V defaultVertex, boolean sparse,
 			BiFunction<Integer, Integer, E> fnEdgeFactory) {
 		super(numCols, numRows, top, fnEdgeFactory);
-		content = sparse ? new SparseSymbolTable<>() : new DenseSymbolTable<>(numCols * numRows);
-		content.setDefaultVertex(defaultContent);
+		vertexTable = sparse ? new SparseSymbolTable<>() : new DenseSymbolTable<>(numCols * numRows);
+		vertexTable.setDefaultVertex(defaultVertex);
 	}
 
 	/**
-	 * Creates an observable grid as a copy of the given grid. Observers are not copied.
+	 * Creates an observable grid as a copy of the given grid. Observers and edges are not copied.
+	 * TODO: handle edges
 	 * 
 	 * @param grid
 	 *          an observable grid
 	 */
-	public ObservableGrid(ObservableGrid<V, E> grid, BiFunction<Integer, Integer, E> fnEdgeFactory) {
-		this(grid.numCols(), grid.numRows(), grid.getTopology(), grid.getDefaultVertex(), grid.isSparse(), fnEdgeFactory);
+	public ObservableGrid(ObservableGrid<V, E> grid) {
+		this(grid.numCols(), grid.numRows(), grid.getTopology(), grid.getDefaultVertex(), grid.isSparse(),
+				grid.fnEdgeFactory);
 		vertices().forEach(v -> {
-			V content = grid.get(v);
-			if (!content.equals(grid.getDefaultVertex())) {
-				set(v, content);
+			V vertex = grid.get(v);
+			if (!vertex.equals(grid.getDefaultVertex())) {
+				set(v, vertex);
 			}
 		});
 	}
 
-	// --- {@link VertexContent} interface ---
+	// --- {@link Vertex} interface ---
 
 	@Override
 	public void clearVertexObjects() {
-		content.clearVertexObjects();
+		vertexTable.clearVertexObjects();
 	}
 
 	@Override
 	public V getDefaultVertex() {
-		return content.getDefaultVertex();
+		return vertexTable.getDefaultVertex();
 	}
 
 	@Override
-	public void setDefaultVertex(V defaultContent) {
-		content.setDefaultVertex(defaultContent);
+	public void setDefaultVertex(V defaultVertex) {
+		vertexTable.setDefaultVertex(defaultVertex);
 		fireGraphChange(this);
 	}
 
 	@Override
-	public V get(int cell) {
-		return content.get(cell);
+	public V get(int v) {
+		return vertexTable.get(v);
 	}
 
 	@Override
-	public void set(int cell, V newContent) {
-		V oldContent = content.get(cell);
-		content.set(cell, newContent);
-		fireVertexChange(cell, oldContent, newContent);
+	public void set(int v, V vertex) {
+		V oldVertex = vertexTable.get(v);
+		vertexTable.set(v, vertex);
+		fireVertexChange(v, oldVertex, vertex);
 	}
 
 	@Override
 	public boolean isSparse() {
-		return content.isSparse();
+		return vertexTable.isSparse();
 	}
 }
