@@ -6,7 +6,6 @@ import java.awt.Color;
 import java.util.BitSet;
 import java.util.function.IntSupplier;
 
-import de.amr.easy.graph.api.ObservableGraphTraversal;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalObserver;
 import de.amr.easy.graph.traversal.AbstractGraphTraversal;
@@ -34,7 +33,7 @@ public class DepthFirstTraversalAnimation {
 		this.grid = grid;
 	}
 
-	private ConfigurableGridRenderer createRenderer(ObservableGraphTraversal dfs, BitSet inPath, GridRenderer base) {
+	private ConfigurableGridRenderer createRenderer(AbstractGraphTraversal dfs, BitSet inPath, GridRenderer base) {
 		ConfigurableGridRenderer r = base instanceof PearlsGridRenderer ? new PearlsGridRenderer()
 				: new WallPassageGridRenderer();
 		r.fnCellSize = base.getModel()::getCellSize;

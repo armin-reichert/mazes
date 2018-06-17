@@ -56,4 +56,26 @@ public interface GraphTraversal {
 	 * @return {@code true} if the vertex is currently in the queue
 	 */
 	boolean inQ(int vertex);
+
+	/**
+	 * Called when an edge is traversed.
+	 * 
+	 * @param either
+	 *          either edge vertex
+	 * @param other
+	 *          other edge vertex
+	 */
+	void edgeTraversed(int either, int other);
+
+	/**
+	 * Called when a vertex is traversed/visited.
+	 * 
+	 * @param v
+	 *          visited vertex
+	 * @param oldState
+	 *          old traversal state of vertex
+	 * @param newState
+	 *          new traversal state of vertex
+	 */
+	void vertexTraversed(int v, TraversalState oldState, TraversalState newState);
 }

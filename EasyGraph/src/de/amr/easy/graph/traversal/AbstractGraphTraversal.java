@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 
 import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Graph;
-import de.amr.easy.graph.api.ObservableGraphTraversal;
+import de.amr.easy.graph.api.GraphTraversal;
 import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalObserver;
 
@@ -20,7 +20,7 @@ import de.amr.easy.graph.api.event.GraphTraversalObserver;
  * 
  * @author Armin Reichert
  */
-public abstract class AbstractGraphTraversal implements ObservableGraphTraversal {
+public abstract class AbstractGraphTraversal implements GraphTraversal {
 
 	protected final Graph<?> graph;
 	protected final Map<Integer, Integer> parentMap = new HashMap<>();
@@ -47,6 +47,32 @@ public abstract class AbstractGraphTraversal implements ObservableGraphTraversal
 	}
 
 	/**
+	 * Adds an observer.
+	 * 
+	 * @param observer
+	 *          traversal observer
+	 */
+	public void addObserver(GraphTraversalObserver observer) {
+		observers.add(observer);
+	}
+
+	/**
+	 * Removes an observer.
+	 * 
+	 * @param observer
+	 *          traversal observer
+	 */
+	public void removeObserver(GraphTraversalObserver observer) {
+		observers.remove(observer);
+	}
+
+	protected void setState(int v, TraversalState newState) {
+		TraversalState oldState = getState(v);
+		stateMap.put(v, newState);
+		vertexTraversed(v, oldState, newState);
+	}
+
+	/**
 	 * @param v
 	 *          a vertex
 	 * @return the children of this vertex in the order they will be added to the search queue
@@ -60,25 +86,9 @@ public abstract class AbstractGraphTraversal implements ObservableGraphTraversal
 		return stateMap.containsKey(v) ? stateMap.get(v) : UNVISITED;
 	}
 
-	protected void setState(int v, TraversalState newState) {
-		TraversalState oldState = getState(v);
-		stateMap.put(v, newState);
-		vertexTraversed(v, oldState, newState);
-	}
-
 	@Override
 	public int getParent(int v) {
 		return parentMap.containsKey(v) ? parentMap.get(v) : -1;
-	}
-
-	@Override
-	public void addObserver(GraphTraversalObserver observer) {
-		observers.add(observer);
-	}
-
-	@Override
-	public void removeObserver(GraphTraversalObserver observer) {
-		observers.remove(observer);
 	}
 
 	@Override
