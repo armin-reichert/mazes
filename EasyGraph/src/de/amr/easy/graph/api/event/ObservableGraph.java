@@ -1,6 +1,7 @@
-package de.amr.easy.graph.api;
+package de.amr.easy.graph.api.event;
 
-import de.amr.easy.graph.api.event.GraphObserver;
+import de.amr.easy.graph.api.Edge;
+import de.amr.easy.graph.api.Graph;
 
 /**
  * A graph whose operations can be observed.

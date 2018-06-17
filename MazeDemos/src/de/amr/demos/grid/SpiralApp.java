@@ -1,8 +1,8 @@
 package de.amr.demos.grid;
 
-import static de.amr.easy.graph.api.TraversalState.COMPLETED;
-import static de.amr.easy.graph.api.TraversalState.UNVISITED;
-import static de.amr.easy.graph.api.TraversalState.VISITED;
+import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
+import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 
 import de.amr.easy.graph.api.SimpleEdge;

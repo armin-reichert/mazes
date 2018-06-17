@@ -1,11 +1,11 @@
 package de.amr.easy.maze.tests;
 
-import static de.amr.easy.graph.api.TraversalState.UNVISITED;
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 
 import org.junit.Test;
 
 import de.amr.easy.graph.api.SimpleEdge;
-import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.impl.Grid;
 import de.amr.easy.grid.impl.Top4;

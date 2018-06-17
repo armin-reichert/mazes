@@ -1,13 +1,13 @@
 package de.amr.easy.maze.alg.traversal;
 
-import static de.amr.easy.graph.api.TraversalState.COMPLETED;
-import static de.amr.easy.graph.api.TraversalState.VISITED;
+import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
+import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
 import static de.amr.easy.util.StreamUtils.randomElement;
 
 import java.util.OptionalInt;
 
 import de.amr.easy.graph.api.SimpleEdge;
-import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.maze.alg.core.MazeAlgorithm;
 

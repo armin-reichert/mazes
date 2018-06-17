@@ -1,6 +1,6 @@
-package de.amr.easy.graph.traversal;
+package de.amr.easy.graph.impl.traversal;
 
-import static de.amr.easy.graph.api.TraversalState.UNVISITED;
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 
 import java.util.Comparator;
 import java.util.function.Function;

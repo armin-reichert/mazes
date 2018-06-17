@@ -1,7 +1,7 @@
 package de.amr.demos.grid;
 
-import static de.amr.easy.graph.api.TraversalState.COMPLETED;
-import static de.amr.easy.graph.api.TraversalState.UNVISITED;
+import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static java.awt.EventQueue.invokeLater;
 import static java.lang.String.format;
 import static javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
@@ -21,7 +21,7 @@ import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.api.Topology;
 import de.amr.easy.grid.impl.ObservableGrid;
 import de.amr.easy.grid.ui.swing.animation.GridCanvasAnimation;

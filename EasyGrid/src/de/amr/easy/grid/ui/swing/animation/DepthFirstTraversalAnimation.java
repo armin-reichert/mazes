@@ -1,14 +1,14 @@
 package de.amr.easy.grid.ui.swing.animation;
 
-import static de.amr.easy.graph.api.TraversalState.VISITED;
+import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
 
 import java.awt.Color;
 import java.util.BitSet;
 import java.util.function.IntSupplier;
 
-import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalObserver;
-import de.amr.easy.graph.traversal.AbstractGraphTraversal;
+import de.amr.easy.graph.api.traversal.TraversalState;
+import de.amr.easy.graph.impl.traversal.AbstractGraphTraversal;
 import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.GridCanvas;

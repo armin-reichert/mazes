@@ -5,7 +5,7 @@ import static de.amr.easy.util.StreamUtils.permute;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.SimpleEdge;
-import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 
 /**

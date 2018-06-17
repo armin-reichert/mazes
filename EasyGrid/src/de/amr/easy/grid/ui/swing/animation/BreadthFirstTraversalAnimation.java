@@ -7,9 +7,9 @@ import java.awt.Font;
 import java.util.BitSet;
 import java.util.function.IntSupplier;
 
-import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalObserver;
-import de.amr.easy.graph.traversal.BreadthFirstTraversal;
+import de.amr.easy.graph.api.traversal.TraversalState;
+import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.api.BareGrid2D;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.GridCanvas;

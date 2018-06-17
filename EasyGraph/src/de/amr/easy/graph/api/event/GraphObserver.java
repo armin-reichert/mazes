@@ -1,7 +1,5 @@
 package de.amr.easy.graph.api.event;
 
-import de.amr.easy.graph.api.ObservableGraph;
-
 /**
  * Observer interface for graph operations.
  * 

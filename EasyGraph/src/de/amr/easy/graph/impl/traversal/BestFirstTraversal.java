@@ -1,4 +1,4 @@
-package de.amr.easy.graph.traversal;
+package de.amr.easy.graph.impl.traversal;
 
 import java.util.PriorityQueue;
 import java.util.function.Function;

@@ -1,12 +1,12 @@
 package de.amr.demos.grid;
 
-import static de.amr.easy.graph.api.TraversalState.UNVISITED;
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 
 import java.awt.Color;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.SimpleEdge;
-import de.amr.easy.graph.traversal.BestFirstTraversal;
+import de.amr.easy.graph.impl.traversal.BestFirstTraversal;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;

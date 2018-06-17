@@ -1,6 +1,6 @@
 package de.amr.demos.maze.swingapp.action;
 
-import static de.amr.easy.graph.api.TraversalState.UNVISITED;
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static java.lang.String.format;
 
 import java.awt.event.ActionEvent;

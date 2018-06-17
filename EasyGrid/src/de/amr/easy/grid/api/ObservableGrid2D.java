@@ -1,7 +1,7 @@
 package de.amr.easy.grid.api;
 
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.graph.api.ObservableGraph;
+import de.amr.easy.graph.api.event.ObservableGraph;
 
 /**
  * A 2D-grid with cell data that can be observed by graph listeners.

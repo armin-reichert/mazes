@@ -1,6 +1,6 @@
 package de.amr.easy.graph.api.event;
 
-import de.amr.easy.graph.api.TraversalState;
+import de.amr.easy.graph.api.traversal.TraversalState;
 
 /**
  * Observer interface for graph traversals like DFS or BFS.

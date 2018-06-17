@@ -15,10 +15,10 @@ import java.awt.Color;
 import java.util.Arrays;
 import java.util.Optional;
 
-import de.amr.easy.graph.traversal.BestFirstTraversal;
-import de.amr.easy.graph.traversal.BreadthFirstTraversal;
-import de.amr.easy.graph.traversal.DepthFirstTraversal2;
-import de.amr.easy.graph.traversal.HillClimbing;
+import de.amr.easy.graph.impl.traversal.BestFirstTraversal;
+import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
+import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
+import de.amr.easy.graph.impl.traversal.HillClimbing;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.maze.alg.BinaryTree;
 import de.amr.easy.maze.alg.BinaryTreeRandom;

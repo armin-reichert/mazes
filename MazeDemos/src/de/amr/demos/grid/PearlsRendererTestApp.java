@@ -1,7 +1,7 @@
 package de.amr.demos.grid;
 
-import static de.amr.easy.graph.api.TraversalState.COMPLETED;
-import static de.amr.easy.graph.api.TraversalState.UNVISITED;
+import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation.floodFill;
@@ -9,7 +9,7 @@ import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation
 import java.awt.Color;
 
 import de.amr.easy.graph.api.SimpleEdge;
-import de.amr.easy.graph.traversal.DepthFirstTraversal2;
+import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;

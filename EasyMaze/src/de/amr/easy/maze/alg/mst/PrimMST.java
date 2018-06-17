@@ -1,11 +1,11 @@
 package de.amr.easy.maze.alg.mst;
 
-import static de.amr.easy.graph.api.TraversalState.COMPLETED;
+import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 
 import java.util.PriorityQueue;
 
-import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.WeightedEdge;
+import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.maze.alg.core.MazeAlgorithm;
 

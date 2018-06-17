@@ -1,6 +1,6 @@
-package de.amr.easy.graph.traversal;
+package de.amr.easy.graph.impl.traversal;
 
-import static de.amr.easy.graph.api.TraversalState.UNVISITED;
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,9 +10,9 @@ import java.util.stream.IntStream;
 
 import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Graph;
-import de.amr.easy.graph.api.GraphTraversal;
-import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.GraphTraversalObserver;
+import de.amr.easy.graph.api.traversal.GraphTraversal;
+import de.amr.easy.graph.api.traversal.TraversalState;
 
 /**
  * Abstract base class for graph traversals. Stores traversal state and parent link for each vertex

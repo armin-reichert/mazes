@@ -5,9 +5,9 @@ import java.util.Set;
 import java.util.function.BiFunction;
 
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.graph.api.ObservableGraph;
 import de.amr.easy.graph.api.event.EdgeEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
+import de.amr.easy.graph.api.event.ObservableGraph;
 import de.amr.easy.graph.api.event.VertexEvent;
 import de.amr.easy.grid.api.ObservableBareGrid2D;
 import de.amr.easy.grid.api.Topology;

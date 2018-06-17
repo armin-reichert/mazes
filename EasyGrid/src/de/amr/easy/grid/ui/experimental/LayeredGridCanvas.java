@@ -6,12 +6,12 @@ import java.awt.Font;
 import java.util.function.BiFunction;
 
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.graph.api.ObservableGraph;
-import de.amr.easy.graph.api.TraversalState;
 import de.amr.easy.graph.api.event.EdgeEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
+import de.amr.easy.graph.api.event.ObservableGraph;
 import de.amr.easy.graph.api.event.VertexEvent;
-import de.amr.easy.graph.traversal.BreadthFirstTraversal;
+import de.amr.easy.graph.api.traversal.TraversalState;
+import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.ObservableGrid2D;
 import de.amr.easy.grid.impl.ObservableGrid;

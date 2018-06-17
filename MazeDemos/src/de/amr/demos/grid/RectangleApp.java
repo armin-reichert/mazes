@@ -1,6 +1,6 @@
 package de.amr.demos.grid;
 
-import static de.amr.easy.graph.api.TraversalState.COMPLETED;
+import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.grid.impl.Top4;

@@ -1,6 +1,6 @@
 package de.amr.demos.grid.curves;
 
-import static de.amr.easy.graph.api.TraversalState.COMPLETED;
+import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 
 import de.amr.demos.grid.SwingGridSampleApp;
 import de.amr.easy.graph.api.SimpleEdge;

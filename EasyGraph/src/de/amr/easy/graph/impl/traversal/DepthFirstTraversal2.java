@@ -1,8 +1,8 @@
-package de.amr.easy.graph.traversal;
+package de.amr.easy.graph.impl.traversal;
 
-import static de.amr.easy.graph.api.TraversalState.COMPLETED;
-import static de.amr.easy.graph.api.TraversalState.UNVISITED;
-import static de.amr.easy.graph.api.TraversalState.VISITED;
+import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
+import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
 
 import java.util.OptionalInt;
 import java.util.stream.IntStream;

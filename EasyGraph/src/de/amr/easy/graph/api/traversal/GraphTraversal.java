@@ -1,4 +1,4 @@
-package de.amr.easy.graph.api;
+package de.amr.easy.graph.api.traversal;
 
 /**
  * Common interface for graph traversals.
