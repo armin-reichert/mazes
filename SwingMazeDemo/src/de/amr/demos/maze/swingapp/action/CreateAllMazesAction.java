@@ -20,7 +20,7 @@ public class CreateAllMazesAction extends CreateMazeAction {
 
 	public CreateAllMazesAction(MazeDemoApp app) {
 		super(app);
-		putValue(NAME, "Create All Mazes");
+		putValue(NAME, "All Mazes");
 	}
 
 	@Override

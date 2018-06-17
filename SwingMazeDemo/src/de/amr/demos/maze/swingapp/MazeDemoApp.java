@@ -25,6 +25,7 @@ import de.amr.demos.maze.swingapp.action.FloodFillAction;
 import de.amr.demos.maze.swingapp.action.RunMazeSolverAction;
 import de.amr.demos.maze.swingapp.action.ShowSettingsAction;
 import de.amr.demos.maze.swingapp.action.StopTaskAction;
+import de.amr.demos.maze.swingapp.action.ToggleControlPanelAction;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
@@ -69,6 +70,7 @@ public class MazeDemoApp {
 	public final Action actionClearCanvas = new ClearCanvasAction(this);
 	public final Action actionChangeGridResolution = new ChangeGridResolutionAction(this);
 	public final Action actionShowSettings = new ShowSettingsAction(this);
+	public final ToggleControlPanelAction actionToggleControlPanel = new ToggleControlPanelAction(this);
 
 	private Thread workerThread;
 	private volatile boolean threadStopped;
@@ -110,9 +112,9 @@ public class MazeDemoApp {
 		getCanvas().getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
 		getCanvas().getActionMap().put("showSettings", actionShowSettings);
 
+		actionToggleControlPanel.setMinimized(true);
 		wndSettings.setAlwaysOnTop(true);
-		wndSettings.pack();
-		wndSettings.setLocationRelativeTo(null);
+		wndSettings.setLocation((DISPLAY_MODE.getWidth() - wndSettings.getWidth()) / 2, 42);
 		wndSettings.setVisible(true);
 	}
 

@@ -39,44 +39,46 @@ public class ControlPanel extends JPanel {
 	private JLabel labelSolver;
 	private JLabel lblGenerator_1;
 	private JLabel lblSolver;
+	private JScrollPane scrollPane;
+	private JPanel controls;
 
 	public ControlPanel() {
-		setPreferredSize(new Dimension(535, 300));
+		setPreferredSize(new Dimension(497, 433));
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(new BorderLayout(0, 0));
 
-		JPanel controlsPanel = new JPanel();
-		add(controlsPanel, BorderLayout.NORTH);
-		controlsPanel.setLayout(new MigLayout("", "[center][:5px:5px,fill][grow]", "[grow,center][][][][][]"));
+		controls = new JPanel();
+		add(controls, BorderLayout.CENTER);
+		controls.setLayout(new MigLayout("", "[][grow,fill]", "[][][][][][]"));
 
 		lblGenerator_1 = new JLabel("Generator");
-		controlsPanel.add(lblGenerator_1, "cell 0 1,alignx left");
+		controls.add(lblGenerator_1, "cell 0 0,alignx left");
 
 		lblGenerator = new JLabel("Generation Algorithm");
 		lblGenerator.setBorder(new EmptyBorder(5, 0, 5, 0));
 		lblGenerator.setForeground(Color.BLUE);
 		lblGenerator.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		lblGenerator.setHorizontalAlignment(SwingConstants.CENTER);
-		controlsPanel.add(lblGenerator, "flowy,cell 2 1,alignx left,aligny center");
+		controls.add(lblGenerator, "flowy,cell 1 0");
 
 		lblSolver = new JLabel("Solver");
-		controlsPanel.add(lblSolver, "flowx,cell 0 2,alignx left");
+		controls.add(lblSolver, "flowx,cell 0 1,alignx left");
 
 		labelSolver = new JLabel("Solver");
-		controlsPanel.add(labelSolver, "cell 2 2,alignx left");
+		controls.add(labelSolver, "cell 1 1");
 		labelSolver.setHorizontalAlignment(SwingConstants.CENTER);
 		labelSolver.setForeground(Color.BLUE);
 		labelSolver.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		labelSolver.setBorder(new EmptyBorder(5, 0, 5, 0));
 
 		JLabel lblGridResolution = new JLabel("Grid Resolution");
-		controlsPanel.add(lblGridResolution, "cell 0 3,alignx left,growy");
+		controls.add(lblGridResolution, "cell 0 2,alignx left");
 
 		comboGridResolution = new JComboBox<>();
-		controlsPanel.add(comboGridResolution, "cell 2 3,grow");
+		controls.add(comboGridResolution, "cell 1 2,growx");
 
 		lblPassageWidth = new JLabel("Passage Width (%)");
-		controlsPanel.add(lblPassageWidth, "cell 0 4,alignx left,growy");
+		controls.add(lblPassageWidth, "cell 0 3,alignx left");
 		lblPassageWidth.setLabelFor(sliderPassageWidth);
 
 		sliderPassageWidth = new JSlider();
@@ -85,10 +87,10 @@ public class ControlPanel extends JPanel {
 		sliderPassageWidth.setPaintLabels(true);
 		sliderPassageWidth.setToolTipText("Passage width (%)");
 		sliderPassageWidth.setPaintTicks(true);
-		controlsPanel.add(sliderPassageWidth, "cell 2 4,grow");
+		controls.add(sliderPassageWidth, "cell 1 3,growx");
 
 		lblDelay = new JLabel("Delay");
-		controlsPanel.add(lblDelay, "cell 0 5,alignx left,growy");
+		controls.add(lblDelay, "cell 0 4,alignx left");
 
 		sliderDelay = new JSlider();
 		sliderDelay.setToolTipText("Rendering Delay");
@@ -97,33 +99,33 @@ public class ControlPanel extends JPanel {
 		sliderDelay.setMaximum(50);
 		sliderDelay.setMinorTickSpacing(1);
 		sliderDelay.setMajorTickSpacing(5);
-		controlsPanel.add(sliderDelay, "cell 2 5,grow");
+		controls.add(sliderDelay, "cell 1 4,growx");
 
-		JScrollPane scrollPane = new JScrollPane();
-		add(scrollPane, BorderLayout.CENTER);
+		scrollPane = new JScrollPane();
+		controls.add(scrollPane, "cell 0 5 2 1,grow");
 
 		textArea = new JTextArea();
+		scrollPane.setViewportView(textArea);
 		textArea.setTabSize(2);
 		textArea.setLineWrap(true);
-		scrollPane.setViewportView(textArea);
 		textArea.setEditable(false);
-		textArea.setRows(6);
+		textArea.setRows(100);
 
-		JPanel buttonPanel = new JPanel();
-		add(buttonPanel, BorderLayout.SOUTH);
-		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		JPanel buttons = new JPanel();
+		add(buttons, BorderLayout.SOUTH);
+		buttons.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		btnCreateMaze = new JButton("Create Maze");
-		buttonPanel.add(btnCreateMaze);
+		buttons.add(btnCreateMaze);
 
 		btnFindPath = new JButton("Solve");
-		buttonPanel.add(btnFindPath);
+		buttons.add(btnFindPath);
 
 		btnCreateAllMazes = new JButton("Create All Mazes");
-		buttonPanel.add(btnCreateAllMazes);
+		buttons.add(btnCreateAllMazes);
 
 		btnStop = new JButton("Stop");
-		buttonPanel.add(btnStop);
+		buttons.add(btnStop);
 	}
 
 	public void showMessage(String msg) {
@@ -170,5 +172,9 @@ public class ControlPanel extends JPanel {
 
 	public JLabel getLblSolver() {
 		return labelSolver;
+	}
+
+	public JPanel getControls() {
+		return controls;
 	}
 }
