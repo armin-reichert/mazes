@@ -3,6 +3,7 @@ package de.amr.demos.maze.swingapp.action;
 import java.awt.event.ActionEvent;
 
 import javax.swing.Action;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
@@ -20,12 +21,17 @@ public class ToggleControlPanelAction extends MazeDemoAction {
 
 	public void setMinimized(boolean minimized) {
 		JPanel controls = app.wndSettings.getControlPanel().getControls();
-		controls.setVisible(!minimized);
-		controls.getParent().revalidate();
-		putValue(Action.NAME, minimized ? "Maximize Control Panel" : "Minimize Control Panel");
-		app.wndSettings.pack();
 		if (minimized) {
+			putValue(Action.NAME, "Show Details");
+			putValue(Action.LARGE_ICON_KEY, new ImageIcon(getClass().getResource("/zoom_in.png")));
+			controls.setVisible(false);
+			app.wndSettings.pack();
 			app.wndSettings.setSize(app.wndSettings.getWidth(), 120);
+		} else {
+			putValue(Action.NAME, "Hide Details");
+			putValue(Action.LARGE_ICON_KEY, new ImageIcon(getClass().getResource("/zoom_out.png")));
+			controls.setVisible(true);
+			app.wndSettings.pack();
 		}
 	}
 }

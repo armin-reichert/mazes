@@ -81,6 +81,7 @@ public class SettingsWindow extends JFrame {
 		controlPanel.getBtnCreateAllMazes().setAction(app.actionCreateAllMazes);
 		controlPanel.getBtnFindPath().setAction(app.actionRunMazeSolver);
 		controlPanel.getBtnStop().setAction(app.actionStopTask);
+		controlPanel.getBtnToggleMinMax().setAction(app.actionToggleControlPanel);
 
 		getContentPane().add(controlPanel, BorderLayout.CENTER);
 
@@ -92,6 +93,7 @@ public class SettingsWindow extends JFrame {
 		getJMenuBar().add(solverMenu);
 		optionMenu = new OptionMenu(app);
 		getJMenuBar().add(optionMenu);
+
 	}
 
 	public ControlPanel getControlPanel() {

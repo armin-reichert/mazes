@@ -17,6 +17,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
+import java.awt.Component;
+import javax.swing.Box;
+import javax.swing.ImageIcon;
 
 /**
  * Panel for setting parameters and running maze generator and path finder.
@@ -41,6 +44,7 @@ public class ControlPanel extends JPanel {
 	private JLabel lblSolver;
 	private JScrollPane scrollPane;
 	private JPanel controls;
+	private JButton btnToggleMinMax;
 
 	public ControlPanel() {
 		setPreferredSize(new Dimension(497, 433));
@@ -117,19 +121,23 @@ public class ControlPanel extends JPanel {
 
 		JPanel buttons = new JPanel();
 		add(buttons, BorderLayout.SOUTH);
-		buttons.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		buttons.setLayout(new MigLayout("", "[][][][][grow,right]", "[28px]"));
 
 		btnCreateMaze = new JButton("Create");
-		buttons.add(btnCreateMaze);
+		buttons.add(btnCreateMaze, "cell 0 0,alignx left,aligny top");
 
 		btnSolve = new JButton("Solve");
-		buttons.add(btnSolve);
+		buttons.add(btnSolve, "cell 1 0,alignx left,aligny top");
 
 		btnCreateAllMazes = new JButton("All Mazes");
-		buttons.add(btnCreateAllMazes);
+		buttons.add(btnCreateAllMazes, "cell 2 0,alignx left,aligny top");
 
 		btnStop = new JButton("Stop");
-		buttons.add(btnStop);
+		buttons.add(btnStop, "cell 3 0,alignx left,aligny top");
+		
+		btnToggleMinMax = new JButton("");
+		btnToggleMinMax.setIcon(new ImageIcon(ControlPanel.class.getResource("/com/sun/java/swing/plaf/windows/icons/DetailsView.gif")));
+		buttons.add(btnToggleMinMax, "cell 4 0,aligny top");
 	}
 
 	public void showMessage(String msg) {
@@ -180,5 +188,8 @@ public class ControlPanel extends JPanel {
 
 	public JPanel getControls() {
 		return controls;
+	}
+	public JButton getBtnToggleMinMax() {
+		return btnToggleMinMax;
 	}
 }

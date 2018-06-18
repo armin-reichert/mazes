@@ -117,6 +117,5 @@ public class OptionMenu extends JMenu {
 			});
 			item.setSelected(app.model.isHidingControlsWhenRunning());
 		}
-		add(app.actionToggleControlPanel);
 	}
 }
