@@ -6,7 +6,7 @@ As an exercise for learning the new Java 8 language features (lambda expressions
 
 To achieve these goals, there is
 - an API for [graph](EasyGraph/src/de/amr/easy/graph/api/Graph.java) and [2D-grid](EasyGrid/src/de/amr/easy/grid/api/GridGraph2D.java) data structures 
-- an implementation of a [2D-grid](EasyGrid/src/de/amr/easy/grid/impl/Grid.java) with cell and edge content
+- an implementation of a [2D-grid](EasyGrid/src/de/amr/easy/grid/impl/GridGraph.java) with cell and edge content
 - a publish-subscribe mechanism for observing graph/grid operations and traversal algorithms
 
 The maze generation algorithms operate strictly on the grid API. For drawing and animation, graph and graph traversal listeners are used.
@@ -16,9 +16,9 @@ I also found new ways of generating mazes, for example a modification of Eller's
 To illustrate, the maze generator based on Kruskal's minimum-spanning-tree algorithm looks like this:
 
 ```java
-public class KruskalMST extends MazeAlgorithm<SimpleEdge> {
+public class KruskalMST extends MazeAlgorithm {
 
-	public KruskalMST(Grid2D<TraversalState, SimpleEdge> grid) {
+	public KruskalMST(GridGraph2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 	}
 
