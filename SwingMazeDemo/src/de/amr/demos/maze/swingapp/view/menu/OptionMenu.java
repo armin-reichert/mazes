@@ -1,9 +1,10 @@
 package de.amr.demos.maze.swingapp.view.menu;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
+import java.util.function.BooleanSupplier;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
-import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
@@ -19,103 +20,41 @@ import de.amr.easy.grid.api.GridPosition;
  */
 public class OptionMenu extends JMenu {
 
-	private static abstract class PositionMenu extends JMenu {
-
-		public PositionMenu(String title) {
-			super(title);
-			ButtonGroup group = new ButtonGroup();
-			for (GridPosition position : GridPosition.values()) {
-				final JRadioButtonMenuItem radio = new JRadioButtonMenuItem(position.toString());
-				radio.putClientProperty("position", position);
-				add(radio);
-				group.add(radio);
-				radio.addItemListener((e) -> {
-					if (e.getStateChange() == ItemEvent.SELECTED) {
-						onPositionSelected((GridPosition) radio.getClientProperty("position"));
-					}
-				});
-				if (isInitiallySelected(position)) {
-					radio.setSelected(true);
-				}
-			}
-		}
-
-		protected abstract boolean isInitiallySelected(GridPosition position);
-
-		protected abstract void onPositionSelected(GridPosition position);
-	}
-
 	private final MazeDemoApp app;
 
 	public OptionMenu(MazeDemoApp demo) {
-		super("Options");
 		this.app = demo;
-
-		add(new PositionMenu("Generation Start") {
-
-			@Override
-			protected void onPositionSelected(GridPosition position) {
-				app.model.setGenerationStart(position);
-			}
-
-			@Override
-			protected boolean isInitiallySelected(GridPosition position) {
-				return position == app.model.getGenerationStart();
-			}
-		});
-
-		add(new PositionMenu("Pathfinder Start") {
-
-			@Override
-			protected void onPositionSelected(GridPosition position) {
-				app.model.setPathFinderStart(position);
-			}
-
-			@Override
-			protected boolean isInitiallySelected(GridPosition position) {
-				return position == app.model.getPathFinderSource();
-			}
-		});
-
-		add(new PositionMenu("Pathfinder Target") {
-
-			@Override
-			protected void onPositionSelected(GridPosition position) {
-				app.model.setPathFinderTarget(position);
-			}
-
-			@Override
-			protected boolean isInitiallySelected(GridPosition position) {
-				return position == app.model.getPathFinderTarget();
-			}
-		});
-
+		setText("Options");
+		addPositionMenu("Generation Start", app.model::setGenerationStart, app.model::getGenerationStart);
+		addPositionMenu("Solution Start", app.model::setPathFinderStart, app.model::getPathFinderSource);
+		addPositionMenu("Solution Target", app.model::setPathFinderTarget, app.model::getPathFinderTarget);
 		addSeparator();
+		addCheckBox("Animate Generation", app.model::setGenerationAnimated, app.model::isGenerationAnimated);
+		addCheckBox("Hide dialog when running", app.model::setHidingControlsWhenRunning,
+				app.model::isHidingControlsWhenRunning);
+	}
 
-		{
-			final JCheckBoxMenuItem item = new JCheckBoxMenuItem("Animate Generation");
-			add(item);
-			item.addActionListener(new AbstractAction() {
+	private void addCheckBox(String title, Consumer<Boolean> onChecked, BooleanSupplier selection) {
+		JCheckBoxMenuItem checkBox = new JCheckBoxMenuItem(title);
+		checkBox.addActionListener(evt -> onChecked.accept(checkBox.isSelected()));
+		checkBox.setSelected(selection.getAsBoolean());
+		add(checkBox);
+	}
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					app.model.setGenerationAnimated(item.isSelected());
+	private void addPositionMenu(String title, Consumer<GridPosition> onSelection, Supplier<GridPosition> selection) {
+		JMenu menu = new JMenu(title);
+		ButtonGroup group = new ButtonGroup();
+		for (GridPosition pos : GridPosition.values()) {
+			JRadioButtonMenuItem radio = new JRadioButtonMenuItem(pos.toString());
+			radio.setSelected(pos == selection.get());
+			radio.addItemListener(e -> {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					onSelection.accept(pos);
 				}
 			});
-			item.setSelected(app.model.isGenerationAnimated());
+			menu.add(radio);
+			group.add(radio);
 		}
-		{
-			final JCheckBoxMenuItem item = new JCheckBoxMenuItem("Hide this dialog when running");
-			add(item);
-			item.addActionListener(new AbstractAction() {
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					boolean hide = item.isSelected();
-					app.model.setHidingControlsWhenRunning(hide);
-				}
-			});
-			item.setSelected(app.model.isHidingControlsWhenRunning());
-		}
+		add(menu);
 	}
 }
