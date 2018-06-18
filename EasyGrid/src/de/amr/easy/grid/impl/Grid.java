@@ -3,9 +3,9 @@ package de.amr.easy.grid.impl;
 import java.util.function.BiFunction;
 
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.graph.api.Vertex;
-import de.amr.easy.graph.impl.DenseSymbolTable;
-import de.amr.easy.graph.impl.SparseSymbolTable;
+import de.amr.easy.graph.api.VertexMap;
+import de.amr.easy.graph.impl.DenseVertexMap;
+import de.amr.easy.graph.impl.SparseVertexMap;
 import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.Topology;
 
@@ -21,7 +21,7 @@ import de.amr.easy.grid.api.Topology;
  */
 public class Grid<V, E extends Edge> extends GridGraph<E> implements Grid2D<V, E> {
 
-	private final Vertex<V> vertexTable;
+	private final VertexMap<V> vertexTable;
 
 	/**
 	 * Creates a grid with the given properties.
@@ -40,15 +40,15 @@ public class Grid<V, E extends Edge> extends GridGraph<E> implements Grid2D<V, E
 	public Grid(int numCols, int numRows, Topology top, V defaultVertex, boolean sparse,
 			BiFunction<Integer, Integer, E> fnEdgeFactory) {
 		super(numCols, numRows, top, fnEdgeFactory);
-		vertexTable = sparse ? new SparseSymbolTable<>() : new DenseSymbolTable<>(numCols * numRows);
+		vertexTable = sparse ? new SparseVertexMap<>() : new DenseVertexMap<>(numCols * numRows);
 		vertexTable.setDefaultVertex(defaultVertex);
 	}
 
-	// --- {@link Vertex} interface ---
+	// --- {@link VertexMap} interface ---
 
 	@Override
-	public void clearVertexObjects() {
-		vertexTable.clearVertexObjects();
+	public void clear() {
+		vertexTable.clear();
 	}
 
 	@Override
@@ -69,10 +69,5 @@ public class Grid<V, E extends Edge> extends GridGraph<E> implements Grid2D<V, E
 	@Override
 	public void set(int v, V vertex) {
 		vertexTable.set(v, vertex);
-	}
-
-	@Override
-	public boolean isSparse() {
-		return vertexTable.isSparse();
 	}
 }

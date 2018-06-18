@@ -1,19 +1,19 @@
 package de.amr.easy.graph.api;
 
 /**
- * Interface for graph vertex objects.
+ * Interface for a map from vertex indices to vertex objects.
  *
  * @param <V>
  *          vertex object type
  */
-public interface Vertex<V> {
+public interface VertexMap<V> {
 
 	/**
 	 * Returns the vertex object at the given vertex index.
 	 * 
 	 * @param v
 	 *          a vertex index
-	 * @return the object at this index or the default vertex object
+	 * @return the object at this index or the default vertex object if no mapping exists
 	 */
 	V get(int v);
 
@@ -30,7 +30,7 @@ public interface Vertex<V> {
 	/**
 	 * Clears the complete grid content.
 	 */
-	void clearVertexObjects();
+	void clear();
 
 	/**
 	 * Sets the default vertex object
@@ -44,9 +44,4 @@ public interface Vertex<V> {
 	 * @return the default vertex object of the graph
 	 */
 	V getDefaultVertex();
-
-	/**
-	 * @return {@code true} if this is a sparse content store
-	 */
-	boolean isSparse();
 }

@@ -112,7 +112,7 @@ public class MazeApp {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			canvas.getGrid().clearVertexObjects();
+			canvas.getGrid().clear();
 			canvas.getGrid().removeEdges();
 			canvas.clear();
 			runRandomMazeAlgorithm(canvas.getGrid());

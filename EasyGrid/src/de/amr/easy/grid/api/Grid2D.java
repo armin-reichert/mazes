@@ -1,7 +1,7 @@
 package de.amr.easy.grid.api;
 
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.graph.api.Vertex;
+import de.amr.easy.graph.api.VertexMap;
 
 /**
  * A 2D-grid graph with vertex objects ("cells").
@@ -13,5 +13,5 @@ import de.amr.easy.graph.api.Vertex;
  * @param <E>
  *          edge type
  */
-public interface Grid2D<V, E extends Edge> extends GridGraph2D<E>, Vertex<V> {
+public interface Grid2D<V, E extends Edge> extends GridGraph2D<E>, VertexMap<V> {
 }

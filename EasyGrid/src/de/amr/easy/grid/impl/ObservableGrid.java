@@ -3,9 +3,9 @@ package de.amr.easy.grid.impl;
 import java.util.function.BiFunction;
 
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.graph.api.Vertex;
-import de.amr.easy.graph.impl.DenseSymbolTable;
-import de.amr.easy.graph.impl.SparseSymbolTable;
+import de.amr.easy.graph.api.VertexMap;
+import de.amr.easy.graph.impl.DenseVertexMap;
+import de.amr.easy.graph.impl.SparseVertexMap;
 import de.amr.easy.grid.api.ObservableGrid2D;
 import de.amr.easy.grid.api.Topology;
 
@@ -16,7 +16,7 @@ import de.amr.easy.grid.api.Topology;
  */
 public class ObservableGrid<V, E extends Edge> extends ObservableGridGraph<E> implements ObservableGrid2D<V, E> {
 
-	private final Vertex<V> vertexTable;
+	private final VertexMap<V> vertexMap;
 
 	/**
 	 * Creates an observable grid with the given properties.
@@ -30,65 +30,43 @@ public class ObservableGrid<V, E extends Edge> extends ObservableGridGraph<E> im
 	 * @param defaultVertex
 	 *          the default vertex object
 	 * @param sparse
-	 *          if the vertex content will be sparse
+	 *          if the grid is sparse of vertex objects
 	 */
 	public ObservableGrid(int numCols, int numRows, Topology top, V defaultVertex, boolean sparse,
 			BiFunction<Integer, Integer, E> fnEdgeFactory) {
 		super(numCols, numRows, top, fnEdgeFactory);
-		vertexTable = sparse ? new SparseSymbolTable<>() : new DenseSymbolTable<>(numCols * numRows);
-		vertexTable.setDefaultVertex(defaultVertex);
+		vertexMap = sparse ? new SparseVertexMap<>() : new DenseVertexMap<>(numCols * numRows);
+		vertexMap.setDefaultVertex(defaultVertex);
 	}
 
-	/**
-	 * Creates an observable grid as a copy of the given grid. Observers and edges are not copied.
-	 * TODO: handle edges
-	 * 
-	 * @param grid
-	 *          an observable grid
-	 */
-	public ObservableGrid(ObservableGrid<V, E> grid) {
-		this(grid.numCols(), grid.numRows(), grid.getTopology(), grid.getDefaultVertex(), grid.isSparse(),
-				grid.fnEdgeFactory);
-		vertices().forEach(v -> {
-			V vertex = grid.get(v);
-			if (!vertex.equals(grid.getDefaultVertex())) {
-				set(v, vertex);
-			}
-		});
-	}
-
-	// --- {@link Vertex} interface ---
+	// --- {@link VertexMap} interface ---
 
 	@Override
-	public void clearVertexObjects() {
-		vertexTable.clearVertexObjects();
+	public void clear() {
+		vertexMap.clear();
+		fireGraphChange(this);
 	}
 
 	@Override
 	public V getDefaultVertex() {
-		return vertexTable.getDefaultVertex();
+		return vertexMap.getDefaultVertex();
 	}
 
 	@Override
 	public void setDefaultVertex(V defaultVertex) {
-		vertexTable.setDefaultVertex(defaultVertex);
+		vertexMap.setDefaultVertex(defaultVertex);
 		fireGraphChange(this);
 	}
 
 	@Override
 	public V get(int v) {
-		return vertexTable.get(v);
+		return vertexMap.get(v);
 	}
 
 	@Override
 	public void set(int v, V vertex) {
-		V oldVertex = vertexTable.get(v);
-		vertexTable.set(v, vertex);
+		V oldVertex = vertexMap.get(v);
+		vertexMap.set(v, vertex);
 		fireVertexChange(v, oldVertex, vertex);
-	}
-
-	@Override
-	public boolean isSparse() {
-		return vertexTable.isSparse();
 	}
 }

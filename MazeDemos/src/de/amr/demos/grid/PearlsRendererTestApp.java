@@ -58,7 +58,7 @@ public class PearlsRendererTestApp extends SwingGridSampleApp<SimpleEdge> {
 
 	private void clear() {
 		grid.removeEdges();
-		grid.clearVertexObjects();
+		grid.clear();
 		grid.setDefaultVertex(UNVISITED);
 		canvas.clear();
 	}
