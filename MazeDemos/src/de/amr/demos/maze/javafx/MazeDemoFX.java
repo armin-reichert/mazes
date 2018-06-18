@@ -10,8 +10,8 @@ import java.util.TimerTask;
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
-import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.grid.impl.ObservableGrid;
+import de.amr.easy.grid.api.GridGraph2D;
+import de.amr.easy.grid.impl.ObservableGridGraph;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
 import de.amr.easy.maze.alg.Eller;
@@ -58,7 +58,7 @@ public class MazeDemoFX extends Application {
 
 	private Canvas canvas;
 	private Timer timer;
-	private ObservableGrid<TraversalState, ?> maze;
+	private ObservableGridGraph<TraversalState, ?> maze;
 	private int cols;
 	private int rows;
 	private int cellSize;
@@ -111,9 +111,10 @@ public class MazeDemoFX extends Application {
 	}
 
 	private void nextMaze() {
-		maze = new ObservableGrid<>(cols, rows, Top4.get(), UNVISITED, false, SimpleEdge::new);
+		maze = new ObservableGridGraph<>(cols, rows, Top4.get(), SimpleEdge::new);
+		maze.setDefaultVertex(UNVISITED);
 		canvas.resize((cols + 1) * cellSize, (rows + 1) * cellSize);
-		MazeAlgorithm<?> generator = randomMazeGenerator();
+		MazeAlgorithm generator = randomMazeGenerator();
 		generator.run(maze.cell(0, 0));
 		drawGrid();
 		BreadthFirstTraversal bfs = new BreadthFirstTraversal(maze);
@@ -121,10 +122,10 @@ public class MazeDemoFX extends Application {
 		drawPath(bfs.path(maze.cell(BOTTOM_RIGHT))::iterator);
 	}
 
-	private MazeAlgorithm<?> randomMazeGenerator() {
+	private MazeAlgorithm randomMazeGenerator() {
 		Class<?> generatorClass = GENERATOR_CLASSES[RAND.nextInt(GENERATOR_CLASSES.length)];
 		try {
-			return (MazeAlgorithm<?>) generatorClass.getConstructor(Grid2D.class).newInstance(maze);
+			return (MazeAlgorithm) generatorClass.getConstructor(GridGraph2D.class).newInstance(maze);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Could not create maze generator instance");

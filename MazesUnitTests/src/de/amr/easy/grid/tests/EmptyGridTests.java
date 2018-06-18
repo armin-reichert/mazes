@@ -8,13 +8,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.amr.easy.graph.api.SimpleEdge;
-import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.impl.GridGraph;
 import de.amr.easy.grid.impl.Top4;
 
 public class EmptyGridTests {
 
-	private GridGraph2D<SimpleEdge> grid;
+	private GridGraph<Void, SimpleEdge> grid;
 
 	@Before
 	public void setUp() {

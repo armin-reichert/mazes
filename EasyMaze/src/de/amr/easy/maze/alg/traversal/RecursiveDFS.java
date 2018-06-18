@@ -8,7 +8,7 @@ import java.util.OptionalInt;
 
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.maze.alg.core.MazeAlgorithm;
 
 /**
@@ -21,9 +21,9 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  *      "http://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking">Maze
  *      Generation: Recursive Backtracking</a>
  */
-public class RecursiveDFS extends MazeAlgorithm<SimpleEdge> {
+public class RecursiveDFS extends MazeAlgorithm {
 
-	public RecursiveDFS(Grid2D<TraversalState, SimpleEdge> grid) {
+	public RecursiveDFS(GridGraph2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 	}
 

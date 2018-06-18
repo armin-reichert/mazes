@@ -13,13 +13,18 @@ import de.amr.easy.grid.api.ObservableGridGraph2D;
 import de.amr.easy.grid.api.Topology;
 
 /**
- * A bare grid which can be observed.
+ * A grid graph which can be observed.
  * 
  * @author Armin Reichert
+ * 
+ * @param <V>
+ *          vertex type
+ * @param <E>
+ *          edge type
  */
-public class ObservableGridGraph<E extends Edge> extends GridGraph<E> implements ObservableGridGraph2D<E> {
+public class ObservableGridGraph<V, E extends Edge> extends GridGraph<V, E> implements ObservableGridGraph2D<V, E> {
 
-	private final Set<GraphObserver> observers;
+	private final Set<GraphObserver<V, E>> observers;
 	private boolean eventsEnabled;
 
 	public ObservableGridGraph(int numCols, int numRows, Topology top, BiFunction<Integer, Integer, E> fnEdgeFactory) {
@@ -28,30 +33,35 @@ public class ObservableGridGraph<E extends Edge> extends GridGraph<E> implements
 		eventsEnabled = true;
 	}
 
-	public ObservableGridGraph(ObservableGridGraph<E> grid, BiFunction<Integer, Integer, E> fnEdgeFactory) {
-		this(grid.numCols(), grid.numRows(), grid.getTopology(), fnEdgeFactory);
-		this.eventsEnabled = grid.eventsEnabled;
+	@Override
+	public void clear() {
+		super.clear();
+		fireGraphChange(this);
 	}
 
 	@Override
-	public void addEdge(int p, int q) {
-		super.addEdge(p, q);
-		if (eventsEnabled) {
-			for (GraphObserver obs : observers) {
-				obs.edgeAdded(new EdgeEvent(this, p, q));
-			}
-		}
+	public void setDefaultVertex(V vertex) {
+		super.setDefaultVertex(vertex);
+		fireGraphChange(this);
 	}
 
 	@Override
-	public void removeEdge(int p, int q) {
-		edge(p, q).ifPresent(edge -> {
-			super.removeEdge(p, q);
-			if (eventsEnabled) {
-				for (GraphObserver obs : observers) {
-					obs.edgeRemoved(new EdgeEvent(this, p, q));
-				}
-			}
+	public void set(int v, V vertex) {
+		super.set(v, vertex);
+		fireVertexChange(v);
+	}
+
+	@Override
+	public void addEdge(int u, int v) {
+		super.addEdge(u, v);
+		fireEdgeAdded(u, v);
+	}
+
+	@Override
+	public void removeEdge(int u, int v) {
+		edge(u, v).ifPresent(edge -> {
+			super.removeEdge(u, v);
+			fireEdgeRemoved(u, v);
 		});
 	}
 
@@ -70,12 +80,12 @@ public class ObservableGridGraph<E extends Edge> extends GridGraph<E> implements
 	/* {@link ObservableGraph} interface */
 
 	@Override
-	public void addGraphObserver(GraphObserver obs) {
+	public void addGraphObserver(GraphObserver<V, E> obs) {
 		observers.add(obs);
 	}
 
 	@Override
-	public void removeGraphObserver(GraphObserver obs) {
+	public void removeGraphObserver(GraphObserver<V, E> obs) {
 		observers.remove(obs);
 	}
 
@@ -86,19 +96,31 @@ public class ObservableGridGraph<E extends Edge> extends GridGraph<E> implements
 
 	// helper methods
 
-	protected void fireVertexChange(int v, Object oldValue, Object newValue) {
+	protected void fireVertexChange(int v) {
 		if (eventsEnabled) {
-			observers.forEach(o -> o.vertexChanged(new VertexEvent(this, v, oldValue, newValue)));
+			observers.forEach(o -> o.vertexChanged(new VertexEvent<>(this, v)));
 		}
 	}
 
-	protected void fireEdgeChange(int u, int v, Object oldValue, Object newValue) {
+	protected void fireEdgeAdded(int u, int v) {
 		if (eventsEnabled) {
-			observers.forEach(o -> o.edgeChanged(new EdgeEvent(this, u, v, oldValue, newValue)));
+			observers.forEach(o -> o.edgeAdded(new EdgeEvent<>(this, u, v)));
+		}
+	}
+	
+	protected void fireEdgeChanged(int u, int v) {
+		if (eventsEnabled) {
+			observers.forEach(o -> o.edgeChanged(new EdgeEvent<>(this, u, v)));
 		}
 	}
 
-	protected void fireGraphChange(ObservableGraph<?> graph) {
+	protected void fireEdgeRemoved(int u, int v) {
+		if (eventsEnabled) {
+			observers.forEach(o -> o.edgeRemoved(new EdgeEvent<>(this, u, v)));
+		}
+	}
+
+	protected void fireGraphChange(ObservableGraph<V, E> graph) {
 		if (eventsEnabled) {
 			observers.forEach(o -> o.graphChanged(graph));
 		}

@@ -7,7 +7,7 @@ import static de.amr.easy.util.StreamUtils.randomElement;
 
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.maze.alg.core.MazeAlgorithm;
 
 /**
@@ -18,12 +18,12 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  * 
  * @author Armin Reichert
  */
-public class AldousBroderWilsonUST extends MazeAlgorithm<SimpleEdge> {
+public class AldousBroderWilsonUST extends MazeAlgorithm {
 
 	private int numVisitedCells;
 	private int currentCell;
 
-	public AldousBroderWilsonUST(Grid2D<TraversalState, SimpleEdge> grid) {
+	public AldousBroderWilsonUST(GridGraph2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 	}
 

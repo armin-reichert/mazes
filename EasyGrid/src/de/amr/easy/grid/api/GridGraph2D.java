@@ -8,17 +8,19 @@ import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
+import de.amr.easy.graph.api.VertexMap;
 
 /**
- * Interface for two-dimensional grid graph.
+ * Interface for 2D grid graph.
  * 
+ * @param <V>
+ *          vertex type
  * @param <E>
  *          edge type
  * 
  * @author Armin Reichert
- * 
  */
-public interface GridGraph2D<E extends Edge> extends Graph<E> {
+public interface GridGraph2D<V, E extends Edge> extends Graph<E>, VertexMap<V> {
 
 	/**
 	 * @return the number of columns (width) of the grid

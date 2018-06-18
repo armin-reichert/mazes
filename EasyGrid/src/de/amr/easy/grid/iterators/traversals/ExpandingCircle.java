@@ -2,8 +2,8 @@ package de.amr.easy.grid.iterators.traversals;
 
 import java.util.Iterator;
 
-import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.api.CellSequence;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.iterators.shapes.Circle;
 
 /**
@@ -13,13 +13,13 @@ import de.amr.easy.grid.iterators.shapes.Circle;
  */
 public class ExpandingCircle implements CellSequence {
 
-	private final GridGraph2D<?> grid;
+	private final GridGraph2D<?, ?> grid;
 	private final int center;
 	private final int minRadius;
 	private final int maxRadius;
 	private int expansionRate;
 
-	public ExpandingCircle(GridGraph2D<?> grid, int center, int minRadius, int maxRadius) {
+	public ExpandingCircle(GridGraph2D<?, ?> grid, int center, int minRadius, int maxRadius) {
 		this.grid = grid;
 		this.center = center;
 		this.minRadius = minRadius;

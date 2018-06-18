@@ -18,10 +18,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.amr.easy.graph.api.SimpleEdge;
-import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.grid.impl.Grid;
+import de.amr.easy.grid.impl.GridGraph;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.maze.alg.BinaryTree;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
@@ -66,7 +64,7 @@ public class MazeGeneratorTests {
 	private static final int WIDTH = 100;
 	private static final int HEIGHT = 100;
 
-	private Grid2D<TraversalState, SimpleEdge> grid;
+	private GridGraph<TraversalState, SimpleEdge> grid;
 	private StopWatch watch;
 
 	private static List<String> results = new ArrayList<>();
@@ -74,7 +72,9 @@ public class MazeGeneratorTests {
 	@BeforeClass
 	public static void beforeAllTests() {
 		// warm-up
-		new RandomBFS(new Grid<>(WIDTH, HEIGHT, Top4.get(), UNVISITED, false, SimpleEdge::new)).run(0);
+		GridGraph<TraversalState, SimpleEdge> dummy = new GridGraph<>(WIDTH, HEIGHT, Top4.get(), SimpleEdge::new);
+		dummy.setDefaultVertex(UNVISITED);
+		new RandomBFS(dummy).run(0);
 	}
 
 	@AfterClass
@@ -85,7 +85,8 @@ public class MazeGeneratorTests {
 
 	@Before
 	public void setUp() {
-		grid = new Grid<>(WIDTH, HEIGHT, Top4.get(), UNVISITED, false, SimpleEdge::new);
+		grid = new GridGraph<>(WIDTH, HEIGHT, Top4.get(), SimpleEdge::new);
+		grid.setDefaultVertex(UNVISITED);
 		watch = new StopWatch();
 	}
 
@@ -95,7 +96,7 @@ public class MazeGeneratorTests {
 		assertFalse(GraphUtils.containsCycle(grid));
 	}
 
-	private void runTest(MazeAlgorithm<SimpleEdge> algorithm) {
+	private void runTest(MazeAlgorithm algorithm) {
 		watch.measure(() -> algorithm.run(grid.cell(CENTER)));
 		results.add(format("%-30s (%6d cells): %.3f sec", algorithm.getClass().getSimpleName(), grid.numVertices(),
 				watch.getSeconds()));
@@ -163,14 +164,7 @@ public class MazeGeneratorTests {
 
 	// @Test
 	public void testPrim() {
-		// runTest(new PrimMST(grid));
-		Grid2D<TraversalState, WeightedEdge<Integer>> grid = new Grid<>(WIDTH, HEIGHT, Top4.get(), UNVISITED, false,
-				WeightedEdge::new);
-		watch = new StopWatch();
-		MazeAlgorithm<WeightedEdge<Integer>> prim = new PrimMST(grid);
-		watch.measure(() -> prim.run(grid.cell(CENTER)));
-		results.add(
-				format("%-30s (%6d cells): %.3f sec", prim.getClass().getSimpleName(), grid.numVertices(), watch.getSeconds()));
+		runTest(new PrimMST(grid));
 	}
 
 	@Test
@@ -180,7 +174,8 @@ public class MazeGeneratorTests {
 
 	@Test
 	public void testRecursiveDFS() {
-		grid = new Grid<>(32, 32, Top4.get(), UNVISITED, false, SimpleEdge::new);
+		grid = new GridGraph<>(32, 32, Top4.get(), SimpleEdge::new);
+		grid.setDefaultVertex(UNVISITED);
 		runTest(new RecursiveDFS(grid));
 	}
 
@@ -191,13 +186,15 @@ public class MazeGeneratorTests {
 
 	@Test
 	public void testReverseDeleteDFSMST() {
-		grid = new Grid<>(32, 32, Top4.get(), UNVISITED, false, SimpleEdge::new);
+		grid = new GridGraph<>(32, 32, Top4.get(), SimpleEdge::new);
+		grid.setDefaultVertex(UNVISITED);
 		runTest(new ReverseDeleteDFSMST(grid));
 	}
 
 	@Test
 	public void testReverseDeleteBFSMST() {
-		grid = new Grid<>(32, 32, Top4.get(), UNVISITED, false, SimpleEdge::new);
+		grid = new GridGraph<>(32, 32, Top4.get(), SimpleEdge::new);
+		grid.setDefaultVertex(UNVISITED);
 		runTest(new ReverseDeleteBFSMST(grid));
 	}
 

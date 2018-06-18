@@ -4,7 +4,7 @@ import static de.amr.easy.util.StreamUtils.permute;
 
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 
 /**
  * Wilson's algorithm with random start cells of the loop-erased random walks.
@@ -13,7 +13,7 @@ import de.amr.easy.grid.api.Grid2D;
  */
 public class WilsonUSTRandomCell extends WilsonUST {
 
-	public WilsonUSTRandomCell(Grid2D<TraversalState, SimpleEdge> grid) {
+	public WilsonUSTRandomCell(GridGraph2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 	}
 

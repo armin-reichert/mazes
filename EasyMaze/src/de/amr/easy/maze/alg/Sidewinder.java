@@ -4,7 +4,7 @@ import static java.util.stream.IntStream.range;
 
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.maze.alg.core.MazeAlgorithm;
 
 /**
@@ -16,11 +16,11 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  *      "http://weblog.jamisbuck.org/2011/2/3/maze-generation-sidewinder-algorithm.html">Jamis
  *      Buck's blog: Sidewinder algorithm</a>
  */
-public class Sidewinder extends MazeAlgorithm<SimpleEdge> {
+public class Sidewinder extends MazeAlgorithm {
 
 	private int start;
 
-	public Sidewinder(Grid2D<TraversalState, SimpleEdge> grid) {
+	public Sidewinder(GridGraph2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 	}
 

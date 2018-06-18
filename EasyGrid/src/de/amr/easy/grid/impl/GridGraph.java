@@ -12,6 +12,8 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.Edge;
+import de.amr.easy.graph.api.VertexMap;
+import de.amr.easy.graph.impl.SparseVertexMap;
 import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.api.Topology;
@@ -21,7 +23,7 @@ import de.amr.easy.grid.api.Topology;
  * 
  * @author Armin Reichert
  */
-public class GridGraph<E extends Edge> implements GridGraph2D<E> {
+public class GridGraph<V, E extends Edge> implements GridGraph2D<V, E> {
 
 	protected final int numCols;
 	protected final int numRows;
@@ -29,6 +31,35 @@ public class GridGraph<E extends Edge> implements GridGraph2D<E> {
 	protected final BiFunction<Integer, Integer, E> fnEdgeFactory;
 	protected Topology top;
 	protected BitSet bits;
+
+	// --- {@link VertexMap} interface ---
+
+	private final VertexMap<V> vertexMap;
+
+	@Override
+	public void clear() {
+		vertexMap.clear();
+	}
+
+	@Override
+	public V getDefaultVertex() {
+		return vertexMap.getDefaultVertex();
+	}
+
+	@Override
+	public void setDefaultVertex(V vertex) {
+		vertexMap.setDefaultVertex(vertex);
+	}
+
+	@Override
+	public V get(int v) {
+		return vertexMap.get(v);
+	}
+
+	@Override
+	public void set(int v, V vertex) {
+		vertexMap.set(v, vertex);
+	}
 
 	// helper methods
 
@@ -88,6 +119,9 @@ public class GridGraph<E extends Edge> implements GridGraph2D<E> {
 		this.top = top;
 		this.bits = new BitSet(top.dirCount() * numCells);
 		this.fnEdgeFactory = fnEdgeFactory;
+
+		// TODO
+		vertexMap = new SparseVertexMap<>();
 	}
 
 	// Implement {@link Graph} interface
@@ -177,7 +211,7 @@ public class GridGraph<E extends Edge> implements GridGraph2D<E> {
 		return (int) adj(v).count();
 	}
 
-	// Implement {@link BareGrid2D} interface
+	// Implement {@link BareGridGraph2D} interface
 
 	@Override
 	public Topology getTopology() {

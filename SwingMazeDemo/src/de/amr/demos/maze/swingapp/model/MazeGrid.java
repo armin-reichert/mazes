@@ -4,7 +4,7 @@ import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.impl.ObservableGrid;
+import de.amr.easy.grid.impl.ObservableGridGraph;
 import de.amr.easy.grid.impl.Top4;
 
 /**
@@ -12,9 +12,10 @@ import de.amr.easy.grid.impl.Top4;
  * 
  * @author Armin Reichert
  */
-public class MazeGrid extends ObservableGrid<TraversalState, SimpleEdge> {
+public class MazeGrid extends ObservableGridGraph<TraversalState, SimpleEdge> {
 
 	public MazeGrid(int numCols, int numRows) {
-		super(numCols, numRows, Top4.get(), UNVISITED, false, SimpleEdge::new);
+		super(numCols, numRows, Top4.get(), SimpleEdge::new);
+		setDefaultVertex(UNVISITED);
 	}
 }

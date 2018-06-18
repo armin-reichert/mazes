@@ -6,10 +6,12 @@ import de.amr.easy.graph.api.Graph;
 /**
  * A graph whose operations can be observed.
  * 
+ * @param <V>
+ *          vertex type
  * @param <E>
  *          edge type
  */
-public interface ObservableGraph<E extends Edge> extends Graph<E> {
+public interface ObservableGraph<V, E extends Edge> extends Graph<E> {
 
 	/**
 	 * Adds the given observer to this graph.
@@ -17,7 +19,7 @@ public interface ObservableGraph<E extends Edge> extends Graph<E> {
 	 * @param observer
 	 *          graph observer
 	 */
-	void addGraphObserver(GraphObserver observer);
+	void addGraphObserver(GraphObserver<V, E> observer);
 
 	/**
 	 * Removes the given observer to this graph.
@@ -25,7 +27,7 @@ public interface ObservableGraph<E extends Edge> extends Graph<E> {
 	 * @param observer
 	 *          graph observer
 	 */
-	void removeGraphObserver(GraphObserver observer);
+	void removeGraphObserver(GraphObserver<V, E> observer);
 
 	/**
 	 * Enables/disables event firing.

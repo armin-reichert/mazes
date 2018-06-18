@@ -4,7 +4,7 @@ import static java.util.stream.IntStream.range;
 
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 
 /**
  * Wilson's algorithm where the vertices are selected row-wise.
@@ -13,7 +13,7 @@ import de.amr.easy.grid.api.Grid2D;
  */
 public class WilsonUSTRowsTopDown extends WilsonUST {
 
-	public WilsonUSTRowsTopDown(Grid2D<TraversalState, SimpleEdge> grid) {
+	public WilsonUSTRowsTopDown(GridGraph2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 	}
 

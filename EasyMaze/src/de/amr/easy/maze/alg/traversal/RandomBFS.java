@@ -9,7 +9,7 @@ import java.util.List;
 
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.maze.alg.core.MazeAlgorithm;
 
 /**
@@ -17,9 +17,9 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  * 
  * @author Armin Reichert
  */
-public class RandomBFS extends MazeAlgorithm<SimpleEdge> {
+public class RandomBFS extends MazeAlgorithm {
 
-	public RandomBFS(Grid2D<TraversalState, SimpleEdge> grid) {
+	public RandomBFS(GridGraph2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 	}
 

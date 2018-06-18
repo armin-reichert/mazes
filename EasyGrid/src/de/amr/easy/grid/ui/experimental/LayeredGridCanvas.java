@@ -12,9 +12,8 @@ import de.amr.easy.graph.api.event.ObservableGraph;
 import de.amr.easy.graph.api.event.VertexEvent;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
-import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.grid.api.ObservableGrid2D;
-import de.amr.easy.grid.impl.ObservableGrid;
+import de.amr.easy.grid.impl.GridGraph;
+import de.amr.easy.grid.impl.ObservableGridGraph;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
@@ -24,7 +23,7 @@ import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
  * 
  * @author Armin Reichert
  */
-public class LayeredGridCanvas<E extends Edge> extends LayeredCanvas implements GraphObserver {
+public class LayeredGridCanvas<E extends Edge> extends LayeredCanvas implements GraphObserver<TraversalState, E> {
 
 	private enum Layers {
 		Grid, Distances, Path
@@ -35,7 +34,7 @@ public class LayeredGridCanvas<E extends Edge> extends LayeredCanvas implements 
 	protected int cellSize;
 	protected boolean pathDisplayed;
 	protected boolean distancesDisplayed;
-	protected ObservableGrid2D<TraversalState, E> grid;
+	protected ObservableGridGraph<TraversalState, E> grid;
 	protected BreadthFirstTraversal bfs;
 	protected int maxDistance;
 	protected Iterable<Integer> path;
@@ -59,7 +58,8 @@ public class LayeredGridCanvas<E extends Edge> extends LayeredCanvas implements 
 		if (grid != null) {
 			grid.removeGraphObserver(this);
 		}
-		grid = new ObservableGrid<>(cols, rows, Top4.get(), TraversalState.UNVISITED, false, fnEdgeFactory);
+		grid = new ObservableGridGraph<>(cols, rows, Top4.get(), fnEdgeFactory);
+		grid.setDefaultVertex(TraversalState.UNVISITED);
 		grid.addGraphObserver(this);
 	}
 
@@ -98,7 +98,7 @@ public class LayeredGridCanvas<E extends Edge> extends LayeredCanvas implements 
 		this.distancesDisplayed = distancesDisplayed;
 	}
 
-	public Grid2D<TraversalState, E> getGrid() {
+	public GridGraph<TraversalState, E> getGrid() {
 		return grid;
 	}
 
@@ -171,27 +171,27 @@ public class LayeredGridCanvas<E extends Edge> extends LayeredCanvas implements 
 	// implement GraphObserver interface
 
 	@Override
-	public void vertexChanged(VertexEvent event) {
+	public void vertexChanged(VertexEvent<TraversalState, E> event) {
 		repaint();
 	}
 
 	@Override
-	public void edgeAdded(EdgeEvent event) {
+	public void edgeAdded(EdgeEvent<TraversalState, E> event) {
 		repaint();
 	}
 
 	@Override
-	public void edgeRemoved(EdgeEvent event) {
+	public void edgeRemoved(EdgeEvent<TraversalState, E> event) {
 		repaint();
 	}
 
 	@Override
-	public void edgeChanged(EdgeEvent event) {
+	public void edgeChanged(EdgeEvent<TraversalState, E> event) {
 		repaint();
 	}
 
 	@Override
-	public void graphChanged(ObservableGraph<?> graph) {
+	public void graphChanged(ObservableGraph<TraversalState, E> graph) {
 		repaint();
 	}
 }

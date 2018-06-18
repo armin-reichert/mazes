@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 import de.amr.easy.data.Partition;
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.maze.alg.core.MazeAlgorithm;
 
 /**
@@ -21,9 +21,9 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  * @see <a href="http://weblog.jamisbuck.org/2011/1/3/maze-generation-kruskal-s-algorithm.html">Maze
  *      Generation: Kruskal's Algorithm</a>
  */
-public class KruskalMST extends MazeAlgorithm<SimpleEdge> {
+public class KruskalMST extends MazeAlgorithm {
 
-	public KruskalMST(Grid2D<TraversalState, SimpleEdge> grid) {
+	public KruskalMST(GridGraph2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 	}
 

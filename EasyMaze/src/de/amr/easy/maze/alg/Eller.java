@@ -11,7 +11,7 @@ import java.util.Set;
 import de.amr.easy.data.Partition;
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.maze.alg.core.MazeAlgorithm;
 
 /**
@@ -23,11 +23,11 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  *      Generation: Eller's Algorithm</a>.
  * 
  */
-public class Eller extends MazeAlgorithm<SimpleEdge> {
+public class Eller extends MazeAlgorithm {
 
 	private final Partition<Integer> parts = new Partition<>();
 
-	public Eller(Grid2D<TraversalState, SimpleEdge> grid) {
+	public Eller(GridGraph2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 	}
 

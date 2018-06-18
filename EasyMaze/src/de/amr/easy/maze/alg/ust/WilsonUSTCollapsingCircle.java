@@ -5,7 +5,7 @@ import static java.lang.Math.max;
 
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.iterators.shapes.Circle;
 
 /**
@@ -15,7 +15,7 @@ import de.amr.easy.grid.iterators.shapes.Circle;
  */
 public class WilsonUSTCollapsingCircle extends WilsonUST {
 
-	public WilsonUSTCollapsingCircle(Grid2D<TraversalState, SimpleEdge> grid) {
+	public WilsonUSTCollapsingCircle(GridGraph2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 	}
 

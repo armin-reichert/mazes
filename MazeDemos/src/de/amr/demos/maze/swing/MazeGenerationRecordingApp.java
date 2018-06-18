@@ -10,9 +10,8 @@ import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.ObservableGraph;
 import de.amr.easy.graph.api.event.VertexEvent;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.Grid2D;
-import de.amr.easy.grid.api.ObservableGrid2D;
-import de.amr.easy.grid.impl.ObservableGrid;
+import de.amr.easy.grid.api.GridGraph2D;
+import de.amr.easy.grid.impl.ObservableGridGraph;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.GridCanvas;
@@ -95,17 +94,18 @@ public class MazeGenerationRecordingApp {
 	/*@formatter:on*/
 	};
 
-	private ObservableGrid2D<TraversalState, SimpleEdge> grid;
+	private ObservableGridGraph<TraversalState, SimpleEdge> grid;
 	private GridCanvas canvas;
 
 	public void run(int numCols, int numRows, int cellSize, int scanRate, int delayMillis) {
 		for (Class<?> generatorClass : generatorClasses) {
-			grid = new ObservableGrid<>(numCols, numRows, Top4.get(), TraversalState.UNVISITED, false, SimpleEdge::new);
+			grid = new ObservableGridGraph<>(numCols, numRows, Top4.get(), SimpleEdge::new);
+			grid.setDefaultVertex(TraversalState.UNVISITED);
 			canvas = new GridCanvas(grid, cellSize);
 			canvas.pushRenderer(createRenderer(cellSize));
 			try {
-				MazeAlgorithm<SimpleEdge> generator = (MazeAlgorithm<SimpleEdge>) generatorClass.getConstructor(Grid2D.class)
-						.newInstance(grid);
+				MazeAlgorithm generator = (MazeAlgorithm) generatorClass
+						.getConstructor(GridGraph2D.class).newInstance(grid);
 				try (GifRecorder recorder = new GifRecorder(canvas.getDrawingBuffer().getType())) {
 					attachRecorderToGrid(recorder);
 					recorder.setDelayMillis(delayMillis);
@@ -141,30 +141,30 @@ public class MazeGenerationRecordingApp {
 	}
 
 	private void attachRecorderToGrid(GifRecorder recorder) {
-		grid.addGraphObserver(new GraphObserver() {
+		grid.addGraphObserver(new GraphObserver<TraversalState, SimpleEdge>() {
 
 			@Override
-			public void vertexChanged(VertexEvent event) {
+			public void vertexChanged(VertexEvent<TraversalState, SimpleEdge> event) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
-			public void graphChanged(ObservableGraph<?> graph) {
+			public void graphChanged(ObservableGraph<TraversalState, SimpleEdge> graph) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
-			public void edgeRemoved(EdgeEvent event) {
+			public void edgeRemoved(EdgeEvent<TraversalState, SimpleEdge> event) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
-			public void edgeChanged(EdgeEvent event) {
+			public void edgeChanged(EdgeEvent<TraversalState, SimpleEdge> event) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
-			public void edgeAdded(EdgeEvent event) {
+			public void edgeAdded(EdgeEvent<TraversalState, SimpleEdge> event) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 		});

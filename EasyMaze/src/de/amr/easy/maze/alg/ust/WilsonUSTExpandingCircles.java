@@ -11,7 +11,7 @@ import java.util.stream.StreamSupport;
 
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.iterators.traversals.ExpandingCircle;
 
 /**
@@ -21,7 +21,7 @@ import de.amr.easy.grid.iterators.traversals.ExpandingCircle;
  */
 public class WilsonUSTExpandingCircles extends WilsonUST {
 
-	public WilsonUSTExpandingCircles(Grid2D<TraversalState, SimpleEdge> grid) {
+	public WilsonUSTExpandingCircles(GridGraph2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 	}
 

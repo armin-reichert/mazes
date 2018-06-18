@@ -5,12 +5,10 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
- * Undirected Graph.
- * <p>
- * Vertices are stored as indices. Vertex objects may be introduced by implementing classes.
+ * Interface for undirected graph.
  * 
  * @author Armin Reichert
- * 
+ *
  * @param <E>
  *          edge type
  */

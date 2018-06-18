@@ -2,7 +2,7 @@ package de.amr.easy.maze.alg;
 
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 
 /**
  * Variant of "hunt-and-kill" algorithm where the "hunt" picks cells randomly from the set of
@@ -12,7 +12,7 @@ import de.amr.easy.grid.api.Grid2D;
  */
 public class HuntAndKillRandom extends HuntAndKill {
 
-	public HuntAndKillRandom(Grid2D<TraversalState, SimpleEdge> grid) {
+	public HuntAndKillRandom(GridGraph2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 	}
 

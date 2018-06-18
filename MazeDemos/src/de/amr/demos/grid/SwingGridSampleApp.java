@@ -23,7 +23,7 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.api.Topology;
-import de.amr.easy.grid.impl.ObservableGrid;
+import de.amr.easy.grid.impl.ObservableGridGraph;
 import de.amr.easy.grid.ui.swing.animation.GridCanvasAnimation;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.GridCanvas;
@@ -55,9 +55,9 @@ public abstract class SwingGridSampleApp<E extends Edge> implements Runnable {
 	protected final Dimension canvasSize;
 	protected String appName;
 	protected boolean fullscreen;
-	protected ObservableGrid<TraversalState, E> grid;
+	protected ObservableGridGraph<TraversalState, E> grid;
 	protected GridCanvas canvas;
-	protected GridCanvasAnimation canvasAnimation;
+	protected GridCanvasAnimation<TraversalState, E> canvasAnimation;
 
 	private ConfigurableGridRenderer createRenderer(Style style, int cellSize) {
 		ConfigurableGridRenderer r;
@@ -101,7 +101,8 @@ public abstract class SwingGridSampleApp<E extends Edge> implements Runnable {
 		this.fnEdgeFactory = fnEdgeFactory;
 		fullscreen = false;
 		canvasSize = new Dimension(canvasWidth, canvasHeight);
-		grid = new ObservableGrid<>(canvasWidth / cellSize, canvasHeight / cellSize, top, UNVISITED, false, fnEdgeFactory);
+		grid = new ObservableGridGraph<>(canvasWidth / cellSize, canvasHeight / cellSize, top, fnEdgeFactory);
+		grid.setDefaultVertex(UNVISITED);
 		canvas = new GridCanvas(grid, cellSize);
 		canvas.pushRenderer(createRenderer(Style.WALL_PASSAGE, cellSize));
 	}
@@ -119,8 +120,8 @@ public abstract class SwingGridSampleApp<E extends Edge> implements Runnable {
 		DisplayMode displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
 				.getDisplayMode();
 		canvasSize = new Dimension(displayMode.getWidth(), displayMode.getHeight());
-		grid = new ObservableGrid<>(canvasSize.width / cellSize, canvasSize.height / cellSize, top, UNVISITED, false,
-				fnEdgeFactory);
+		grid = new ObservableGridGraph<>(canvasSize.width / cellSize, canvasSize.height / cellSize, top, fnEdgeFactory);
+		grid.setDefaultVertex(UNVISITED);
 		canvas = new GridCanvas(grid, cellSize);
 		canvas.pushRenderer(createRenderer(Style.WALL_PASSAGE, cellSize));
 	}
@@ -141,7 +142,7 @@ public abstract class SwingGridSampleApp<E extends Edge> implements Runnable {
 		});
 		int cellSize = canvas.getRenderer().get().getModel().getCellSize();
 
-		canvasAnimation = new GridCanvasAnimation(canvas);
+		canvasAnimation = new GridCanvasAnimation<>(canvas);
 		grid.addGraphObserver(canvasAnimation);
 
 		window.add(canvas, BorderLayout.CENTER);
@@ -191,8 +192,9 @@ public abstract class SwingGridSampleApp<E extends Edge> implements Runnable {
 		if (renderer.getModel().getCellSize() == cellSize) {
 			return;
 		}
-		grid = new ObservableGrid<>(canvasSize.width / cellSize, canvasSize.height / cellSize, grid.getTopology(),
-				grid.getDefaultVertex(), false, fnEdgeFactory);
+		grid = new ObservableGridGraph<>(canvasSize.width / cellSize, canvasSize.height / cellSize, grid.getTopology(),
+				fnEdgeFactory);
+		grid.setDefaultVertex(UNVISITED);
 		canvas.setGrid(grid);
 		grid.addGraphObserver(canvasAnimation);
 		renderer.fnCellSize = () -> cellSize;

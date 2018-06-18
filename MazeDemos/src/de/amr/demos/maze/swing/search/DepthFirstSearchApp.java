@@ -18,9 +18,8 @@ import javax.swing.KeyStroke;
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
-import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.grid.impl.Grid;
+import de.amr.easy.grid.impl.GridGraph;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
@@ -37,7 +36,7 @@ public class DepthFirstSearchApp {
 		EventQueue.invokeLater(DepthFirstSearchApp::new);
 	}
 
-	private Grid2D<TraversalState, SimpleEdge> grid;
+	private GridGraph<TraversalState, SimpleEdge> grid;
 	private Iterable<Integer> solution;
 	private DrawingArea canvas;
 	private ConfigurableGridRenderer renderer;
@@ -132,7 +131,8 @@ public class DepthFirstSearchApp {
 	}
 
 	private void newMaze(int gridSize) {
-		grid = new Grid<>(gridSize, gridSize, Top4.get(), TraversalState.UNVISITED, false, SimpleEdge::new);
+		grid = new GridGraph<>(gridSize, gridSize, Top4.get(), SimpleEdge::new);
+		grid.setDefaultVertex(TraversalState.UNVISITED);
 		solution = null;
 		new KruskalMST(grid).run(0);
 	}

@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.curves.Curve;
 import de.amr.easy.grid.curves.PeanoCurve;
 import de.amr.easy.grid.impl.GridGraph;
@@ -26,11 +26,11 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 	private final int[] walkStartCells;
 	private int i;
 
-	public WilsonUSTPeanoCurve(Grid2D<TraversalState, SimpleEdge> grid) {
+	public WilsonUSTPeanoCurve(GridGraph2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 		walkStartCells = new int[grid.numVertices()];
 		int n = nextPow(3, max(grid.numCols(), grid.numRows()));
-		GridGraph<?> square = new GridGraph<>(n, n, Top4.get(), SimpleEdge::new);
+		GridGraph<?, ?> square = new GridGraph<>(n, n, Top4.get(), SimpleEdge::new);
 		Curve peano = new PeanoCurve(log(3, n));
 		int current = square.cell(BOTTOM_LEFT);
 		addWalkStartCell(square.col(current), square.row(current));

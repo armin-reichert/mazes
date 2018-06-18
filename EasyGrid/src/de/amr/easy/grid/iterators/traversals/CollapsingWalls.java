@@ -2,8 +2,8 @@ package de.amr.easy.grid.iterators.traversals;
 
 import java.util.Iterator;
 
-import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.api.CellSequence;
+import de.amr.easy.grid.api.GridGraph2D;
 
 /**
  * A sequence of cells traversing the grid like "walls" which are growing horizontally from the
@@ -13,9 +13,9 @@ import de.amr.easy.grid.api.CellSequence;
  */
 public class CollapsingWalls implements CellSequence {
 
-	private final GridGraph2D<?> grid;
+	private final GridGraph2D<?, ?> grid;
 
-	public CollapsingWalls(GridGraph2D<?> grid) {
+	public CollapsingWalls(GridGraph2D<?, ?> grid) {
 		this.grid = grid;
 	}
 

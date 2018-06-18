@@ -27,7 +27,7 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.ui.experimental.LayeredGridCanvas;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
@@ -121,13 +121,13 @@ public class MazeApp {
 		}
 	};
 
-	private void runRandomMazeAlgorithm(Grid2D<TraversalState, WeightedEdge<Integer>> grid) {
+	private void runRandomMazeAlgorithm(GridGraph2D<TraversalState, WeightedEdge<Integer>> grid) {
 		grid.setDefaultVertex(TraversalState.UNVISITED);
 		int index = new Random().nextInt(GENERATORS.length);
 		try {
 			@SuppressWarnings("unchecked")
-			Class<? extends MazeAlgorithm<WeightedEdge<Integer>>> generatorClass = (Class<? extends MazeAlgorithm<WeightedEdge<Integer>>>) GENERATORS[index];
-			MazeAlgorithm<WeightedEdge<Integer>> generator = generatorClass.getConstructor(Grid2D.class).newInstance(grid);
+			Class<? extends MazeAlgorithm> generatorClass = (Class<? extends MazeAlgorithm>) GENERATORS[index];
+			MazeAlgorithm generator = generatorClass.getConstructor(GridGraph2D.class).newInstance(grid);
 			window.setTitle(generatorClass.getSimpleName());
 			generator.run(grid.cell(CENTER));
 		} catch (Exception e) {
@@ -190,7 +190,7 @@ public class MazeApp {
 				JMenuItem item = (JMenuItem) e.getSource();
 				pathStart = (GridPosition) item.getClientProperty("position");
 				canvas.clear();
-				final Grid2D<TraversalState, WeightedEdge<Integer>> grid = canvas.getGrid();
+				final GridGraph2D<TraversalState, WeightedEdge<Integer>> grid = canvas.getGrid();
 				canvas.runPathFinder(grid.cell(pathStart), grid.cell(pathTarget));
 				canvas.repaint();
 			}
@@ -205,7 +205,7 @@ public class MazeApp {
 				JMenuItem item = (JMenuItem) e.getSource();
 				pathTarget = (GridPosition) item.getClientProperty("position");
 				canvas.clear();
-				final Grid2D<TraversalState, WeightedEdge<Integer>> grid = canvas.getGrid();
+				final GridGraph2D<TraversalState, WeightedEdge<Integer>> grid = canvas.getGrid();
 				canvas.runPathFinder(grid.cell(pathStart), grid.cell(pathTarget));
 				canvas.repaint();
 			}

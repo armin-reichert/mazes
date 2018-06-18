@@ -5,7 +5,7 @@ import static de.amr.easy.util.StreamUtils.permute;
 
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.maze.alg.core.MazeAlgorithm;
 
 /**
@@ -15,9 +15,9 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  *
  * @see <a href="https://en.wikipedia.org/wiki/Reverse-delete_algorithm">Wikipedia</a>
  */
-public abstract class ReverseDeleteMST extends MazeAlgorithm<SimpleEdge> {
+public abstract class ReverseDeleteMST extends MazeAlgorithm {
 
-	public ReverseDeleteMST(Grid2D<TraversalState, SimpleEdge> grid) {
+	public ReverseDeleteMST(GridGraph2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 	}
 

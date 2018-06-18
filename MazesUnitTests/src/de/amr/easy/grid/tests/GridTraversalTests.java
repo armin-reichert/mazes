@@ -26,13 +26,12 @@ import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal;
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
 import de.amr.easy.graph.impl.traversal.HillClimbing;
-import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.curves.HilbertCurve;
 import de.amr.easy.grid.curves.HilbertLCurve;
 import de.amr.easy.grid.curves.HilbertLCurveWirth;
 import de.amr.easy.grid.curves.MooreLCurve;
 import de.amr.easy.grid.curves.PeanoCurve;
-import de.amr.easy.grid.impl.Grid;
+import de.amr.easy.grid.impl.GridGraph;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
 import de.amr.easy.util.StreamUtils;
@@ -47,11 +46,12 @@ public class GridTraversalTests {
 		cells.forEach(cell -> assertTrue(getState.apply(cell) == expected));
 	}
 
-	private Grid2D<TraversalState, SimpleEdge> grid;
+	private GridGraph<TraversalState, SimpleEdge> grid;
 
 	@Before
 	public void setUp() {
-		grid = new Grid<>(N, N, Top4.get(), UNVISITED, false, SimpleEdge::new);
+		grid = new GridGraph<>(N, N, Top4.get(), SimpleEdge::new);
+		grid.setDefaultVertex(UNVISITED);
 		grid.fill();
 	}
 
@@ -148,7 +148,8 @@ public class GridTraversalTests {
 
 	@Test
 	public void testPeanoCurve() {
-		grid = new Grid<>(243, 243, Top4.get(), UNVISITED, false, SimpleEdge::new);
+		grid = new GridGraph<>(243, 243, Top4.get(), SimpleEdge::new);
+		grid.setDefaultVertex(TraversalState.UNVISITED);
 		assertAllCells(UNVISITED);
 		traverse(new PeanoCurve(5), grid, grid.cell(BOTTOM_LEFT), this::setCompleted);
 		assertAllCells(COMPLETED);

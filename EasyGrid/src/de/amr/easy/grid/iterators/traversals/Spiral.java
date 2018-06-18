@@ -7,8 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import de.amr.easy.graph.api.SimpleEdge;
-import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.api.CellSequence;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.impl.GridGraph;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.iterators.shapes.Square;
@@ -23,10 +23,10 @@ public class Spiral implements CellSequence {
 
 	private final List<Integer> cells = new ArrayList<>();
 
-	public Spiral(GridGraph2D<?> grid, Integer start) {
+	public Spiral(GridGraph2D<?, ?> grid, Integer start) {
 		int size = Math.max(grid.numCols(), grid.numRows());
 		int offsetY = (size - grid.numRows()) / 2;
-		GridGraph2D<?> squareGrid = new GridGraph<>(size, size, Top4.get(), SimpleEdge::new);
+		GridGraph2D<?, ?> squareGrid = new GridGraph<>(size, size, Top4.get(), SimpleEdge::new);
 		int leftUpperCorner = squareGrid.cell(CENTER);
 		for (int i = 0, n = size / 2 + 1; i < n; ++i) {
 			Square square = new Square(squareGrid, leftUpperCorner, 2 * i + 1);

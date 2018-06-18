@@ -22,7 +22,7 @@ public class Square extends AbstractShape {
 	private final Integer topLeft;
 	private final int size;
 
-	public Square(GridGraph2D<?> grid, Integer topLeft, int size) {
+	public Square(GridGraph2D<?, ?> grid, Integer topLeft, int size) {
 		super(grid);
 
 		this.topLeft = topLeft;

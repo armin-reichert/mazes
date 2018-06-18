@@ -1,11 +1,16 @@
 package de.amr.easy.graph.api.event;
 
+import de.amr.easy.graph.api.Edge;
+
 /**
  * Observer interface for graph operations.
  * 
  * @author Armin Reichert
+ * 
+ * @param <V>
+ *          vertex type
  */
-public interface GraphObserver {
+public interface GraphObserver<V, E extends Edge> {
 
 	/**
 	 * Called when a vertex has changed.
@@ -13,7 +18,7 @@ public interface GraphObserver {
 	 * @param event
 	 *          information about the vertex change
 	 */
-	void vertexChanged(VertexEvent event);
+	void vertexChanged(VertexEvent<V, E> event);
 
 	/**
 	 * Called when an edge has changed or was touched.
@@ -21,7 +26,7 @@ public interface GraphObserver {
 	 * @param event
 	 *          information about the edge
 	 */
-	void edgeChanged(EdgeEvent event);
+	void edgeChanged(EdgeEvent<V, E> event);
 
 	/**
 	 * Called when an edge has been added.
@@ -29,7 +34,7 @@ public interface GraphObserver {
 	 * @param event
 	 *          information about the new edge
 	 */
-	void edgeAdded(EdgeEvent event);
+	void edgeAdded(EdgeEvent<V, E> event);
 
 	/**
 	 * Called when an edge has been removed.
@@ -37,7 +42,7 @@ public interface GraphObserver {
 	 * @param event
 	 *          information about the removed edge
 	 */
-	void edgeRemoved(EdgeEvent event);
+	void edgeRemoved(EdgeEvent<V, E> event);
 
 	/**
 	 * Called when the graph as a whole has changed.
@@ -45,5 +50,5 @@ public interface GraphObserver {
 	 * @param graph
 	 *          the new or changed graph
 	 */
-	void graphChanged(ObservableGraph<?> graph);
+	void graphChanged(ObservableGraph<V, E> graph);
 }

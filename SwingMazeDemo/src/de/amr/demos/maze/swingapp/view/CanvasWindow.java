@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.ui.swing.animation.GridCanvasAnimation;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
@@ -24,7 +25,7 @@ import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
 public class CanvasWindow extends JFrame {
 
 	private GridCanvas canvas;
-	private GridCanvasAnimation canvasAnimation;
+	private GridCanvasAnimation<TraversalState, SimpleEdge> canvasAnimation;
 
 	public CanvasWindow(MazeDemoModel model) {
 		setBackground(Color.BLACK);
@@ -37,7 +38,7 @@ public class CanvasWindow extends JFrame {
 		canvas = new GridCanvas(model.getGrid(), model.getGridCellSize());
 		canvas.pushRenderer(createRenderer(model));
 		canvas.clear();
-		canvasAnimation = new GridCanvasAnimation(canvas);
+		canvasAnimation = new GridCanvasAnimation<>(canvas);
 		canvasAnimation.fnDelay = () -> model.getDelay();
 		model.getGrid().addGraphObserver(canvasAnimation);
 		setContentPane(canvas);
@@ -48,7 +49,7 @@ public class CanvasWindow extends JFrame {
 		return canvas;
 	}
 
-	public GridCanvasAnimation getCanvasAnimation() {
+	public GridCanvasAnimation<TraversalState, SimpleEdge> getCanvasAnimation() {
 		return canvasAnimation;
 	}
 

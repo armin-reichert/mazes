@@ -27,7 +27,7 @@ public class CurveUtils {
 	 * @param action
 	 *          the action executed for each cell
 	 */
-	public static void traverse(Curve curve, GridGraph2D<?> grid, int start, BiConsumer<Integer, Integer> action) {
+	public static void traverse(Curve curve, GridGraph2D<?, ?> grid, int start, BiConsumer<Integer, Integer> action) {
 		int current = start;
 		for (int dir : curve) {
 			int next = grid.neighbor(current, dir).getAsInt();
@@ -47,7 +47,7 @@ public class CurveUtils {
 	 *          the start cell
 	 * @return list of cells traversed by {@code curve} on {@code grid} when starting at {@code start}
 	 */
-	public static List<Integer> cells(Curve curve, GridGraph2D<?> grid, int start) {
+	public static List<Integer> cells(Curve curve, GridGraph2D<?, ?> grid, int start) {
 		/*@formatter:off*/
 		return curve.stream().collect(
 			() -> new ArrayList<>(Arrays.asList(start)), 
@@ -68,7 +68,7 @@ public class CurveUtils {
 	 *          the start cell
 	 * @return textual representation of the grid cells traversed by the given curve
 	 */
-	public static String cellsAsString(Curve curve, GridGraph2D<?> grid, int start) {
+	public static String cellsAsString(Curve curve, GridGraph2D<?, ?> grid, int start) {
 		return cells(curve, grid, start).stream().map(cell -> String.format("(%d,%d)", grid.col(cell), grid.row(cell)))
 				.collect(Collectors.joining());
 	}

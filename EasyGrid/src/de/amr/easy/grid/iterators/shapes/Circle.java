@@ -13,7 +13,7 @@ public class Circle extends AbstractShape {
 	private final int center;
 	private final int radius;
 
-	public Circle(GridGraph2D<?> grid, int center, int radius) {
+	public Circle(GridGraph2D<?, ?> grid, int center, int radius) {
 		super(grid);
 		this.center = center;
 		this.radius = radius;

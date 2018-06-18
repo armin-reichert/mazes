@@ -16,7 +16,7 @@ public class Rectangle extends AbstractShape {
 	private final int width;
 	private final int height;
 
-	public Rectangle(GridGraph2D<?> grid, int leftUpperCorner, int width, int height) {
+	public Rectangle(GridGraph2D<?, ?> grid, int leftUpperCorner, int width, int height) {
 		super(grid);
 
 		this.leftUpperCorner = leftUpperCorner;

@@ -16,10 +16,8 @@ import org.junit.Test;
 
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.Grid2D;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.GridGraph;
-import de.amr.easy.grid.impl.Grid;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.maze.alg.traversal.RandomBFS;
 import de.amr.easy.util.GraphUtils;
@@ -28,18 +26,18 @@ import de.amr.easy.util.GraphUtils;
  * Test case for {@link GridGraph}
  * 
  * @author Armin Reichert
- *
  */
 public class GridTests {
 
 	private static final int WIDTH = 100;
 	private static final int HEIGHT = 100;
 
-	private Grid2D<TraversalState, SimpleEdge> grid;
+	private GridGraph<TraversalState, SimpleEdge> grid;
 
 	@Before
 	public void setUp() {
-		grid = new Grid<>(WIDTH, HEIGHT, Top4.get(), UNVISITED, false, SimpleEdge::new);
+		grid = new GridGraph<>(WIDTH, HEIGHT, Top4.get(), SimpleEdge::new);
+		grid.setDefaultVertex(UNVISITED);
 	}
 
 	@After

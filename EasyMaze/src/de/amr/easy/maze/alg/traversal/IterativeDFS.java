@@ -9,7 +9,7 @@ import java.util.OptionalInt;
 import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.maze.alg.core.MazeAlgorithm;
 
 /**
@@ -17,9 +17,9 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  * 
  * @author Armin Reichert
  */
-public class IterativeDFS extends MazeAlgorithm<SimpleEdge> {
+public class IterativeDFS extends MazeAlgorithm {
 
-	public IterativeDFS(Grid2D<TraversalState, SimpleEdge> grid) {
+	public IterativeDFS(GridGraph2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 	}
 

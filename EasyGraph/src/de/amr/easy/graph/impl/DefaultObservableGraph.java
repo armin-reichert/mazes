@@ -8,88 +8,73 @@ import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.event.EdgeEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.ObservableGraph;
-import de.amr.easy.graph.api.event.VertexEvent;
 
 /**
  * Adjacency set based implementation of an undirected, observable graph.
  * 
  * @author Armin Reichert
  * 
+ * @param <V>
+ *          vertex type
  * @param <E>
  *          edge type
  */
-public class DefaultObservableGraph<E extends Edge> extends DefaultGraph<E> implements ObservableGraph<E> {
+public class DefaultObservableGraph<V, E extends Edge> extends DefaultGraph<E> implements ObservableGraph<V, E> {
 
-	private Set<GraphObserver> listeners = new HashSet<>();
-	private boolean listeningSuspended = false;
+	private Set<GraphObserver<V, E>> observers = new HashSet<>();
+	private boolean eventsEnabled;
 
 	public DefaultObservableGraph(BiFunction<Integer, Integer, E> fnEdgeFactory) {
 		super(fnEdgeFactory);
-		this.listeningSuspended = false;
+		eventsEnabled = true;
 	}
 
 	@Override
-	public void addGraphObserver(GraphObserver listener) {
-		listeners.add(listener);
+	public void addGraphObserver(GraphObserver<V, E> o) {
+		observers.add(o);
 	}
 
 	@Override
-	public void removeGraphObserver(GraphObserver listener) {
-		listeners.remove(listener);
+	public void removeGraphObserver(GraphObserver<V, E> o) {
+		observers.remove(o);
 	}
 
 	@Override
 	public void setEventsEnabled(boolean enabled) {
-		listeningSuspended = enabled;
-	}
-
-	protected void fireVertexChange(int vertex, Object oldValue, Object newValue) {
-		if (!listeningSuspended) {
-			for (GraphObserver listener : listeners) {
-				listener.vertexChanged(new VertexEvent(this, vertex, oldValue, newValue));
-			}
-		}
-	}
-
-	protected void fireEdgeChange(Edge edge, Object oldValue, Object newValue) {
-		if (!listeningSuspended) {
-			for (GraphObserver listener : listeners) {
-				listener.edgeChanged(new EdgeEvent(this, edge.either(), edge.other(), oldValue, newValue));
-			}
-		}
-	}
-
-	protected void fireGraphChange(ObservableGraph<E> graph) {
-		if (!listeningSuspended) {
-			for (GraphObserver listener : listeners) {
-				listener.graphChanged(graph);
-			}
-		}
+		eventsEnabled = enabled;
 	}
 
 	@Override
 	public void addVertex(int vertex) {
 		super.addVertex(vertex);
-		fireVertexChange(vertex, null, vertex);
+		if (eventsEnabled) {
+			observers.forEach(o -> o.graphChanged(this));
+		}
 	}
 
 	@Override
 	public void addEdge(int v, int w) {
 		super.addEdge(v, w);
-		edge(v, w).ifPresent(edge -> fireEdgeChange(edge, null, edge));
+		if (eventsEnabled) {
+			observers.forEach(o -> o.edgeAdded(new EdgeEvent<>(this, v, w)));
+		}
 	}
 
 	@Override
 	public void removeEdge(int v, int w) {
 		edge(v, w).ifPresent(edge -> {
 			super.removeEdge(v, w);
-			fireEdgeChange(edge, edge, null);
+			if (eventsEnabled) {
+				observers.forEach(o -> o.edgeRemoved(new EdgeEvent<>(this, v, w)));
+			}
 		});
 	}
 
 	@Override
 	public void removeEdges() {
 		super.removeEdges();
-		fireGraphChange(this);
+		if (eventsEnabled) {
+			observers.forEach(o -> o.graphChanged(this));
+		}
 	}
 }

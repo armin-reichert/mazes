@@ -9,7 +9,7 @@ import de.amr.easy.data.Partition;
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.Grid2D;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.maze.alg.core.MazeAlgorithm;
 
 /**
@@ -20,11 +20,11 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  * @see <a href="http://iss.ices.utexas.edu/?p=projects/galois/benchmarks/mst">Boruvka's
  *      Algorithm</a>
  */
-public class BoruvkaMST extends MazeAlgorithm<SimpleEdge> {
+public class BoruvkaMST extends MazeAlgorithm {
 
 	private Partition<Integer> forest;
 
-	public BoruvkaMST(Grid2D<TraversalState, SimpleEdge> grid) {
+	public BoruvkaMST(GridGraph2D<TraversalState, SimpleEdge> grid) {
 		super(grid);
 	}
 

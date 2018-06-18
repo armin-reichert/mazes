@@ -2,8 +2,8 @@ package de.amr.easy.grid.iterators.traversals;
 
 import java.util.Iterator;
 
-import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.api.CellSequence;
+import de.amr.easy.grid.api.GridGraph2D;
 
 /**
  * A sequence of cells filling the grid by sweeping a vertical line from right to left.
@@ -12,9 +12,9 @@ import de.amr.easy.grid.api.CellSequence;
  */
 public class RightToLeftSweep implements CellSequence {
 
-	private final GridGraph2D<?> grid;
+	private final GridGraph2D<?, ?> grid;
 
-	public RightToLeftSweep(GridGraph2D<?> grid) {
+	public RightToLeftSweep(GridGraph2D<?, ?> grid) {
 		this.grid = grid;
 	}
 

@@ -33,6 +33,8 @@ import de.amr.demos.maze.swingapp.model.MazeGrid;
 import de.amr.demos.maze.swingapp.view.CanvasWindow;
 import de.amr.demos.maze.swingapp.view.ControlPanel;
 import de.amr.demos.maze.swingapp.view.SettingsWindow;
+import de.amr.easy.graph.api.SimpleEdge;
+import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.graph.impl.traversal.BestFirstTraversal;
 import de.amr.easy.grid.ui.swing.animation.GridCanvasAnimation;
 import de.amr.easy.grid.ui.swing.rendering.GridCanvas;
@@ -135,7 +137,7 @@ public class MazeDemoApp {
 		return wndCanvas.getCanvas();
 	}
 
-	public GridCanvasAnimation getCanvasAnimation() {
+	public GridCanvasAnimation<TraversalState, SimpleEdge> getCanvasAnimation() {
 		return wndCanvas.getCanvasAnimation();
 	}
 
