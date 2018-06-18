@@ -24,7 +24,7 @@ public class CreateMazeAction extends MazeDemoAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app.wndSettings.getGeneratorMenu().getSelectedAlgorithm().ifPresent(this::createMaze);
+		app.wndSettings.generatorMenu.getSelectedAlgorithm().ifPresent(this::createMaze);
 	}
 
 	private void createMaze(AlgorithmInfo generatorInfo) {
@@ -50,8 +50,8 @@ public class CreateMazeAction extends MazeDemoAction {
 		app.model.getGrid().setEventsEnabled(false);
 		app.model.getGrid().removeEdges();
 		app.model.getGrid().setEventsEnabled(true);
-		MazeAlgorithm generator = (MazeAlgorithm) generatorInfo.getAlgorithmClass()
-				.getConstructor(GridGraph2D.class).newInstance(app.model.getGrid());
+		MazeAlgorithm generator = (MazeAlgorithm) generatorInfo.getAlgorithmClass().getConstructor(GridGraph2D.class)
+				.newInstance(app.model.getGrid());
 		if (app.model.isGenerationAnimated()) {
 			generator.run(startCell);
 		} else {

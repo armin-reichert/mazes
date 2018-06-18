@@ -24,10 +24,10 @@ import de.amr.demos.maze.swingapp.view.menu.SolverMenu;
  */
 public class SettingsWindow extends JFrame {
 
-	private final GeneratorMenu generatorMenu;
-	private final SolverMenu solverMenu;
-	private final OptionMenu optionMenu;
-	private final ControlPanel controlPanel;
+	public final GeneratorMenu generatorMenu;
+	public final SolverMenu solverMenu;
+	public final OptionMenu optionMenu;
+	public final ControlPanel controlPanel;
 
 	private static ComboBoxModel<String> createGridResolutionModel(MazeDemoModel model) {
 		String tmpl = "%d cells (%d cols x %d rows, cell size %d)";
@@ -93,22 +93,5 @@ public class SettingsWindow extends JFrame {
 		getJMenuBar().add(solverMenu);
 		optionMenu = new OptionMenu(app);
 		getJMenuBar().add(optionMenu);
-
-	}
-
-	public ControlPanel getControlPanel() {
-		return controlPanel;
-	}
-
-	public GeneratorMenu getGeneratorMenu() {
-		return generatorMenu;
-	}
-
-	public OptionMenu getOptionMenu() {
-		return optionMenu;
-	}
-
-	public SolverMenu getSolverMenu() {
-		return solverMenu;
 	}
 }

@@ -36,7 +36,7 @@ public class RunMazeSolverAction extends MazeDemoAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app.wndSettings.getSolverMenu().getSelectedAlgorithm().ifPresent(solver -> {
+		app.wndSettings.solverMenu.getSelectedAlgorithm().ifPresent(solver -> {
 			app.enableUI(false);
 			app.getCanvas().drawGrid();
 			app.startWorkerThread(() -> {

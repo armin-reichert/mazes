@@ -31,7 +31,6 @@ import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
 import de.amr.demos.maze.swingapp.model.MazeGrid;
 import de.amr.demos.maze.swingapp.view.CanvasWindow;
-import de.amr.demos.maze.swingapp.view.ControlPanel;
 import de.amr.demos.maze.swingapp.view.SettingsWindow;
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
@@ -103,12 +102,12 @@ public class MazeDemoApp {
 
 		wndSettings = new SettingsWindow(this);
 		MazeDemoModel.find(GENERATOR_ALGORITHMS, IterativeDFS.class).ifPresent(alg -> {
-			wndSettings.getGeneratorMenu().selectAlgorithm(alg);
+			wndSettings.generatorMenu.selectAlgorithm(alg);
 			onGeneratorChange(alg);
 		});
 		MazeDemoModel.find(PATHFINDER_ALGORITHMS,
 				alg -> alg.getAlgorithmClass() == BestFirstTraversal.class && alg.isTagged(MANHATTAN)).ifPresent(alg -> {
-					wndSettings.getSolverMenu().selectAlgorithm(alg);
+					wndSettings.solverMenu.selectAlgorithm(alg);
 					onSolverChange(alg);
 				});
 		getCanvas().getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
@@ -142,7 +141,7 @@ public class MazeDemoApp {
 	}
 
 	public void showMessage(String msg) {
-		wndSettings.getControlPanel().showMessage(msg + "\n");
+		wndSettings.controlPanel.showMessage(msg + "\n");
 	}
 
 	public void setGridPassageThickness(int percent) {
@@ -153,23 +152,22 @@ public class MazeDemoApp {
 
 	public void enableUI(boolean enabled) {
 		wndSettings.setVisible(enabled || !model.isHidingControlsWhenRunning());
-		wndSettings.getGeneratorMenu().setEnabled(enabled);
-		wndSettings.getSolverMenu().setEnabled(enabled);
-		wndSettings.getOptionMenu().setEnabled(enabled);
+		wndSettings.generatorMenu.setEnabled(enabled);
+		wndSettings.solverMenu.setEnabled(enabled);
+		wndSettings.optionMenu.setEnabled(enabled);
 		actionChangeGridResolution.setEnabled(enabled);
 		actionCreateMaze.setEnabled(enabled);
 		actionCreateAllMazes.setEnabled(enabled);
 		actionRunMazeSolver.setEnabled(enabled);
-		ControlPanel controlPanel = wndSettings.getControlPanel();
-		controlPanel.getSliderPassageWidth().setEnabled(enabled);
+		wndSettings.controlPanel.getSliderPassageWidth().setEnabled(enabled);
 	}
 
 	public void onGeneratorChange(AlgorithmInfo generatorInfo) {
-		wndSettings.getControlPanel().getLblGenerationAlgorithm().setText(generatorInfo.getDescription());
+		wndSettings.controlPanel.getLblGenerationAlgorithm().setText(generatorInfo.getDescription());
 	}
 
 	public void onSolverChange(AlgorithmInfo solverInfo) {
-		wndSettings.getControlPanel().getLblSolver().setText(solverInfo.getDescription());
+		wndSettings.controlPanel.getLblSolver().setText(solverInfo.getDescription());
 	}
 
 	public void startWorkerThread(Runnable work) {

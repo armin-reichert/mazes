@@ -61,7 +61,7 @@ public class CreateAllMazesAction extends CreateMazeAction {
 	private void createNextMaze(AlgorithmInfo generatorInfo, int startCell) {
 		ready = false;
 		app.getCanvas().clear();
-		app.wndSettings.getGeneratorMenu().selectAlgorithm(generatorInfo);
+		app.wndSettings.generatorMenu.selectAlgorithm(generatorInfo);
 		app.onGeneratorChange(generatorInfo);
 		try {
 			runMazeGenerator(generatorInfo, startCell);
