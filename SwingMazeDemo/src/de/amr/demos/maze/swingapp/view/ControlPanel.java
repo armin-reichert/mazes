@@ -3,7 +3,6 @@ package de.amr.demos.maze.swingapp.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -17,9 +16,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
-import java.awt.Component;
-import javax.swing.Box;
-import javax.swing.ImageIcon;
 
 /**
  * Panel for setting parameters and running maze generator and path finder.
@@ -134,9 +130,9 @@ public class ControlPanel extends JPanel {
 
 		btnStop = new JButton("Stop");
 		buttons.add(btnStop, "cell 3 0,alignx left,aligny top");
-		
-		btnToggleMinMax = new JButton("");
-		btnToggleMinMax.setIcon(new ImageIcon(ControlPanel.class.getResource("/com/sun/java/swing/plaf/windows/icons/DetailsView.gif")));
+
+		btnToggleMinMax = new JButton("Show/Hide Details");
+		btnToggleMinMax.setIcon(null);
 		buttons.add(btnToggleMinMax, "cell 4 0,aligny top");
 	}
 
@@ -189,6 +185,7 @@ public class ControlPanel extends JPanel {
 	public JPanel getControls() {
 		return controls;
 	}
+
 	public JButton getBtnToggleMinMax() {
 		return btnToggleMinMax;
 	}

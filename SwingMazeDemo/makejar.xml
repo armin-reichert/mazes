@@ -12,7 +12,8 @@
                 <attribute name="Main-Class" value="de.amr.demos.maze.swingapp.MazeDemoApp"/>
                 <attribute name="Class-Path" value="."/>
             </manifest>
-            <fileset dir="${dir.jarfile}/bin"/>
+            <fileset dir="${dir.jarfile}/assets"/>
+	          <fileset dir="${dir.jarfile}/bin"/>
             <fileset dir="C:/Users/Armin/git/mazes/EasyGrid/bin"/>
             <fileset dir="C:/Users/Armin/git/mazes/EasyGraph/bin"/>
             <fileset dir="C:/Users/Armin/git/mazes/EasyMaze/bin"/>
