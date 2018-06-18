@@ -21,7 +21,7 @@ import de.amr.easy.grid.api.Topology;
  */
 public class Grid<V, E extends Edge> extends GridGraph<E> implements Grid2D<V, E> {
 
-	private final VertexMap<V> vertexTable;
+	private final VertexMap<V> vertexMap;
 
 	/**
 	 * Creates a grid with the given properties.
@@ -40,34 +40,34 @@ public class Grid<V, E extends Edge> extends GridGraph<E> implements Grid2D<V, E
 	public Grid(int numCols, int numRows, Topology top, V defaultVertex, boolean sparse,
 			BiFunction<Integer, Integer, E> fnEdgeFactory) {
 		super(numCols, numRows, top, fnEdgeFactory);
-		vertexTable = sparse ? new SparseVertexMap<>() : new DenseVertexMap<>(numCols * numRows);
-		vertexTable.setDefaultVertex(defaultVertex);
+		vertexMap = sparse ? new SparseVertexMap<>() : new DenseVertexMap<>(numCols * numRows);
+		vertexMap.setDefaultVertex(defaultVertex);
 	}
 
 	// --- {@link VertexMap} interface ---
 
 	@Override
 	public void clear() {
-		vertexTable.clear();
+		vertexMap.clear();
 	}
 
 	@Override
 	public V getDefaultVertex() {
-		return vertexTable.getDefaultVertex();
+		return vertexMap.getDefaultVertex();
 	}
 
 	@Override
 	public void setDefaultVertex(V vertex) {
-		vertexTable.setDefaultVertex(vertex);
+		vertexMap.setDefaultVertex(vertex);
 	}
 
 	@Override
 	public V get(int v) {
-		return vertexTable.get(v);
+		return vertexMap.get(v);
 	}
 
 	@Override
 	public void set(int v, V vertex) {
-		vertexTable.set(v, vertex);
+		vertexMap.set(v, vertex);
 	}
 }
