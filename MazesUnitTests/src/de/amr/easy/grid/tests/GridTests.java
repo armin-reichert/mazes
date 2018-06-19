@@ -64,6 +64,11 @@ public class GridTests {
 		grid.addVertex(0);
 	}
 
+	@Test(expected = UnsupportedOperationException.class)
+	public void testRemoveVertexThrowsException() {
+		grid.removeVertex(0);
+	}
+
 	@Test
 	public void testGetNonexistingEdge() {
 		assertFalse(grid.edge(0, 1).isPresent());
