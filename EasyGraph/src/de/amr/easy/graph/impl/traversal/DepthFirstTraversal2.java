@@ -19,7 +19,7 @@ public class DepthFirstTraversal2 extends AbstractGraphTraversal {
 
 	private final Stack<Integer> stack = new Stack<>();
 
-	public DepthFirstTraversal2(Graph<?> graph) {
+	public DepthFirstTraversal2(Graph<?, ?> graph) {
 		super(graph);
 	}
 

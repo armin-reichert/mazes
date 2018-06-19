@@ -19,7 +19,7 @@ import de.amr.easy.graph.api.event.ObservableGraph;
  * @param <E>
  *          edge type
  */
-public class DefaultObservableGraph<V, E extends Edge> extends DefaultGraph<E> implements ObservableGraph<V, E> {
+public class DefaultObservableGraph<V, E extends Edge> extends DefaultGraph<V, E> implements ObservableGraph<V, E> {
 
 	private Set<GraphObserver<V, E>> observers = new HashSet<>();
 	private boolean eventsEnabled;

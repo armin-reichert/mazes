@@ -29,7 +29,7 @@ public class HillClimbing<C extends Comparable<C>> extends DepthFirstTraversal {
 	 * @param cost
 	 *          cost function for vertices
 	 */
-	public HillClimbing(Graph<?> graph, Function<Integer, C> cost) {
+	public HillClimbing(Graph<?, ?> graph, Function<Integer, C> cost) {
 		super(graph);
 		byDecreasingCost = (u, v) -> cost.apply(v).compareTo(cost.apply(u));
 	}

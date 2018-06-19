@@ -9,10 +9,12 @@ import java.util.stream.Stream;
  * 
  * @author Armin Reichert
  *
+ * @param <V>
+ *          vertex type
  * @param <E>
  *          edge type
  */
-public interface Graph<E extends Edge> {
+public interface Graph<V, E extends Edge> {
 
 	/**
 	 * @return stream of the vertex indices of this graph
@@ -45,6 +47,14 @@ public interface Graph<E extends Edge> {
 	 *          a vertex index
 	 */
 	void addVertex(int v);
+
+	/**
+	 * Removes the given vertex (index) from this graph.
+	 * 
+	 * @param v
+	 *          a vertex index
+	 */
+	void removeVertex(int v);
 
 	/**
 	 * Connects the given vertices.

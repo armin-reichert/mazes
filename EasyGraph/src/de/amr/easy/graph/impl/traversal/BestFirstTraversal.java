@@ -27,7 +27,7 @@ public class BestFirstTraversal<C extends Comparable<C>> extends BreadthFirstTra
 	 * @param cost
 	 *          cost function for vertices
 	 */
-	public BestFirstTraversal(Graph<?> graph, Function<Integer, C> cost) {
+	public BestFirstTraversal(Graph<?, ?> graph, Function<Integer, C> cost) {
 		super(graph, new PriorityQueue<>((u, v) -> cost.apply(u).compareTo(cost.apply(v))));
 	}
 }

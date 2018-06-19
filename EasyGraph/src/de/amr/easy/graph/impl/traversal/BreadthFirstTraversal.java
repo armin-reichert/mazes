@@ -27,14 +27,14 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal {
 	protected final int[] distance;
 	private int maxDistance;
 
-	protected BreadthFirstTraversal(Graph<?> graph, Queue<Integer> queue) {
+	protected BreadthFirstTraversal(Graph<?, ?> graph, Queue<Integer> queue) {
 		super(graph);
 		this.q = queue;
 		this.distance = new int[graph.numVertices()];
 		clear();
 	}
 
-	public BreadthFirstTraversal(Graph<?> graph) {
+	public BreadthFirstTraversal(Graph<?, ?> graph) {
 		this(graph, new ArrayDeque<>());
 	}
 

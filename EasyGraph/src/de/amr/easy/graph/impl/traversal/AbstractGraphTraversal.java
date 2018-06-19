@@ -22,12 +22,12 @@ import de.amr.easy.graph.api.traversal.TraversalState;
  */
 public abstract class AbstractGraphTraversal implements GraphTraversal {
 
-	protected final Graph<?> graph;
+	protected final Graph<?, ?> graph;
 	protected final Map<Integer, Integer> parentMap = new HashMap<>();
 	protected final Map<Integer, TraversalState> stateMap = new HashMap<>();
 	protected final Set<GraphTraversalObserver> observers = new HashSet<>(5);
 
-	protected AbstractGraphTraversal(Graph<?> graph) {
+	protected AbstractGraphTraversal(Graph<?, ?> graph) {
 		this.graph = graph;
 	}
 

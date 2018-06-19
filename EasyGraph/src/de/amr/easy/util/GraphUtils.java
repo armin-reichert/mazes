@@ -21,7 +21,7 @@ public class GraphUtils {
 	 *          an undirected graph
 	 * @return {@code true} if the graph contains a cycle
 	 */
-	public static <E extends Edge> boolean containsCycle(Graph<E> g) {
+	public static <E extends Edge> boolean containsCycle(Graph<?, E> g) {
 		Partition<Integer> p = new Partition<>();
 		Iterable<E> edges = g.edges()::iterator;
 		for (E edge : edges) {
@@ -43,7 +43,7 @@ public class GraphUtils {
 	 *          a cell
 	 * @return {@code true} if there exists a path connecting the given cells
 	 */
-	public static <E extends Edge> boolean areConnected(Graph<E> g, int u, int v) {
+	public static <E extends Edge> boolean areConnected(Graph<?, E> g, int u, int v) {
 		BreadthFirstTraversal bfs = new BreadthFirstTraversal(g);
 		bfs.traverseGraph(u, v);
 		return bfs.getDistance(v) != -1;

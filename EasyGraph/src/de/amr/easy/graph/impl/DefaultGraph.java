@@ -14,17 +14,21 @@ import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
+import de.amr.easy.graph.api.VertexMap;
 
 /**
  * Adjacency set based implementation of an undirected graph.
  * 
  * @author Armin Reichert
  * 
+ * @param <V>
+ *          vertex type
  * @param <E>
  *          edge type
  */
-public class DefaultGraph<E extends Edge> implements Graph<E> {
+public class DefaultGraph<V, E extends Edge> implements Graph<V, E>, VertexMap<V> {
 
+	protected final VertexMap<V> vertexMap = new SparseVertexMap<>();
 	protected final BiFunction<Integer, Integer, E> fnEdgeFactory;
 	protected final Set<Integer> vertexSet = new HashSet<>();
 	protected final Map<Integer, Set<E>> adjEdges = new HashMap<>();
@@ -35,9 +39,46 @@ public class DefaultGraph<E extends Edge> implements Graph<E> {
 	}
 
 	@Override
-	public void addVertex(int vertex) {
-		vertexSet.add(vertex);
-		adjEdges.put(vertex, new HashSet<>());
+	public V get(int v) {
+		return vertexMap.get(v);
+	}
+
+	@Override
+	public void set(int v, V vertex) {
+		if (!vertexSet.contains(v)) {
+			throw new IllegalStateException();
+		}
+		vertexMap.set(v, vertex);
+	}
+
+	@Override
+	public void clear() {
+		vertexMap.clear();
+	}
+
+	@Override
+	public void setDefaultVertex(V vertex) {
+		vertexMap.setDefaultVertex(vertex);
+	}
+
+	@Override
+	public V getDefaultVertex() {
+		return vertexMap.getDefaultVertex();
+	}
+
+	@Override
+	public void addVertex(int v) {
+		vertexSet.add(v);
+		adjEdges.put(v, new HashSet<>());
+	}
+	
+	@Override
+	public void removeVertex(int v) {
+		if (!vertexSet.contains(v)) {
+			throw new IllegalStateException();
+		}
+		vertexSet.remove(v);
+		adjEdges.remove(v);
 	}
 
 	@Override

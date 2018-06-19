@@ -164,6 +164,11 @@ public class GridGraph<V, E extends Edge> implements GridGraph2D<V, E> {
 	}
 
 	@Override
+	public void removeVertex(int v) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public Optional<E> edge(int u, int v) {
 		checkCell(u);
 		checkCell(v);

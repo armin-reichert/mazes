@@ -11,7 +11,7 @@ import de.amr.easy.graph.api.Graph;
  * @param <E>
  *          edge type
  */
-public interface ObservableGraph<V, E extends Edge> extends Graph<E> {
+public interface ObservableGraph<V, E extends Edge> extends Graph<V, E> {
 
 	/**
 	 * Adds the given observer to this graph.

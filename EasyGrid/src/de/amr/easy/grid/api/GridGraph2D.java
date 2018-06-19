@@ -20,7 +20,7 @@ import de.amr.easy.graph.api.VertexMap;
  * 
  * @author Armin Reichert
  */
-public interface GridGraph2D<V, E extends Edge> extends Graph<E>, VertexMap<V> {
+public interface GridGraph2D<V, E extends Edge> extends Graph<V, E>, VertexMap<V> {
 
 	/**
 	 * @return the number of columns (width) of the grid
