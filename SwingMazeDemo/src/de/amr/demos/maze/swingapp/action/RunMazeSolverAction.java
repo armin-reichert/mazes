@@ -62,7 +62,7 @@ public class RunMazeSolverAction extends MazeDemoAction {
 
 		BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid);
 		anim.fnDelay = () -> app.model.getDelay();
-		anim.setPathColor(app.model.getPathColor());
+		anim.fnPathColor = () -> app.model.getPathColor();
 
 		if (solver.getAlgorithmClass() == BreadthFirstTraversal.class) {
 			BreadthFirstTraversal bfs = new BreadthFirstTraversal(grid);

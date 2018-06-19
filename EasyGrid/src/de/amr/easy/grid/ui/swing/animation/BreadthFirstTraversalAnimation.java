@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.BitSet;
 import java.util.function.IntSupplier;
+import java.util.function.Supplier;
 
 import de.amr.easy.graph.api.event.GraphTraversalObserver;
 import de.amr.easy.graph.api.traversal.TraversalState;
@@ -37,7 +38,7 @@ public class BreadthFirstTraversalAnimation {
 	 * @param source
 	 *          cell where flood-fill starts
 	 */
-	public static void floodFill(GridCanvas canvas, GridGraph<?,?> grid, int source) {
+	public static void floodFill(GridCanvas canvas, GridGraph<?, ?> grid, int source) {
 		floodFill(canvas, grid, source, true);
 	}
 
@@ -53,24 +54,23 @@ public class BreadthFirstTraversalAnimation {
 	 * @param distanceVisible
 	 *          if distances should be displayed as text
 	 */
-	public static void floodFill(GridCanvas canvas, GridGraph<?,?> grid, int source, boolean distanceVisible) {
+	public static void floodFill(GridCanvas canvas, GridGraph<?, ?> grid, int source, boolean distanceVisible) {
 		BreadthFirstTraversal bfs = new BreadthFirstTraversal(grid);
 		BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid);
 		anim.setDistanceVisible(distanceVisible);
 		anim.run(canvas, bfs, source, -1);
 	}
 
-	private final GridGraph<?,?> grid;
+	private final GridGraph<?, ?> grid;
 	private ConfigurableGridRenderer floodFillRenderer;
 	private boolean distanceVisible;
-	private Color pathColor;
 
 	public IntSupplier fnDelay = () -> 0;
+	public Supplier<Color> fnPathColor = () -> Color.RED;
 
-	public BreadthFirstTraversalAnimation(GridGraph<?,?> grid) {
+	public BreadthFirstTraversalAnimation(GridGraph<?, ?> grid) {
 		this.grid = grid;
 		distanceVisible = true;
-		pathColor = Color.RED;
 	}
 
 	public boolean isDistanceVisible() {
@@ -82,11 +82,7 @@ public class BreadthFirstTraversalAnimation {
 	}
 
 	public Color getPathColor() {
-		return pathColor;
-	}
-
-	public void setPathColor(Color color) {
-		this.pathColor = color;
+		return fnPathColor.get();
 	}
 
 	/**
@@ -168,12 +164,12 @@ public class BreadthFirstTraversalAnimation {
 		path.forEach(inPath::set);
 		ConfigurableGridRenderer r = base instanceof PearlsGridRenderer ? new PearlsGridRenderer()
 				: new WallPassageGridRenderer();
-		r.fnCellBgColor = cell -> inPath.get(cell) ? pathColor : base.getCellBgColor(cell);
+		r.fnCellBgColor = cell -> inPath.get(cell) ? getPathColor() : base.getCellBgColor(cell);
 		r.fnCellSize = () -> base.getCellSize();
 		r.fnGridBgColor = () -> base.getGridBgColor();
 		r.fnPassageColor = (cell, dir) -> {
 			int neighbor = grid.neighbor(cell, dir).getAsInt();
-			return inPath.get(cell) && inPath.get(neighbor) ? pathColor : base.getCellBgColor(cell);
+			return inPath.get(cell) && inPath.get(neighbor) ? getPathColor() : base.getCellBgColor(cell);
 		};
 		r.fnPassageWidth = () -> base.getPassageWidth() > 5 ? base.getPassageWidth() / 2 : base.getPassageWidth();
 		r.fnText = cell -> distanceVisible ? format("%d", distanceMap.getDistance(cell)) : "";

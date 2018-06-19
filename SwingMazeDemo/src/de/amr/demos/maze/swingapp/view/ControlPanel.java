@@ -40,8 +40,7 @@ public class ControlPanel extends JPanel {
 	private JLabel lblSolver;
 	private JScrollPane scrollPane;
 	private JPanel controls;
-	private JButton btnToggleMinMax;
-
+	private JButton btnShowHideDetails;
 	public ControlPanel() {
 		setPreferredSize(new Dimension(497, 433));
 		setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -77,6 +76,7 @@ public class ControlPanel extends JPanel {
 		controls.add(lblGridResolution, "cell 0 2,growx");
 
 		comboGridResolution = new JComboBox<>();
+		comboGridResolution.setMaximumRowCount(16);
 		lblGridResolution.setLabelFor(comboGridResolution);
 		controls.add(comboGridResolution, "cell 1 2,growx");
 
@@ -99,7 +99,6 @@ public class ControlPanel extends JPanel {
 		lblDelay.setLabelFor(sliderDelay);
 		sliderDelay.setToolTipText("Rendering Delay");
 		sliderDelay.setValue(10);
-		sliderDelay.setSnapToTicks(true);
 		sliderDelay.setMaximum(50);
 		sliderDelay.setMinorTickSpacing(1);
 		sliderDelay.setMajorTickSpacing(5);
@@ -109,10 +108,10 @@ public class ControlPanel extends JPanel {
 		controls.add(scrollPane, "cell 0 5 2 1,grow");
 
 		textArea = new JTextArea();
+		textArea.setEditable(false);
 		scrollPane.setViewportView(textArea);
 		textArea.setTabSize(2);
 		textArea.setLineWrap(true);
-		textArea.setEditable(false);
 		textArea.setRows(100);
 
 		JPanel buttons = new JPanel();
@@ -131,9 +130,9 @@ public class ControlPanel extends JPanel {
 		btnStop = new JButton("Stop");
 		buttons.add(btnStop, "cell 3 0,alignx left,aligny top");
 
-		btnToggleMinMax = new JButton("Show/Hide Details");
-		btnToggleMinMax.setIcon(null);
-		buttons.add(btnToggleMinMax, "cell 4 0,aligny top");
+		btnShowHideDetails = new JButton("Show/Hide Details");
+		btnShowHideDetails.setIcon(null);
+		buttons.add(btnShowHideDetails, "cell 4 0,aligny top");
 	}
 
 	public void showMessage(String msg) {
@@ -186,7 +185,7 @@ public class ControlPanel extends JPanel {
 		return controls;
 	}
 
-	public JButton getBtnToggleMinMax() {
-		return btnToggleMinMax;
+	public JButton getBtnShowHideDetails() {
+		return btnShowHideDetails;
 	}
 }

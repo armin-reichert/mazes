@@ -97,7 +97,8 @@ public class MazeDemoApp {
 		model.setGrid(createGrid(model.getGridCellSize()));
 
 		// create new canvas in its own window
-		wndCanvas = new CanvasWindow(model);
+		wndCanvas = new CanvasWindow();
+		wndCanvas.newCanvas(model);
 		wndCanvas.setVisible(true);
 
 		wndSettings = new SettingsWindow(this);

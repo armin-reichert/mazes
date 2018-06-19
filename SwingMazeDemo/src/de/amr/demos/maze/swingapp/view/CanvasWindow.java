@@ -3,8 +3,6 @@ package de.amr.demos.maze.swingapp.view;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-import java.awt.Color;
-
 import javax.swing.JFrame;
 
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
@@ -27,11 +25,18 @@ public class CanvasWindow extends JFrame {
 	private GridCanvas canvas;
 	private GridCanvasAnimation<TraversalState, SimpleEdge> canvasAnimation;
 
-	public CanvasWindow(MazeDemoModel model) {
-		setBackground(Color.BLACK);
+	public CanvasWindow() {
+		setTitle("Canvas Window");
 		setExtendedState(MAXIMIZED_BOTH);
 		setUndecorated(true);
-		newCanvas(model);
+	}
+
+	public GridCanvas getCanvas() {
+		return canvas;
+	}
+
+	public GridCanvasAnimation<TraversalState, SimpleEdge> getCanvasAnimation() {
+		return canvasAnimation;
 	}
 
 	public void newCanvas(MazeDemoModel model) {
@@ -43,14 +48,6 @@ public class CanvasWindow extends JFrame {
 		model.getGrid().addGraphObserver(canvasAnimation);
 		setContentPane(canvas);
 		repaint();
-	}
-
-	public GridCanvas getCanvas() {
-		return canvas;
-	}
-
-	public GridCanvasAnimation<TraversalState, SimpleEdge> getCanvasAnimation() {
-		return canvasAnimation;
 	}
 
 	private static ConfigurableGridRenderer createRenderer(MazeDemoModel model) {
