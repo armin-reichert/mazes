@@ -3,12 +3,13 @@ package de.amr.demos.grid;
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.KeyStroke;
 
 import de.amr.easy.graph.api.SimpleEdge;
@@ -29,38 +30,24 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp<SimpleEdge> {
 	private int source;
 	private int target;
 
-	private Action actionFindPath = new AbstractAction() {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			findPath();
-		}
-	};
-
-	private Action actionClear = new AbstractAction() {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			clear();
-		}
-	};
+	private Point dragPosition;
 
 	public FindPathAroundObstaclesApp(int canvasSize, int cellSize) {
 		super(canvasSize, canvasSize, cellSize, Top4.get(), SimpleEdge::new);
 		setAppName("Find Path Around Obstacles");
 		addMouseHandler();
-		assignAction("SPACE", actionFindPath);
-		assignAction("C", actionClear);
-		createRenderer();
-		grid.fill();
-		grid.setDefaultVertex(UNVISITED);
-		source = grid.cell(GridPosition.TOP_LEFT);
-		target = grid.cell(GridPosition.BOTTOM_RIGHT);
+		assignAction("SPACE", this::findAndShowPath);
+		assignAction("C", this::clear);
+		canvas.pushRenderer(createRenderer(canvas.getRenderer().get()));
 	}
 
 	@Override
 	public void run() {
-		findPath();
+		grid.fill();
+		grid.setDefaultVertex(UNVISITED);
+		source = grid.cell(GridPosition.TOP_LEFT);
+		target = grid.cell(GridPosition.BOTTOM_RIGHT);
+		findAndShowPath();
 	}
 
 	private void clear() {
@@ -68,41 +55,45 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp<SimpleEdge> {
 		canvas.drawGrid();
 	}
 
-	private void findPath() {
-		BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid);
-		anim.fnDelay = () -> 0;
-		BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, v -> grid.euclidean2(v, target));
-		best.traverseGraph(source, target);
-		// anim.run(canvas, best, source, target);
+	private void findAndShowPath() {
 		clear();
-		anim.showPath(canvas, best, target);
+		BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, v -> grid.manhattan(v, target));
+		best.traverseGraph(source, target);
+		new BreadthFirstTraversalAnimation(grid).showPath(canvas, best, target);
 	}
 
-	private void createRenderer() {
-		GridRenderer renderer = canvas.getRenderer().get();
-		ConfigurableGridRenderer r = new WallPassageGridRenderer();
-		r.fnCellSize = () -> renderer.getModel().getCellSize();
+	private ConfigurableGridRenderer createRenderer(GridRenderer base) {
+		WallPassageGridRenderer r = new WallPassageGridRenderer();
+		r.fnCellSize = () -> base.getModel().getCellSize();
 		r.fnCellBgColor = cell -> {
 			if (cell == source) {
 				return Color.YELLOW;
 			}
 			if (cell == target) {
-				return Color.BLUE;
+				return Color.GREEN;
 			}
 			if (isWall(cell)) {
-				return Color.GRAY;
+				return new Color(139, 69, 19);
 			}
-			if (grid.get(cell) == UNVISITED)
+			if (grid.get(cell) == UNVISITED) {
 				return Color.WHITE;
-			return renderer.getModel().getCellBgColor(cell);
+			}
+			return base.getModel().getCellBgColor(cell);
 		};
 		r.fnPassageColor = (cell, dir) -> grid.get(cell) == UNVISITED ? Color.WHITE
-				: renderer.getModel().getPassageColor(cell, dir);
-		r.fnPassageWidth = () -> renderer.getModel().getCellSize() - 2;
-		canvas.pushRenderer(r);
+				: base.getModel().getPassageColor(cell, dir);
+		r.fnPassageWidth = () -> base.getModel().getCellSize() - 2;
+		return r;
 	}
 
-	private void assignAction(String key, Action action) {
+	private void assignAction(String key, Runnable code) {
+		AbstractAction action = new AbstractAction() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				code.run();
+			}
+		};
 		canvas.getInputMap().put(KeyStroke.getKeyStroke(key), "action_" + action);
 		canvas.getActionMap().put("action_" + action, action);
 	}
@@ -113,9 +104,37 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp<SimpleEdge> {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int cell = cellAt(e.getX(), e.getY());
-				grid.clear();
 				toggleContent(cell);
-				findPath();
+				findAndShowPath();
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				findAndShowPath();
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				dragPosition = new Point(e.getX(), e.getY());
+			}
+		});
+
+		canvas.addMouseMotionListener(new MouseMotionAdapter() {
+
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				// System.out.println("Dragged");
+				Point position = new Point(e.getX(), e.getY());
+				int cell = cellAt(position.x, position.y);
+				if (dragPosition == null || cell != cellAt(dragPosition.x, dragPosition.y)) {
+					dragPosition = position;
+					if (e.isShiftDown()) {
+						removeWall(cellAt(position.x, position.y));
+					} else {
+						setWall(cellAt(position.x, position.y));
+					}
+					findAndShowPath();
+				}
 			}
 		});
 	}
@@ -140,10 +159,14 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp<SimpleEdge> {
 	}
 
 	private void setWall(int cell) {
-		grid.neighbors(cell).forEach(nb -> grid.removeEdge(cell, nb));
+		if (!isWall(cell)) {
+			grid.neighbors(cell).forEach(nb -> grid.removeEdge(cell, nb));
+		}
 	}
 
 	private void removeWall(int cell) {
-		grid.neighbors(cell).filter(nb -> !isWall(nb)).forEach(nb -> grid.addEdge(cell, nb));
+		if (isWall(cell)) {
+			grid.neighbors(cell).filter(nb -> !isWall(nb)).forEach(nb -> grid.addEdge(cell, nb));
+		}
 	}
 }
