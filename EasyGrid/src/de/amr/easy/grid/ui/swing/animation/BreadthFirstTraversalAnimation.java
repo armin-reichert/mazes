@@ -138,7 +138,15 @@ public class BreadthFirstTraversalAnimation {
 	public void showPath(GridCanvas canvas, BreadthFirstTraversal bfs, int target) {
 		canvas.getRenderer().ifPresent(canvasRenderer -> {
 			Iterable<Integer> path = bfs.path(target);
-			canvas.pushRenderer(createPathRenderer(floodFillRenderer, bfs, path));
+			if (floodFillRenderer != null) {
+				canvas.pushRenderer(createPathRenderer(floodFillRenderer, bfs, path));
+			} else {
+				if (canvas.getRenderer().get() instanceof ConfigurableGridRenderer) {
+					canvas.pushRenderer(createPathRenderer((ConfigurableGridRenderer) canvas.getRenderer().get(), bfs, path));
+				} else {
+					throw new IllegalStateException();
+				}
+			}
 			path.forEach(canvas::drawGridCell);
 			canvas.popRenderer();
 		});

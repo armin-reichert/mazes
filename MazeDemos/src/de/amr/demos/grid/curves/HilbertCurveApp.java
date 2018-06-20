@@ -27,7 +27,7 @@ import de.amr.easy.grid.impl.Top4;
 
 /**
  * Creates Hilbert curves of different sizes and shows an animation of the creation and
- * BFS-traversal of the underlying graph.
+ * a flood-fill of the underlying graph.
  * 
  * @author Armin Reichert
  */
@@ -53,7 +53,7 @@ public class HilbertCurveApp extends SwingGridSampleApp<SimpleEdge> {
 
 	@Override
 	public void run() {
-		Stream.of(TOP_RIGHT, TOP_LEFT, BOTTOM_LEFT, BOTTOM_RIGHT).forEach(start -> {
+		Stream.of(TOP_RIGHT, TOP_LEFT, BOTTOM_RIGHT, BOTTOM_LEFT).forEach(start -> {
 			IntStream.of(256, 128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 				resizeGrid(cellSize);
 				List<Integer> dir = ORIENTATION.get(start);
