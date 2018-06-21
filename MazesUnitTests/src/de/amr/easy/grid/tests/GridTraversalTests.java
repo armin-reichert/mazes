@@ -86,8 +86,6 @@ public class GridTraversalTests {
 		best.traverseGraph(source);
 		assertState(grid.vertices(), best::getState, COMPLETED);
 		best.traverseGraph(source, target);
-		long length = StreamUtils.toIntStream(best.path(target)).count();
-		System.out.println("Best-first search found path of length " + length);
 	}
 
 	@Test

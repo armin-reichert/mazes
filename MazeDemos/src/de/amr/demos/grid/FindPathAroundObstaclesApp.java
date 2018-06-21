@@ -20,17 +20,18 @@ import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
+import de.amr.easy.util.StopWatch;
 
 public class FindPathAroundObstaclesApp extends SwingGridSampleApp<SimpleEdge> {
 
 	public static void main(String[] args) {
-		launch(new FindPathAroundObstaclesApp(800, 40));
+		launch(new FindPathAroundObstaclesApp(800, 20));
 	}
 
 	private int source;
 	private int target;
-
 	private Point dragPosition;
+	private StopWatch watch = new StopWatch();
 
 	public FindPathAroundObstaclesApp(int canvasSize, int cellSize) {
 		super(canvasSize, canvasSize, cellSize, Top4.get(), SimpleEdge::new);
@@ -52,13 +53,15 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp<SimpleEdge> {
 
 	private void clear() {
 		grid.clear();
-		canvas.drawGrid();
+		watch.measure(() -> canvas.drawGrid());
+		System.out.println(String.format("Grid rendering took %f seconds", watch.getSeconds()));
 	}
 
 	private void findAndShowPath() {
 		clear();
 		BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, v -> grid.manhattan(v, target));
-		best.traverseGraph(source, target);
+		watch.measure(() -> best.traverseGraph(source, target));
+		System.out.println(String.format("Path finding took %f seconds", watch.getSeconds()));
 		new BreadthFirstTraversalAnimation(grid).showPath(canvas, best, target);
 	}
 

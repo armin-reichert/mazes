@@ -6,22 +6,21 @@ import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Graph;
 
 /**
- * Base class for depth-first traversal classes. Subclasses my change the order in which the
- * children of the currently visited vertex are put onto the stack.
+ * Depth-first traversal of a graph.
  * 
  * @author Armin Reichert
  */
 public class DepthFirstTraversal extends AbstractGraphTraversal {
 
-	private final Stack<Integer> stack = new Stack<>();
+	protected final Stack<Integer> stack = new Stack<>();
 
 	public DepthFirstTraversal(Graph<?, ?> graph) {
 		super(graph);
 	}
 
+	@Override
 	protected void clear() {
-		parentMap.clear();
-		stateMap.clear();
+		super.clear();
 		stack.clear();
 	}
 
@@ -33,33 +32,18 @@ public class DepthFirstTraversal extends AbstractGraphTraversal {
 	@Override
 	public void traverseGraph(int source, int target) {
 		clear();
-		visit(source, -1);
+		stack.push(source);
+		setState(source, VISITED);
 		while (!stack.isEmpty()) {
-			int current = stack.pop();
-			if (current == target) {
-				break;
+			int v = stack.pop();
+			if (v == target) {
+				return;
 			}
-			childrenInQueuingOrder(current).forEach(child -> visit(child, current));
-		}
-		while (!stack.isEmpty()) {
-			stack.pop();
-		}
-	}
-
-	/**
-	 * Visits child vertex traversing edge from parent vertex.
-	 * 
-	 * @param child
-	 *          child vertex
-	 * @param parent
-	 *          parent vertex or {@code -1} for first visited vertex
-	 */
-	protected void visit(int child, int parent) {
-		stack.push(child);
-		setState(child, VISITED);
-		parentMap.put(child, parent);
-		if (parent != -1) {
-			edgeTraversed(parent, child);
+			children(v).forEach(w -> {
+				stack.push(w);
+				setState(w, VISITED);
+				setParent(w, v);
+			});
 		}
 	}
 }

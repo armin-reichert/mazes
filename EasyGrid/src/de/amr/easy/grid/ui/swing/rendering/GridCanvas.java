@@ -90,7 +90,7 @@ public class GridCanvas extends JComponent {
 	}
 
 	public Optional<GridRenderer> getRenderer() {
-		return rendererStack.top();
+		return rendererStack.peek();
 	}
 
 	public void pushRenderer(GridRenderer newRenderer) {

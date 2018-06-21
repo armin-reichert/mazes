@@ -24,6 +24,38 @@ public class StreamUtils {
 	}
 
 	/**
+	 * @return a collector into a reversed list
+	 */
+	public static <T> Collector<T, ?, List<T>> toReversedList() {
+		return Collectors.collectingAndThen(Collectors.toList(), list -> {
+			Collections.reverse(list);
+			return list;
+		});
+	}
+
+	/**
+	 * Returns a reversed version of a stream.
+	 * 
+	 * @param source
+	 *          some stream
+	 * @return the stream content in reversed order
+	 */
+	public static <T> Stream<T> reversed(Stream<T> source) {
+		return source.collect(toReversedList()).stream();
+	}
+
+	/**
+	 * Returns a reversed version of a stream of integer values.
+	 * 
+	 * @param source
+	 *          some stream
+	 * @return the stream content in reversed order
+	 */
+	public static IntStream reversed(IntStream source) {
+		return reversed(source.boxed()).mapToInt(Integer::intValue);
+	}
+
+	/**
 	 * Returns a permutation of a stream.
 	 * 
 	 * @param source

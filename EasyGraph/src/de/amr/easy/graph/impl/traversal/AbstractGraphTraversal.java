@@ -23,21 +23,27 @@ import de.amr.easy.graph.api.traversal.TraversalState;
 public abstract class AbstractGraphTraversal implements GraphTraversal {
 
 	protected final Graph<?, ?> graph;
-	protected final Map<Integer, Integer> parentMap = new HashMap<>();
-	protected final Map<Integer, TraversalState> stateMap = new HashMap<>();
-	protected final Set<GraphTraversalObserver> observers = new HashSet<>(5);
+	private final Map<Integer, Integer> parentMap = new HashMap<>();
+	private final Map<Integer, TraversalState> stateMap = new HashMap<>();
+	private final Set<GraphTraversalObserver> observers = new HashSet<>(5);
 
 	protected AbstractGraphTraversal(Graph<?, ?> graph) {
 		this.graph = graph;
 	}
 
-	/**
-	 * Builds and returns the path from the source of this traversal to the given target vertex.
-	 * 
-	 * @param target
-	 *          target vertex
-	 * @return path from source to target
-	 */
+	protected void clear() {
+		parentMap.clear();
+		stateMap.clear();
+	}
+
+	protected boolean isUnvisited(int v) {
+		return getState(v) == UNVISITED;
+	}
+
+	protected IntStream children(int v) {
+		return graph.adj(v).filter(this::isUnvisited);
+	}
+
 	public Iterable<Integer> path(int target) {
 		Stack<Integer> path = new Stack<>();
 		for (int v = target; v != -1; v = getParent(v)) {
@@ -46,22 +52,10 @@ public abstract class AbstractGraphTraversal implements GraphTraversal {
 		return path;
 	}
 
-	/**
-	 * Adds an observer.
-	 * 
-	 * @param observer
-	 *          traversal observer
-	 */
 	public void addObserver(GraphTraversalObserver observer) {
 		observers.add(observer);
 	}
 
-	/**
-	 * Removes an observer.
-	 * 
-	 * @param observer
-	 *          traversal observer
-	 */
 	public void removeObserver(GraphTraversalObserver observer) {
 		observers.remove(observer);
 	}
@@ -72,18 +66,16 @@ public abstract class AbstractGraphTraversal implements GraphTraversal {
 		vertexTraversed(v, oldState, newState);
 	}
 
-	/**
-	 * @param v
-	 *          a vertex
-	 * @return the children of this vertex in the order they will be added to the search queue
-	 */
-	protected IntStream childrenInQueuingOrder(int v) {
-		return graph.adj(v).filter(child -> getState(child) == UNVISITED);
-	}
-
 	@Override
 	public TraversalState getState(int v) {
 		return stateMap.containsKey(v) ? stateMap.get(v) : UNVISITED;
+	}
+
+	protected void setParent(int child, int parent) {
+		parentMap.put(child, parent);
+		if (parent != -1) {
+			edgeTraversed(parent, child);
+		}
 	}
 
 	@Override

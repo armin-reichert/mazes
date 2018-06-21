@@ -31,16 +31,15 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal {
 		super(graph);
 		this.q = queue;
 		this.distance = new int[graph.numVertices()];
-		clear();
 	}
 
 	public BreadthFirstTraversal(Graph<?, ?> graph) {
 		this(graph, new ArrayDeque<>());
 	}
 
+	@Override
 	protected void clear() {
-		stateMap.clear();
-		parentMap.clear();
+		super.clear();
 		q.clear();
 		Arrays.fill(distance, -1);
 		maxDistance = -1;
@@ -54,28 +53,22 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal {
 	@Override
 	public void traverseGraph(int source, int target) {
 		clear();
-		visit(source, -1);
+		q.add(source);
+		setState(source, VISITED);
+		maxDistance = distance[source] = 0;
 		while (!q.isEmpty()) {
-			int current = q.poll();
-			if (current == target) {
-				break;
+			int v = q.poll();
+			if (v == target) {
+				return;
 			}
-			childrenInQueuingOrder(current).forEach(child -> visit(child, current));
-			setState(current, COMPLETED);
-		}
-	}
-
-	private void visit(int v, int parent) {
-		q.add(v);
-		setState(v, VISITED);
-		parentMap.put(v, parent);
-		int d = parent != -1 ? distance[parent] + 1 : 0;
-		if (d > maxDistance) {
-			maxDistance = d;
-		}
-		distance[v] = d;
-		if (parent != -1) {
-			edgeTraversed(parent, v);
+			setState(v, COMPLETED);
+			children(v).forEach(w -> {
+				q.add(w);
+				setState(w, VISITED);
+				setParent(w, v);
+				distance[w] = distance[v] + 1;
+				maxDistance = Math.max(maxDistance, distance[w]);
+			});
 		}
 	}
 

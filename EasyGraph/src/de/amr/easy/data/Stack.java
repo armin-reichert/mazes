@@ -56,7 +56,7 @@ public class Stack<T> implements Iterable<T> {
 	/**
 	 * @return the top stack element
 	 */
-	public Optional<T> top() {
+	public Optional<T> peek() {
 		return Optional.ofNullable(stack.peek());
 	}
 

@@ -1,6 +1,6 @@
 package de.amr.easy.graph.impl.traversal;
 
-import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
+import static de.amr.easy.util.StreamUtils.reversed;
 
 import java.util.Comparator;
 import java.util.function.Function;
@@ -9,10 +9,10 @@ import java.util.stream.IntStream;
 import de.amr.easy.graph.api.Graph;
 
 /**
- * Implementation of a heuristic Depth-First-Search ("Hill Climbing") where the children of the
- * current vertex are visited in the order defined by a cost function.
+ * Heuristic depth-first search ("Hill Climbing") where the children of the current vertex are
+ * expanded by increasing cost.
  * <p>
- * Reference: Patrick Henry Winston, Artificial Intelligence, Addison-Wesley, 1984
+ * From: Patrick Henry Winston, Artificial Intelligence, Addison-Wesley, 1984
  * 
  * @author Armin Reichert
  * 
@@ -21,7 +21,7 @@ import de.amr.easy.graph.api.Graph;
  */
 public class HillClimbing<C extends Comparable<C>> extends DepthFirstTraversal {
 
-	private final Comparator<Integer> byDecreasingCost;
+	private final Comparator<Integer> byCost;
 
 	/**
 	 * @param graph
@@ -29,20 +29,14 @@ public class HillClimbing<C extends Comparable<C>> extends DepthFirstTraversal {
 	 * @param cost
 	 *          cost function for vertices
 	 */
-	public HillClimbing(Graph<?, ?> graph, Function<Integer, C> cost) {
+	public HillClimbing(Graph<?, ?> graph, Function<Integer, C> fnCost) {
 		super(graph);
-		byDecreasingCost = (u, v) -> cost.apply(v).compareTo(cost.apply(u));
+		byCost = (v1, v2) -> fnCost.apply(v1).compareTo(fnCost.apply(v2));
 	}
 
 	@Override
-	protected IntStream childrenInQueuingOrder(int parent) {
-		/*@formatter:off*/
-		return graph.adj(parent)
-			.filter(c -> getState(c) == UNVISITED)
-			.boxed()
-			// push vertex with higher cost *before* vertex with lower cost onto the stack!
-			.sorted(byDecreasingCost)
-			.mapToInt(Integer::intValue);
-		/*@formatter:on*/
+	protected IntStream children(int v) {
+		// a1 < a2 < a3 => push(a3); push(a2); push(a1)
+		return reversed(super.children(v).boxed().sorted(byCost)).mapToInt(Integer::intValue);
 	}
 }
