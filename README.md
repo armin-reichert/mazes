@@ -16,9 +16,9 @@ I also found new ways of generating mazes, for example a modification of Eller's
 To illustrate, the maze generator based on Kruskal's minimum-spanning-tree algorithm looks like this:
 
 ```java
-public class KruskalMST extends MazeAlgorithm {
+public class KruskalMST extends MazeAlgorithm<Void> {
 
-	public KruskalMST(GridGraph2D<TraversalState, SimpleEdge> grid) {
+	public KruskalMST(GridGraph2D<TraversalState, Void> grid) {
 		super(grid);
 	}
 
@@ -26,7 +26,7 @@ public class KruskalMST extends MazeAlgorithm {
 	public void run(int start) {
 		Partition<Integer> forest = new Partition<>();
 		grid.fill();
-		Stream<SimpleEdge> edges = permute(grid.edges());
+		Stream<Edge<Void>> edges = permute(grid.edges());
 		grid.removeEdges();
 		edges.forEach(edge -> {
 			int u = edge.either(), v = edge.other();
