@@ -52,18 +52,4 @@ public abstract class MazeAlgorithm<E> {
 	 *          the grid cell where the generation starts
 	 */
 	public abstract void run(int start);
-
-	/**
-	 * Adds an edge to the spanning tree and marks the vertices as completed.
-	 * 
-	 * @param u
-	 *          some vertex (cell)
-	 * @param v
-	 *          another vertex (cell)
-	 */
-	protected final void addTreeEdge(int u, int v) {
-		grid.addEdge(u, v);
-		grid.set(u, COMPLETED);
-		grid.set(v, COMPLETED);
-	}
 }

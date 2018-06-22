@@ -1,5 +1,6 @@
 package de.amr.easy.maze.alg;
 
+import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 import static de.amr.easy.grid.impl.Top4.E;
 import static de.amr.easy.grid.impl.Top4.S;
 
@@ -27,16 +28,20 @@ public class BinaryTree extends MazeAlgorithm<Void> {
 
 	@Override
 	public void run(int start) {
-		cellStream().forEach(u -> randomParent(u, S, E).ifPresent(v -> addTreeEdge(u, v)));
+		cells().forEach(v -> findRandomParent(v, S, E).ifPresent(parent -> {
+			grid.addEdge(v, parent);
+			grid.set(v, COMPLETED);
+			grid.set(parent, COMPLETED);
+		}));
 	}
 
-	private OptionalInt randomParent(int cell, int dir1, int dir2) {
+	protected IntStream cells() {
+		return grid.vertices();
+	}
+
+	private OptionalInt findRandomParent(int cell, int dir1, int dir2) {
 		boolean choice = rnd.nextBoolean();
 		OptionalInt neighbor = grid.neighbor(cell, choice ? dir1 : dir2);
 		return neighbor.isPresent() ? neighbor : grid.neighbor(cell, choice ? dir2 : dir1);
-	}
-
-	protected IntStream cellStream() {
-		return grid.vertices();
 	}
 }

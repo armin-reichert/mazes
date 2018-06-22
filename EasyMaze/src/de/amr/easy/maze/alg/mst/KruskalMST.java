@@ -1,5 +1,6 @@
 package de.amr.easy.maze.alg.mst;
 
+import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 import static de.amr.easy.util.StreamUtils.permute;
 
 import java.util.stream.Stream;
@@ -36,7 +37,9 @@ public class KruskalMST extends MazeAlgorithm<Void> {
 		edges.forEach(edge -> {
 			int u = edge.either(), v = edge.other();
 			if (forest.find(u) != forest.find(v)) {
-				addTreeEdge(u, v);
+				grid.addEdge(u, v);
+				grid.set(u, COMPLETED);
+				grid.set(v, COMPLETED);
 				forest.union(u, v);
 			}
 		});

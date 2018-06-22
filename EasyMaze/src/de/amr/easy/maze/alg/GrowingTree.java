@@ -1,5 +1,6 @@
 package de.amr.easy.maze.alg;
 
+import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 import static de.amr.easy.util.StreamUtils.permute;
 
 import java.util.ArrayList;
@@ -32,7 +33,9 @@ public class GrowingTree extends MazeAlgorithm<Void> {
 			int index = rnd.nextBoolean() ? cells.size() - 1 : rnd.nextInt(cells.size());
 			int cell = cells.remove(index);
 			permute(grid.neighbors(cell)).filter(isCellUnvisited).forEach(neighbor -> {
-				addTreeEdge(cell, neighbor);
+				grid.addEdge(cell, neighbor);
+				grid.set(cell, COMPLETED);
+				grid.set(neighbor, COMPLETED);
 				cells.add(neighbor);
 			});
 		} while (!cells.isEmpty());

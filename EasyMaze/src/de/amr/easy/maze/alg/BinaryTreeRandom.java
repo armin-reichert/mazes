@@ -19,7 +19,7 @@ public class BinaryTreeRandom extends BinaryTree {
 	}
 
 	@Override
-	protected IntStream cellStream() {
+	protected IntStream cells() {
 		return permute(grid.vertices());
 	}
 }

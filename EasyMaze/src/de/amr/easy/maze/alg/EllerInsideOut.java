@@ -1,5 +1,6 @@
 package de.amr.easy.maze.alg;
 
+import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.grid.impl.Top4.E;
@@ -101,7 +102,9 @@ public class EllerInsideOut extends MazeAlgorithm<Void> {
 		if (grid.hasEdge(u, v)) {
 			return;
 		}
-		addTreeEdge(u, v);
+		grid.addEdge(u, v);
+		grid.set(u, COMPLETED);
+		grid.set(v, COMPLETED);
 		mazeParts.union(u, v);
 	}
 
