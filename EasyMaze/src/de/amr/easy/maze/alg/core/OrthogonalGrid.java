@@ -5,6 +5,11 @@ import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.impl.ObservableGridGraph;
 import de.amr.easy.grid.impl.Top4;
 
+/**
+ * Type of 2D grid used by maze generator implementations.
+ * 
+ * @author Armin Reichert
+ */
 public class OrthogonalGrid extends ObservableGridGraph<TraversalState, Void> {
 
 	public OrthogonalGrid(int numCols, int numRows) {
