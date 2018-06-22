@@ -11,7 +11,6 @@ import java.util.stream.IntStream;
 import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.event.GraphTraversalObserver;
-import de.amr.easy.graph.api.traversal.GraphTraversal;
 import de.amr.easy.graph.api.traversal.TraversalState;
 
 /**
@@ -20,7 +19,7 @@ import de.amr.easy.graph.api.traversal.TraversalState;
  * 
  * @author Armin Reichert
  */
-public abstract class AbstractGraphTraversal implements GraphTraversal {
+public abstract class AbstractGraphTraversal {
 
 	protected final Graph<?, ?> graph;
 	private final Map<Integer, Integer> parentMap = new HashMap<>();
@@ -31,17 +30,23 @@ public abstract class AbstractGraphTraversal implements GraphTraversal {
 		this.graph = graph;
 	}
 
-	protected void clear() {
-		parentMap.clear();
-		stateMap.clear();
-	}
-
 	protected boolean isUnvisited(int v) {
 		return getState(v) == UNVISITED;
 	}
 
 	protected IntStream children(int v) {
 		return graph.adj(v).filter(this::isUnvisited);
+	}
+
+	protected void clear() {
+		parentMap.clear();
+		stateMap.clear();
+	}
+
+	public abstract void traverseGraph(int source, int target);
+
+	public void traverseGraph(int source) {
+		traverseGraph(source, -1);
 	}
 
 	public Iterable<Integer> path(int target) {
@@ -66,7 +71,6 @@ public abstract class AbstractGraphTraversal implements GraphTraversal {
 		vertexTraversed(v, oldState, newState);
 	}
 
-	@Override
 	public TraversalState getState(int v) {
 		return stateMap.containsKey(v) ? stateMap.get(v) : UNVISITED;
 	}
@@ -78,17 +82,14 @@ public abstract class AbstractGraphTraversal implements GraphTraversal {
 		}
 	}
 
-	@Override
 	public int getParent(int v) {
 		return parentMap.containsKey(v) ? parentMap.get(v) : -1;
 	}
 
-	@Override
 	public void edgeTraversed(int either, int other) {
 		observers.forEach(observer -> observer.edgeTraversed(either, other));
 	}
 
-	@Override
 	public void vertexTraversed(int v, TraversalState oldState, TraversalState newState) {
 		observers.forEach(observer -> observer.vertexTraversed(v, oldState, newState));
 	}

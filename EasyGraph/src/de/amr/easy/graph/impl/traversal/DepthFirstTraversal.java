@@ -25,11 +25,6 @@ public class DepthFirstTraversal extends AbstractGraphTraversal {
 	}
 
 	@Override
-	public boolean inQ(int vertex) {
-		return stack.contains(vertex);
-	}
-
-	@Override
 	public void traverseGraph(int source, int target) {
 		clear();
 		stack.push(source);
@@ -45,5 +40,9 @@ public class DepthFirstTraversal extends AbstractGraphTraversal {
 				setParent(w, v);
 			});
 		}
+	}
+
+	public boolean isStacked(int v) {
+		return stack.contains(v);
 	}
 }

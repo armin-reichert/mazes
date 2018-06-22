@@ -8,7 +8,7 @@ import java.util.function.IntSupplier;
 
 import de.amr.easy.graph.api.event.GraphTraversalObserver;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.graph.impl.traversal.AbstractGraphTraversal;
+import de.amr.easy.graph.impl.traversal.DepthFirstTraversal;
 import de.amr.easy.grid.impl.GridGraph;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.GridCanvas;
@@ -23,17 +23,17 @@ import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
  */
 public class DepthFirstTraversalAnimation {
 
-	private final GridGraph<?,?> grid;
+	private final GridGraph<?, ?> grid;
 	private Iterable<Integer> path;
 	private Color pathColor = Color.RED;
 	private Color visitedCellColor = Color.BLUE;
 	public IntSupplier fnDelay = () -> 0;
 
-	public DepthFirstTraversalAnimation(GridGraph<?,?> grid) {
+	public DepthFirstTraversalAnimation(GridGraph<?, ?> grid) {
 		this.grid = grid;
 	}
 
-	private ConfigurableGridRenderer createRenderer(AbstractGraphTraversal dfs, BitSet inPath, GridRenderer base) {
+	private ConfigurableGridRenderer createRenderer(DepthFirstTraversal dfs, BitSet inPath, GridRenderer base) {
 		ConfigurableGridRenderer r = base instanceof PearlsGridRenderer ? new PearlsGridRenderer()
 				: new WallPassageGridRenderer();
 		r.fnCellSize = base.getModel()::getCellSize;
@@ -43,7 +43,7 @@ public class DepthFirstTraversalAnimation {
 			if (inPath.get(cell)) {
 				return pathColor;
 			}
-			if (dfs.getState(cell) == VISITED || dfs.inQ(cell)) {
+			if (dfs.getState(cell) == VISITED || dfs.isStacked(cell)) {
 				return visitedCellColor;
 			}
 			return base.getModel().getCellBgColor(cell);
@@ -64,7 +64,7 @@ public class DepthFirstTraversalAnimation {
 		return r;
 	}
 
-	public void run(GridCanvas canvas, AbstractGraphTraversal dfs, int source, int target) {
+	public void run(GridCanvas canvas, DepthFirstTraversal dfs, int source, int target) {
 		dfs.addObserver(new GraphTraversalObserver() {
 
 			private void delayed(Runnable code) {

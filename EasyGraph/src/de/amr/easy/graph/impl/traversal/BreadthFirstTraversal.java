@@ -46,11 +46,6 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal {
 	}
 
 	@Override
-	public boolean inQ(int vertex) {
-		return q.contains(vertex);
-	}
-
-	@Override
 	public void traverseGraph(int source, int target) {
 		clear();
 		q.add(source);

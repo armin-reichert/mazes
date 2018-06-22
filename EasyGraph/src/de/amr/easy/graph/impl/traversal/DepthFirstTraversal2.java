@@ -5,7 +5,6 @@ import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
 
 import java.util.OptionalInt;
 
-import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Graph;
 
 /**
@@ -13,23 +12,10 @@ import de.amr.easy.graph.api.Graph;
  * 
  * @author Armin Reichert
  */
-public class DepthFirstTraversal2 extends AbstractGraphTraversal {
-
-	private final Stack<Integer> stack = new Stack<>();
+public class DepthFirstTraversal2 extends DepthFirstTraversal {
 
 	public DepthFirstTraversal2(Graph<?, ?> graph) {
 		super(graph);
-	}
-
-	@Override
-	protected void clear() {
-		super.clear();
-		stack.clear();
-	}
-
-	@Override
-	public boolean inQ(int v) {
-		return stack.contains(v);
 	}
 
 	@Override
