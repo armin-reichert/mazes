@@ -8,11 +8,10 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 
-import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.iterators.IteratorFactory;
 import de.amr.easy.grid.iterators.shapes.Rectangle;
 import de.amr.easy.grid.iterators.traversals.ExpandingRectangle;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Wilson's algorithm where the vertices are selected from a sequence of nested rectangles.
@@ -21,7 +20,7 @@ import de.amr.easy.grid.iterators.traversals.ExpandingRectangle;
  */
 public class WilsonUSTNestedRectangles extends WilsonUST {
 
-	public WilsonUSTNestedRectangles(GridGraph2D<TraversalState, Void> grid) {
+	public WilsonUSTNestedRectangles(OrthogonalGrid grid) {
 		super(grid);
 	}
 

@@ -13,10 +13,9 @@ import static java.util.Arrays.stream;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.SimpleEdge;
-import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.curves.HilbertCurve;
 import de.amr.easy.grid.impl.GridGraph;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Wilson's algorithm where the random walks start in the order defined by a Hilbert curve.
@@ -27,11 +26,11 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 
 	private final int[] walkStartCells;
 
-	public WilsonUSTHilbertCurve(GridGraph2D<TraversalState, Void> grid) {
+	public WilsonUSTHilbertCurve(OrthogonalGrid grid) {
 		super(grid);
 		walkStartCells = new int[grid.numVertices()];
 		int n = nextPow(2, max(grid.numCols(), grid.numRows()));
-		GridGraph<?,?> square = new GridGraph<>(n, n, grid.getTopology(), SimpleEdge::new);
+		GridGraph<?, ?> square = new GridGraph<>(n, n, grid.getTopology(), SimpleEdge::new);
 		int cell = square.cell(TOP_LEFT);
 		int i = 0;
 		walkStartCells[i++] = cell;

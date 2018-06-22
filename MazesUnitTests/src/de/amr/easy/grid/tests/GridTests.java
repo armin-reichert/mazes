@@ -14,11 +14,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.graph.api.SimpleEdge;
-import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.GridGraph;
-import de.amr.easy.grid.impl.Top4;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.traversal.RandomBFS;
 import de.amr.easy.util.GraphUtils;
 
@@ -32,11 +30,11 @@ public class GridTests {
 	private static final int WIDTH = 100;
 	private static final int HEIGHT = 100;
 
-	private GridGraph<TraversalState, Void> grid;
+	private OrthogonalGrid grid;
 
 	@Before
 	public void setUp() {
-		grid = new GridGraph<>(WIDTH, HEIGHT, Top4.get(), SimpleEdge::new);
+		grid = new OrthogonalGrid(WIDTH, HEIGHT);
 		grid.setDefaultVertex(UNVISITED);
 	}
 
@@ -120,13 +118,6 @@ public class GridTests {
 		grid.removeEdge(0, 1);
 		assertEquals(grid.numEdges(), numEdges);
 		assertFalse(grid.edge(0, 1).isPresent());
-	}
-
-	@Test(expected = IllegalStateException.class)
-	public void testRemoveEdgeTwiceThrowsException() {
-		grid.addEdge(0, 1);
-		grid.removeEdge(0, 1);
-		grid.removeEdge(0, 1);
 	}
 
 	@Test

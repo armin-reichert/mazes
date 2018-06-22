@@ -7,19 +7,15 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import de.amr.easy.graph.api.SimpleEdge;
-import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
-import de.amr.easy.grid.api.GridGraph2D;
-import de.amr.easy.grid.impl.ObservableGridGraph;
-import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
 import de.amr.easy.maze.alg.Eller;
 import de.amr.easy.maze.alg.EllerInsideOut;
 import de.amr.easy.maze.alg.GrowingTree;
 import de.amr.easy.maze.alg.HuntAndKillRandom;
 import de.amr.easy.maze.alg.RecursiveDivision;
-import de.amr.easy.maze.alg.core.MazeAlgorithm;
+import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 import de.amr.easy.maze.alg.mst.PrimMST;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
@@ -58,7 +54,7 @@ public class MazeDemoFX extends Application {
 
 	private Canvas canvas;
 	private Timer timer;
-	private ObservableGridGraph<TraversalState, ?> maze;
+	private OrthogonalGrid maze;
 	private int cols;
 	private int rows;
 	private int cellSize;
@@ -111,10 +107,10 @@ public class MazeDemoFX extends Application {
 	}
 
 	private void nextMaze() {
-		maze = new ObservableGridGraph<>(cols, rows, Top4.get(), SimpleEdge::new);
+		maze = new OrthogonalGrid(cols, rows);
 		maze.setDefaultVertex(UNVISITED);
 		canvas.resize((cols + 1) * cellSize, (rows + 1) * cellSize);
-		MazeAlgorithm<?> generator = randomMazeGenerator();
+		MazeGenerator generator = randomMazeGenerator();
 		generator.run(maze.cell(0, 0));
 		drawGrid();
 		BreadthFirstTraversal bfs = new BreadthFirstTraversal(maze);
@@ -122,10 +118,10 @@ public class MazeDemoFX extends Application {
 		drawPath(bfs.path(maze.cell(BOTTOM_RIGHT))::iterator);
 	}
 
-	private MazeAlgorithm<?> randomMazeGenerator() {
+	private MazeGenerator randomMazeGenerator() {
 		Class<?> generatorClass = GENERATOR_CLASSES[RAND.nextInt(GENERATOR_CLASSES.length)];
 		try {
-			return (MazeAlgorithm<?>) generatorClass.getConstructor(GridGraph2D.class).newInstance(maze);
+			return (MazeGenerator) generatorClass.getConstructor(OrthogonalGrid.class).newInstance(maze);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Could not create maze generator instance");

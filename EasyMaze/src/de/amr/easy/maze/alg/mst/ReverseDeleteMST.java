@@ -4,9 +4,8 @@ import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 import static de.amr.easy.util.StreamUtils.permute;
 
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.GridGraph2D;
-import de.amr.easy.maze.alg.core.MazeAlgorithm;
+import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Maze generator derived from the Reverse-Delete-MST algorithm.
@@ -15,10 +14,12 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  *
  * @see <a href="https://en.wikipedia.org/wiki/Reverse-delete_algorithm">Wikipedia</a>
  */
-public abstract class ReverseDeleteMST extends MazeAlgorithm<Void> {
+public abstract class ReverseDeleteMST implements MazeGenerator {
 
-	public ReverseDeleteMST(GridGraph2D<TraversalState, Void> grid) {
-		super(grid);
+	protected final OrthogonalGrid grid;
+
+	public ReverseDeleteMST(OrthogonalGrid grid) {
+		this.grid = grid;
 	}
 
 	@Override

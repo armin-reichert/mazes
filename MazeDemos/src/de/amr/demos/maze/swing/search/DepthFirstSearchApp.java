@@ -15,14 +15,12 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
-import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
 import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.grid.impl.GridGraph;
-import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 
 /**
@@ -36,7 +34,7 @@ public class DepthFirstSearchApp {
 		EventQueue.invokeLater(DepthFirstSearchApp::new);
 	}
 
-	private GridGraph<TraversalState, Void> grid;
+	private OrthogonalGrid grid;
 	private Iterable<Integer> solution;
 	private DrawingArea canvas;
 	private ConfigurableGridRenderer renderer;
@@ -131,7 +129,7 @@ public class DepthFirstSearchApp {
 	}
 
 	private void newMaze(int gridSize) {
-		grid = new GridGraph<>(gridSize, gridSize, Top4.get(), SimpleEdge::new);
+		grid = new OrthogonalGrid(gridSize, gridSize);
 		grid.setDefaultVertex(TraversalState.UNVISITED);
 		solution = null;
 		new KruskalMST(grid).run(0);

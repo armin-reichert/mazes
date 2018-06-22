@@ -36,7 +36,7 @@ import de.amr.easy.maze.alg.EllerInsideOut;
 import de.amr.easy.maze.alg.HuntAndKillRandom;
 import de.amr.easy.maze.alg.RecursiveDivision;
 import de.amr.easy.maze.alg.Sidewinder;
-import de.amr.easy.maze.alg.core.MazeAlgorithm;
+import de.amr.easy.maze.alg.core.MazeGenerator;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 import de.amr.easy.maze.alg.mst.PrimMST;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
@@ -127,8 +127,8 @@ public class MazeApp {
 		int index = new Random().nextInt(GENERATORS.length);
 		try {
 			@SuppressWarnings("unchecked")
-			Class<? extends MazeAlgorithm<?>> generatorClass = (Class<? extends MazeAlgorithm<?>>) GENERATORS[index];
-			MazeAlgorithm<?> generator = generatorClass.getConstructor(GridGraph2D.class).newInstance(grid);
+			Class<? extends MazeGenerator> generatorClass = (Class<? extends MazeGenerator>) GENERATORS[index];
+			MazeGenerator generator = generatorClass.getConstructor(GridGraph2D.class).newInstance(grid);
 			window.setTitle(generatorClass.getSimpleName());
 			generator.run(grid.cell(CENTER));
 		} catch (Exception e) {

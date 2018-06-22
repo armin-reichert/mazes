@@ -8,12 +8,11 @@ import static java.util.Arrays.stream;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.SimpleEdge;
-import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.curves.Curve;
 import de.amr.easy.grid.curves.MooreLCurve;
 import de.amr.easy.grid.impl.GridGraph;
 import de.amr.easy.grid.impl.Top4;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Wilson's algorithm where the random walks start in the order defined by a Moore curve.
@@ -24,7 +23,7 @@ public class WilsonUSTMooreCurve extends WilsonUST {
 
 	private final int[] walkStartCells;
 
-	public WilsonUSTMooreCurve(GridGraph2D<TraversalState, Void> grid) {
+	public WilsonUSTMooreCurve(OrthogonalGrid grid) {
 		super(grid);
 		walkStartCells = new int[grid.numVertices()];
 		int n = nextPow(2, max(grid.numCols(), grid.numRows()));

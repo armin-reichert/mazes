@@ -19,11 +19,9 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
-import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.curves.Curve;
 import de.amr.easy.grid.curves.HilbertCurve;
-import de.amr.easy.grid.impl.Top4;
 
 /**
  * Creates Hilbert curves of different sizes and shows an animation of the creation and a flood-fill
@@ -31,7 +29,7 @@ import de.amr.easy.grid.impl.Top4;
  * 
  * @author Armin Reichert
  */
-public class HilbertCurveApp extends SwingGridSampleApp<Void> {
+public class HilbertCurveApp extends SwingGridSampleApp {
 
 	private static final EnumMap<GridPosition, List<Integer>> ORIENTATION = new EnumMap<>(GridPosition.class);
 
@@ -47,7 +45,7 @@ public class HilbertCurveApp extends SwingGridSampleApp<Void> {
 	}
 
 	private HilbertCurveApp() {
-		super(512, 512, 256, Top4.get(), SimpleEdge::new);
+		super(512, 512, 256);
 		setAppName("Hilbert Curve");
 	}
 

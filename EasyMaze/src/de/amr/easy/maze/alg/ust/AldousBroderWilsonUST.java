@@ -6,8 +6,8 @@ import static de.amr.easy.util.StreamUtils.permute;
 import static de.amr.easy.util.StreamUtils.randomElement;
 
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.GridGraph2D;
-import de.amr.easy.maze.alg.core.MazeAlgorithm;
+import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * A hybrid algorithm that first uses Aldous/Broder until some fraction of cells are visited and
@@ -17,13 +17,14 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  * 
  * @author Armin Reichert
  */
-public class AldousBroderWilsonUST extends MazeAlgorithm<Void> {
+public class AldousBroderWilsonUST implements MazeGenerator {
 
+	private final OrthogonalGrid grid;
 	private int numVisitedCells;
 	private int currentCell;
 
-	public AldousBroderWilsonUST(GridGraph2D<TraversalState, Void> grid) {
-		super(grid);
+	public AldousBroderWilsonUST(OrthogonalGrid grid) {
+		this.grid = grid;
 	}
 
 	@Override
@@ -39,13 +40,13 @@ public class AldousBroderWilsonUST extends MazeAlgorithm<Void> {
 		}
 		// continue with Wilson
 		WilsonUSTRandomCell wilson = new WilsonUSTRandomCell(grid);
-		permute(grid.vertices().filter(isCellUnvisited)).forEach(wilson::loopErasedRandomWalk);
+		permute(grid.vertices().filter(grid::isUnvisited)).forEach(wilson::loopErasedRandomWalk);
 
 	}
 
 	private void visitRandomNeighbor() {
 		int neighbor = randomElement(grid.neighbors(currentCell)).getAsInt();
-		if (isCellUnvisited.test(neighbor)) {
+		if (grid.isUnvisited(neighbor)) {
 			grid.addEdge(currentCell, neighbor);
 			grid.set(neighbor, COMPLETED);
 			++numVisitedCells;

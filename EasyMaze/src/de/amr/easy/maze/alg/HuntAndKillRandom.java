@@ -1,7 +1,8 @@
 package de.amr.easy.maze.alg;
 
-import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.GridGraph2D;
+import java.util.Random;
+
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Variant of "hunt-and-kill" algorithm where the "hunt" picks cells randomly from the set of
@@ -11,7 +12,9 @@ import de.amr.easy.grid.api.GridGraph2D;
  */
 public class HuntAndKillRandom extends HuntAndKill {
 
-	public HuntAndKillRandom(GridGraph2D<TraversalState, Void> grid) {
+	private final Random rnd = new Random();
+
+	public HuntAndKillRandom(OrthogonalGrid grid) {
 		super(grid);
 	}
 

@@ -5,11 +5,9 @@ import static de.amr.easy.util.StreamUtils.randomElement;
 
 import java.util.BitSet;
 import java.util.OptionalInt;
-import java.util.function.IntPredicate;
 
-import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.GridGraph2D;
-import de.amr.easy.maze.alg.core.MazeAlgorithm;
+import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Generates a maze similar to the "hunt-and-kill" algorithm.
@@ -20,14 +18,13 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  *      "http://weblog.jamisbuck.org/2011/1/24/maze-generation-hunt-and-kill-algorithm.html"> Maze
  *      Generation: Hunt-and-Kill algorithm</a>
  */
-public class HuntAndKill extends MazeAlgorithm<Void> {
+public class HuntAndKill implements MazeGenerator {
 
-	protected final IntPredicate isAlive = isCellUnvisited;
-	protected final IntPredicate isDead = isAlive.negate();
+	protected final OrthogonalGrid grid;
 	protected final BitSet targets;
 
-	public HuntAndKill(GridGraph2D<TraversalState, Void> grid) {
-		super(grid);
+	public HuntAndKill(OrthogonalGrid grid) {
+		this.grid = grid;
 		targets = new BitSet(grid.numVertices());
 	}
 
@@ -35,16 +32,24 @@ public class HuntAndKill extends MazeAlgorithm<Void> {
 	public void run(int animal) {
 		do {
 			kill(animal);
-			OptionalInt livingNeighbor = randomElement(grid.neighbors(animal).filter(isAlive));
+			OptionalInt livingNeighbor = randomElement(grid.neighbors(animal).filter(this::isAlive));
 			if (livingNeighbor.isPresent()) {
-				grid.neighbors(animal).filter(isAlive).forEach(targets::set);
+				grid.neighbors(animal).filter(this::isAlive).forEach(targets::set);
 				grid.addEdge(animal, livingNeighbor.getAsInt());
 				animal = livingNeighbor.getAsInt();
 			} else if (!targets.isEmpty()) {
 				animal = hunt();
-				grid.addEdge(animal, randomElement(grid.neighbors(animal).filter(isDead)).getAsInt());
+				grid.addEdge(animal, randomElement(grid.neighbors(animal).filter(this::isDead)).getAsInt());
 			}
 		} while (!targets.isEmpty());
+	}
+
+	protected boolean isAlive(int v) {
+		return grid.isUnvisited(v);
+	}
+
+	protected boolean isDead(int v) {
+		return !isAlive(v);
 	}
 
 	protected int hunt() {

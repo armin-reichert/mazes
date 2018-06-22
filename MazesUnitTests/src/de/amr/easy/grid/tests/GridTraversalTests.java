@@ -19,7 +19,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.graph.impl.traversal.BestFirstTraversal;
 import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
@@ -31,8 +30,7 @@ import de.amr.easy.grid.curves.HilbertLCurve;
 import de.amr.easy.grid.curves.HilbertLCurveWirth;
 import de.amr.easy.grid.curves.MooreLCurve;
 import de.amr.easy.grid.curves.PeanoCurve;
-import de.amr.easy.grid.impl.GridGraph;
-import de.amr.easy.grid.impl.Top4;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
 import de.amr.easy.util.StreamUtils;
 
@@ -46,11 +44,11 @@ public class GridTraversalTests {
 		cells.forEach(cell -> assertTrue(getState.apply(cell) == expected));
 	}
 
-	private GridGraph<TraversalState, Void> grid;
+	private OrthogonalGrid grid;
 
 	@Before
 	public void setUp() {
-		grid = new GridGraph<>(N, N, Top4.get(), SimpleEdge::new);
+		grid = new OrthogonalGrid(N, N);
 		grid.setDefaultVertex(UNVISITED);
 		grid.fill();
 	}
@@ -146,7 +144,7 @@ public class GridTraversalTests {
 
 	@Test
 	public void testPeanoCurve() {
-		grid = new GridGraph<>(243, 243, Top4.get(), SimpleEdge::new);
+		grid = new OrthogonalGrid(243, 243);
 		grid.setDefaultVertex(TraversalState.UNVISITED);
 		assertAllCells(UNVISITED);
 		traverse(new PeanoCurve(5), grid, grid.cell(BOTTOM_LEFT), this::setCompleted);

@@ -7,9 +7,8 @@ import java.util.stream.Stream;
 
 import de.amr.easy.data.Partition;
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.GridGraph2D;
-import de.amr.easy.maze.alg.core.MazeAlgorithm;
+import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Maze generator derived from Kruskal's minimum spanning tree algorithm.
@@ -22,10 +21,12 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  * @see <a href="http://weblog.jamisbuck.org/2011/1/3/maze-generation-kruskal-s-algorithm.html">Maze
  *      Generation: Kruskal's Algorithm</a>
  */
-public class KruskalMST extends MazeAlgorithm<Void> {
+public class KruskalMST implements MazeGenerator {
 
-	public KruskalMST(GridGraph2D<TraversalState, Void> grid) {
-		super(grid);
+	private final OrthogonalGrid grid;
+
+	public KruskalMST(OrthogonalGrid grid) {
+		this.grid = grid;
 	}
 
 	@Override

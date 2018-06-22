@@ -4,8 +4,7 @@ import static de.amr.easy.util.StreamUtils.permute;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.GridGraph2D;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Wilson's algorithm with random start cells of the loop-erased random walks.
@@ -14,7 +13,7 @@ import de.amr.easy.grid.api.GridGraph2D;
  */
 public class WilsonUSTRandomCell extends WilsonUST {
 
-	public WilsonUSTRandomCell(GridGraph2D<TraversalState, Void> grid) {
+	public WilsonUSTRandomCell(OrthogonalGrid grid) {
 		super(grid);
 	}
 

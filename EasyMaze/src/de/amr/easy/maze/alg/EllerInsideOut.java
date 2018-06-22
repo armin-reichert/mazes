@@ -16,17 +16,17 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import de.amr.easy.data.Partition;
 import de.amr.easy.graph.api.SimpleEdge;
-import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.impl.GridGraph;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.iterators.shapes.Rectangle;
 import de.amr.easy.grid.iterators.shapes.Square;
-import de.amr.easy.maze.alg.core.MazeAlgorithm;
+import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Maze generator similar to Eller's algorithm but growing the maze inside-out. To my knowledge this
@@ -34,9 +34,11 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  * 
  * @author Armin Reichert
  */
-public class EllerInsideOut extends MazeAlgorithm<Void> {
+public class EllerInsideOut implements MazeGenerator {
 
+	private final OrthogonalGrid grid;
 	private final GridGraph<?, ?> squareGrid;
+	private final Random rnd = new Random();
 	private final Partition<Integer> mazeParts = new Partition<>();
 	private Square square;
 	private Iterable<Integer> layer;
@@ -44,8 +46,8 @@ public class EllerInsideOut extends MazeAlgorithm<Void> {
 	private final int offsetX;
 	private final int offsetY;
 
-	public EllerInsideOut(GridGraph2D<TraversalState, Void> grid) {
-		super(grid);
+	public EllerInsideOut(OrthogonalGrid grid) {
+		this.grid = grid;
 		int n = max(grid.numCols(), grid.numRows());
 		offsetX = (n - grid.numCols()) / 2;
 		offsetY = (n - grid.numRows()) / 2;

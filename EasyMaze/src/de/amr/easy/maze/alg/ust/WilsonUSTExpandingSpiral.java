@@ -4,9 +4,8 @@ import static de.amr.easy.grid.api.GridPosition.CENTER;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.iterators.traversals.Spiral;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Wilson's algorithm where the vertices are selected from an expanding spiral.
@@ -15,7 +14,7 @@ import de.amr.easy.grid.iterators.traversals.Spiral;
  */
 public class WilsonUSTExpandingSpiral extends WilsonUST {
 
-	public WilsonUSTExpandingSpiral(GridGraph2D<TraversalState, Void> grid) {
+	public WilsonUSTExpandingSpiral(OrthogonalGrid grid) {
 		super(grid);
 	}
 

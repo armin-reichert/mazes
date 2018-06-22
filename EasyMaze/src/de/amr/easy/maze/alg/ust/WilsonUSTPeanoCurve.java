@@ -9,12 +9,11 @@ import static java.util.Arrays.stream;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.SimpleEdge;
-import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.curves.Curve;
 import de.amr.easy.grid.curves.PeanoCurve;
 import de.amr.easy.grid.impl.GridGraph;
 import de.amr.easy.grid.impl.Top4;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Wilson's algorithm where the random walks start in the order defined by a Peano curve.
@@ -26,7 +25,7 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 	private final int[] walkStartCells;
 	private int i;
 
-	public WilsonUSTPeanoCurve(GridGraph2D<TraversalState, Void> grid) {
+	public WilsonUSTPeanoCurve(OrthogonalGrid grid) {
 		super(grid);
 		walkStartCells = new int[grid.numVertices()];
 		int n = nextPow(3, max(grid.numCols(), grid.numRows()));

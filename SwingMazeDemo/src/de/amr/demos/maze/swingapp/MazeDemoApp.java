@@ -29,13 +29,13 @@ import de.amr.demos.maze.swingapp.action.ToggleControlPanelAction;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
-import de.amr.demos.maze.swingapp.model.MazeGrid;
 import de.amr.demos.maze.swingapp.view.CanvasWindow;
 import de.amr.demos.maze.swingapp.view.SettingsWindow;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.graph.impl.traversal.BestFirstTraversal;
 import de.amr.easy.grid.ui.swing.animation.GridCanvasAnimation;
 import de.amr.easy.grid.ui.swing.rendering.GridCanvas;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
 
 /**
@@ -119,10 +119,10 @@ public class MazeDemoApp {
 		wndSettings.setVisible(true);
 	}
 
-	private static MazeGrid createGrid(int cellSize) {
+	private static OrthogonalGrid createGrid(int cellSize) {
 		int numCols = DISPLAY_MODE.getWidth() / cellSize;
 		int numRows = DISPLAY_MODE.getHeight() / cellSize;
-		return new MazeGrid(numCols, numRows);
+		return new OrthogonalGrid(numCols, numRows);
 	}
 
 	public void newCanvas() {

@@ -5,8 +5,8 @@ import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
 import static de.amr.easy.util.StreamUtils.randomElement;
 
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.GridGraph2D;
-import de.amr.easy.maze.alg.core.MazeAlgorithm;
+import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Let G = (V,E) be a graph with vertices V and edge set E.
@@ -30,13 +30,14 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  *        Generation: Aldous-Broder algorithm</a>
  * 
  */
-public class AldousBroderUST extends MazeAlgorithm<Void> {
+public class AldousBroderUST implements MazeGenerator {
 
+	protected final OrthogonalGrid grid;
 	private int numVisitedCells;
 	private int currentCell;
 
-	public AldousBroderUST(GridGraph2D<TraversalState, Void> grid) {
-		super(grid);
+	public AldousBroderUST(OrthogonalGrid grid) {
+		this.grid = grid;
 	}
 
 	@Override
@@ -55,7 +56,7 @@ public class AldousBroderUST extends MazeAlgorithm<Void> {
 	 */
 	private void visitRandomNeighbor() {
 		int neighbor = randomElement(grid.neighbors(currentCell)).getAsInt();
-		if (isCellUnvisited.test(neighbor)) {
+		if (grid.isUnvisited(neighbor)) {
 			grid.addEdge(currentCell, neighbor);
 			grid.set(neighbor, COMPLETED);
 			++numVisitedCells;

@@ -7,8 +7,8 @@ import java.awt.event.ActionEvent;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
-import de.amr.easy.grid.api.GridGraph2D;
-import de.amr.easy.maze.alg.core.MazeAlgorithm;
+import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.util.StopWatch;
 
 /**
@@ -50,7 +50,7 @@ public class CreateMazeAction extends MazeDemoAction {
 		app.model.getGrid().setEventsEnabled(false);
 		app.model.getGrid().removeEdges();
 		app.model.getGrid().setEventsEnabled(true);
-		MazeAlgorithm<?> generator = (MazeAlgorithm<?>) generatorInfo.getAlgorithmClass().getConstructor(GridGraph2D.class)
+		MazeGenerator generator = (MazeGenerator) generatorInfo.getAlgorithmClass().getConstructor(OrthogonalGrid.class)
 				.newInstance(app.model.getGrid());
 		if (app.model.isGenerationAnimated()) {
 			generator.run(startCell);

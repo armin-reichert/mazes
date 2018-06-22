@@ -12,17 +12,15 @@ import java.awt.event.MouseMotionAdapter;
 import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
 
-import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.impl.traversal.BestFirstTraversal;
 import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
 import de.amr.easy.util.StopWatch;
 
-public class FindPathAroundObstaclesApp extends SwingGridSampleApp<Void> {
+public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 
 	public static void main(String[] args) {
 		launch(new FindPathAroundObstaclesApp(800, 20));
@@ -34,7 +32,7 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp<Void> {
 	private StopWatch watch = new StopWatch();
 
 	public FindPathAroundObstaclesApp(int canvasSize, int cellSize) {
-		super(canvasSize, canvasSize, cellSize, Top4.get(), SimpleEdge::new);
+		super(canvasSize, canvasSize, cellSize);
 		setAppName("Find Path Around Obstacles");
 		addMouseHandler();
 		assignAction("SPACE", this::findAndShowPath);
@@ -143,8 +141,9 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp<Void> {
 	}
 
 	private int cellAt(int x, int y) {
-		return grid.cell(x / canvas.getRenderer().get().getModel().getCellSize(),
-				y / canvas.getRenderer().get().getModel().getCellSize());
+		int cellSize = canvas.getRenderer().get().getModel().getCellSize();
+		int gridX = Math.min(x / cellSize, grid.numCols() - 1), gridY = Math.min(y / cellSize, grid.numRows() - 1);
+		return grid.cell(gridX, gridY);
 	}
 
 	private void toggleContent(int cell) {

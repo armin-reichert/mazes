@@ -1,15 +1,11 @@
 package de.amr.demos.maze.swing;
 
-import java.util.function.BiFunction;
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
-import de.amr.easy.graph.api.Edge;
-import de.amr.easy.graph.api.SimpleEdge;
-import de.amr.easy.grid.api.GridGraph2D;
-import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
-import de.amr.easy.maze.alg.core.MazeAlgorithm;
+import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Helper class for quick maze generation / flood-fill demo. Subclasses just implement a main method
@@ -24,25 +20,24 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  * 
  * @author Armin Reichert
  */
-public class QuickMazeDemoApp<E> extends SwingGridSampleApp<E> {
+public class QuickMazeDemoApp extends SwingGridSampleApp {
 
-	public static void launch(Class<? extends MazeAlgorithm<?>> algorithmClass) {
-		QuickMazeDemoApp<?> app = new QuickMazeDemoApp<>(algorithmClass.getSimpleName(), algorithmClass, SimpleEdge::new);
+	public static void launch(Class<? extends MazeGenerator> algorithmClass) {
+		QuickMazeDemoApp app = new QuickMazeDemoApp(algorithmClass.getSimpleName(), algorithmClass);
 		SwingGridSampleApp.launch(app);
 	}
 
-	private final Class<? extends MazeAlgorithm<?>> algorithmClass;
+	private final Class<? extends MazeGenerator> algorithmClass;
 
-	public QuickMazeDemoApp(String appName, Class<? extends MazeAlgorithm<?>> algorithmClass,
-			BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory) {
-		super(128, Top4.get(), fnEdgeFactory);
+	public QuickMazeDemoApp(String appName, Class<? extends MazeGenerator> algorithmClass) {
+		super(128);
 		this.algorithmClass = algorithmClass;
 		setAppName(appName);
 	}
 
-	private MazeAlgorithm<?> createAlgorithm() {
+	private MazeGenerator createAlgorithm() {
 		try {
-			return algorithmClass.getConstructor(GridGraph2D.class).newInstance(grid);
+			return algorithmClass.getConstructor(OrthogonalGrid.class).newInstance(grid);
 		} catch (Exception x) {
 			throw new RuntimeException(x);
 		}

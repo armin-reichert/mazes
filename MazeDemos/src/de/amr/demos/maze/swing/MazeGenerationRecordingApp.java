@@ -4,15 +4,12 @@ import static java.lang.String.format;
 
 import java.awt.Color;
 
-import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.event.EdgeEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.ObservableGraph;
 import de.amr.easy.graph.api.event.VertexEvent;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.api.GridGraph2D;
-import de.amr.easy.grid.impl.ObservableGridGraph;
-import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.GridCanvas;
 import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
@@ -26,7 +23,8 @@ import de.amr.easy.maze.alg.HuntAndKill;
 import de.amr.easy.maze.alg.HuntAndKillRandom;
 import de.amr.easy.maze.alg.RecursiveDivision;
 import de.amr.easy.maze.alg.Sidewinder;
-import de.amr.easy.maze.alg.core.MazeAlgorithm;
+import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.mst.BoruvkaMST;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 import de.amr.easy.maze.alg.mst.PrimMST;
@@ -94,18 +92,17 @@ public class MazeGenerationRecordingApp {
 	/*@formatter:on*/
 	};
 
-	private ObservableGridGraph<TraversalState, Double> grid;
+	private OrthogonalGrid grid;
 	private GridCanvas canvas;
 
 	public void run(int numCols, int numRows, int cellSize, int scanRate, int delayMillis) {
 		for (Class<?> generatorClass : generatorClasses) {
-			grid = new ObservableGridGraph<>(numCols, numRows, Top4.get(), SimpleEdge::new);
+			grid = new OrthogonalGrid(numCols, numRows);
 			grid.setDefaultVertex(TraversalState.UNVISITED);
 			canvas = new GridCanvas(grid, cellSize);
 			canvas.pushRenderer(createRenderer(cellSize));
 			try {
-				MazeAlgorithm<?> generator = (MazeAlgorithm<?>) generatorClass.getConstructor(GridGraph2D.class)
-						.newInstance(grid);
+				MazeGenerator generator = (MazeGenerator) generatorClass.getConstructor(GridGraph2D.class).newInstance(grid);
 				try (GifRecorder recorder = new GifRecorder(canvas.getDrawingBuffer().getType())) {
 					attachRecorderToGrid(recorder);
 					recorder.setDelayMillis(delayMillis);
@@ -141,30 +138,30 @@ public class MazeGenerationRecordingApp {
 	}
 
 	private void attachRecorderToGrid(GifRecorder recorder) {
-		grid.addGraphObserver(new GraphObserver<TraversalState, Double>() {
+		grid.addGraphObserver(new GraphObserver<TraversalState, Void>() {
 
 			@Override
-			public void vertexChanged(VertexEvent<TraversalState, Double> event) {
+			public void vertexChanged(VertexEvent<TraversalState, Void> event) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
-			public void graphChanged(ObservableGraph<TraversalState, Double> graph) {
+			public void graphChanged(ObservableGraph<TraversalState, Void> graph) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
-			public void edgeRemoved(EdgeEvent<TraversalState, Double> event) {
+			public void edgeRemoved(EdgeEvent<TraversalState, Void> event) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
-			public void edgeChanged(EdgeEvent<TraversalState, Double> event) {
+			public void edgeChanged(EdgeEvent<TraversalState, Void> event) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
-			public void edgeAdded(EdgeEvent<TraversalState, Double> event) {
+			public void edgeAdded(EdgeEvent<TraversalState, Void> event) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 		});

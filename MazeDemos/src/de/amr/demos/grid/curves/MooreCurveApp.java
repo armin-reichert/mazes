@@ -7,9 +7,7 @@ import static de.amr.easy.util.GraphUtils.log;
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
-import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.grid.curves.MooreLCurve;
-import de.amr.easy.grid.impl.Top4;
 
 /**
  * Creates Moore curves of different sizes and shows an animation of the creation and BFS-traversal
@@ -17,14 +15,14 @@ import de.amr.easy.grid.impl.Top4;
  * 
  * @author Armin Reichert
  */
-public class MooreCurveApp extends SwingGridSampleApp<Void> {
+public class MooreCurveApp extends SwingGridSampleApp {
 
 	public static void main(String[] args) {
 		launch(new MooreCurveApp());
 	}
 
 	public MooreCurveApp() {
-		super(512, 512, 512, Top4.get(), SimpleEdge::new);
+		super(512, 512, 512);
 		setAppName("Moore Curve");
 	}
 

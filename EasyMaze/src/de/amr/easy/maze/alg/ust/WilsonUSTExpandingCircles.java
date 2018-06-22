@@ -9,9 +9,8 @@ import java.util.Iterator;
 import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 
-import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.iterators.traversals.ExpandingCircle;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Wilson's algorithm where grid cells are selected from five expanding circles.
@@ -20,7 +19,7 @@ import de.amr.easy.grid.iterators.traversals.ExpandingCircle;
  */
 public class WilsonUSTExpandingCircles extends WilsonUST {
 
-	public WilsonUSTExpandingCircles(GridGraph2D<TraversalState, Void> grid) {
+	public WilsonUSTExpandingCircles(OrthogonalGrid grid) {
 		super(grid);
 	}
 

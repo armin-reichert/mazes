@@ -3,11 +3,9 @@ package de.amr.demos.grid.curves;
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 
 import de.amr.demos.grid.SwingGridSampleApp;
-import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.grid.curves.SierpinskiLCurve;
-import de.amr.easy.grid.impl.Top8;
 
-public class SierpinskiLCurveApp extends SwingGridSampleApp<Void> {
+public class SierpinskiLCurveApp extends SwingGridSampleApp {
 
 	public static void main(String[] args) {
 		launch(new SierpinskiLCurveApp());
@@ -16,7 +14,7 @@ public class SierpinskiLCurveApp extends SwingGridSampleApp<Void> {
 	private static int CELL_SIZE = 8;
 
 	public SierpinskiLCurveApp() {
-		super(CELL_SIZE, Top8.get(), SimpleEdge::new);
+		super(CELL_SIZE);
 		setAppName("Sierpinski Curve (L-system)");
 	}
 

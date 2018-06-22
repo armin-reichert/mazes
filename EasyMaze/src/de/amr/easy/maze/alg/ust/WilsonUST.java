@@ -5,9 +5,8 @@ import static de.amr.easy.util.StreamUtils.randomElement;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.GridGraph2D;
-import de.amr.easy.maze.alg.core.MazeAlgorithm;
+import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Wilson's algorithm.
@@ -29,13 +28,14 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  *      wikipedia.org/wiki/Loop -erased_random_walk</>
  * 
  */
-public abstract class WilsonUST extends MazeAlgorithm<Void> {
+public abstract class WilsonUST implements MazeGenerator {
 
+	protected final OrthogonalGrid grid;
 	private final int[] lastWalkDir;
 	private int current;
 
-	protected WilsonUST(GridGraph2D<TraversalState, Void> grid) {
-		super(grid);
+	protected WilsonUST(OrthogonalGrid grid) {
+		this.grid = grid;
 		lastWalkDir = new int[grid.numVertices()];
 	}
 

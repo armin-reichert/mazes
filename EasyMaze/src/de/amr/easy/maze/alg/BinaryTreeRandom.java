@@ -4,8 +4,7 @@ import static de.amr.easy.util.StreamUtils.permute;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.GridGraph2D;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Creates maze as a binary tree with random cell selection.
@@ -14,7 +13,7 @@ import de.amr.easy.grid.api.GridGraph2D;
  */
 public class BinaryTreeRandom extends BinaryTree {
 
-	public BinaryTreeRandom(GridGraph2D<TraversalState, Void> grid) {
+	public BinaryTreeRandom(OrthogonalGrid grid) {
 		super(grid);
 	}
 

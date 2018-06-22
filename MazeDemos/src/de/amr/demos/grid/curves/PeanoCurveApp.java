@@ -8,18 +8,16 @@ import static de.amr.easy.util.GraphUtils.log;
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
-import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.grid.curves.PeanoCurve;
-import de.amr.easy.grid.impl.Top4;
 
-public class PeanoCurveApp extends SwingGridSampleApp<Void> {
+public class PeanoCurveApp extends SwingGridSampleApp {
 
 	public static void main(String[] args) {
 		launch(new PeanoCurveApp());
 	}
 
 	public PeanoCurveApp() {
-		super(243 * 4, 243 * 4, 4, Top4.get(), SimpleEdge::new);
+		super(243 * 4, 243 * 4, 4);
 		setAppName("Peano Curve");
 	}
 

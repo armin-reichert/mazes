@@ -3,9 +3,10 @@ package de.amr.easy.maze.alg;
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 import static java.util.stream.IntStream.range;
 
-import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.GridGraph2D;
-import de.amr.easy.maze.alg.core.MazeAlgorithm;
+import java.util.Random;
+
+import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * The "Sidewinder" algorithm.
@@ -16,12 +17,14 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  *      "http://weblog.jamisbuck.org/2011/2/3/maze-generation-sidewinder-algorithm.html">Jamis
  *      Buck's blog: Sidewinder algorithm</a>
  */
-public class Sidewinder extends MazeAlgorithm<Void> {
+public class Sidewinder implements MazeGenerator {
 
+	private final OrthogonalGrid grid;
+	private final Random rnd = new Random();
 	private int start;
 
-	public Sidewinder(GridGraph2D<TraversalState, Void> grid) {
-		super(grid);
+	public Sidewinder(OrthogonalGrid grid) {
+		this.grid = grid;
 	}
 
 	@Override

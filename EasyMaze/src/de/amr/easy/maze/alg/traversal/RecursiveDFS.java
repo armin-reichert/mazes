@@ -6,9 +6,8 @@ import static de.amr.easy.util.StreamUtils.randomElement;
 
 import java.util.OptionalInt;
 
-import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.GridGraph2D;
-import de.amr.easy.maze.alg.core.MazeAlgorithm;
+import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Maze generator using randomized recursive depth-first-search. Not suited for larger grids because
@@ -20,10 +19,12 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  *      "http://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking">Maze
  *      Generation: Recursive Backtracking</a>
  */
-public class RecursiveDFS extends MazeAlgorithm<Void> {
+public class RecursiveDFS implements MazeGenerator {
 
-	public RecursiveDFS(GridGraph2D<TraversalState, Void> grid) {
-		super(grid);
+	private final OrthogonalGrid grid;
+
+	public RecursiveDFS(OrthogonalGrid grid) {
+		this.grid = grid;
 	}
 
 	@Override
@@ -37,6 +38,6 @@ public class RecursiveDFS extends MazeAlgorithm<Void> {
 	}
 
 	private OptionalInt unvisitedNeighbor(int cell) {
-		return randomElement(grid.neighbors(cell).filter(isCellUnvisited));
+		return randomElement(grid.neighbors(cell).filter(grid::isUnvisited));
 	}
 }

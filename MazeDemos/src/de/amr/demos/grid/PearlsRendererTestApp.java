@@ -8,14 +8,12 @@ import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation
 
 import java.awt.Color;
 
-import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
-import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.maze.alg.ust.WilsonUSTRecursiveCrosses;
 
-public class PearlsRendererTestApp extends SwingGridSampleApp<Void> {
+public class PearlsRendererTestApp extends SwingGridSampleApp {
 
 	public static void main(String[] args) {
 		launch(new PearlsRendererTestApp());
@@ -26,7 +24,7 @@ public class PearlsRendererTestApp extends SwingGridSampleApp<Void> {
 	static final int GRID_CELL_SIZE = CANVAS_SIZE / GRID_SIZE;
 
 	public PearlsRendererTestApp() {
-		super(CANVAS_SIZE, CANVAS_SIZE, GRID_CELL_SIZE, Top4.get(), SimpleEdge::new);
+		super(CANVAS_SIZE, CANVAS_SIZE, GRID_CELL_SIZE);
 		setAppName("Pearls Renderer Test");
 		setRenderingStyle(Style.PEARLS);
 		ConfigurableGridRenderer renderer = (ConfigurableGridRenderer) canvas.getRenderer().get();

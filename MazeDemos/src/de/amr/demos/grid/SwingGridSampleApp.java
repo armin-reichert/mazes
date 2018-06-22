@@ -12,7 +12,6 @@ import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
-import java.util.function.BiFunction;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
@@ -20,15 +19,13 @@ import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
-import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.Topology;
-import de.amr.easy.grid.impl.ObservableGridGraph;
 import de.amr.easy.grid.ui.swing.animation.GridCanvasAnimation;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.GridCanvas;
 import de.amr.easy.grid.ui.swing.rendering.PearlsGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Base class for grid sample applications.
@@ -38,13 +35,13 @@ import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
  * @param <E>
  *          edge label type
  */
-public abstract class SwingGridSampleApp<E> implements Runnable {
+public abstract class SwingGridSampleApp implements Runnable {
 
 	public enum Style {
 		WALL_PASSAGE, PEARLS
 	};
 
-	public static void launch(SwingGridSampleApp<?> app) {
+	public static void launch(SwingGridSampleApp app) {
 		try {
 			UIManager.setLookAndFeel(NimbusLookAndFeel.class.getName());
 		} catch (Exception e) {
@@ -53,14 +50,13 @@ public abstract class SwingGridSampleApp<E> implements Runnable {
 		invokeLater(app::createAndShowUI);
 	}
 
-	private final BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory;
 	protected final JFrame window = new JFrame();
 	protected final Dimension canvasSize;
 	protected String appName;
 	protected boolean fullscreen;
-	protected ObservableGridGraph<TraversalState, E> grid;
+	protected OrthogonalGrid grid;
 	protected GridCanvas canvas;
-	protected GridCanvasAnimation<TraversalState, E> canvasAnimation;
+	protected GridCanvasAnimation<TraversalState, Void> canvasAnimation;
 
 	private ConfigurableGridRenderer createRenderer(Style style, int cellSize) {
 		ConfigurableGridRenderer r;
@@ -99,12 +95,10 @@ public abstract class SwingGridSampleApp<E> implements Runnable {
 	 * @param cellSize
 	 *          the grid cell size
 	 */
-	public SwingGridSampleApp(int canvasWidth, int canvasHeight, int cellSize, Topology top,
-			BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory) {
-		this.fnEdgeFactory = fnEdgeFactory;
+	public SwingGridSampleApp(int canvasWidth, int canvasHeight, int cellSize) {
 		fullscreen = false;
 		canvasSize = new Dimension(canvasWidth, canvasHeight);
-		grid = new ObservableGridGraph<>(canvasWidth / cellSize, canvasHeight / cellSize, top, fnEdgeFactory);
+		grid = new OrthogonalGrid(canvasWidth / cellSize, canvasHeight / cellSize);
 		grid.setDefaultVertex(UNVISITED);
 		canvas = new GridCanvas(grid, cellSize);
 		canvas.pushRenderer(createRenderer(Style.WALL_PASSAGE, cellSize));
@@ -117,13 +111,12 @@ public abstract class SwingGridSampleApp<E> implements Runnable {
 	 * @param cellSize
 	 *          the grid cell size
 	 */
-	public SwingGridSampleApp(int cellSize, Topology top, BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory) {
-		this.fnEdgeFactory = fnEdgeFactory;
+	public SwingGridSampleApp(int cellSize) {
 		fullscreen = true;
 		DisplayMode displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
 				.getDisplayMode();
 		canvasSize = new Dimension(displayMode.getWidth(), displayMode.getHeight());
-		grid = new ObservableGridGraph<>(canvasSize.width / cellSize, canvasSize.height / cellSize, top, fnEdgeFactory);
+		grid = new OrthogonalGrid(canvasSize.width / cellSize, canvasSize.height / cellSize);
 		grid.setDefaultVertex(UNVISITED);
 		canvas = new GridCanvas(grid, cellSize);
 		canvas.pushRenderer(createRenderer(Style.WALL_PASSAGE, cellSize));
@@ -195,8 +188,7 @@ public abstract class SwingGridSampleApp<E> implements Runnable {
 		if (renderer.getModel().getCellSize() == cellSize) {
 			return;
 		}
-		grid = new ObservableGridGraph<>(canvasSize.width / cellSize, canvasSize.height / cellSize, grid.getTopology(),
-				fnEdgeFactory);
+		grid = new OrthogonalGrid(canvasSize.width / cellSize, canvasSize.height / cellSize);
 		grid.setDefaultVertex(UNVISITED);
 		canvas.setGrid(grid);
 		grid.addGraphObserver(canvasAnimation);

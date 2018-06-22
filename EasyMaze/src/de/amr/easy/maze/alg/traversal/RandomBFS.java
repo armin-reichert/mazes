@@ -6,20 +6,23 @@ import static de.amr.easy.util.StreamUtils.permute;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.GridGraph2D;
-import de.amr.easy.maze.alg.core.MazeAlgorithm;
+import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Maze generator using a randomized breadth-first-traversal.
  * 
  * @author Armin Reichert
  */
-public class RandomBFS extends MazeAlgorithm<Void> {
+public class RandomBFS implements MazeGenerator {
 
-	public RandomBFS(GridGraph2D<TraversalState, Void> grid) {
-		super(grid);
+	private final OrthogonalGrid grid;
+	private final Random rnd = new Random();
+
+	public RandomBFS(OrthogonalGrid grid) {
+		this.grid = grid;
 	}
 
 	@Override
@@ -29,7 +32,7 @@ public class RandomBFS extends MazeAlgorithm<Void> {
 		frontier.add(start);
 		while (!frontier.isEmpty()) {
 			int cell = frontier.remove(rnd.nextInt(frontier.size()));
-			permute(grid.neighbors(cell)).filter(isCellUnvisited).forEach(neighbor -> {
+			permute(grid.neighbors(cell)).filter(grid::isUnvisited).forEach(neighbor -> {
 				grid.addEdge(cell, neighbor);
 				grid.set(neighbor, VISITED);
 				frontier.add(neighbor);

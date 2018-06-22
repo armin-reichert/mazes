@@ -9,9 +9,8 @@ import java.util.stream.Stream;
 import de.amr.easy.data.Partition;
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.SimpleEdge;
-import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.GridGraph2D;
-import de.amr.easy.maze.alg.core.MazeAlgorithm;
+import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Maze generator derived from Boruvka's minimum spanning tree algorithm.
@@ -21,12 +20,13 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  * @see <a href="http://iss.ices.utexas.edu/?p=projects/galois/benchmarks/mst">Boruvka's
  *      Algorithm</a>
  */
-public class BoruvkaMST extends MazeAlgorithm<Void> {
+public class BoruvkaMST implements MazeGenerator {
 
+	private final OrthogonalGrid grid;
 	private Partition<Integer> forest;
 
-	public BoruvkaMST(GridGraph2D<TraversalState, Void> grid) {
-		super(grid);
+	public BoruvkaMST(OrthogonalGrid grid) {
+		this.grid = grid;
 	}
 
 	@Override

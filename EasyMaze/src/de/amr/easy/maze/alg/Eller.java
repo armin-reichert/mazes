@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import de.amr.easy.data.Partition;
-import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.GridGraph2D;
-import de.amr.easy.maze.alg.core.MazeAlgorithm;
+import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Maze generator using Eller's algorithm.
@@ -23,12 +23,14 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  *      Generation: Eller's Algorithm</a>.
  * 
  */
-public class Eller extends MazeAlgorithm<Void> {
+public class Eller implements MazeGenerator {
 
+	private final OrthogonalGrid grid;
+	private final Random rnd = new Random();
 	private final Partition<Integer> parts = new Partition<>();
 
-	public Eller(GridGraph2D<TraversalState, Void> grid) {
-		super(grid);
+	public Eller(OrthogonalGrid grid) {
+		this.grid = grid;
 	}
 
 	@Override

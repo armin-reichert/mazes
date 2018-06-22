@@ -10,7 +10,6 @@ import java.util.Optional;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
-import de.amr.demos.maze.swingapp.model.MazeGrid;
 import de.amr.demos.maze.swingapp.model.PathFinderTag;
 import de.amr.demos.maze.swingapp.model.VertexCost;
 import de.amr.easy.graph.impl.traversal.BestFirstTraversal;
@@ -19,6 +18,7 @@ import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
 import de.amr.easy.graph.impl.traversal.HillClimbing;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.util.StopWatch;
 
 /**
@@ -56,7 +56,7 @@ public class RunMazeSolverAction extends MazeDemoAction {
 	}
 
 	private void runBFSSolverAnimation(AlgorithmInfo solver) {
-		MazeGrid grid = app.model.getGrid();
+		OrthogonalGrid grid = app.model.getGrid();
 		int src = grid.cell(app.model.getPathFinderSource());
 		int tgt = grid.cell(app.model.getPathFinderTarget());
 
@@ -82,7 +82,7 @@ public class RunMazeSolverAction extends MazeDemoAction {
 	}
 
 	private void runDFSSolverAnimation(AlgorithmInfo solver) {
-		MazeGrid grid = app.model.getGrid();
+		OrthogonalGrid grid = app.model.getGrid();
 		int src = grid.cell(app.model.getPathFinderSource());
 		int tgt = grid.cell(app.model.getPathFinderTarget());
 
@@ -103,7 +103,7 @@ public class RunMazeSolverAction extends MazeDemoAction {
 		}
 	}
 
-	private Optional<VertexCost> getHeuristics(AlgorithmInfo solver, MazeGrid grid, int tgt) {
+	private Optional<VertexCost> getHeuristics(AlgorithmInfo solver, OrthogonalGrid grid, int tgt) {
 		VertexCost h = null;
 		if (solver.isTagged(CHEBYSHEV)) {
 			h = new VertexCost("Chebyshev", v -> grid.chebyshev(v, tgt));

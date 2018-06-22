@@ -3,11 +3,11 @@ package de.amr.easy.maze.alg.mst;
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 
 import java.util.PriorityQueue;
+import java.util.Random;
 
 import de.amr.easy.graph.api.WeightedEdge;
-import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.GridGraph2D;
-import de.amr.easy.maze.alg.core.MazeAlgorithm;
+import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Maze generator based on Prim's minimum spanning tree algorithm with random edge weights.
@@ -18,12 +18,14 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  *      Generation: Prim's Algorithm</a>
  * @see <a href="https://en.wikipedia.org/wiki/Prim%27s_algorithm">Wikipedia: Prim's Algorithm</a>
  */
-public class PrimMST extends MazeAlgorithm<Void> {
+public class PrimMST implements MazeGenerator {
 
+	private final OrthogonalGrid grid;
 	private final PriorityQueue<WeightedEdge<Integer>> cut = new PriorityQueue<>();
+	private final Random rnd = new Random();
 
-	public PrimMST(GridGraph2D<TraversalState, Void> grid) {
-		super(grid);
+	public PrimMST(OrthogonalGrid grid) {
+		this.grid = grid;
 	}
 
 	@Override

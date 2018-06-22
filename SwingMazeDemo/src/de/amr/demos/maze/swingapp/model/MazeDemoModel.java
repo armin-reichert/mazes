@@ -30,6 +30,7 @@ import de.amr.easy.maze.alg.HuntAndKill;
 import de.amr.easy.maze.alg.HuntAndKillRandom;
 import de.amr.easy.maze.alg.RecursiveDivision;
 import de.amr.easy.maze.alg.Sidewinder;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.mst.BoruvkaMST;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 import de.amr.easy.maze.alg.mst.PrimMST;
@@ -135,7 +136,7 @@ public class MazeDemoModel {
 		return Arrays.stream(algorithms).filter(alg -> alg != null).filter(filter).findFirst();
 	}
 
-	private MazeGrid grid;
+	private OrthogonalGrid grid;
 	private int[] gridCellSizes;
 	private int gridCellSize;
 	private int passageWidthPercentage;
@@ -199,11 +200,11 @@ public class MazeDemoModel {
 		this.hidingControlsWhenRunning = hidingControlsWhenRunning;
 	}
 
-	public MazeGrid getGrid() {
+	public OrthogonalGrid getGrid() {
 		return grid;
 	}
 
-	public void setGrid(MazeGrid grid) {
+	public void setGrid(OrthogonalGrid grid) {
 		this.grid = grid;
 	}
 
