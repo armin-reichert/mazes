@@ -16,10 +16,12 @@ I also found new ways of generating mazes, for example a modification of Eller's
 To illustrate, the maze generator based on Kruskal's minimum-spanning-tree algorithm looks like this:
 
 ```java
-public class KruskalMST extends MazeAlgorithm<Void> {
+public class KruskalMST implements MazeGenerator {
 
-	public KruskalMST(GridGraph2D<TraversalState, Void> grid) {
-		super(grid);
+	private final OrthogonalGrid grid;
+
+	public KruskalMST(OrthogonalGrid grid) {
+		this.grid = grid;
 	}
 
 	@Override
