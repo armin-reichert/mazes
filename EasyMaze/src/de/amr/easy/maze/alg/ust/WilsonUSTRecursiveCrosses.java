@@ -2,7 +2,6 @@ package de.amr.easy.maze.alg.ust;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.iterators.traversals.RecursiveCrosses;
@@ -14,7 +13,7 @@ import de.amr.easy.grid.iterators.traversals.RecursiveCrosses;
  */
 public class WilsonUSTRecursiveCrosses extends WilsonUST {
 
-	public WilsonUSTRecursiveCrosses(GridGraph2D<TraversalState, SimpleEdge> grid) {
+	public WilsonUSTRecursiveCrosses(GridGraph2D<TraversalState, Void> grid) {
 		super(grid);
 	}
 

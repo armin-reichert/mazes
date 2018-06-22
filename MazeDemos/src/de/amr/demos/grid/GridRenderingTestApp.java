@@ -12,7 +12,7 @@ import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.util.StopWatch;
 
-public class GridRenderingTestApp extends SwingGridSampleApp<SimpleEdge> {
+public class GridRenderingTestApp extends SwingGridSampleApp<Void> {
 
 	public static void main(String[] args) {
 		launch(new GridRenderingTestApp());

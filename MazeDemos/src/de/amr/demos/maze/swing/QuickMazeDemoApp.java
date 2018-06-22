@@ -24,23 +24,23 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  * 
  * @author Armin Reichert
  */
-public class QuickMazeDemoApp<E extends Edge> extends SwingGridSampleApp<E> {
+public class QuickMazeDemoApp<E> extends SwingGridSampleApp<E> {
 
-	public static void launch(Class<? extends MazeAlgorithm> algorithmClass) {
+	public static void launch(Class<? extends MazeAlgorithm<?>> algorithmClass) {
 		QuickMazeDemoApp<?> app = new QuickMazeDemoApp<>(algorithmClass.getSimpleName(), algorithmClass, SimpleEdge::new);
 		SwingGridSampleApp.launch(app);
 	}
 
-	private final Class<? extends MazeAlgorithm> algorithmClass;
+	private final Class<? extends MazeAlgorithm<?>> algorithmClass;
 
-	public QuickMazeDemoApp(String appName, Class<? extends MazeAlgorithm> algorithmClass,
-			BiFunction<Integer, Integer, E> fnEdgeFactory) {
+	public QuickMazeDemoApp(String appName, Class<? extends MazeAlgorithm<?>> algorithmClass,
+			BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory) {
 		super(128, Top4.get(), fnEdgeFactory);
 		this.algorithmClass = algorithmClass;
 		setAppName(appName);
 	}
 
-	private MazeAlgorithm createAlgorithm() {
+	private MazeAlgorithm<?> createAlgorithm() {
 		try {
 			return algorithmClass.getConstructor(GridGraph2D.class).newInstance(grid);
 		} catch (Exception x) {

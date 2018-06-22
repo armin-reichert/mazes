@@ -33,7 +33,7 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  * 
  * @author Armin Reichert
  */
-public class EllerInsideOut extends MazeAlgorithm {
+public class EllerInsideOut extends MazeAlgorithm<Void> {
 
 	private final GridGraph<?, ?> squareGrid;
 	private final Partition<Integer> mazeParts = new Partition<>();
@@ -43,7 +43,7 @@ public class EllerInsideOut extends MazeAlgorithm {
 	private final int offsetX;
 	private final int offsetY;
 
-	public EllerInsideOut(GridGraph2D<TraversalState, SimpleEdge> grid) {
+	public EllerInsideOut(GridGraph2D<TraversalState, Void> grid) {
 		super(grid);
 		int n = max(grid.numCols(), grid.numRows());
 		offsetX = (n - grid.numCols()) / 2;

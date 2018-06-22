@@ -8,7 +8,7 @@ import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.maze.alg.mst.ReverseDeleteBFSMST;
 
-public class ReverseDeleteBFSApp extends SwingGridSampleApp<SimpleEdge> {
+public class ReverseDeleteBFSApp extends SwingGridSampleApp<Void> {
 
 	public static void main(String[] args) {
 		launch(new ReverseDeleteBFSApp());

@@ -17,7 +17,7 @@ import de.amr.easy.grid.impl.Top4;
  * 
  * @author Armin Reichert
  */
-public class MooreCurveApp extends SwingGridSampleApp<SimpleEdge> {
+public class MooreCurveApp extends SwingGridSampleApp<Void> {
 
 	public static void main(String[] args) {
 		launch(new MooreCurveApp());

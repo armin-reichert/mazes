@@ -13,7 +13,7 @@ import de.amr.easy.grid.impl.Top4;
 
 public class EmptyGridTests {
 
-	private GridGraph<Void, SimpleEdge> grid;
+	private GridGraph<Void, Void> grid;
 
 	@Before
 	public void setUp() {

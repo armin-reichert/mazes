@@ -36,7 +36,7 @@ public class DepthFirstSearchApp {
 		EventQueue.invokeLater(DepthFirstSearchApp::new);
 	}
 
-	private GridGraph<TraversalState, SimpleEdge> grid;
+	private GridGraph<TraversalState, Void> grid;
 	private Iterable<Integer> solution;
 	private DrawingArea canvas;
 	private ConfigurableGridRenderer renderer;

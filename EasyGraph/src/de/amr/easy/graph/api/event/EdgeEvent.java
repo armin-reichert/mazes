@@ -1,13 +1,16 @@
 package de.amr.easy.graph.api.event;
 
-import de.amr.easy.graph.api.Edge;
-
 /**
  * Event for edge related changes of a graph.
  * 
  * @author Armin Reichert
+ * 
+ * @param <V>
+ *          vertex label type
+ * @param <E>
+ *          edge label type
  */
-public class EdgeEvent<V,E extends Edge> extends GraphEvent<V,E> {
+public class EdgeEvent<V, E> extends GraphEvent<V, E> {
 
 	private final int either;
 	private final int other;

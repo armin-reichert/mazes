@@ -1,16 +1,16 @@
 package de.amr.easy.graph.api.event;
 
-import de.amr.easy.graph.api.Edge;
-
 /**
  * Observer interface for graph operations.
  * 
  * @author Armin Reichert
  * 
  * @param <V>
- *          vertex type
+ *          vertex label type
+ * @param <E>
+ *          edge label type
  */
-public interface GraphObserver<V, E extends Edge> {
+public interface GraphObserver<V, E> {
 
 	/**
 	 * Called when a vertex has changed.

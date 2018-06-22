@@ -26,7 +26,7 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 	private final int[] walkStartCells;
 	private int i;
 
-	public WilsonUSTPeanoCurve(GridGraph2D<TraversalState, SimpleEdge> grid) {
+	public WilsonUSTPeanoCurve(GridGraph2D<TraversalState, Void> grid) {
 		super(grid);
 		walkStartCells = new int[grid.numVertices()];
 		int n = nextPow(3, max(grid.numCols(), grid.numRows()));

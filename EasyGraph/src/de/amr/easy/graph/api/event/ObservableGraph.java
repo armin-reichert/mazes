@@ -1,17 +1,16 @@
 package de.amr.easy.graph.api.event;
 
-import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
 
 /**
  * A graph whose operations can be observed.
  * 
  * @param <V>
- *          vertex type
+ *          vertex label type
  * @param <E>
- *          edge type
+ *          edge label type
  */
-public interface ObservableGraph<V, E extends Edge> extends Graph<V, E> {
+public interface ObservableGraph<V, E> extends Graph<V, E> {
 
 	/**
 	 * Adds the given observer to this graph.

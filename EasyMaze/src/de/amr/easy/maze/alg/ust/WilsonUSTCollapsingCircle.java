@@ -3,7 +3,6 @@ package de.amr.easy.maze.alg.ust;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static java.lang.Math.max;
 
-import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.iterators.shapes.Circle;
@@ -15,7 +14,7 @@ import de.amr.easy.grid.iterators.shapes.Circle;
  */
 public class WilsonUSTCollapsingCircle extends WilsonUST {
 
-	public WilsonUSTCollapsingCircle(GridGraph2D<TraversalState, SimpleEdge> grid) {
+	public WilsonUSTCollapsingCircle(GridGraph2D<TraversalState, Void> grid) {
 		super(grid);
 	}
 

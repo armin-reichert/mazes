@@ -4,7 +4,6 @@ import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 
 import java.util.PriorityQueue;
 
-import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.api.GridGraph2D;
@@ -19,11 +18,11 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  *      Generation: Prim's Algorithm</a>
  * @see <a href="https://en.wikipedia.org/wiki/Prim%27s_algorithm">Wikipedia: Prim's Algorithm</a>
  */
-public class PrimMST extends MazeAlgorithm {
+public class PrimMST extends MazeAlgorithm<Void> {
 
 	private final PriorityQueue<WeightedEdge<Integer>> cut = new PriorityQueue<>();
 
-	public PrimMST(GridGraph2D<TraversalState, SimpleEdge> grid) {
+	public PrimMST(GridGraph2D<TraversalState, Void> grid) {
 		super(grid);
 	}
 

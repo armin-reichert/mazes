@@ -20,11 +20,11 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  * @see <a href="http://iss.ices.utexas.edu/?p=projects/galois/benchmarks/mst">Boruvka's
  *      Algorithm</a>
  */
-public class BoruvkaMST extends MazeAlgorithm {
+public class BoruvkaMST extends MazeAlgorithm<Void> {
 
 	private Partition<Integer> forest;
 
-	public BoruvkaMST(GridGraph2D<TraversalState, SimpleEdge> grid) {
+	public BoruvkaMST(GridGraph2D<TraversalState, Void> grid) {
 		super(grid);
 	}
 
@@ -38,7 +38,7 @@ public class BoruvkaMST extends MazeAlgorithm {
 		}
 	}
 
-	private void addEdge(Edge edge) {
+	private void addEdge(Edge<Void> edge) {
 		int u = edge.either(), v = edge.other();
 		if (forest.find(u) != forest.find(v)) {
 			addTreeEdge(u, v);
@@ -46,12 +46,12 @@ public class BoruvkaMST extends MazeAlgorithm {
 		}
 	}
 
-	private Optional<Edge> findCombiningEdge(Partition<Integer>.Set tree) {
+	private Optional<Edge<Void>> findCombiningEdge(Partition<Integer>.Set tree) {
 		return permute(tree.elements()).flatMap(this::combiningEdges).findFirst();
 	}
 
-	private Stream<Edge> combiningEdges(int cell) {
+	private Stream<Edge<Void>> combiningEdges(int cell) {
 		return permute(grid.neighbors(cell)).filter(neighbor -> forest.find(cell) != forest.find(neighbor))
-				.mapToObj(neighbor -> new SimpleEdge(cell, neighbor));
+				.mapToObj(neighbor -> new SimpleEdge<>(cell, neighbor));
 	}
 }

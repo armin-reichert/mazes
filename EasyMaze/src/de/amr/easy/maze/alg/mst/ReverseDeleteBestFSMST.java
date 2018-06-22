@@ -1,6 +1,5 @@
 package de.amr.easy.maze.alg.mst;
 
-import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.graph.impl.traversal.BestFirstTraversal;
 import de.amr.easy.grid.api.GridGraph2D;
@@ -14,7 +13,7 @@ import de.amr.easy.grid.api.GridGraph2D;
  */
 public class ReverseDeleteBestFSMST extends ReverseDeleteMST {
 
-	public ReverseDeleteBestFSMST(GridGraph2D<TraversalState, SimpleEdge> grid) {
+	public ReverseDeleteBestFSMST(GridGraph2D<TraversalState, Void> grid) {
 		super(grid);
 	}
 

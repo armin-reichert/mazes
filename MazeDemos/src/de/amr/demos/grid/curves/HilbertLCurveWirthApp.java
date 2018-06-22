@@ -12,7 +12,7 @@ import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.grid.curves.HilbertLCurveWirth;
 import de.amr.easy.grid.impl.Top4;
 
-public class HilbertLCurveWirthApp extends SwingGridSampleApp<SimpleEdge> {
+public class HilbertLCurveWirthApp extends SwingGridSampleApp<Void> {
 
 	public static void main(String[] args) {
 		launch(new HilbertLCurveWirthApp());

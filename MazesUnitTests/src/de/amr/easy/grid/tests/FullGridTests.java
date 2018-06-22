@@ -22,7 +22,7 @@ public class FullGridTests {
 	private static final int WIDTH = 15;
 	private static final int HEIGHT = 10;
 
-	private GridGraph<Void, SimpleEdge> grid;
+	private GridGraph<Void, Void> grid;
 
 	@Before
 	public void setUp() {

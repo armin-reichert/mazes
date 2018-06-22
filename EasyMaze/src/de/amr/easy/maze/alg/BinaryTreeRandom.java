@@ -4,7 +4,6 @@ import static de.amr.easy.util.StreamUtils.permute;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.api.GridGraph2D;
 
@@ -15,7 +14,7 @@ import de.amr.easy.grid.api.GridGraph2D;
  */
 public class BinaryTreeRandom extends BinaryTree {
 
-	public BinaryTreeRandom(GridGraph2D<TraversalState, SimpleEdge> grid) {
+	public BinaryTreeRandom(GridGraph2D<TraversalState, Void> grid) {
 		super(grid);
 	}
 

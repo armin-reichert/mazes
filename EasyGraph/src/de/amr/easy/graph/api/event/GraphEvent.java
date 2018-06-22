@@ -1,18 +1,16 @@
 package de.amr.easy.graph.api.event;
 
-import de.amr.easy.graph.api.Edge;
-
 /**
  * Graph event base class.
  * 
  * @author Armin Reichert
  *
  * @param <V>
- *          vertex type
+ *          vertex label type
  * @param <E>
- *          edge type
+ *          edge label type
  */
-public class GraphEvent<V, E extends Edge> {
+public class GraphEvent<V, E> {
 
 	protected final ObservableGraph<V, E> graph;
 

@@ -26,15 +26,15 @@ import de.amr.easy.graph.api.VertexMap;
  * @param <E>
  *          edge type
  */
-public class DefaultGraph<V, E extends Edge> implements Graph<V, E>, VertexMap<V> {
+public class DefaultGraph<V, E> implements Graph<V, E>, VertexMap<V> {
 
 	protected final VertexMap<V> vertexMap = new SparseVertexMap<>();
-	protected final BiFunction<Integer, Integer, E> fnEdgeFactory;
+	protected final BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory;
 	protected final Set<Integer> vertexSet = new HashSet<>();
-	protected final Map<Integer, Set<E>> adjEdges = new HashMap<>();
+	protected final Map<Integer, Set<Edge<E>>> adjEdges = new HashMap<>();
 	protected int numEdges; // number of undirected edges
 
-	public DefaultGraph(BiFunction<Integer, Integer, E> fnEdgeFactory) {
+	public DefaultGraph(BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory) {
 		this.fnEdgeFactory = fnEdgeFactory;
 	}
 
@@ -71,7 +71,7 @@ public class DefaultGraph<V, E extends Edge> implements Graph<V, E>, VertexMap<V
 		vertexSet.add(v);
 		adjEdges.put(v, new HashSet<>());
 	}
-	
+
 	@Override
 	public void removeVertex(int v) {
 		if (!vertexSet.contains(v)) {
@@ -85,17 +85,17 @@ public class DefaultGraph<V, E extends Edge> implements Graph<V, E>, VertexMap<V
 	public void addEdge(int v, int w) {
 		assertVertexExists(v);
 		assertVertexExists(w);
-		E edge = fnEdgeFactory.apply(v, w);
+		Edge<E> edge = fnEdgeFactory.apply(v, w);
 		adjEdges.get(v).add(edge);
 		adjEdges.get(w).add(edge);
 		numEdges += 1;
 	}
 
 	@Override
-	public Optional<E> edge(int v, int w) {
+	public Optional<Edge<E>> edge(int v, int w) {
 		assertVertexExists(v);
 		assertVertexExists(w);
-		for (E edge : adjEdges.get(v)) {
+		for (Edge<E> edge : adjEdges.get(v)) {
 			if (w == edge.either() || w == edge.other()) {
 				return Optional.of(edge);
 			}
@@ -127,7 +127,7 @@ public class DefaultGraph<V, E extends Edge> implements Graph<V, E>, VertexMap<V
 	public boolean hasEdge(int v, int w) {
 		assertVertexExists(v);
 		assertVertexExists(w);
-		for (E edge : adjEdges.get(v)) {
+		for (Edge<E> edge : adjEdges.get(v)) {
 			if (w == edge.either() || w == edge.other()) {
 				return true;
 			}
@@ -145,10 +145,10 @@ public class DefaultGraph<V, E extends Edge> implements Graph<V, E>, VertexMap<V
 		return vertexSet.size();
 	}
 
-	private Set<E> createEdgeSet() {
-		Set<E> edges = new HashSet<>();
+	private Set<Edge<E>> createEdgeSet() {
+		Set<Edge<E>> edges = new HashSet<>();
 		for (int v : vertexSet) {
-			for (E edge : adjEdges.get(v)) {
+			for (Edge<E> edge : adjEdges.get(v)) {
 				edges.add(edge);
 			}
 		}
@@ -156,7 +156,7 @@ public class DefaultGraph<V, E extends Edge> implements Graph<V, E>, VertexMap<V
 	}
 
 	@Override
-	public Stream<E> edges() {
+	public Stream<Edge<E>> edges() {
 		return createEdgeSet().stream(); // TODO more efficient way possible?
 	}
 
@@ -175,7 +175,7 @@ public class DefaultGraph<V, E extends Edge> implements Graph<V, E>, VertexMap<V
 	public IntStream adj(int v) {
 		assertVertexExists(v);
 		List<Integer> result = new ArrayList<>();
-		for (E e : adjEdges.get(v)) {
+		for (Edge<E> e : adjEdges.get(v)) {
 			if (e.either() == v) {
 				result.add(e.other());
 			} else {
@@ -193,7 +193,7 @@ public class DefaultGraph<V, E extends Edge> implements Graph<V, E>, VertexMap<V
 		for (int v : vertexSet) {
 			s.append(v).append("\n");
 		}
-		for (E e : createEdgeSet()) {
+		for (Edge<E> e : createEdgeSet()) {
 			s.append(e.either()).append(" ").append(e.other()).append("\n");
 		}
 		return s.toString();

@@ -12,7 +12,7 @@ import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.grid.curves.PeanoCurve;
 import de.amr.easy.grid.impl.Top4;
 
-public class PeanoCurveApp extends SwingGridSampleApp<SimpleEdge> {
+public class PeanoCurveApp extends SwingGridSampleApp<Void> {
 
 	public static void main(String[] args) {
 		launch(new PeanoCurveApp());

@@ -16,13 +16,13 @@ import de.amr.easy.maze.alg.mst.KruskalMST;
 public class LargeMazesTests {
 
 	private void test_Kruskal(int cols, int rows) {
-		GridGraph2D<TraversalState, SimpleEdge> grid = new GridGraph<>(cols, rows, Top4.get(), SimpleEdge::new);
+		GridGraph2D<TraversalState, Void> grid = new GridGraph<>(cols, rows, Top4.get(), SimpleEdge::new);
 		grid.setDefaultVertex(UNVISITED);
 		new KruskalMST(grid).run(-1);
 	}
 
 	private void test_RecursiveDivision(int cols, int rows) {
-		GridGraph2D<TraversalState, SimpleEdge> grid = new GridGraph<>(cols, rows, Top4.get(), SimpleEdge::new);
+		GridGraph2D<TraversalState, Void> grid = new GridGraph<>(cols, rows, Top4.get(), SimpleEdge::new);
 		grid.setDefaultVertex(COMPLETED);
 		new RecursiveDivision(grid).run(-1);
 	}

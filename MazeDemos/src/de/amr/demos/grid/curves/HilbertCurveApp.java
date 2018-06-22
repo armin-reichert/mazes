@@ -26,12 +26,12 @@ import de.amr.easy.grid.curves.HilbertCurve;
 import de.amr.easy.grid.impl.Top4;
 
 /**
- * Creates Hilbert curves of different sizes and shows an animation of the creation and
- * a flood-fill of the underlying graph.
+ * Creates Hilbert curves of different sizes and shows an animation of the creation and a flood-fill
+ * of the underlying graph.
  * 
  * @author Armin Reichert
  */
-public class HilbertCurveApp extends SwingGridSampleApp<SimpleEdge> {
+public class HilbertCurveApp extends SwingGridSampleApp<Void> {
 
 	private static final EnumMap<GridPosition, List<Integer>> ORIENTATION = new EnumMap<>(GridPosition.class);
 

@@ -64,7 +64,7 @@ public class MazeGeneratorTests {
 	private static final int WIDTH = 100;
 	private static final int HEIGHT = 100;
 
-	private GridGraph<TraversalState, SimpleEdge> grid;
+	private GridGraph<TraversalState, Void> grid;
 	private StopWatch watch;
 
 	private static List<String> results = new ArrayList<>();
@@ -72,7 +72,7 @@ public class MazeGeneratorTests {
 	@BeforeClass
 	public static void beforeAllTests() {
 		// warm-up
-		GridGraph<TraversalState, SimpleEdge> dummy = new GridGraph<>(WIDTH, HEIGHT, Top4.get(), SimpleEdge::new);
+		GridGraph<TraversalState, Void> dummy = new GridGraph<>(WIDTH, HEIGHT, Top4.get(), SimpleEdge::new);
 		dummy.setDefaultVertex(UNVISITED);
 		new RandomBFS(dummy).run(0);
 	}
@@ -96,7 +96,7 @@ public class MazeGeneratorTests {
 		assertFalse(GraphUtils.containsCycle(grid));
 	}
 
-	private void runTest(MazeAlgorithm algorithm) {
+	private void runTest(MazeAlgorithm<Void> algorithm) {
 		watch.measure(() -> algorithm.run(grid.cell(CENTER)));
 		results.add(format("%-30s (%6d cells): %.3f sec", algorithm.getClass().getSimpleName(), grid.numVertices(),
 				watch.getSeconds()));

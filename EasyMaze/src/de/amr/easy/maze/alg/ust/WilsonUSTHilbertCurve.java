@@ -27,7 +27,7 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 
 	private final int[] walkStartCells;
 
-	public WilsonUSTHilbertCurve(GridGraph2D<TraversalState, SimpleEdge> grid) {
+	public WilsonUSTHilbertCurve(GridGraph2D<TraversalState, Void> grid) {
 		super(grid);
 		walkStartCells = new int[grid.numVertices()];
 		int n = nextPow(2, max(grid.numCols(), grid.numRows()));

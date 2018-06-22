@@ -8,7 +8,7 @@ import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.iterators.traversals.RecursiveCrosses;
 
-public class RecursiveCrossesApp extends SwingGridSampleApp<SimpleEdge> {
+public class RecursiveCrossesApp extends SwingGridSampleApp<Void> {
 
 	public static void main(String[] args) {
 		launch(new RecursiveCrossesApp());

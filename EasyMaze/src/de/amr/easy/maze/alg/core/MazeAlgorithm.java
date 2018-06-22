@@ -7,7 +7,6 @@ import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
 import java.util.Random;
 import java.util.function.IntPredicate;
 
-import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.api.GridGraph2D;
 
@@ -15,11 +14,14 @@ import de.amr.easy.grid.api.GridGraph2D;
  * Abstract base class for maze generation algorithms.
  * 
  * @author Armin Reichert
+ * 
+ * @param <E>
+ *          edge label type
  */
-public abstract class MazeAlgorithm {
+public abstract class MazeAlgorithm<E> {
 
 	/** The grid this algorithm operates on. */
-	protected final GridGraph2D<TraversalState, SimpleEdge> grid;
+	protected final GridGraph2D<TraversalState, E> grid;
 
 	/** A random number generator. */
 	protected final Random rnd;
@@ -34,7 +36,7 @@ public abstract class MazeAlgorithm {
 	 * @param grid
 	 *          the grid this generator works on
 	 */
-	public MazeAlgorithm(GridGraph2D<TraversalState, SimpleEdge> grid) {
+	public MazeAlgorithm(GridGraph2D<TraversalState, E> grid) {
 		this.grid = grid;
 		this.rnd = new Random();
 		this.isCellUnvisited = cell -> grid.get(cell) == UNVISITED;

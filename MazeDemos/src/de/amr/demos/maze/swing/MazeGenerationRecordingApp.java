@@ -94,7 +94,7 @@ public class MazeGenerationRecordingApp {
 	/*@formatter:on*/
 	};
 
-	private ObservableGridGraph<TraversalState, SimpleEdge> grid;
+	private ObservableGridGraph<TraversalState, Double> grid;
 	private GridCanvas canvas;
 
 	public void run(int numCols, int numRows, int cellSize, int scanRate, int delayMillis) {
@@ -104,8 +104,8 @@ public class MazeGenerationRecordingApp {
 			canvas = new GridCanvas(grid, cellSize);
 			canvas.pushRenderer(createRenderer(cellSize));
 			try {
-				MazeAlgorithm generator = (MazeAlgorithm) generatorClass
-						.getConstructor(GridGraph2D.class).newInstance(grid);
+				MazeAlgorithm<?> generator = (MazeAlgorithm<?>) generatorClass.getConstructor(GridGraph2D.class)
+						.newInstance(grid);
 				try (GifRecorder recorder = new GifRecorder(canvas.getDrawingBuffer().getType())) {
 					attachRecorderToGrid(recorder);
 					recorder.setDelayMillis(delayMillis);
@@ -141,30 +141,30 @@ public class MazeGenerationRecordingApp {
 	}
 
 	private void attachRecorderToGrid(GifRecorder recorder) {
-		grid.addGraphObserver(new GraphObserver<TraversalState, SimpleEdge>() {
+		grid.addGraphObserver(new GraphObserver<TraversalState, Double>() {
 
 			@Override
-			public void vertexChanged(VertexEvent<TraversalState, SimpleEdge> event) {
+			public void vertexChanged(VertexEvent<TraversalState, Double> event) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
-			public void graphChanged(ObservableGraph<TraversalState, SimpleEdge> graph) {
+			public void graphChanged(ObservableGraph<TraversalState, Double> graph) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
-			public void edgeRemoved(EdgeEvent<TraversalState, SimpleEdge> event) {
+			public void edgeRemoved(EdgeEvent<TraversalState, Double> event) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
-			public void edgeChanged(EdgeEvent<TraversalState, SimpleEdge> event) {
+			public void edgeChanged(EdgeEvent<TraversalState, Double> event) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
-			public void edgeAdded(EdgeEvent<TraversalState, SimpleEdge> event) {
+			public void edgeAdded(EdgeEvent<TraversalState, Double> event) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 		});

@@ -22,13 +22,18 @@ import de.amr.easy.grid.api.Topology;
  * An implementation of the {@link GridGraph2D} interface.
  * 
  * @author Armin Reichert
+ * 
+ * @param <V>
+ *          vertex label type
+ * @param <E>
+ *          edge label type
  */
-public class GridGraph<V, E extends Edge> implements GridGraph2D<V, E> {
+public class GridGraph<V, E> implements GridGraph2D<V, E> {
 
 	protected final int numCols;
 	protected final int numRows;
 	protected final int numCells;
-	protected final BiFunction<Integer, Integer, E> fnEdgeFactory;
+	protected final BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory;
 	protected Topology top;
 	protected BitSet bits;
 
@@ -100,7 +105,7 @@ public class GridGraph<V, E extends Edge> implements GridGraph2D<V, E> {
 	 * @param fnEdgeFactory
 	 *          function for creating edges of the correct type
 	 */
-	public GridGraph(int numCols, int numRows, Topology top, BiFunction<Integer, Integer, E> fnEdgeFactory) {
+	public GridGraph(int numCols, int numRows, Topology top, BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory) {
 		if (numCols < 0) {
 			throw new IllegalArgumentException("Illegal number of columns: " + numCols);
 		}
@@ -137,8 +142,8 @@ public class GridGraph<V, E extends Edge> implements GridGraph2D<V, E> {
 	}
 
 	@Override
-	public Stream<E> edges() {
-		List<E> edgeList = new ArrayList<>();
+	public Stream<Edge<E>> edges() {
+		List<Edge<E>> edgeList = new ArrayList<>();
 		/*@formatter:off*/
 		vertices().forEach(cell -> {
 			top.dirs()
@@ -169,7 +174,7 @@ public class GridGraph<V, E extends Edge> implements GridGraph2D<V, E> {
 	}
 
 	@Override
-	public Optional<E> edge(int u, int v) {
+	public Optional<Edge<E>> edge(int u, int v) {
 		checkCell(u);
 		checkCell(v);
 		return hasEdge(u, v) ? Optional.of(fnEdgeFactory.apply(u, v)) : Optional.empty();

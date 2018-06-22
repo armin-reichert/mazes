@@ -7,7 +7,6 @@ import java.util.BitSet;
 import java.util.OptionalInt;
 import java.util.function.IntPredicate;
 
-import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.maze.alg.core.MazeAlgorithm;
@@ -21,13 +20,13 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  *      "http://weblog.jamisbuck.org/2011/1/24/maze-generation-hunt-and-kill-algorithm.html"> Maze
  *      Generation: Hunt-and-Kill algorithm</a>
  */
-public class HuntAndKill extends MazeAlgorithm {
+public class HuntAndKill extends MazeAlgorithm<Void> {
 
 	protected final IntPredicate isAlive = isCellUnvisited;
 	protected final IntPredicate isDead = isAlive.negate();
 	protected final BitSet targets;
 
-	public HuntAndKill(GridGraph2D<TraversalState, SimpleEdge> grid) {
+	public HuntAndKill(GridGraph2D<TraversalState, Void> grid) {
 		super(grid);
 		targets = new BitSet(grid.numVertices());
 	}

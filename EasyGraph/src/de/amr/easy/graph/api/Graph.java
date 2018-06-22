@@ -10,11 +10,11 @@ import java.util.stream.Stream;
  * @author Armin Reichert
  *
  * @param <V>
- *          vertex type
+ *          vertex label type
  * @param <E>
- *          edge type
+ *          edge label type
  */
-public interface Graph<V, E extends Edge> {
+public interface Graph<V, E> {
 
 	/**
 	 * @return stream of the vertex indices of this graph
@@ -31,7 +31,7 @@ public interface Graph<V, E extends Edge> {
 	/**
 	 * @return stream of the edges of this graph
 	 */
-	Stream<E> edges();
+	Stream<Edge<E>> edges();
 
 	/**
 	 * @return the number of edges of this graph
@@ -73,7 +73,7 @@ public interface Graph<V, E extends Edge> {
 	 *          a vertex
 	 * @return the edge between the vertices if it exists
 	 */
-	Optional<E> edge(int v, int w);
+	Optional<Edge<E>> edge(int v, int w);
 
 	/**
 	 * Removes the edge between the given vertices from this graph.
@@ -89,7 +89,7 @@ public interface Graph<V, E extends Edge> {
 	 * @param edge
 	 *          an edge
 	 */
-	default void removeEdge(E edge) {
+	default void removeEdge(Edge<E> edge) {
 		removeEdge(edge.either(), edge.other());
 	}
 

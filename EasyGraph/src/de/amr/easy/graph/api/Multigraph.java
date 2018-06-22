@@ -9,9 +9,9 @@ import java.util.stream.Stream;
  * @author Armin Reichert
  * 
  * @param <E>
- *          edge type
+ *          edge label type
  */
-public interface Multigraph<E extends Edge> {
+public interface Multigraph<E> {
 
 	/**
 	 * @return a stream of the vertices of this graph
@@ -26,7 +26,7 @@ public interface Multigraph<E extends Edge> {
 	/**
 	 * @return a stream of the edges of this graph
 	 */
-	Stream<E> edgeStream();
+	Stream<Edge<E>> edgeStream();
 
 	/**
 	 * @return the number of edges of this graph
@@ -47,7 +47,7 @@ public interface Multigraph<E extends Edge> {
 	 * @param edge
 	 *          an edge
 	 */
-	void addEdge(E edge);
+	void addEdge(Edge<E> edge);
 
 	/**
 	 * @param v
@@ -56,7 +56,7 @@ public interface Multigraph<E extends Edge> {
 	 *          a vertex
 	 * @return the edges between the vertices if any
 	 */
-	Stream<E> edges(int v, int w);
+	Stream<Edge<E>> edges(int v, int w);
 
 	/**
 	 * Removes the edge between the given vertices.

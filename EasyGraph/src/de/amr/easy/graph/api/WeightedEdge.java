@@ -1,58 +1,38 @@
 package de.amr.easy.graph.api;
 
 /**
- * Edge with weight of some comparable type.
+ * Edge with label ("weight") of some comparable type.
  * 
  * @author Armin Reichert
  * 
  * @param <W>
  *          weight type (int, double, ...)
  */
-public class WeightedEdge<W extends Comparable<W>> extends SimpleEdge implements Comparable<WeightedEdge<W>> {
+public class WeightedEdge<W extends Comparable<W>> extends SimpleEdge<W> implements Comparable<WeightedEdge<W>> {
 
-	private W weight;
-
-	public WeightedEdge(int u, int v, W weight) {
-		super(u, v);
-		this.weight = weight;
+	public WeightedEdge(int u, int v, W w) {
+		super(u, v, w);
 	}
 
 	public WeightedEdge(int u, int v) {
 		this(u, v, null);
 	}
 
-	/**
-	 * @return the weight of this edge
-	 */
-	public W getWeight() {
-		return weight;
-	}
-
-	/**
-	 * Sets the weight of this edge.
-	 * 
-	 * @param weight
-	 *          the weight
-	 */
-	public void setWeight(W weight) {
-		this.weight = weight;
-	}
-
 	@Override
 	public int compareTo(WeightedEdge<W> other) {
-		return weight.compareTo(other.weight);
+		return label.compareTo(other.label);
 	}
 
 	@Override
 	public String toString() {
-		return String.format("[%d,%d,%s]", u, v, String.valueOf(weight));
+		return String.format("[%d,%d,%s]", u, v, String.valueOf(label));
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((weight == null) ? 0 : weight.hashCode());
+		result = prime * result + ((label == null) ? 0 : label.hashCode());
 		return result;
 	}
 
@@ -66,10 +46,10 @@ public class WeightedEdge<W extends Comparable<W>> extends SimpleEdge implements
 		if (getClass() != obj.getClass())
 			return false;
 		WeightedEdge<W> other = (WeightedEdge<W>) obj;
-		if (weight == null) {
-			if (other.weight != null)
+		if (label == null) {
+			if (other.label != null)
 				return false;
-		} else if (!weight.equals(other.weight))
+		} else if (!label.equals(other.label))
 			return false;
 		return true;
 	}

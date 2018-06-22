@@ -4,7 +4,6 @@ import static de.amr.easy.grid.api.GridPosition.CENTER;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.iterators.traversals.Spiral;
@@ -16,7 +15,7 @@ import de.amr.easy.grid.iterators.traversals.Spiral;
  */
 public class WilsonUSTExpandingSpiral extends WilsonUST {
 
-	public WilsonUSTExpandingSpiral(GridGraph2D<TraversalState, SimpleEdge> grid) {
+	public WilsonUSTExpandingSpiral(GridGraph2D<TraversalState, Void> grid) {
 		super(grid);
 	}
 

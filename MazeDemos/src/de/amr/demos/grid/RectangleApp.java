@@ -7,7 +7,7 @@ import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.iterators.shapes.Rectangle;
 import de.amr.easy.grid.iterators.traversals.ExpandingRectangle;
 
-public class RectangleApp extends SwingGridSampleApp<SimpleEdge> {
+public class RectangleApp extends SwingGridSampleApp<Void> {
 
 	public static void main(String[] args) {
 		launch(new RectangleApp());

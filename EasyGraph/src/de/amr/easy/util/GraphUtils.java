@@ -15,16 +15,18 @@ public class GraphUtils {
 	/**
 	 * Checks whether a graph contains a cycle.
 	 * 
+	 * @param <V>
+	 *          vertex label type
 	 * @param <E>
-	 *          the edge type of the graph
+	 *          edge label type
 	 * @param g
 	 *          an undirected graph
 	 * @return {@code true} if the graph contains a cycle
 	 */
-	public static <E extends Edge> boolean containsCycle(Graph<?, E> g) {
+	public static <V, E> boolean containsCycle(Graph<V, E> g) {
 		Partition<Integer> p = new Partition<>();
-		Iterable<E> edges = g.edges()::iterator;
-		for (E edge : edges) {
+		Iterable<Edge<E>> edges = g.edges()::iterator;
+		for (Edge<E> edge : edges) {
 			int u = edge.either(), v = edge.other();
 			if (p.find(u) == p.find(v)) {
 				return true;
@@ -43,8 +45,8 @@ public class GraphUtils {
 	 *          a cell
 	 * @return {@code true} if there exists a path connecting the given cells
 	 */
-	public static <E extends Edge> boolean areConnected(Graph<?, E> g, int u, int v) {
-		BreadthFirstTraversal bfs = new BreadthFirstTraversal(g);
+	public static <V, E> boolean areConnected(Graph<V, E> graph, int u, int v) {
+		BreadthFirstTraversal bfs = new BreadthFirstTraversal(graph);
 		bfs.traverseGraph(u, v);
 		return bfs.getDistance(v) != -1;
 	}

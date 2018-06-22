@@ -7,7 +7,7 @@ import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.grid.curves.SierpinskiLCurve;
 import de.amr.easy.grid.impl.Top8;
 
-public class SierpinskiLCurveApp extends SwingGridSampleApp<SimpleEdge> {
+public class SierpinskiLCurveApp extends SwingGridSampleApp<Void> {
 
 	public static void main(String[] args) {
 		launch(new SierpinskiLCurveApp());

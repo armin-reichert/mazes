@@ -114,7 +114,7 @@ public class MazeDemoFX extends Application {
 		maze = new ObservableGridGraph<>(cols, rows, Top4.get(), SimpleEdge::new);
 		maze.setDefaultVertex(UNVISITED);
 		canvas.resize((cols + 1) * cellSize, (rows + 1) * cellSize);
-		MazeAlgorithm generator = randomMazeGenerator();
+		MazeAlgorithm<?> generator = randomMazeGenerator();
 		generator.run(maze.cell(0, 0));
 		drawGrid();
 		BreadthFirstTraversal bfs = new BreadthFirstTraversal(maze);
@@ -122,10 +122,10 @@ public class MazeDemoFX extends Application {
 		drawPath(bfs.path(maze.cell(BOTTOM_RIGHT))::iterator);
 	}
 
-	private MazeAlgorithm randomMazeGenerator() {
+	private MazeAlgorithm<?> randomMazeGenerator() {
 		Class<?> generatorClass = GENERATOR_CLASSES[RAND.nextInt(GENERATOR_CLASSES.length)];
 		try {
-			return (MazeAlgorithm) generatorClass.getConstructor(GridGraph2D.class).newInstance(maze);
+			return (MazeAlgorithm<?>) generatorClass.getConstructor(GridGraph2D.class).newInstance(maze);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Could not create maze generator instance");

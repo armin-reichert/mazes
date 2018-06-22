@@ -50,7 +50,7 @@ public class CreateMazeAction extends MazeDemoAction {
 		app.model.getGrid().setEventsEnabled(false);
 		app.model.getGrid().removeEdges();
 		app.model.getGrid().setEventsEnabled(true);
-		MazeAlgorithm generator = (MazeAlgorithm) generatorInfo.getAlgorithmClass().getConstructor(GridGraph2D.class)
+		MazeAlgorithm<?> generator = (MazeAlgorithm<?>) generatorInfo.getAlgorithmClass().getConstructor(GridGraph2D.class)
 				.newInstance(app.model.getGrid());
 		if (app.model.isGenerationAnimated()) {
 			generator.run(startCell);

@@ -15,7 +15,7 @@ import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.maze.alg.ust.WilsonUSTRecursiveCrosses;
 
-public class PearlsRendererTestApp extends SwingGridSampleApp<SimpleEdge> {
+public class PearlsRendererTestApp extends SwingGridSampleApp<Void> {
 
 	public static void main(String[] args) {
 		launch(new PearlsRendererTestApp());

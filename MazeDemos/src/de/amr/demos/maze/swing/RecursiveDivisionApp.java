@@ -11,7 +11,7 @@ import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.maze.alg.RecursiveDivision;
 
-public class RecursiveDivisionApp extends SwingGridSampleApp<SimpleEdge> {
+public class RecursiveDivisionApp extends SwingGridSampleApp<Void> {
 
 	public static void main(String[] args) {
 		launch(new RecursiveDivisionApp());

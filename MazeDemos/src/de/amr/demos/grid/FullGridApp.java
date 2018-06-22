@@ -9,7 +9,7 @@ import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.impl.Top8;
 import de.amr.easy.util.StopWatch;
 
-public class FullGridApp extends SwingGridSampleApp<SimpleEdge> {
+public class FullGridApp extends SwingGridSampleApp<Void> {
 
 	public static void main(String[] args) {
 		launch(new FullGridApp());

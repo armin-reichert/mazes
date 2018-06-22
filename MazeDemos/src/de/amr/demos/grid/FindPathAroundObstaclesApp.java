@@ -22,7 +22,7 @@ import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
 import de.amr.easy.util.StopWatch;
 
-public class FindPathAroundObstaclesApp extends SwingGridSampleApp<SimpleEdge> {
+public class FindPathAroundObstaclesApp extends SwingGridSampleApp<Void> {
 
 	public static void main(String[] args) {
 		launch(new FindPathAroundObstaclesApp(800, 20));

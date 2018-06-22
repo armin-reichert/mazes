@@ -11,7 +11,7 @@ import de.amr.easy.graph.impl.DefaultGraph;
 
 public class DefaultGraphTests {
 
-	private DefaultGraph<Void, SimpleEdge> g;
+	private DefaultGraph<Void, Void> g;
 
 	@Before
 	public void setUp() {
@@ -36,19 +36,17 @@ public class DefaultGraphTests {
 	public void testRemoveVertexFromEmptyGraph() {
 		g.removeVertex(42);
 	}
-	
+
 	@Test
 	public void removeVertex() {
 		g.addVertex(42);
 		g.removeVertex(42);
 		assertEquals(0, g.numVertices());
 	}
-	
+
 	@Test(expected = IllegalStateException.class)
 	public void removeNonexistingVertex() {
 		g.removeVertex(42);
 	}
-	
-	
 
 }

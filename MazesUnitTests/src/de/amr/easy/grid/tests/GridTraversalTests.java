@@ -46,7 +46,7 @@ public class GridTraversalTests {
 		cells.forEach(cell -> assertTrue(getState.apply(cell) == expected));
 	}
 
-	private GridGraph<TraversalState, SimpleEdge> grid;
+	private GridGraph<TraversalState, Void> grid;
 
 	@Before
 	public void setUp() {

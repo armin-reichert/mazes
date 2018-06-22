@@ -25,6 +25,7 @@ import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.api.GridGraph2D;
@@ -78,7 +79,7 @@ public class MazeApp {
 		pathStart = TOP_LEFT;
 		pathTarget = BOTTOM_RIGHT;
 
-		canvas = new LayeredGridCanvas<>(1024, 768, 8, WeightedEdge::new);
+		canvas = new LayeredGridCanvas<>(1024, 768, 8, SimpleEdge::new);
 		canvas.getInputMap().put(KeyStroke.getKeyStroke("SPACE"), "stopStartTimer");
 		canvas.getActionMap().put("stopStartTimer", stopStartTimer);
 
@@ -126,8 +127,8 @@ public class MazeApp {
 		int index = new Random().nextInt(GENERATORS.length);
 		try {
 			@SuppressWarnings("unchecked")
-			Class<? extends MazeAlgorithm> generatorClass = (Class<? extends MazeAlgorithm>) GENERATORS[index];
-			MazeAlgorithm generator = generatorClass.getConstructor(GridGraph2D.class).newInstance(grid);
+			Class<? extends MazeAlgorithm<?>> generatorClass = (Class<? extends MazeAlgorithm<?>>) GENERATORS[index];
+			MazeAlgorithm<?> generator = generatorClass.getConstructor(GridGraph2D.class).newInstance(grid);
 			window.setTitle(generatorClass.getSimpleName());
 			generator.run(grid.cell(CENTER));
 		} catch (Exception e) {

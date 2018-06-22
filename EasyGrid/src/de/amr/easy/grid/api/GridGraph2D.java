@@ -6,7 +6,6 @@ import static java.lang.Math.max;
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
 
-import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.VertexMap;
 
@@ -14,13 +13,13 @@ import de.amr.easy.graph.api.VertexMap;
  * Interface for 2D grid graph.
  * 
  * @param <V>
- *          vertex type
+ *          vertex label type
  * @param <E>
- *          edge type
+ *          edge label type
  * 
  * @author Armin Reichert
  */
-public interface GridGraph2D<V, E extends Edge> extends Graph<V, E>, VertexMap<V> {
+public interface GridGraph2D<V, E> extends Graph<V, E>, VertexMap<V> {
 
 	/**
 	 * @return the number of columns (width) of the grid

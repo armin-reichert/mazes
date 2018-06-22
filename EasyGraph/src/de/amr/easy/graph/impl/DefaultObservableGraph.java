@@ -15,16 +15,16 @@ import de.amr.easy.graph.api.event.ObservableGraph;
  * @author Armin Reichert
  * 
  * @param <V>
- *          vertex type
+ *          vertex label type
  * @param <E>
- *          edge type
+ *          edge label type
  */
-public class DefaultObservableGraph<V, E extends Edge> extends DefaultGraph<V, E> implements ObservableGraph<V, E> {
+public class DefaultObservableGraph<V, E> extends DefaultGraph<V, E> implements ObservableGraph<V, E> {
 
 	private Set<GraphObserver<V, E>> observers = new HashSet<>();
 	private boolean eventsEnabled;
 
-	public DefaultObservableGraph(BiFunction<Integer, Integer, E> fnEdgeFactory) {
+	public DefaultObservableGraph(BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory) {
 		super(fnEdgeFactory);
 		eventsEnabled = true;
 	}

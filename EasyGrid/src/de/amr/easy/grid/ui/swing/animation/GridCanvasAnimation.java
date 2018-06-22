@@ -2,14 +2,13 @@ package de.amr.easy.grid.ui.swing.animation;
 
 import java.util.function.IntSupplier;
 
-import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.event.EdgeEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.ObservableGraph;
 import de.amr.easy.graph.api.event.VertexEvent;
 import de.amr.easy.grid.ui.swing.rendering.GridCanvas;
 
-public class GridCanvasAnimation<V, E extends Edge> implements GraphObserver<V, E> {
+public class GridCanvasAnimation<V, E> implements GraphObserver<V, E> {
 
 	private final GridCanvas canvas;
 	private boolean enabled;

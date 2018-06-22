@@ -9,7 +9,7 @@ import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.iterators.traversals.Spiral;
 
-public class SpiralApp extends SwingGridSampleApp<SimpleEdge> {
+public class SpiralApp extends SwingGridSampleApp<Void> {
 
 	public static void main(String[] args) {
 		launch(new SpiralApp());

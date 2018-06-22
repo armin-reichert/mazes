@@ -18,16 +18,17 @@ import de.amr.easy.grid.api.Topology;
  * @author Armin Reichert
  * 
  * @param <V>
- *          vertex type
+ *          vertex label type
  * @param <E>
- *          edge type
+ *          edge label type
  */
-public class ObservableGridGraph<V, E extends Edge> extends GridGraph<V, E> implements ObservableGridGraph2D<V, E> {
+public class ObservableGridGraph<V, E> extends GridGraph<V, E> implements ObservableGridGraph2D<V, E> {
 
 	private final Set<GraphObserver<V, E>> observers;
 	private boolean eventsEnabled;
 
-	public ObservableGridGraph(int numCols, int numRows, Topology top, BiFunction<Integer, Integer, E> fnEdgeFactory) {
+	public ObservableGridGraph(int numCols, int numRows, Topology top,
+			BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory) {
 		super(numCols, numRows, top, fnEdgeFactory);
 		observers = new HashSet<>();
 		eventsEnabled = true;
@@ -107,7 +108,7 @@ public class ObservableGridGraph<V, E extends Edge> extends GridGraph<V, E> impl
 			observers.forEach(o -> o.edgeAdded(new EdgeEvent<>(this, u, v)));
 		}
 	}
-	
+
 	protected void fireEdgeChanged(int u, int v) {
 		if (eventsEnabled) {
 			observers.forEach(o -> o.edgeChanged(new EdgeEvent<>(this, u, v)));

@@ -12,7 +12,7 @@ import de.amr.easy.grid.impl.Top4;
  * 
  * @author Armin Reichert
  */
-public class MazeGrid extends ObservableGridGraph<TraversalState, SimpleEdge> {
+public class MazeGrid extends ObservableGridGraph<TraversalState, Void> {
 
 	public MazeGrid(int numCols, int numRows) {
 		super(numCols, numRows, Top4.get(), SimpleEdge::new);

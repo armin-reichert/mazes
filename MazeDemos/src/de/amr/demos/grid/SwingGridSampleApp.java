@@ -34,8 +34,11 @@ import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
  * Base class for grid sample applications.
  * 
  * @author Armin Reichert
+ * 
+ * @param <E>
+ *          edge label type
  */
-public abstract class SwingGridSampleApp<E extends Edge> implements Runnable {
+public abstract class SwingGridSampleApp<E> implements Runnable {
 
 	public enum Style {
 		WALL_PASSAGE, PEARLS
@@ -50,7 +53,7 @@ public abstract class SwingGridSampleApp<E extends Edge> implements Runnable {
 		invokeLater(app::createAndShowUI);
 	}
 
-	private final BiFunction<Integer, Integer, E> fnEdgeFactory;
+	private final BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory;
 	protected final JFrame window = new JFrame();
 	protected final Dimension canvasSize;
 	protected String appName;
@@ -97,7 +100,7 @@ public abstract class SwingGridSampleApp<E extends Edge> implements Runnable {
 	 *          the grid cell size
 	 */
 	public SwingGridSampleApp(int canvasWidth, int canvasHeight, int cellSize, Topology top,
-			BiFunction<Integer, Integer, E> fnEdgeFactory) {
+			BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory) {
 		this.fnEdgeFactory = fnEdgeFactory;
 		fullscreen = false;
 		canvasSize = new Dimension(canvasWidth, canvasHeight);
@@ -114,7 +117,7 @@ public abstract class SwingGridSampleApp<E extends Edge> implements Runnable {
 	 * @param cellSize
 	 *          the grid cell size
 	 */
-	public SwingGridSampleApp(int cellSize, Topology top, BiFunction<Integer, Integer, E> fnEdgeFactory) {
+	public SwingGridSampleApp(int cellSize, Topology top, BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory) {
 		this.fnEdgeFactory = fnEdgeFactory;
 		fullscreen = true;
 		DisplayMode displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()

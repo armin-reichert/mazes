@@ -32,7 +32,7 @@ public class GridTests {
 	private static final int WIDTH = 100;
 	private static final int HEIGHT = 100;
 
-	private GridGraph<TraversalState, SimpleEdge> grid;
+	private GridGraph<TraversalState, Void> grid;
 
 	@Before
 	public void setUp() {

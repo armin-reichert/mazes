@@ -1,6 +1,5 @@
 package de.amr.easy.maze.alg;
 
-import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.api.GridGraph2D;
 
@@ -12,7 +11,7 @@ import de.amr.easy.grid.api.GridGraph2D;
  */
 public class HuntAndKillRandom extends HuntAndKill {
 
-	public HuntAndKillRandom(GridGraph2D<TraversalState, SimpleEdge> grid) {
+	public HuntAndKillRandom(GridGraph2D<TraversalState, Void> grid) {
 		super(grid);
 	}
 

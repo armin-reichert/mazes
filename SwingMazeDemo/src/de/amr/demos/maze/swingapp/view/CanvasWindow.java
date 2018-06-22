@@ -7,7 +7,6 @@ import javax.swing.JFrame;
 
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
-import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.ui.swing.animation.GridCanvasAnimation;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
@@ -23,7 +22,7 @@ import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
 public class CanvasWindow extends JFrame {
 
 	private GridCanvas canvas;
-	private GridCanvasAnimation<TraversalState, SimpleEdge> canvasAnimation;
+	private GridCanvasAnimation<TraversalState, Void> canvasAnimation;
 
 	public CanvasWindow() {
 		setTitle("Canvas Window");
@@ -35,7 +34,7 @@ public class CanvasWindow extends JFrame {
 		return canvas;
 	}
 
-	public GridCanvasAnimation<TraversalState, SimpleEdge> getCanvasAnimation() {
+	public GridCanvasAnimation<TraversalState, Void> getCanvasAnimation() {
 		return canvasAnimation;
 	}
 
