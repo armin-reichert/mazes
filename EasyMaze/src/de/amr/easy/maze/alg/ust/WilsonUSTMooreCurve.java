@@ -45,7 +45,7 @@ public class WilsonUSTMooreCurve extends WilsonUST {
 	}
 
 	@Override
-	protected IntStream cellStream() {
+	protected IntStream randomWalkStartCells() {
 		return stream(walkStartCells);
 	}
 }

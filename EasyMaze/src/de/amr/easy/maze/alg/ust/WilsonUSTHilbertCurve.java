@@ -45,7 +45,7 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 	}
 
 	@Override
-	protected IntStream cellStream() {
+	protected IntStream randomWalkStartCells() {
 		return stream(walkStartCells);
 	}
 }

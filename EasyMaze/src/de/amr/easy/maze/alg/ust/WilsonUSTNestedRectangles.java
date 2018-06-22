@@ -31,7 +31,7 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 	}
 
 	@Override
-	protected IntStream cellStream() {
+	protected IntStream randomWalkStartCells() {
 		Iterable<Integer> it = new Iterable<Integer>() {
 
 			@Override

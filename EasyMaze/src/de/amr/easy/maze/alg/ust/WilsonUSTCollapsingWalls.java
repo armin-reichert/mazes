@@ -19,7 +19,7 @@ public class WilsonUSTCollapsingWalls extends WilsonUST {
 	}
 
 	@Override
-	protected IntStream cellStream() {
+	protected IntStream randomWalkStartCells() {
 		return new CollapsingWalls(grid).stream();
 	}
 }

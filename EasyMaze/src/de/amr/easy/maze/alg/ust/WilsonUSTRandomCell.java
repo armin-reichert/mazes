@@ -2,6 +2,8 @@ package de.amr.easy.maze.alg.ust;
 
 import static de.amr.easy.util.StreamUtils.permute;
 
+import java.util.stream.IntStream;
+
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.api.GridGraph2D;
 
@@ -17,8 +19,7 @@ public class WilsonUSTRandomCell extends WilsonUST {
 	}
 
 	@Override
-	public void run(int start) {
-		addToTree(start);
-		permute(grid.vertices()).forEach(this::loopErasedRandomWalk);
+	protected IntStream randomWalkStartCells() {
+		return permute(grid.vertices());
 	}
 }

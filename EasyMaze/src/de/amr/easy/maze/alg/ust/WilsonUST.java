@@ -31,8 +31,8 @@ import de.amr.easy.maze.alg.core.MazeAlgorithm;
  */
 public abstract class WilsonUST extends MazeAlgorithm<Void> {
 
+	private final int[] lastWalkDir;
 	private int current;
-	private int[] lastWalkDir;
 
 	protected WilsonUST(GridGraph2D<TraversalState, Void> grid) {
 		super(grid);
@@ -41,8 +41,15 @@ public abstract class WilsonUST extends MazeAlgorithm<Void> {
 
 	@Override
 	public void run(int start) {
-		addToTree(start);
-		cellStream().forEach(this::loopErasedRandomWalk);
+		grid.set(start, COMPLETED);
+		randomWalkStartCells().forEach(this::loopErasedRandomWalk);
+	}
+
+	/**
+	 * @return stream of start cells for the random walks
+	 */
+	protected IntStream randomWalkStartCells() {
+		return grid.vertices();
 	}
 
 	/**
@@ -52,50 +59,28 @@ public abstract class WilsonUST extends MazeAlgorithm<Void> {
 	 * @param walkStart
 	 *          the start cell of the random walk
 	 */
-	protected void loopErasedRandomWalk(int walkStart) {
-		// do random walk until tree is touched
+	protected final void loopErasedRandomWalk(int walkStart) {
+		// if walk start is already in tree, do nothing
+		if (grid.get(walkStart) == COMPLETED) {
+			return;
+		}
+		// do a random walk until it touches the tree created so far
 		current = walkStart;
-		while (!inTree(current)) {
+		while (grid.get(current) != COMPLETED) {
 			int walkDir = randomElement(grid.getTopology().dirs()).getAsInt();
 			grid.neighbor(current, walkDir).ifPresent(neighbor -> {
 				lastWalkDir[current] = walkDir;
 				current = neighbor;
 			});
 		}
-		// add the (loop-erased) walk to the tree
+		// add the (loop-erased) random walk to the tree
 		current = walkStart;
-		while (!inTree(current)) {
+		while (grid.get(current) != COMPLETED) {
 			grid.neighbor(current, lastWalkDir[current]).ifPresent(neighbor -> {
-				addToTree(current);
+				grid.set(current, COMPLETED);
 				grid.addEdge(current, neighbor);
 				current = neighbor;
 			});
 		}
-	}
-
-	/**
-	 * @return iterator defining the cell order used by the maze generator
-	 */
-	protected IntStream cellStream() {
-		return grid.vertices();
-	}
-
-	/**
-	 * @param cell
-	 *          a grid cell
-	 * @return <code>true</code> if the cell belongs to the tree
-	 */
-	protected boolean inTree(int cell) {
-		return grid.get(cell) == COMPLETED;
-	}
-
-	/**
-	 * Adds a cell to the tree.
-	 * 
-	 * @param cell
-	 *          a grid cell
-	 */
-	protected void addToTree(int cell) {
-		grid.set(cell, COMPLETED);
 	}
 }

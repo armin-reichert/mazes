@@ -25,7 +25,7 @@ public class WilsonUSTLeftToRightSweep extends WilsonUST {
 	}
 
 	@Override
-	protected IntStream cellStream() {
+	protected IntStream randomWalkStartCells() {
 		return new LeftToRightSweep(grid).stream();
 	}
 }

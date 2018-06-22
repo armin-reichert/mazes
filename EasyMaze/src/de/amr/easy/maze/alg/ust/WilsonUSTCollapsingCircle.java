@@ -1,5 +1,6 @@
 package de.amr.easy.maze.alg.ust;
 
+import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static java.lang.Math.max;
 
@@ -21,7 +22,7 @@ public class WilsonUSTCollapsingCircle extends WilsonUST {
 	@Override
 	public void run(int start) {
 		start = grid.cell(CENTER);
-		addToTree(start);
+		grid.set(start, COMPLETED);
 		for (int radius = max(grid.numRows(), grid.numCols()) - 1; radius >= 0; radius--) {
 			new Circle(grid, start, radius).forEach(this::loopErasedRandomWalk);
 		}

@@ -26,7 +26,7 @@ public class WilsonUSTExpandingRectangle extends WilsonUST {
 	}
 
 	@Override
-	protected IntStream cellStream() {
+	protected IntStream randomWalkStartCells() {
 		Rectangle startRect = new Rectangle(grid, grid.cell(TOP_LEFT), 1, 1);
 		ExpandingRectangle expRect = new ExpandingRectangle(startRect);
 		expRect.setExpandHorizontally(true);
