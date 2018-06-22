@@ -54,18 +54,6 @@ public abstract class MazeAlgorithm<E> {
 	public abstract void run(int start);
 
 	/**
-	 * Can be overridden by subclasses of a maze generation algorithm to specify a different start
-	 * cell.
-	 * 
-	 * @param startCell
-	 *          the original start cell passed to the algorithm
-	 * @return the possibly modified start cell
-	 */
-	protected int customizedStartCell(int startCell) {
-		return startCell;
-	}
-
-	/**
 	 * Adds an edge to the spanning tree and marks the vertices as completed.
 	 * 
 	 * @param u

@@ -41,7 +41,6 @@ public abstract class WilsonUST extends MazeAlgorithm<Void> {
 
 	@Override
 	public void run(int start) {
-		start = customizedStartCell(start);
 		addToTree(start);
 		cellStream().forEach(this::loopErasedRandomWalk);
 	}

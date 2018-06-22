@@ -20,12 +20,12 @@ public class WilsonUSTLeftToRightSweep extends WilsonUST {
 	}
 
 	@Override
-	protected IntStream cellStream() {
-		return new LeftToRightSweep(grid).stream();
+	public void run(int start) {
+		super.run(grid.cell(TOP_LEFT));
 	}
 
 	@Override
-	protected int customizedStartCell(int start) {
-		return grid.cell(TOP_LEFT);
+	protected IntStream cellStream() {
+		return new LeftToRightSweep(grid).stream();
 	}
 }

@@ -26,8 +26,8 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 	}
 
 	@Override
-	protected int customizedStartCell(int start) {
-		return grid.cell(TOP_LEFT);
+	public void run(int start) {
+		super.run(grid.cell(TOP_LEFT));
 	}
 
 	@Override

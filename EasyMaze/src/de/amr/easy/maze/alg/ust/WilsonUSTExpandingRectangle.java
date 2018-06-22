@@ -21,6 +21,11 @@ public class WilsonUSTExpandingRectangle extends WilsonUST {
 	}
 
 	@Override
+	public void run(int start) {
+		super.run(grid.cell(TOP_LEFT));
+	}
+
+	@Override
 	protected IntStream cellStream() {
 		Rectangle startRect = new Rectangle(grid, grid.cell(TOP_LEFT), 1, 1);
 		ExpandingRectangle expRect = new ExpandingRectangle(startRect);
@@ -28,10 +33,5 @@ public class WilsonUSTExpandingRectangle extends WilsonUST {
 		expRect.setExpandVertically(true);
 		expRect.setMaxExpansion(grid.numCols() - 1);
 		return expRect.stream();
-	}
-
-	@Override
-	protected int customizedStartCell(int start) {
-		return grid.cell(TOP_LEFT);
 	}
 }

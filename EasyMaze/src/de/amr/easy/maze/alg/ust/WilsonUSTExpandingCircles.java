@@ -25,8 +25,8 @@ public class WilsonUSTExpandingCircles extends WilsonUST {
 	}
 
 	@Override
-	protected int customizedStartCell(int start) {
-		return grid.cell(CENTER);
+	public void run(int start) {
+		super.run(grid.cell(CENTER));
 	}
 
 	@Override
