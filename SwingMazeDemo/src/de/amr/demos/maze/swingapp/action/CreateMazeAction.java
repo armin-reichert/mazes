@@ -29,7 +29,6 @@ public class CreateMazeAction extends MazeDemoAction {
 
 	private void createMaze(AlgorithmInfo generatorInfo) {
 		app.enableUI(false);
-		app.getCanvas().clear();
 		app.startWorkerThread(() -> {
 			try {
 				runMazeGenerator(generatorInfo, app.model.getGrid().cell(app.model.getGenerationStart()));
@@ -50,6 +49,7 @@ public class CreateMazeAction extends MazeDemoAction {
 		app.model.getGrid().setEventsEnabled(false);
 		app.model.getGrid().removeEdges();
 		app.model.getGrid().setEventsEnabled(true);
+		app.getCanvas().clear();
 		MazeGenerator generator = (MazeGenerator) generatorInfo.getAlgorithmClass().getConstructor(OrthogonalGrid.class)
 				.newInstance(app.model.getGrid());
 		if (app.model.isGenerationAnimated()) {
