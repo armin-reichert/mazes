@@ -35,47 +35,39 @@ public class RecursiveDivision implements MazeGenerator {
 	}
 
 	/**
-	 * Applies the division step to the sub-grid defined by the given left column, top row, width and
-	 * height.
+	 * Divides the {@code (w x h)}-subgrid with top-left position {@code (x0, y0)}.
 	 * 
-	 * @param left
-	 *          left column of sub-grid
-	 * @param top
-	 *          top row of sub-grid
-	 * @param width
-	 *          number of columns of sub-grid
-	 * @param height
-	 *          number of rows of sub-grid
+	 * @param x0
+	 *          x-position of subgrid
+	 * @param y0
+	 *          y-position subgrid
+	 * @param w
+	 *          width of subgrid
+	 * @param h
+	 *          height of subgrid
 	 */
-	private void divide(int left, int top, int width, int height) {
-		if (width <= 1 && height <= 1) {
+	private void divide(int x0, int y0, int w, int h) {
+		if (w <= 1 && h <= 1) {
 			return;
 		}
-		boolean horizontalCut = (width < height) || (width == height && rnd.nextBoolean());
-		if (horizontalCut) {
-			// cut horizontally at random row from interval [top + 1, top + height - 1]
-			int cut = min(grid.numRows() - 1, (top + 1) + rnd.nextInt(height - 1));
-			int passage = rnd.nextInt(width);
-			range(0, width).filter(col -> col != passage).forEach(col -> {
-				if (grid.isValidCol(left + col) && grid.isValidRow(cut - 1)) {
-					int u = grid.cell(left + col, cut), v = grid.cell(left + col, cut - 1);
-					grid.edge(u, v).ifPresent(grid::removeEdge);
-				}
+		if (w < h || (w == h && rnd.nextBoolean())) {
+			// Build "horizontal wall" at random y from [y0 + 1, y0 + h - 1], keep random door
+			int wy = min(y0 + 1 + rnd.nextInt(h - 1), grid.numRows() - 1);
+			int door = rnd.nextInt(w);
+			range(0, w).filter(x -> x != door).map(x -> x0 + x).forEach(x -> {
+				grid.edge(grid.cell(x, wy - 1), grid.cell(x, wy)).ifPresent(grid::removeEdge);
 			});
-			divide(left, top, width, cut - top);
-			divide(left, cut, width, height - cut + top);
+			divide(x0, y0, w, wy - y0);
+			divide(x0, wy, w, h - (wy - y0));
 		} else {
-			// cut vertically at random column from interval [left + 1, left + width - 1]
-			int cut = min(grid.numCols() - 1, (left + 1) + rnd.nextInt(width - 1));
-			int passage = rnd.nextInt(height);
-			range(0, height).filter(row -> row != passage).forEach(row -> {
-				if (grid.isValidCol(cut - 1) && grid.isValidRow(top + row)) {
-					int u = grid.cell(cut, top + row), v = grid.cell(cut - 1, top + row);
-					grid.edge(u, v).ifPresent(grid::removeEdge);
-				}
+			// Build "vertical wall" at random x from [x0 + 1, x0 + w - 1], keep random door
+			int wx = min(x0 + 1 + rnd.nextInt(w - 1), grid.numCols() - 1);
+			int door = rnd.nextInt(h);
+			range(0, h).filter(y -> y != door).map(y -> y0 + y).forEach(y -> {
+				grid.edge(grid.cell(wx - 1, y), grid.cell(wx, y)).ifPresent(grid::removeEdge);
 			});
-			divide(left, top, cut - left, height);
-			divide(cut, top, width - cut + left, height);
+			divide(x0, y0, wx - x0, h);
+			divide(wx, y0, w - (wx - x0), h);
 		}
 	}
 }
