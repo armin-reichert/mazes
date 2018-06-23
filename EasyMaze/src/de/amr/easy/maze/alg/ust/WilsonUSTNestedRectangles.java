@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.IntStream;
-import java.util.stream.StreamSupport;
 
 import de.amr.easy.grid.iterators.IteratorFactory;
 import de.amr.easy.grid.iterators.shapes.Rectangle;
 import de.amr.easy.grid.iterators.traversals.ExpandingRectangle;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
+import de.amr.easy.util.StreamUtils;
 
 /**
  * Wilson's algorithm where the vertices are selected from a sequence of nested rectangles.
@@ -55,7 +55,7 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 				return IteratorFactory.sequence(IteratorFactory.sequence(expRectsArray), sweep.iterator());
 			}
 		};
-		return StreamSupport.stream(it.spliterator(), false).mapToInt(Integer::intValue); // TODO
+		return StreamUtils.toIntStream(it);
 	}
 
 	private ExpandingRectangle expandingRectangle(Rectangle startRectangle, int rate) {

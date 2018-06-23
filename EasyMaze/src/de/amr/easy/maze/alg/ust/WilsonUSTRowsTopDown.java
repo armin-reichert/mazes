@@ -6,7 +6,7 @@ import static java.util.stream.IntStream.range;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
- * Wilson's algorithm where the vertices are selected row-wise.
+ * Wilson's algorithm where the random walks start row-wise from top to bottom.
  * 
  * @author Armin Reichert
  */
@@ -19,10 +19,8 @@ public class WilsonUSTRowsTopDown extends WilsonUST {
 	@Override
 	public void run(int start) {
 		grid.set(start, COMPLETED);
-		range(0, grid.numRows()).forEach(row -> {
-			range(0, grid.numCols()).forEach(col -> {
-				loopErasedRandomWalk(grid.cell(col, row));
-			});
-		});
+		range(0, grid.numRows()).forEach(row -> range(0, grid.numCols()).forEach(col -> {
+			loopErasedRandomWalk(grid.cell(col, row));
+		}));
 	}
 }

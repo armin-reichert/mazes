@@ -7,10 +7,10 @@ import static java.lang.Math.max;
 
 import java.util.Iterator;
 import java.util.stream.IntStream;
-import java.util.stream.StreamSupport;
 
 import de.amr.easy.grid.iterators.traversals.ExpandingCircle;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
+import de.amr.easy.util.StreamUtils;
 
 /**
  * Wilson's algorithm where grid cells are selected from five expanding circles.
@@ -59,7 +59,7 @@ public class WilsonUSTExpandingCircles extends WilsonUST {
 				/*@formatter:on*/
 			}
 		};
-		return StreamSupport.stream(it.spliterator(), false).mapToInt(Integer::intValue); // TODO
+		return StreamUtils.toIntStream(it);
 	}
 
 	private Iterator<Integer> expandingCircle(int centerX, int centerY, int rmin, int rmax) {

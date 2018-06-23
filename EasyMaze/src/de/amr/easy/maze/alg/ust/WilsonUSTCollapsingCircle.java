@@ -20,10 +20,10 @@ public class WilsonUSTCollapsingCircle extends WilsonUST {
 
 	@Override
 	public void run(int start) {
-		start = grid.cell(CENTER);
-		grid.set(start, COMPLETED);
-		for (int radius = max(grid.numRows(), grid.numCols()) - 1; radius >= 0; radius--) {
-			new Circle(grid, start, radius).forEach(this::loopErasedRandomWalk);
+		int center = grid.cell(CENTER);
+		grid.set(center, COMPLETED);
+		for (int r = max(grid.numRows(), grid.numCols()) - 1; r > 0; r--) {
+			new Circle(grid, center, r).forEach(this::loopErasedRandomWalk);
 		}
 	}
 }

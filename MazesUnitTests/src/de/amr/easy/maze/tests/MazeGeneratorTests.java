@@ -200,9 +200,9 @@ public class MazeGeneratorTests {
 		runTest(new Sidewinder(grid));
 	}
 
+	// TODO why does this test fail?
 	// @Test
 	// public void testWilsonUSTCollapsingCircle() {
-	// // TODO this test fails
 	// runTest(new WilsonUSTCollapsingCircle(grid));
 	// }
 
