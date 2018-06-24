@@ -16,29 +16,25 @@ I also found new ways of generating mazes, for example a modification of Eller's
 To illustrate, the maze generator based on Kruskal's minimum-spanning-tree algorithm looks like this:
 
 ```java
-public class KruskalMST implements MazeGenerator {
+public class KruskalMST extends ObservableMazeGenerator {
 
-	private final OrthogonalGrid grid;
-
-	public KruskalMST(OrthogonalGrid grid) {
-		this.grid = grid;
+	public KruskalMST(int numCols, int numRows) {
+		super(numCols, numRows, false, UNVISITED);
 	}
 
 	@Override
-	public void run(int start) {
+	public OrthogonalGrid createMaze(int x, int y) {
 		Partition<Integer> forest = new Partition<>();
-		grid.fill();
-		Stream<Edge<Void>> edges = permute(grid.edges());
-		grid.removeEdges();
-		edges.forEach(edge -> {
+		permute(fullGrid(maze.numCols(), maze.numRows(), UNVISITED).edges()).forEach(edge -> {
 			int u = edge.either(), v = edge.other();
 			if (forest.find(u) != forest.find(v)) {
-				grid.addEdge(u, v);
-				grid.set(u, COMPLETED);
-				grid.set(v, COMPLETED);
+				maze.addEdge(u, v);
+				maze.set(u, COMPLETED);
+				maze.set(v, COMPLETED);
 				forest.union(u, v);
 			}
 		});
+		return maze;
 	}
 }
 ```
