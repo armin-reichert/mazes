@@ -19,7 +19,7 @@ public class ExpandingCircleApp extends SwingGridSampleApp {
 
 	@Override
 	public void run() {
-		int n = min(grid.numCols() / 2, grid.numRows() / 2);
-		new ExpandingCircle(grid, grid.cell(CENTER), 0, n).forEach(cell -> grid.set(cell, COMPLETED));
+		int n = min(getGrid().numCols() / 2, getGrid().numRows() / 2);
+		new ExpandingCircle(getGrid(), getGrid().cell(CENTER), 0, n).forEach(cell -> getGrid().set(cell, COMPLETED));
 	}
 }

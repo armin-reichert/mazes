@@ -1,7 +1,5 @@
 package de.amr.easy.maze.tests;
 
-import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
-import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static java.lang.String.format;
 import static java.lang.System.out;
 import static org.junit.Assert.assertEquals;
@@ -32,7 +30,9 @@ import de.amr.easy.maze.alg.mst.BoruvkaMST;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 import de.amr.easy.maze.alg.mst.PrimMST;
 import de.amr.easy.maze.alg.mst.ReverseDeleteBFSMST;
+import de.amr.easy.maze.alg.mst.ReverseDeleteBestFSMST;
 import de.amr.easy.maze.alg.mst.ReverseDeleteDFSMST;
+import de.amr.easy.maze.alg.mst.ReverseDeleteHillClimbingMST;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
 import de.amr.easy.maze.alg.traversal.RandomBFS;
 import de.amr.easy.maze.alg.traversal.RecursiveDFS;
@@ -60,31 +60,28 @@ public class MazeGeneratorTests {
 
 	private static final int WIDTH = 100;
 	private static final int HEIGHT = 100;
+	private static final int WIDTH_SMALL = 25;
+	private static final int HEIGHT_SMALL = 25;
+
+	private static List<String> REPORT;
 
 	private OrthogonalGrid grid;
-	private StopWatch watch;
-
-	private static List<String> results = new ArrayList<>();
 
 	@BeforeClass
 	public static void beforeAllTests() {
-		// warm-up
-		OrthogonalGrid dummy = new OrthogonalGrid(WIDTH, HEIGHT);
-		dummy.setDefaultVertex(UNVISITED);
-		new RandomBFS(dummy).run(0);
+		// warm-up (class loading etc.)
+		new RandomBFS(WIDTH, HEIGHT).createMaze(0, 0);
+		REPORT = new ArrayList<>();
 	}
 
 	@AfterClass
 	public static void afterAllTests() {
-		Collections.sort(results);
-		results.forEach(out::println);
+		Collections.sort(REPORT);
+		REPORT.forEach(out::println);
 	}
 
 	@Before
 	public void setUp() {
-		grid = new OrthogonalGrid(WIDTH, HEIGHT);
-		grid.setDefaultVertex(UNVISITED);
-		watch = new StopWatch();
 	}
 
 	@After
@@ -93,191 +90,197 @@ public class MazeGeneratorTests {
 		assertFalse(GraphUtils.containsCycle(grid));
 	}
 
-	private void runTest(MazeGenerator algorithm) {
-		watch.measure(() -> algorithm.run(grid.cell(CENTER)));
-		results.add(format("%-30s (%6d cells): %.3f sec", algorithm.getClass().getSimpleName(), grid.numVertices(),
+	private void test(MazeGenerator algorithm) {
+		StopWatch watch = new StopWatch();
+		watch.measure(() -> grid = algorithm.createMaze(0, 0));
+		REPORT.add(format("%-30s (%6d cells): %.3f sec", algorithm.getClass().getSimpleName(), grid.numVertices(),
 				watch.getSeconds()));
+
 	}
 
 	@Test
 	public void testAldousBroder() {
-		runTest(new AldousBroderUST(grid));
+		test(new AldousBroderUST(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testAldousBroderWilson() {
-		runTest(new AldousBroderWilsonUST(grid));
+		test(new AldousBroderWilsonUST(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testBinaryTree() {
-		runTest(new BinaryTree(grid));
+		test(new BinaryTree(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testBinaryTreeRandom() {
-		runTest(new BinaryTreeRandom(grid));
+		test(new BinaryTreeRandom(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testBoruvka() {
-		runTest(new BoruvkaMST(grid));
+		test(new BoruvkaMST(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testEller() {
-		runTest(new Eller(grid));
+		test(new Eller(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testEllerInsideOut() {
-		runTest(new EllerInsideOut(grid));
+		test(new EllerInsideOut(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testGrowingTree() {
-		runTest(new GrowingTree(grid));
+		test(new GrowingTree(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testHuntAndKill() {
-		runTest(new HuntAndKill(grid));
+		test(new HuntAndKill(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testHuntAndKillRandom() {
-		runTest(new HuntAndKillRandom(grid));
+		test(new HuntAndKillRandom(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testIterativeDFS() {
-		runTest(new IterativeDFS(grid));
+		test(new IterativeDFS(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testKruskal() {
-		runTest(new KruskalMST(grid));
+		test(new KruskalMST(WIDTH, HEIGHT));
 	}
 
 	// @Test
 	public void testPrim() {
-		runTest(new PrimMST(grid));
+		test(new PrimMST(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testRandomBFS() {
-		runTest(new RandomBFS(grid));
+		test(new RandomBFS(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testRecursiveDFS() {
-		grid = new OrthogonalGrid(32, 32);
-		grid.setDefaultVertex(UNVISITED);
-		runTest(new RecursiveDFS(grid));
+		test(new RecursiveDFS(WIDTH_SMALL, HEIGHT_SMALL));
 	}
 
 	@Test
 	public void testRecursiveDivision() {
-		runTest(new RecursiveDivision(grid));
+		test(new RecursiveDivision(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testReverseDeleteDFSMST() {
-		grid = new OrthogonalGrid(32, 32);
-		grid.setDefaultVertex(UNVISITED);
-		runTest(new ReverseDeleteDFSMST(grid));
+		test(new ReverseDeleteDFSMST(WIDTH_SMALL, HEIGHT_SMALL));
+	}
+
+	@Test
+	public void testReverseDeleteBestFSMST() {
+		test(new ReverseDeleteBestFSMST(WIDTH_SMALL, HEIGHT_SMALL));
 	}
 
 	@Test
 	public void testReverseDeleteBFSMST() {
-		grid = new OrthogonalGrid(32, 32);
-		grid.setDefaultVertex(UNVISITED);
-		runTest(new ReverseDeleteBFSMST(grid));
+		test(new ReverseDeleteBFSMST(WIDTH_SMALL, HEIGHT_SMALL));
+	}
+
+	@Test
+	public void testReverseDeleteHillClimbingMST() {
+		test(new ReverseDeleteHillClimbingMST(WIDTH_SMALL, HEIGHT_SMALL));
 	}
 
 	@Test
 	public void testSideWinder() {
-		runTest(new Sidewinder(grid));
+		test(new Sidewinder(WIDTH, HEIGHT));
 	}
 
 	// TODO why does this test fail?
 	// @Test
 	// public void testWilsonUSTCollapsingCircle() {
-	// runTest(new WilsonUSTCollapsingCircle(grid));
+	// test(new WilsonUSTCollapsingCircle());
 	// }
 
 	@Test
 	public void testWilsonUSTCollapsingRectangle() {
-		runTest(new WilsonUSTCollapsingRectangle(grid));
+		test(new WilsonUSTCollapsingRectangle(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTCollapsingWalls() {
-		runTest(new WilsonUSTCollapsingWalls(grid));
+		test(new WilsonUSTCollapsingWalls(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTExpandingCircle() {
-		runTest(new WilsonUSTExpandingCircle(grid));
+		test(new WilsonUSTExpandingCircle(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTExpandingCircles() {
-		runTest(new WilsonUSTExpandingCircles(grid));
+		test(new WilsonUSTExpandingCircles(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTExpandingRectangle() {
-		runTest(new WilsonUSTExpandingRectangle(grid));
+		test(new WilsonUSTExpandingRectangle(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTExpandingSpiral() {
-		runTest(new WilsonUSTExpandingSpiral(grid));
+		test(new WilsonUSTExpandingSpiral(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTHilbertCurve() {
-		runTest(new WilsonUSTHilbertCurve(grid));
+		test(new WilsonUSTHilbertCurve(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTLeftToRightSweep() {
-		runTest(new WilsonUSTLeftToRightSweep(grid));
+		test(new WilsonUSTLeftToRightSweep(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTMooreCurve() {
-		runTest(new WilsonUSTMooreCurve(grid));
+		test(new WilsonUSTMooreCurve(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTNestedRectangles() {
-		runTest(new WilsonUSTNestedRectangles(grid));
+		test(new WilsonUSTNestedRectangles(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTPeanoCurve() {
-		runTest(new WilsonUSTPeanoCurve(grid));
+		test(new WilsonUSTPeanoCurve(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTRandomCell() {
-		runTest(new WilsonUSTRandomCell(grid));
+		test(new WilsonUSTRandomCell(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTRecursiveCrosses() {
-		runTest(new WilsonUSTRecursiveCrosses(grid));
+		test(new WilsonUSTRecursiveCrosses(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTRightToLeftSweep() {
-		runTest(new WilsonUSTRightToLeftSweep(grid));
+		test(new WilsonUSTRightToLeftSweep(WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTRowsTopDown() {
-		runTest(new WilsonUSTRowsTopDown(grid));
+		test(new WilsonUSTRowsTopDown(WIDTH, HEIGHT));
 	}
 }

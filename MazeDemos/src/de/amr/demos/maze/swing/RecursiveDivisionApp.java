@@ -1,13 +1,12 @@
 package de.amr.demos.maze.swing;
 
-import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
-import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
+import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation.floodFill;
 
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
-import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.maze.alg.RecursiveDivision;
+import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
 
 public class RecursiveDivisionApp extends SwingGridSampleApp {
 
@@ -23,12 +22,13 @@ public class RecursiveDivisionApp extends SwingGridSampleApp {
 	@Override
 	public void run() {
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
-			resizeGrid(cellSize);
-			grid.fill();
-			grid.setDefaultVertex(COMPLETED);
-			new RecursiveDivision(grid).run(grid.cell(TOP_LEFT));
+			setCellSize(cellSize);
+			ObservableMazeGenerator generator = new RecursiveDivision(getCanvas().getWidth() / cellSize,
+					getCanvas().getHeight() / cellSize);
+			setGrid(generator.getGrid());
+			generator.createMaze(0, 0);
 			sleep(1000);
-			BreadthFirstTraversalAnimation.floodFill(canvas, grid, 0);
+			floodFill(getCanvas(), getGrid(), 0);
 			sleep(1000);
 		});
 		System.exit(0);

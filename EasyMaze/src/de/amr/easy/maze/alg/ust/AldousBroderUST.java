@@ -1,11 +1,12 @@
 package de.amr.easy.maze.alg.ust;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
 import static de.amr.easy.util.StreamUtils.randomElement;
 
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -30,24 +31,24 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *        Generation: Aldous-Broder algorithm</a>
  * 
  */
-public class AldousBroderUST implements MazeGenerator {
+public class AldousBroderUST extends ObservableMazeGenerator {
 
-	protected final OrthogonalGrid grid;
 	private int numVisitedCells;
 	private int currentCell;
 
-	public AldousBroderUST(OrthogonalGrid grid) {
-		this.grid = grid;
+	public AldousBroderUST(int numCols, int numRows) {
+		super(numCols, numRows, false, UNVISITED);
 	}
 
 	@Override
-	public void run(int start) {
-		currentCell = start;
-		grid.set(currentCell, COMPLETED);
+	public OrthogonalGrid createMaze(int x, int y) {
+		currentCell = maze.cell(x, y);
+		maze.set(currentCell, COMPLETED);
 		numVisitedCells = 1;
-		while (numVisitedCells < grid.numVertices()) {
+		while (numVisitedCells < maze.numVertices()) {
 			visitRandomNeighbor();
 		}
+		return maze;
 	}
 
 	/**
@@ -55,16 +56,16 @@ public class AldousBroderUST implements MazeGenerator {
 	 * time.
 	 */
 	private void visitRandomNeighbor() {
-		int neighbor = randomElement(grid.neighbors(currentCell)).getAsInt();
-		if (grid.isUnvisited(neighbor)) {
-			grid.addEdge(currentCell, neighbor);
-			grid.set(neighbor, COMPLETED);
+		int neighbor = randomElement(maze.neighbors(currentCell)).getAsInt();
+		if (maze.isUnvisited(neighbor)) {
+			maze.addEdge(currentCell, neighbor);
+			maze.set(neighbor, COMPLETED);
 			++numVisitedCells;
 		}
 		currentCell = neighbor;
 		// for animation only:
-		TraversalState state = grid.get(currentCell);
-		grid.set(currentCell, VISITED);
-		grid.set(currentCell, state);
+		TraversalState state = maze.get(currentCell);
+		maze.set(currentCell, VISITED);
+		maze.set(currentCell, state);
 	}
 }

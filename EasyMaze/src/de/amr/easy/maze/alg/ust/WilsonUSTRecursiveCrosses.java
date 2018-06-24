@@ -12,12 +12,12 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  */
 public class WilsonUSTRecursiveCrosses extends WilsonUST {
 
-	public WilsonUSTRecursiveCrosses(OrthogonalGrid grid) {
-		super(grid);
+	public WilsonUSTRecursiveCrosses(int numCols, int numRows) {
+		super(numCols, numRows);
 	}
 
 	@Override
-	protected IntStream randomWalkStartCells() {
-		return new RecursiveCrosses(grid).stream();
+	protected IntStream randomWalkStartCells(OrthogonalGrid maze) {
+		return new RecursiveCrosses(maze).stream();
 	}
 }

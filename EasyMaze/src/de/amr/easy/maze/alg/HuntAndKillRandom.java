@@ -2,8 +2,6 @@ package de.amr.easy.maze.alg;
 
 import java.util.Random;
 
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
-
 /**
  * Variant of "hunt-and-kill" algorithm where the "hunt" picks cells randomly from the set of
  * targets.
@@ -14,8 +12,8 @@ public class HuntAndKillRandom extends HuntAndKill {
 
 	private final Random rnd = new Random();
 
-	public HuntAndKillRandom(OrthogonalGrid grid) {
-		super(grid);
+	public HuntAndKillRandom(int numCols, int numRows) {
+		super(numCols, numRows);
 	}
 
 	@Override

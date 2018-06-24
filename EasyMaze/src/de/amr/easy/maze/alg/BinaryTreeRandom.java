@@ -13,12 +13,12 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  */
 public class BinaryTreeRandom extends BinaryTree {
 
-	public BinaryTreeRandom(OrthogonalGrid grid) {
-		super(grid);
+	public BinaryTreeRandom(int numCols, int numRows) {
+		super(numCols, numRows);
 	}
 
 	@Override
-	protected IntStream cells() {
-		return permute(grid.vertices());
+	protected IntStream cells(OrthogonalGrid maze) {
+		return permute(maze.vertices());
 	}
 }

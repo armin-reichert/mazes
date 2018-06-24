@@ -53,11 +53,11 @@ public class HilbertCurveApp extends SwingGridSampleApp {
 	public void run() {
 		Stream.of(TOP_RIGHT, TOP_LEFT, BOTTOM_RIGHT, BOTTOM_LEFT).forEach(start -> {
 			IntStream.of(256, 128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
-				resizeGrid(cellSize);
+				setCellSize(cellSize);
 				List<Integer> dir = ORIENTATION.get(start);
-				Curve hilbert = new HilbertCurve(log(2, grid.numCols()), dir.get(0), dir.get(1), dir.get(2), dir.get(3));
-				traverse(hilbert, grid, grid.cell(start), this::addEdge);
-				floodFill(canvas, grid, grid.cell(start), false);
+				Curve hilbert = new HilbertCurve(log(2, getGrid().numCols()), dir.get(0), dir.get(1), dir.get(2), dir.get(3));
+				traverse(hilbert, getGrid(), getGrid().cell(start), this::addEdge);
+				floodFill(getCanvas(), getGrid(), getGrid().cell(start), false);
 				sleep(1000);
 			});
 		});

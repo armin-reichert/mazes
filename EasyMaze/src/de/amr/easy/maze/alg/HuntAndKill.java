@@ -1,12 +1,13 @@
 package de.amr.easy.maze.alg;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static de.amr.easy.util.StreamUtils.randomElement;
 
 import java.util.BitSet;
 import java.util.OptionalInt;
 
-import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -18,34 +19,35 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *      "http://weblog.jamisbuck.org/2011/1/24/maze-generation-hunt-and-kill-algorithm.html"> Maze
  *      Generation: Hunt-and-Kill algorithm</a>
  */
-public class HuntAndKill implements MazeGenerator {
+public class HuntAndKill extends ObservableMazeGenerator {
 
-	protected final OrthogonalGrid grid;
-	protected final BitSet targets;
+	protected BitSet targets;
 
-	public HuntAndKill(OrthogonalGrid grid) {
-		this.grid = grid;
-		targets = new BitSet(grid.numVertices());
+	public HuntAndKill(int numCols, int numRows) {
+		super(numCols, numRows, false, UNVISITED);
 	}
 
 	@Override
-	public void run(int animal) {
+	public OrthogonalGrid createMaze(int x, int y) {
+		targets = new BitSet(maze.numVertices());
+		int animal = maze.cell(x, y);
 		do {
 			kill(animal);
-			OptionalInt livingNeighbor = randomElement(grid.neighbors(animal).filter(this::isAlive));
+			OptionalInt livingNeighbor = randomElement(maze.neighbors(animal).filter(this::isAlive));
 			if (livingNeighbor.isPresent()) {
-				grid.neighbors(animal).filter(this::isAlive).forEach(targets::set);
-				grid.addEdge(animal, livingNeighbor.getAsInt());
+				maze.neighbors(animal).filter(this::isAlive).forEach(targets::set);
+				maze.addEdge(animal, livingNeighbor.getAsInt());
 				animal = livingNeighbor.getAsInt();
 			} else if (!targets.isEmpty()) {
 				animal = hunt();
-				grid.addEdge(animal, randomElement(grid.neighbors(animal).filter(this::isDead)).getAsInt());
+				maze.addEdge(animal, randomElement(maze.neighbors(animal).filter(this::isDead)).getAsInt());
 			}
 		} while (!targets.isEmpty());
+		return maze;
 	}
 
 	protected boolean isAlive(int v) {
-		return grid.isUnvisited(v);
+		return maze.isUnvisited(v);
 	}
 
 	protected boolean isDead(int v) {
@@ -57,7 +59,7 @@ public class HuntAndKill implements MazeGenerator {
 	}
 
 	protected void kill(int animal) {
-		grid.set(animal, COMPLETED);
+		maze.set(animal, COMPLETED);
 		targets.clear(animal);
 	}
 }

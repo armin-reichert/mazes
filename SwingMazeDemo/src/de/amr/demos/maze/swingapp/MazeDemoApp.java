@@ -80,7 +80,6 @@ public class MazeDemoApp {
 		// initialize data
 		model = new MazeDemoModel();
 		model.setGridCellSizes(256, 128, 64, 32, 16, 8, 4, 2);
-		model.setGridCellSize(32);
 		model.setPassageWidthPercentage(100);
 		model.setStyle(Style.WALL_PASSAGES);
 		model.setDelay(0);
@@ -93,12 +92,21 @@ public class MazeDemoApp {
 		model.setPathFinderTarget(BOTTOM_RIGHT);
 		model.setGenerationAnimated(true);
 		model.setHidingControlsWhenRunning(false);
-		model.setGrid(createGrid(model.getGridCellSize()));
+
+		// create initial grid
+		model.setGridCellSize(32);
+		model.setGridWidth(DISPLAY_MODE.getWidth() / model.getGridCellSize());
+		model.setGridHeight(DISPLAY_MODE.getHeight() / model.getGridCellSize());
+		model.setGrid(createDefaultGrid());
 
 		// create new canvas in its own window
 		wndCanvas = new CanvasWindow();
 		wndCanvas.newCanvas(model);
 		wndCanvas.setVisible(true);
+
+		// initialize grid canvas
+		getCanvas().setGrid(model.getGrid());
+		getCanvas().drawGrid();
 
 		wndSettings = new SettingsWindow(this);
 		MazeDemoModel.find(GENERATOR_ALGORITHMS, IterativeDFS.class).ifPresent(alg -> {
@@ -119,17 +127,24 @@ public class MazeDemoApp {
 		wndSettings.setVisible(true);
 	}
 
-	private static OrthogonalGrid createGrid(int cellSize) {
-		int numCols = DISPLAY_MODE.getWidth() / cellSize;
-		int numRows = DISPLAY_MODE.getHeight() / cellSize;
-		return new OrthogonalGrid(numCols, numRows);
+	private OrthogonalGrid createDefaultGrid() {
+		OrthogonalGrid grid = new OrthogonalGrid(model.getGridWidth(), model.getGridHeight(), TraversalState.COMPLETED);
+		return grid;
+	}
+
+	public void setGrid(OrthogonalGrid grid) {
+		model.setGrid(grid);
+		getCanvas().setGrid(grid);
+		grid.addGraphObserver(getCanvasAnimation());
+		getCanvas().drawGrid();
 	}
 
 	public void newCanvas() {
-		model.setGrid(createGrid(model.getGridCellSize()));
+		model.setGrid(createDefaultGrid());
 		wndCanvas.newCanvas(model);
 		getCanvas().getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
 		getCanvas().getActionMap().put("showSettings", actionShowSettings);
+		getCanvas().drawGrid();
 	}
 
 	public GridCanvas getCanvas() {

@@ -1,11 +1,12 @@
 package de.amr.easy.maze.alg.ust;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static de.amr.easy.util.StreamUtils.randomElement;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -28,28 +29,32 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *      wikipedia.org/wiki/Loop -erased_random_walk</>
  * 
  */
-public abstract class WilsonUST implements MazeGenerator {
+public abstract class WilsonUST extends ObservableMazeGenerator {
 
-	protected final OrthogonalGrid grid;
-	private final int[] lastWalkDir;
+	protected int[] lastWalkDir;
 	private int current;
 
-	protected WilsonUST(OrthogonalGrid grid) {
-		this.grid = grid;
-		lastWalkDir = new int[grid.numVertices()];
+	public WilsonUST(int numCols, int numRows) {
+		super(numCols, numRows, false, UNVISITED);
 	}
 
 	@Override
-	public void run(int start) {
-		grid.set(start, COMPLETED);
-		randomWalkStartCells().forEach(this::loopErasedRandomWalk);
+	public OrthogonalGrid createMaze(int x, int y) {
+		return runWilsonAlgorithm(maze, maze.cell(x, y));
+	}
+
+	protected OrthogonalGrid runWilsonAlgorithm(OrthogonalGrid maze, int start) {
+		lastWalkDir = new int[maze.numVertices()];
+		maze.set(start, COMPLETED);
+		randomWalkStartCells(maze).forEach(walkStart -> loopErasedRandomWalk(maze, walkStart));
+		return maze;
 	}
 
 	/**
 	 * @return stream of start cells for the random walks
 	 */
-	protected IntStream randomWalkStartCells() {
-		return grid.vertices();
+	protected IntStream randomWalkStartCells(OrthogonalGrid maze) {
+		return maze.vertices();
 	}
 
 	/**
@@ -59,26 +64,30 @@ public abstract class WilsonUST implements MazeGenerator {
 	 * @param walkStart
 	 *          the start cell of the random walk
 	 */
-	protected final void loopErasedRandomWalk(int walkStart) {
+	protected final void loopErasedRandomWalk(OrthogonalGrid maze, int walkStart) {
+		// TODO: HACK
+		if (lastWalkDir == null) {
+			lastWalkDir = new int[maze.numVertices()];
+		}
 		// if walk start is already in tree, do nothing
-		if (grid.get(walkStart) == COMPLETED) {
+		if (maze.get(walkStart) == COMPLETED) {
 			return;
 		}
 		// do a random walk until it touches the tree created so far
 		current = walkStart;
-		while (grid.get(current) != COMPLETED) {
-			int walkDir = randomElement(grid.getTopology().dirs()).getAsInt();
-			grid.neighbor(current, walkDir).ifPresent(neighbor -> {
+		while (maze.get(current) != COMPLETED) {
+			int walkDir = randomElement(maze.getTopology().dirs()).getAsInt();
+			maze.neighbor(current, walkDir).ifPresent(neighbor -> {
 				lastWalkDir[current] = walkDir;
 				current = neighbor;
 			});
 		}
 		// add the (loop-erased) random walk to the tree
 		current = walkStart;
-		while (grid.get(current) != COMPLETED) {
-			grid.neighbor(current, lastWalkDir[current]).ifPresent(neighbor -> {
-				grid.set(current, COMPLETED);
-				grid.addEdge(current, neighbor);
+		while (maze.get(current) != COMPLETED) {
+			maze.neighbor(current, lastWalkDir[current]).ifPresent(neighbor -> {
+				maze.set(current, COMPLETED);
+				maze.addEdge(current, neighbor);
 				current = neighbor;
 			});
 		}

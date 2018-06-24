@@ -12,15 +12,17 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  */
 public class WilsonUSTRowsTopDown extends WilsonUST {
 
-	public WilsonUSTRowsTopDown(OrthogonalGrid grid) {
-		super(grid);
+	public WilsonUSTRowsTopDown(int numCols, int numRows) {
+		super(numCols, numRows);
 	}
 
 	@Override
-	public void run(int start) {
-		grid.set(start, COMPLETED);
-		range(0, grid.numRows()).forEach(row -> range(0, grid.numCols()).forEach(col -> {
-			loopErasedRandomWalk(grid.cell(col, row));
+	public OrthogonalGrid createMaze(int x, int y) {
+		lastWalkDir = new int[maze.numVertices()];
+		maze.set(maze.cell(x, y), COMPLETED);
+		range(0, maze.numRows()).forEach(row -> range(0, maze.numCols()).forEach(col -> {
+			loopErasedRandomWalk(maze, maze.cell(col, row));
 		}));
+		return maze;
 	}
 }

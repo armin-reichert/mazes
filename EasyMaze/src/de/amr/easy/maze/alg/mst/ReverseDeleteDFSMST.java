@@ -1,7 +1,6 @@
 package de.amr.easy.maze.alg.mst;
 
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * A (naive?) implementation of the Reverse-Delete-MST algorithm.
@@ -12,13 +11,13 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  */
 public class ReverseDeleteDFSMST extends ReverseDeleteMST {
 
-	public ReverseDeleteDFSMST(OrthogonalGrid grid) {
-		super(grid);
+	public ReverseDeleteDFSMST(int numCols, int numRows) {
+		super(numCols, numRows);
 	}
 
 	@Override
 	protected boolean connected(int u, int v) {
-		DepthFirstTraversal2 dfs = new DepthFirstTraversal2(grid);
+		DepthFirstTraversal2 dfs = new DepthFirstTraversal2(maze);
 		dfs.traverseGraph(u, v);
 		return dfs.getParent(v) != -1;
 	}

@@ -18,21 +18,20 @@ public class GridRenderingTestApp extends SwingGridSampleApp {
 
 	public GridRenderingTestApp() {
 		super(256);
-		setAppName("Full Grid");
-		fullscreen = false;
+		setAppName("Grid Rendering Demo");
 	}
 
 	@Override
 	public void run() {
-		canvasAnimation.setEnabled(false);
+		setCanvasAnimation(false);
 		StopWatch watch = new StopWatch();
 		IntStream.of(256, 128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
-			resizeGrid(cellSize);
-			grid.setDefaultVertex(COMPLETED);
-			grid.fill();
-			watch.measure(canvas::drawGrid);
-			out.println(format("Rendering grid with %d cells took %.3f seconds", grid.numVertices(), watch.getSeconds()));
-			floodFill(canvas, grid, grid.cell(CENTER));
+			setCellSize(cellSize);
+			getGrid().setDefaultVertex(COMPLETED);
+			getGrid().fill();
+			watch.measure(getCanvas()::drawGrid);
+			out.println(format("Rendering getGrid() with %d cells took %.3f seconds", getGrid().numVertices(), watch.getSeconds()));
+			floodFill(getCanvas(), getGrid(), getGrid().cell(CENTER));
 			sleep(2000);
 		});
 		System.exit(0);

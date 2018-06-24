@@ -1,5 +1,6 @@
 package de.amr.easy.maze.alg.ust;
 
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
 import static de.amr.easy.util.GraphUtils.log;
 import static de.amr.easy.util.GraphUtils.nextPow;
@@ -8,11 +9,8 @@ import static java.util.Arrays.stream;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.grid.curves.Curve;
 import de.amr.easy.grid.curves.PeanoCurve;
-import de.amr.easy.grid.impl.GridGraph;
-import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -22,31 +20,30 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  */
 public class WilsonUSTPeanoCurve extends WilsonUST {
 
-	private final int[] walkStartCells;
-	private int i;
-
-	public WilsonUSTPeanoCurve(OrthogonalGrid grid) {
-		super(grid);
-		walkStartCells = new int[grid.numVertices()];
-		int n = nextPow(3, max(grid.numCols(), grid.numRows()));
-		GridGraph<?, ?> square = new GridGraph<>(n, n, Top4.get(), SimpleEdge::new);
-		Curve peano = new PeanoCurve(log(3, n));
-		int current = square.cell(BOTTOM_LEFT);
-		addWalkStartCell(square.col(current), square.row(current));
-		for (int dir : peano) {
-			current = square.neighbor(current, dir).getAsInt();
-			addWalkStartCell(square.col(current), square.row(current));
-		}
+	public WilsonUSTPeanoCurve(int numCols, int numRows) {
+		super(numCols, numRows);
 	}
 
+	private int i;
+
 	@Override
-	protected IntStream randomWalkStartCells() {
+	protected IntStream randomWalkStartCells(OrthogonalGrid maze) {
+		int[] walkStartCells = new int[maze.numVertices()];
+		int n = nextPow(3, max(maze.numCols(), maze.numRows()));
+		OrthogonalGrid square = emptyGrid(n, n, UNVISITED);
+		Curve peano = new PeanoCurve(log(3, n));
+		int current = square.cell(BOTTOM_LEFT);
+		addCell(walkStartCells, maze, square.col(current), square.row(current));
+		for (int dir : peano) {
+			current = square.neighbor(current, dir).getAsInt();
+			addCell(walkStartCells, maze, square.col(current), square.row(current));
+		}
 		return stream(walkStartCells);
 	}
 
-	private void addWalkStartCell(int col, int row) {
-		if (grid.isValidCol(col) && grid.isValidRow(row)) {
-			walkStartCells[i++] = grid.cell(col, row);
+	private void addCell(int[] walkStartCells, OrthogonalGrid maze, int col, int row) {
+		if (maze.isValidCol(col) && maze.isValidRow(row)) {
+			walkStartCells[i++] = maze.cell(col, row);
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package de.amr.easy.maze.alg.traversal;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
 import static de.amr.easy.util.StreamUtils.permute;
 
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -16,28 +17,29 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  * 
  * @author Armin Reichert
  */
-public class RandomBFS implements MazeGenerator {
+public class RandomBFS extends ObservableMazeGenerator {
 
-	private final OrthogonalGrid grid;
 	private final Random rnd = new Random();
 
-	public RandomBFS(OrthogonalGrid grid) {
-		this.grid = grid;
+	public RandomBFS(int numCols, int numRows) {
+		super(numCols, numRows, false, UNVISITED);
 	}
 
 	@Override
-	public void run(int start) {
+	public OrthogonalGrid createMaze(int x, int y) {
 		List<Integer> frontier = new ArrayList<>();
-		grid.set(start, VISITED);
+		int start = maze.cell(x, y);
+		maze.set(start, VISITED);
 		frontier.add(start);
 		while (!frontier.isEmpty()) {
 			int cell = frontier.remove(rnd.nextInt(frontier.size()));
-			permute(grid.neighbors(cell)).filter(grid::isUnvisited).forEach(neighbor -> {
-				grid.addEdge(cell, neighbor);
-				grid.set(neighbor, VISITED);
+			permute(maze.neighbors(cell)).filter(maze::isUnvisited).forEach(neighbor -> {
+				maze.addEdge(cell, neighbor);
+				maze.set(neighbor, VISITED);
 				frontier.add(neighbor);
 			});
-			grid.set(cell, COMPLETED);
+			maze.set(cell, COMPLETED);
 		}
+		return maze;
 	}
 }

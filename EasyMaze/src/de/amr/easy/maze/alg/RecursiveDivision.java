@@ -6,7 +6,7 @@ import static java.util.stream.IntStream.range;
 
 import java.util.Random;
 
-import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -18,20 +18,18 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *      "http://weblog.jamisbuck.org/2011/1/12/maze-generation-recursive-division-algorithm.html">Maze
  *      Generation: Recursive Division</a>
  */
-public class RecursiveDivision implements MazeGenerator {
+public class RecursiveDivision extends ObservableMazeGenerator {
 
-	private final OrthogonalGrid grid;
 	private final Random rnd = new Random();
 
-	public RecursiveDivision(OrthogonalGrid grid) {
-		this.grid = grid;
+	public RecursiveDivision(int numCols, int numRows) {
+		super(numCols, numRows, true, COMPLETED);
 	}
 
 	@Override
-	public void run(int start) {
-		grid.fill();
-		grid.setDefaultVertex(COMPLETED);
-		divide(0, 0, grid.numCols(), grid.numRows());
+	public OrthogonalGrid createMaze(int x, int y) {
+		divide(maze, 0, 0, maze.numCols(), maze.numRows());
+		return maze;
 	}
 
 	/**
@@ -46,28 +44,28 @@ public class RecursiveDivision implements MazeGenerator {
 	 * @param h
 	 *          height of subgrid
 	 */
-	private void divide(int x0, int y0, int w, int h) {
+	private void divide(OrthogonalGrid maze, int x0, int y0, int w, int h) {
 		if (w <= 1 && h <= 1) {
 			return;
 		}
 		if (w < h || (w == h && rnd.nextBoolean())) {
 			// Build "horizontal wall" at random y from [y0 + 1, y0 + h - 1], keep random door
-			int wy = min(y0 + 1 + rnd.nextInt(h - 1), grid.numRows() - 1);
+			int wy = min(y0 + 1 + rnd.nextInt(h - 1), maze.numRows() - 1);
 			int door = rnd.nextInt(w);
 			range(0, w).filter(x -> x != door).map(x -> x0 + x).forEach(x -> {
-				grid.edge(grid.cell(x, wy - 1), grid.cell(x, wy)).ifPresent(grid::removeEdge);
+				maze.edge(maze.cell(x, wy - 1), maze.cell(x, wy)).ifPresent(maze::removeEdge);
 			});
-			divide(x0, y0, w, wy - y0);
-			divide(x0, wy, w, h - (wy - y0));
+			divide(maze, x0, y0, w, wy - y0);
+			divide(maze, x0, wy, w, h - (wy - y0));
 		} else {
 			// Build "vertical wall" at random x from [x0 + 1, x0 + w - 1], keep random door
-			int wx = min(x0 + 1 + rnd.nextInt(w - 1), grid.numCols() - 1);
+			int wx = min(x0 + 1 + rnd.nextInt(w - 1), maze.numCols() - 1);
 			int door = rnd.nextInt(h);
 			range(0, h).filter(y -> y != door).map(y -> y0 + y).forEach(y -> {
-				grid.edge(grid.cell(wx - 1, y), grid.cell(wx, y)).ifPresent(grid::removeEdge);
+				maze.edge(maze.cell(wx - 1, y), maze.cell(wx, y)).ifPresent(maze::removeEdge);
 			});
-			divide(x0, y0, wx - x0, h);
-			divide(wx, y0, w - (wx - x0), h);
+			divide(maze, x0, y0, wx - x0, h);
+			divide(maze, wx, y0, w - (wx - x0), h);
 		}
 	}
 }

@@ -48,8 +48,7 @@ public class GridTraversalTests {
 
 	@Before
 	public void setUp() {
-		grid = new OrthogonalGrid(N, N);
-		grid.setDefaultVertex(UNVISITED);
+		grid = new OrthogonalGrid(N, N, UNVISITED);
 		grid.fill();
 	}
 
@@ -76,9 +75,8 @@ public class GridTraversalTests {
 
 	@Test
 	public void testBestFS() {
+		grid = new IterativeDFS(N, N).createMaze(0, 0);
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		grid.removeEdges();
-		new IterativeDFS(grid).run(target);
 		BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, v -> grid.manhattan(v, target));
 		assertState(grid.vertices(), best::getState, UNVISITED);
 		best.traverseGraph(source);
@@ -144,8 +142,7 @@ public class GridTraversalTests {
 
 	@Test
 	public void testPeanoCurve() {
-		grid = new OrthogonalGrid(243, 243);
-		grid.setDefaultVertex(TraversalState.UNVISITED);
+		grid = new OrthogonalGrid(243, 243, UNVISITED);
 		assertAllCells(UNVISITED);
 		traverse(new PeanoCurve(5), grid, grid.cell(BOTTOM_LEFT), this::setCompleted);
 		assertAllCells(COMPLETED);

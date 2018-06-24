@@ -1,6 +1,6 @@
 package de.amr.demos.maze.swing;
 
-import static de.amr.demos.maze.swing.QuickMazeDemoApp.launch;
+import static de.amr.demos.maze.swing.MazeDemoApp.launch;
 
 import de.amr.easy.maze.alg.mst.PrimMST;
 

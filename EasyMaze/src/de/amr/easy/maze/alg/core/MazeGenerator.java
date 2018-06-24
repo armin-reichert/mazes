@@ -7,6 +7,14 @@ package de.amr.easy.maze.alg.core;
  */
 public interface MazeGenerator {
 
-	void run(int start);
-
+	/**
+	 * Creates a maze starting at the given position.
+	 * 
+	 * @param x
+	 *          column index of start position
+	 * @param y
+	 *          row index of start position
+	 * @return the maze grid
+	 */
+	OrthogonalGrid createMaze(int x, int y);
 }

@@ -1,26 +1,18 @@
 package de.amr.easy.maze.tests;
 
-import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
-import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
-
 import org.junit.Test;
 
 import de.amr.easy.maze.alg.RecursiveDivision;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 
 public class LargeMazesTests {
 
-	private void test_Kruskal(int cols, int rows) {
-		OrthogonalGrid grid = new OrthogonalGrid(cols, rows);
-		grid.setDefaultVertex(UNVISITED);
-		new KruskalMST(grid).run(-1);
+	private void test_Kruskal(int numCols, int numRows) {
+		new KruskalMST(numCols, numRows).createMaze(0, 0);
 	}
 
-	private void test_RecursiveDivision(int cols, int rows) {
-		OrthogonalGrid grid = new OrthogonalGrid(cols, rows);
-		grid.setDefaultVertex(COMPLETED);
-		new RecursiveDivision(grid).run(-1);
+	private void test_RecursiveDivision(int numCols, int numRows) {
+		new RecursiveDivision(numCols, numRows).createMaze(0, 0);
 	}
 
 	@Test

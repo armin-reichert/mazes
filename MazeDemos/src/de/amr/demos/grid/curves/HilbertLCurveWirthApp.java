@@ -1,6 +1,5 @@
 package de.amr.demos.grid.curves;
 
-import static de.amr.easy.grid.api.GridPosition.TOP_RIGHT;
 import static de.amr.easy.grid.curves.CurveUtils.traverse;
 import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation.floodFill;
 import static de.amr.easy.util.GraphUtils.log;
@@ -8,6 +7,7 @@ import static de.amr.easy.util.GraphUtils.log;
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
+import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.curves.HilbertLCurveWirth;
 
 public class HilbertLCurveWirthApp extends SwingGridSampleApp {
@@ -24,9 +24,10 @@ public class HilbertLCurveWirthApp extends SwingGridSampleApp {
 	@Override
 	public void run() {
 		IntStream.of(256, 128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
-			resizeGrid(cellSize);
-			traverse(new HilbertLCurveWirth(log(2, grid.numCols())), grid, grid.cell(TOP_RIGHT), this::addEdge);
-			floodFill(canvas, grid, grid.cell(TOP_RIGHT), false);
+			setCellSize(cellSize);
+			HilbertLCurveWirth curve = new HilbertLCurveWirth(log(2, getGrid().numCols()));
+			traverse(curve, getGrid(), getGrid().cell(GridPosition.TOP_RIGHT), this::addEdge);
+			floodFill(getCanvas(), getGrid(), getGrid().cell(GridPosition.TOP_RIGHT), false);
 			sleep(1000);
 		});
 	}

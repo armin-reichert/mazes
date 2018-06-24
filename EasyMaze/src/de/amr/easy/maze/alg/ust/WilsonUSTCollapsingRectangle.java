@@ -13,22 +13,25 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  */
 public class WilsonUSTCollapsingRectangle extends WilsonUST {
 
-	public WilsonUSTCollapsingRectangle(OrthogonalGrid grid) {
-		super(grid);
+	public WilsonUSTCollapsingRectangle(int numCols, int numRows) {
+		super(numCols, numRows);
 	}
 
 	@Override
-	public void run(int start) {
-		start = grid.cell(CENTER);
-		grid.set(start, COMPLETED);
+	public OrthogonalGrid createMaze(int x, int y) {
+		lastWalkDir = new int[maze.numVertices()];
+		int start = maze.cell(CENTER);
+		maze.set(start, COMPLETED);
 		int col = 0, row = 0;
-		int width = grid.numCols(), height = grid.numRows();
+		int width = maze.numCols(), height = maze.numRows();
 		while (width > 0 && height > 0) {
-			new Rectangle(grid, grid.cell(col, row), width, height).forEach(this::loopErasedRandomWalk);
+			new Rectangle(maze, maze.cell(col, row), width, height)
+					.forEach(walkStart -> loopErasedRandomWalk(maze, walkStart));
 			width -= 2;
 			height -= 2;
 			col += 1;
 			row += 1;
 		}
+		return maze;
 	}
 }

@@ -1,6 +1,5 @@
 package de.amr.demos.maze.javafx;
 
-import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 
 import java.util.Random;
@@ -107,11 +106,9 @@ public class MazeDemoFX extends Application {
 	}
 
 	private void nextMaze() {
-		maze = new OrthogonalGrid(cols, rows);
-		maze.setDefaultVertex(UNVISITED);
 		canvas.resize((cols + 1) * cellSize, (rows + 1) * cellSize);
 		MazeGenerator generator = randomMazeGenerator();
-		generator.run(maze.cell(0, 0));
+		maze = generator.createMaze(0, 0);
 		drawGrid();
 		BreadthFirstTraversal bfs = new BreadthFirstTraversal(maze);
 		bfs.traverseGraph(maze.cell(0, 0), maze.cell(BOTTOM_RIGHT));
@@ -121,7 +118,7 @@ public class MazeDemoFX extends Application {
 	private MazeGenerator randomMazeGenerator() {
 		Class<?> generatorClass = GENERATOR_CLASSES[RAND.nextInt(GENERATOR_CLASSES.length)];
 		try {
-			return (MazeGenerator) generatorClass.getConstructor(OrthogonalGrid.class).newInstance(maze);
+			return (MazeGenerator) generatorClass.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(cols, rows);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Could not create maze generator instance");

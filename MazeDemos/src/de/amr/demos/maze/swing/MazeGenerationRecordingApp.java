@@ -3,13 +3,13 @@ package de.amr.demos.maze.swing;
 import static java.lang.String.format;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 
 import de.amr.easy.graph.api.event.EdgeEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.ObservableGraph;
 import de.amr.easy.graph.api.event.VertexEvent;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.GridCanvas;
 import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
@@ -23,7 +23,7 @@ import de.amr.easy.maze.alg.HuntAndKill;
 import de.amr.easy.maze.alg.HuntAndKillRandom;
 import de.amr.easy.maze.alg.RecursiveDivision;
 import de.amr.easy.maze.alg.Sidewinder;
-import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.mst.BoruvkaMST;
 import de.amr.easy.maze.alg.mst.KruskalMST;
@@ -97,19 +97,19 @@ public class MazeGenerationRecordingApp {
 
 	public void run(int numCols, int numRows, int cellSize, int scanRate, int delayMillis) {
 		for (Class<?> generatorClass : generatorClasses) {
-			grid = new OrthogonalGrid(numCols, numRows);
-			grid.setDefaultVertex(TraversalState.UNVISITED);
-			canvas = new GridCanvas(grid, cellSize);
-			canvas.pushRenderer(createRenderer(cellSize));
 			try {
-				MazeGenerator generator = (MazeGenerator) generatorClass.getConstructor(GridGraph2D.class).newInstance(grid);
-				try (GifRecorder recorder = new GifRecorder(canvas.getDrawingBuffer().getType())) {
+				ObservableMazeGenerator generator = (ObservableMazeGenerator) generatorClass.getConstructor(Integer.TYPE, Integer.TYPE)
+						.newInstance(numCols, numRows);
+				grid = generator.getGrid();
+				canvas = new GridCanvas(grid, cellSize);
+				canvas.pushRenderer(createRenderer(cellSize));
+				try (GifRecorder recorder = new GifRecorder(BufferedImage.TYPE_INT_RGB)) {
 					attachRecorderToGrid(recorder);
 					recorder.setDelayMillis(delayMillis);
 					recorder.setLoop(true);
 					recorder.setScanRate(scanRate);
 					recorder.start(createFileName(generatorClass));
-					generator.run(0);
+					generator.createMaze(0, 0);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

@@ -20,12 +20,13 @@ public class SierpinskiLCurveApp extends SwingGridSampleApp {
 
 	@Override
 	public void run() {
-		Integer current = grid.cell(1, 0);
-		grid.set(current, COMPLETED);
+		//TODO make this work again
+		Integer current = getGrid().cell(1, 0);
+		getGrid().set(current, COMPLETED);
 		for (int dir : new SierpinskiLCurve(6)) {
-			current = grid.cell(grid.col(current) + grid.getTopology().dx(dir),
-					grid.row(current) + grid.getTopology().dy(dir));
-			grid.set(current, COMPLETED);
+			current = getGrid().cell(getGrid().col(current) + getGrid().getTopology().dx(dir),
+					getGrid().row(current) + getGrid().getTopology().dy(dir));
+			getGrid().set(current, COMPLETED);
 		}
 	}
 }

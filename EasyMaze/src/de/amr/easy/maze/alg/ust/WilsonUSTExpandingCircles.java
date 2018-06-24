@@ -19,42 +19,42 @@ import de.amr.easy.util.StreamUtils;
  */
 public class WilsonUSTExpandingCircles extends WilsonUST {
 
-	public WilsonUSTExpandingCircles(OrthogonalGrid grid) {
-		super(grid);
+	public WilsonUSTExpandingCircles(int numCols, int numRows) {
+		super(numCols, numRows);
 	}
 
 	@Override
-	public void run(int start) {
-		super.run(grid.cell(CENTER));
+	public OrthogonalGrid createMaze(int x, int y) {
+		return runWilsonAlgorithm(maze, maze.cell(CENTER));
 	}
 
 	@Override
-	protected IntStream randomWalkStartCells() {
+	protected IntStream randomWalkStartCells(OrthogonalGrid maze) {
 		Iterable<Integer> it = new Iterable<Integer>() {
 
 			@Override
 			public Iterator<Integer> iterator() {
-				int w = grid.numCols(), h = grid.numRows(), r = max(w / 2, h / 2);
+				int w = maze.numCols(), h = maze.numRows(), r = max(w / 2, h / 2);
 				/*@formatter:off*/
 				return sequence(
 					// expand 4 circles in parallel to certain size	
 					parallel(
-						expandingCircle(w / 4, h / 4, 1, r / 4),
-						expandingCircle(3 * w / 4, h / 4, 1, r / 4),
-						expandingCircle(w / 4, 3 * h / 4, 1, r / 4), 
-						expandingCircle(3 * w / 4, 3 * h / 4, 1, r / 4)
+						expandingCircle(maze, w / 4, h / 4, 1, r / 4),
+						expandingCircle(maze, 3 * w / 4, h / 4, 1, r / 4),
+						expandingCircle(maze, w / 4, 3 * h / 4, 1, r / 4), 
+						expandingCircle(maze, 3 * w / 4, 3 * h / 4, 1, r / 4)
 					),
 					// expand 5th circle to half its size
-					expandingCircle(w / 2, h / 2, 1, r / 2),
+					expandingCircle(maze, w / 2, h / 2, 1, r / 2),
 					// expand first 4 circles to final size
 					parallel(
-						expandingCircle(w / 4, h / 4, r / 4, r / 2),
-						expandingCircle(3 * w / 4, h / 4, r / 4, r / 2), 
-						expandingCircle(w / 4, 3 * h / 4, r / 4, r / 2),
-						expandingCircle(3 * w / 4, 3 * h / 4, r / 4, r / 2)
+						expandingCircle(maze, w / 4, h / 4, r / 4, r / 2),
+						expandingCircle(maze, 3 * w / 4, h / 4, r / 4, r / 2), 
+						expandingCircle(maze, w / 4, 3 * h / 4, r / 4, r / 2),
+						expandingCircle(maze, 3 * w / 4, 3 * h / 4, r / 4, r / 2)
 					),
 					// expand 5th circle to final size
-					expandingCircle(w / 2, h / 2, r / 2, 2 * r)
+					expandingCircle(maze, w / 2, h / 2, r / 2, 2 * r)
 				);
 				/*@formatter:on*/
 			}
@@ -62,7 +62,7 @@ public class WilsonUSTExpandingCircles extends WilsonUST {
 		return StreamUtils.toIntStream(it);
 	}
 
-	private Iterator<Integer> expandingCircle(int centerX, int centerY, int rmin, int rmax) {
-		return new ExpandingCircle(grid, grid.cell(centerX, centerY), rmin, rmax).iterator();
+	private Iterator<Integer> expandingCircle(OrthogonalGrid maze, int centerX, int centerY, int rmin, int rmax) {
+		return new ExpandingCircle(maze, maze.cell(centerX, centerY), rmin, rmax).iterator();
 	}
 }

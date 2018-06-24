@@ -13,12 +13,12 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  */
 public class WilsonUSTRandomCell extends WilsonUST {
 
-	public WilsonUSTRandomCell(OrthogonalGrid grid) {
-		super(grid);
+	public WilsonUSTRandomCell(int numCols, int numRows) {
+		super(numCols, numRows);
 	}
 
 	@Override
-	protected IntStream randomWalkStartCells() {
-		return permute(grid.vertices());
+	protected IntStream randomWalkStartCells(OrthogonalGrid maze) {
+		return permute(maze.vertices());
 	}
 }

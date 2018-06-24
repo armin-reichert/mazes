@@ -20,37 +20,37 @@ import de.amr.easy.util.StreamUtils;
  */
 public class WilsonUSTNestedRectangles extends WilsonUST {
 
-	public WilsonUSTNestedRectangles(OrthogonalGrid grid) {
-		super(grid);
+	public WilsonUSTNestedRectangles(int numCols, int numRows) {
+		super(numCols, numRows);
 	}
 
 	@Override
-	public void run(int start) {
-		super.run(grid.cell(TOP_LEFT));
+	public OrthogonalGrid createMaze(int x, int y) {
+		return runWilsonAlgorithm(maze, maze.cell(TOP_LEFT));
 	}
 
 	@Override
-	protected IntStream randomWalkStartCells() {
+	protected IntStream randomWalkStartCells(OrthogonalGrid maze) {
 		Iterable<Integer> it = new Iterable<Integer>() {
 
 			@Override
 			public Iterator<Integer> iterator() {
-				Rectangle firstCell = new Rectangle(grid, grid.cell(TOP_LEFT), 1, 1);
+				Rectangle firstCell = new Rectangle(maze, maze.cell(TOP_LEFT), 1, 1);
 				List<Iterator<Integer>> expRects = new ArrayList<>();
-				int rate = grid.numCols();
+				int rate = maze.numCols();
 				while (rate > 1) {
-					expRects.add(expandingRectangle(firstCell, rate).iterator());
+					expRects.add(expandingRectangle(maze, firstCell, rate).iterator());
 					rate /= 2;
 				}
 				@SuppressWarnings("unchecked")
 				Iterator<Integer>[] expRectsArray = expRects.toArray(new Iterator[expRects.size()]);
 
-				Rectangle firstColumn = new Rectangle(grid, grid.cell(TOP_LEFT), 1, grid.numRows());
+				Rectangle firstColumn = new Rectangle(maze, maze.cell(TOP_LEFT), 1, maze.numRows());
 				ExpandingRectangle sweep = new ExpandingRectangle(firstColumn);
 				sweep.setExpandHorizontally(true);
 				sweep.setExpandVertically(false);
 				sweep.setExpansionRate(1);
-				sweep.setMaxExpansion(grid.numCols());
+				sweep.setMaxExpansion(maze.numCols());
 
 				return IteratorFactory.sequence(IteratorFactory.sequence(expRectsArray), sweep.iterator());
 			}
@@ -58,12 +58,12 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 		return StreamUtils.toIntStream(it);
 	}
 
-	private ExpandingRectangle expandingRectangle(Rectangle startRectangle, int rate) {
+	private ExpandingRectangle expandingRectangle(OrthogonalGrid maze, Rectangle startRectangle, int rate) {
 		ExpandingRectangle expRect = new ExpandingRectangle(startRectangle);
 		expRect.setExpandHorizontally(true);
 		expRect.setExpandVertically(true);
 		expRect.setExpansionRate(rate);
-		expRect.setMaxExpansion(grid.numCols() - startRectangle.getWidth());
+		expRect.setMaxExpansion(maze.numCols() - startRectangle.getWidth());
 		return expRect;
 	}
 }

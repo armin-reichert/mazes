@@ -1,9 +1,11 @@
 package de.amr.demos.maze.swing;
 
+import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation.floodFill;
+
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
-import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
+import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
 import de.amr.easy.maze.alg.mst.ReverseDeleteDFSMST;
 
 public class ReverseDeleteDFSApp extends SwingGridSampleApp {
@@ -20,9 +22,12 @@ public class ReverseDeleteDFSApp extends SwingGridSampleApp {
 	@Override
 	public void run() {
 		IntStream.of(128, 64, 32).forEach(cellSize -> {
-			resizeGrid(cellSize);
-			new ReverseDeleteDFSMST(grid).run(-1);
-			BreadthFirstTraversalAnimation.floodFill(canvas, grid, 0);
+			setCellSize(cellSize);
+			ObservableMazeGenerator generator = new ReverseDeleteDFSMST(getCanvas().getWidth() / cellSize,
+					getCanvas().getHeight() / cellSize);
+			setGrid(generator.getGrid());
+			generator.createMaze(0, 0);
+			floodFill(getCanvas(), getGrid(), 0);
 			sleep(1000);
 		});
 		System.exit(0);

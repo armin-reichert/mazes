@@ -20,9 +20,8 @@ public class RecursiveCrossesApp extends SwingGridSampleApp {
 	@Override
 	public void run() {
 		IntStream.of(64, 32, 16, 8, 4, 2).forEach(cellSize -> {
-			canvasAnimation.fnDelay = () -> cellSize > 4 ? 1 : 0;
-			resizeGrid(cellSize);
-			new RecursiveCrosses(grid).forEach(cell -> grid.set(cell, COMPLETED));
+			setCellSize(cellSize);
+			new RecursiveCrosses(getGrid()).forEach(cell -> getGrid().set(cell, COMPLETED));
 			sleep(1000);
 		});
 		System.exit(0);

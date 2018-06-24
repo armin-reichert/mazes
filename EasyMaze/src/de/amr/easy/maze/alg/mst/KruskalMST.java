@@ -1,13 +1,11 @@
 package de.amr.easy.maze.alg.mst;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static de.amr.easy.util.StreamUtils.permute;
 
-import java.util.stream.Stream;
-
 import de.amr.easy.data.Partition;
-import de.amr.easy.graph.api.Edge;
-import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -21,28 +19,24 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  * @see <a href="http://weblog.jamisbuck.org/2011/1/3/maze-generation-kruskal-s-algorithm.html">Maze
  *      Generation: Kruskal's Algorithm</a>
  */
-public class KruskalMST implements MazeGenerator {
+public class KruskalMST extends ObservableMazeGenerator {
 
-	private final OrthogonalGrid grid;
-
-	public KruskalMST(OrthogonalGrid grid) {
-		this.grid = grid;
+	public KruskalMST(int numCols, int numRows) {
+		super(numCols, numRows, false, UNVISITED);
 	}
 
 	@Override
-	public void run(int start) {
+	public OrthogonalGrid createMaze(int x, int y) {
 		Partition<Integer> forest = new Partition<>();
-		grid.fill();
-		Stream<Edge<Void>> edges = permute(grid.edges());
-		grid.removeEdges();
-		edges.forEach(edge -> {
+		permute(fullGrid(maze.numCols(), maze.numRows(), UNVISITED).edges()).forEach(edge -> {
 			int u = edge.either(), v = edge.other();
 			if (forest.find(u) != forest.find(v)) {
-				grid.addEdge(u, v);
-				grid.set(u, COMPLETED);
-				grid.set(v, COMPLETED);
+				maze.addEdge(u, v);
+				maze.set(u, COMPLETED);
+				maze.set(v, COMPLETED);
 				forest.union(u, v);
 			}
 		});
+		return maze;
 	}
 }

@@ -1,6 +1,7 @@
 package de.amr.easy.maze.alg;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static java.util.stream.IntStream.range;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.Random;
 import java.util.Set;
 
 import de.amr.easy.data.Partition;
-import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -23,53 +24,53 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *      Generation: Eller's Algorithm</a>.
  * 
  */
-public class Eller implements MazeGenerator {
+public class Eller extends ObservableMazeGenerator {
 
-	private final OrthogonalGrid grid;
 	private final Random rnd = new Random();
 	private final Partition<Integer> parts = new Partition<>();
 
-	public Eller(OrthogonalGrid grid) {
-		this.grid = grid;
+	public Eller(int numCols, int numRows) {
+		super(numCols, numRows, false, UNVISITED);
 	}
 
 	@Override
-	public void run(int start) {
-		range(0, grid.numRows() - 1).forEach(row -> {
-			connectCellsInsideRow(row, false);
-			connectCellsWithNextRow(row);
+	public OrthogonalGrid createMaze(int x, int y) {
+		range(0, maze.numRows() - 1).forEach(row -> {
+			connectCellsInsideRow(maze, row, false);
+			connectCellsWithNextRow(maze, row);
 		});
-		connectCellsInsideRow(grid.numRows() - 1, true);
+		connectCellsInsideRow(maze, maze.numRows() - 1, true);
+		return maze;
 	}
 
-	private void connectCells(int u, int v) {
-		grid.addEdge(u, v);
-		grid.set(u, COMPLETED);
-		grid.set(v, COMPLETED);
+	private void connectCells(OrthogonalGrid maze, int u, int v) {
+		maze.addEdge(u, v);
+		maze.set(u, COMPLETED);
+		maze.set(v, COMPLETED);
 		parts.union(u, v);
 	}
 
-	private void connectCellsInsideRow(int row, boolean all) {
-		range(0, grid.numCols() - 1).filter(col -> all || rnd.nextBoolean()).forEach(col -> {
-			int left = grid.cell(col, row), right = grid.cell(col + 1, row);
+	private void connectCellsInsideRow(OrthogonalGrid maze, int row, boolean all) {
+		range(0, maze.numCols() - 1).filter(col -> all || rnd.nextBoolean()).forEach(col -> {
+			int left = maze.cell(col, row), right = maze.cell(col + 1, row);
 			if (parts.find(left) != parts.find(right)) {
-				connectCells(left, right);
+				connectCells(maze, left, right);
 			}
 		});
 	}
 
-	private void connectCellsWithNextRow(int row) {
+	private void connectCellsWithNextRow(OrthogonalGrid maze, int row) {
 		// connect randomly selected cells of this row with next row
 		Set<Partition<Integer>.Set> connectedParts = new HashSet<>();
-		range(0, grid.numCols()).filter(col -> rnd.nextBoolean()).forEach(col -> {
-			int top = grid.cell(col, row), bottom = grid.cell(col, row + 1);
-			connectCells(top, bottom);
+		range(0, maze.numCols()).filter(col -> rnd.nextBoolean()).forEach(col -> {
+			int top = maze.cell(col, row), bottom = maze.cell(col, row + 1);
+			connectCells(maze, top, bottom);
 			connectedParts.add(parts.find(top));
 		});
 		// collect cells of still unconnected parts in this row
 		List<Integer> unconnectedCells = new ArrayList<>();
-		range(0, grid.numCols()).forEach(col -> {
-			int cell = grid.cell(col, row);
+		range(0, maze.numCols()).forEach(col -> {
+			int cell = maze.cell(col, row);
 			Partition<Integer>.Set part = parts.find(cell);
 			if (!connectedParts.contains(part)) {
 				unconnectedCells.add(cell);
@@ -81,8 +82,8 @@ public class Eller implements MazeGenerator {
 		unconnectedCells.forEach(top -> {
 			Partition<Integer>.Set part = parts.find(top);
 			if (!connectedParts.contains(part)) {
-				int bottom = grid.cell(grid.col(top), row + 1);
-				connectCells(top, bottom);
+				int bottom = maze.cell(maze.col(top), row + 1);
+				connectCells(maze, top, bottom);
 				connectedParts.add(part);
 			}
 		});

@@ -20,15 +20,15 @@ public class SpiralApp extends SwingGridSampleApp {
 
 	@Override
 	public void run() {
-		grid.vertices().forEach(cell -> {
-			grid.set(cell, COMPLETED);
+		getGrid().vertices().forEach(cell -> {
+			getGrid().set(cell, COMPLETED);
 		});
-		Spiral spiral = new Spiral(grid, grid.cell(CENTER));
+		Spiral spiral = new Spiral(getGrid(), getGrid().cell(CENTER));
 		Integer prevCell = null;
 		for (Integer cell : spiral) {
-			grid.set(cell, VISITED);
+			getGrid().set(cell, VISITED);
 			if (prevCell != null) {
-				grid.set(prevCell, UNVISITED);
+				getGrid().set(prevCell, UNVISITED);
 			}
 			prevCell = cell;
 		}

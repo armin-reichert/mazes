@@ -1,12 +1,13 @@
 package de.amr.easy.maze.alg.traversal;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
 import static de.amr.easy.util.StreamUtils.randomElement;
 
 import java.util.OptionalInt;
 
-import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -19,25 +20,29 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *      "http://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking">Maze
  *      Generation: Recursive Backtracking</a>
  */
-public class RecursiveDFS implements MazeGenerator {
+public class RecursiveDFS extends ObservableMazeGenerator {
 
-	private final OrthogonalGrid grid;
-
-	public RecursiveDFS(OrthogonalGrid grid) {
-		this.grid = grid;
+	public RecursiveDFS(int numCols, int numRows) {
+		super(numCols, numRows, false, UNVISITED);
 	}
 
 	@Override
-	public void run(int cell) {
-		grid.set(cell, VISITED);
-		for (OptionalInt neighbor = unvisitedNeighbor(cell); neighbor.isPresent(); neighbor = unvisitedNeighbor(cell)) {
-			grid.addEdge(cell, neighbor.getAsInt());
-			run(neighbor.getAsInt());
-		}
-		grid.set(cell, COMPLETED);
+	public OrthogonalGrid createMaze(int x, int y) {
+		return dfs(maze, maze.cell(x, y));
 	}
 
-	private OptionalInt unvisitedNeighbor(int cell) {
-		return randomElement(grid.neighbors(cell).filter(grid::isUnvisited));
+	public OrthogonalGrid dfs(OrthogonalGrid grid, int v) {
+		grid.set(v, VISITED);
+		for (OptionalInt neighbor = neighbor(grid, v); neighbor.isPresent(); neighbor = neighbor(grid, v)) {
+			int w = neighbor.getAsInt();
+			grid.addEdge(v, w);
+			dfs(grid, w);
+		}
+		grid.set(v, COMPLETED);
+		return grid;
+	}
+
+	private OptionalInt neighbor(OrthogonalGrid grid, int v) {
+		return randomElement(grid.neighbors(v).filter(grid::isUnvisited));
 	}
 }

@@ -1,6 +1,7 @@
 package de.amr.easy.maze.alg;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static de.amr.easy.grid.impl.Top4.E;
 import static de.amr.easy.grid.impl.Top4.S;
 
@@ -8,7 +9,7 @@ import java.util.OptionalInt;
 import java.util.Random;
 import java.util.stream.IntStream;
 
-import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -20,31 +21,31 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *      "http://weblog.jamisbuck.org/2011/2/1/maze-generation-binary-tree-algorithm.html">Maze
  *      Generation: Binary Tree algorithm</a>
  */
-public class BinaryTree implements MazeGenerator {
+public class BinaryTree extends ObservableMazeGenerator {
 
-	protected final OrthogonalGrid grid;
 	protected final Random rnd = new Random();
 
-	public BinaryTree(OrthogonalGrid grid) {
-		this.grid = grid;
+	public BinaryTree(int numCols, int numRows) {
+		super(numCols, numRows, false, UNVISITED);
 	}
 
 	@Override
-	public void run(int start) {
-		cells().forEach(v -> findRandomParent(v, S, E).ifPresent(parent -> {
-			grid.addEdge(v, parent);
-			grid.set(v, COMPLETED);
-			grid.set(parent, COMPLETED);
+	public OrthogonalGrid createMaze(int x, int y) {
+		cells(maze).forEach(v -> findRandomParent(maze, v, S, E).ifPresent(parent -> {
+			maze.addEdge(v, parent);
+			maze.set(v, COMPLETED);
+			maze.set(parent, COMPLETED);
 		}));
+		return maze;
 	}
 
-	protected IntStream cells() {
-		return grid.vertices();
+	protected IntStream cells(OrthogonalGrid maze) {
+		return maze.vertices();
 	}
 
-	private OptionalInt findRandomParent(int cell, int dir1, int dir2) {
+	private OptionalInt findRandomParent(OrthogonalGrid maze, int cell, int dir1, int dir2) {
 		boolean choice = rnd.nextBoolean();
-		OptionalInt neighbor = grid.neighbor(cell, choice ? dir1 : dir2);
-		return neighbor.isPresent() ? neighbor : grid.neighbor(cell, choice ? dir2 : dir1);
+		OptionalInt neighbor = maze.neighbor(cell, choice ? dir1 : dir2);
+		return neighbor.isPresent() ? neighbor : maze.neighbor(cell, choice ? dir2 : dir1);
 	}
 }

@@ -4,7 +4,7 @@ import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 import static de.amr.easy.util.StreamUtils.permute;
 
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -14,33 +14,28 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *
  * @see <a href="https://en.wikipedia.org/wiki/Reverse-delete_algorithm">Wikipedia</a>
  */
-public abstract class ReverseDeleteMST implements MazeGenerator {
+public abstract class ReverseDeleteMST extends ObservableMazeGenerator {
 
-	protected final OrthogonalGrid grid;
-
-	public ReverseDeleteMST(OrthogonalGrid grid) {
-		this.grid = grid;
+	public ReverseDeleteMST(int numCols, int numRows) {
+		super(numCols, numRows, true, COMPLETED);
 	}
 
 	@Override
-	public void run(int start) {
-		grid.setDefaultVertex(COMPLETED);
-		grid.fill();
-		Iterable<Edge<Void>> edges = permute(grid.edges())::iterator;
+	public OrthogonalGrid createMaze(int x, int y) {
+		Iterable<Edge<Void>> edges = permute(maze.edges())::iterator;
 		for (Edge<Void> edge : edges) {
-			if (grid.numEdges() == grid.numVertices() - 1) {
+			if (maze.numEdges() == maze.numVertices() - 1) {
 				break;
 			}
-			int u = edge.either(), v = edge.other();
-			grid.removeEdge(edge);
-			if (!connected(u, v)) {
-				grid.addEdge(u, v);
+			maze.removeEdge(edge);
+			if (!connected(edge.either(), edge.other())) {
+				maze.addEdge(edge.either(), edge.other());
 			}
 		}
+		return maze;
 	}
 
 	/**
-	 * 
 	 * @param u
 	 *          a cell
 	 * @param v

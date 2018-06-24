@@ -13,12 +13,12 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  */
 public class WilsonUSTCollapsingWalls extends WilsonUST {
 
-	public WilsonUSTCollapsingWalls(OrthogonalGrid grid) {
-		super(grid);
+	public WilsonUSTCollapsingWalls(int numCols, int numRows) {
+		super(numCols, numRows);
 	}
 
 	@Override
-	protected IntStream randomWalkStartCells() {
-		return new CollapsingWalls(grid).stream();
+	protected IntStream randomWalkStartCells(OrthogonalGrid maze) {
+		return new CollapsingWalls(maze).stream();
 	}
 }

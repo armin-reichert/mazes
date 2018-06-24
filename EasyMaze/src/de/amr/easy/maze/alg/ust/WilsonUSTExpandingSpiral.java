@@ -14,17 +14,17 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  */
 public class WilsonUSTExpandingSpiral extends WilsonUST {
 
-	public WilsonUSTExpandingSpiral(OrthogonalGrid grid) {
-		super(grid);
+	public WilsonUSTExpandingSpiral(int numCols, int numRows) {
+		super(numCols, numRows);
 	}
 
 	@Override
-	public void run(int start) {
-		super.run(grid.cell(CENTER));
+	public OrthogonalGrid createMaze(int x, int y) {
+		return runWilsonAlgorithm(maze, maze.cell(CENTER));
 	}
 
 	@Override
-	protected IntStream randomWalkStartCells() {
-		return new Spiral(grid, grid.cell(CENTER)).stream();
+	protected IntStream randomWalkStartCells(OrthogonalGrid maze) {
+		return new Spiral(maze, maze.cell(CENTER)).stream();
 	}
 }

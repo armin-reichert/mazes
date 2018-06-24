@@ -15,22 +15,22 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  */
 public class WilsonUSTExpandingRectangle extends WilsonUST {
 
-	public WilsonUSTExpandingRectangle(OrthogonalGrid grid) {
-		super(grid);
+	public WilsonUSTExpandingRectangle(int numCols, int numRows) {
+		super(numCols, numRows);
 	}
 
 	@Override
-	public void run(int start) {
-		super.run(grid.cell(TOP_LEFT));
+	public OrthogonalGrid createMaze(int x, int y) {
+		return runWilsonAlgorithm(maze, maze.cell(TOP_LEFT));
 	}
 
 	@Override
-	protected IntStream randomWalkStartCells() {
-		Rectangle startRect = new Rectangle(grid, grid.cell(TOP_LEFT), 1, 1);
+	protected IntStream randomWalkStartCells(OrthogonalGrid maze) {
+		Rectangle startRect = new Rectangle(maze, maze.cell(TOP_LEFT), 1, 1);
 		ExpandingRectangle expRect = new ExpandingRectangle(startRect);
 		expRect.setExpandHorizontally(true);
 		expRect.setExpandVertically(true);
-		expRect.setMaxExpansion(grid.numCols() - 1);
+		expRect.setMaxExpansion(maze.numCols() - 1);
 		return expRect.stream();
 	}
 }

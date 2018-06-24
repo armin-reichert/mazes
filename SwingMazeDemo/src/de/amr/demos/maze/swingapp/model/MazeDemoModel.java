@@ -136,6 +136,8 @@ public class MazeDemoModel {
 		return Arrays.stream(algorithms).filter(alg -> alg != null).filter(filter).findFirst();
 	}
 
+	private int gridWidth;
+	private int gridHeight;
 	private OrthogonalGrid grid;
 	private int[] gridCellSizes;
 	private int gridCellSize;
@@ -198,6 +200,22 @@ public class MazeDemoModel {
 
 	public void setHidingControlsWhenRunning(boolean hidingControlsWhenRunning) {
 		this.hidingControlsWhenRunning = hidingControlsWhenRunning;
+	}
+
+	public int getGridWidth() {
+		return gridWidth;
+	}
+
+	public void setGridWidth(int gridWidth) {
+		this.gridWidth = gridWidth;
+	}
+
+	public int getGridHeight() {
+		return gridHeight;
+	}
+
+	public void setGridHeight(int gridHeight) {
+		this.gridHeight = gridHeight;
 	}
 
 	public OrthogonalGrid getGrid() {

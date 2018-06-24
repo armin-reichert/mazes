@@ -29,11 +29,11 @@ public class MooreCurveApp extends SwingGridSampleApp {
 	@Override
 	public void run() {
 		IntStream.of(2, 4, 8, 16, 32, 64, 128, 256).forEach(n -> {
-			resizeGrid(canvasSize.width / n);
+			setCellSize(getCanvas().getWidth() / n);
 			int startCol = n / 2, startRow = n - 1;
-			int startCell = grid.cell(startCol, startRow);
-			traverse(new MooreLCurve(log(2, n)), grid, startCell, this::addEdge);
-			floodFill(canvas, grid, startCell, false);
+			int startCell = getGrid().cell(startCol, startRow);
+			traverse(new MooreLCurve(log(2, n)), getGrid(), startCell, this::addEdge);
+			floodFill(getCanvas(), getGrid(), startCell, false);
 			sleep(1000);
 		});
 	}

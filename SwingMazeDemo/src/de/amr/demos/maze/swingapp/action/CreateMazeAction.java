@@ -7,8 +7,8 @@ import java.awt.event.ActionEvent;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
-import de.amr.easy.maze.alg.core.MazeGenerator;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
+import de.amr.easy.grid.api.GridPosition;
+import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
 import de.amr.easy.util.StopWatch;
 
 /**
@@ -31,7 +31,7 @@ public class CreateMazeAction extends MazeDemoAction {
 		app.enableUI(false);
 		app.startWorkerThread(() -> {
 			try {
-				runMazeGenerator(generatorInfo, app.model.getGrid().cell(app.model.getGenerationStart()));
+				runMazeGenerator(generatorInfo, app.model.getGenerationStart());
 			} catch (Exception | StackOverflowError x) {
 				x.printStackTrace(System.err);
 				app.showMessage("Maze generation aborted: " + x.getClass().getSimpleName());
@@ -42,7 +42,8 @@ public class CreateMazeAction extends MazeDemoAction {
 		});
 	}
 
-	protected void runMazeGenerator(AlgorithmInfo generatorInfo, int startCell) throws Exception, StackOverflowError {
+	protected void runMazeGenerator(AlgorithmInfo generatorInfo, GridPosition startPosition)
+			throws Exception, StackOverflowError {
 		app.showMessage(format("\n%s (%d cells)", generatorInfo.getDescription(), app.model.getGrid().numVertices()));
 		app.model.getGrid().clear();
 		app.model.getGrid().setDefaultVertex(UNVISITED);
@@ -50,14 +51,17 @@ public class CreateMazeAction extends MazeDemoAction {
 		app.model.getGrid().removeEdges();
 		app.model.getGrid().setEventsEnabled(true);
 		app.getCanvas().clear();
-		MazeGenerator generator = (MazeGenerator) generatorInfo.getAlgorithmClass().getConstructor(OrthogonalGrid.class)
-				.newInstance(app.model.getGrid());
+		ObservableMazeGenerator generator = (ObservableMazeGenerator) generatorInfo.getAlgorithmClass()
+				.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(app.model.getGridWidth(), app.model.getGridHeight());
+		app.setGrid(generator.getGrid());
+		int startCell = generator.getGrid().cell(startPosition);
+		int x = generator.getGrid().col(startCell), y = generator.getGrid().row(startCell);
 		if (app.model.isGenerationAnimated()) {
-			generator.run(startCell);
+			generator.createMaze(x, y);
 		} else {
 			StopWatch watch = new StopWatch();
 			app.getCanvasAnimation().setEnabled(false);
-			watch.measure(() -> generator.run(startCell));
+			watch.measure(() -> generator.createMaze(x, y));
 			app.showMessage(format("Maze generation: %.2f seconds.", watch.getSeconds()));
 			app.getCanvasAnimation().setEnabled(true);
 			watch.measure(() -> app.getCanvas().drawGrid());

@@ -1,12 +1,13 @@
 package de.amr.easy.maze.alg.mst;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 
 import java.util.PriorityQueue;
 import java.util.Random;
 
 import de.amr.easy.graph.api.WeightedEdge;
-import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -18,37 +19,38 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *      Generation: Prim's Algorithm</a>
  * @see <a href="https://en.wikipedia.org/wiki/Prim%27s_algorithm">Wikipedia: Prim's Algorithm</a>
  */
-public class PrimMST implements MazeGenerator {
+public class PrimMST extends ObservableMazeGenerator {
 
-	private final OrthogonalGrid grid;
-	private final PriorityQueue<WeightedEdge<Integer>> cut = new PriorityQueue<>();
-	private final Random rnd = new Random();
+	private PriorityQueue<WeightedEdge<Integer>> cut;
+	private Random rnd = new Random();
 
-	public PrimMST(OrthogonalGrid grid) {
-		this.grid = grid;
+	public PrimMST(int numCols, int numRows) {
+		super(numCols, numRows, false, UNVISITED);
 	}
 
 	@Override
-	public void run(int start) {
-		extendMazeAt(start);
+	public OrthogonalGrid createMaze(int x, int y) {
+		cut = new PriorityQueue<>();
+		extendMazeAt(maze.cell(x, y));
 		while (!cut.isEmpty()) {
-			WeightedEdge<Integer> edge = cut.poll();
-			int either = edge.either(), other = edge.other();
+			WeightedEdge<Integer> minEdge = cut.poll();
+			int either = minEdge.either(), other = minEdge.other();
 			if (outsideMaze(either) || outsideMaze(other)) {
-				grid.addEdge(either, other);
+				maze.addEdge(either, other);
 				extendMazeAt(outsideMaze(either) ? either : other);
 			}
 		}
+		return maze;
 	}
 
 	private void extendMazeAt(int cell) {
-		grid.neighbors(cell).filter(this::outsideMaze).forEach(neighbor -> {
+		maze.neighbors(cell).filter(this::outsideMaze).forEach(neighbor -> {
 			cut.add(new WeightedEdge<>(cell, neighbor, rnd.nextInt()));
 		});
-		grid.set(cell, COMPLETED);
+		maze.set(cell, COMPLETED);
 	}
 
 	private boolean outsideMaze(int cell) {
-		return grid.get(cell) != COMPLETED;
+		return maze.get(cell) != COMPLETED;
 	}
 }

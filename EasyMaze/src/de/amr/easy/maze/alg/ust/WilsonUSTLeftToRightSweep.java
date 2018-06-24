@@ -14,17 +14,17 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  */
 public class WilsonUSTLeftToRightSweep extends WilsonUST {
 
-	public WilsonUSTLeftToRightSweep(OrthogonalGrid grid) {
-		super(grid);
+	public WilsonUSTLeftToRightSweep(int numCols, int numRows) {
+		super(numCols, numRows);
 	}
 
 	@Override
-	public void run(int start) {
-		super.run(grid.cell(TOP_LEFT));
+	public OrthogonalGrid createMaze(int x, int y) {
+		return runWilsonAlgorithm(maze, maze.cell(TOP_LEFT));
 	}
 
 	@Override
-	protected IntStream randomWalkStartCells() {
-		return new LeftToRightSweep(grid).stream();
+	protected IntStream randomWalkStartCells(OrthogonalGrid maze) {
+		return new LeftToRightSweep(maze).stream();
 	}
 }

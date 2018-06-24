@@ -34,8 +34,7 @@ public class GridTests {
 
 	@Before
 	public void setUp() {
-		grid = new OrthogonalGrid(WIDTH, HEIGHT);
-		grid.setDefaultVertex(UNVISITED);
+		grid = new OrthogonalGrid(WIDTH, HEIGHT, UNVISITED);
 	}
 
 	@After
@@ -199,11 +198,11 @@ public class GridTests {
 	@Test
 	public void testCycleCheckerSpanningTree() {
 		// create a spanning tree
-		new RandomBFS(grid).run(grid.cell(0, 0));
+		grid = new RandomBFS(WIDTH, HEIGHT).createMaze(0, 0);
 		assertFalse(GraphUtils.containsCycle(grid));
 
 		// Find vertex with non-adjacent neighbor. Adding an edge to this neighbor produces a cycle.
-		///*@formatter:off*/
+		/*@formatter:off*/
 		grid.vertices()
 			.filter(cell -> grid.neighbors(cell).anyMatch(neighbor -> !grid.hasEdge(cell, neighbor)))
 			.findAny()
@@ -212,7 +211,7 @@ public class GridTests {
 					.filter(neighbor -> !grid.hasEdge(cell, neighbor))
 					.findAny()
 					.ifPresent(neighbor -> grid.addEdge(cell, neighbor)));
-		///*@formatter:on*/
+		/*@formatter:on*/
 
 		// now there must be a cycle
 		assertTrue(GraphUtils.containsCycle(grid));

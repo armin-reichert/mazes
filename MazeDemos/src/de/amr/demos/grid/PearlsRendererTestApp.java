@@ -6,11 +6,9 @@ import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation.floodFill;
 
-import java.awt.Color;
-
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
 import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
-import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
+import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
 import de.amr.easy.maze.alg.ust.WilsonUSTRecursiveCrosses;
 
 public class PearlsRendererTestApp extends SwingGridSampleApp {
@@ -26,38 +24,37 @@ public class PearlsRendererTestApp extends SwingGridSampleApp {
 	public PearlsRendererTestApp() {
 		super(CANVAS_SIZE, CANVAS_SIZE, GRID_CELL_SIZE);
 		setAppName("Pearls Renderer Test");
-		setRenderingStyle(Style.PEARLS);
-		ConfigurableGridRenderer renderer = (ConfigurableGridRenderer) canvas.getRenderer().get();
-		renderer.fnGridBgColor = () -> Color.DARK_GRAY;
+		setStyle(Style.PEARLS);
 	}
 
 	@Override
 	public void run() {
 		clear();
-		canvasAnimation.setEnabled(false);
-		grid.setDefaultVertex(COMPLETED);
-		grid.fill();
-		canvas.drawGrid();
+		setCanvasAnimation(false);
+		getGrid().setDefaultVertex(COMPLETED);
+		getGrid().fill();
+		getCanvas().drawGrid();
 
-		sleep(5000);
+		sleep(2000);
 		clear();
-		canvasAnimation.setEnabled(true);
-		canvasAnimation.fnDelay = () -> 1;
-		new WilsonUSTRecursiveCrosses(grid).run(0);
+		setCanvasAnimation(true);
+		ObservableMazeGenerator generator = new WilsonUSTRecursiveCrosses(GRID_SIZE, GRID_SIZE);
+		setGrid(generator.getGrid());
+		generator.createMaze(0, 0);
 
-		sleep(5000);
-		canvasAnimation.fnDelay = () -> 10;
-		new DepthFirstTraversalAnimation(grid).run(canvas, new DepthFirstTraversal2(grid), 0, grid.cell(BOTTOM_RIGHT));
+		sleep(2000);
+		new DepthFirstTraversalAnimation(getGrid()).run(getCanvas(), new DepthFirstTraversal2(getGrid()), 0,
+				getGrid().cell(BOTTOM_RIGHT));
 
-		sleep(5000);
-		canvas.clear();
-		floodFill(canvas, grid, grid.cell(TOP_LEFT), true);
+		sleep(2000);
+		getCanvas().clear();
+		floodFill(getCanvas(), getGrid(), getGrid().cell(TOP_LEFT), true);
 	}
 
 	private void clear() {
-		grid.removeEdges();
-		grid.clear();
-		grid.setDefaultVertex(UNVISITED);
-		canvas.clear();
+		getGrid().removeEdges();
+		getGrid().clear();
+		getGrid().setDefaultVertex(UNVISITED);
+		getCanvas().clear();
 	}
 }

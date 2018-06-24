@@ -14,16 +14,17 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  */
 public class WilsonUSTCollapsingCircle extends WilsonUST {
 
-	public WilsonUSTCollapsingCircle(OrthogonalGrid grid) {
-		super(grid);
+	public WilsonUSTCollapsingCircle(int numCols, int numRows) {
+		super(numCols, numRows);
 	}
 
 	@Override
-	public void run(int start) {
-		int center = grid.cell(CENTER);
-		grid.set(center, COMPLETED);
-		for (int r = max(grid.numRows(), grid.numCols()) - 1; r > 0; r--) {
-			new Circle(grid, center, r).forEach(this::loopErasedRandomWalk);
+	public OrthogonalGrid createMaze(int x, int y) {
+		int center = maze.cell(CENTER);
+		maze.set(center, COMPLETED);
+		for (int r = max(maze.numRows(), maze.numCols()) - 1; r > 0; r--) {
+			new Circle(maze, center, r).forEach(walkStart -> loopErasedRandomWalk(maze, walkStart));
 		}
+		return maze;
 	}
 }
