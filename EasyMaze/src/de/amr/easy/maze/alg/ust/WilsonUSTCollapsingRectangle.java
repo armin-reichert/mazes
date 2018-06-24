@@ -19,13 +19,12 @@ public class WilsonUSTCollapsingRectangle extends WilsonUST {
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		lastWalkDir = new int[maze.numVertices()];
 		int start = maze.cell(CENTER);
 		maze.set(start, COMPLETED);
 		int col = 0, row = 0;
 		int width = maze.numCols(), height = maze.numRows();
 		while (width > 0 && height > 0) {
-			new Rectangle(maze, maze.cell(col, row), width, height).forEach(walkStart -> loopErasedRandomWalk(walkStart));
+			new Rectangle(maze, maze.cell(col, row), width, height).forEach(this::loopErasedRandomWalk);
 			width -= 2;
 			height -= 2;
 			col += 1;

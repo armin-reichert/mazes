@@ -31,13 +31,13 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  */
 public abstract class WilsonUST extends ObservableMazeGenerator {
 
-	protected int[] lastWalkDir;
+	private int[] lastWalkDir;
 	private int current;
 
 	public WilsonUST(int numCols, int numRows) {
 		super(numCols, numRows, false, UNVISITED);
 	}
-	
+
 	public WilsonUST(OrthogonalGrid maze) {
 		super(maze);
 	}
@@ -48,9 +48,8 @@ public abstract class WilsonUST extends ObservableMazeGenerator {
 	}
 
 	protected OrthogonalGrid runWilsonAlgorithm(int start) {
-		lastWalkDir = new int[maze.numVertices()];
 		maze.set(start, COMPLETED);
-		randomWalkStartCells().forEach(walkStart -> loopErasedRandomWalk(walkStart));
+		randomWalkStartCells().forEach(this::loopErasedRandomWalk);
 		return maze;
 	}
 
@@ -69,7 +68,6 @@ public abstract class WilsonUST extends ObservableMazeGenerator {
 	 *          the start cell of the random walk
 	 */
 	protected final void loopErasedRandomWalk(int walkStart) {
-		// TODO: HACK
 		if (lastWalkDir == null) {
 			lastWalkDir = new int[maze.numVertices()];
 		}
