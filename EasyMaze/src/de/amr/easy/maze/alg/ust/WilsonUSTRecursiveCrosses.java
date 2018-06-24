@@ -3,7 +3,6 @@ package de.amr.easy.maze.alg.ust;
 import java.util.stream.IntStream;
 
 import de.amr.easy.grid.iterators.traversals.RecursiveCrosses;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Wilson's algorithm where the vertices are selected from recursive crosses.
@@ -17,7 +16,7 @@ public class WilsonUSTRecursiveCrosses extends WilsonUST {
 	}
 
 	@Override
-	protected IntStream randomWalkStartCells(OrthogonalGrid maze) {
+	protected IntStream randomWalkStartCells() {
 		return new RecursiveCrosses(maze).stream();
 	}
 }

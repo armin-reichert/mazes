@@ -27,21 +27,21 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 	private int i;
 
 	@Override
-	protected IntStream randomWalkStartCells(OrthogonalGrid maze) {
+	protected IntStream randomWalkStartCells() {
 		int[] walkStartCells = new int[maze.numVertices()];
 		int n = nextPow(3, max(maze.numCols(), maze.numRows()));
 		OrthogonalGrid square = emptyGrid(n, n, UNVISITED);
 		Curve peano = new PeanoCurve(log(3, n));
 		int current = square.cell(BOTTOM_LEFT);
-		addCell(walkStartCells, maze, square.col(current), square.row(current));
+		addCell(walkStartCells, square.col(current), square.row(current));
 		for (int dir : peano) {
 			current = square.neighbor(current, dir).getAsInt();
-			addCell(walkStartCells, maze, square.col(current), square.row(current));
+			addCell(walkStartCells, square.col(current), square.row(current));
 		}
 		return stream(walkStartCells);
 	}
 
-	private void addCell(int[] walkStartCells, OrthogonalGrid maze, int col, int row) {
+	private void addCell(int[] walkStartCells, int col, int row) {
 		if (maze.isValidCol(col) && maze.isValidRow(row)) {
 			walkStartCells[i++] = maze.cell(col, row);
 		}

@@ -21,7 +21,7 @@ public class WilsonUSTRowsTopDown extends WilsonUST {
 		lastWalkDir = new int[maze.numVertices()];
 		maze.set(maze.cell(x, y), COMPLETED);
 		range(0, maze.numRows()).forEach(row -> range(0, maze.numCols()).forEach(col -> {
-			loopErasedRandomWalk(maze, maze.cell(col, row));
+			loopErasedRandomWalk(maze.cell(col, row));
 		}));
 		return maze;
 	}

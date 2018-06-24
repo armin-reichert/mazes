@@ -9,14 +9,18 @@ import de.amr.easy.graph.api.traversal.TraversalState;
  */
 public abstract class ObservableMazeGenerator implements MazeGenerator {
 
-	protected final OrthogonalGrid maze;
+	protected OrthogonalGrid maze;
 
-	public ObservableMazeGenerator(int numCols, int numRows, boolean full, TraversalState defaultState) {
+	protected ObservableMazeGenerator(int numCols, int numRows, boolean full, TraversalState defaultState) {
 		if (full) {
 			maze = fullGrid(numCols, numRows, defaultState);
 		} else {
 			maze = emptyGrid(numCols, numRows, defaultState);
 		}
+	}
+	
+	protected ObservableMazeGenerator(OrthogonalGrid maze) {
+		this.maze = maze;
 	}
 
 	public OrthogonalGrid getGrid() {

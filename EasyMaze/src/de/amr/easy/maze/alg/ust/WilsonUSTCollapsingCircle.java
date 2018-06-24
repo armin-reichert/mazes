@@ -23,7 +23,7 @@ public class WilsonUSTCollapsingCircle extends WilsonUST {
 		int center = maze.cell(CENTER);
 		maze.set(center, COMPLETED);
 		for (int r = max(maze.numRows(), maze.numCols()) - 1; r > 0; r--) {
-			new Circle(maze, center, r).forEach(walkStart -> loopErasedRandomWalk(maze, walkStart));
+			new Circle(maze, center, r).forEach(walkStart -> loopErasedRandomWalk(walkStart));
 		}
 		return maze;
 	}

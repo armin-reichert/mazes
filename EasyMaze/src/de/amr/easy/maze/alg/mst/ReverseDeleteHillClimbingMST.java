@@ -10,7 +10,7 @@ import de.amr.easy.graph.impl.traversal.HillClimbing;
  * @see <a href="https://en.wikipedia.org/wiki/Reverse-delete_algorithm">Wikipedia</a>
  */
 public class ReverseDeleteHillClimbingMST extends ReverseDeleteMST {
-	
+
 	public ReverseDeleteHillClimbingMST(int numCols, int numRows) {
 		super(numCols, numRows);
 	}

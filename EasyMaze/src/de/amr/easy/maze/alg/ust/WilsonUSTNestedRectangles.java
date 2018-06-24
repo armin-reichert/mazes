@@ -26,11 +26,11 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		return runWilsonAlgorithm(maze, maze.cell(TOP_LEFT));
+		return runWilsonAlgorithm(maze.cell(TOP_LEFT));
 	}
 
 	@Override
-	protected IntStream randomWalkStartCells(OrthogonalGrid maze) {
+	protected IntStream randomWalkStartCells() {
 		Iterable<Integer> it = new Iterable<Integer>() {
 
 			@Override
@@ -39,7 +39,7 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 				List<Iterator<Integer>> expRects = new ArrayList<>();
 				int rate = maze.numCols();
 				while (rate > 1) {
-					expRects.add(expandingRectangle(maze, firstCell, rate).iterator());
+					expRects.add(expandingRectangle(firstCell, rate).iterator());
 					rate /= 2;
 				}
 				@SuppressWarnings("unchecked")
@@ -58,7 +58,7 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 		return StreamUtils.toIntStream(it);
 	}
 
-	private ExpandingRectangle expandingRectangle(OrthogonalGrid maze, Rectangle startRectangle, int rate) {
+	private ExpandingRectangle expandingRectangle(Rectangle startRectangle, int rate) {
 		ExpandingRectangle expRect = new ExpandingRectangle(startRectangle);
 		expRect.setExpandHorizontally(true);
 		expRect.setExpandVertically(true);

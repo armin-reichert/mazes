@@ -24,7 +24,7 @@ public class WilsonUSTMooreCurve extends WilsonUST {
 	}
 
 	@Override
-	protected IntStream randomWalkStartCells(OrthogonalGrid maze) {
+	protected IntStream randomWalkStartCells() {
 		int[] walkStartCells = new int[maze.numVertices()];
 		int n = nextPow(2, max(maze.numCols(), maze.numRows()));
 		OrthogonalGrid square = emptyGrid(n, n, UNVISITED);

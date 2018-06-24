@@ -37,23 +37,27 @@ public abstract class WilsonUST extends ObservableMazeGenerator {
 	public WilsonUST(int numCols, int numRows) {
 		super(numCols, numRows, false, UNVISITED);
 	}
+	
+	public WilsonUST(OrthogonalGrid maze) {
+		super(maze);
+	}
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		return runWilsonAlgorithm(maze, maze.cell(x, y));
+		return runWilsonAlgorithm(maze.cell(x, y));
 	}
 
-	protected OrthogonalGrid runWilsonAlgorithm(OrthogonalGrid maze, int start) {
+	protected OrthogonalGrid runWilsonAlgorithm(int start) {
 		lastWalkDir = new int[maze.numVertices()];
 		maze.set(start, COMPLETED);
-		randomWalkStartCells(maze).forEach(walkStart -> loopErasedRandomWalk(maze, walkStart));
+		randomWalkStartCells().forEach(walkStart -> loopErasedRandomWalk(walkStart));
 		return maze;
 	}
 
 	/**
 	 * @return stream of start cells for the random walks
 	 */
-	protected IntStream randomWalkStartCells(OrthogonalGrid maze) {
+	protected IntStream randomWalkStartCells() {
 		return maze.vertices();
 	}
 
@@ -64,7 +68,7 @@ public abstract class WilsonUST extends ObservableMazeGenerator {
 	 * @param walkStart
 	 *          the start cell of the random walk
 	 */
-	protected final void loopErasedRandomWalk(OrthogonalGrid maze, int walkStart) {
+	protected final void loopErasedRandomWalk(int walkStart) {
 		// TODO: HACK
 		if (lastWalkDir == null) {
 			lastWalkDir = new int[maze.numVertices()];

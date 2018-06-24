@@ -38,9 +38,8 @@ public class AldousBroderWilsonUST extends ObservableMazeGenerator {
 			visitRandomNeighbor();
 		}
 		// continue with Wilson
-		WilsonUSTRandomCell wilson = new WilsonUSTRandomCell(maze.numCols(), maze.numRows());
-		permute(maze.vertices().filter(maze::isUnvisited))
-				.forEach(walkStart -> wilson.loopErasedRandomWalk(maze, walkStart));
+		WilsonUSTRandomCell wilson = new WilsonUSTRandomCell(maze);
+		permute(maze.vertices().filter(maze::isUnvisited)).forEach(wilson::loopErasedRandomWalk);
 		return maze;
 	}
 

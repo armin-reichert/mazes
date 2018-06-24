@@ -3,7 +3,6 @@ package de.amr.easy.maze.alg.ust;
 import java.util.stream.IntStream;
 
 import de.amr.easy.grid.iterators.traversals.CollapsingWalls;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Wilson's algorithm where the vertices are selected alternating left-to-right and right-to-left
@@ -18,7 +17,7 @@ public class WilsonUSTCollapsingWalls extends WilsonUST {
 	}
 
 	@Override
-	protected IntStream randomWalkStartCells(OrthogonalGrid maze) {
+	protected IntStream randomWalkStartCells() {
 		return new CollapsingWalls(maze).stream();
 	}
 }

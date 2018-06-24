@@ -20,11 +20,11 @@ public class WilsonUSTLeftToRightSweep extends WilsonUST {
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		return runWilsonAlgorithm(maze, maze.cell(TOP_LEFT));
+		return runWilsonAlgorithm(maze.cell(TOP_LEFT));
 	}
 
 	@Override
-	protected IntStream randomWalkStartCells(OrthogonalGrid maze) {
+	protected IntStream randomWalkStartCells() {
 		return new LeftToRightSweep(maze).stream();
 	}
 }

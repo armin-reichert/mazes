@@ -33,7 +33,7 @@ public class RecursiveDFS extends ObservableMazeGenerator {
 
 	public OrthogonalGrid dfs(OrthogonalGrid grid, int v) {
 		grid.set(v, VISITED);
-		for (OptionalInt neighbor = neighbor(grid, v); neighbor.isPresent(); neighbor = neighbor(grid, v)) {
+		for (OptionalInt neighbor = neighbor(v); neighbor.isPresent(); neighbor = neighbor(v)) {
 			int w = neighbor.getAsInt();
 			grid.addEdge(v, w);
 			dfs(grid, w);
@@ -42,7 +42,7 @@ public class RecursiveDFS extends ObservableMazeGenerator {
 		return grid;
 	}
 
-	private OptionalInt neighbor(OrthogonalGrid grid, int v) {
-		return randomElement(grid.neighbors(v).filter(grid::isUnvisited));
+	private OptionalInt neighbor(int v) {
+		return randomElement(maze.neighbors(v).filter(maze::isUnvisited));
 	}
 }
