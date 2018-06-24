@@ -128,7 +128,7 @@ public abstract class SwingGridSampleApp implements Runnable {
 		window.setTitle(getTitleText());
 	}
 
-	private ConfigurableGridRenderer createRenderer() {
+	protected ConfigurableGridRenderer createRenderer() {
 		ConfigurableGridRenderer r;
 		if (style == Style.WALL_PASSAGE) {
 			r = new WallPassageGridRenderer();
