@@ -28,18 +28,18 @@ public class RecursiveDFS extends ObservableMazeGenerator {
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		return dfs(maze, maze.cell(x, y));
+		dfs(maze.cell(x, y));
+		return maze;
 	}
 
-	public OrthogonalGrid dfs(OrthogonalGrid grid, int v) {
-		grid.set(v, VISITED);
-		for (OptionalInt neighbor = neighbor(v); neighbor.isPresent(); neighbor = neighbor(v)) {
-			int w = neighbor.getAsInt();
-			grid.addEdge(v, w);
-			dfs(grid, w);
+	private void dfs(int v) {
+		maze.set(v, VISITED);
+		for (OptionalInt optNeighbor = neighbor(v); optNeighbor.isPresent(); optNeighbor = neighbor(v)) {
+			int neighbor = optNeighbor.getAsInt();
+			maze.addEdge(v, neighbor);
+			dfs(neighbor);
 		}
-		grid.set(v, COMPLETED);
-		return grid;
+		maze.set(v, COMPLETED);
 	}
 
 	private OptionalInt neighbor(int v) {

@@ -33,7 +33,7 @@ public class RandomBFS extends ObservableMazeGenerator {
 		frontier.add(start);
 		while (!frontier.isEmpty()) {
 			int cell = frontier.remove(rnd.nextInt(frontier.size()));
-			permute(maze.neighbors(cell)).filter(maze::isUnvisited).forEach(neighbor -> {
+			permute(maze.neighbors(cell).filter(maze::isUnvisited)).forEach(neighbor -> {
 				maze.addEdge(cell, neighbor);
 				maze.set(neighbor, VISITED);
 				frontier.add(neighbor);

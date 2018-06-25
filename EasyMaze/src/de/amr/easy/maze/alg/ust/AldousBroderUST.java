@@ -40,15 +40,23 @@ public class AldousBroderUST extends ObservableMazeGenerator {
 		super(numCols, numRows, false, UNVISITED);
 	}
 
+	public AldousBroderUST(OrthogonalGrid grid) {
+		super(grid);
+	}
+
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		currentCell = maze.cell(x, y);
+		run(maze.cell(x, y), maze.numVertices());
+		return maze;
+	}
+
+	public void run(int start, int limit) {
+		currentCell = start;
 		maze.set(currentCell, COMPLETED);
 		numVisitedCells = 1;
-		while (numVisitedCells < maze.numVertices()) {
+		while (numVisitedCells < limit) {
 			visitRandomNeighbor();
 		}
-		return maze;
 	}
 
 	/**
