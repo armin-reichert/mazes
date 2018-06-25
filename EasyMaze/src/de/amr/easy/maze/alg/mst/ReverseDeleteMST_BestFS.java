@@ -3,15 +3,15 @@ package de.amr.easy.maze.alg.mst;
 import de.amr.easy.graph.impl.traversal.BestFirstTraversal;
 
 /**
- * A (naive?) implementation of the Reverse-Delete-MST algorithm.
+ * Reverse-Delete-MST algorithm using best-first search for connectivity test.
  * 
  * @author Armin Reichert
  *
  * @see <a href="https://en.wikipedia.org/wiki/Reverse-delete_algorithm">Wikipedia</a>
  */
-public class ReverseDeleteBestFSMST extends ReverseDeleteMST {
+public class ReverseDeleteMST_BestFS extends ReverseDeleteMST {
 
-	public ReverseDeleteBestFSMST(int numCols, int numRows) {
+	public ReverseDeleteMST_BestFS(int numCols, int numRows) {
 		super(numCols, numRows);
 	}
 

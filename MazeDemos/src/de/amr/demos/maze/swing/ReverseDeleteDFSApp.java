@@ -6,7 +6,7 @@ import java.util.stream.IntStream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
 import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
-import de.amr.easy.maze.alg.mst.ReverseDeleteDFSMST;
+import de.amr.easy.maze.alg.mst.ReverseDeleteMST_DFS;
 
 public class ReverseDeleteDFSApp extends SwingGridSampleApp {
 
@@ -23,7 +23,7 @@ public class ReverseDeleteDFSApp extends SwingGridSampleApp {
 	public void run() {
 		IntStream.of(128, 64, 32).forEach(cellSize -> {
 			setCellSize(cellSize);
-			ObservableMazeGenerator generator = new ReverseDeleteDFSMST(getCanvas().getWidth() / cellSize,
+			ObservableMazeGenerator generator = new ReverseDeleteMST_DFS(getCanvas().getWidth() / cellSize,
 					getCanvas().getHeight() / cellSize);
 			setGrid(generator.getGrid());
 			generator.createMaze(0, 0);

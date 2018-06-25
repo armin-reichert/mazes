@@ -28,7 +28,7 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.mst.BoruvkaMST;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 import de.amr.easy.maze.alg.mst.PrimMST;
-import de.amr.easy.maze.alg.mst.ReverseDeleteDFSMST;
+import de.amr.easy.maze.alg.mst.ReverseDeleteMST_DFS;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
 import de.amr.easy.maze.alg.traversal.RandomBFS;
 import de.amr.easy.maze.alg.traversal.RecursiveDFS;
@@ -60,7 +60,7 @@ public class MazeGenerationRecordingApp {
 		BoruvkaMST.class, 
 		KruskalMST.class, 
 		PrimMST.class, 
-		ReverseDeleteDFSMST.class,
+		ReverseDeleteMST_DFS.class,
 //		AldousBroderUST.class, 
 		BinaryTree.class,
 		BinaryTreeRandom.class, 

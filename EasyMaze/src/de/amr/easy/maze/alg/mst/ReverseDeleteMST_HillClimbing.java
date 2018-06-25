@@ -3,15 +3,15 @@ package de.amr.easy.maze.alg.mst;
 import de.amr.easy.graph.impl.traversal.HillClimbing;
 
 /**
- * A (naive?) implementation of the Reverse-Delete-MST algorithm.
+ * Reverse-Delete-MST algorithm using "hill climbing" for connectivity test.
  * 
  * @author Armin Reichert
  *
  * @see <a href="https://en.wikipedia.org/wiki/Reverse-delete_algorithm">Wikipedia</a>
  */
-public class ReverseDeleteHillClimbingMST extends ReverseDeleteMST {
+public class ReverseDeleteMST_HillClimbing extends ReverseDeleteMST {
 
-	public ReverseDeleteHillClimbingMST(int numCols, int numRows) {
+	public ReverseDeleteMST_HillClimbing(int numCols, int numRows) {
 		super(numCols, numRows);
 	}
 

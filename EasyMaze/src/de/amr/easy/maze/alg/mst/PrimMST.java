@@ -34,23 +34,19 @@ public class PrimMST extends ObservableMazeGenerator {
 		extendMazeAt(maze.cell(x, y));
 		while (!cut.isEmpty()) {
 			WeightedEdge<Integer> minEdge = cut.poll();
-			int either = minEdge.either(), other = minEdge.other();
-			if (outsideMaze(either) || outsideMaze(other)) {
-				maze.addEdge(either, other);
-				extendMazeAt(outsideMaze(either) ? either : other);
+			int u = minEdge.either(), v = minEdge.other();
+			if (maze.isUnvisited(u) || maze.isUnvisited(v)) {
+				maze.addEdge(u, v);
+				extendMazeAt(maze.isUnvisited(u) ? u : v);
 			}
 		}
 		return maze;
 	}
 
 	private void extendMazeAt(int cell) {
-		maze.neighbors(cell).filter(this::outsideMaze).forEach(neighbor -> {
+		maze.neighbors(cell).filter(maze::isUnvisited).forEach(neighbor -> {
 			cut.add(new WeightedEdge<>(cell, neighbor, rnd.nextInt()));
 		});
 		maze.set(cell, COMPLETED);
-	}
-
-	private boolean outsideMaze(int cell) {
-		return maze.get(cell) != COMPLETED;
 	}
 }

@@ -35,12 +35,12 @@ public class BoruvkaMST extends ObservableMazeGenerator {
 		maze.vertices().forEach(forest::makeSet);
 		while (forest.size() > 1) {
 			permute(forest.sets()).map(this::findCombiningEdge).filter(Optional::isPresent).map(Optional::get)
-					.forEach(this::addEdge);
+					.forEach(this::combineTrees);
 		}
 		return maze;
 	}
 
-	private void addEdge(Edge<Void> edge) {
+	private void combineTrees(Edge<Void> edge) {
 		int u = edge.either(), v = edge.other();
 		if (forest.find(u) != forest.find(v)) {
 			maze.addEdge(u, v);
@@ -51,11 +51,12 @@ public class BoruvkaMST extends ObservableMazeGenerator {
 	}
 
 	private Optional<Edge<Void>> findCombiningEdge(Partition<Integer>.Set tree) {
-		return permute(tree.elements()).flatMap(this::combiningEdges).findFirst();
+		return permute(tree.elements()).flatMap(this::inventCombiningEdges).findFirst();
 	}
 
-	private Stream<Edge<Void>> combiningEdges(int cell) {
-		return permute(maze.neighbors(cell)).filter(neighbor -> forest.find(cell) != forest.find(neighbor))
-				.mapToObj(neighbor -> new SimpleEdge<>(cell, neighbor));
+	private Stream<Edge<Void>> inventCombiningEdges(int cell) {
+		// invent edges combining different subtrees
+		return permute(maze.neighbors(cell).filter(neighbor -> forest.find(cell) != forest.find(neighbor))
+				.mapToObj(neighbor -> new SimpleEdge<>(cell, neighbor)));
 	}
 }

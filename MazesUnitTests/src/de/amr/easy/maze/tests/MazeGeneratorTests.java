@@ -29,10 +29,10 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.mst.BoruvkaMST;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 import de.amr.easy.maze.alg.mst.PrimMST;
-import de.amr.easy.maze.alg.mst.ReverseDeleteBFSMST;
-import de.amr.easy.maze.alg.mst.ReverseDeleteBestFSMST;
-import de.amr.easy.maze.alg.mst.ReverseDeleteDFSMST;
-import de.amr.easy.maze.alg.mst.ReverseDeleteHillClimbingMST;
+import de.amr.easy.maze.alg.mst.ReverseDeleteMST_BFS;
+import de.amr.easy.maze.alg.mst.ReverseDeleteMST_BestFS;
+import de.amr.easy.maze.alg.mst.ReverseDeleteMST_DFS;
+import de.amr.easy.maze.alg.mst.ReverseDeleteMST_HillClimbing;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
 import de.amr.easy.maze.alg.traversal.RandomBFS;
 import de.amr.easy.maze.alg.traversal.RecursiveDFS;
@@ -180,22 +180,22 @@ public class MazeGeneratorTests {
 
 	@Test
 	public void testReverseDeleteDFSMST() {
-		test(new ReverseDeleteDFSMST(WIDTH_SMALL, HEIGHT_SMALL));
+		test(new ReverseDeleteMST_DFS(WIDTH_SMALL, HEIGHT_SMALL));
 	}
 
 	@Test
 	public void testReverseDeleteBestFSMST() {
-		test(new ReverseDeleteBestFSMST(WIDTH_SMALL, HEIGHT_SMALL));
+		test(new ReverseDeleteMST_BestFS(WIDTH_SMALL, HEIGHT_SMALL));
 	}
 
 	@Test
 	public void testReverseDeleteBFSMST() {
-		test(new ReverseDeleteBFSMST(WIDTH_SMALL, HEIGHT_SMALL));
+		test(new ReverseDeleteMST_BFS(WIDTH_SMALL, HEIGHT_SMALL));
 	}
 
 	@Test
 	public void testReverseDeleteHillClimbingMST() {
-		test(new ReverseDeleteHillClimbingMST(WIDTH_SMALL, HEIGHT_SMALL));
+		test(new ReverseDeleteMST_HillClimbing(WIDTH_SMALL, HEIGHT_SMALL));
 	}
 
 	@Test

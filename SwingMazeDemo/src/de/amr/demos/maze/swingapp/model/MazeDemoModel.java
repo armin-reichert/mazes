@@ -34,10 +34,10 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.mst.BoruvkaMST;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 import de.amr.easy.maze.alg.mst.PrimMST;
-import de.amr.easy.maze.alg.mst.ReverseDeleteBFSMST;
-import de.amr.easy.maze.alg.mst.ReverseDeleteBestFSMST;
-import de.amr.easy.maze.alg.mst.ReverseDeleteDFSMST;
-import de.amr.easy.maze.alg.mst.ReverseDeleteHillClimbingMST;
+import de.amr.easy.maze.alg.mst.ReverseDeleteMST_BFS;
+import de.amr.easy.maze.alg.mst.ReverseDeleteMST_BestFS;
+import de.amr.easy.maze.alg.mst.ReverseDeleteMST_DFS;
+import de.amr.easy.maze.alg.mst.ReverseDeleteMST_HillClimbing;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
 import de.amr.easy.maze.alg.traversal.RandomBFS;
 import de.amr.easy.maze.alg.traversal.RecursiveDFS;
@@ -79,10 +79,10 @@ public class MazeDemoModel {
 		new AlgorithmInfo(KruskalMST.class, "Kruskal MST", MST),
 		new AlgorithmInfo(PrimMST.class, "Prim MST", MST),
 		new AlgorithmInfo(BoruvkaMST.class, "Boruvka MST", MST),
-		new AlgorithmInfo(ReverseDeleteBFSMST.class, "Reverse-Delete MST (BFS, very slow)", MST, Slow),
-		new AlgorithmInfo(ReverseDeleteBestFSMST.class, "Reverse-Delete MST (Best-First-Search, very slow)", MST, Slow),
-		new AlgorithmInfo(ReverseDeleteDFSMST.class, "Reverse-Delete MST (DFS, very slow)", MST, Slow),
-		new AlgorithmInfo(ReverseDeleteHillClimbingMST.class, "Reverse-Delete MST (Hill-Climbing, very slow)", MST, Slow),
+		new AlgorithmInfo(ReverseDeleteMST_BFS.class, "Reverse-Delete MST (BFS, very slow)", MST, Slow),
+		new AlgorithmInfo(ReverseDeleteMST_BestFS.class, "Reverse-Delete MST (Best-First-Search, very slow)", MST, Slow),
+		new AlgorithmInfo(ReverseDeleteMST_DFS.class, "Reverse-Delete MST (DFS, very slow)", MST, Slow),
+		new AlgorithmInfo(ReverseDeleteMST_HillClimbing.class, "Reverse-Delete MST (Hill-Climbing, very slow)", MST, Slow),
 		new AlgorithmInfo(AldousBroderUST.class, "Aldous-Broder UST (rather slow)", UST, Slow),
 		new AlgorithmInfo(AldousBroderWilsonUST.class, "Houston UST (rather slow)", UST, Slow),
 		new AlgorithmInfo(WilsonUSTRandomCell.class, "Wilson UST (random)", UST, Slow),
