@@ -29,8 +29,7 @@ import de.amr.demos.maze.swingapp.action.ToggleControlPanelAction;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
-import de.amr.demos.maze.swingapp.view.CanvasWindow;
-import de.amr.demos.maze.swingapp.view.GridDisplayArea;
+import de.amr.demos.maze.swingapp.view.DisplayAreaWindow;
 import de.amr.demos.maze.swingapp.view.SettingsWindow;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.graph.impl.traversal.BestFirstTraversal;
@@ -59,7 +58,7 @@ public class MazeDemoApp {
 
 	public final MazeDemoModel model;
 	public final SettingsWindow wndSettings;
-	public final CanvasWindow wndCanvas;
+	public final DisplayAreaWindow wndDisplayArea;
 
 	public final Action actionCreateMaze = new CreateMazeAction(this);
 	public final Action actionCreateAllMazes = new CreateAllMazesAction(this);
@@ -99,13 +98,12 @@ public class MazeDemoApp {
 		model.setGrid(createDefaultGrid());
 
 		// create new canvas in its own window
-		wndCanvas = new CanvasWindow();
-		wndCanvas.newCanvas(model);
-		wndCanvas.setVisible(true);
+		wndDisplayArea = new DisplayAreaWindow(model);
+		wndDisplayArea.setVisible(true);
 
 		// initialize grid canvas
-		getCanvas().setGrid(model.getGrid());
-		getCanvas().drawGrid();
+		wndDisplayArea.getCanvas().setGrid(model.getGrid());
+		wndDisplayArea.getCanvas().drawGrid();
 
 		wndSettings = new SettingsWindow(this);
 		MazeDemoModel.find(GENERATOR_ALGORITHMS, IterativeDFS.class).ifPresent(alg -> {
@@ -117,8 +115,8 @@ public class MazeDemoApp {
 					wndSettings.solverMenu.selectAlgorithm(alg);
 					onSolverChange(alg);
 				});
-		getCanvas().getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
-		getCanvas().getActionMap().put("showSettings", actionShowSettings);
+		wndDisplayArea.getCanvas().getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
+		wndDisplayArea.getCanvas().getActionMap().put("showSettings", actionShowSettings);
 
 		actionToggleControlPanel.setMinimized(true);
 		wndSettings.setAlwaysOnTop(true);
@@ -132,21 +130,17 @@ public class MazeDemoApp {
 		return grid;
 	}
 
-	public void newCanvas() {
+	public void resetDisplay() {
 		model.setGrid(createDefaultGrid());
-		wndCanvas.newCanvas(model);
-		getCanvas().getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
-		getCanvas().getActionMap().put("showSettings", actionShowSettings);
-		// TODO how to handle this performance issue?
+		wndDisplayArea.newCanvas();
+		wndDisplayArea.getCanvas().getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
+		wndDisplayArea.getCanvas().getActionMap().put("showSettings", actionShowSettings);
+		// TODO how to handle this better?
 		if (model.getGrid().numVertices() < 100_000) {
-			getCanvas().drawGrid();
+			wndDisplayArea.getCanvas().drawGrid();
 		} else {
-			getCanvas().fill(Color.WHITE);
+			wndDisplayArea.getCanvas().fill(Color.WHITE);
 		}
-	}
-
-	public GridDisplayArea getCanvas() {
-		return wndCanvas.getCanvas();
 	}
 
 	public void showMessage(String msg) {
@@ -155,8 +149,8 @@ public class MazeDemoApp {
 
 	public void setGridPassageThickness(int percent) {
 		model.setPassageWidthPercentage(percent);
-		getCanvas().clear();
-		getCanvas().drawGrid();
+		wndDisplayArea.getCanvas().clear();
+		wndDisplayArea.getCanvas().drawGrid();
 	}
 
 	public void enableUI(boolean enabled) {

@@ -17,6 +17,6 @@ public class ResetGridAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app.getCanvas().setGrid(app.createDefaultGrid());
+		app.wndDisplayArea.getCanvas().setGrid(app.createDefaultGrid());
 	}
 }

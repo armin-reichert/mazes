@@ -28,6 +28,6 @@ public class ChangeGridResolutionAction extends AbstractAction {
 		app.model.setGridCellSize(cellSize);
 		app.model.setGridWidth(MazeDemoApp.DISPLAY_MODE.getWidth() / cellSize);
 		app.model.setGridHeight(MazeDemoApp.DISPLAY_MODE.getHeight() / cellSize);
-		app.newCanvas();
+		app.resetDisplay();
 	}
 }

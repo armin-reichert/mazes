@@ -25,13 +25,13 @@ public class FloodFillAction extends AbstractAction {
 
 	private void runFloodFill() {
 		int source = app.model.getGrid().cell(app.model.getPathFinderSource());
-		floodFill(app.getCanvas(), app.model.getGrid(), source);
+		floodFill(app.wndDisplayArea.getCanvas(), app.model.getGrid(), source);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		app.enableUI(false);
-		app.getCanvas().drawGrid();
+		app.wndDisplayArea.getCanvas().drawGrid();
 		app.startWorkerThread(() -> {
 			try {
 				StopWatch watch = new StopWatch();

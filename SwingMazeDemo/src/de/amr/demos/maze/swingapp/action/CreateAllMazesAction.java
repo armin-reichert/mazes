@@ -60,14 +60,14 @@ public class CreateAllMazesAction extends CreateMazeAction {
 
 	private void createNextMaze(AlgorithmInfo generatorInfo, GridPosition startPosition) {
 		ready = false;
-		app.getCanvas().clear();
+		app.wndDisplayArea.getCanvas().clear();
 		app.wndSettings.generatorMenu.selectAlgorithm(generatorInfo);
 		app.onGeneratorChange(generatorInfo);
 		try {
 			runMazeGenerator(generatorInfo, startPosition);
 		} catch (Exception | StackOverflowError x) {
 			app.showMessage("Maze generation aborted: " + x.getClass().getSimpleName());
-			app.newCanvas();
+			app.resetDisplay();
 		} finally {
 			ready = true;
 		}

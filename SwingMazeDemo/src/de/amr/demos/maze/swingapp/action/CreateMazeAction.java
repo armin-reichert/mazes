@@ -39,7 +39,7 @@ public class CreateMazeAction extends AbstractAction {
 			} catch (Exception | StackOverflowError x) {
 				x.printStackTrace(System.err);
 				app.showMessage("Maze generation aborted: " + x.getClass().getSimpleName());
-				app.newCanvas();
+				app.resetDisplay();
 			} finally {
 				app.enableUI(true);
 			}
@@ -50,22 +50,22 @@ public class CreateMazeAction extends AbstractAction {
 			throws Exception, StackOverflowError {
 		ObservableMazeGenerator generator = (ObservableMazeGenerator) generatorInfo.getAlgorithmClass()
 				.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(app.model.getGridWidth(), app.model.getGridHeight());
-		app.getCanvas().clear();
-		app.getCanvas().setGrid(generator.getGrid());
-		app.getCanvas().drawGrid();
+		app.wndDisplayArea.getCanvas().clear();
+		app.wndDisplayArea.getCanvas().setGrid(generator.getGrid());
+		app.wndDisplayArea.getCanvas().drawGrid();
 		app.showMessage(format("\n%s (%d cells)", generatorInfo.getDescription(), app.model.getGrid().numVertices()));
 		int startCell = generator.getGrid().cell(startPosition);
 		int x = generator.getGrid().col(startCell), y = generator.getGrid().row(startCell);
 		if (app.model.isGenerationAnimated()) {
 			generator.createMaze(x, y);
 		} else {
-			app.getCanvas().getAnimation().setEnabled(false);
+			app.wndDisplayArea.getCanvas().getAnimation().setEnabled(false);
 			StopWatch watch = new StopWatch();
 			watch.measure(() -> generator.createMaze(x, y));
 			app.showMessage(format("Maze generation: %.2f seconds.", watch.getSeconds()));
-			watch.measure(() -> app.getCanvas().drawGrid());
+			watch.measure(() -> app.wndDisplayArea.getCanvas().drawGrid());
 			app.showMessage(format("Grid rendering:  %.2f seconds.", watch.getSeconds()));
-			app.getCanvas().getAnimation().setEnabled(true);
+			app.wndDisplayArea.getCanvas().getAnimation().setEnabled(true);
 		}
 	}
 }

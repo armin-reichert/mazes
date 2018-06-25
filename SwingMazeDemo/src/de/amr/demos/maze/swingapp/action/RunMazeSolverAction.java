@@ -42,7 +42,7 @@ public class RunMazeSolverAction extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		app.wndSettings.solverMenu.getSelectedAlgorithm().ifPresent(solver -> {
 			app.enableUI(false);
-			app.getCanvas().drawGrid();
+			app.wndDisplayArea.getCanvas().drawGrid();
 			app.startWorkerThread(() -> {
 				try {
 					if (solver.isTagged(PathFinderTag.DFS)) {
@@ -70,17 +70,17 @@ public class RunMazeSolverAction extends AbstractAction {
 
 		if (solver.getAlgorithmClass() == BreadthFirstTraversal.class) {
 			BreadthFirstTraversal bfs = new BreadthFirstTraversal(grid);
-			watch.measure(() -> anim.run(app.getCanvas(), bfs, src, tgt));
+			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), bfs, src, tgt));
 			app.showMessage(format("Breadth-first search: %.2f seconds.", watch.getSeconds()));
-			anim.showPath(app.getCanvas(), bfs, tgt);
+			anim.showPath(app.wndDisplayArea.getCanvas(), bfs, tgt);
 		}
 
 		else if (solver.getAlgorithmClass() == BestFirstTraversal.class) {
 			getHeuristics(solver, grid, tgt).ifPresent(h -> {
 				BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, h.getCostFunction());
-				watch.measure(() -> anim.run(app.getCanvas(), best, src, tgt));
+				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), best, src, tgt));
 				app.showMessage(format("Best-first search (%s): %.2f seconds.", h.getName(), watch.getSeconds()));
-				anim.showPath(app.getCanvas(), best, tgt);
+				anim.showPath(app.wndDisplayArea.getCanvas(), best, tgt);
 			});
 		}
 	}
@@ -95,13 +95,13 @@ public class RunMazeSolverAction extends AbstractAction {
 		anim.setPathColor(app.model.getPathColor());
 
 		if (solver.getAlgorithmClass() == DepthFirstTraversal2.class) {
-			watch.measure(() -> anim.run(app.getCanvas(), new DepthFirstTraversal2(grid), src, tgt));
+			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), new DepthFirstTraversal2(grid), src, tgt));
 			app.showMessage(format("Depth-first search: %.2f seconds.", watch.getSeconds()));
 		}
 
 		else if (solver.getAlgorithmClass() == HillClimbing.class) {
 			getHeuristics(solver, grid, tgt).ifPresent(h -> {
-				watch.measure(() -> anim.run(app.getCanvas(), new HillClimbing<>(grid, h.getCostFunction()), src, tgt));
+				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), new HillClimbing<>(grid, h.getCostFunction()), src, tgt));
 				app.showMessage(format("Hill Climbing (%s): %.2f seconds.", h.getName(), watch.getSeconds()));
 			});
 		}

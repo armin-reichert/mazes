@@ -9,11 +9,15 @@ import de.amr.demos.maze.swingapp.model.MazeDemoModel;
  * 
  * @author Armin Reichert
  */
-public class CanvasWindow extends JFrame {
+public class DisplayAreaWindow extends JFrame {
 
+	private final MazeDemoModel model;
 	private GridDisplayArea canvas;
 
-	public CanvasWindow() {
+	public DisplayAreaWindow(MazeDemoModel model) {
+		this.model = model;
+		canvas = new GridDisplayArea(model);
+		setContentPane(canvas);
 		setTitle("Canvas Window");
 		setExtendedState(MAXIMIZED_BOTH);
 		setUndecorated(true);
@@ -23,7 +27,7 @@ public class CanvasWindow extends JFrame {
 		return canvas;
 	}
 
-	public void newCanvas(MazeDemoModel model) {
+	public void newCanvas() {
 		canvas = new GridDisplayArea(model);
 		setContentPane(canvas);
 		repaint();
