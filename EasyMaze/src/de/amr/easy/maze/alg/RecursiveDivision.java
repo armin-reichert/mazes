@@ -50,22 +50,22 @@ public class RecursiveDivision extends ObservableMazeGenerator {
 		}
 		if (w < h || (w == h && rnd.nextBoolean())) {
 			// Build "horizontal wall" at random y from [y0 + 1, y0 + h - 1], keep random door
-			int wy = min(y0 + 1 + rnd.nextInt(h - 1), maze.numRows() - 1);
+			int y = min(y0 + 1 + rnd.nextInt(h - 1), maze.numRows() - 1);
 			int door = rnd.nextInt(w);
 			range(0, w).filter(x -> x != door).map(x -> x0 + x).forEach(x -> {
-				maze.edge(maze.cell(x, wy - 1), maze.cell(x, wy)).ifPresent(maze::removeEdge);
+				maze.edge(maze.cell(x, y - 1), maze.cell(x, y)).ifPresent(maze::removeEdge);
 			});
-			divide(x0, y0, w, wy - y0);
-			divide(x0, wy, w, h - (wy - y0));
+			divide(x0, y0, w, y - y0);
+			divide(x0, y, w, h - (y - y0));
 		} else {
 			// Build "vertical wall" at random x from [x0 + 1, x0 + w - 1], keep random door
-			int wx = min(x0 + 1 + rnd.nextInt(w - 1), maze.numCols() - 1);
+			int x = min(x0 + 1 + rnd.nextInt(w - 1), maze.numCols() - 1);
 			int door = rnd.nextInt(h);
 			range(0, h).filter(y -> y != door).map(y -> y0 + y).forEach(y -> {
-				maze.edge(maze.cell(wx - 1, y), maze.cell(wx, y)).ifPresent(maze::removeEdge);
+				maze.edge(maze.cell(x - 1, y), maze.cell(x, y)).ifPresent(maze::removeEdge);
 			});
-			divide(x0, y0, wx - x0, h);
-			divide(wx, y0, w - (wx - x0), h);
+			divide(x0, y0, x - x0, h);
+			divide(x, y0, w - (x - x0), h);
 		}
 	}
 }
