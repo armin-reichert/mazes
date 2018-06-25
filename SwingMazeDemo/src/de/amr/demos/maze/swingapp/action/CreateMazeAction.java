@@ -43,14 +43,14 @@ public class CreateMazeAction extends MazeDemoAction {
 
 	protected void runMazeGenerator(AlgorithmInfo generatorInfo, GridPosition startPosition)
 			throws Exception, StackOverflowError {
+		app.getCanvas().clear();
 		ObservableMazeGenerator generator = (ObservableMazeGenerator) generatorInfo.getAlgorithmClass()
 				.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(app.model.getGridWidth(), app.model.getGridHeight());
 		app.setGrid(generator.getGrid());
-		int startCell = generator.getGrid().cell(startPosition);
-		int x = generator.getGrid().col(startCell), y = generator.getGrid().row(startCell);
-		app.getCanvas().clear();
 		app.getCanvas().drawGrid();
 		app.showMessage(format("\n%s (%d cells)", generatorInfo.getDescription(), app.model.getGrid().numVertices()));
+		int startCell = generator.getGrid().cell(startPosition);
+		int x = generator.getGrid().col(startCell), y = generator.getGrid().row(startCell);
 		if (app.model.isGenerationAnimated()) {
 			generator.createMaze(x, y);
 		} else {
