@@ -71,13 +71,13 @@ public abstract class WilsonUST extends ObservableMazeGenerator {
 		if (lastWalkDir == null) {
 			lastWalkDir = new int[maze.numVertices()];
 		}
-		// if walk start is already in tree, do nothing
-		if (maze.get(walkStart) == COMPLETED) {
+		// if walk start is already inside tree, do nothing
+		if (maze.isCompleted(walkStart)) {
 			return;
 		}
 		// do a random walk until it touches the tree created so far
 		current = walkStart;
-		while (maze.get(current) != COMPLETED) {
+		while (!maze.isCompleted(current)) {
 			int walkDir = randomElement(maze.getTopology().dirs()).getAsInt();
 			maze.neighbor(current, walkDir).ifPresent(neighbor -> {
 				lastWalkDir[current] = walkDir;
@@ -86,7 +86,7 @@ public abstract class WilsonUST extends ObservableMazeGenerator {
 		}
 		// add the (loop-erased) random walk to the tree
 		current = walkStart;
-		while (maze.get(current) != COMPLETED) {
+		while (!maze.isCompleted(current)) {
 			maze.neighbor(current, lastWalkDir[current]).ifPresent(neighbor -> {
 				maze.set(current, COMPLETED);
 				maze.addEdge(current, neighbor);
