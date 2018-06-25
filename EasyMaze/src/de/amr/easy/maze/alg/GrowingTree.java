@@ -22,11 +22,11 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  */
 public class GrowingTree extends ObservableMazeGenerator {
 
+	private final Random rnd = new Random();
+
 	public GrowingTree(int numCols, int numRows) {
 		super(numCols, numRows, false, UNVISITED);
 	}
-
-	private final Random rnd = new Random();
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {

@@ -31,7 +31,7 @@ public class BinaryTree extends ObservableMazeGenerator {
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		cells(maze).forEach(v -> findRandomParent(maze, v, S, E).ifPresent(parent -> {
+		cells().forEach(v -> findRandomParent(v, S, E).ifPresent(parent -> {
 			maze.addEdge(v, parent);
 			maze.set(v, COMPLETED);
 			maze.set(parent, COMPLETED);
@@ -39,11 +39,11 @@ public class BinaryTree extends ObservableMazeGenerator {
 		return maze;
 	}
 
-	protected IntStream cells(OrthogonalGrid maze) {
+	protected IntStream cells() {
 		return maze.vertices();
 	}
 
-	private OptionalInt findRandomParent(OrthogonalGrid maze, int cell, int dir1, int dir2) {
+	private OptionalInt findRandomParent(int cell, int dir1, int dir2) {
 		boolean choice = rnd.nextBoolean();
 		OptionalInt neighbor = maze.neighbor(cell, choice ? dir1 : dir2);
 		return neighbor.isPresent() ? neighbor : maze.neighbor(cell, choice ? dir2 : dir1);

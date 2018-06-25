@@ -36,35 +36,35 @@ public class Eller extends ObservableMazeGenerator {
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
 		range(0, maze.numRows() - 1).forEach(row -> {
-			connectCellsInsideRow(maze, row, false);
-			connectCellsWithNextRow(maze, row);
+			connectCellsInsideRow(row, false);
+			connectCellsWithNextRow(row);
 		});
-		connectCellsInsideRow(maze, maze.numRows() - 1, true);
+		connectCellsInsideRow(maze.numRows() - 1, true);
 		return maze;
 	}
 
-	private void connectCells(OrthogonalGrid maze, int u, int v) {
+	private void connectCells(int u, int v) {
 		maze.addEdge(u, v);
 		maze.set(u, COMPLETED);
 		maze.set(v, COMPLETED);
 		parts.union(u, v);
 	}
 
-	private void connectCellsInsideRow(OrthogonalGrid maze, int row, boolean all) {
+	private void connectCellsInsideRow(int row, boolean all) {
 		range(0, maze.numCols() - 1).filter(col -> all || rnd.nextBoolean()).forEach(col -> {
 			int left = maze.cell(col, row), right = maze.cell(col + 1, row);
 			if (parts.find(left) != parts.find(right)) {
-				connectCells(maze, left, right);
+				connectCells(left, right);
 			}
 		});
 	}
 
-	private void connectCellsWithNextRow(OrthogonalGrid maze, int row) {
+	private void connectCellsWithNextRow(int row) {
 		// connect randomly selected cells of this row with next row
 		Set<Partition<Integer>.Set> connectedParts = new HashSet<>();
 		range(0, maze.numCols()).filter(col -> rnd.nextBoolean()).forEach(col -> {
 			int top = maze.cell(col, row), bottom = maze.cell(col, row + 1);
-			connectCells(maze, top, bottom);
+			connectCells(top, bottom);
 			connectedParts.add(parts.find(top));
 		});
 		// collect cells of still unconnected parts in this row
@@ -83,7 +83,7 @@ public class Eller extends ObservableMazeGenerator {
 			Partition<Integer>.Set part = parts.find(top);
 			if (!connectedParts.contains(part)) {
 				int bottom = maze.cell(maze.col(top), row + 1);
-				connectCells(maze, top, bottom);
+				connectCells(top, bottom);
 				connectedParts.add(part);
 			}
 		});

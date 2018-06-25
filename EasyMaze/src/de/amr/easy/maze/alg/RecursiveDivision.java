@@ -28,7 +28,7 @@ public class RecursiveDivision extends ObservableMazeGenerator {
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		divide(maze, 0, 0, maze.numCols(), maze.numRows());
+		divide(0, 0, maze.numCols(), maze.numRows());
 		return maze;
 	}
 
@@ -44,7 +44,7 @@ public class RecursiveDivision extends ObservableMazeGenerator {
 	 * @param h
 	 *          height of subgrid
 	 */
-	private void divide(OrthogonalGrid maze, int x0, int y0, int w, int h) {
+	private void divide(int x0, int y0, int w, int h) {
 		if (w <= 1 && h <= 1) {
 			return;
 		}
@@ -55,8 +55,8 @@ public class RecursiveDivision extends ObservableMazeGenerator {
 			range(0, w).filter(x -> x != door).map(x -> x0 + x).forEach(x -> {
 				maze.edge(maze.cell(x, wy - 1), maze.cell(x, wy)).ifPresent(maze::removeEdge);
 			});
-			divide(maze, x0, y0, w, wy - y0);
-			divide(maze, x0, wy, w, h - (wy - y0));
+			divide(x0, y0, w, wy - y0);
+			divide(x0, wy, w, h - (wy - y0));
 		} else {
 			// Build "vertical wall" at random x from [x0 + 1, x0 + w - 1], keep random door
 			int wx = min(x0 + 1 + rnd.nextInt(w - 1), maze.numCols() - 1);
@@ -64,8 +64,8 @@ public class RecursiveDivision extends ObservableMazeGenerator {
 			range(0, h).filter(y -> y != door).map(y -> y0 + y).forEach(y -> {
 				maze.edge(maze.cell(wx - 1, y), maze.cell(wx, y)).ifPresent(maze::removeEdge);
 			});
-			divide(maze, x0, y0, wx - x0, h);
-			divide(maze, wx, y0, w - (wx - x0), h);
+			divide(x0, y0, wx - x0, h);
+			divide(wx, y0, w - (wx - x0), h);
 		}
 	}
 }

@@ -4,8 +4,6 @@ import static de.amr.easy.util.StreamUtils.permute;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
-
 /**
  * Creates maze as a binary tree with random cell selection.
  * 
@@ -18,7 +16,7 @@ public class BinaryTreeRandom extends BinaryTree {
 	}
 
 	@Override
-	protected IntStream cells(OrthogonalGrid maze) {
+	protected IntStream cells() {
 		return permute(maze.vertices());
 	}
 }
