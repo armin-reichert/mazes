@@ -1,9 +1,10 @@
 package de.amr.demos.maze.swingapp.action;
 
 import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation.floodFill;
-import static java.lang.String.format;
 
 import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractAction;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.easy.util.StopWatch;
@@ -13,10 +14,13 @@ import de.amr.easy.util.StopWatch;
  * 
  * @author Armin Reichert
  */
-public class FloodFillAction extends MazeDemoAction {
+public class FloodFillAction extends AbstractAction {
+
+	private final MazeDemoApp app;
 
 	public FloodFillAction(MazeDemoApp app) {
-		super(app, "Flood-fill");
+		this.app = app;
+		putValue(NAME, "Flood-fill");
 	}
 
 	private void runFloodFill() {
@@ -32,7 +36,7 @@ public class FloodFillAction extends MazeDemoAction {
 			try {
 				StopWatch watch = new StopWatch();
 				watch.measure(this::runFloodFill);
-				app.showMessage(format("Flood-fill: %.2f seconds.", watch.getSeconds()));
+				app.showMessage(String.format("Flood-fill: %.2f seconds.", watch.getSeconds()));
 			} catch (Exception x) {
 				x.printStackTrace();
 			} finally {

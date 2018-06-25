@@ -8,6 +8,8 @@ import static java.lang.String.format;
 import java.awt.event.ActionEvent;
 import java.util.Optional;
 
+import javax.swing.AbstractAction;
+
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.PathFinderTag;
@@ -26,12 +28,14 @@ import de.amr.easy.util.StopWatch;
  * 
  * @author Armin Reichert
  */
-public class RunMazeSolverAction extends MazeDemoAction {
+public class RunMazeSolverAction extends AbstractAction {
 
+	private final MazeDemoApp app;
 	private final StopWatch watch = new StopWatch();
 
 	public RunMazeSolverAction(MazeDemoApp app) {
-		super(app, "Solve");
+		this.app = app;
+		putValue(NAME, "Solve");
 	}
 
 	@Override

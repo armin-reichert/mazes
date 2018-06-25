@@ -128,7 +128,7 @@ public abstract class SwingGridSampleApp implements Runnable {
 		renderer.fnCellSize = () -> cellSize;
 		setGrid(new OrthogonalGrid(canvasSize.width / cellSize, canvasSize.height / cellSize, UNVISITED));
 		canvas.setGrid(grid);
-		canvas.adaptSize(cellSize);
+		canvas.setCellSize(cellSize);
 		window.setTitle(getTitleText());
 	}
 

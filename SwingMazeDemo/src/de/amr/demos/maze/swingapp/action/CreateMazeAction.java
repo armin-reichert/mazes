@@ -4,6 +4,8 @@ import static java.lang.String.format;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.AbstractAction;
+
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.easy.grid.api.GridPosition;
@@ -15,10 +17,13 @@ import de.amr.easy.util.StopWatch;
  * 
  * @author Armin Reichert
  */
-public class CreateMazeAction extends MazeDemoAction {
+public class CreateMazeAction extends AbstractAction {
+
+	protected final MazeDemoApp app;
 
 	public CreateMazeAction(MazeDemoApp app) {
-		super(app, "Create");
+		this.app = app;
+		putValue(NAME, "Create");
 	}
 
 	@Override
@@ -43,10 +48,10 @@ public class CreateMazeAction extends MazeDemoAction {
 
 	protected void runMazeGenerator(AlgorithmInfo generatorInfo, GridPosition startPosition)
 			throws Exception, StackOverflowError {
-		app.getCanvas().clear();
 		ObservableMazeGenerator generator = (ObservableMazeGenerator) generatorInfo.getAlgorithmClass()
 				.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(app.model.getGridWidth(), app.model.getGridHeight());
-		app.setGrid(generator.getGrid());
+		app.getCanvas().clear();
+		app.getCanvas().setGrid(generator.getGrid());
 		app.getCanvas().drawGrid();
 		app.showMessage(format("\n%s (%d cells)", generatorInfo.getDescription(), app.model.getGrid().numVertices()));
 		int startCell = generator.getGrid().cell(startPosition);
@@ -54,13 +59,13 @@ public class CreateMazeAction extends MazeDemoAction {
 		if (app.model.isGenerationAnimated()) {
 			generator.createMaze(x, y);
 		} else {
+			app.getCanvas().getAnimation().setEnabled(false);
 			StopWatch watch = new StopWatch();
-			app.getCanvasAnimation().setEnabled(false);
 			watch.measure(() -> generator.createMaze(x, y));
 			app.showMessage(format("Maze generation: %.2f seconds.", watch.getSeconds()));
-			app.getCanvasAnimation().setEnabled(true);
 			watch.measure(() -> app.getCanvas().drawGrid());
 			app.showMessage(format("Grid rendering:  %.2f seconds.", watch.getSeconds()));
+			app.getCanvas().getAnimation().setEnabled(true);
 		}
 	}
 }

@@ -2,6 +2,7 @@ package de.amr.demos.maze.swingapp.action;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.AbstractAction;
 import javax.swing.JComboBox;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
@@ -11,10 +12,13 @@ import de.amr.demos.maze.swingapp.MazeDemoApp;
  * 
  * @author Armin Reichert
  */
-public class ChangeGridResolutionAction extends MazeDemoAction {
+public class ChangeGridResolutionAction extends AbstractAction {
+
+	private final MazeDemoApp app;
 
 	public ChangeGridResolutionAction(MazeDemoApp app) {
-		super(app, "Change Resolution");
+		this.app = app;
+		putValue(NAME, "Change Resolution");
 	}
 
 	@Override

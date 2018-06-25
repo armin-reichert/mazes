@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
 import java.util.Optional;
@@ -23,13 +22,16 @@ public class GridCanvas extends JComponent {
 
 	protected final Stack<GridRenderer> rendererStack = new Stack<>();
 	protected GridGraph<?, ?> grid;
-	protected BufferedImage drawingBuffer;
+	protected BufferedImage buffer;
 	protected Graphics2D g2;
 
 	public GridCanvas(GridGraph<?, ?> grid, int cellSize) {
-		setGrid(grid);
+		if (grid == null) {
+			throw new IllegalArgumentException("No grid specified");
+		}
+		this.grid = grid;
 		setDoubleBuffered(false);
-		adaptSize(cellSize);
+		resizeTo(cellSize);
 	}
 
 	public GridGraph<?, ?> getGrid() {
@@ -41,20 +43,22 @@ public class GridCanvas extends JComponent {
 			throw new IllegalArgumentException("No grid specified");
 		}
 		this.grid = grid;
+		drawGrid();
 	}
 
 	public BufferedImage getDrawingBuffer() {
-		return drawingBuffer;
+		return buffer;
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(drawingBuffer, 0, 0, null);
+		g.drawImage(buffer, 0, 0, null);
 	}
 
 	public void clear() {
 		getRenderer().ifPresent(r -> fill(r.getModel().getGridBgColor()));
+		repaint();
 	}
 
 	public void fill(Color bgColor) {
@@ -78,14 +82,17 @@ public class GridCanvas extends JComponent {
 		repaint();
 	}
 
-	public void adaptSize(int cellSize) {
-		Dimension size = new Dimension(grid.numCols() * cellSize, grid.numRows() * cellSize);
-		setSize(size);
-		setPreferredSize(size);
-		GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
-				.getDefaultConfiguration();
-		drawingBuffer = gc.createCompatibleImage(size.width, size.height);
-		g2 = drawingBuffer.createGraphics();
+	protected void resizeTo(int cellSize) {
+		int width = grid.numCols() * cellSize, height = grid.numRows() * cellSize;
+		setSize(new Dimension(width, height));
+		setPreferredSize(new Dimension(width, height));
+		buffer = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration()
+				.createCompatibleImage(width, height);
+		g2 = buffer.createGraphics();
+	}
+
+	public void setCellSize(int cellSize) {
+		resizeTo(cellSize);
 		repaint();
 	}
 
@@ -96,7 +103,7 @@ public class GridCanvas extends JComponent {
 	public void pushRenderer(GridRenderer newRenderer) {
 		getRenderer().ifPresent(oldRenderer -> {
 			if (oldRenderer.getModel().getCellSize() != newRenderer.getModel().getCellSize()) {
-				adaptSize(newRenderer.getModel().getCellSize());
+				resizeTo(newRenderer.getModel().getCellSize());
 			}
 		});
 		rendererStack.push(newRenderer);
@@ -110,7 +117,7 @@ public class GridCanvas extends JComponent {
 		GridRenderer oldRenderer = rendererStack.pop();
 		getRenderer().ifPresent(newRenderer -> {
 			if (oldRenderer.getModel().getCellSize() != newRenderer.getModel().getCellSize()) {
-				adaptSize(newRenderer.getModel().getCellSize());
+				resizeTo(newRenderer.getModel().getCellSize());
 			}
 		});
 		repaint();

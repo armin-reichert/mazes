@@ -2,6 +2,7 @@ package de.amr.demos.maze.swingapp.action;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -13,13 +14,15 @@ import de.amr.demos.maze.swingapp.MazeDemoApp;
  * 
  * @author Armin Reichert
  */
-public class ToggleControlPanelAction extends MazeDemoAction {
+public class ToggleControlPanelAction extends AbstractAction {
 
+	private final MazeDemoApp app;
 	private final ImageIcon zoomIn = new ImageIcon(getClass().getResource("/zoom_in.png"));
 	private final ImageIcon zoomOut = new ImageIcon(getClass().getResource("/zoom_out.png"));
 
 	public ToggleControlPanelAction(MazeDemoApp app) {
-		super(app, "Toggle Control Panel");
+		this.app = app;
+		putValue(NAME, "Toggle Control Panel");
 	}
 
 	@Override
