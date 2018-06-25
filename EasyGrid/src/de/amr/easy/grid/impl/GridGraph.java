@@ -102,10 +102,13 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 	 *          the number of rows
 	 * @param top
 	 *          the topology of this grid
+	 * @param defaultVertex
+	 *          default vertex object
 	 * @param fnEdgeFactory
 	 *          function for creating edges of the correct type
 	 */
-	public GridGraph(int numCols, int numRows, Topology top, BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory) {
+	public GridGraph(int numCols, int numRows, Topology top, V defaultVertex,
+			BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory) {
 		if (numCols < 0) {
 			throw new IllegalArgumentException("Illegal number of columns: " + numCols);
 		}
@@ -127,6 +130,7 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 
 		// TODO
 		vertexMap = new SparseVertexMap<>();
+		vertexMap.setDefaultVertex(defaultVertex);
 	}
 
 	// Implement {@link Graph} interface

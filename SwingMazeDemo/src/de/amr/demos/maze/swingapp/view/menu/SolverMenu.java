@@ -17,7 +17,7 @@ public class SolverMenu extends AlgorithmMenu {
 
 	public SolverMenu(MazeDemoApp app) {
 		setText("Solvers");
-		add(app.actionClearCanvas);
+		add(app.actionResetGrid);
 		add(app.actionFloodFill);
 		addSeparator();
 		Stream.of(PATHFINDER_ALGORITHMS).forEach(alg -> {

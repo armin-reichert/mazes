@@ -18,7 +18,7 @@ import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import de.amr.demos.maze.swingapp.action.ChangeGridResolutionAction;
-import de.amr.demos.maze.swingapp.action.ClearCanvasAction;
+import de.amr.demos.maze.swingapp.action.ResetGridAction;
 import de.amr.demos.maze.swingapp.action.CreateAllMazesAction;
 import de.amr.demos.maze.swingapp.action.CreateMazeAction;
 import de.amr.demos.maze.swingapp.action.FloodFillAction;
@@ -67,7 +67,7 @@ public class MazeDemoApp {
 	public final Action actionRunMazeSolver = new RunMazeSolverAction(this);
 	public final Action actionStopTask = new StopTaskAction(this);
 	public final Action actionFloodFill = new FloodFillAction(this);
-	public final Action actionClearCanvas = new ClearCanvasAction(this);
+	public final Action actionResetGrid = new ResetGridAction(this);
 	public final Action actionChangeGridResolution = new ChangeGridResolutionAction(this);
 	public final Action actionShowSettings = new ShowSettingsAction(this);
 	public final ToggleControlPanelAction actionToggleControlPanel = new ToggleControlPanelAction(this);
@@ -127,8 +127,9 @@ public class MazeDemoApp {
 		wndSettings.setVisible(true);
 	}
 
-	private OrthogonalGrid createDefaultGrid() {
+	public OrthogonalGrid createDefaultGrid() {
 		OrthogonalGrid grid = new OrthogonalGrid(model.getGridWidth(), model.getGridHeight(), TraversalState.COMPLETED);
+		grid.fill();
 		return grid;
 	}
 
@@ -144,7 +145,12 @@ public class MazeDemoApp {
 		wndCanvas.newCanvas(model);
 		getCanvas().getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
 		getCanvas().getActionMap().put("showSettings", actionShowSettings);
-		getCanvas().drawGrid();
+		// TODO how to handle this performance issue?
+		if (model.getGrid().numVertices() < 100_000) {
+			getCanvas().drawGrid();
+		} else {
+			getCanvas().fill(Color.WHITE);
+		}
 	}
 
 	public GridCanvas getCanvas() {

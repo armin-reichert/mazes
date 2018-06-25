@@ -18,13 +18,17 @@ import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
+import de.amr.easy.grid.api.Topology;
+import de.amr.easy.grid.impl.ObservableGridGraph;
 import de.amr.easy.grid.ui.swing.animation.GridCanvasAnimation;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.GridCanvas;
 import de.amr.easy.grid.ui.swing.rendering.PearlsGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
+import de.amr.easy.util.StopWatch;
 
 /**
  * Base class for grid sample applications.
@@ -43,9 +47,7 @@ public abstract class SwingGridSampleApp implements Runnable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		invokeLater(() -> {
-			new Thread(app).start(); // TODO
-		});
+		invokeLater(() -> new Thread(app).start());
 	}
 
 	public static Dimension getScreenSize() {
@@ -62,7 +64,9 @@ public abstract class SwingGridSampleApp implements Runnable {
 	private int cellSize;
 	private String appName;
 	private boolean fullscreen;
-	private OrthogonalGrid grid;
+	private ObservableGridGraph<TraversalState, Void> grid;
+
+	protected final StopWatch watch = new StopWatch();
 
 	public SwingGridSampleApp(int width, int height, int cellSize) {
 		this.cellSize = cellSize;
@@ -177,11 +181,11 @@ public abstract class SwingGridSampleApp implements Runnable {
 		return canvas;
 	}
 
-	public OrthogonalGrid getGrid() {
+	public ObservableGridGraph<TraversalState, Void> getGrid() {
 		return grid;
 	}
 
-	public void setGrid(OrthogonalGrid grid) {
+	public void setGrid(ObservableGridGraph<TraversalState, Void> grid) {
 		if (this.grid == grid) {
 			return;
 		}
@@ -208,6 +212,11 @@ public abstract class SwingGridSampleApp implements Runnable {
 			canvas.popRenderer();
 			canvas.pushRenderer(createRenderer());
 		}
+	}
+
+	public void setGridTopology(Topology topology) {
+		setGrid(
+				new ObservableGridGraph<>(grid.numCols(), grid.numRows(), topology, TraversalState.UNVISITED, SimpleEdge::new));
 	}
 
 	public int getCellSize() {

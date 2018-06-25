@@ -19,7 +19,6 @@ import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
-import de.amr.easy.util.StopWatch;
 
 public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 
@@ -28,7 +27,6 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 	}
 
 	private final Set<Integer> pathCells = new HashSet<>();
-	private final StopWatch watch = new StopWatch();
 	private int source;
 	private int target;
 	private int currentCell = -1;
@@ -76,12 +74,12 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 			if (isWall(cell)) {
 				return new Color(139, 69, 19);
 			}
-			if (getGrid().isUnvisited(cell)) {
+			if (getGrid().get(cell) == UNVISITED) {
 				return Color.WHITE;
 			}
 			return base.getModel().getCellBgColor(cell);
 		};
-		r.fnPassageColor = (cell, dir) -> getGrid().isUnvisited(cell) ? Color.WHITE
+		r.fnPassageColor = (cell, dir) -> getGrid().get(cell) == UNVISITED ? Color.WHITE
 				: base.getModel().getPassageColor(cell, dir);
 		r.fnPassageWidth = () -> getCellSize() - 2;
 		return r;
@@ -150,14 +148,14 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 		if (animated) {
 			anim.fnDelay = () -> 5;
 			anim.run(getCanvas(), best, source, target);
-		} 
+		}
 		anim.showPath(getCanvas(), best, target);
 	}
-	
+
 	private void updatePath() {
 		updatePath(false);
 	}
-	
+
 	private void updatePathAnimated() {
 		updatePath(true);
 	}

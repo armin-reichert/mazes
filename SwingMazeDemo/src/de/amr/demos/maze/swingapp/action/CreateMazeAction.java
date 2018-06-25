@@ -1,6 +1,5 @@
 package de.amr.demos.maze.swingapp.action;
 
-import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static java.lang.String.format;
 
 import java.awt.event.ActionEvent;
@@ -44,18 +43,14 @@ public class CreateMazeAction extends MazeDemoAction {
 
 	protected void runMazeGenerator(AlgorithmInfo generatorInfo, GridPosition startPosition)
 			throws Exception, StackOverflowError {
-		app.showMessage(format("\n%s (%d cells)", generatorInfo.getDescription(), app.model.getGrid().numVertices()));
-		app.model.getGrid().clear();
-		app.model.getGrid().setDefaultVertex(UNVISITED);
-		app.model.getGrid().setEventsEnabled(false);
-		app.model.getGrid().removeEdges();
-		app.model.getGrid().setEventsEnabled(true);
-		app.getCanvas().clear();
 		ObservableMazeGenerator generator = (ObservableMazeGenerator) generatorInfo.getAlgorithmClass()
 				.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(app.model.getGridWidth(), app.model.getGridHeight());
 		app.setGrid(generator.getGrid());
 		int startCell = generator.getGrid().cell(startPosition);
 		int x = generator.getGrid().col(startCell), y = generator.getGrid().row(startCell);
+		app.getCanvas().clear();
+		app.getCanvas().drawGrid();
+		app.showMessage(format("\n%s (%d cells)", generatorInfo.getDescription(), app.model.getGrid().numVertices()));
 		if (app.model.isGenerationAnimated()) {
 			generator.createMaze(x, y);
 		} else {

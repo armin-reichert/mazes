@@ -13,8 +13,7 @@ import de.amr.easy.grid.impl.Top4;
 public class OrthogonalGrid extends ObservableGridGraph<TraversalState, Void> {
 
 	public OrthogonalGrid(int numCols, int numRows, TraversalState defaultState) {
-		super(numCols, numRows, Top4.get(), SimpleEdge::new);
-		setDefaultVertex(defaultState);
+		super(numCols, numRows, Top4.get(), defaultState, SimpleEdge::new);
 	}
 
 	public boolean isUnvisited(int v) {

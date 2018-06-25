@@ -8,8 +8,6 @@ import static java.lang.System.out;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.util.StopWatch;
-
 public class GridRenderingTestApp extends SwingGridSampleApp {
 
 	public static void main(String[] args) {
@@ -24,7 +22,6 @@ public class GridRenderingTestApp extends SwingGridSampleApp {
 	@Override
 	public void run() {
 		setCanvasAnimation(false);
-		StopWatch watch = new StopWatch();
 		IntStream.of(256, 128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			setCellSize(cellSize);
 			getGrid().setDefaultVertex(COMPLETED);
@@ -32,7 +29,7 @@ public class GridRenderingTestApp extends SwingGridSampleApp {
 			watch.measure(getCanvas()::drawGrid);
 			out.println(format("Rendering getGrid() with %d cells took %.3f seconds", getGrid().numVertices(), watch.getSeconds()));
 			floodFill(getCanvas(), getGrid(), getGrid().cell(CENTER));
-			sleep(2000);
+			sleep(1000);
 		});
 		System.exit(0);
 	}
