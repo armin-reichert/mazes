@@ -2,6 +2,7 @@ package de.amr.easy.maze.alg.mst;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
+import static de.amr.easy.maze.alg.core.OrthogonalGrid.fullGrid;
 import static de.amr.easy.util.StreamUtils.permute;
 
 import de.amr.easy.data.Partition;

@@ -27,4 +27,15 @@ public class OrthogonalGrid extends ObservableGridGraph<TraversalState, Void> {
 	public boolean isCompleted(int v) {
 		return get(v) == TraversalState.COMPLETED;
 	}
+
+	public static OrthogonalGrid fullGrid(int numCols, int numRows, TraversalState defaultState) {
+		OrthogonalGrid grid = new OrthogonalGrid(numCols, numRows, defaultState);
+		grid.fill();
+		return grid;
+	}
+
+	public static OrthogonalGrid emptyGrid(int numCols, int numRows, TraversalState defaultState) {
+		OrthogonalGrid grid = new OrthogonalGrid(numCols, numRows, defaultState);
+		return grid;
+	}
 }

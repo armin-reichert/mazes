@@ -2,6 +2,7 @@ package de.amr.easy.maze.alg.ust;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
+import static de.amr.easy.maze.alg.core.OrthogonalGrid.emptyGrid;
 import static de.amr.easy.util.GraphUtils.log;
 import static de.amr.easy.util.GraphUtils.nextPow;
 import static java.lang.Math.max;
