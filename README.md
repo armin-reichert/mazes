@@ -1,6 +1,6 @@
 ## Maze generation algorithms in Java 8
 
-This project provides implementations of the most common algorithms for generating so called "perfect mazes". I got interested in maze algorithms by reading this blog(http://weblog.jamisbuck.org/2011/2/7/maze-generation-algorithm-recap), where Jamis Buck presents the most common algorithms and provides Ruby and Javascript implementations. 
+This project provides implementations of the most common algorithms for generating so called "perfect mazes". I got interested in maze algorithms by reading [this blog](http://weblog.jamisbuck.org/2011/2/7/maze-generation-algorithm-recap), where Jamis Buck presents the most common algorithms and provides Ruby and Javascript implementations. 
 
 My original intent was to reimplement some of these algorithms using the new Java 8 features (streams, lambda expressions). I also wanted to make the underlying graph algorithm (creating a spanning tree of a 2D grid graph) more explicit in the code. 
 
