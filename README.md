@@ -20,7 +20,7 @@ Other algorithms are variations of Wilson's uniform spanning tree algorithm. The
 To illustrate the code, this is the maze generator based on Kruskal's minimum-spanning-tree algorithm:
 
 ```java
-public class KruskalMST extends ObservableMazeGenerator {
+public class KruskalMST extends OrthogonalMazeGenerator {
 
 	public KruskalMST(int numCols, int numRows) {
 		super(numCols, numRows, false, UNVISITED);
