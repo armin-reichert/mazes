@@ -13,7 +13,7 @@ To achieve these goals, there is
 - an implementation of a [2D-grid](EasyGrid/src/de/amr/easy/grid/impl/GridGraph.java) with cell and edge content
 - a publish-subscribe mechanism for observing graph/grid operations and traversal algorithms
 
-In the meantime I also found new algorithms for generating mazes. On algorithm is a modification of Eller's algorithm which generates the maze from the center of the grid towards the outer borders. The resulting grid however is heavily biased.
+In the meantime I also found new algorithms for generating mazes. One algorithm is a modification of Eller's algorithm which generates the maze from the center of the grid towards the outer borders. The resulting grid however is heavily biased.
 
 Other algorithms are variations of Wilson's uniform spanning tree algorithm. They result from the different possibilities for selecting the random walk start cells. As the order in which the random walk start cells are selected is arbitrary, there is a huge number of interesting choices. For example, you can start the random walks in the order defined by a space-filling-curve like [Hilbert](EasyGrid/src/de/amr/easy/grid/curves/HilbertCurve.java), [Peano](EasyGrid/src/de/amr/easy/grid/curves/PeanoCurve.java) or [Moore](EasyGrid/src/de/amr/easy/grid/curves/MooreLCurve.java) curves, or you can use visually appealing ways of filling a grid like recursive patterns. The result are visually appealing maze creation processes. If this has any practical use, who knows?
 
