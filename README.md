@@ -1,19 +1,23 @@
 ## Maze generation algorithms in Java 8
 
-Maze generation algorithms got my attention when I found a series of [blog posts](http://weblog.jamisbuck.org/2011/2/7/maze-generation-algorithm-recap) by Jamis Buck where he presents the most common maze algorithms together with Ruby implementations and Javascript animations. 
+This project provides implementations of the most common algorithms for generating so called "perfect mazes". I got interested in maze algorithms by reading this blog(http://weblog.jamisbuck.org/2011/2/7/maze-generation-algorithm-recap), where Jamis Buck presents the most common algorithms and provides Ruby and Javascript implementations. 
 
-As an exercise for learning the new Java 8 language features (lambda expressions, streams etc.) I started to reimplement some of these algorithms. Apart from using Java 8 style, my intent was to make the underlying graph algorithm (creation of a spanning tree of a 2D grid graph) more explicit in the code. On the web one can find a large number of maze implementations, but many of them are not very interesting because they are not so well coded, use ad-hoc data structures or mix the essentials of the maze creation algorithm with UI or animation related code. In contrast, I wanted to provide implementations that just change the edge set of a 2D grid graph and emphasize the underlying graph algorithm. The generator classes have no dependencies to any UI frameworks (Swing, JavaFX) which makes them easily reusable.
+My original intent was to reimplement some of these algorithms using the new Java 8 features (streams, lambda expressions). I also wanted to make the underlying graph algorithm (creating a spanning tree of a 2D grid graph) more explicit in the code. 
+
+There exist many maze implementations on the Internet, but often they use "ad-hoc" data structures or mix the graph manipulation  with UI/animation related code. The implementations given here in contrast just change the edge set of a 2D grid graph and try to make the underlying graph algorithm still be recognazible (e.g. classical minimum-spanning tree algortihms like Kruskal or Prim). As there are no dependencies to UI frameworks they can more easily be reused.
+
+Also implemented are some graph traversal algorithms which can be used to "solve" the mazes: "Breadth-First" and "Depth-First" search together with their informed variants "Best-First" search and "Hill Climbing". In the demo application, each of these solvers can be selected and visualized on the generated maze.
 
 To achieve these goals, there is
 - an API for [graph](EasyGraph/src/de/amr/easy/graph/api/Graph.java) and [2D-grid](EasyGrid/src/de/amr/easy/grid/api/GridGraph2D.java) data structures 
 - an implementation of a [2D-grid](EasyGrid/src/de/amr/easy/grid/impl/GridGraph.java) with cell and edge content
 - a publish-subscribe mechanism for observing graph/grid operations and traversal algorithms
 
-The maze generation algorithms operate strictly on the grid API. For drawing and animation, graph and graph traversal listeners are used.
+In the meantime I also found new algorithms for generating mazes. On algorithm is a modification of Eller's algorithm which generates the maze from the center of the grid towards the outer borders. The resulting grid however is heavily biased.
 
-I also found new ways of generating mazes, for example a modification of Eller's algorithm which generates the maze from the center of the grid towards the borders, or variations of Wilson's algorithm which result from the different ways of selecting the random walk start cells. For example, one can start the random walks in the order defined by space-filling-curves like [Hilbert](EasyGrid/src/de/amr/easy/grid/curves/HilbertCurve.java), [Peano](EasyGrid/src/de/amr/easy/grid/curves/PeanoCurve.java) or [Moore](EasyGrid/src/de/amr/easy/grid/curves/MooreLCurve.java) curves. This gives visually appealing creation processes. If it has any practical use, time will show.
+Other algorithms are variations of Wilson's uniform spanning tree algorithm. They result from the different possibilities for selecting the random walk start cells. As the order in which the random walk start cells are selected is arbitrary, there is a huge number of interesting choices. For example, you can start the random walks in the order defined by a space-filling-curve like [Hilbert](EasyGrid/src/de/amr/easy/grid/curves/HilbertCurve.java), [Peano](EasyGrid/src/de/amr/easy/grid/curves/PeanoCurve.java) or [Moore](EasyGrid/src/de/amr/easy/grid/curves/MooreLCurve.java) curves, or you can use visually appealing ways of filling a grid like recursive patterns. The result are visually appealing maze creation processes. If this has any practical use, who knows?
 
-To illustrate, the maze generator based on Kruskal's minimum-spanning-tree algorithm looks like this:
+To illustrate the code, this is the maze generator based on Kruskal's minimum-spanning-tree algorithm:
 
 ```java
 public class KruskalMST extends ObservableMazeGenerator {
