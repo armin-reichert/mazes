@@ -41,6 +41,7 @@ public class ControlPanel extends JPanel {
 	private JScrollPane scrollPane;
 	private JPanel controls;
 	private JButton btnShowHideDetails;
+
 	public ControlPanel() {
 		setPreferredSize(new Dimension(497, 433));
 		setBorder(new EmptyBorder(5, 5, 5, 5));

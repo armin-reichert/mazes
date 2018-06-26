@@ -20,7 +20,7 @@ public class SierpinskiLCurveApp extends SwingGridSampleApp {
 
 	@Override
 	public void run() {
-		//TODO make this work again
+		// TODO make this work again
 		Integer current = getGrid().cell(1, 0);
 		getGrid().set(current, COMPLETED);
 		for (int dir : new SierpinskiLCurve(6)) {

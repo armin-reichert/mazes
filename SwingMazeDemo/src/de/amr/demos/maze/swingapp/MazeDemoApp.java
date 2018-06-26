@@ -18,10 +18,12 @@ import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import de.amr.demos.maze.swingapp.action.ChangeGridResolutionAction;
+import de.amr.demos.maze.swingapp.action.ClearCanvasAction;
 import de.amr.demos.maze.swingapp.action.CreateAllMazesAction;
 import de.amr.demos.maze.swingapp.action.CreateMazeAction;
+import de.amr.demos.maze.swingapp.action.EmptyGridAction;
 import de.amr.demos.maze.swingapp.action.FloodFillAction;
-import de.amr.demos.maze.swingapp.action.ResetGridAction;
+import de.amr.demos.maze.swingapp.action.FullGridAction;
 import de.amr.demos.maze.swingapp.action.RunMazeSolverAction;
 import de.amr.demos.maze.swingapp.action.ShowSettingsAction;
 import de.amr.demos.maze.swingapp.action.StopTaskAction;
@@ -64,8 +66,10 @@ public class MazeDemoApp {
 	public final Action actionCreateAllMazes = new CreateAllMazesAction(this);
 	public final Action actionRunMazeSolver = new RunMazeSolverAction(this);
 	public final Action actionStopTask = new StopTaskAction(this);
+	public final Action actionClearCanvas = new ClearCanvasAction(this);
 	public final Action actionFloodFill = new FloodFillAction(this);
-	public final Action actionResetGrid = new ResetGridAction(this);
+	public final Action actionEmptyGrid = new EmptyGridAction(this);
+	public final Action actionFullGrid = new FullGridAction(this);
 	public final Action actionChangeGridResolution = new ChangeGridResolutionAction(this);
 	public final Action actionShowSettings = new ShowSettingsAction(this);
 	public final ToggleControlPanelAction actionToggleControlPanel = new ToggleControlPanelAction(this);
@@ -95,17 +99,20 @@ public class MazeDemoApp {
 		model.setGridCellSize(32);
 		model.setGridWidth(DISPLAY_MODE.getWidth() / model.getGridCellSize());
 		model.setGridHeight(DISPLAY_MODE.getHeight() / model.getGridCellSize());
-		model.setGrid(createDefaultGrid());
+		model.setGrid(createDefaultGrid(false));
 
 		// create new canvas in its own window
-		wndDisplayArea = new DisplayAreaWindow(model);
+		wndDisplayArea = new DisplayAreaWindow(this);
+		wndDisplayArea.getCanvas().getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
+		wndDisplayArea.getCanvas().getActionMap().put("showSettings", actionShowSettings);
+		wndDisplayArea.getCanvas().drawGrid();
 		wndDisplayArea.setVisible(true);
 
-		// initialize grid canvas
-		wndDisplayArea.getCanvas().setGrid(model.getGrid());
-		wndDisplayArea.getCanvas().drawGrid();
-
+		// create settings window
 		wndSettings = new SettingsWindow(this);
+		wndSettings.setAlwaysOnTop(true);
+
+		// initialize generator and pathfinder selection
 		MazeDemoModel.find(GENERATOR_ALGORITHMS, IterativeDFS.class).ifPresent(alg -> {
 			wndSettings.generatorMenu.selectAlgorithm(alg);
 			onGeneratorChange(alg);
@@ -115,23 +122,24 @@ public class MazeDemoApp {
 					wndSettings.solverMenu.selectAlgorithm(alg);
 					onSolverChange(alg);
 				});
-		wndDisplayArea.getCanvas().getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
-		wndDisplayArea.getCanvas().getActionMap().put("showSettings", actionShowSettings);
 
+		// hide details initially
 		actionToggleControlPanel.setMinimized(true);
-		wndSettings.setAlwaysOnTop(true);
-		wndSettings.setLocation((DISPLAY_MODE.getWidth() - wndSettings.getWidth()) / 2, 42);
+
 		wndSettings.setVisible(true);
+		wndSettings.setLocation((DISPLAY_MODE.getWidth() - wndSettings.getWidth()) / 2, 42);
 	}
 
-	public OrthogonalGrid createDefaultGrid() {
+	public OrthogonalGrid createDefaultGrid(boolean full) {
 		OrthogonalGrid grid = new OrthogonalGrid(model.getGridWidth(), model.getGridHeight(), TraversalState.COMPLETED);
-		grid.fill();
+		if (full) {
+			grid.fill();
+		}
 		return grid;
 	}
 
 	public void resetDisplay() {
-		model.setGrid(createDefaultGrid());
+		model.setGrid(createDefaultGrid(false));
 		wndDisplayArea.newCanvas();
 		wndDisplayArea.getCanvas().getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
 		wndDisplayArea.getCanvas().getActionMap().put("showSettings", actionShowSettings);

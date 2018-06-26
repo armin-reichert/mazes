@@ -23,7 +23,7 @@ public class CreateMazeAction extends AbstractAction {
 
 	public CreateMazeAction(MazeDemoApp app) {
 		this.app = app;
-		putValue(NAME, "Create");
+		putValue(NAME, "New Maze");
 	}
 
 	@Override
@@ -50,12 +50,12 @@ public class CreateMazeAction extends AbstractAction {
 			throws Exception, StackOverflowError {
 		ObservableMazeGenerator generator = (ObservableMazeGenerator) generatorInfo.getAlgorithmClass()
 				.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(app.model.getGridWidth(), app.model.getGridHeight());
-		app.wndDisplayArea.getCanvas().clear();
-		app.wndDisplayArea.getCanvas().setGrid(generator.getGrid());
-		app.wndDisplayArea.getCanvas().drawGrid();
-		app.showMessage(format("\n%s (%d cells)", generatorInfo.getDescription(), app.model.getGrid().numVertices()));
 		int startCell = generator.getGrid().cell(startPosition);
 		int x = generator.getGrid().col(startCell), y = generator.getGrid().row(startCell);
+		app.wndDisplayArea.getCanvas().setGrid(generator.getGrid());
+		app.showMessage(format("\n%s (%d cells)", generatorInfo.getDescription(), app.model.getGrid().numVertices()));
+		app.wndDisplayArea.getCanvas().clear();
+		app.wndDisplayArea.getCanvas().drawGrid();
 		if (app.model.isGenerationAnimated()) {
 			generator.createMaze(x, y);
 		} else {

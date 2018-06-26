@@ -11,7 +11,8 @@ import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
 /**
  * Helper class for visualizing maze creation and flood-fill.
  * 
- * <p>Subclasses just implement a main method, e.g.:
+ * <p>
+ * Subclasses just implement a main method, e.g.:
  * 
  * <pre>
  * 

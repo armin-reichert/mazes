@@ -13,6 +13,7 @@ import javax.swing.JSlider;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
+import de.amr.demos.maze.swingapp.view.menu.CanvasMenu;
 import de.amr.demos.maze.swingapp.view.menu.GeneratorMenu;
 import de.amr.demos.maze.swingapp.view.menu.OptionMenu;
 import de.amr.demos.maze.swingapp.view.menu.SolverMenu;
@@ -25,6 +26,7 @@ import de.amr.demos.maze.swingapp.view.menu.SolverMenu;
 public class SettingsWindow extends JFrame {
 
 	public final GeneratorMenu generatorMenu;
+	public final CanvasMenu canvasMenu;
 	public final SolverMenu solverMenu;
 	public final OptionMenu optionMenu;
 	public final ControlPanel controlPanel;
@@ -92,6 +94,8 @@ public class SettingsWindow extends JFrame {
 		mb.add(generatorMenu);
 		solverMenu = new SolverMenu(app);
 		mb.add(solverMenu);
+		canvasMenu = new CanvasMenu(app);
+		mb.add(canvasMenu);
 		optionMenu = new OptionMenu(app);
 		mb.add(optionMenu);
 	}

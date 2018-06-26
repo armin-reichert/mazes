@@ -101,7 +101,8 @@ public class RunMazeSolverAction extends AbstractAction {
 
 		else if (solver.getAlgorithmClass() == HillClimbing.class) {
 			getHeuristics(solver, grid, tgt).ifPresent(h -> {
-				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), new HillClimbing<>(grid, h.getCostFunction()), src, tgt));
+				watch.measure(
+						() -> anim.run(app.wndDisplayArea.getCanvas(), new HillClimbing<>(grid, h.getCostFunction()), src, tgt));
 				app.showMessage(format("Hill Climbing (%s): %.2f seconds.", h.getName(), watch.getSeconds()));
 			});
 		}

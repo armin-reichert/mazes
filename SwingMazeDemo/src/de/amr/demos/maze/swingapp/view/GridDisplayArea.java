@@ -3,7 +3,7 @@ package de.amr.demos.maze.swingapp.view;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-import de.amr.demos.maze.swingapp.model.MazeDemoModel;
+import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.impl.GridGraph;
@@ -21,16 +21,16 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  */
 public class GridDisplayArea extends GridCanvas {
 
-	private final MazeDemoModel model;
+	private final MazeDemoApp app;
 	private final GridCanvasAnimation<TraversalState, Void> animation;
 
-	public GridDisplayArea(MazeDemoModel model) {
-		super(model.getGrid(), model.getGridCellSize());
-		this.model = model;
+	public GridDisplayArea(MazeDemoApp app) {
+		super(app.model.getGrid(), app.model.getGridCellSize());
+		this.app = app;
 		pushRenderer(createRenderer());
 		animation = new GridCanvasAnimation<>(this);
-		animation.fnDelay = () -> model.getDelay();
-		model.getGrid().addGraphObserver(animation);
+		animation.fnDelay = () -> app.model.getDelay();
+		app.model.getGrid().addGraphObserver(animation);
 	}
 
 	public GridCanvasAnimation<TraversalState, Void> getAnimation() {
@@ -44,40 +44,40 @@ public class GridDisplayArea extends GridCanvas {
 			OrthogonalGrid oldGrid = (OrthogonalGrid) this.grid;
 			OrthogonalGrid newGrid = (OrthogonalGrid) grid;
 			oldGrid.removeGraphObserver(animation);
-			model.setGrid(newGrid);
+			app.model.setGrid(newGrid);
 			newGrid.addGraphObserver(animation);
 		}
 	}
 
 	private ConfigurableGridRenderer createRenderer() {
-		ConfigurableGridRenderer r = model.getStyle() == Style.PEARLS ? new PearlsGridRenderer()
+		ConfigurableGridRenderer r = app.model.getStyle() == Style.PEARLS ? new PearlsGridRenderer()
 				: new WallPassageGridRenderer();
-		r.fnCellSize = () -> model.getGridCellSize();
+		r.fnCellSize = () -> app.model.getGridCellSize();
 		r.fnPassageWidth = () -> {
-			int passageWidth = model.getGridCellSize() * model.getPassageWidthPercentage() / 100;
+			int passageWidth = app.model.getGridCellSize() * app.model.getPassageWidthPercentage() / 100;
 			passageWidth = max(1, passageWidth);
-			passageWidth = min(model.getGridCellSize() - 1, passageWidth);
+			passageWidth = min(app.model.getGridCellSize() - 1, passageWidth);
 			return passageWidth;
 		};
 		r.fnPassageColor = (u, v) -> {
-			TraversalState s_u = model.getGrid().get(u), s_v = model.getGrid().get(v);
+			TraversalState s_u = app.model.getGrid().get(u), s_v = app.model.getGrid().get(v);
 			if (s_u == s_v) {
 				return r.getCellBgColor(u);
 			}
 			// if (s_u == COMPLETED || s_v == COMPLETED) {
-			// return model.getCompletedCellColor();
+			// return app.model.getCompletedCellColor();
 			// }
 			return r.getCellBgColor(u);
 		};
 		r.fnCellBgColor = cell -> {
-			TraversalState state = model.getGrid().get(cell);
+			TraversalState state = app.model.getGrid().get(cell);
 			switch (state) {
 			case COMPLETED:
-				return model.getCompletedCellColor();
+				return app.model.getCompletedCellColor();
 			case UNVISITED:
-				return model.getUnvisitedCellColor();
+				return app.model.getUnvisitedCellColor();
 			case VISITED:
-				return model.getVisitedCellColor();
+				return app.model.getVisitedCellColor();
 			default:
 				return r.getGridBgColor();
 			}

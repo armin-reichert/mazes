@@ -15,7 +15,7 @@ public class FullGridApp extends SwingGridSampleApp {
 	}
 
 	public FullGridApp() {
-		super(1024,1024,512);
+		super(1024, 1024, 512);
 		setAppName("Full Grid");
 	}
 

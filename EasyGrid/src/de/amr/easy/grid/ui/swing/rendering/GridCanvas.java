@@ -43,7 +43,6 @@ public class GridCanvas extends JComponent {
 			throw new IllegalArgumentException("No grid specified");
 		}
 		this.grid = grid;
-		drawGrid();
 	}
 
 	public BufferedImage getDrawingBuffer() {

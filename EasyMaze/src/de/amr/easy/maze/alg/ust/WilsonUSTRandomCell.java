@@ -16,7 +16,7 @@ public class WilsonUSTRandomCell extends WilsonUST {
 	public WilsonUSTRandomCell(int numCols, int numRows) {
 		super(numCols, numRows);
 	}
-	
+
 	public WilsonUSTRandomCell(OrthogonalGrid maze) {
 		super(maze);
 	}

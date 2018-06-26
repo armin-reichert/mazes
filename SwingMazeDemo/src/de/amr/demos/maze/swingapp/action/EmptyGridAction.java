@@ -6,17 +6,19 @@ import javax.swing.AbstractAction;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 
-public class ResetGridAction extends AbstractAction {
+public class EmptyGridAction extends AbstractAction {
 
 	private final MazeDemoApp app;
 
-	public ResetGridAction(MazeDemoApp app) {
+	public EmptyGridAction(MazeDemoApp app) {
 		this.app = app;
-		putValue(NAME, "Reset Grid");
+		putValue(NAME, "Empty Grid");
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app.wndDisplayArea.getCanvas().setGrid(app.createDefaultGrid());
+		app.wndDisplayArea.getCanvas().setGrid(app.createDefaultGrid(false));
+		app.wndDisplayArea.getCanvas().clear();
+		app.wndDisplayArea.getCanvas().drawGrid();
 	}
 }

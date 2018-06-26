@@ -98,8 +98,8 @@ public class MazeGenerationRecordingApp {
 	public void run(int numCols, int numRows, int cellSize, int scanRate, int delayMillis) {
 		for (Class<?> generatorClass : generatorClasses) {
 			try {
-				ObservableMazeGenerator generator = (ObservableMazeGenerator) generatorClass.getConstructor(Integer.TYPE, Integer.TYPE)
-						.newInstance(numCols, numRows);
+				ObservableMazeGenerator generator = (ObservableMazeGenerator) generatorClass
+						.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(numCols, numRows);
 				grid = generator.getGrid();
 				canvas = new GridCanvas(grid, cellSize);
 				canvas.pushRenderer(createRenderer(cellSize));

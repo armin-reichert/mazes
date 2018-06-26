@@ -34,12 +34,12 @@ public class SimpleEdge<E> implements Edge<E> {
 	public int other() {
 		return v;
 	}
-	
+
 	@Override
 	public E getLabel() {
 		return label;
 	}
-	
+
 	public void setLabel(E label) {
 		this.label = label;
 	}
