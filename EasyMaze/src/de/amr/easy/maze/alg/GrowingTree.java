@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -20,7 +20,7 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *      "http://weblog.jamisbuck.org/2011/1/27/maze-generation-growing-tree-algorithm.html">Maze
  *      Generation: Growing Tree algorithm</a>
  */
-public class GrowingTree extends ObservableMazeGenerator {
+public class GrowingTree extends OrthogonalMazeGenerator {
 
 	private final Random rnd = new Random();
 

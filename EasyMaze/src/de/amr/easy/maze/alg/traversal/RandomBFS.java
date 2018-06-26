@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -17,7 +17,7 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  * 
  * @author Armin Reichert
  */
-public class RandomBFS extends ObservableMazeGenerator {
+public class RandomBFS extends OrthogonalMazeGenerator {
 
 	private final Random rnd = new Random();
 

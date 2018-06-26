@@ -6,7 +6,7 @@ import static de.amr.easy.util.StreamUtils.randomElement;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -29,7 +29,7 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *      wikipedia.org/wiki/Loop -erased_random_walk</>
  * 
  */
-public abstract class WilsonUST extends ObservableMazeGenerator {
+public abstract class WilsonUST extends OrthogonalMazeGenerator {
 
 	private int[] lastWalkDir;
 	private int current;

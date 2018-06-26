@@ -7,7 +7,7 @@ import static de.amr.easy.util.StreamUtils.randomElement;
 
 import java.util.OptionalInt;
 
-import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -20,7 +20,7 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *      "http://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking">Maze
  *      Generation: Recursive Backtracking</a>
  */
-public class RecursiveDFS extends ObservableMazeGenerator {
+public class RecursiveDFS extends OrthogonalMazeGenerator {
 
 	public RecursiveDFS(int numCols, int numRows) {
 		super(numCols, numRows, false, UNVISITED);

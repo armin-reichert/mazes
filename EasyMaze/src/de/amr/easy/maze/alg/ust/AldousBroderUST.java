@@ -6,7 +6,7 @@ import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
 import static de.amr.easy.util.StreamUtils.randomElement;
 
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -31,7 +31,7 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *        Generation: Aldous-Broder algorithm</a>
  * 
  */
-public class AldousBroderUST extends ObservableMazeGenerator {
+public class AldousBroderUST extends OrthogonalMazeGenerator {
 
 	private int numVisitedCells;
 	private int currentCell;

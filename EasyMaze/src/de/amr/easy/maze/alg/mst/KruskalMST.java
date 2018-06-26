@@ -6,7 +6,7 @@ import static de.amr.easy.maze.alg.core.OrthogonalGrid.fullGrid;
 import static de.amr.easy.util.StreamUtils.permute;
 
 import de.amr.easy.data.Partition;
-import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -20,7 +20,7 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  * @see <a href="http://weblog.jamisbuck.org/2011/1/3/maze-generation-kruskal-s-algorithm.html">Maze
  *      Generation: Kruskal's Algorithm</a>
  */
-public class KruskalMST extends ObservableMazeGenerator {
+public class KruskalMST extends OrthogonalMazeGenerator {
 
 	public KruskalMST(int numCols, int numRows) {
 		super(numCols, numRows, false, UNVISITED);

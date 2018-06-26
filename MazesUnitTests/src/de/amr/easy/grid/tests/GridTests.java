@@ -34,7 +34,7 @@ public class GridTests {
 
 	@Before
 	public void setUp() {
-		grid = new OrthogonalGrid(WIDTH, HEIGHT, UNVISITED);
+		grid = OrthogonalGrid.emptyGrid(WIDTH, HEIGHT, UNVISITED);
 	}
 
 	@After

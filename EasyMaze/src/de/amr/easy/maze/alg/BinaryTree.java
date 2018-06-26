@@ -9,7 +9,7 @@ import java.util.OptionalInt;
 import java.util.Random;
 import java.util.stream.IntStream;
 
-import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -21,7 +21,7 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *      "http://weblog.jamisbuck.org/2011/2/1/maze-generation-binary-tree-algorithm.html">Maze
  *      Generation: Binary Tree algorithm</a>
  */
-public class BinaryTree extends ObservableMazeGenerator {
+public class BinaryTree extends OrthogonalMazeGenerator {
 
 	protected final Random rnd = new Random();
 

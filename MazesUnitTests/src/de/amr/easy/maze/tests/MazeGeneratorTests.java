@@ -24,7 +24,7 @@ import de.amr.easy.maze.alg.HuntAndKill;
 import de.amr.easy.maze.alg.HuntAndKillRandom;
 import de.amr.easy.maze.alg.RecursiveDivision;
 import de.amr.easy.maze.alg.Sidewinder;
-import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.mst.BoruvkaMST;
 import de.amr.easy.maze.alg.mst.KruskalMST;
@@ -90,7 +90,7 @@ public class MazeGeneratorTests {
 		assertFalse(GraphUtils.containsCycle(grid));
 	}
 
-	private void test(MazeGenerator algorithm) {
+	private void test(OrthogonalMazeGenerator algorithm) {
 		StopWatch watch = new StopWatch();
 		watch.measure(() -> grid = algorithm.createMaze(0, 0));
 		REPORT.add(format("%-30s (%6d cells): %.3f sec", algorithm.getClass().getSimpleName(), grid.numVertices(),

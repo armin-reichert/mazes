@@ -12,7 +12,7 @@ import java.util.Random;
 import java.util.Set;
 
 import de.amr.easy.data.Partition;
-import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -24,7 +24,7 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *      Generation: Eller's Algorithm</a>.
  * 
  */
-public class Eller extends ObservableMazeGenerator {
+public class Eller extends OrthogonalMazeGenerator {
 
 	private final Random rnd = new Random();
 	private final Partition<Integer> parts = new Partition<>();

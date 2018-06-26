@@ -23,7 +23,7 @@ import de.amr.easy.maze.alg.HuntAndKill;
 import de.amr.easy.maze.alg.HuntAndKillRandom;
 import de.amr.easy.maze.alg.RecursiveDivision;
 import de.amr.easy.maze.alg.Sidewinder;
-import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.mst.BoruvkaMST;
 import de.amr.easy.maze.alg.mst.KruskalMST;
@@ -98,7 +98,7 @@ public class MazeGenerationRecordingApp {
 	public void run(int numCols, int numRows, int cellSize, int scanRate, int delayMillis) {
 		for (Class<?> generatorClass : generatorClasses) {
 			try {
-				ObservableMazeGenerator generator = (ObservableMazeGenerator) generatorClass
+				OrthogonalMazeGenerator generator = (OrthogonalMazeGenerator) generatorClass
 						.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(numCols, numRows);
 				grid = generator.getGrid();
 				canvas = new GridCanvas(grid, cellSize);

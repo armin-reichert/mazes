@@ -8,7 +8,7 @@ import static de.amr.easy.util.StreamUtils.randomElement;
 import java.util.OptionalInt;
 
 import de.amr.easy.data.Stack;
-import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -16,7 +16,7 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  * 
  * @author Armin Reichert
  */
-public class IterativeDFS extends ObservableMazeGenerator {
+public class IterativeDFS extends OrthogonalMazeGenerator {
 
 	public IterativeDFS(int numCols, int numRows) {
 		super(numCols, numRows, false, UNVISITED);

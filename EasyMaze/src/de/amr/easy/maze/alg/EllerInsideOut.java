@@ -24,7 +24,7 @@ import java.util.Set;
 import de.amr.easy.data.Partition;
 import de.amr.easy.grid.iterators.shapes.Rectangle;
 import de.amr.easy.grid.iterators.shapes.Square;
-import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -33,7 +33,7 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  * 
  * @author Armin Reichert
  */
-public class EllerInsideOut extends ObservableMazeGenerator {
+public class EllerInsideOut extends OrthogonalMazeGenerator {
 
 	private final Random rnd = new Random();
 	private final Partition<Integer> mazeParts = new Partition<>();

@@ -7,7 +7,7 @@ import java.util.PriorityQueue;
 import java.util.Random;
 
 import de.amr.easy.graph.api.WeightedEdge;
-import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -19,7 +19,7 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *      Generation: Prim's Algorithm</a>
  * @see <a href="https://en.wikipedia.org/wiki/Prim%27s_algorithm">Wikipedia: Prim's Algorithm</a>
  */
-public class PrimMST extends ObservableMazeGenerator {
+public class PrimMST extends OrthogonalMazeGenerator {
 
 	private PriorityQueue<WeightedEdge<Integer>> cut;
 	private Random rnd = new Random();

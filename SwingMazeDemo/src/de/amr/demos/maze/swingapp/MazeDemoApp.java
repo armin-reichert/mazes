@@ -131,10 +131,9 @@ public class MazeDemoApp {
 	}
 
 	public OrthogonalGrid createDefaultGrid(boolean full) {
-		OrthogonalGrid grid = new OrthogonalGrid(model.getGridWidth(), model.getGridHeight(), TraversalState.COMPLETED);
-		if (full) {
-			grid.fill();
-		}
+		OrthogonalGrid grid = full
+				? OrthogonalGrid.fullGrid(model.getGridWidth(), model.getGridHeight(), TraversalState.COMPLETED)
+				: OrthogonalGrid.emptyGrid(model.getGridWidth(), model.getGridHeight(), TraversalState.COMPLETED);
 		return grid;
 	}
 

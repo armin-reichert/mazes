@@ -13,7 +13,7 @@ import de.amr.easy.maze.alg.EllerInsideOut;
 import de.amr.easy.maze.alg.GrowingTree;
 import de.amr.easy.maze.alg.HuntAndKillRandom;
 import de.amr.easy.maze.alg.RecursiveDivision;
-import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 import de.amr.easy.maze.alg.mst.PrimMST;
@@ -107,7 +107,7 @@ public class MazeDemoFX extends Application {
 
 	private void nextMaze() {
 		canvas.resize((cols + 1) * cellSize, (rows + 1) * cellSize);
-		MazeGenerator generator = randomMazeGenerator();
+		OrthogonalMazeGenerator generator = randomMazeGenerator();
 		maze = generator.createMaze(0, 0);
 		drawGrid();
 		BreadthFirstTraversal bfs = new BreadthFirstTraversal(maze);
@@ -115,10 +115,10 @@ public class MazeDemoFX extends Application {
 		drawPath(bfs.path(maze.cell(BOTTOM_RIGHT))::iterator);
 	}
 
-	private MazeGenerator randomMazeGenerator() {
+	private OrthogonalMazeGenerator randomMazeGenerator() {
 		Class<?> generatorClass = GENERATOR_CLASSES[RAND.nextInt(GENERATOR_CLASSES.length)];
 		try {
-			return (MazeGenerator) generatorClass.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(cols, rows);
+			return (OrthogonalMazeGenerator) generatorClass.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(cols, rows);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Could not create maze generator instance");

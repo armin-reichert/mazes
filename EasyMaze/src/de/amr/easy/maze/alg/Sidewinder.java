@@ -6,7 +6,7 @@ import static java.util.stream.IntStream.range;
 
 import java.util.Random;
 
-import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -18,7 +18,7 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *      "http://weblog.jamisbuck.org/2011/2/3/maze-generation-sidewinder-algorithm.html">Jamis
  *      Buck's blog: Sidewinder algorithm</a>
  */
-public class Sidewinder extends ObservableMazeGenerator {
+public class Sidewinder extends OrthogonalMazeGenerator {
 
 	private final Random rnd = new Random();
 	private int current;

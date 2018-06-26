@@ -48,8 +48,7 @@ public class GridTraversalTests {
 
 	@Before
 	public void setUp() {
-		grid = new OrthogonalGrid(N, N, UNVISITED);
-		grid.fill();
+		grid = OrthogonalGrid.fullGrid(N, N, UNVISITED);
 	}
 
 	@After
@@ -142,7 +141,7 @@ public class GridTraversalTests {
 
 	@Test
 	public void testPeanoCurve() {
-		grid = new OrthogonalGrid(243, 243, UNVISITED);
+		grid = OrthogonalGrid.emptyGrid(243, 243, UNVISITED);
 		assertAllCells(UNVISITED);
 		traverse(new PeanoCurve(5), grid, grid.cell(BOTTOM_LEFT), this::setCompleted);
 		assertAllCells(COMPLETED);

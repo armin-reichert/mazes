@@ -6,7 +6,7 @@ import static java.util.stream.IntStream.range;
 
 import java.util.Random;
 
-import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -18,7 +18,7 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *      "http://weblog.jamisbuck.org/2011/1/12/maze-generation-recursive-division-algorithm.html">Maze
  *      Generation: Recursive Division</a>
  */
-public class RecursiveDivision extends ObservableMazeGenerator {
+public class RecursiveDivision extends OrthogonalMazeGenerator {
 
 	private final Random rnd = new Random();
 

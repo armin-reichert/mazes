@@ -9,7 +9,7 @@ import javax.swing.AbstractAction;
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.util.StopWatch;
 
 /**
@@ -48,7 +48,7 @@ public class CreateMazeAction extends AbstractAction {
 
 	protected void runMazeGenerator(AlgorithmInfo generatorInfo, GridPosition startPosition)
 			throws Exception, StackOverflowError {
-		ObservableMazeGenerator generator = (ObservableMazeGenerator) generatorInfo.getAlgorithmClass()
+		OrthogonalMazeGenerator generator = (OrthogonalMazeGenerator) generatorInfo.getAlgorithmClass()
 				.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(app.model.getGridWidth(), app.model.getGridHeight());
 		int startCell = generator.getGrid().cell(startPosition);
 		int x = generator.getGrid().col(startCell), y = generator.getGrid().row(startCell);

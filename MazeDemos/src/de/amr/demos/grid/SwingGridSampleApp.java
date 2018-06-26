@@ -72,7 +72,7 @@ public abstract class SwingGridSampleApp implements Runnable {
 		this.cellSize = cellSize;
 		canvasSize = new Dimension(width, height);
 		style = Style.WALL_PASSAGE;
-		setGrid(new OrthogonalGrid(width / cellSize, height / cellSize, UNVISITED));
+		setGrid(OrthogonalGrid.emptyGrid(width / cellSize, height / cellSize, UNVISITED));
 		fullscreen = false;
 		createUI();
 	}
@@ -81,7 +81,7 @@ public abstract class SwingGridSampleApp implements Runnable {
 		this.cellSize = cellSize;
 		canvasSize = getScreenSize();
 		style = Style.WALL_PASSAGE;
-		grid = new OrthogonalGrid(canvasSize.width / cellSize, canvasSize.height / cellSize, UNVISITED);
+		grid = OrthogonalGrid.emptyGrid(canvasSize.width / cellSize, canvasSize.height / cellSize, UNVISITED);
 		fullscreen = true;
 		createUI();
 	}
@@ -126,7 +126,7 @@ public abstract class SwingGridSampleApp implements Runnable {
 	private void doResize() {
 		ConfigurableGridRenderer renderer = (ConfigurableGridRenderer) canvas.getRenderer().get();
 		renderer.fnCellSize = () -> cellSize;
-		setGrid(new OrthogonalGrid(canvasSize.width / cellSize, canvasSize.height / cellSize, UNVISITED));
+		setGrid(OrthogonalGrid.emptyGrid(canvasSize.width / cellSize, canvasSize.height / cellSize, UNVISITED));
 		canvas.setGrid(grid);
 		canvas.setCellSize(cellSize);
 		window.setTitle(getTitleText());

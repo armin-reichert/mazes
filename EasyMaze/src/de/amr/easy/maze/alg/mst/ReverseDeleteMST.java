@@ -4,7 +4,7 @@ import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 import static de.amr.easy.util.StreamUtils.permute;
 
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -14,7 +14,7 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *
  * @see <a href="https://en.wikipedia.org/wiki/Reverse-delete_algorithm">Wikipedia</a>
  */
-public abstract class ReverseDeleteMST extends ObservableMazeGenerator {
+public abstract class ReverseDeleteMST extends OrthogonalMazeGenerator {
 
 	public ReverseDeleteMST(int numCols, int numRows) {
 		super(numCols, numRows, true, COMPLETED);

@@ -7,7 +7,7 @@ import static de.amr.easy.util.StreamUtils.randomElement;
 import java.util.BitSet;
 import java.util.OptionalInt;
 
-import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -19,7 +19,7 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *      "http://weblog.jamisbuck.org/2011/1/24/maze-generation-hunt-and-kill-algorithm.html"> Maze
  *      Generation: Hunt-and-Kill algorithm</a>
  */
-public class HuntAndKill extends ObservableMazeGenerator {
+public class HuntAndKill extends OrthogonalMazeGenerator {
 
 	protected BitSet targets;
 

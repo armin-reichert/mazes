@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 import de.amr.easy.data.Partition;
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.SimpleEdge;
-import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
@@ -21,7 +21,7 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  * @see <a href="http://iss.ices.utexas.edu/?p=projects/galois/benchmarks/mst">Boruvka's
  *      Algorithm</a>
  */
-public class BoruvkaMST extends ObservableMazeGenerator {
+public class BoruvkaMST extends OrthogonalMazeGenerator {
 
 	private Partition<Integer> forest;
 

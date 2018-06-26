@@ -6,7 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
-import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * Helper class for visualizing maze creation and flood-fill.
@@ -25,19 +25,19 @@ import de.amr.easy.maze.alg.core.ObservableMazeGenerator;
  */
 public class MazeDemoApp extends SwingGridSampleApp {
 
-	public static void launch(Class<? extends ObservableMazeGenerator> generatorClass) {
+	public static void launch(Class<? extends OrthogonalMazeGenerator> generatorClass) {
 		SwingGridSampleApp.launch(new MazeDemoApp(generatorClass.getSimpleName(), generatorClass));
 	}
 
-	private final Class<? extends ObservableMazeGenerator> generatorClass;
+	private final Class<? extends OrthogonalMazeGenerator> generatorClass;
 
-	public MazeDemoApp(String appName, Class<? extends ObservableMazeGenerator> generatorClass) {
+	public MazeDemoApp(String appName, Class<? extends OrthogonalMazeGenerator> generatorClass) {
 		super(128);
 		this.generatorClass = generatorClass;
 		setAppName(appName);
 	}
 
-	private ObservableMazeGenerator createGenerator(int width, int height) {
+	private OrthogonalMazeGenerator createGenerator(int width, int height) {
 		try {
 			return generatorClass.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(width, height);
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
@@ -51,7 +51,7 @@ public class MazeDemoApp extends SwingGridSampleApp {
 	public void run() {
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			setCellSize(cellSize);
-			ObservableMazeGenerator generator = createGenerator(getCanvas().getWidth() / cellSize,
+			OrthogonalMazeGenerator generator = createGenerator(getCanvas().getWidth() / cellSize,
 					getCanvas().getHeight() / cellSize);
 			setGrid(generator.getGrid());
 			generator.createMaze(0, 0);
