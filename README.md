@@ -4,7 +4,7 @@ This project provides implementations of the most common algorithms for generati
 
 My original intent was to reimplement some of these algorithms using the new Java 8 features (streams, lambda expressions). I also wanted to make the underlying graph algorithm (creating a spanning tree of a 2D grid graph) more explicit in the code. 
 
-There exist many maze implementations on the Internet, but often they use "ad-hoc" data structures or mix the graph manipulation  with UI/animation related code. The implementations given here in contrast just change the edge set of a 2D grid graph and try to make the underlying graph algorithm still be recognazible (e.g. you should be able to still recognize classical algorithms like Kruskal or Prim in the corresponding generator). As there are no dependencies to UI frameworks they can more easily be reused.
+There exist many maze implementations on the Internet, but often they use "ad-hoc" data structures or mix the graph manipulation  with UI/animation related code. The implementations given here in contrast just change the edge set of a 2D grid graph and try to make the underlying graph algorithm still be recognizable (e.g. you should be able to still recognize classical algorithms like Kruskal or Prim in the corresponding generator). As there are no dependencies to UI frameworks they can more easily be reused.
 
 Also implemented are some graph traversal algorithms which can be used to "solve" the mazes: "Breadth-First" and "Depth-First" search together with their informed variants "Best-First" search and "Hill Climbing". In the demo application, each of these solvers can be selected and visualized on the generated maze.
 
@@ -20,7 +20,7 @@ Other algorithms are variations of Wilson's uniform spanning tree algorithm. The
 To illustrate the code, this is the maze generator based on Kruskal's minimum-spanning-tree algorithm:
 
 ```java
-public class KruskalMST extends ObservableMazeGenerator {
+public class KruskalMST extends OrthogonalMazeGenerator {
 
 	public KruskalMST(int numCols, int numRows) {
 		super(numCols, numRows, false, UNVISITED);
