@@ -6,7 +6,7 @@ Many maze implementations can be found on the Internet, but often they implement
 
 The implementations given here try to do better: by just changing the edge set of a 2D grid graph the underlying graph algorithm should still be recognizable (e.g. classical minimum-spanning-tree algorithms like Kruskal or Prim ). As there are no dependencies to UI frameworks these algorithms should be easily reusable.
 
-Maze algorithms go my attention when reading [this blog](http://weblog.jamisbuck.org/2011/2/7/maze-generation-algorithm-recap), where Jamis Buck presents the most commonly known algorithms and provides Ruby and Javascript implementations. My original intent was to reimplement only some of these algorithms using the new Java 8 features (streams, lambda expressions). In the end, I implemented all of the algorithms presented there and even more.
+Maze algorithms got my attention when reading [this blog](http://weblog.jamisbuck.org/2011/2/7/maze-generation-algorithm-recap), where Jamis Buck presents the most commonly known algorithms and provides Ruby and Javascript implementations. My original intent was to reimplement only some of these algorithms using the new Java 8 features (streams, lambda expressions). In the end, I implemented all of the algorithms presented there and even more.
 
 This project contains also new algorithms for generating mazes. One new algorithm is a modification of Eller's algorithm which generates the maze from the center of the grid towards the outer borders. The resulting grid however is heavily biased.
 
