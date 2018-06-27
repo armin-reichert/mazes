@@ -25,6 +25,19 @@ import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
  */
 public class MazeDemoApp extends SwingGridSampleApp {
 
+	@SuppressWarnings("unchecked")
+	public static void main(String[] args) {
+		if (args.length > 0) {
+			try {
+				launch((Class<? extends OrthogonalMazeGenerator>) ClassLoader.getSystemClassLoader().loadClass(args[0]));
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("Usage: java de.amr.demos.maze.swing.MazeDemoApp <maze generator class>");
+		}
+	}
+
 	public static void launch(Class<? extends OrthogonalMazeGenerator> generatorClass) {
 		SwingGridSampleApp.launch(new MazeDemoApp(generatorClass.getSimpleName(), generatorClass));
 	}
