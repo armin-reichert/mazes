@@ -50,7 +50,7 @@ public class RecursiveDivision extends OrthogonalMazeGenerator {
 		}
 		if (w < h || (w == h && rnd.nextBoolean())) {
 			// Build "horizontal wall" at random y from [y0 + 1, y0 + h - 1], keep random door
-			int y = min(y0 + 1 + rnd.nextInt(h - 1), maze.numRows() - 1);
+			int y = y0 + 1 + rnd.nextInt(h - 1);
 			int door = x0 + rnd.nextInt(w);
 			range(x0, x0 + w).filter(x -> x != door).forEach(x -> {
 				maze.edge(maze.cell(x, y - 1), maze.cell(x, y)).ifPresent(maze::removeEdge);
@@ -59,7 +59,7 @@ public class RecursiveDivision extends OrthogonalMazeGenerator {
 			divide(x0, y, w, h - (y - y0));
 		} else {
 			// Build "vertical wall" at random x from [x0 + 1, x0 + w - 1], keep random door
-			int x = min(x0 + 1 + rnd.nextInt(w - 1), maze.numCols() - 1);
+			int x = x0 + 1 + rnd.nextInt(w - 1);
 			int door = y0 + rnd.nextInt(h);
 			range(y0, y0 + h).filter(y -> y != door).forEach(y -> {
 				maze.edge(maze.cell(x - 1, y), maze.cell(x, y)).ifPresent(maze::removeEdge);
