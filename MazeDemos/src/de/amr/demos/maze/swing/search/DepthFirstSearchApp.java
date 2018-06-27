@@ -85,7 +85,7 @@ public class DepthFirstSearchApp {
 		renderer.fnPassageColor = (cell, dir) -> renderer.getCellBgColor(cell);
 		renderer.fnPassageWidth = () -> renderer.getCellSize() * 95 / 100;
 		renderer.fnText = cell -> String.format("%d", cell);
-		renderer.fnTextColor = () -> Color.LIGHT_GRAY;
+		renderer.fnTextColor = cell -> Color.LIGHT_GRAY;
 		renderer.fnTextFont = () -> new Font(Font.SANS_SERIF, Font.PLAIN, renderer.getCellSize() / 3);
 
 		addKeyboardAction('s', this::dfs);

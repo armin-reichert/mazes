@@ -146,7 +146,7 @@ public class WallPassageGridRenderer extends ConfigurableGridRenderer {
 		if (text.length() == 0) {
 			return;
 		}
-		g.setColor(getTextColor());
+		g.setColor(getTextColor(cell));
 		g.setFont(getTextFont().deriveFont(Font.PLAIN, fontSize));
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		Rectangle textBox = g.getFontMetrics().getStringBounds(text, g).getBounds();

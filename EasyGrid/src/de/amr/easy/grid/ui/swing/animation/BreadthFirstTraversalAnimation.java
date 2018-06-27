@@ -162,7 +162,7 @@ public class BreadthFirstTraversalAnimation {
 		r.fnPassageWidth = base.getModel()::getPassageWidth;
 		r.fnText = cell -> distanceVisible ? format("%d", distanceMap.getDistance(cell)) : "";
 		r.fnTextFont = () -> new Font(Font.SANS_SERIF, Font.PLAIN, r.getPassageWidth() / 2);
-		r.fnTextColor = () -> Color.BLACK;
+		r.fnTextColor = cell -> Color.BLACK;
 		return r;
 	}
 
@@ -182,7 +182,7 @@ public class BreadthFirstTraversalAnimation {
 		r.fnPassageWidth = () -> base.getPassageWidth() > 5 ? base.getPassageWidth() / 2 : base.getPassageWidth();
 		r.fnText = cell -> distanceVisible ? format("%d", distanceMap.getDistance(cell)) : "";
 		r.fnTextFont = () -> new Font(Font.SANS_SERIF, Font.PLAIN, r.getPassageWidth() / 2);
-		r.fnTextColor = () -> Color.WHITE;
+		r.fnTextColor = cell -> Color.WHITE;
 		return r;
 	}
 
