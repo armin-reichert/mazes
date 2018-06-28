@@ -31,28 +31,34 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *        Generation: Aldous-Broder algorithm</a>
  * 
  */
-public class AldousBroderUST extends OrthogonalMazeGenerator {
+public class AldousBroderUST implements OrthogonalMazeGenerator {
 
+	private OrthogonalGrid grid;
 	private int numVisitedCells;
 	private int currentCell;
 
 	public AldousBroderUST(int numCols, int numRows) {
-		super(numCols, numRows, false, UNVISITED);
+		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
+	}
+	
+	@Override
+	public OrthogonalGrid getGrid() {
+		return grid;
 	}
 
 	public AldousBroderUST(OrthogonalGrid grid) {
-		super(grid);
+		this.grid = grid;
 	}
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		run(maze.cell(x, y), maze.numVertices());
-		return maze;
+		run(grid.cell(x, y), grid.numVertices());
+		return grid;
 	}
 
 	public void run(int start, int limit) {
 		currentCell = start;
-		maze.set(currentCell, COMPLETED);
+		grid.set(currentCell, COMPLETED);
 		numVisitedCells = 1;
 		while (numVisitedCells < limit) {
 			visitRandomNeighbor();
@@ -64,16 +70,16 @@ public class AldousBroderUST extends OrthogonalMazeGenerator {
 	 * time.
 	 */
 	private void visitRandomNeighbor() {
-		int neighbor = randomElement(maze.neighbors(currentCell)).getAsInt();
-		if (maze.isUnvisited(neighbor)) {
-			maze.addEdge(currentCell, neighbor);
-			maze.set(neighbor, COMPLETED);
+		int neighbor = randomElement(grid.neighbors(currentCell)).getAsInt();
+		if (grid.isUnvisited(neighbor)) {
+			grid.addEdge(currentCell, neighbor);
+			grid.set(neighbor, COMPLETED);
 			++numVisitedCells;
 		}
 		currentCell = neighbor;
 		// for animation only:
-		TraversalState state = maze.get(currentCell);
-		maze.set(currentCell, VISITED);
-		maze.set(currentCell, state);
+		TraversalState state = grid.get(currentCell);
+		grid.set(currentCell, VISITED);
+		grid.set(currentCell, state);
 	}
 }

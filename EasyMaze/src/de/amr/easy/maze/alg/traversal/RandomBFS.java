@@ -9,37 +9,43 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * Maze generator using a randomized breadth-first-traversal.
  * 
  * @author Armin Reichert
  */
-public class RandomBFS extends OrthogonalMazeGenerator {
+public class RandomBFS implements OrthogonalMazeGenerator {
 
-	private final Random rnd = new Random();
+	private OrthogonalGrid grid;
+	private Random rnd = new Random();
 
 	public RandomBFS(int numCols, int numRows) {
-		super(numCols, numRows, false, UNVISITED);
+		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
+	}
+
+	@Override
+	public OrthogonalGrid getGrid() {
+		return grid;
 	}
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
 		List<Integer> frontier = new ArrayList<>();
-		int start = maze.cell(x, y);
-		maze.set(start, VISITED);
+		int start = grid.cell(x, y);
+		grid.set(start, VISITED);
 		frontier.add(start);
 		while (!frontier.isEmpty()) {
 			int cell = frontier.remove(rnd.nextInt(frontier.size()));
-			permute(maze.neighbors(cell).filter(maze::isUnvisited)).forEach(neighbor -> {
-				maze.addEdge(cell, neighbor);
-				maze.set(neighbor, VISITED);
+			permute(grid.neighbors(cell).filter(grid::isUnvisited)).forEach(neighbor -> {
+				grid.addEdge(cell, neighbor);
+				grid.set(neighbor, VISITED);
 				frontier.add(neighbor);
 			});
-			maze.set(cell, COMPLETED);
+			grid.set(cell, COMPLETED);
 		}
-		return maze;
+		return grid;
 	}
 }

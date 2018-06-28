@@ -21,16 +21,16 @@ public class WilsonUSTExpandingRectangle extends WilsonUST {
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		return runWilsonAlgorithm(maze.cell(TOP_LEFT));
+		return runWilsonAlgorithm(grid.cell(TOP_LEFT));
 	}
 
 	@Override
 	protected IntStream randomWalkStartCells() {
-		Rectangle startRect = new Rectangle(maze, maze.cell(TOP_LEFT), 1, 1);
+		Rectangle startRect = new Rectangle(grid, grid.cell(TOP_LEFT), 1, 1);
 		ExpandingRectangle expRect = new ExpandingRectangle(startRect);
 		expRect.setExpandHorizontally(true);
 		expRect.setExpandVertically(true);
-		expRect.setMaxExpansion(maze.numCols() - 1);
+		expRect.setMaxExpansion(grid.numCols() - 1);
 		return expRect.stream();
 	}
 }

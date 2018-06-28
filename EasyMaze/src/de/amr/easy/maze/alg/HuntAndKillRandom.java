@@ -10,7 +10,7 @@ import java.util.Random;
  */
 public class HuntAndKillRandom extends HuntAndKill {
 
-	private final Random rnd = new Random();
+	private Random rnd = new Random();
 
 	public HuntAndKillRandom(int numCols, int numRows) {
 		super(numCols, numRows);

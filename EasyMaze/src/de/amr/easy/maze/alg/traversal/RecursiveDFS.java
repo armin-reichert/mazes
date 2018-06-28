@@ -20,29 +20,36 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *      "http://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking">Maze
  *      Generation: Recursive Backtracking</a>
  */
-public class RecursiveDFS extends OrthogonalMazeGenerator {
+public class RecursiveDFS implements OrthogonalMazeGenerator {
 
+	private OrthogonalGrid grid;
+	
 	public RecursiveDFS(int numCols, int numRows) {
-		super(numCols, numRows, false, UNVISITED);
+		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
+	}
+	
+	@Override
+	public OrthogonalGrid getGrid() {
+		return grid;
 	}
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		dfs(maze.cell(x, y));
-		return maze;
+		dfs(grid.cell(x, y));
+		return grid;
 	}
 
 	private void dfs(int v) {
-		maze.set(v, VISITED);
+		grid.set(v, VISITED);
 		for (OptionalInt optNeighbor = neighbor(v); optNeighbor.isPresent(); optNeighbor = neighbor(v)) {
 			int neighbor = optNeighbor.getAsInt();
-			maze.addEdge(v, neighbor);
+			grid.addEdge(v, neighbor);
 			dfs(neighbor);
 		}
-		maze.set(v, COMPLETED);
+		grid.set(v, COMPLETED);
 	}
 
 	private OptionalInt neighbor(int v) {
-		return randomElement(maze.neighbors(v).filter(maze::isUnvisited));
+		return randomElement(grid.neighbors(v).filter(grid::isUnvisited));
 	}
 }

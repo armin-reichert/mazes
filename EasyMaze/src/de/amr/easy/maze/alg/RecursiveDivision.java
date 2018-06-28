@@ -17,18 +17,24 @@ import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
  *      "http://weblog.jamisbuck.org/2011/1/12/maze-generation-recursive-division-algorithm.html">Maze
  *      Generation: Recursive Division</a>
  */
-public class RecursiveDivision extends OrthogonalMazeGenerator {
+public class RecursiveDivision implements OrthogonalMazeGenerator {
 
-	private final Random rnd = new Random();
+	private OrthogonalGrid grid;
+	private Random rnd = new Random();
 
 	public RecursiveDivision(int numCols, int numRows) {
-		super(numCols, numRows, true, COMPLETED);
+		grid = OrthogonalGrid.fullGrid(numCols, numRows, COMPLETED);
+	}
+
+	@Override
+	public OrthogonalGrid getGrid() {
+		return grid;
 	}
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		divide(0, 0, maze.numCols(), maze.numRows());
-		return maze;
+		divide(0, 0, grid.numCols(), grid.numRows());
+		return grid;
 	}
 
 	/**
@@ -52,7 +58,7 @@ public class RecursiveDivision extends OrthogonalMazeGenerator {
 			int y = y0 + 1 + rnd.nextInt(h - 1);
 			int door = x0 + rnd.nextInt(w);
 			range(x0, x0 + w).filter(x -> x != door).forEach(x -> {
-				maze.edge(maze.cell(x, y - 1), maze.cell(x, y)).ifPresent(maze::removeEdge);
+				grid.edge(grid.cell(x, y - 1), grid.cell(x, y)).ifPresent(grid::removeEdge);
 			});
 			divide(x0, y0, w, y - y0);
 			divide(x0, y, w, h - (y - y0));
@@ -61,7 +67,7 @@ public class RecursiveDivision extends OrthogonalMazeGenerator {
 			int x = x0 + 1 + rnd.nextInt(w - 1);
 			int door = y0 + rnd.nextInt(h);
 			range(y0, y0 + h).filter(y -> y != door).forEach(y -> {
-				maze.edge(maze.cell(x - 1, y), maze.cell(x, y)).ifPresent(maze::removeEdge);
+				grid.edge(grid.cell(x - 1, y), grid.cell(x, y)).ifPresent(grid::removeEdge);
 			});
 			divide(x0, y0, x - x0, h);
 			divide(x, y0, w - (x - x0), h);

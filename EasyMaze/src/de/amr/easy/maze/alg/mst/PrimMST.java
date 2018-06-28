@@ -19,34 +19,40 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *      Generation: Prim's Algorithm</a>
  * @see <a href="https://en.wikipedia.org/wiki/Prim%27s_algorithm">Wikipedia: Prim's Algorithm</a>
  */
-public class PrimMST extends OrthogonalMazeGenerator {
+public class PrimMST implements OrthogonalMazeGenerator {
 
+	private OrthogonalGrid grid;
 	private PriorityQueue<WeightedEdge<Integer>> cut;
 	private Random rnd = new Random();
 
 	public PrimMST(int numCols, int numRows) {
-		super(numCols, numRows, false, UNVISITED);
+		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
+	}
+	
+	@Override
+	public OrthogonalGrid getGrid() {
+		return grid;
 	}
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
 		cut = new PriorityQueue<>();
-		extendMazeAt(maze.cell(x, y));
+		extendMazeAt(grid.cell(x, y));
 		while (!cut.isEmpty()) {
 			WeightedEdge<Integer> minEdge = cut.poll();
 			int u = minEdge.either(), v = minEdge.other();
-			if (maze.isUnvisited(u) || maze.isUnvisited(v)) {
-				maze.addEdge(u, v);
-				extendMazeAt(maze.isUnvisited(u) ? u : v);
+			if (grid.isUnvisited(u) || grid.isUnvisited(v)) {
+				grid.addEdge(u, v);
+				extendMazeAt(grid.isUnvisited(u) ? u : v);
 			}
 		}
-		return maze;
+		return grid;
 	}
 
 	private void extendMazeAt(int cell) {
-		maze.neighbors(cell).filter(maze::isUnvisited).forEach(neighbor -> {
+		grid.neighbors(cell).filter(grid::isUnvisited).forEach(neighbor -> {
 			cut.add(new WeightedEdge<>(cell, neighbor, rnd.nextInt()));
 		});
-		maze.set(cell, COMPLETED);
+		grid.set(cell, COMPLETED);
 	}
 }

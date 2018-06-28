@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * The "Growing-Tree" algorithm.
@@ -20,28 +20,34 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *      "http://weblog.jamisbuck.org/2011/1/27/maze-generation-growing-tree-algorithm.html">Maze
  *      Generation: Growing Tree algorithm</a>
  */
-public class GrowingTree extends OrthogonalMazeGenerator {
+public class GrowingTree implements OrthogonalMazeGenerator {
 
+	private OrthogonalGrid grid;
 	private final Random rnd = new Random();
 
 	public GrowingTree(int numCols, int numRows) {
-		super(numCols, numRows, false, UNVISITED);
+		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
+	}
+
+	@Override
+	public OrthogonalGrid getGrid() {
+		return grid;
 	}
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
 		List<Integer> cells = new ArrayList<>();
-		cells.add(maze.cell(x, y));
+		cells.add(grid.cell(x, y));
 		do {
 			int index = rnd.nextBoolean() ? cells.size() - 1 : rnd.nextInt(cells.size());
 			int cell = cells.remove(index);
-			permute(maze.neighbors(cell)).filter(maze::isUnvisited).forEach(neighbor -> {
-				maze.addEdge(cell, neighbor);
-				maze.set(cell, COMPLETED);
-				maze.set(neighbor, COMPLETED);
+			permute(grid.neighbors(cell)).filter(grid::isUnvisited).forEach(neighbor -> {
+				grid.addEdge(cell, neighbor);
+				grid.set(cell, COMPLETED);
+				grid.set(neighbor, COMPLETED);
 				cells.add(neighbor);
 			});
 		} while (!cells.isEmpty());
-		return maze;
+		return grid;
 	}
 }

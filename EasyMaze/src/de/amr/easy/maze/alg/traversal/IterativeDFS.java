@@ -16,42 +16,49 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  * 
  * @author Armin Reichert
  */
-public class IterativeDFS extends OrthogonalMazeGenerator {
+public class IterativeDFS implements OrthogonalMazeGenerator {
 
+	private OrthogonalGrid grid;
+	
 	public IterativeDFS(int numCols, int numRows) {
-		super(numCols, numRows, false, UNVISITED);
+		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
+	}
+	
+	@Override
+	public OrthogonalGrid getGrid() {
+		return grid;
 	}
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
 		Stack<Integer> stack = new Stack<>();
-		int current = maze.cell(x, y);
-		maze.set(current, VISITED);
+		int current = grid.cell(x, y);
+		grid.set(current, VISITED);
 		stack.push(current);
 		while (!stack.isEmpty()) {
 			OptionalInt unvisitedNeighbor = randomUnvisitedNeighbor(current);
 			if (unvisitedNeighbor.isPresent()) {
 				int neighbor = unvisitedNeighbor.getAsInt();
-				maze.addEdge(current, neighbor);
-				maze.set(neighbor, VISITED);
+				grid.addEdge(current, neighbor);
+				grid.set(neighbor, VISITED);
 				if (randomUnvisitedNeighbor(neighbor).isPresent()) {
 					stack.push(neighbor);
 				}
 				current = neighbor;
 			} else {
-				maze.set(current, COMPLETED);
+				grid.set(current, COMPLETED);
 				if (!stack.isEmpty()) {
 					current = stack.pop();
 				}
-				if (!maze.isCompleted(current)) {
+				if (!grid.isCompleted(current)) {
 					stack.push(current);
 				}
 			}
 		}
-		return maze;
+		return grid;
 	}
 
 	private OptionalInt randomUnvisitedNeighbor(int cell) {
-		return randomElement(maze.neighbors(cell).filter(maze::isUnvisited));
+		return randomElement(grid.neighbors(cell).filter(grid::isUnvisited));
 	}
 }

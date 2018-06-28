@@ -17,12 +17,12 @@ public class WilsonUSTRandomCell extends WilsonUST {
 		super(numCols, numRows);
 	}
 
-	public WilsonUSTRandomCell(OrthogonalGrid maze) {
-		super(maze);
+	public WilsonUSTRandomCell(OrthogonalGrid grid) {
+		super(grid);
 	}
 
 	@Override
 	protected IntStream randomWalkStartCells() {
-		return permute(maze.vertices());
+		return permute(grid.vertices());
 	}
 }

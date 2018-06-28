@@ -29,35 +29,42 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *      wikipedia.org/wiki/Loop -erased_random_walk</>
  * 
  */
-public abstract class WilsonUST extends OrthogonalMazeGenerator {
+public abstract class WilsonUST implements OrthogonalMazeGenerator {
 
+	protected OrthogonalGrid grid;
 	private int[] lastWalkDir;
 	private int current;
 
 	public WilsonUST(int numCols, int numRows) {
-		super(numCols, numRows, false, UNVISITED);
+		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
 	}
 
-	public WilsonUST(OrthogonalGrid maze) {
-		super(maze);
+	public WilsonUST(OrthogonalGrid grid) {
+		this.grid = grid;
+	}
+	
+	
+	@Override
+	public OrthogonalGrid getGrid() {
+		return grid;
 	}
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		return runWilsonAlgorithm(maze.cell(x, y));
+		return runWilsonAlgorithm(grid.cell(x, y));
 	}
 
 	protected OrthogonalGrid runWilsonAlgorithm(int start) {
-		maze.set(start, COMPLETED);
+		grid.set(start, COMPLETED);
 		randomWalkStartCells().forEach(this::loopErasedRandomWalk);
-		return maze;
+		return grid;
 	}
 
 	/**
 	 * @return stream of start cells for the random walks
 	 */
 	protected IntStream randomWalkStartCells() {
-		return maze.vertices();
+		return grid.vertices();
 	}
 
 	/**
@@ -69,27 +76,27 @@ public abstract class WilsonUST extends OrthogonalMazeGenerator {
 	 */
 	protected final void loopErasedRandomWalk(int walkStart) {
 		if (lastWalkDir == null) {
-			lastWalkDir = new int[maze.numVertices()];
+			lastWalkDir = new int[grid.numVertices()];
 		}
 		// if walk start is already inside tree, do nothing
-		if (maze.isCompleted(walkStart)) {
+		if (grid.isCompleted(walkStart)) {
 			return;
 		}
 		// do a random walk until it touches the tree created so far
 		current = walkStart;
-		while (!maze.isCompleted(current)) {
-			int walkDir = randomElement(maze.getTopology().dirs()).getAsInt();
-			maze.neighbor(current, walkDir).ifPresent(neighbor -> {
+		while (!grid.isCompleted(current)) {
+			int walkDir = randomElement(grid.getTopology().dirs()).getAsInt();
+			grid.neighbor(current, walkDir).ifPresent(neighbor -> {
 				lastWalkDir[current] = walkDir;
 				current = neighbor;
 			});
 		}
 		// add the (loop-erased) random walk to the tree
 		current = walkStart;
-		while (!maze.isCompleted(current)) {
-			maze.neighbor(current, lastWalkDir[current]).ifPresent(neighbor -> {
-				maze.set(current, COMPLETED);
-				maze.addEdge(current, neighbor);
+		while (!grid.isCompleted(current)) {
+			grid.neighbor(current, lastWalkDir[current]).ifPresent(neighbor -> {
+				grid.set(current, COMPLETED);
+				grid.addEdge(current, neighbor);
 				current = neighbor;
 			});
 		}

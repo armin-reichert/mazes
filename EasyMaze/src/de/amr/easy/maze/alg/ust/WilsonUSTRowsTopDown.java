@@ -18,10 +18,10 @@ public class WilsonUSTRowsTopDown extends WilsonUST {
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		maze.set(maze.cell(x, y), COMPLETED);
-		range(0, maze.numRows()).forEach(row -> range(0, maze.numCols()).forEach(col -> {
-			loopErasedRandomWalk(maze.cell(col, row));
+		grid.set(grid.cell(x, y), COMPLETED);
+		range(0, grid.numRows()).forEach(row -> range(0, grid.numCols()).forEach(col -> {
+			loopErasedRandomWalk(grid.cell(col, row));
 		}));
-		return maze;
+		return grid;
 	}
 }

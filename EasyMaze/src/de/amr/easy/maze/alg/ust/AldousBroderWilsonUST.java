@@ -16,17 +16,24 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  * 
  * @author Armin Reichert
  */
-public class AldousBroderWilsonUST extends OrthogonalMazeGenerator {
+public class AldousBroderWilsonUST implements OrthogonalMazeGenerator {
 
+	private OrthogonalGrid grid;
+	
 	public AldousBroderWilsonUST(int numCols, int numRows) {
-		super(numCols, numRows, false, UNVISITED);
+		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
+	}
+	
+	@Override
+	public OrthogonalGrid getGrid() {
+		return grid;
 	}
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		new AldousBroderUST(maze).run(maze.cell(x, y), Math.round(maze.numVertices() / 3.0f));
-		WilsonUSTRandomCell wilson = new WilsonUSTRandomCell(maze);
-		permute(maze.vertices().filter(maze::isUnvisited)).forEach(wilson::loopErasedRandomWalk);
-		return maze;
+		new AldousBroderUST(grid).run(grid.cell(x, y), Math.round(grid.numVertices() / 3.0f));
+		WilsonUSTRandomCell wilson = new WilsonUSTRandomCell(grid);
+		permute(grid.vertices().filter(grid::isUnvisited)).forEach(wilson::loopErasedRandomWalk);
+		return grid;
 	}
 }

@@ -26,7 +26,7 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		return runWilsonAlgorithm(maze.cell(TOP_LEFT));
+		return runWilsonAlgorithm(grid.cell(TOP_LEFT));
 	}
 
 	@Override
@@ -35,9 +35,9 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 
 			@Override
 			public Iterator<Integer> iterator() {
-				Rectangle firstCell = new Rectangle(maze, maze.cell(TOP_LEFT), 1, 1);
+				Rectangle firstCell = new Rectangle(grid, grid.cell(TOP_LEFT), 1, 1);
 				List<Iterator<Integer>> expRects = new ArrayList<>();
-				int rate = maze.numCols();
+				int rate = grid.numCols();
 				while (rate > 1) {
 					expRects.add(expandingRectangle(firstCell, rate).iterator());
 					rate /= 2;
@@ -45,12 +45,12 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 				@SuppressWarnings("unchecked")
 				Iterator<Integer>[] expRectsArray = expRects.toArray(new Iterator[expRects.size()]);
 
-				Rectangle firstColumn = new Rectangle(maze, maze.cell(TOP_LEFT), 1, maze.numRows());
+				Rectangle firstColumn = new Rectangle(grid, grid.cell(TOP_LEFT), 1, grid.numRows());
 				ExpandingRectangle sweep = new ExpandingRectangle(firstColumn);
 				sweep.setExpandHorizontally(true);
 				sweep.setExpandVertically(false);
 				sweep.setExpansionRate(1);
-				sweep.setMaxExpansion(maze.numCols());
+				sweep.setMaxExpansion(grid.numCols());
 
 				return IteratorFactory.sequence(IteratorFactory.sequence(expRectsArray), sweep.iterator());
 			}
@@ -63,7 +63,7 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 		expRect.setExpandHorizontally(true);
 		expRect.setExpandVertically(true);
 		expRect.setExpansionRate(rate);
-		expRect.setMaxExpansion(maze.numCols() - startRectangle.getWidth());
+		expRect.setMaxExpansion(grid.numCols() - startRectangle.getWidth());
 		return expRect;
 	}
 }

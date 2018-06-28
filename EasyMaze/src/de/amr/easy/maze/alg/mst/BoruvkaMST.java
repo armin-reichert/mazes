@@ -10,8 +10,8 @@ import java.util.stream.Stream;
 import de.amr.easy.data.Partition;
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.SimpleEdge;
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * Maze generator derived from Boruvka's minimum spanning tree algorithm.
@@ -21,31 +21,37 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  * @see <a href="http://iss.ices.utexas.edu/?p=projects/galois/benchmarks/mst">Boruvka's
  *      Algorithm</a>
  */
-public class BoruvkaMST extends OrthogonalMazeGenerator {
+public class BoruvkaMST implements OrthogonalMazeGenerator {
 
+	private OrthogonalGrid grid;
 	private Partition<Integer> forest;
 
 	public BoruvkaMST(int numCols, int numRows) {
-		super(numCols, numRows, false, UNVISITED);
+		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
+	}
+
+	@Override
+	public OrthogonalGrid getGrid() {
+		return grid;
 	}
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
 		forest = new Partition<>();
-		maze.vertices().forEach(forest::makeSet);
+		grid.vertices().forEach(forest::makeSet);
 		while (forest.size() > 1) {
 			permute(forest.sets()).map(this::findCombiningEdge).filter(Optional::isPresent).map(Optional::get)
 					.forEach(this::combineTrees);
 		}
-		return maze;
+		return grid;
 	}
 
 	private void combineTrees(Edge<Void> edge) {
 		int u = edge.either(), v = edge.other();
 		if (forest.find(u) != forest.find(v)) {
-			maze.addEdge(u, v);
-			maze.set(u, COMPLETED);
-			maze.set(v, COMPLETED);
+			grid.addEdge(u, v);
+			grid.set(u, COMPLETED);
+			grid.set(v, COMPLETED);
 			forest.union(u, v);
 		}
 	}
@@ -56,7 +62,7 @@ public class BoruvkaMST extends OrthogonalMazeGenerator {
 
 	private Stream<Edge<Void>> inventCombiningEdges(int cell) {
 		// invent edges combining different subtrees
-		return permute(maze.neighbors(cell).filter(neighbor -> forest.find(cell) != forest.find(neighbor))
+		return permute(grid.neighbors(cell).filter(neighbor -> forest.find(cell) != forest.find(neighbor))
 				.mapToObj(neighbor -> new SimpleEdge<>(cell, neighbor)));
 	}
 }

@@ -18,35 +18,41 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *      "http://weblog.jamisbuck.org/2011/2/3/maze-generation-sidewinder-algorithm.html">Jamis
  *      Buck's blog: Sidewinder algorithm</a>
  */
-public class Sidewinder extends OrthogonalMazeGenerator {
+public class Sidewinder implements OrthogonalMazeGenerator {
 
-	private final Random rnd = new Random();
+	private OrthogonalGrid grid;
+	private Random rnd = new Random();
 	private int current;
 
 	public Sidewinder(int numCols, int numRows) {
-		super(numCols, numRows, false, UNVISITED);
+		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
+	}
+	
+	@Override
+	public OrthogonalGrid getGrid() {
+		return grid;
 	}
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		range(0, maze.numRows()).forEach(row -> {
+		range(0, grid.numRows()).forEach(row -> {
 			current = 0;
-			range(0, maze.numCols()).forEach(col -> {
-				if (row > 0 && (col == maze.numCols() - 1 || rnd.nextBoolean())) {
+			range(0, grid.numCols()).forEach(col -> {
+				if (row > 0 && (col == grid.numCols() - 1 || rnd.nextBoolean())) {
 					int passageCol = current + rnd.nextInt(col - current + 1);
-					int north = maze.cell(passageCol, row - 1), south = maze.cell(passageCol, row);
-					maze.addEdge(north, south);
-					maze.set(north, COMPLETED);
-					maze.set(south, COMPLETED);
+					int north = grid.cell(passageCol, row - 1), south = grid.cell(passageCol, row);
+					grid.addEdge(north, south);
+					grid.set(north, COMPLETED);
+					grid.set(south, COMPLETED);
 					current = col + 1;
-				} else if (col + 1 < maze.numCols()) {
-					int west = maze.cell(col, row), east = maze.cell(col + 1, row);
-					maze.addEdge(west, east);
-					maze.set(west, COMPLETED);
-					maze.set(east, COMPLETED);
+				} else if (col + 1 < grid.numCols()) {
+					int west = grid.cell(col, row), east = grid.cell(col + 1, row);
+					grid.addEdge(west, east);
+					grid.set(west, COMPLETED);
+					grid.set(east, COMPLETED);
 				}
 			});
 		});
-		return maze;
+		return grid;
 	}
 }

@@ -17,6 +17,6 @@ public class WilsonUSTRecursiveCrosses extends WilsonUST {
 
 	@Override
 	protected IntStream randomWalkStartCells() {
-		return new RecursiveCrosses(maze).stream();
+		return new RecursiveCrosses(grid).stream();
 	}
 }

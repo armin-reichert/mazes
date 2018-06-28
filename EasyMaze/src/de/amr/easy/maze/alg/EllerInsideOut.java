@@ -33,10 +33,11 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  * 
  * @author Armin Reichert
  */
-public class EllerInsideOut extends OrthogonalMazeGenerator {
+public class EllerInsideOut implements OrthogonalMazeGenerator {
 
-	private final Random rnd = new Random();
-	private final Partition<Integer> mazeParts = new Partition<>();
+	private OrthogonalGrid grid;
+	private Random rnd = new Random();
+	private Partition<Integer> mazeParts;
 	private OrthogonalGrid squareGrid;
 	private Square square;
 	private Iterable<Integer> layer;
@@ -45,30 +46,36 @@ public class EllerInsideOut extends OrthogonalMazeGenerator {
 	private int offsetY;
 
 	public EllerInsideOut(int numCols, int numRows) {
-		super(numCols, numRows, false, UNVISITED);
+		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
+	}
+	
+	@Override
+	public OrthogonalGrid getGrid() {
+		return grid;
 	}
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		int n = max(maze.numCols(), maze.numRows());
-		offsetX = (n - maze.numCols()) / 2;
-		offsetY = (n - maze.numRows()) / 2;
+		mazeParts = new Partition<>();
+		int n = max(grid.numCols(), grid.numRows());
+		offsetX = (n - grid.numCols()) / 2;
+		offsetY = (n - grid.numRows()) / 2;
 		squareGrid = emptyGrid(n, n, UNVISITED);
 		while (nextLayer() <= squareGrid.numCols()) {
 			connectCellsInsideLayer(false);
 			connectCellsWithNextLayer();
 		}
-		layer = new Rectangle(maze, maze.cell(TOP_LEFT), maze.numCols(), maze.numRows());
+		layer = new Rectangle(grid, grid.cell(TOP_LEFT), grid.numCols(), grid.numRows());
 		connectCellsInsideLayer(true);
-		return maze;
+		return grid;
 	}
 
 	private int nextLayer() {
 		int x, y, size;
 		if (square == null) {
-			int center = maze.cell(CENTER);
-			x = maze.col(center) + offsetX;
-			y = maze.row(center) + offsetY;
+			int center = grid.cell(CENTER);
+			x = grid.col(center) + offsetX;
+			y = grid.row(center) + offsetY;
 			size = 1;
 		} else {
 			x = squareGrid.col(square.getTopLeft()) - 1;
@@ -89,8 +96,8 @@ public class EllerInsideOut extends OrthogonalMazeGenerator {
 		for (int cell : square) {
 			int x = squareGrid.col(cell) - offsetX;
 			int y = squareGrid.row(cell) - offsetY;
-			if (maze.isValidCol(x) && maze.isValidRow(y)) {
-				int gridCell = maze.cell(x, y);
+			if (grid.isValidCol(x) && grid.isValidRow(y)) {
+				int gridCell = grid.cell(x, y);
 				result.add(gridCell);
 				cellIndex.put(gridCell, index);
 			}
@@ -100,12 +107,12 @@ public class EllerInsideOut extends OrthogonalMazeGenerator {
 	}
 
 	private void connectCells(int u, int v) {
-		if (maze.hasEdge(u, v)) {
+		if (grid.hasEdge(u, v)) {
 			return;
 		}
-		maze.addEdge(u, v);
-		maze.set(u, COMPLETED);
-		maze.set(v, COMPLETED);
+		grid.addEdge(u, v);
+		grid.set(u, COMPLETED);
+		grid.set(v, COMPLETED);
 		mazeParts.union(u, v);
 	}
 
@@ -115,7 +122,7 @@ public class EllerInsideOut extends OrthogonalMazeGenerator {
 			if (firstCell == -1) {
 				firstCell = cell;
 			}
-			if (prevCell != -1 && maze.areNeighbors(prevCell, cell)) {
+			if (prevCell != -1 && grid.areNeighbors(prevCell, cell)) {
 				if (all || rnd.nextBoolean()) {
 					if (mazeParts.find(prevCell) != mazeParts.find(cell)) {
 						connectCells(prevCell, cell);
@@ -124,8 +131,8 @@ public class EllerInsideOut extends OrthogonalMazeGenerator {
 			}
 			prevCell = cell;
 		}
-		if (prevCell != -1 && firstCell != -1 && prevCell != firstCell && maze.areNeighbors(prevCell, firstCell)
-				&& !maze.hasEdge(prevCell, firstCell)) {
+		if (prevCell != -1 && firstCell != -1 && prevCell != firstCell && grid.areNeighbors(prevCell, firstCell)
+				&& !grid.hasEdge(prevCell, firstCell)) {
 			if (all || rnd.nextBoolean()) {
 				if (mazeParts.find(prevCell) != mazeParts.find(firstCell)) {
 					connectCells(prevCell, firstCell);
@@ -200,6 +207,6 @@ public class EllerInsideOut extends OrthogonalMazeGenerator {
 	}
 
 	private void addNeighborsIfAny(List<Integer> list, int cell, int... dirs) {
-		Arrays.stream(dirs).forEach(dir -> maze.neighbor(cell, dir).ifPresent(list::add));
+		Arrays.stream(dirs).forEach(dir -> grid.neighbor(cell, dir).ifPresent(list::add));
 	}
 }

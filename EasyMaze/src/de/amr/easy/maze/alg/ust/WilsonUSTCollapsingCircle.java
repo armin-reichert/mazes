@@ -20,11 +20,11 @@ public class WilsonUSTCollapsingCircle extends WilsonUST {
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		int center = maze.cell(CENTER);
-		maze.set(center, COMPLETED);
-		for (int r = max(maze.numRows(), maze.numCols()) - 1; r > 0; r--) {
-			new Circle(maze, center, r).forEach(this::loopErasedRandomWalk);
+		int center = grid.cell(CENTER);
+		grid.set(center, COMPLETED);
+		for (int r = max(grid.numRows(), grid.numCols()) - 1; r > 0; r--) {
+			new Circle(grid, center, r).forEach(this::loopErasedRandomWalk);
 		}
-		return maze;
+		return grid;
 	}
 }

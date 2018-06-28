@@ -30,8 +30,8 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 
 	@Override
 	protected IntStream randomWalkStartCells() {
-		int[] walkStartCells = new int[maze.numVertices()];
-		int n = nextPow(2, max(maze.numCols(), maze.numRows()));
+		int[] walkStartCells = new int[grid.numVertices()];
+		int n = nextPow(2, max(grid.numCols(), grid.numRows()));
 		OrthogonalGrid square = emptyGrid(n, n, UNVISITED);
 		int cell = square.cell(TOP_LEFT);
 		int i = 0;
@@ -39,8 +39,8 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 		for (int dir : new HilbertCurve(log(2, n), W, N, E, S)) {
 			cell = square.neighbor(cell, dir).getAsInt();
 			int col = square.col(cell), row = square.row(cell);
-			if (maze.isValidCol(col) && maze.isValidRow(row)) {
-				walkStartCells[i++] = maze.cell(col, row);
+			if (grid.isValidCol(col) && grid.isValidRow(row)) {
+				walkStartCells[i++] = grid.cell(col, row);
 			}
 		}
 		return stream(walkStartCells);

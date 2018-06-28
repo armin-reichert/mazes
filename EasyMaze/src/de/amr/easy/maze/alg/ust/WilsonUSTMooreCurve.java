@@ -26,20 +26,20 @@ public class WilsonUSTMooreCurve extends WilsonUST {
 
 	@Override
 	protected IntStream randomWalkStartCells() {
-		int[] walkStartCells = new int[maze.numVertices()];
-		int n = nextPow(2, max(maze.numCols(), maze.numRows()));
+		int[] walkStartCells = new int[grid.numVertices()];
+		int n = nextPow(2, max(grid.numCols(), grid.numRows()));
 		OrthogonalGrid square = emptyGrid(n, n, UNVISITED);
 		Curve mooreCurve = new MooreLCurve(log(2, n));
 		int cell = square.cell(n / 2, n - 1);
 		int i = 0;
-		if (maze.isValidCol(n / 2) && maze.isValidRow(n - 1)) {
-			walkStartCells[i++] = maze.cell(n / 2, n - 1);
+		if (grid.isValidCol(n / 2) && grid.isValidRow(n - 1)) {
+			walkStartCells[i++] = grid.cell(n / 2, n - 1);
 		}
 		for (int dir : mooreCurve) {
 			cell = square.neighbor(cell, dir).getAsInt();
 			int col = square.col(cell), row = square.row(cell);
-			if (maze.isValidCol(col) && maze.isValidRow(row)) {
-				walkStartCells[i++] = maze.cell(col, row);
+			if (grid.isValidCol(col) && grid.isValidRow(row)) {
+				walkStartCells[i++] = grid.cell(col, row);
 			}
 		}
 		return stream(walkStartCells);

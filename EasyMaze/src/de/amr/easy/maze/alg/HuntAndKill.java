@@ -19,35 +19,41 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  *      "http://weblog.jamisbuck.org/2011/1/24/maze-generation-hunt-and-kill-algorithm.html"> Maze
  *      Generation: Hunt-and-Kill algorithm</a>
  */
-public class HuntAndKill extends OrthogonalMazeGenerator {
+public class HuntAndKill implements OrthogonalMazeGenerator {
 
+	protected OrthogonalGrid grid;
 	protected BitSet targets;
 
 	public HuntAndKill(int numCols, int numRows) {
-		super(numCols, numRows, false, UNVISITED);
+		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
+	}
+	
+	@Override
+	public OrthogonalGrid getGrid() {
+		return grid;
 	}
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		targets = new BitSet(maze.numVertices());
-		int animal = maze.cell(x, y);
+		targets = new BitSet(grid.numVertices());
+		int animal = grid.cell(x, y);
 		do {
 			kill(animal);
-			OptionalInt livingNeighbor = randomElement(maze.neighbors(animal).filter(this::isAlive));
+			OptionalInt livingNeighbor = randomElement(grid.neighbors(animal).filter(this::isAlive));
 			if (livingNeighbor.isPresent()) {
-				maze.neighbors(animal).filter(this::isAlive).forEach(targets::set);
-				maze.addEdge(animal, livingNeighbor.getAsInt());
+				grid.neighbors(animal).filter(this::isAlive).forEach(targets::set);
+				grid.addEdge(animal, livingNeighbor.getAsInt());
 				animal = livingNeighbor.getAsInt();
 			} else if (!targets.isEmpty()) {
 				animal = hunt();
-				maze.addEdge(animal, randomElement(maze.neighbors(animal).filter(this::isDead)).getAsInt());
+				grid.addEdge(animal, randomElement(grid.neighbors(animal).filter(this::isDead)).getAsInt());
 			}
 		} while (!targets.isEmpty());
-		return maze;
+		return grid;
 	}
 
 	protected boolean isAlive(int v) {
-		return maze.isUnvisited(v);
+		return grid.isUnvisited(v);
 	}
 
 	protected boolean isDead(int v) {
@@ -59,7 +65,7 @@ public class HuntAndKill extends OrthogonalMazeGenerator {
 	}
 
 	protected void kill(int animal) {
-		maze.set(animal, COMPLETED);
+		grid.set(animal, COMPLETED);
 		targets.clear(animal);
 	}
 }

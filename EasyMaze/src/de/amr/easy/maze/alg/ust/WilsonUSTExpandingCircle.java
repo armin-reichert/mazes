@@ -21,11 +21,11 @@ public class WilsonUSTExpandingCircle extends WilsonUST {
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		return runWilsonAlgorithm(maze.cell(CENTER));
+		return runWilsonAlgorithm(grid.cell(CENTER));
 	}
 
 	@Override
 	protected IntStream randomWalkStartCells() {
-		return new ExpandingCircle(maze, maze.cell(CENTER), 1, max(maze.numCols(), maze.numRows())).stream();
+		return new ExpandingCircle(grid, grid.cell(CENTER), 1, max(grid.numCols(), grid.numRows())).stream();
 	}
 }

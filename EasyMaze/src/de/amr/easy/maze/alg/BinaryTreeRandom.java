@@ -17,6 +17,6 @@ public class BinaryTreeRandom extends BinaryTree {
 
 	@Override
 	protected IntStream cells() {
-		return permute(maze.vertices());
+		return permute(grid.vertices());
 	}
 }

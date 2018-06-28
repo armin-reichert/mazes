@@ -6,8 +6,8 @@ import static de.amr.easy.maze.alg.core.OrthogonalGrid.fullGrid;
 import static de.amr.easy.util.StreamUtils.permute;
 
 import de.amr.easy.data.Partition;
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * Maze generator derived from Kruskal's minimum spanning tree algorithm.
@@ -20,24 +20,31 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
  * @see <a href="http://weblog.jamisbuck.org/2011/1/3/maze-generation-kruskal-s-algorithm.html">Maze
  *      Generation: Kruskal's Algorithm</a>
  */
-public class KruskalMST extends OrthogonalMazeGenerator {
+public class KruskalMST implements OrthogonalMazeGenerator {
 
+	private OrthogonalGrid grid;
+	
 	public KruskalMST(int numCols, int numRows) {
-		super(numCols, numRows, false, UNVISITED);
+		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
+	}
+	
+	@Override
+	public OrthogonalGrid getGrid() {
+		return grid;
 	}
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
 		Partition<Integer> forest = new Partition<>();
-		permute(fullGrid(maze.numCols(), maze.numRows(), UNVISITED).edges()).forEach(edge -> {
+		permute(fullGrid(grid.numCols(), grid.numRows(), UNVISITED).edges()).forEach(edge -> {
 			int u = edge.either(), v = edge.other();
 			if (forest.find(u) != forest.find(v)) {
-				maze.addEdge(u, v);
-				maze.set(u, COMPLETED);
-				maze.set(v, COMPLETED);
+				grid.addEdge(u, v);
+				grid.set(u, COMPLETED);
+				grid.set(v, COMPLETED);
 				forest.union(u, v);
 			}
 		});
-		return maze;
+		return grid;
 	}
 }
