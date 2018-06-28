@@ -164,6 +164,7 @@ public class MazeDemoApp {
 		wndSettings.setVisible(enabled || !model.isHidingControlsWhenRunning());
 		wndSettings.generatorMenu.setEnabled(enabled);
 		wndSettings.solverMenu.setEnabled(enabled);
+		wndSettings.canvasMenu.setEnabled(enabled);
 		wndSettings.optionMenu.setEnabled(enabled);
 		actionChangeGridResolution.setEnabled(enabled);
 		actionCreateMaze.setEnabled(enabled);
