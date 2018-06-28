@@ -50,12 +50,12 @@ public class CreateMazeAction extends AbstractAction {
 			throws Exception, StackOverflowError {
 		OrthogonalMazeGenerator generator = (OrthogonalMazeGenerator) generatorInfo.getAlgorithmClass()
 				.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(app.model.getGridWidth(), app.model.getGridHeight());
-		int startCell = generator.getGrid().cell(startPosition);
-		int x = generator.getGrid().col(startCell), y = generator.getGrid().row(startCell);
+		app.showMessage(format("\n%s (%d cells)", generatorInfo.getDescription(), generator.getGrid().numVertices()));
 		app.wndDisplayArea.getCanvas().setGrid(generator.getGrid());
-		app.showMessage(format("\n%s (%d cells)", generatorInfo.getDescription(), app.model.getGrid().numVertices()));
 		app.wndDisplayArea.getCanvas().clear();
 		app.wndDisplayArea.getCanvas().drawGrid();
+		int startCell = generator.getGrid().cell(startPosition);
+		int x = generator.getGrid().col(startCell), y = generator.getGrid().row(startCell);
 		if (app.model.isGenerationAnimated()) {
 			generator.createMaze(x, y);
 		} else {
