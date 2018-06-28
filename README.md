@@ -22,25 +22,32 @@ To achieve the goals mentioned above, there is
 To illustrate the code, here is the maze generator based on Kruskal's minimum-spanning-tree algorithm:
 
 ```java
-public class KruskalMST extends OrthogonalMazeGenerator {
+public class KruskalMST implements OrthogonalMazeGenerator {
 
+	private OrthogonalGrid grid;
+	
 	public KruskalMST(int numCols, int numRows) {
-		super(numCols, numRows, false, UNVISITED);
+		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
+	}
+	
+	@Override
+	public OrthogonalGrid getGrid() {
+		return grid;
 	}
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
 		Partition<Integer> forest = new Partition<>();
-		permute(fullGrid(maze.numCols(), maze.numRows(), UNVISITED).edges()).forEach(edge -> {
+		permute(fullGrid(grid.numCols(), grid.numRows(), UNVISITED).edges()).forEach(edge -> {
 			int u = edge.either(), v = edge.other();
 			if (forest.find(u) != forest.find(v)) {
-				maze.addEdge(u, v);
-				maze.set(u, COMPLETED);
-				maze.set(v, COMPLETED);
+				grid.addEdge(u, v);
+				grid.set(u, COMPLETED);
+				grid.set(v, COMPLETED);
 				forest.union(u, v);
 			}
 		});
-		return maze;
+		return grid;
 	}
 }
 ```
