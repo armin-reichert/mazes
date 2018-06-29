@@ -28,11 +28,11 @@ public class DepthFirstTraversal2 extends DepthFirstTraversal {
 			if (current == target) {
 				break;
 			}
-			OptionalInt neighbor = children(current).findAny();
+			OptionalInt neighbor = unvisitedChildren(current).findAny();
 			if (neighbor.isPresent()) {
 				setState(neighbor.getAsInt(), VISITED);
 				setParent(neighbor.getAsInt(), current);
-				if (children(neighbor.getAsInt()).findAny().isPresent()) {
+				if (unvisitedChildren(neighbor.getAsInt()).findAny().isPresent()) {
 					stack.push(neighbor.getAsInt());
 				}
 				current = neighbor.getAsInt();

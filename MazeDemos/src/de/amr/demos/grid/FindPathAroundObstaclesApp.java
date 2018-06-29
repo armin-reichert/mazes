@@ -9,12 +9,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Function;
 
 import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
 
+import de.amr.easy.graph.impl.traversal.AStarTraversal;
 import de.amr.easy.graph.impl.traversal.BestFirstTraversal;
+import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
@@ -23,14 +24,13 @@ import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
 public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 
 	public static void main(String[] args) {
-		launch(new FindPathAroundObstaclesApp(1000, 800, 20));
+		launch(new FindPathAroundObstaclesApp(1000, 800, 40));
 	}
 
 	private final Set<Integer> pathCells = new HashSet<>();
 	private int source;
 	private int target;
 	private int currentCell = -1;
-	private Function<Integer, Integer> heuristics;
 
 	public FindPathAroundObstaclesApp(int width, int height, int cellSize) {
 		super(width, height, cellSize);
@@ -45,7 +45,6 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 		getGrid().setDefaultVertex(UNVISITED);
 		source = getGrid().cell(GridPosition.TOP_LEFT);
 		target = getGrid().cell(GridPosition.BOTTOM_RIGHT);
-		heuristics = v -> getGrid().euclidean2(v, target);
 		updatePath();
 	}
 
@@ -129,27 +128,27 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 					} else {
 						setWall(cell);
 					}
-					if (pathCells.contains(cell)) {
-						updatePath();
-					}
+					updatePath();
 				}
 			}
 		});
 	}
 
 	private void updatePath(boolean animated) {
-		BestFirstTraversal<Integer> best = new BestFirstTraversal<>(getGrid(), heuristics);
-		watch.measure(() -> best.traverseGraph(source, target));
+		AStarTraversal astar = new AStarTraversal(getGrid(), (u, v) -> (float) getGrid().manhattan(u, v));
+//		BestFirstTraversal<Integer> best = new BestFirstTraversal<>(getGrid(), u -> getGrid().manhattan(u, target));
+		BreadthFirstTraversal search = astar;
+		watch.measure(() -> search.traverseGraph(source, target));
 		System.out.println(String.format("Path finding time: %f seconds", watch.getSeconds()));
 		pathCells.clear();
-		best.path(target).forEach(pathCells::add);
+		search.path(target).forEach(pathCells::add);
 		getGrid().clear();
 		BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(getGrid());
 		if (animated) {
 			anim.fnDelay = () -> 5;
-			anim.run(getCanvas(), best, source, target);
+			anim.run(getCanvas(), search, source, target);
 		}
-		anim.showPath(getCanvas(), best, target);
+		anim.showPath(getCanvas(), search, target);
 	}
 
 	private void updatePath() {

@@ -34,7 +34,7 @@ public abstract class AbstractGraphTraversal {
 		return getState(v) == UNVISITED;
 	}
 
-	protected IntStream children(int v) {
+	protected IntStream unvisitedChildren(int v) {
 		return graph.adj(v).filter(this::isUnvisited);
 	}
 

@@ -34,7 +34,7 @@ public class DepthFirstTraversal extends AbstractGraphTraversal {
 			if (v == target) {
 				return;
 			}
-			children(v).forEach(w -> {
+			unvisitedChildren(v).forEach(w -> {
 				stack.push(w);
 				setState(w, VISITED);
 				setParent(w, v);

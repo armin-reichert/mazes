@@ -20,6 +20,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.amr.easy.graph.api.traversal.TraversalState;
+import de.amr.easy.graph.impl.traversal.AStarTraversal;
 import de.amr.easy.graph.impl.traversal.BestFirstTraversal;
 import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal;
@@ -76,11 +77,23 @@ public class GridTraversalTests {
 	public void testBestFS() {
 		grid = new IterativeDFS(N, N).createMaze(0, 0);
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, v -> grid.manhattan(v, target));
+		BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, x -> grid.manhattan(x, target));
 		assertState(grid.vertices(), best::getState, UNVISITED);
 		best.traverseGraph(source);
 		assertState(grid.vertices(), best::getState, COMPLETED);
 		best.traverseGraph(source, target);
+	}
+
+	@Test
+	public void testAStar() {
+		grid = new IterativeDFS(N, N).createMaze(0, 0);
+		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
+		AStarTraversal astar = new AStarTraversal(grid, (u, v) -> (float) grid.manhattan(u, v));
+		assertState(grid.vertices(), astar::getState, UNVISITED);
+		astar.traverseGraph(source, target);
+		assertTrue(astar.getState(target) == COMPLETED);
+		assertTrue(astar.getParent(target) != -1);
+		assertTrue(astar.getDistance(target) != -1);
 	}
 
 	@Test

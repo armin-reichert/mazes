@@ -23,48 +23,50 @@ import de.amr.easy.graph.api.Graph;
  */
 public class BreadthFirstTraversal extends AbstractGraphTraversal {
 
-	protected final Queue<Integer> q;
-	protected final int[] distance;
-	private int maxDistance;
-
-	protected BreadthFirstTraversal(Graph<?, ?> graph, Queue<Integer> queue) {
-		super(graph);
-		this.q = queue;
-		this.distance = new int[graph.numVertices()];
-	}
+	protected Queue<Integer> q;
+	protected int[] distFromSource;
+	protected int maxDistance;
 
 	public BreadthFirstTraversal(Graph<?, ?> graph) {
-		this(graph, new ArrayDeque<>());
+		super(graph);
+		q = new ArrayDeque<>();
 	}
 
 	@Override
 	protected void clear() {
 		super.clear();
 		q.clear();
-		Arrays.fill(distance, -1);
+		distFromSource = new int[graph.numVertices()];
+		Arrays.fill(distFromSource, -1);
 		maxDistance = -1;
 	}
 
 	@Override
 	public void traverseGraph(int source, int target) {
 		clear();
+
 		q.add(source);
 		setState(source, VISITED);
-		maxDistance = distance[source] = 0;
+		maxDistance = distFromSource[source] = 0;
+
 		while (!q.isEmpty()) {
-			int v = q.poll();
-			if (v == target) {
+			int current = q.poll();
+			setState(current, COMPLETED);
+			if (current == target) {
 				return;
 			}
-			setState(v, COMPLETED);
-			children(v).forEach(w -> {
-				q.add(w);
-				setState(w, VISITED);
-				setParent(w, v);
-				distance[w] = distance[v] + 1;
-				maxDistance = Math.max(maxDistance, distance[w]);
-			});
+			expand(current);
 		}
+	}
+
+	private void expand(int current) {
+		unvisitedChildren(current).forEach(neighbor -> {
+			q.add(neighbor);
+			setState(neighbor, VISITED);
+			setParent(neighbor, current);
+			distFromSource[neighbor] = distFromSource[current] + 1;
+			maxDistance = Math.max(maxDistance, distFromSource[neighbor]);
+		});
 	}
 
 	/**
@@ -75,7 +77,7 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal {
 	 * @return the distance from the source
 	 */
 	public int getDistance(int v) {
-		return distance[v];
+		return distFromSource[v];
 	}
 
 	/**

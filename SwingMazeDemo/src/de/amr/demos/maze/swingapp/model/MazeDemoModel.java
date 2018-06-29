@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import de.amr.easy.graph.impl.traversal.AStarTraversal;
 import de.amr.easy.graph.impl.traversal.BestFirstTraversal;
 import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
@@ -115,16 +116,20 @@ public class MazeDemoModel {
 
 	public static final AlgorithmInfo[] PATHFINDER_ALGORITHMS = {
 			/*@formatter:off*/
-			new AlgorithmInfo(BreadthFirstTraversal.class, "Breadth-First-Search", BFS),
-			new AlgorithmInfo(DepthFirstTraversal2.class, "Depth-First-Search", DFS), 
+			new AlgorithmInfo(BreadthFirstTraversal.class, "Breadth-First", BFS),
+			new AlgorithmInfo(DepthFirstTraversal2.class, "Depth-First", DFS), 
 			null,
-			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Manhattan)", BFS, MANHATTAN),
-			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Euclidean)", BFS, EUCLIDEAN),
-			new AlgorithmInfo(BestFirstTraversal.class, "Best-First-Search (Chebyshev)", BFS, CHEBYSHEV), 
+			new AlgorithmInfo(BestFirstTraversal.class, "Best-First (Manhattan)", BFS, MANHATTAN),
+			new AlgorithmInfo(BestFirstTraversal.class, "Best-First (Euclidean)", BFS, EUCLIDEAN),
+			new AlgorithmInfo(BestFirstTraversal.class, "Best-First (Chebyshev)", BFS, CHEBYSHEV), 
 			null,
 			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Manhattan)", DFS, MANHATTAN),
 			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Euclidean)", DFS, EUCLIDEAN),
 			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Chebyshev)", DFS, CHEBYSHEV),
+			null,
+			new AlgorithmInfo(AStarTraversal.class, "A* (Manhattan)", BFS, MANHATTAN),
+			new AlgorithmInfo(AStarTraversal.class, "A* (Euclidean)", BFS, EUCLIDEAN),
+			new AlgorithmInfo(AStarTraversal.class, "A* (Chebyshev)", BFS, CHEBYSHEV), 
 			/*@formatter:on*/
 	};
 

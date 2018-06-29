@@ -35,8 +35,8 @@ public class HillClimbing<C extends Comparable<C>> extends DepthFirstTraversal {
 	}
 
 	@Override
-	protected IntStream children(int v) {
+	protected IntStream unvisitedChildren(int v) {
 		// a1 < a2 < a3 => push(a3); push(a2); push(a1)
-		return reversed(super.children(v).boxed().sorted(byCost)).mapToInt(Integer::intValue);
+		return reversed(super.unvisitedChildren(v).boxed().sorted(byCost)).mapToInt(Integer::intValue);
 	}
 }
