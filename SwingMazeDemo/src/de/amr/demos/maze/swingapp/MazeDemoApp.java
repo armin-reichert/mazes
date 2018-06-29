@@ -99,7 +99,7 @@ public class MazeDemoApp {
 		model.setGridCellSize(32);
 		model.setGridWidth(DISPLAY_MODE.getWidth() / model.getGridCellSize());
 		model.setGridHeight(DISPLAY_MODE.getHeight() / model.getGridCellSize());
-		model.setGrid(createDefaultGrid(false));
+		model.setGrid(createDefaultGrid(true));
 
 		// create new canvas in its own window
 		wndDisplayArea = new DisplayAreaWindow(this);
@@ -138,7 +138,7 @@ public class MazeDemoApp {
 	}
 
 	public void resetDisplay() {
-		model.setGrid(createDefaultGrid(false));
+		model.setGrid(createDefaultGrid(true));
 		wndDisplayArea.newCanvas();
 		wndDisplayArea.getCanvas().getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
 		wndDisplayArea.getCanvas().getActionMap().put("showSettings", actionShowSettings);

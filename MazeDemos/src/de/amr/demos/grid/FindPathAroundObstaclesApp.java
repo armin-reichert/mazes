@@ -23,7 +23,7 @@ import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
 public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 
 	public static void main(String[] args) {
-		launch(new FindPathAroundObstaclesApp(1000, 800, 40));
+		launch(new FindPathAroundObstaclesApp(1000, 800, 25));
 	}
 
 	private final Set<Integer> pathCells = new HashSet<>();
@@ -135,7 +135,8 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 
 	private void updatePath(boolean animated) {
 		AStarTraversal astar = new AStarTraversal(getGrid(), (u, v) -> (float) getGrid().manhattan(u, v));
-//		BestFirstTraversal<Integer> best = new BestFirstTraversal<>(getGrid(), u -> getGrid().manhattan(u, target));
+		// BestFirstTraversal<Integer> best = new BestFirstTraversal<>(getGrid(), u ->
+		// getGrid().manhattan(u, target));
 		BreadthFirstTraversal search = astar;
 		watch.measure(() -> search.traverseGraph(source, target));
 		System.out.println(String.format("Path finding time: %f seconds", watch.getSeconds()));
