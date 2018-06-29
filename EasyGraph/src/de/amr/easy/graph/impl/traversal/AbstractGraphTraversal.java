@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.IntStream;
 
 import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Graph;
@@ -26,24 +25,16 @@ public abstract class AbstractGraphTraversal {
 	private final Map<Integer, TraversalState> stateMap = new HashMap<>();
 	private final Set<GraphTraversalObserver> observers = new HashSet<>(5);
 
+	public abstract void traverseGraph(int source, int target);
+
 	protected AbstractGraphTraversal(Graph<?, ?> graph) {
 		this.graph = graph;
-	}
-
-	protected boolean isUnvisited(int v) {
-		return getState(v) == UNVISITED;
-	}
-
-	protected IntStream unvisitedChildren(int v) {
-		return graph.adj(v).filter(this::isUnvisited);
 	}
 
 	protected void clear() {
 		parentMap.clear();
 		stateMap.clear();
 	}
-
-	public abstract void traverseGraph(int source, int target);
 
 	public void traverseGraph(int source) {
 		traverseGraph(source, -1);

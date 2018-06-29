@@ -9,8 +9,8 @@ import java.util.OptionalInt;
 import java.util.Random;
 import java.util.stream.IntStream;
 
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * Creates a random binary spanning tree.

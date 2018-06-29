@@ -7,8 +7,8 @@ import static de.amr.easy.util.StreamUtils.randomElement;
 
 import java.util.OptionalInt;
 
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * Maze generator using randomized recursive depth-first-search. Not suited for larger grids because

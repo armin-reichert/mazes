@@ -19,6 +19,7 @@ import java.util.function.Predicate;
 import de.amr.easy.graph.impl.traversal.AStarTraversal;
 import de.amr.easy.graph.impl.traversal.BestFirstTraversal;
 import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
+import de.amr.easy.graph.impl.traversal.DepthFirstTraversal;
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
 import de.amr.easy.graph.impl.traversal.HillClimbing;
 import de.amr.easy.grid.api.GridPosition;
@@ -116,20 +117,21 @@ public class MazeDemoModel {
 
 	public static final AlgorithmInfo[] PATHFINDER_ALGORITHMS = {
 			/*@formatter:off*/
-			new AlgorithmInfo(BreadthFirstTraversal.class, "Breadth-First", BFS),
-			new AlgorithmInfo(DepthFirstTraversal2.class, "Depth-First", DFS), 
+			new AlgorithmInfo(BreadthFirstTraversal.class, "Breadth-First Search", BFS),
+			new AlgorithmInfo(DepthFirstTraversal2.class, "Depth-First Search", DFS), 
+			new AlgorithmInfo(DepthFirstTraversal.class, "Depth-First Search (alternative)", DFS), 
 			null,
-			new AlgorithmInfo(BestFirstTraversal.class, "Best-First (Manhattan)", BFS, MANHATTAN),
-			new AlgorithmInfo(BestFirstTraversal.class, "Best-First (Euclidean)", BFS, EUCLIDEAN),
-			new AlgorithmInfo(BestFirstTraversal.class, "Best-First (Chebyshev)", BFS, CHEBYSHEV), 
+			new AlgorithmInfo(BestFirstTraversal.class, "Best-First Search (Manhattan)", BFS, MANHATTAN),
+			new AlgorithmInfo(BestFirstTraversal.class, "Best-First Search (Euclidean)", BFS, EUCLIDEAN),
+			new AlgorithmInfo(BestFirstTraversal.class, "Best-First Search (Chebyshev)", BFS, CHEBYSHEV), 
 			null,
 			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Manhattan)", DFS, MANHATTAN),
 			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Euclidean)", DFS, EUCLIDEAN),
 			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Chebyshev)", DFS, CHEBYSHEV),
 			null,
-			new AlgorithmInfo(AStarTraversal.class, "A* (Manhattan)", BFS, MANHATTAN),
-			new AlgorithmInfo(AStarTraversal.class, "A* (Euclidean)", BFS, EUCLIDEAN),
-			new AlgorithmInfo(AStarTraversal.class, "A* (Chebyshev)", BFS, CHEBYSHEV), 
+			new AlgorithmInfo(AStarTraversal.class, "A* Search (Manhattan)", BFS, MANHATTAN),
+			new AlgorithmInfo(AStarTraversal.class, "A* Search (Euclidean)", BFS, EUCLIDEAN),
+			new AlgorithmInfo(AStarTraversal.class, "A* Search (Chebyshev)", BFS, CHEBYSHEV), 
 			/*@formatter:on*/
 	};
 

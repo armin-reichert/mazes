@@ -1,5 +1,7 @@
 package de.amr.easy.graph.impl.traversal;
 
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
+import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
 import static de.amr.easy.util.StreamUtils.reversed;
 
 import java.util.Comparator;
@@ -35,8 +37,14 @@ public class HillClimbing<C extends Comparable<C>> extends DepthFirstTraversal {
 	}
 
 	@Override
-	protected IntStream unvisitedChildren(int v) {
-		// a1 < a2 < a3 => push(a3); push(a2); push(a1)
-		return reversed(super.unvisitedChildren(v).boxed().sorted(byCost)).mapToInt(Integer::intValue);
+	protected void expand(int current) {
+		IntStream sortedByCost = graph.adj(current).filter(neighbor -> getState(neighbor) == UNVISITED).boxed()
+				.sorted(byCost).mapToInt(Integer::intValue);
+		// push children in reversed order such that cheapest element will get popped first
+		reversed(sortedByCost).forEach(neighbor -> {
+			stack.push(neighbor);
+			setState(neighbor, VISITED);
+			setParent(neighbor, current);
+		});
 	}
 }

@@ -4,8 +4,8 @@ import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 import static de.amr.easy.util.StreamUtils.permute;
 
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * Maze generator derived from the Reverse-Delete-MST algorithm.

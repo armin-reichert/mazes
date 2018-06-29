@@ -6,8 +6,8 @@ import static de.amr.easy.util.StreamUtils.randomElement;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * Wilson's algorithm.

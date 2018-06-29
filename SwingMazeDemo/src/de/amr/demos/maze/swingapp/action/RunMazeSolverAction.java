@@ -18,6 +18,7 @@ import de.amr.demos.maze.swingapp.model.VertexCost;
 import de.amr.easy.graph.impl.traversal.AStarTraversal;
 import de.amr.easy.graph.impl.traversal.BestFirstTraversal;
 import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
+import de.amr.easy.graph.impl.traversal.DepthFirstTraversal;
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
 import de.amr.easy.graph.impl.traversal.HillClimbing;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
@@ -130,7 +131,12 @@ public class RunMazeSolverAction extends AbstractAction {
 		anim.fnDelay = () -> app.model.getDelay();
 		anim.setPathColor(app.model.getPathColor());
 
-		if (solver.getAlgorithmClass() == DepthFirstTraversal2.class) {
+		if (solver.getAlgorithmClass() == DepthFirstTraversal.class) {
+			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), new DepthFirstTraversal(grid), src, tgt));
+			app.showMessage(format("Depth-first search: %.2f seconds.", watch.getSeconds()));
+		}
+
+		else if (solver.getAlgorithmClass() == DepthFirstTraversal2.class) {
 			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), new DepthFirstTraversal2(grid), src, tgt));
 			app.showMessage(format("Depth-first search: %.2f seconds.", watch.getSeconds()));
 		}

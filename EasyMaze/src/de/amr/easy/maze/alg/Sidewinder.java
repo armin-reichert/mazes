@@ -6,8 +6,8 @@ import static java.util.stream.IntStream.range;
 
 import java.util.Random;
 
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * The "Sidewinder" algorithm.

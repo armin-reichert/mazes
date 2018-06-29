@@ -1,14 +1,18 @@
 package de.amr.easy.graph.impl.traversal;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
 
 import java.util.OptionalInt;
+import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.Graph;
 
 /**
- * Alternative implementation of Depth-first-traversal of an undirected graph.
+ * Alternative implementation of depth-first traversal of an undirected graph.
+ * <p>
+ * This implementation has a nicer visualization.
  * 
  * @author Armin Reichert
  */
@@ -16,6 +20,10 @@ public class DepthFirstTraversal2 extends DepthFirstTraversal {
 
 	public DepthFirstTraversal2(Graph<?, ?> graph) {
 		super(graph);
+	}
+
+	private IntStream unvisitedChildren(int v) {
+		return graph.adj(v).filter(child -> getState(child) == UNVISITED);
 	}
 
 	@Override

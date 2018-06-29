@@ -12,8 +12,8 @@ import java.util.Random;
 import java.util.Set;
 
 import de.amr.easy.data.Partition;
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * Maze generator using Eller's algorithm.

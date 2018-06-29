@@ -14,7 +14,6 @@ import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
 
 import de.amr.easy.graph.impl.traversal.AStarTraversal;
-import de.amr.easy.graph.impl.traversal.BestFirstTraversal;
 import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;

@@ -1,5 +1,6 @@
 package de.amr.easy.graph.impl.traversal;
 
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
 
 import de.amr.easy.data.Stack;
@@ -30,16 +31,20 @@ public class DepthFirstTraversal extends AbstractGraphTraversal {
 		stack.push(source);
 		setState(source, VISITED);
 		while (!stack.isEmpty()) {
-			int v = stack.pop();
-			if (v == target) {
+			int current = stack.pop();
+			if (current == target) {
 				return;
 			}
-			unvisitedChildren(v).forEach(w -> {
-				stack.push(w);
-				setState(w, VISITED);
-				setParent(w, v);
-			});
+			expand(current);
 		}
+	}
+	
+	protected void expand(int current) {
+		graph.adj(current).filter(neighbor -> getState(neighbor) == UNVISITED).forEach(neighbor -> {
+			stack.push(neighbor);
+			setState(neighbor, VISITED);
+			setParent(neighbor, current);
+		});
 	}
 
 	public boolean isStacked(int v) {

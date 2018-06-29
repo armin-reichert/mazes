@@ -1,6 +1,7 @@
 package de.amr.easy.graph.impl.traversal;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
 
 import java.util.Arrays;
@@ -61,7 +62,7 @@ public class AStarTraversal extends BreadthFirstTraversal {
 
 	private void expand(int current) {
 		graph.adj(current).filter(neighbor -> getState(neighbor) != COMPLETED).forEach(neighbor -> {
-			if (isUnvisited(neighbor)) {
+			if (getState(neighbor) == UNVISITED) {
 				q.add(neighbor);
 			}
 			int altDistFromSource = distFromSource[current] + 1; // which means: A* is useless for unit-cost edges!

@@ -6,8 +6,8 @@ import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
 import static de.amr.easy.util.StreamUtils.randomElement;
 
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * Let G = (V,E) be a graph with vertices V and edge set E.

@@ -1,6 +1,7 @@
 package de.amr.easy.graph.impl.traversal;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
 
 import java.util.ArrayDeque;
@@ -60,7 +61,7 @@ public class BreadthFirstTraversal extends AbstractGraphTraversal {
 	}
 
 	private void expand(int current) {
-		unvisitedChildren(current).forEach(neighbor -> {
+		graph.adj(current).filter(neighbor -> getState(neighbor) == UNVISITED).forEach(neighbor -> {
 			q.add(neighbor);
 			setState(neighbor, VISITED);
 			setParent(neighbor, current);

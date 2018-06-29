@@ -3,8 +3,8 @@ package de.amr.easy.maze.alg.ust;
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static de.amr.easy.util.StreamUtils.permute;
 
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * A hybrid algorithm ("Houston") that first uses Aldous/Broder until some fraction of cells is

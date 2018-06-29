@@ -8,8 +8,8 @@ import static de.amr.easy.util.StreamUtils.randomElement;
 import java.util.OptionalInt;
 
 import de.amr.easy.data.Stack;
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * Generates a maze by iterative random depth-first-traversal of a grid.

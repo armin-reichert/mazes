@@ -7,8 +7,8 @@ import java.util.PriorityQueue;
 import java.util.Random;
 
 import de.amr.easy.graph.api.WeightedEdge;
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * Maze generator based on Prim's minimum spanning tree algorithm with random edge weights.

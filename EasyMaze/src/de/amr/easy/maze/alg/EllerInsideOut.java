@@ -24,8 +24,8 @@ import java.util.Set;
 import de.amr.easy.data.Partition;
 import de.amr.easy.grid.iterators.shapes.Rectangle;
 import de.amr.easy.grid.iterators.shapes.Square;
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
+import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * Maze generator similar to Eller's algorithm but growing the maze inside-out. To my knowledge this
