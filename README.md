@@ -147,6 +147,6 @@ Implemented maze generation algorithms:
 The [EasyGraph](EasyGraph) library currently contains the following path finder implementations:
 - [Breadth-First Search](EasyGraph/src/de/amr/easy/graph/impl/traversal/BreadthFirstTraversal.java)
 - [Depth-First Search](EasyGraph/src/de/amr/easy/graph/impl/traversal/DepthFirstTraversal.java)
-- [Best-First Search](EasyGraph/src/de/amr/easy/graph/impl/traversal/BestFirstTraversal.java) with Euclidean, Manhattan and Chebyshev distance heuristics
-- [Hill Climbing](EasyGraph/src/de/amr/easy/graph/impl/traversal/HillClimbing.java)  with Euclidean, Manhattan and Chebyshev distance heuristics
-
+- [Best-First Search](EasyGraph/src/de/amr/easy/graph/impl/traversal/BestFirstTraversal.java). Can be used with Euclidean, Manhattan and Chebyshev distance heuristics.
+- [Hill Climbing](EasyGraph/src/de/amr/easy/graph/impl/traversal/HillClimbing.java) Can be used with Euclidean, Manhattan and Chebyshev distance heuristics.
+- [A* Search](EasyGraph/src/de/amr/easy/graph/impl/traversal/AStarTraversal.java). Not really useful in perfect mazes which have exactly one path from any source to any target.
