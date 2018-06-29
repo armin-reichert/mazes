@@ -2,13 +2,14 @@ package de.amr.easy.graph.impl.traversal;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import de.amr.easy.data.Stack;
-import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.event.GraphTraversalObserver;
 import de.amr.easy.graph.api.traversal.TraversalState;
 
@@ -18,42 +19,44 @@ import de.amr.easy.graph.api.traversal.TraversalState;
  * 
  * @author Armin Reichert
  */
-public abstract class AbstractGraphTraversal {
+public abstract class ObservableGraphTraversal {
 
-	protected final Graph<?, ?> graph;
 	private final Map<Integer, Integer> parentMap = new HashMap<>();
 	private final Map<Integer, TraversalState> stateMap = new HashMap<>();
 	private final Set<GraphTraversalObserver> observers = new HashSet<>(5);
 
+	/**
+	 * Traverses the graph starting from the given source until the target is reached.
+	 * 
+	 * @param source
+	 *          source vertex
+	 * @param target
+	 *          target vertex
+	 */
 	public abstract void traverseGraph(int source, int target);
 
-	protected AbstractGraphTraversal(Graph<?, ?> graph) {
-		this.graph = graph;
-	}
-
-	protected void clear() {
-		parentMap.clear();
-		stateMap.clear();
-	}
-
+	/**
+	 * Traverses the graph starting from the given source until all reachable vertices are visited.
+	 * 
+	 * @param source
+	 *          source vertex
+	 */
 	public void traverseGraph(int source) {
 		traverseGraph(source, -1);
 	}
 
-	public Iterable<Integer> path(int target) {
-		Stack<Integer> path = new Stack<>();
+	/**
+	 * @param target
+	 *          target vertex
+	 * @return path from source to target vertex
+	 */
+	public List<Integer> path(int target) {
+		List<Integer> path = new ArrayList<>();
 		for (int v = target; v != -1; v = getParent(v)) {
-			path.push(v);
+			path.add(v);
 		}
+		Collections.reverse(path);
 		return path;
-	}
-
-	public void addObserver(GraphTraversalObserver observer) {
-		observers.add(observer);
-	}
-
-	public void removeObserver(GraphTraversalObserver observer) {
-		observers.remove(observer);
 	}
 
 	protected void setState(int v, TraversalState newState) {
@@ -75,6 +78,16 @@ public abstract class AbstractGraphTraversal {
 
 	public int getParent(int v) {
 		return parentMap.containsKey(v) ? parentMap.get(v) : -1;
+	}
+
+	// Observer related stuff
+
+	public void addObserver(GraphTraversalObserver observer) {
+		observers.add(observer);
+	}
+
+	public void removeObserver(GraphTraversalObserver observer) {
+		observers.remove(observer);
 	}
 
 	public void edgeTraversed(int either, int other) {

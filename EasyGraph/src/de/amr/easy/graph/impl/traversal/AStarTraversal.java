@@ -18,7 +18,7 @@ import de.amr.easy.graph.api.Graph;
  * @see <a href="https://en.wikipedia.org/wiki/A*_search_algorithm">Wikipedia</a>
  */
 public class AStarTraversal extends BreadthFirstTraversal {
-
+	
 	// distance metrics, for example Manhattan distance
 	private BiFunction<Integer, Integer, Float> fnMetrics;
 

@@ -11,23 +11,18 @@ import de.amr.easy.graph.api.Graph;
  * 
  * @author Armin Reichert
  */
-public class DepthFirstTraversal extends AbstractGraphTraversal {
+public class DepthFirstTraversal extends ObservableGraphTraversal {
 
-	protected final Stack<Integer> stack = new Stack<>();
+	protected Graph<?, ?> graph;
+	protected Stack<Integer> stack;
 
 	public DepthFirstTraversal(Graph<?, ?> graph) {
-		super(graph);
-	}
-
-	@Override
-	protected void clear() {
-		super.clear();
-		stack.clear();
+		this.graph = graph;
 	}
 
 	@Override
 	public void traverseGraph(int source, int target) {
-		clear();
+		stack = new Stack<>();
 		stack.push(source);
 		setState(source, VISITED);
 		while (!stack.isEmpty()) {
@@ -38,7 +33,7 @@ public class DepthFirstTraversal extends AbstractGraphTraversal {
 			expand(current);
 		}
 	}
-	
+
 	protected void expand(int current) {
 		graph.adj(current).filter(neighbor -> getState(neighbor) == UNVISITED).forEach(neighbor -> {
 			stack.push(neighbor);

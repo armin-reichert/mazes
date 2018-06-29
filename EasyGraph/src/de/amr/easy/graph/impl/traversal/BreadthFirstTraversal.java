@@ -22,29 +22,23 @@ import de.amr.easy.graph.api.Graph;
  * 
  * @author Armin Reichert
  */
-public class BreadthFirstTraversal extends AbstractGraphTraversal {
+public class BreadthFirstTraversal extends ObservableGraphTraversal {
 
+	protected Graph<?, ?> graph;
 	protected Queue<Integer> q;
 	protected int[] distFromSource;
 	protected int maxDistance;
 
 	public BreadthFirstTraversal(Graph<?, ?> graph) {
-		super(graph);
-		q = new ArrayDeque<>();
-	}
-
-	@Override
-	protected void clear() {
-		super.clear();
-		q.clear();
-		distFromSource = new int[graph.numVertices()];
-		Arrays.fill(distFromSource, -1);
-		maxDistance = -1;
+		this.graph = graph;
 	}
 
 	@Override
 	public void traverseGraph(int source, int target) {
-		clear();
+		q = new ArrayDeque<>();
+		distFromSource = new int[graph.numVertices()];
+		Arrays.fill(distFromSource, -1);
+		maxDistance = -1;
 
 		q.add(source);
 		setState(source, VISITED);

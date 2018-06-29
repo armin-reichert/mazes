@@ -7,6 +7,7 @@ import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
 
+import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Graph;
 
 /**
@@ -28,7 +29,7 @@ public class DepthFirstTraversal2 extends DepthFirstTraversal {
 
 	@Override
 	public void traverseGraph(int source, int target) {
-		clear();
+		stack = new Stack<>();
 		int current = source;
 		stack.push(current);
 		setState(current, VISITED);
