@@ -14,7 +14,6 @@
             </manifest>
             <fileset dir="${dir.jarfile}/assets"/>
 	          <fileset dir="${dir.jarfile}/bin"/>
-            <fileset dir="C:/Users/Armin/git/mazes/EasyGrid/bin"/>
             <fileset dir="C:/Users/Armin/git/mazes/EasyGraph/bin"/>
             <fileset dir="C:/Users/Armin/git/mazes/EasyMaze/bin"/>
             <zipfileset excludes="META-INF/*.SF" src="${dir.jarfile}/miglayout15-swing.jar"/>
