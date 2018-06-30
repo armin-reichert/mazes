@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.AbstractAction;
@@ -134,15 +135,17 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 	}
 	
 	private BreadthFirstTraversal getPathFinder() {
-		return new AStarTraversal(getGrid(), (u, v) -> (float) getGrid().euclidean2(u, v));
+		return new AStarTraversal(getGrid(), (u, v) -> (float) getGrid().manhattan(u, v));
 	}
 
 	private void updatePath(boolean animated) {
+		pathCells.clear();
 		BreadthFirstTraversal pathFinder = getPathFinder();
 		watch.measure(() -> pathFinder.traverseGraph(source, target));
 		System.out.println(String.format("Path finding time: %f seconds", watch.getSeconds()));
-		pathCells.clear();
-		pathFinder.path(target).forEach(pathCells::add);
+		List<Integer> path = pathFinder.path(target);
+		path.forEach(pathCells::add);
+		System.out.println(String.format("Path length: %d", path.size()));
 		getGrid().clear();
 		BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(getGrid());
 		if (animated) {
