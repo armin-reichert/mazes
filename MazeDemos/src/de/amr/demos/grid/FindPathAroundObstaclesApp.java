@@ -132,23 +132,24 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 			}
 		});
 	}
+	
+	private BreadthFirstTraversal getPathFinder() {
+		return new AStarTraversal(getGrid(), (u, v) -> (float) getGrid().euclidean2(u, v));
+	}
 
 	private void updatePath(boolean animated) {
-		AStarTraversal astar = new AStarTraversal(getGrid(), (u, v) -> (float) getGrid().manhattan(u, v));
-		// BestFirstTraversal<Integer> best = new BestFirstTraversal<>(getGrid(), u ->
-		// getGrid().manhattan(u, target));
-		BreadthFirstTraversal search = astar;
-		watch.measure(() -> search.traverseGraph(source, target));
+		BreadthFirstTraversal pathFinder = getPathFinder();
+		watch.measure(() -> pathFinder.traverseGraph(source, target));
 		System.out.println(String.format("Path finding time: %f seconds", watch.getSeconds()));
 		pathCells.clear();
-		search.path(target).forEach(pathCells::add);
+		pathFinder.path(target).forEach(pathCells::add);
 		getGrid().clear();
 		BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(getGrid());
 		if (animated) {
-			anim.fnDelay = () -> 5;
-			anim.run(getCanvas(), search, source, target);
+			anim.fnDelay = () -> 1;
+			anim.run(getCanvas(), pathFinder, source, target);
 		}
-		anim.showPath(getCanvas(), search, target);
+		anim.showPath(getCanvas(), pathFinder, target);
 	}
 
 	private void updatePath() {

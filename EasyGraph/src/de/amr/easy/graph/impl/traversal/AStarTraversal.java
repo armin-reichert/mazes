@@ -1,13 +1,11 @@
 package de.amr.easy.graph.impl.traversal;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
-import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
 
 import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 import de.amr.easy.graph.api.Graph;
 
@@ -20,59 +18,45 @@ import de.amr.easy.graph.api.Graph;
  */
 public class AStarTraversal extends BreadthFirstTraversal {
 
-	/** fnMetrics: (v1, v2) -> distance(v1, v2), for example Manhattan distance */
-	private BiFunction<Integer, Integer, Float> fnMetrics;
+	private BiFunction<Integer, Integer, Float> fnEstimatedDist;
 
-	/** Vertex valuation, f[v] = distFromSource[v] + h[v] */
-	private float[] f;
-
-	/** (lower-bound) estimate of remaining cost, for example Manhattan distance to target */
-	private Function<Integer, Float> h;
-
-	public AStarTraversal(Graph<?, ?> graph, BiFunction<Integer, Integer, Float> fnMetrics) {
+	public AStarTraversal(Graph<?, ?> graph, BiFunction<Integer, Integer, Float> fnEstimatedDist) {
 		super(graph);
-		this.fnMetrics = fnMetrics;
+		this.fnEstimatedDist = fnEstimatedDist;
 	}
 
 	@Override
 	public void traverseGraph(int source, int target) {
-		q = new PriorityQueue<>((v, w) -> Float.compare(f[v], f[w])); // "open" set
-
-		f = new float[graph.numVertices()];
-		Arrays.fill(f, Float.MAX_VALUE);
-
-		/* g */distFromSource = new int[graph.numVertices()];
+		float[] score = new float[graph.numVertices()];
+		Arrays.fill(score, Float.MAX_VALUE);
+		distFromSource = new int[graph.numVertices()];
 		Arrays.fill(distFromSource, Integer.MAX_VALUE);
-
-		h = v -> fnMetrics.apply(v, target);
-
-		q.add(source);
-		setState(source, VISITED); // add to "open" set
+		q = new PriorityQueue<>((v, w) -> Float.compare(score[v], score[w]));
+		setState(source, VISITED); // -> "open"
 		distFromSource[source] = 0;
-		f[source] = distFromSource[source] + h.apply(source);
-
+		score[source] = fnEstimatedDist.apply(source, target);
+		q.add(source);
 		while (!q.isEmpty()) {
 			int current = q.poll();
-			setState(current, COMPLETED); // add to "closed" set
 			if (current == target) {
 				break;
 			}
-			expand(current);
+			setState(current, COMPLETED); // "open" -> "closed"
+			graph.adj(current).filter(neighbor -> getState(neighbor) != COMPLETED).forEach(neighbor -> {
+				int newDist = distFromSource[current] + /* distance(current, neighbor) */ 1;
+				if (getState(neighbor) != VISITED || newDist < distFromSource[neighbor]) {
+					distFromSource[neighbor] = newDist;
+					score[neighbor] = newDist + fnEstimatedDist.apply(neighbor, target);
+					setParent(neighbor, current);
+					if (getState(neighbor) == VISITED) {
+						q.remove(neighbor); // TODO need "decrease-key" operation
+						q.add(neighbor);
+					} else {
+						setState(neighbor, VISITED);
+						q.add(neighbor);
+					}
+				}
+			});
 		}
-	}
-
-	private void expand(int current) {
-		graph.adj(current).filter(neighbor -> getState(neighbor) != COMPLETED).forEach(neighbor -> {
-			if (getState(neighbor) == UNVISITED) {
-				q.add(neighbor);
-			}
-			int altDistFromSource = distFromSource[current] + 1;
-			// A* is useless for equal-cost edges!
-			if (altDistFromSource < distFromSource[neighbor]) {
-				distFromSource[neighbor] = altDistFromSource;
-				f[neighbor] = distFromSource[neighbor] + h.apply(neighbor);
-				setParent(neighbor, current);
-			}
-		});
 	}
 }
