@@ -15,17 +15,18 @@ import de.amr.easy.graph.api.Graph;
  * The A* path finder.
  * 
  * @author Armin Reichert
+ * 
  * @see <a href="https://en.wikipedia.org/wiki/A*_search_algorithm">Wikipedia</a>
  */
 public class AStarTraversal extends BreadthFirstTraversal {
-	
-	// distance metrics, for example Manhattan distance
+
+	/** fnMetrics: (v1, v2) -> distance(v1, v2), for example Manhattan distance */
 	private BiFunction<Integer, Integer, Float> fnMetrics;
 
-	// Vertex valuation, f[v] = distFromSource[v] + h[v]
+	/** Vertex valuation, f[v] = distFromSource[v] + h[v] */
 	private float[] f;
-	
-	// (lower-bound) estimate of remaining cost, for example Manhattan distance to target
+
+	/** (lower-bound) estimate of remaining cost, for example Manhattan distance to target */
 	private Function<Integer, Float> h;
 
 	public AStarTraversal(Graph<?, ?> graph, BiFunction<Integer, Integer, Float> fnMetrics) {
@@ -36,19 +37,19 @@ public class AStarTraversal extends BreadthFirstTraversal {
 	@Override
 	public void traverseGraph(int source, int target) {
 		q = new PriorityQueue<>((v, w) -> Float.compare(f[v], f[w])); // "open" set
-		
+
 		f = new float[graph.numVertices()];
 		Arrays.fill(f, Float.MAX_VALUE);
-		
-		/*g*/distFromSource = new int[graph.numVertices()];
+
+		/* g */distFromSource = new int[graph.numVertices()];
 		Arrays.fill(distFromSource, Integer.MAX_VALUE);
-		
+
 		h = v -> fnMetrics.apply(v, target);
 
 		q.add(source);
 		setState(source, VISITED); // add to "open" set
 		distFromSource[source] = 0;
-		f[source] = h.apply(source);
+		f[source] = distFromSource[source] + h.apply(source);
 
 		while (!q.isEmpty()) {
 			int current = q.poll();
@@ -65,11 +66,12 @@ public class AStarTraversal extends BreadthFirstTraversal {
 			if (getState(neighbor) == UNVISITED) {
 				q.add(neighbor);
 			}
-			int altDistFromSource = distFromSource[current] + 1; // which means: A* is useless for unit-cost edges!
+			int altDistFromSource = distFromSource[current] + 1;
+			// A* is useless for equal-cost edges!
 			if (altDistFromSource < distFromSource[neighbor]) {
-				setParent(neighbor, current);
 				distFromSource[neighbor] = altDistFromSource;
 				f[neighbor] = distFromSource[neighbor] + h.apply(neighbor);
+				setParent(neighbor, current);
 			}
 		});
 	}
