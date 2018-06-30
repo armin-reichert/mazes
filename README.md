@@ -12,7 +12,7 @@ This project contains also new algorithms for generating mazes. One new algorith
 
 Other algorithms are variations of Wilson's uniform spanning tree algorithm. They result from the different possibilities for selecting the random walk start cells. As the order in which the random walk start cells are selected is arbitrary, we have a  number of interesting choices. For example, you can start the random walks in the order defined by a space-filling-curve like [Hilbert](EasyGrid/src/de/amr/easy/grid/curves/HilbertCurve.java), [Peano](EasyGrid/src/de/amr/easy/grid/curves/PeanoCurve.java) or [Moore](EasyGrid/src/de/amr/easy/grid/curves/MooreLCurve.java) curves, or you can use visually appealing ways of filling a grid like recursive patterns. The result are visually appealing maze creation processes. If this has any practical use, who knows?
 
-Also implemented are path finding algorithms which can be used to "solve" the mazes: "Breadth-First" and "Depth-First" search together with their informed variants "Best-First" search and "Hill Climbing". In the [demo application](https://github.com/armin-reichert/mazes/releases/download/june2018/mazedemoapp.jar), each of these solvers can be visualized on the generated maze.
+Also implemented are path finding algorithms which can be used to "solve" the mazes: "Breadth-First" and "Depth-First" search together with their informed variants "Best-First" search and "Hill Climbing". In the [demo application](https://github.com/armin-reichert/mazes/releases/download/July2018/mazedemoapp.jar), each of these solvers can be visualized on the generated maze.
 
 To achieve the goals mentioned above, there is
 - an API for [graph](EasyGraph/src/de/amr/easy/graph/api/Graph.java) and [2D-grid](EasyGrid/src/de/amr/easy/grid/api/GridGraph2D.java) data structures 
@@ -53,7 +53,7 @@ public class KruskalMST implements OrthogonalMazeGenerator {
 ```
 Anyone familiar with the Kruskal MST algorithm will immediately recognize it in this code. The difference is that in the maze generator the edges of a (full) grid are selected in permuted order where the Kruskal MST algorithm greedily selects the minimum cost edge in each step.
 
-The included [demo application](https://github.com/armin-reichert/mazes/releases/download/june2018/mazedemoapp.jar) demonstrates all implemented maze generators and path finders. Using a control panel you can interactively select the generation algorithm, path finder, grid resolution and rendering style ("walls", "passages").
+The included [demo application](https://github.com/armin-reichert/mazes/releases/download/July2018/mazedemoapp.jar) demonstrates all implemented maze generators and path finders. Using a control panel you can interactively select the generation algorithm, path finder, grid resolution and rendering style ("walls", "passages").
 
 <img style="width:100%; height=auto" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/mazedemoapp.png">
 
