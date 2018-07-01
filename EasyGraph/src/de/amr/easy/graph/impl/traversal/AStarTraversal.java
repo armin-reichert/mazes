@@ -8,7 +8,15 @@ import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.traversal.TraversalState;
 
 /**
- * The A* path finder.
+ * The A* path finder. In this implementation, the functions f, g, h are realized as follows:
+ * 
+ * <pre>
+ * 	
+ * "f" = score
+ * "g" = distFromSource
+ * "h" = v -> fnEstimatedDist(v, target)
+ * "open list" = q
+ * </pre>
  * 
  * @author Armin Reichert
  * 
@@ -16,37 +24,40 @@ import de.amr.easy.graph.api.traversal.TraversalState;
  */
 public class AStarTraversal extends BreadthFirstTraversal {
 
-	private static final TraversalState OPEN = TraversalState.VISITED;
-	private static final TraversalState CLOSED = TraversalState.COMPLETED;
+	public static final TraversalState OPEN = TraversalState.VISITED;
+	public static final TraversalState CLOSED = TraversalState.COMPLETED;
 
-	private BiFunction<Integer, Integer, Float> fnEstimatedDist;
+	private final BiFunction<Integer, Integer, Float> fnEstimatedDist;
+	private final float[] score;
 
 	public AStarTraversal(Graph<?, ?> graph, BiFunction<Integer, Integer, Float> fnEstimatedDist) {
 		super(graph);
 		this.fnEstimatedDist = fnEstimatedDist;
+		score = new float[graph.numVertices()];
+		distFromSource = new int[graph.numVertices()];
+		q = new PriorityQueue<>((v, w) -> Float.compare(score[v], score[w])); // "open list"
+	}
+	
+	public float getScore(int cell) {
+		return score[cell];
+	}
+
+	@Override
+	protected void init() {
+		super.init();
+		Arrays.fill(score, Float.MAX_VALUE);
+		Arrays.fill(distFromSource, Integer.MAX_VALUE);
 	}
 
 	@Override
 	public void traverseGraph(int source, int target) {
-		
-		/* "f" */
-		float[] score = new float[graph.numVertices()];
-		Arrays.fill(score, Float.MAX_VALUE);
-		
-		/* "g" */
-		distFromSource = new int[graph.numVertices()];
-		Arrays.fill(distFromSource, Integer.MAX_VALUE);
-		
-		/* "h" = v -> fnEstimatedDist(v, target)
-
-		/* "open list" */
-		q = new PriorityQueue<>((v, w) -> Float.compare(score[v], score[w]));
+		init();
 		
 		distFromSource[source] = 0;
 		score[source] = fnEstimatedDist.apply(source, target);
 		setState(source, OPEN);
 		q.add(source);
-		
+
 		while (!q.isEmpty()) {
 			int current = q.poll();
 			setState(current, CLOSED);

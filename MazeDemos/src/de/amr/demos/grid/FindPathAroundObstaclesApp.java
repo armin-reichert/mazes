@@ -3,6 +3,7 @@ package de.amr.demos.grid;
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -14,23 +15,23 @@ import java.util.Set;
 import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
 
+import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.graph.impl.traversal.AStarTraversal;
-import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
 import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
 
 public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 
 	public static void main(String[] args) {
-		launch(new FindPathAroundObstaclesApp(1000, 800, 25));
+		launch(new FindPathAroundObstaclesApp(800, 800, 40));
 	}
 
-	private final Set<Integer> pathCells = new HashSet<>();
+	private Set<Integer> pathCells = new HashSet<>();
 	private int source;
 	private int target;
 	private int currentCell = -1;
+	private AStarTraversal pathFinder;
 
 	public FindPathAroundObstaclesApp(int width, int height, int cellSize) {
 		super(width, height, cellSize);
@@ -38,19 +39,20 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 		addMouseHandler();
 		addKeyboardAction("SPACE", this::updatePath);
 		addKeyboardAction("typed c", this::clearBoard);
-		addKeyboardAction("typed p", this::updatePathAnimated);
+		addKeyboardAction("typed p", this::updatePath);
 		getCanvas().pushRenderer(createRenderer());
-		getCanvas().requestFocus();
-		getGrid().fill();
 		getGrid().setDefaultVertex(UNVISITED);
+		getGrid().setEventsEnabled(false);
+		getGrid().fill();
+		getGrid().setEventsEnabled(true);
 		source = getGrid().cell(GridPosition.TOP_LEFT);
 		target = getGrid().cell(GridPosition.BOTTOM_RIGHT);
-		updatePath();
+		getCanvas().requestFocus();
+		getCanvas().drawGrid();
 	}
 
 	@Override
 	public void run() {
-		// no auto run
 	}
 
 	private void clearBoard() {
@@ -73,11 +75,36 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 			if (isWall(cell)) {
 				return new Color(139, 69, 19);
 			}
+			if (pathCells.contains(cell)) {
+				return Color.RED;
+			}
+			if (pathFinder != null) {
+				if (pathFinder.getState(cell) == AStarTraversal.CLOSED) {
+					return Color.GRAY;
+				}
+				if (pathFinder.getState(cell) == AStarTraversal.OPEN) {
+					return Color.LIGHT_GRAY;
+				}
+			}
 			if (getGrid().get(cell) == UNVISITED) {
 				return Color.WHITE;
 			}
 			return base.getModel().getCellBgColor(cell);
 		};
+		r.fnText = cell -> {
+			if (pathFinder != null && pathFinder.getState(cell) != TraversalState.UNVISITED) {
+				return String.format("%.2f", pathFinder.getScore(cell));
+			}
+			return "";
+		};
+		r.fnTextColor = cell -> {
+			if (pathCells.contains(cell)) {
+				return Color.WHITE;
+			}
+			return Color.BLACK;
+
+		};
+		r.fnTextFont = () -> new Font("Arial", Font.PLAIN, getCellSize() / 4);
 		r.fnPassageColor = (cell, dir) -> getGrid().get(cell) == UNVISITED ? Color.WHITE
 				: base.getModel().getPassageColor(cell, dir);
 		r.fnPassageWidth = () -> getCellSize() - 2;
@@ -108,7 +135,7 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 			@Override
 			public void mousePressed(MouseEvent mouse) {
 				currentCell = cellAt(mouse.getX(), mouse.getY());
-				if (mouse.isShiftDown()) {
+				if (mouse.getButton() == MouseEvent.BUTTON3) {
 					removeWall(currentCell);
 				} else {
 					setWall(currentCell);
@@ -123,44 +150,36 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 				int cell = cellAt(mouse.getX(), mouse.getY());
 				if (cell != currentCell) {
 					currentCell = cell;
+					boolean updated = false;
 					if (mouse.isShiftDown()) {
-						removeWall(cell);
+						updated = removeWall(cell);
 					} else {
-						setWall(cell);
+						updated = setWall(cell);
 					}
-					updatePath();
+					if (updated) {
+						updatePath();
+					}
 				}
 			}
 		});
 	}
-	
-	private BreadthFirstTraversal getPathFinder() {
+
+	private AStarTraversal getPathFinder() {
 		return new AStarTraversal(getGrid(), (u, v) -> (float) getGrid().manhattan(u, v));
 	}
 
 	private void updatePath(boolean animated) {
-		pathCells.clear();
-		BreadthFirstTraversal pathFinder = getPathFinder();
+		pathFinder = getPathFinder();
 		watch.measure(() -> pathFinder.traverseGraph(source, target));
 		System.out.println(String.format("Path finding time: %f seconds", watch.getSeconds()));
 		List<Integer> path = pathFinder.path(target);
-		path.forEach(pathCells::add);
+		pathCells = new HashSet<>(path);
 		System.out.println(String.format("Path length: %d", path.size()));
-		getGrid().clear();
-		BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(getGrid());
-		if (animated) {
-			anim.fnDelay = () -> 1;
-			anim.run(getCanvas(), pathFinder, source, target);
-		}
-		anim.showPath(getCanvas(), pathFinder, target);
+		getCanvas().drawGrid();
 	}
 
 	private void updatePath() {
 		updatePath(false);
-	}
-
-	private void updatePathAnimated() {
-		updatePath(true);
 	}
 
 	private int cellAt(int x, int y) {
@@ -173,15 +192,19 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 		return getGrid().neighbors(cell).noneMatch(nb -> getGrid().hasEdge(cell, nb));
 	}
 
-	private void setWall(int cell) {
+	private boolean setWall(int cell) {
 		if (!isWall(cell) && cell != source && cell != target) {
 			getGrid().neighbors(cell).forEach(nb -> getGrid().removeEdge(cell, nb));
+			return true;
 		}
+		return false;
 	}
 
-	private void removeWall(int cell) {
+	private boolean removeWall(int cell) {
 		if (isWall(cell)) {
 			getGrid().neighbors(cell).filter(nb -> !isWall(nb)).forEach(nb -> getGrid().addEdge(cell, nb));
+			return true;
 		}
+		return false;
 	}
 }
