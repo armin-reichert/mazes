@@ -10,13 +10,13 @@ Maze algorithms got my attention when reading [this blog](http://weblog.jamisbuc
 
 This project contains also new algorithms for generating mazes. One new algorithm is a modification of Eller's algorithm that doesn't generate the maze row-wise but from the center of the grid towards the outer borders. The resulting maze however is heavily biased.
 
-Other algorithms are variations of Wilson's uniform spanning tree algorithm. They result from the different possibilities for selecting the random walk start cells. As the order in which the random walk start cells are selected is arbitrary, we have a  number of interesting choices. For example, you can start the random walks in the order defined by a space-filling-curve like [Hilbert](EasyGrid/src/de/amr/easy/grid/curves/HilbertCurve.java), [Peano](EasyGrid/src/de/amr/easy/grid/curves/PeanoCurve.java) or [Moore](EasyGrid/src/de/amr/easy/grid/curves/MooreLCurve.java) curves, or you can use visually appealing ways of filling a grid like recursive patterns. The result are visually appealing maze creation processes. If this has any practical use, who knows?
+Other algorithms are variations of Wilson's uniform spanning tree algorithm. They result from the different possibilities for selecting the random walk start cells. As the order in which the random walk start cells are selected is arbitrary, we have a  number of interesting choices. For example, you can start the random walks in the order defined by a space-filling-curve like [Hilbert](EasyGraph/src/de/amr/easy/grid/curves/HilbertCurve.java), [Peano](EasyGraph/src/de/amr/easy/grid/curves/PeanoCurve.java) or [Moore](EasyGraph/src/de/amr/easy/grid/curves/MooreLCurve.java) curves, or you can use visually appealing ways of filling a grid like recursive patterns. The result are visually appealing maze creation processes. If this has any practical use, who knows?
 
 Also implemented are path finding algorithms which can be used to "solve" the mazes: "Breadth-First" and "Depth-First" search together with their informed variants "Best-First" search and "Hill Climbing". In the [demo application](https://github.com/armin-reichert/mazes/releases/download/July2018/mazedemoapp.jar), each of these solvers can be visualized on the generated maze.
 
 To achieve the goals mentioned above, there is
-- an API for [graph](EasyGraph/src/de/amr/easy/graph/api/Graph.java) and [2D-grid](EasyGrid/src/de/amr/easy/grid/api/GridGraph2D.java) data structures 
-- an implementation of a [2D-grid](EasyGrid/src/de/amr/easy/grid/impl/GridGraph.java) with cell and edge content
+- an API for [graph](EasyGraph/src/de/amr/easy/graph/api/Graph.java) and [2D-grid](EasyGraph/src/de/amr/easy/grid/api/GridGraph2D.java) data structures 
+- an implementation of a [2D-grid](EasyGraph/src/de/amr/easy/grid/impl/GridGraph.java) with cell and edge content
 - a publish-subscribe mechanism for observing graph/grid operations and traversal algorithms
 
 To illustrate the code, here is the maze generator based on Kruskal's minimum-spanning-tree algorithm:
@@ -87,13 +87,13 @@ Implemented maze generation algorithms:
 
 - [Reverse-Delete, base algorithm](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteMST.java)
 
-  - [Reverse-Delete, DFS variant](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteDFSMST.java)
+  - [Reverse-Delete, DFS variant](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteMST_DFS.java)
 
-  - [Reverse-Delete, BFS variant](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteBFSMST.java)
+  - [Reverse-Delete, BFS variant](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteMST_BFS.java)
 
-  - [Reverse-Delete, Best FS variant](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteBestFSMST.java)
+  - [Reverse-Delete, Best FS variant](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteMST_BestFS.java)
 
-  - [Reverse-Delete, Hill Climbing variant](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteHillClimbingMST.java)
+  - [Reverse-Delete, Hill Climbing variant](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteMST_HillClimbing.java)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_ReverseDeleteMST.gif">
 
