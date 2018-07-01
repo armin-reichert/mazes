@@ -88,7 +88,7 @@ public class GridTraversalTests {
 	public void testAStar() {
 		grid = new IterativeDFS(N, N).createMaze(0, 0);
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		AStarTraversal astar = new AStarTraversal(grid, (u, v) -> (float) grid.manhattan(u, v));
+		AStarTraversal astar = new AStarTraversal(grid, (u, v) -> grid.manhattan(u, v));
 		assertState(grid.vertices(), astar::getState, UNVISITED);
 		astar.traverseGraph(source, target);
 		assertTrue(astar.getState(target) == VISITED);

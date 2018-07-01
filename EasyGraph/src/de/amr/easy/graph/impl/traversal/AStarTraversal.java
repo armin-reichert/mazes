@@ -28,32 +28,32 @@ public class AStarTraversal extends BreadthFirstTraversal {
 	public static final TraversalState OPEN = TraversalState.VISITED;
 	public static final TraversalState CLOSED = TraversalState.COMPLETED;
 
-	private final BiFunction<Integer, Integer, Float> fnEstimatedDist;
-	private final float[] score;
+	private final BiFunction<Integer, Integer, Integer> fnEstimatedDist;
+	private final int[] score;
 
-	public AStarTraversal(Graph<?, ?> graph, BiFunction<Integer, Integer, Float> fnEstimatedDist) {
+	public AStarTraversal(Graph<?, ?> graph, BiFunction<Integer, Integer, Integer> fnEstimatedDist) {
 		this.graph = graph;
 		this.fnEstimatedDist = fnEstimatedDist;
-		score = new float[graph.numVertices()];
+		score = new int[graph.numVertices()];
 		distFromSource = new int[graph.numVertices()];
-		q = new PriorityQueue<>((v, w) -> Float.compare(score[v], score[w])); // "open list"
+		q = new PriorityQueue<>((v, w) -> Integer.compare(score[v], score[w])); // "open list"
 	}
-	
-	public float getScore(int cell) {
+
+	public int getScore(int cell) {
 		return score[cell];
 	}
 
 	@Override
 	protected void init() {
 		super.init();
-		Arrays.fill(score, Float.MAX_VALUE);
+		Arrays.fill(score, Integer.MAX_VALUE);
 		Arrays.fill(distFromSource, Integer.MAX_VALUE);
 	}
 
 	@Override
 	public void traverseGraph(int source, int target) {
 		init();
-		
+
 		distFromSource[source] = 0;
 		score[source] = fnEstimatedDist.apply(source, target);
 		setState(source, OPEN);

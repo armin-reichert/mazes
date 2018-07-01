@@ -109,14 +109,15 @@ public class RunMazeSolverAction extends AbstractAction {
 		return Optional.ofNullable(h);
 	}
 
-	private Optional<BiFunction<Integer, Integer, Float>> getDistanceFunction(AlgorithmInfo solver, OrthogonalGrid grid) {
-		BiFunction<Integer, Integer, Float> dist = null;
+	private Optional<BiFunction<Integer, Integer, Integer>> getDistanceFunction(AlgorithmInfo solver,
+			OrthogonalGrid grid) {
+		BiFunction<Integer, Integer, Integer> dist = null;
 		if (solver.isTagged(CHEBYSHEV)) {
-			dist = (u, v) -> (float) grid.chebyshev(u, v);
+			dist = (u, v) -> grid.chebyshev(u, v);
 		} else if (solver.isTagged(EUCLIDEAN)) {
-			dist = (u, v) -> (float) grid.euclidean2(u, v);
+			dist = (u, v) -> grid.euclidean2(u, v);
 		} else if (solver.isTagged(MANHATTAN)) {
-			dist = (u, v) -> (float) grid.manhattan(u, v);
+			dist = (u, v) -> grid.manhattan(u, v);
 		}
 		return Optional.ofNullable(dist);
 

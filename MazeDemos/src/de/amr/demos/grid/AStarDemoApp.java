@@ -2,7 +2,6 @@ package de.amr.demos.grid;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static java.lang.Math.min;
-import static java.lang.Math.sqrt;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -30,7 +29,7 @@ public class AStarDemoApp extends SwingGridSampleApp {
 	private int current = -1;
 	private AStarTraversal astar;
 	private BitSet pathCells;
-	private BiFunction<Integer, Integer, Float> fnDist = (u, v) -> (float) sqrt(getGrid().euclidean2(u, v));
+	private BiFunction<Integer, Integer, Integer> fnDist = (u, v) -> getGrid().euclidean2(u, v);
 
 	public AStarDemoApp(int width, int height, int cellSize) {
 		super(width, height, cellSize);
@@ -91,7 +90,7 @@ public class AStarDemoApp extends SwingGridSampleApp {
 		};
 		r.fnText = cell -> {
 			if (astar != null && astar.getState(cell) != TraversalState.UNVISITED) {
-				return String.format("%.2f", astar.getScore(cell));
+				return String.format("%d", astar.getScore(cell));
 			}
 			return "";
 		};
