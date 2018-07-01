@@ -19,20 +19,20 @@ import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
 
-public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
+public class AStarDemoApp extends SwingGridSampleApp {
 
 	public static void main(String[] args) {
-		launch(new FindPathAroundObstaclesApp(800, 800, 40));
+		launch(new AStarDemoApp(800, 800, 40));
 	}
 
 	private int source;
 	private int target;
 	private int current = -1;
-	private AStarTraversal pathFinder;
+	private AStarTraversal astar;
 	private BitSet pathCells;
 	private BiFunction<Integer, Integer, Float> fnDist = (u, v) -> (float) sqrt(getGrid().euclidean2(u, v));
 
-	public FindPathAroundObstaclesApp(int width, int height, int cellSize) {
+	public AStarDemoApp(int width, int height, int cellSize) {
 		super(width, height, cellSize);
 		setAppName("A* demo application");
 		addMouseHandler();
@@ -40,14 +40,11 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 		addKeyboardAction("typed c", this::clearBoard);
 		addKeyboardAction("typed p", this::updatePath);
 		getCanvas().pushRenderer(createRenderer());
-		getGrid().setDefaultVertex(UNVISITED);
-		getGrid().setEventsEnabled(false);
-		getGrid().fill();
-		getGrid().setEventsEnabled(true);
+		getCanvas().requestFocus();
 		source = getGrid().cell(GridPosition.TOP_LEFT);
 		target = getGrid().cell(GridPosition.BOTTOM_RIGHT);
-		getCanvas().requestFocus();
-		getCanvas().drawGrid();
+		getGrid().setDefaultVertex(UNVISITED);
+		getGrid().fill();
 	}
 
 	@Override
@@ -56,7 +53,7 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 
 	private void clearBoard() {
 		getGrid().vertices().forEach(this::unblock);
-		pathFinder = null;
+		astar = null;
 		pathCells.clear();
 		getCanvas().drawGrid();
 	}
@@ -73,17 +70,17 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 			if (cell == target) {
 				return Color.BLUE;
 			}
-			if (isBlock(cell)) {
+			if (isBlocked(cell)) {
 				return new Color(139, 69, 19);
 			}
 			if (pathCells != null && pathCells.get(cell)) {
 				return Color.RED;
 			}
-			if (pathFinder != null) {
-				if (pathFinder.getState(cell) == AStarTraversal.CLOSED) {
+			if (astar != null) {
+				if (astar.getState(cell) == AStarTraversal.CLOSED) {
 					return Color.GRAY;
 				}
-				if (pathFinder.getState(cell) == AStarTraversal.OPEN) {
+				if (astar.getState(cell) == AStarTraversal.OPEN) {
 					return Color.LIGHT_GRAY;
 				}
 			}
@@ -93,8 +90,8 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 			return base.getModel().getCellBgColor(cell);
 		};
 		r.fnText = cell -> {
-			if (pathFinder != null && pathFinder.getState(cell) != TraversalState.UNVISITED) {
-				return String.format("%.2f", pathFinder.getScore(cell));
+			if (astar != null && astar.getState(cell) != TraversalState.UNVISITED) {
+				return String.format("%.2f", astar.getScore(cell));
 			}
 			return "";
 		};
@@ -149,14 +146,14 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 	}
 
 	private void updatePath() {
-		pathFinder = new AStarTraversal(getGrid(), fnDist);
-		watch.measure(() -> pathFinder.traverseGraph(source, target));
-		System.out.println(String.format("Path finding time: %f seconds", watch.getSeconds()));
-		List<Integer> path = pathFinder.path(target);
+		astar = new AStarTraversal(getGrid(), fnDist);
+		watch.measure(() -> astar.traverseGraph(source, target));
+		List<Integer> path = astar.path(target);
 		pathCells = new BitSet(getGrid().numVertices());
 		path.forEach(pathCells::set);
-		System.out.println(String.format("Path length: %d", path.size()));
 		getCanvas().drawGrid();
+		System.out.println(String.format("A*: %.4f seconds", watch.getSeconds()));
+		System.out.println(String.format("Path length: %d", path.size()));
 	}
 
 	private int cellAt(int x, int y) {
@@ -165,33 +162,33 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 		return getGrid().cell(gridX, gridY);
 	}
 
-	private boolean isBlock(int cell) {
+	private boolean isBlocked(int cell) {
 		return getGrid().neighbors(cell).noneMatch(neighbor -> getGrid().hasEdge(cell, neighbor));
 	}
 
 	private void block(int cell) {
-		if (cell == source || cell == target || isBlock(cell)) {
+		if (cell == source || cell == target || isBlocked(cell)) {
 			return;
 		}
 		getGrid().neighbors(cell).forEach(neighbor -> getGrid().removeEdge(cell, neighbor));
 		updatePath();
 	}
 
-	private void removeWallsToNeighbors(int cell) {
-		getGrid().neighbors(cell).filter(n -> !isBlock(n)).forEach(neighbor -> getGrid().addEdge(cell, neighbor));
-	}
-
 	private void unblock(int cell) {
-		if (!isBlock(cell)) {
+		if (!isBlocked(cell)) {
 			return;
 		}
-		removeWallsToNeighbors(cell);
-		if (isBlock(source)) {
-			removeWallsToNeighbors(source);
+		connectWithNeighbors(cell);
+		if (isBlocked(source)) {
+			connectWithNeighbors(source);
 		}
-		if (isBlock(target)) {
-			removeWallsToNeighbors(target);
+		if (isBlocked(target)) {
+			connectWithNeighbors(target);
 		}
 		updatePath();
+	}
+
+	private void connectWithNeighbors(int cell) {
+		getGrid().neighbors(cell).filter(n -> !isBlocked(n)).forEach(neighbor -> getGrid().addEdge(cell, neighbor));
 	}
 }
