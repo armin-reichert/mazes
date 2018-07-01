@@ -93,7 +93,7 @@ public class GridTraversalTests {
 		astar.traverseGraph(source, target);
 		assertTrue(astar.getState(target) == VISITED);
 		assertTrue(astar.getParent(target) != -1);
-		assertTrue(astar.getDistance(target) != -1);
+		assertTrue(astar.getDistFromSource(target) != -1);
 	}
 
 	@Test

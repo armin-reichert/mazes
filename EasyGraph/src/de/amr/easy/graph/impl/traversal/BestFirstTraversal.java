@@ -23,12 +23,12 @@ public class BestFirstTraversal<C extends Comparable<C>> extends BreadthFirstTra
 	 * 
 	 * @param graph
 	 *          a graph
-	 * 
 	 * @param fnCost
 	 *          vertex cost function. Queue is always sorted by increasing cost.
 	 */
 	public BestFirstTraversal(Graph<?, ?> graph, Function<Integer, C> fnCost) {
-		super(graph);
-		q = new PriorityQueue<>((u, v) -> fnCost.apply(u).compareTo(fnCost.apply(v)));
+		this.graph = graph;
+		this.q = new PriorityQueue<>((u, v) -> fnCost.apply(u).compareTo(fnCost.apply(v)));
+		this.distFromSource = new int[graph.numVertices()];
 	}
 }

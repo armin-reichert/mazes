@@ -21,7 +21,7 @@ import de.amr.easy.graph.api.traversal.TraversalState;
  * @author Armin Reichert
  * 
  * @see <a href="https://en.wikipedia.org/wiki/A*_search_algorithm">Wikipedia</a>
- * @see <a href="">Patrick Henry Winston, Artificial Intelligence, Addison-Wesley, 1984</a>
+ * @see <a href="#">Patrick Henry Winston, Artificial Intelligence, Addison-Wesley, 1984</a>
  */
 public class AStarTraversal extends BreadthFirstTraversal {
 
@@ -32,7 +32,7 @@ public class AStarTraversal extends BreadthFirstTraversal {
 	private final float[] score;
 
 	public AStarTraversal(Graph<?, ?> graph, BiFunction<Integer, Integer, Float> fnEstimatedDist) {
-		super(graph);
+		this.graph = graph;
 		this.fnEstimatedDist = fnEstimatedDist;
 		score = new float[graph.numVertices()];
 		distFromSource = new int[graph.numVertices()];

@@ -6,16 +6,12 @@ import static java.lang.Math.sqrt;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.BitSet;
 import java.util.List;
 import java.util.function.BiFunction;
-
-import javax.swing.AbstractAction;
-import javax.swing.KeyStroke;
 
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.graph.impl.traversal.AStarTraversal;
@@ -38,7 +34,7 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 
 	public FindPathAroundObstaclesApp(int width, int height, int cellSize) {
 		super(width, height, cellSize);
-		setAppName("Find Path Around Obstacles");
+		setAppName("A* demo application");
 		addMouseHandler();
 		addKeyboardAction("SPACE", this::updatePath);
 		addKeyboardAction("typed c", this::clearBoard);
@@ -72,10 +68,10 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 		r.fnCellSize = base.fnCellSize;
 		r.fnCellBgColor = cell -> {
 			if (cell == source) {
-				return Color.YELLOW;
+				return Color.GREEN.darker();
 			}
 			if (cell == target) {
-				return Color.GREEN;
+				return Color.BLUE;
 			}
 			if (isBlock(cell)) {
 				return new Color(139, 69, 19);
@@ -114,18 +110,6 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 				: base.getModel().getPassageColor(cell, dir);
 		r.fnPassageWidth = () -> getCellSize() - 3;
 		return r;
-	}
-
-	private void addKeyboardAction(String key, Runnable code) {
-		AbstractAction action = new AbstractAction() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				code.run();
-			}
-		};
-		getCanvas().getInputMap().put(KeyStroke.getKeyStroke(key), "action_" + key);
-		getCanvas().getActionMap().put("action_" + key, action);
 	}
 
 	private void addMouseHandler() {
@@ -196,6 +180,7 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 	private void removeWallsToNeighbors(int cell) {
 		getGrid().neighbors(cell).filter(n -> !isBlock(n)).forEach(neighbor -> getGrid().addEdge(cell, neighbor));
 	}
+
 	private void unblock(int cell) {
 		if (!isBlock(cell)) {
 			return;

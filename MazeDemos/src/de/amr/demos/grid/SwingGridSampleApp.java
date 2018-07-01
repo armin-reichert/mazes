@@ -67,6 +67,10 @@ public abstract class SwingGridSampleApp implements Runnable {
 	private ObservableGridGraph<TraversalState, Void> grid;
 
 	protected final StopWatch watch = new StopWatch();
+	
+	@Override
+	public void run() {
+	}
 
 	public SwingGridSampleApp(int width, int height, int cellSize) {
 		this.cellSize = cellSize;
@@ -84,6 +88,18 @@ public abstract class SwingGridSampleApp implements Runnable {
 		grid = OrthogonalGrid.emptyGrid(canvasSize.width / cellSize, canvasSize.height / cellSize, UNVISITED);
 		fullscreen = true;
 		createUI();
+	}
+
+	protected void addKeyboardAction(String key, Runnable code) {
+		AbstractAction action = new AbstractAction() {
+	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				code.run();
+			}
+		};
+		getCanvas().getInputMap().put(KeyStroke.getKeyStroke(key), "action_" + key);
+		getCanvas().getActionMap().put("action_" + key, action);
 	}
 
 	private void createUI() {
@@ -244,5 +260,9 @@ public abstract class SwingGridSampleApp implements Runnable {
 
 	public void setCanvasAnimation(boolean animated) {
 		canvasAnimation.setEnabled(animated);
+	}
+	
+	public void setCanvasAnimationDelay(int millis) {
+		canvasAnimation.fnDelay = () -> millis;
 	}
 }

@@ -26,20 +26,19 @@ public class BreadthFirstTraversal extends ObservableGraphTraversal {
 	protected int[] distFromSource;
 	protected int maxDistance;
 
-	public BreadthFirstTraversal(Graph<?, ?> g) {
-		this(g, new ArrayDeque<>());
+	protected BreadthFirstTraversal() {
 	}
-	
-	protected BreadthFirstTraversal(Graph<?, ?> graph, Queue<Integer> q) {
+
+	public BreadthFirstTraversal(Graph<?, ?> graph) {
 		this.graph = graph;
-		this.q = q;
+		this.q = new ArrayDeque<>();
+		this.distFromSource = new int[graph.numVertices()];
 	}
 
 	@Override
 	protected void init() {
 		super.init();
 		q.clear();
-		distFromSource = new int[graph.numVertices()];
 		Arrays.fill(distFromSource, -1);
 		maxDistance = -1;
 	}
@@ -64,11 +63,11 @@ public class BreadthFirstTraversal extends ObservableGraphTraversal {
 
 	private void expand(int current) {
 		graph.adj(current).filter(neighbor -> getState(neighbor) == UNVISITED).forEach(neighbor -> {
-			q.add(neighbor);
 			setState(neighbor, VISITED);
 			setParent(neighbor, current);
 			distFromSource[neighbor] = distFromSource[current] + 1;
 			maxDistance = Math.max(maxDistance, distFromSource[neighbor]);
+			q.add(neighbor);
 		});
 	}
 
@@ -77,18 +76,18 @@ public class BreadthFirstTraversal extends ObservableGraphTraversal {
 	 * 
 	 * @param v
 	 *          some vertex
-	 * @return the distance from the source
+	 * @return the distance from the source or {@code -1} if the vertex is not reachable
 	 */
-	public int getDistance(int v) {
+	public int getDistFromSource(int v) {
 		return distFromSource[v];
 	}
 
 	/**
-	 * Returns the maximum distance encountered in this traversal.
+	 * Returns the maximum distance of any vertex reachable from the source.
 	 * 
 	 * @return the maximum distance
 	 */
-	public int getMaxDistance() {
+	public int getMaxDistFromSource() {
 		return maxDistance;
 	}
 
@@ -98,6 +97,6 @@ public class BreadthFirstTraversal extends ObservableGraphTraversal {
 	 * @return a vertex with maximum distance or empty
 	 */
 	public Optional<Integer> getMaxDistanceVertex() {
-		return graph.vertices().boxed().max(Comparator.comparing(this::getDistance));
+		return graph.vertices().boxed().max(Comparator.comparing(this::getDistFromSource));
 	}
 }

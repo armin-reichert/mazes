@@ -104,7 +104,7 @@ public class LayeredGridCanvas<E> extends LayeredCanvas implements GraphObserver
 	public void runPathFinder(int pathStartCell, int pathTargetCell) {
 		bfs = new BreadthFirstTraversal(grid);
 		bfs.traverseGraph(pathStartCell);
-		maxDistance = bfs.getMaxDistance();
+		maxDistance = bfs.getMaxDistFromSource();
 		bfs = new BreadthFirstTraversal(grid);
 		bfs.traverseGraph(pathStartCell, pathTargetCell);
 		path = bfs.path(pathTargetCell)::iterator;
@@ -125,7 +125,7 @@ public class LayeredGridCanvas<E> extends LayeredCanvas implements GraphObserver
 		ConfigurableGridRenderer renderer = new WallPassageGridRenderer();
 		renderer.fnPassageWidth = () -> cellSize * 9 / 10;
 		renderer.fnText = cell -> cellSize / 2 < renderer.getMinFontSize() ? ""
-				: String.format("%d", bfs.getDistance(cell));
+				: String.format("%d", bfs.getDistFromSource(cell));
 		renderer.fnTextFont = () -> new Font("Sans", Font.PLAIN, cellSize / 2);
 		renderer.fnCellBgColor = cell -> {
 			if (maxDistance == -1) {
@@ -133,7 +133,7 @@ public class LayeredGridCanvas<E> extends LayeredCanvas implements GraphObserver
 			}
 			float hue = 0.16f;
 			if (maxDistance > 0) {
-				hue += 0.7f * bfs.getDistance(cell) / maxDistance;
+				hue += 0.7f * bfs.getDistFromSource(cell) / maxDistance;
 			}
 			return Color.getHSBColor(hue, 0.5f, 1f);
 		};

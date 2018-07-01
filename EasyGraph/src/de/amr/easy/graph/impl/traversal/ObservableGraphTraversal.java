@@ -100,6 +100,10 @@ public abstract class ObservableGraphTraversal {
 		observers.remove(observer);
 	}
 
+	public void removeAllObservers() {
+		observers.clear();
+	}
+
 	public void edgeTraversed(int either, int other) {
 		observers.forEach(observer -> observer.edgeTraversed(either, other));
 	}
