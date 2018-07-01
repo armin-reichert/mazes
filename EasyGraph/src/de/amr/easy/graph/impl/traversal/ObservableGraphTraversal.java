@@ -22,8 +22,18 @@ import de.amr.easy.graph.api.traversal.TraversalState;
 public abstract class ObservableGraphTraversal {
 
 	private final Map<Integer, Integer> parentMap = new HashMap<>();
+
 	private final Map<Integer, TraversalState> stateMap = new HashMap<>();
+
 	private final Set<GraphTraversalObserver> observers = new HashSet<>(5);
+
+	/**
+	 * Initializes the traversal such that {@link #traverseGraph(int, int)} starts in a clean state.
+	 */
+	protected void init() {
+		parentMap.clear();
+		stateMap.clear();
+	}
 
 	/**
 	 * Traverses the graph starting from the given source until the target is reached.

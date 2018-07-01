@@ -16,9 +16,6 @@ import de.amr.easy.graph.api.Graph;
  * Breadth-first traversal of an undirected graph from a given source vertex. After being executed,
  * the distance of each vertex from the source can be queried, as well as the maximal distance of a
  * reachable vertex from the source.
- * <p>
- * During the traversal, events are fired which can be processed by observers, for example an
- * animation.
  * 
  * @author Armin Reichert
  */
@@ -29,16 +26,27 @@ public class BreadthFirstTraversal extends ObservableGraphTraversal {
 	protected int[] distFromSource;
 	protected int maxDistance;
 
-	public BreadthFirstTraversal(Graph<?, ?> graph) {
+	public BreadthFirstTraversal(Graph<?, ?> g) {
+		this(g, new ArrayDeque<>());
+	}
+	
+	protected BreadthFirstTraversal(Graph<?, ?> graph, Queue<Integer> q) {
 		this.graph = graph;
+		this.q = q;
+	}
+
+	@Override
+	protected void init() {
+		super.init();
+		q.clear();
+		distFromSource = new int[graph.numVertices()];
+		Arrays.fill(distFromSource, -1);
+		maxDistance = -1;
 	}
 
 	@Override
 	public void traverseGraph(int source, int target) {
-		q = new ArrayDeque<>();
-		distFromSource = new int[graph.numVertices()];
-		Arrays.fill(distFromSource, -1);
-		maxDistance = -1;
+		init();
 
 		q.add(source);
 		setState(source, VISITED);

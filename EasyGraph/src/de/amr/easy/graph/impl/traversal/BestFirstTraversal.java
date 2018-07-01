@@ -18,10 +18,6 @@ import de.amr.easy.graph.api.Graph;
  */
 public class BestFirstTraversal<C extends Comparable<C>> extends BreadthFirstTraversal {
 
-	protected BestFirstTraversal(Graph<?, ?> graph) {
-		super(graph);
-	}
-
 	/**
 	 * Creates a best-first traversal instance for the given graph and vertex cost function.
 	 * 

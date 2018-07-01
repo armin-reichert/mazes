@@ -7,7 +7,6 @@ import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
 
-import de.amr.easy.data.Stack;
 import de.amr.easy.graph.api.Graph;
 
 /**
@@ -23,16 +22,14 @@ public class DepthFirstTraversal2 extends DepthFirstTraversal {
 		super(graph);
 	}
 
-	private IntStream unvisitedChildren(int v) {
-		return graph.adj(v).filter(child -> getState(child) == UNVISITED);
-	}
-
 	@Override
 	public void traverseGraph(int source, int target) {
-		stack = new Stack<>();
+		init();
+		
 		int current = source;
 		stack.push(current);
 		setState(current, VISITED);
+		
 		while (!stack.isEmpty()) {
 			if (current == target) {
 				break;
@@ -58,5 +55,9 @@ public class DepthFirstTraversal2 extends DepthFirstTraversal {
 		while (!stack.isEmpty()) {
 			setState(stack.pop(), COMPLETED);
 		}
+	}
+
+	private IntStream unvisitedChildren(int v) {
+		return graph.adj(v).filter(child -> getState(child) == UNVISITED);
 	}
 }

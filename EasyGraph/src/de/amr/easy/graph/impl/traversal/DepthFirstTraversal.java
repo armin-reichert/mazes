@@ -18,11 +18,18 @@ public class DepthFirstTraversal extends ObservableGraphTraversal {
 
 	public DepthFirstTraversal(Graph<?, ?> graph) {
 		this.graph = graph;
+		stack = new Stack<>();
+	}
+	
+	@Override
+	protected void init() {
+		super.init();
+		stack.clear();
 	}
 
 	@Override
 	public void traverseGraph(int source, int target) {
-		stack = new Stack<>();
+		init();
 		stack.push(source);
 		setState(source, VISITED);
 		while (!stack.isEmpty()) {

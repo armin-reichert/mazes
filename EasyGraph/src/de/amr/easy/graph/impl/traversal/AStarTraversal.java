@@ -49,10 +49,10 @@ public class AStarTraversal extends BreadthFirstTraversal {
 		
 		while (!q.isEmpty()) {
 			int current = q.poll();
+			setState(current, CLOSED);
 			if (current == target) {
 				break;
 			}
-			setState(current, CLOSED);
 			graph.adj(current).filter(neighbor -> getState(neighbor) != CLOSED).forEach(neighbor -> {
 				int newDist = distFromSource[current] + /* distance(current, neighbor) */ 1;
 				if (getState(neighbor) != OPEN || newDist < distFromSource[neighbor]) {
