@@ -91,7 +91,7 @@ public class GridTraversalTests {
 		AStarTraversal astar = new AStarTraversal(grid, (u, v) -> (float) grid.manhattan(u, v));
 		assertState(grid.vertices(), astar::getState, UNVISITED);
 		astar.traverseGraph(source, target);
-		assertTrue(astar.getState(target) == COMPLETED);
+		assertTrue(astar.getState(target) == VISITED);
 		assertTrue(astar.getParent(target) != -1);
 		assertTrue(astar.getDistance(target) != -1);
 	}

@@ -21,6 +21,7 @@ import de.amr.easy.graph.api.traversal.TraversalState;
  * @author Armin Reichert
  * 
  * @see <a href="https://en.wikipedia.org/wiki/A*_search_algorithm">Wikipedia</a>
+ * @see <a href="">Patrick Henry Winston, Artificial Intelligence, Addison-Wesley, 1984</a>
  */
 public class AStarTraversal extends BreadthFirstTraversal {
 
@@ -58,12 +59,9 @@ public class AStarTraversal extends BreadthFirstTraversal {
 		setState(source, OPEN);
 		q.add(source);
 
-		while (!q.isEmpty()) {
+		while (!q.isEmpty() && q.peek() != target) {
 			int current = q.poll();
 			setState(current, CLOSED);
-			if (current == target) {
-				break;
-			}
 			graph.adj(current).filter(neighbor -> getState(neighbor) != CLOSED).forEach(neighbor -> {
 				int newDist = distFromSource[current] + /* distance(current, neighbor) */ 1;
 				if (getState(neighbor) != OPEN || newDist < distFromSource[neighbor]) {

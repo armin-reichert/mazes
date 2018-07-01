@@ -1,6 +1,8 @@
 package de.amr.demos.grid;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
+import static java.lang.Math.min;
+import static java.lang.Math.sqrt;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -8,9 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.util.HashSet;
+import java.util.BitSet;
 import java.util.List;
-import java.util.Set;
+import java.util.function.BiFunction;
 
 import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
@@ -27,11 +29,12 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 		launch(new FindPathAroundObstaclesApp(800, 800, 40));
 	}
 
-	private Set<Integer> pathCells = new HashSet<>();
 	private int source;
 	private int target;
-	private int currentCell = -1;
+	private int current = -1;
 	private AStarTraversal pathFinder;
+	private BitSet pathCells;
+	private BiFunction<Integer, Integer, Float> fnDist = (u, v) -> (float) sqrt(getGrid().euclidean2(u, v));
 
 	public FindPathAroundObstaclesApp(int width, int height, int cellSize) {
 		super(width, height, cellSize);
@@ -56,8 +59,10 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 	}
 
 	private void clearBoard() {
-		getGrid().vertices().forEach(this::removeWall);
-		updatePath();
+		getGrid().vertices().forEach(this::unblock);
+		pathFinder = null;
+		pathCells.clear();
+		getCanvas().drawGrid();
 	}
 
 	@Override
@@ -72,10 +77,10 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 			if (cell == target) {
 				return Color.GREEN;
 			}
-			if (isWall(cell)) {
+			if (isBlock(cell)) {
 				return new Color(139, 69, 19);
 			}
-			if (pathCells.contains(cell)) {
+			if (pathCells != null && pathCells.get(cell)) {
 				return Color.RED;
 			}
 			if (pathFinder != null) {
@@ -98,7 +103,7 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 			return "";
 		};
 		r.fnTextColor = cell -> {
-			if (pathCells.contains(cell)) {
+			if (pathCells != null && pathCells.get(cell)) {
 				return Color.WHITE;
 			}
 			return Color.BLACK;
@@ -107,7 +112,7 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 		r.fnTextFont = () -> new Font("Arial", Font.PLAIN, getCellSize() / 4);
 		r.fnPassageColor = (cell, dir) -> getGrid().get(cell) == UNVISITED ? Color.WHITE
 				: base.getModel().getPassageColor(cell, dir);
-		r.fnPassageWidth = () -> getCellSize() - 2;
+		r.fnPassageWidth = () -> getCellSize() - 3;
 		return r;
 	}
 
@@ -128,17 +133,16 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 
 			@Override
 			public void mouseReleased(MouseEvent mouse) {
-				currentCell = -1;
-				updatePath();
+				current = -1;
 			}
 
 			@Override
 			public void mousePressed(MouseEvent mouse) {
-				currentCell = cellAt(mouse.getX(), mouse.getY());
+				current = cellAt(mouse.getX(), mouse.getY());
 				if (mouse.getButton() == MouseEvent.BUTTON3) {
-					removeWall(currentCell);
+					unblock(current);
 				} else {
-					setWall(currentCell);
+					block(current);
 				}
 			}
 		});
@@ -148,63 +152,61 @@ public class FindPathAroundObstaclesApp extends SwingGridSampleApp {
 			@Override
 			public void mouseDragged(MouseEvent mouse) {
 				int cell = cellAt(mouse.getX(), mouse.getY());
-				if (cell != currentCell) {
-					currentCell = cell;
-					boolean updated = false;
+				if (cell != current) {
+					current = cell;
 					if (mouse.isShiftDown()) {
-						updated = removeWall(cell);
+						unblock(cell);
 					} else {
-						updated = setWall(cell);
-					}
-					if (updated) {
-						updatePath();
+						block(cell);
 					}
 				}
 			}
 		});
 	}
 
-	private AStarTraversal getPathFinder() {
-		return new AStarTraversal(getGrid(), (u, v) -> (float) getGrid().manhattan(u, v));
-	}
-
-	private void updatePath(boolean animated) {
-		pathFinder = getPathFinder();
+	private void updatePath() {
+		pathFinder = new AStarTraversal(getGrid(), fnDist);
 		watch.measure(() -> pathFinder.traverseGraph(source, target));
 		System.out.println(String.format("Path finding time: %f seconds", watch.getSeconds()));
 		List<Integer> path = pathFinder.path(target);
-		pathCells = new HashSet<>(path);
+		pathCells = new BitSet(getGrid().numVertices());
+		path.forEach(pathCells::set);
 		System.out.println(String.format("Path length: %d", path.size()));
 		getCanvas().drawGrid();
 	}
 
-	private void updatePath() {
-		updatePath(false);
-	}
-
 	private int cellAt(int x, int y) {
-		int gridX = Math.min(x / getCellSize(), getGrid().numCols() - 1),
-				gridY = Math.min(y / getCellSize(), getGrid().numRows() - 1);
+		int gridX = min(x / getCellSize(), getGrid().numCols() - 1),
+				gridY = min(y / getCellSize(), getGrid().numRows() - 1);
 		return getGrid().cell(gridX, gridY);
 	}
 
-	private boolean isWall(int cell) {
-		return getGrid().neighbors(cell).noneMatch(nb -> getGrid().hasEdge(cell, nb));
+	private boolean isBlock(int cell) {
+		return getGrid().neighbors(cell).noneMatch(neighbor -> getGrid().hasEdge(cell, neighbor));
 	}
 
-	private boolean setWall(int cell) {
-		if (!isWall(cell) && cell != source && cell != target) {
-			getGrid().neighbors(cell).forEach(nb -> getGrid().removeEdge(cell, nb));
-			return true;
+	private void block(int cell) {
+		if (cell == source || cell == target || isBlock(cell)) {
+			return;
 		}
-		return false;
+		getGrid().neighbors(cell).forEach(neighbor -> getGrid().removeEdge(cell, neighbor));
+		updatePath();
 	}
 
-	private boolean removeWall(int cell) {
-		if (isWall(cell)) {
-			getGrid().neighbors(cell).filter(nb -> !isWall(nb)).forEach(nb -> getGrid().addEdge(cell, nb));
-			return true;
+	private void removeWallsToNeighbors(int cell) {
+		getGrid().neighbors(cell).filter(n -> !isBlock(n)).forEach(neighbor -> getGrid().addEdge(cell, neighbor));
+	}
+	private void unblock(int cell) {
+		if (!isBlock(cell)) {
+			return;
 		}
-		return false;
+		removeWallsToNeighbors(cell);
+		if (isBlock(source)) {
+			removeWallsToNeighbors(source);
+		}
+		if (isBlock(target)) {
+			removeWallsToNeighbors(target);
+		}
+		updatePath();
 	}
 }
