@@ -19,10 +19,10 @@ public class LabeledGraphTests {
 
 	private class DFSTracer implements GraphTraversalObserver {
 
-		private final DefaultGraph<String, Void> graph;
+		private final DefaultGraph<String, Integer> graph;
 		private final List<Integer> trace = new ArrayList<>();
 
-		public DFSTracer(DefaultGraph<String, Void> graph) {
+		public DFSTracer(DefaultGraph<String, Integer> graph) {
 			this.graph = graph;
 		}
 
@@ -46,10 +46,10 @@ public class LabeledGraphTests {
 
 	};
 
-	private DefaultGraph<String, Void> g;
+	private DefaultGraph<String, Integer> g;
 
-	private DefaultGraph<String, Void> createSampleGraph() {
-		DefaultGraph<String, Void> g = new DefaultGraph<>(SimpleEdge::new);
+	private DefaultGraph<String, Integer> createSampleGraph() {
+		DefaultGraph<String, Integer> g = new DefaultGraph<>(SimpleEdge::new);
 		IntStream.range(0, 8).forEach(g::addVertex);
 		g.set(0, "S");
 		g.set(1, "A");
@@ -90,7 +90,7 @@ public class LabeledGraphTests {
 
 	@Test
 	public void testDefaultVertexLabel() {
-		g.setDefaultVertex("42");
+		g.setDefaultVertexLabel("42");
 		g.addVertex(0);
 		Assert.assertEquals("42", g.get(0));
 		g.set(0, "43");
@@ -99,7 +99,7 @@ public class LabeledGraphTests {
 
 	@Test
 	public void testSampleGraph() {
-		DefaultGraph<String, Void> g = createSampleGraph();
+		DefaultGraph<String, Integer> g = createSampleGraph();
 		Assert.assertTrue(g.hasEdge(0, 1));
 		Assert.assertTrue(g.hasEdge(1, 2));
 		Assert.assertTrue(g.hasEdge(2, 3));
@@ -113,7 +113,7 @@ public class LabeledGraphTests {
 
 	@Test
 	public void testSampleGraphDFS() {
-		DefaultGraph<String, Void> g = createSampleGraph();
+		DefaultGraph<String, Integer> g = createSampleGraph();
 		DepthFirstTraversal dfs = new DepthFirstTraversal(g);
 		DFSTracer tracer = new DFSTracer(g);
 		dfs.addObserver(tracer);

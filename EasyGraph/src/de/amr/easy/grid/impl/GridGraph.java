@@ -12,8 +12,10 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.graph.api.VertexMap;
-import de.amr.easy.graph.impl.SparseVertexMap;
+import de.amr.easy.graph.api.EdgeLabels;
+import de.amr.easy.graph.api.VertexLabels;
+import de.amr.easy.graph.impl.EdgeLabelsMap;
+import de.amr.easy.graph.impl.VertexLabelsMap;
 import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.api.Topology;
@@ -37,33 +39,62 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 	protected Topology top;
 	protected BitSet bits;
 
-	// --- {@link VertexMap} interface ---
+	// {@link VertexLabels}
 
-	private final VertexMap<V> vertexMap;
+	private final VertexLabels<V> vertexLabels;
 
 	@Override
-	public void clear() {
-		vertexMap.clear();
+	public void clearVertexLabels() {
+		vertexLabels.clearVertexLabels();
 	}
 
 	@Override
-	public V getDefaultVertex() {
-		return vertexMap.getDefaultVertex();
+	public V getDefaultVertexLabel() {
+		return vertexLabels.getDefaultVertexLabel();
 	}
 
 	@Override
-	public void setDefaultVertex(V vertex) {
-		vertexMap.setDefaultVertex(vertex);
+	public void setDefaultVertexLabel(V vertex) {
+		vertexLabels.setDefaultVertexLabel(vertex);
 	}
 
 	@Override
 	public V get(int v) {
-		return vertexMap.get(v);
+		return vertexLabels.get(v);
 	}
 
 	@Override
 	public void set(int v, V vertex) {
-		vertexMap.set(v, vertex);
+		vertexLabels.set(v, vertex);
+	}
+
+	// {@link EdgeLabels}
+
+	private final EdgeLabels<E> edgeLabels;
+
+	@Override
+	public void clearEdgeLabels() {
+		edgeLabels.clearEdgeLabels();
+	}
+
+	@Override
+	public E getDefaultEdgeLabel() {
+		return edgeLabels.getDefaultEdgeLabel();
+	}
+
+	@Override
+	public void setDefaultEdgeLabel(E e) {
+		edgeLabels.setDefaultEdgeLabel(e);
+	}
+
+	@Override
+	public E getEdgeLabel(int u, int v) {
+		return edgeLabels.getEdgeLabel(u, v);
+	}
+
+	@Override
+	public void setEdgeLabel(int u, int v, E e) {
+		edgeLabels.setEdgeLabel(u, v, e);
 	}
 
 	// helper methods
@@ -103,7 +134,7 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 	 * @param top
 	 *          the topology of this grid
 	 * @param defaultVertex
-	 *          default vertex object
+	 *          default vertex label
 	 * @param fnEdgeFactory
 	 *          function for creating edges of the correct type
 	 */
@@ -128,9 +159,10 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 		this.bits = new BitSet(top.dirCount() * numCells);
 		this.fnEdgeFactory = fnEdgeFactory;
 
-		// TODO
-		vertexMap = new SparseVertexMap<>();
-		vertexMap.setDefaultVertex(defaultVertex);
+		vertexLabels = new VertexLabelsMap<>();
+		vertexLabels.setDefaultVertexLabel(defaultVertex);
+
+		edgeLabels = new EdgeLabelsMap<>();
 	}
 
 	// Implement {@link Graph} interface
@@ -193,6 +225,12 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 			throw new IllegalStateException(String.format("Cannot add edge {%s,%s} twice", u, v));
 		}
 		direction(u, v).ifPresent(dir -> connect(u, v, dir, true));
+	}
+	
+	@Override
+	public void addEdge(int u, int v, E e) {
+		addEdge(u, v);
+		setEdgeLabel(u, v, e);
 	}
 
 	@Override

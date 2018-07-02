@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
-import de.amr.easy.graph.api.VertexMap;
+import de.amr.easy.graph.api.VertexLabels;
 
 /**
  * Adjacency set based implementation of an undirected graph.
@@ -26,9 +26,9 @@ import de.amr.easy.graph.api.VertexMap;
  * @param <E>
  *          edge type
  */
-public class DefaultGraph<V, E> implements Graph<V, E>, VertexMap<V> {
+public class DefaultGraph<V, E> implements Graph<V, E> {
 
-	protected final VertexMap<V> vertexMap = new SparseVertexMap<>();
+	protected final VertexLabels<V> vertexLabels = new VertexLabelsMap<>();
 	protected final BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory;
 	protected final Set<Integer> vertexSet = new HashSet<>();
 	protected final Map<Integer, Set<Edge<E>>> adjEdges = new HashMap<>();
@@ -40,7 +40,7 @@ public class DefaultGraph<V, E> implements Graph<V, E>, VertexMap<V> {
 
 	@Override
 	public V get(int v) {
-		return vertexMap.get(v);
+		return vertexLabels.get(v);
 	}
 
 	@Override
@@ -48,22 +48,53 @@ public class DefaultGraph<V, E> implements Graph<V, E>, VertexMap<V> {
 		if (!vertexSet.contains(v)) {
 			throw new IllegalStateException();
 		}
-		vertexMap.set(v, vertex);
+		vertexLabels.set(v, vertex);
 	}
 
 	@Override
-	public void clear() {
-		vertexMap.clear();
+	public void clearVertexLabels() {
+		vertexLabels.clearVertexLabels();
 	}
 
 	@Override
-	public void setDefaultVertex(V vertex) {
-		vertexMap.setDefaultVertex(vertex);
+	public void setDefaultVertexLabel(V vertex) {
+		vertexLabels.setDefaultVertexLabel(vertex);
 	}
 
 	@Override
-	public V getDefaultVertex() {
-		return vertexMap.getDefaultVertex();
+	public V getDefaultVertexLabel() {
+		return vertexLabels.getDefaultVertexLabel();
+	}
+
+	@Override
+	public void clearEdgeLabels() {
+		edges().forEach(edge -> {
+			
+		});
+	}
+	
+	@Override
+	public E getEdgeLabel(int u, int v) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setEdgeLabel(int u, int v, E edge) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setDefaultEdgeLabel(E edge) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public E getDefaultEdgeLabel() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -82,7 +113,7 @@ public class DefaultGraph<V, E> implements Graph<V, E>, VertexMap<V> {
 	}
 
 	@Override
-	public void addEdge(int v, int w) {
+	public void addEdge(int v, int w, E e) {
 		assertVertexExists(v);
 		assertVertexExists(w);
 		Edge<E> edge = fnEdgeFactory.apply(v, w);
@@ -91,6 +122,16 @@ public class DefaultGraph<V, E> implements Graph<V, E>, VertexMap<V> {
 		numEdges += 1;
 	}
 
+	@Override
+	public void addEdge(int v, int w) {
+		assertVertexExists(v);
+		assertVertexExists(w);
+		Edge<E> edge = fnEdgeFactory.apply(v, w);
+		adjEdges.get(v).add(edge);
+		adjEdges.get(w).add(edge);
+		numEdges += 1;
+	}
+	
 	@Override
 	public Optional<Edge<E>> edge(int v, int w) {
 		assertVertexExists(v);

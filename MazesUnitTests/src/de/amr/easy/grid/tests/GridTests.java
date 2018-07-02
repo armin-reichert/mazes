@@ -14,8 +14,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.amr.easy.graph.api.SimpleEdge;
+import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.GridGraph;
+import de.amr.easy.grid.impl.ObservableGridGraph;
+import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.traversal.RandomBFS;
 import de.amr.easy.util.GraphUtils;
@@ -30,11 +34,11 @@ public class GridTests {
 	private static final int WIDTH = 100;
 	private static final int HEIGHT = 100;
 
-	private OrthogonalGrid grid;
+	private ObservableGridGraph<TraversalState, Integer> grid;
 
 	@Before
 	public void setUp() {
-		grid = OrthogonalGrid.emptyGrid(WIDTH, HEIGHT, UNVISITED);
+		grid = new ObservableGridGraph<>(WIDTH, HEIGHT, Top4.get(), UNVISITED, SimpleEdge::new);
 	}
 
 	@After
@@ -198,7 +202,7 @@ public class GridTests {
 	@Test
 	public void testCycleCheckerSpanningTree() {
 		// create a spanning tree
-		grid = new RandomBFS(WIDTH, HEIGHT).createMaze(0, 0);
+		OrthogonalGrid grid = new RandomBFS(WIDTH, HEIGHT).createMaze(0, 0);
 		assertFalse(GraphUtils.containsCycle(grid));
 
 		// Find vertex with non-adjacent neighbor. Adding an edge to this neighbor produces a cycle.
@@ -260,5 +264,13 @@ public class GridTests {
 		int dist = grid.chebyshev(u, v);
 		assertEquals(Math.max(grid.numRows() - 1, grid.numCols() - 1), dist);
 		assertEquals(0, grid.chebyshev(u, u));
+	}
+	
+	@Test
+	public void testEdgeLabel() {
+		grid.addEdge(0, 1, 5);
+		assertEquals(new Integer(5), grid.getEdgeLabel(0, 1));
+		grid.setEdgeLabel(0, 1, 6);
+		assertEquals(new Integer(6), grid.getEdgeLabel(0, 1));
 	}
 }

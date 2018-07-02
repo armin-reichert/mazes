@@ -31,7 +31,7 @@ public class PearlsRendererTestApp extends SwingGridSampleApp {
 	public void run() {
 		clear();
 		setCanvasAnimation(false);
-		getGrid().setDefaultVertex(COMPLETED);
+		getGrid().setDefaultVertexLabel(COMPLETED);
 		getGrid().fill();
 		getCanvas().drawGrid();
 
@@ -53,8 +53,8 @@ public class PearlsRendererTestApp extends SwingGridSampleApp {
 
 	private void clear() {
 		getGrid().removeEdges();
-		getGrid().clear();
-		getGrid().setDefaultVertex(UNVISITED);
+		getGrid().clearVertexLabels();
+		getGrid().setDefaultVertexLabel(UNVISITED);
 		getCanvas().clear();
 	}
 }

@@ -5,7 +5,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
- * Interface for undirected graph.
+ * Interface for undirected graph with vertex and edge labels.
  * 
  * @author Armin Reichert
  *
@@ -14,7 +14,7 @@ import java.util.stream.Stream;
  * @param <E>
  *          edge label type
  */
-public interface Graph<V, E> {
+public interface Graph<V, E> extends VertexLabels<V>, EdgeLabels<E> {
 
 	/**
 	 * @return stream of the vertex indices of this graph
@@ -57,7 +57,7 @@ public interface Graph<V, E> {
 	void removeVertex(int v);
 
 	/**
-	 * Connects the given vertices.
+	 * Adds an edge between the given vertices.
 	 * 
 	 * @param v
 	 *          a vertex
@@ -65,6 +65,18 @@ public interface Graph<V, E> {
 	 *          a vertex
 	 */
 	void addEdge(int v, int w);
+
+	/**
+	 * Adds an edge between the given vertices.
+	 * 
+	 * @param v
+	 *          a vertex
+	 * @param w
+	 *          a vertex
+	 * @param e
+	 *          edge label
+	 */
+	void addEdge(int u, int v, E e);
 
 	/**
 	 * @param v

@@ -35,14 +35,14 @@ public class ObservableGridGraph<V, E> extends GridGraph<V, E> implements Observ
 	}
 
 	@Override
-	public void clear() {
-		super.clear();
+	public void clearVertexLabels() {
+		super.clearVertexLabels();
 		fireGraphChange(this);
 	}
 
 	@Override
-	public void setDefaultVertex(V vertex) {
-		super.setDefaultVertex(vertex);
+	public void setDefaultVertexLabel(V vertex) {
+		super.setDefaultVertexLabel(vertex);
 		fireGraphChange(this);
 	}
 

@@ -17,6 +17,7 @@ import java.util.function.BiFunction;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.graph.impl.traversal.AStarTraversal;
 import de.amr.easy.grid.api.GridPosition;
+import de.amr.easy.grid.impl.Top8;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
 
@@ -31,7 +32,7 @@ public class AStarDemoApp extends SwingGridSampleApp {
 		launch(new AStarDemoApp(800, 800, 20));
 	}
 
-	private static final int WALLSIZE = 2;
+	private static final int WALLSIZE = 1;
 	private BiFunction<Integer, Integer, Integer> EUCLIDEAN = (u, v) -> (int) round(sqrt(getGrid().euclidean2(u, v)));
 	private BiFunction<Integer, Integer, Integer> MANHATTAN = (u, v) -> getGrid().manhattan(u, v);
 
@@ -44,10 +45,11 @@ public class AStarDemoApp extends SwingGridSampleApp {
 
 	public AStarDemoApp(int width, int height, int cellSize) {
 		super(width, height, cellSize);
+//		setGridTopology(Top8.get());
 		source = getGrid().cell(GridPosition.TOP_LEFT);
 		target = getGrid().cell(GridPosition.BOTTOM_RIGHT);
 		current = -1;
-		getGrid().setDefaultVertex(UNVISITED);
+		getGrid().setDefaultVertexLabel(UNVISITED);
 		getGrid().fill();
 		setAppName("A* demo application");
 		addMouseActions();
@@ -74,7 +76,7 @@ public class AStarDemoApp extends SwingGridSampleApp {
 	@Override
 	protected ConfigurableGridRenderer createRenderer() {
 		ConfigurableGridRenderer base = super.createRenderer(), r = new WallPassageGridRenderer();
-		r.fnCellSize = base.fnCellSize;
+		r.fnCellSize = () -> getCellSize();
 		r.fnCellBgColor = cell -> {
 			if (cell == source) {
 				return Color.GREEN.darker();
