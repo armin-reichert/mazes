@@ -6,7 +6,8 @@ import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import java.util.PriorityQueue;
 import java.util.Random;
 
-import de.amr.easy.graph.api.WeightedEdge;
+import de.amr.easy.graph.api.Edge;
+import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
@@ -22,7 +23,7 @@ import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 public class PrimMST implements OrthogonalMazeGenerator {
 
 	private OrthogonalGrid grid;
-	private PriorityQueue<WeightedEdge<Integer>> cut;
+	private PriorityQueue<Edge<Integer>> cut;
 	private Random rnd = new Random();
 
 	public PrimMST(int numCols, int numRows) {
@@ -39,7 +40,7 @@ public class PrimMST implements OrthogonalMazeGenerator {
 		cut = new PriorityQueue<>();
 		extendMazeAt(grid.cell(x, y));
 		while (!cut.isEmpty()) {
-			WeightedEdge<Integer> minEdge = cut.poll();
+			Edge<Integer> minEdge = cut.poll();
 			int u = minEdge.either(), v = minEdge.other();
 			if (grid.isUnvisited(u) || grid.isUnvisited(v)) {
 				grid.addEdge(u, v);
@@ -51,7 +52,7 @@ public class PrimMST implements OrthogonalMazeGenerator {
 
 	private void extendMazeAt(int cell) {
 		grid.neighbors(cell).filter(grid::isUnvisited).forEach(neighbor -> {
-			cut.add(new WeightedEdge<>(cell, neighbor, rnd.nextInt()));
+			cut.add(new SimpleEdge<>(cell, neighbor, rnd.nextInt()));
 		});
 		grid.set(cell, COMPLETED);
 	}

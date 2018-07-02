@@ -52,34 +52,32 @@ public class AStarDemoApp {
 	private ObservableGridGraph<TraversalState, Integer> grid;
 	private GridCanvas canvas;
 	private AStarTraversal<TraversalState> astar;
-	private BitSet pathCells;
-
+	private BitSet solution;
 	private BiFunction<Integer, Integer, Integer> euclidean = (u, v) -> (int) round(sqrt(grid.euclidean2(u, v)));
-	private BiFunction<Integer, Integer, Integer> MANHATTAN = (u, v) -> grid.manhattan(u, v);
+	private BiFunction<Integer, Integer, Integer> manhattan = (u, v) -> grid.manhattan(u, v);
 	private BiFunction<Integer, Integer, Integer> fnDist = euclidean;
+	private JFrame window;
 
 	public AStarDemoApp(int numCols, int numRows, int cellSize) {
 		this.cellSize = cellSize;
-		grid = new ObservableGridGraph<>(numCols, numRows, Top4.get(), "", "", SimpleEdge::new);
-		grid.setDefaultEdgeLabel(1);
-		// setGridTopology(Top8.get());
+		grid = new ObservableGridGraph<>(numCols, numRows, Top4.get(), UNVISITED, 1, SimpleEdge::new);
+		grid.fill();
 		source = grid.cell(GridPosition.TOP_LEFT);
 		target = grid.cell(GridPosition.BOTTOM_RIGHT);
 		current = -1;
-		grid.setDefaultVertexLabel(UNVISITED);
-		grid.fill();
-		showUI();
+		createUI();
+		window.setVisible(true);
 	}
 
-	private void showUI() {
-		JFrame window = new JFrame("A* demo application");
+	private void createUI() {
+		window = new JFrame("A* demo application");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		canvas = new GridCanvas(grid, cellSize);
 		canvas.pushRenderer(createRenderer());
 		window.getContentPane().add(canvas, BorderLayout.CENTER);
 		addMouseActions();
 		addKeyboardAction("SPACE", this::updatePath);
-		addKeyboardAction("typed c", this::clearBoard);
+		addKeyboardAction("typed c", this::clearScene);
 		addKeyboardAction("typed e", this::selectEuclidean);
 		addKeyboardAction("typed m", this::selectManhattan);
 		addKeyboardAction("typed p", this::updatePath);
@@ -87,7 +85,6 @@ public class AStarDemoApp {
 		canvas.requestFocus();
 		canvas.drawGrid();
 		window.pack();
-		window.setVisible(true);
 	}
 
 	private void addKeyboardAction(String key, Runnable code) {
@@ -102,10 +99,10 @@ public class AStarDemoApp {
 		canvas.getActionMap().put("action_" + key, action);
 	}
 
-	private void clearBoard() {
+	private void clearScene() {
 		grid.vertices().forEach(this::unblock);
 		astar = null;
-		pathCells.clear();
+		solution.clear();
 		canvas.drawGrid();
 	}
 
@@ -122,7 +119,7 @@ public class AStarDemoApp {
 			if (isBlocked(cell)) {
 				return new Color(139, 69, 19);
 			}
-			if (pathCells != null && pathCells.get(cell)) {
+			if (solution != null && solution.get(cell)) {
 				return Color.RED;
 			}
 			if (astar != null) {
@@ -145,7 +142,7 @@ public class AStarDemoApp {
 			return "";
 		};
 		r.fnTextColor = cell -> {
-			if (pathCells != null && pathCells.get(cell)) {
+			if (solution != null && solution.get(cell)) {
 				return Color.WHITE;
 			}
 			return Color.BLACK;
@@ -203,20 +200,20 @@ public class AStarDemoApp {
 	}
 
 	private void selectManhattan() {
-		if (fnDist != MANHATTAN) {
+		if (fnDist != manhattan) {
 			System.out.println("Manhattan distance selected");
-			fnDist = MANHATTAN;
+			fnDist = manhattan;
 			updatePath();
 		}
 	}
 
 	private void updatePath() {
-		StopWatch watch = new StopWatch();
 		astar = new AStarTraversal<>(grid, fnDist);
+		StopWatch watch = new StopWatch();
 		watch.measure(() -> astar.traverseGraph(source, target));
 		List<Integer> path = astar.path(target);
-		pathCells = new BitSet(grid.numVertices());
-		path.forEach(pathCells::set);
+		solution = new BitSet(grid.numVertices());
+		path.forEach(solution::set);
 		canvas.drawGrid();
 		System.out.println(String.format("A*: %.4f seconds", watch.getSeconds()));
 		System.out.println(String.format("Path length: %d", path.size()));
