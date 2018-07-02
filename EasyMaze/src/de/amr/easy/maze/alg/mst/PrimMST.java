@@ -7,7 +7,7 @@ import java.util.PriorityQueue;
 import java.util.Random;
 
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.graph.api.SimpleEdge;
+import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
@@ -52,7 +52,7 @@ public class PrimMST implements OrthogonalMazeGenerator {
 
 	private void extendMazeAt(int cell) {
 		grid.neighbors(cell).filter(grid::isUnvisited).forEach(neighbor -> {
-			cut.add(new SimpleEdge<>(cell, neighbor, rnd.nextInt()));
+			cut.add(new WeightedEdge<>(cell, neighbor, rnd.nextInt()));
 		});
 		grid.set(cell, COMPLETED);
 	}
