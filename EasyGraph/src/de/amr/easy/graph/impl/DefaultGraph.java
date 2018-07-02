@@ -69,10 +69,10 @@ public class DefaultGraph<V, E> implements Graph<V, E> {
 	@Override
 	public void clearEdgeLabels() {
 		edges().forEach(edge -> {
-			
+
 		});
 	}
-	
+
 	@Override
 	public E getEdgeLabel(int u, int v) {
 		// TODO Auto-generated method stub
@@ -82,13 +82,13 @@ public class DefaultGraph<V, E> implements Graph<V, E> {
 	@Override
 	public void setEdgeLabel(int u, int v, E edge) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setDefaultEdgeLabel(E edge) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -131,7 +131,7 @@ public class DefaultGraph<V, E> implements Graph<V, E> {
 		adjEdges.get(w).add(edge);
 		numEdges += 1;
 	}
-	
+
 	@Override
 	public Optional<Edge<E>> edge(int v, int w) {
 		assertVertexExists(v);

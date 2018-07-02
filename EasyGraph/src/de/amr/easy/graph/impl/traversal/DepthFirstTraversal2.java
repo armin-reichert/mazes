@@ -25,11 +25,11 @@ public class DepthFirstTraversal2 extends DepthFirstTraversal {
 	@Override
 	public void traverseGraph(int source, int target) {
 		init();
-		
+
 		int current = source;
 		stack.push(current);
 		setState(current, VISITED);
-		
+
 		while (!stack.isEmpty()) {
 			if (current == target) {
 				break;

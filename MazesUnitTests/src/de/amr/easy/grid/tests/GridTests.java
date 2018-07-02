@@ -38,7 +38,7 @@ public class GridTests {
 
 	@Before
 	public void setUp() {
-		grid = new ObservableGridGraph<>(WIDTH, HEIGHT, Top4.get(), UNVISITED, SimpleEdge::new);
+		grid = new ObservableGridGraph<>(WIDTH, HEIGHT, Top4.get(), UNVISITED, 1, SimpleEdge::new);
 	}
 
 	@After
@@ -265,7 +265,7 @@ public class GridTests {
 		assertEquals(Math.max(grid.numRows() - 1, grid.numCols() - 1), dist);
 		assertEquals(0, grid.chebyshev(u, u));
 	}
-	
+
 	@Test
 	public void testEdgeLabel() {
 		grid.addEdge(0, 1, 5);

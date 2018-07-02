@@ -17,7 +17,7 @@ public class EmptyGridTests {
 
 	@Before
 	public void setUp() {
-		grid = new GridGraph<>(0, 0, Top4.get(), new Object(), SimpleEdge::new);
+		grid = new GridGraph<>(0, 0, Top4.get(), "", "", SimpleEdge::new);
 	}
 
 	@After

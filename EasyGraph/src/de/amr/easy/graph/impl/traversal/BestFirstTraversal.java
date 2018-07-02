@@ -16,7 +16,7 @@ import de.amr.easy.graph.api.Graph;
  * @param <C>
  *          vertex cost type
  */
-public class BestFirstTraversal<C extends Comparable<C>> extends BreadthFirstTraversal {
+public class BestFirstTraversal<V, E, C extends Comparable<C>> extends BreadthFirstTraversal<V, E> {
 
 	/**
 	 * Creates a best-first traversal instance for the given graph and vertex cost function.
@@ -26,7 +26,7 @@ public class BestFirstTraversal<C extends Comparable<C>> extends BreadthFirstTra
 	 * @param fnCost
 	 *          vertex cost function. Queue is always sorted by increasing cost.
 	 */
-	public BestFirstTraversal(Graph<?, ?> graph, Function<Integer, C> fnCost) {
+	public BestFirstTraversal(Graph<V, E> graph, Function<Integer, C> fnCost) {
 		this.graph = graph;
 		this.q = new PriorityQueue<>((u, v) -> fnCost.apply(u).compareTo(fnCost.apply(v)));
 		this.distFromSource = new int[graph.numVertices()];

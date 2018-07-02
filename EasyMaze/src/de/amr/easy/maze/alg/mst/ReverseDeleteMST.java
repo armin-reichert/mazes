@@ -17,11 +17,11 @@ import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 public abstract class ReverseDeleteMST implements OrthogonalMazeGenerator {
 
 	protected OrthogonalGrid grid;
-	
+
 	public ReverseDeleteMST(int numCols, int numRows) {
 		grid = OrthogonalGrid.fullGrid(numCols, numRows, COMPLETED);
 	}
-	
+
 	@Override
 	public OrthogonalGrid getGrid() {
 		return grid;
@@ -29,14 +29,15 @@ public abstract class ReverseDeleteMST implements OrthogonalMazeGenerator {
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		Iterable<Edge<Void>> edges = permute(grid.edges())::iterator;
-		for (Edge<Void> edge : edges) {
+		Iterable<Edge<Integer>> edges = permute(grid.edges())::iterator;
+		for (Edge<Integer> edge : edges) {
 			if (grid.numEdges() == grid.numVertices() - 1) {
 				break;
 			}
-			grid.removeEdge(edge);
-			if (!connected(edge.either(), edge.other())) {
-				grid.addEdge(edge.either(), edge.other());
+			int u = edge.either(), v = edge.other();
+			grid.removeEdge(u, v);
+			if (!connected(u, v)) {
+				grid.addEdge(u, v);
 			}
 		}
 		return grid;

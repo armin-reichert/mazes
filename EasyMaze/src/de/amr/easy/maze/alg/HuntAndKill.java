@@ -27,7 +27,7 @@ public class HuntAndKill implements OrthogonalMazeGenerator {
 	public HuntAndKill(int numCols, int numRows) {
 		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
 	}
-	
+
 	@Override
 	public OrthogonalGrid getGrid() {
 		return grid;

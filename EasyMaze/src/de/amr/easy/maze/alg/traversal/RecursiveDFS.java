@@ -23,11 +23,11 @@ import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 public class RecursiveDFS implements OrthogonalMazeGenerator {
 
 	private OrthogonalGrid grid;
-	
+
 	public RecursiveDFS(int numCols, int numRows) {
 		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
 	}
-	
+
 	@Override
 	public OrthogonalGrid getGrid() {
 		return grid;

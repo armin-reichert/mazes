@@ -28,7 +28,7 @@ public class PrimMST implements OrthogonalMazeGenerator {
 	public PrimMST(int numCols, int numRows) {
 		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
 	}
-	
+
 	@Override
 	public OrthogonalGrid getGrid() {
 		return grid;

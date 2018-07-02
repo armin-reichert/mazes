@@ -55,7 +55,7 @@ public class BreadthFirstTraversalAnimation {
 	 *          if distances should be displayed as text
 	 */
 	public static void floodFill(GridCanvas canvas, GridGraph<?, ?> grid, int source, boolean distanceVisible) {
-		BreadthFirstTraversal bfs = new BreadthFirstTraversal(grid);
+		BreadthFirstTraversal<?, ?> bfs = new BreadthFirstTraversal<>(grid);
 		BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid);
 		anim.setDistanceVisible(distanceVisible);
 		anim.run(canvas, bfs, source, -1);
@@ -93,10 +93,10 @@ public class BreadthFirstTraversalAnimation {
 	 * @param target
 	 *          the target cell
 	 */
-	public void run(GridCanvas canvas, BreadthFirstTraversal bfs, int source, int target) {
+	public void run(GridCanvas canvas, BreadthFirstTraversal<?, ?> bfs, int source, int target) {
 		canvas.getRenderer().ifPresent(canvasRenderer -> {
 			// 1. traverse complete graph for computing maximum distance from source
-			BreadthFirstTraversal distanceMap = new BreadthFirstTraversal(grid);
+			BreadthFirstTraversal<?, ?> distanceMap = new BreadthFirstTraversal<>(grid);
 			distanceMap.traverseGraph(source);
 
 			// Create renderer using distance map for coloring
@@ -135,7 +135,7 @@ public class BreadthFirstTraversalAnimation {
 		});
 	}
 
-	public void showPath(GridCanvas canvas, BreadthFirstTraversal bfs, int target) {
+	public void showPath(GridCanvas canvas, BreadthFirstTraversal<?, ?> bfs, int target) {
 		canvas.getRenderer().ifPresent(canvasRenderer -> {
 			Iterable<Integer> path = bfs.path(target);
 			if (floodFillRenderer != null) {
@@ -152,7 +152,7 @@ public class BreadthFirstTraversalAnimation {
 		});
 	}
 
-	private ConfigurableGridRenderer createFloodFillRenderer(GridRenderer base, BreadthFirstTraversal distanceMap) {
+	private ConfigurableGridRenderer createFloodFillRenderer(GridRenderer base, BreadthFirstTraversal<?, ?> distanceMap) {
 		ConfigurableGridRenderer r = base instanceof PearlsGridRenderer ? new PearlsGridRenderer()
 				: new WallPassageGridRenderer();
 		r.fnCellBgColor = cell -> colorByDist(cell, distanceMap);
@@ -166,8 +166,8 @@ public class BreadthFirstTraversalAnimation {
 		return r;
 	}
 
-	private ConfigurableGridRenderer createPathRenderer(ConfigurableGridRenderer base, BreadthFirstTraversal distanceMap,
-			Iterable<Integer> path) {
+	private ConfigurableGridRenderer createPathRenderer(ConfigurableGridRenderer base,
+			BreadthFirstTraversal<?, ?> distanceMap, Iterable<Integer> path) {
 		BitSet inPath = new BitSet();
 		path.forEach(inPath::set);
 		ConfigurableGridRenderer r = base instanceof PearlsGridRenderer ? new PearlsGridRenderer()
@@ -186,7 +186,7 @@ public class BreadthFirstTraversalAnimation {
 		return r;
 	}
 
-	private static Color colorByDist(int cell, BreadthFirstTraversal distanceMap) {
+	private static Color colorByDist(int cell, BreadthFirstTraversal<?, ?> distanceMap) {
 		float hue = 0.16f;
 		if (distanceMap.getMaxDistFromSource() > 0) {
 			hue += 0.7f * distanceMap.getDistFromSource(cell) / distanceMap.getMaxDistFromSource();

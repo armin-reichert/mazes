@@ -67,7 +67,7 @@ public class GridTraversalTests {
 
 	@Test
 	public void testBFS() {
-		BreadthFirstTraversal bfs = new BreadthFirstTraversal(grid);
+		BreadthFirstTraversal<TraversalState, ?> bfs = new BreadthFirstTraversal<>(grid);
 		assertState(grid.vertices(), bfs::getState, UNVISITED);
 		bfs.traverseGraph(grid.cell(CENTER));
 		assertState(grid.vertices(), bfs::getState, COMPLETED);
@@ -77,7 +77,7 @@ public class GridTraversalTests {
 	public void testBestFS() {
 		grid = new IterativeDFS(N, N).createMaze(0, 0);
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, x -> grid.manhattan(x, target));
+		BestFirstTraversal<?, ?, Integer> best = new BestFirstTraversal<>(grid, x -> grid.manhattan(x, target));
 		assertState(grid.vertices(), best::getState, UNVISITED);
 		best.traverseGraph(source);
 		assertState(grid.vertices(), best::getState, COMPLETED);
@@ -87,8 +87,9 @@ public class GridTraversalTests {
 	@Test
 	public void testAStar() {
 		grid = new IterativeDFS(N, N).createMaze(0, 0);
+		grid.setDefaultEdgeLabel(1);
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		AStarTraversal astar = new AStarTraversal(grid, (u, v) -> grid.manhattan(u, v));
+		AStarTraversal<TraversalState> astar = new AStarTraversal<>(grid, (u, v) -> grid.manhattan(u, v));
 		assertState(grid.vertices(), astar::getState, UNVISITED);
 		astar.traverseGraph(source, target);
 		assertTrue(astar.getState(target) == VISITED);

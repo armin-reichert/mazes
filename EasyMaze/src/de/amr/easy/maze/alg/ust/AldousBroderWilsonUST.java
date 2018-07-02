@@ -19,11 +19,11 @@ import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 public class AldousBroderWilsonUST implements OrthogonalMazeGenerator {
 
 	private OrthogonalGrid grid;
-	
+
 	public AldousBroderWilsonUST(int numCols, int numRows) {
 		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
 	}
-	
+
 	@Override
 	public OrthogonalGrid getGrid() {
 		return grid;

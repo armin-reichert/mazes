@@ -19,9 +19,9 @@ import de.amr.easy.graph.api.Graph;
  * 
  * @author Armin Reichert
  */
-public class BreadthFirstTraversal extends ObservableGraphTraversal {
+public class BreadthFirstTraversal<V, E> extends ObservableGraphTraversal {
 
-	protected Graph<?, ?> graph;
+	protected Graph<V, E> graph;
 	protected Queue<Integer> q;
 	protected int[] distFromSource;
 	protected int maxDistance;
@@ -29,7 +29,7 @@ public class BreadthFirstTraversal extends ObservableGraphTraversal {
 	protected BreadthFirstTraversal() {
 	}
 
-	public BreadthFirstTraversal(Graph<?, ?> graph) {
+	public BreadthFirstTraversal(Graph<V, E> graph) {
 		this.graph = graph;
 		this.q = new ArrayDeque<>();
 		this.distFromSource = new int[graph.numVertices()];

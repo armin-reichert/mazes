@@ -22,7 +22,7 @@ import de.amr.easy.maze.alg.core.OrthogonalGrid;
 public class GridDisplayArea extends GridCanvas {
 
 	private final MazeDemoApp app;
-	private final GridCanvasAnimation<TraversalState, Void> animation;
+	private final GridCanvasAnimation<TraversalState, Integer> animation;
 
 	public GridDisplayArea(MazeDemoApp app) {
 		super(app.model.getGrid(), app.model.getGridCellSize());
@@ -33,7 +33,7 @@ public class GridDisplayArea extends GridCanvas {
 		app.model.getGrid().addGraphObserver(animation);
 	}
 
-	public GridCanvasAnimation<TraversalState, Void> getAnimation() {
+	public GridCanvasAnimation<TraversalState, Integer> getAnimation() {
 		return animation;
 	}
 

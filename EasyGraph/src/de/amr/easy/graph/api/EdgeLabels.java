@@ -20,8 +20,10 @@ public interface EdgeLabels<E> {
 	 *          either end of edge
 	 * @param v
 	 *          other end of edge
+	 * @param e
+	 *          edge label
 	 */
-	void setEdgeLabel(int u, int v, E edgeLabel);
+	void setEdgeLabel(int u, int v, E e);
 
 	/**
 	 * Clears the complete edge content.
@@ -31,10 +33,10 @@ public interface EdgeLabels<E> {
 	/**
 	 * Sets the default edge label.
 	 * 
-	 * @param edge
+	 * @param e
 	 *          the default edge label
 	 */
-	void setDefaultEdgeLabel(E edgeLabel);
+	void setDefaultEdgeLabel(E e);
 
 	/**
 	 * @return the default edge label of the graph

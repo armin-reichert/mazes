@@ -48,7 +48,7 @@ public class EllerInsideOut implements OrthogonalMazeGenerator {
 	public EllerInsideOut(int numCols, int numRows) {
 		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
 	}
-	
+
 	@Override
 	public OrthogonalGrid getGrid() {
 		return grid;

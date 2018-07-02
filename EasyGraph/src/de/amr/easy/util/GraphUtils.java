@@ -46,7 +46,7 @@ public class GraphUtils {
 	 * @return {@code true} if there exists a path connecting the given cells
 	 */
 	public static <V, E> boolean areConnected(Graph<V, E> graph, int u, int v) {
-		BreadthFirstTraversal bfs = new BreadthFirstTraversal(graph);
+		BreadthFirstTraversal<V, E> bfs = new BreadthFirstTraversal<>(graph);
 		bfs.traverseGraph(u, v);
 		return bfs.getDistFromSource(v) != -1;
 	}

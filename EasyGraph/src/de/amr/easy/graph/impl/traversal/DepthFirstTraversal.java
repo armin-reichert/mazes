@@ -20,7 +20,7 @@ public class DepthFirstTraversal extends ObservableGraphTraversal {
 		this.graph = graph;
 		stack = new Stack<>();
 	}
-	
+
 	@Override
 	protected void init() {
 		super.init();

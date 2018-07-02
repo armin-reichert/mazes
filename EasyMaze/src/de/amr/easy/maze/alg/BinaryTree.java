@@ -29,7 +29,7 @@ public class BinaryTree implements OrthogonalMazeGenerator {
 	public BinaryTree(int numCols, int numRows) {
 		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
 	}
-	
+
 	@Override
 	public OrthogonalGrid getGrid() {
 		return grid;

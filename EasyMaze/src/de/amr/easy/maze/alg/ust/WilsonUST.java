@@ -42,8 +42,7 @@ public abstract class WilsonUST implements OrthogonalMazeGenerator {
 	public WilsonUST(OrthogonalGrid grid) {
 		this.grid = grid;
 	}
-	
-	
+
 	@Override
 	public OrthogonalGrid getGrid() {
 		return grid;

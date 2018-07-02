@@ -110,7 +110,7 @@ public class MazeDemoFX extends Application {
 		OrthogonalMazeGenerator generator = randomMazeGenerator();
 		maze = generator.createMaze(0, 0);
 		drawGrid();
-		BreadthFirstTraversal bfs = new BreadthFirstTraversal(maze);
+		BreadthFirstTraversal<?, ?> bfs = new BreadthFirstTraversal<>(maze);
 		bfs.traverseGraph(maze.cell(0, 0), maze.cell(BOTTOM_RIGHT));
 		drawPath(bfs.path(maze.cell(BOTTOM_RIGHT))::iterator);
 	}
@@ -118,7 +118,8 @@ public class MazeDemoFX extends Application {
 	private OrthogonalMazeGenerator randomMazeGenerator() {
 		Class<?> generatorClass = GENERATOR_CLASSES[RAND.nextInt(GENERATOR_CLASSES.length)];
 		try {
-			return (OrthogonalMazeGenerator) generatorClass.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(cols, rows);
+			return (OrthogonalMazeGenerator) generatorClass.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(cols,
+					rows);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Could not create maze generator instance");

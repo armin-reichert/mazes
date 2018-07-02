@@ -10,7 +10,7 @@ import de.amr.easy.grid.impl.Top4;
  * 
  * @author Armin Reichert
  */
-public class OrthogonalGrid extends ObservableGridGraph<TraversalState, Void> {
+public class OrthogonalGrid extends ObservableGridGraph<TraversalState, Integer> {
 
 	public static OrthogonalGrid emptyGrid(int numCols, int numRows, TraversalState defaultState) {
 		OrthogonalGrid grid = new OrthogonalGrid(numCols, numRows, defaultState);
@@ -24,7 +24,7 @@ public class OrthogonalGrid extends ObservableGridGraph<TraversalState, Void> {
 	}
 
 	private OrthogonalGrid(int numCols, int numRows, TraversalState defaultState) {
-		super(numCols, numRows, Top4.get(), defaultState, SimpleEdge::new);
+		super(numCols, numRows, Top4.get(), defaultState, 1, SimpleEdge::new);
 	}
 
 	public boolean isUnvisited(int v) {

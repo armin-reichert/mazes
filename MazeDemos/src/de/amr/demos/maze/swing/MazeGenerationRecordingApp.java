@@ -138,30 +138,30 @@ public class MazeGenerationRecordingApp {
 	}
 
 	private void attachRecorderToGrid(GifRecorder recorder) {
-		grid.addGraphObserver(new GraphObserver<TraversalState, Void>() {
+		grid.addGraphObserver(new GraphObserver<TraversalState, Integer>() {
 
 			@Override
-			public void vertexChanged(VertexEvent<TraversalState, Void> event) {
+			public void vertexChanged(VertexEvent<TraversalState, Integer> event) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
-			public void graphChanged(ObservableGraph<TraversalState, Void> graph) {
+			public void graphChanged(ObservableGraph<TraversalState, Integer> graph) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
-			public void edgeRemoved(EdgeEvent<TraversalState, Void> event) {
+			public void edgeRemoved(EdgeEvent<TraversalState, Integer> event) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
-			public void edgeChanged(EdgeEvent<TraversalState, Void> event) {
+			public void edgeChanged(EdgeEvent<TraversalState, Integer> event) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 
 			@Override
-			public void edgeAdded(EdgeEvent<TraversalState, Void> event) {
+			public void edgeAdded(EdgeEvent<TraversalState, Integer> event) {
 				recorder.addFrame(canvas.getDrawingBuffer());
 			}
 		});

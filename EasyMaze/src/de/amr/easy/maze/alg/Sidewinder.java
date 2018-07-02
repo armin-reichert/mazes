@@ -27,7 +27,7 @@ public class Sidewinder implements OrthogonalMazeGenerator {
 	public Sidewinder(int numCols, int numRows) {
 		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
 	}
-	
+
 	@Override
 	public OrthogonalGrid getGrid() {
 		return grid;

@@ -15,6 +15,7 @@ import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.PathFinderTag;
 import de.amr.demos.maze.swingapp.model.VertexCost;
+import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.graph.impl.traversal.AStarTraversal;
 import de.amr.easy.graph.impl.traversal.BestFirstTraversal;
 import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
@@ -72,7 +73,7 @@ public class RunMazeSolverAction extends AbstractAction {
 		anim.fnPathColor = () -> app.model.getPathColor();
 
 		if (solver.getAlgorithmClass() == BreadthFirstTraversal.class) {
-			BreadthFirstTraversal bfs = new BreadthFirstTraversal(grid);
+			BreadthFirstTraversal<?, ?> bfs = new BreadthFirstTraversal<>(grid);
 			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), bfs, src, tgt));
 			app.showMessage(format("Breadth-first search: %.2f seconds.", watch.getSeconds()));
 			anim.showPath(app.wndDisplayArea.getCanvas(), bfs, tgt);
@@ -80,7 +81,7 @@ public class RunMazeSolverAction extends AbstractAction {
 
 		else if (solver.getAlgorithmClass() == BestFirstTraversal.class) {
 			getHeuristics(solver, grid, tgt).ifPresent(h -> {
-				BestFirstTraversal<Integer> best = new BestFirstTraversal<>(grid, h.getCostFunction());
+				BestFirstTraversal<?, ?, Integer> best = new BestFirstTraversal<>(grid, h.getCostFunction());
 				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), best, src, tgt));
 				app.showMessage(format("Best-first search (%s): %.2f seconds.", h.getName(), watch.getSeconds()));
 				anim.showPath(app.wndDisplayArea.getCanvas(), best, tgt);
@@ -89,7 +90,7 @@ public class RunMazeSolverAction extends AbstractAction {
 
 		else if (solver.getAlgorithmClass() == AStarTraversal.class) {
 			getDistanceFunction(solver, grid).ifPresent(dist -> {
-				AStarTraversal astar = new AStarTraversal(grid, dist);
+				AStarTraversal<TraversalState> astar = new AStarTraversal<>(grid, dist);
 				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), astar, src, tgt));
 				app.showMessage(format("A* search (%s): %.2f seconds.", "", watch.getSeconds()));
 				anim.showPath(app.wndDisplayArea.getCanvas(), astar, tgt);

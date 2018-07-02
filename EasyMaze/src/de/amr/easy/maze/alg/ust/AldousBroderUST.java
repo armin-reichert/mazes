@@ -40,7 +40,7 @@ public class AldousBroderUST implements OrthogonalMazeGenerator {
 	public AldousBroderUST(int numCols, int numRows) {
 		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
 	}
-	
+
 	@Override
 	public OrthogonalGrid getGrid() {
 		return grid;

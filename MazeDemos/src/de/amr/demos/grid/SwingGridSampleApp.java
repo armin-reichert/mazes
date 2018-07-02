@@ -59,15 +59,15 @@ public abstract class SwingGridSampleApp implements Runnable {
 	private JFrame window;
 	private Dimension canvasSize;
 	private GridCanvas canvas;
-	private GridCanvasAnimation<TraversalState, Void> canvasAnimation;
+	private GridCanvasAnimation<TraversalState, Integer> canvasAnimation;
 	private Style style;
 	private int cellSize;
 	private String appName;
 	private boolean fullscreen;
-	private ObservableGridGraph<TraversalState, Void> grid;
+	private ObservableGridGraph<TraversalState, Integer> grid;
 
 	protected final StopWatch watch = new StopWatch();
-	
+
 	@Override
 	public void run() {
 	}
@@ -92,7 +92,7 @@ public abstract class SwingGridSampleApp implements Runnable {
 
 	protected void addKeyboardAction(String key, Runnable code) {
 		AbstractAction action = new AbstractAction() {
-	
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				code.run();
@@ -197,11 +197,11 @@ public abstract class SwingGridSampleApp implements Runnable {
 		return canvas;
 	}
 
-	public ObservableGridGraph<TraversalState, Void> getGrid() {
+	public ObservableGridGraph<TraversalState, Integer> getGrid() {
 		return grid;
 	}
 
-	public void setGrid(ObservableGridGraph<TraversalState, Void> grid) {
+	public void setGrid(ObservableGridGraph<TraversalState, Integer> grid) {
 		if (this.grid == grid) {
 			return;
 		}
@@ -231,8 +231,7 @@ public abstract class SwingGridSampleApp implements Runnable {
 	}
 
 	public void setGridTopology(Topology topology) {
-		setGrid(
-				new ObservableGridGraph<>(grid.numCols(), grid.numRows(), topology, TraversalState.UNVISITED, SimpleEdge::new));
+		setGrid(new ObservableGridGraph<>(grid.numCols(), grid.numRows(), topology, UNVISITED, 1, SimpleEdge::new));
 	}
 
 	public int getCellSize() {
@@ -261,7 +260,7 @@ public abstract class SwingGridSampleApp implements Runnable {
 	public void setCanvasAnimation(boolean animated) {
 		canvasAnimation.setEnabled(animated);
 	}
-	
+
 	public void setCanvasAnimationDelay(int millis) {
 		canvasAnimation.fnDelay = () -> millis;
 	}
