@@ -2,6 +2,8 @@ package de.amr.demos.grid;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static java.lang.Math.min;
+import static java.lang.Math.round;
+import static java.lang.Math.sqrt;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -18,32 +20,44 @@ import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
 
+/**
+ * Demo application for A* algorithm.
+ * 
+ * @author Armin Reichert
+ */
 public class AStarDemoApp extends SwingGridSampleApp {
 
 	public static void main(String[] args) {
-		launch(new AStarDemoApp(800, 800, 40));
+		launch(new AStarDemoApp(800, 800, 20));
 	}
+
+	private static final int WALLSIZE = 2;
+	private BiFunction<Integer, Integer, Integer> EUCLIDEAN = (u, v) -> (int) round(sqrt(getGrid().euclidean2(u, v)));
+	private BiFunction<Integer, Integer, Integer> MANHATTAN = (u, v) -> getGrid().manhattan(u, v);
 
 	private int source;
 	private int target;
-	private int current = -1;
+	private int current;
 	private AStarTraversal astar;
 	private BitSet pathCells;
-	private BiFunction<Integer, Integer, Integer> fnDist = (u, v) -> getGrid().euclidean2(u, v);
+	private BiFunction<Integer, Integer, Integer> fnDist = EUCLIDEAN;
 
 	public AStarDemoApp(int width, int height, int cellSize) {
 		super(width, height, cellSize);
+		source = getGrid().cell(GridPosition.TOP_LEFT);
+		target = getGrid().cell(GridPosition.BOTTOM_RIGHT);
+		current = -1;
+		getGrid().setDefaultVertex(UNVISITED);
+		getGrid().fill();
 		setAppName("A* demo application");
-		addMouseHandler();
+		addMouseActions();
 		addKeyboardAction("SPACE", this::updatePath);
 		addKeyboardAction("typed c", this::clearBoard);
+		addKeyboardAction("typed e", this::selectEuclidean);
+		addKeyboardAction("typed m", this::selectManhattan);
 		addKeyboardAction("typed p", this::updatePath);
 		getCanvas().pushRenderer(createRenderer());
 		getCanvas().requestFocus();
-		source = getGrid().cell(GridPosition.TOP_LEFT);
-		target = getGrid().cell(GridPosition.BOTTOM_RIGHT);
-		getGrid().setDefaultVertex(UNVISITED);
-		getGrid().fill();
 	}
 
 	@Override
@@ -59,8 +73,7 @@ public class AStarDemoApp extends SwingGridSampleApp {
 
 	@Override
 	protected ConfigurableGridRenderer createRenderer() {
-		ConfigurableGridRenderer base = super.createRenderer();
-		WallPassageGridRenderer r = new WallPassageGridRenderer();
+		ConfigurableGridRenderer base = super.createRenderer(), r = new WallPassageGridRenderer();
 		r.fnCellSize = base.fnCellSize;
 		r.fnCellBgColor = cell -> {
 			if (cell == source) {
@@ -101,14 +114,15 @@ public class AStarDemoApp extends SwingGridSampleApp {
 			return Color.BLACK;
 
 		};
-		r.fnTextFont = () -> new Font("Arial", Font.PLAIN, getCellSize() / 4);
+		r.fnTextFont = () -> new Font("Arial", Font.PLAIN, getCellSize() / 2);
+		r.fnMinFontSize = () -> 4;
 		r.fnPassageColor = (cell, dir) -> getGrid().get(cell) == UNVISITED ? Color.WHITE
 				: base.getModel().getPassageColor(cell, dir);
-		r.fnPassageWidth = () -> getCellSize() - 3;
+		r.fnPassageWidth = () -> getCellSize() - WALLSIZE;
 		return r;
 	}
 
-	private void addMouseHandler() {
+	private void addMouseActions() {
 		getCanvas().addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -142,6 +156,22 @@ public class AStarDemoApp extends SwingGridSampleApp {
 				}
 			}
 		});
+	}
+
+	private void selectEuclidean() {
+		if (fnDist != EUCLIDEAN) {
+			System.out.println("Euclidean distance selected");
+			fnDist = EUCLIDEAN;
+			updatePath();
+		}
+	}
+
+	private void selectManhattan() {
+		if (fnDist != MANHATTAN) {
+			System.out.println("Manhattan distance selected");
+			fnDist = MANHATTAN;
+			updatePath();
+		}
 	}
 
 	private void updatePath() {
