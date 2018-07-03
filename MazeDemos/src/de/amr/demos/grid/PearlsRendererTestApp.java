@@ -8,7 +8,8 @@ import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation
 
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
 import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
+import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.ust.WilsonUSTRecursiveCrosses;
 
 public class PearlsRendererTestApp extends SwingGridSampleApp {
@@ -38,7 +39,7 @@ public class PearlsRendererTestApp extends SwingGridSampleApp {
 		sleep(2000);
 		clear();
 		setCanvasAnimation(true);
-		OrthogonalMazeGenerator generator = new WilsonUSTRecursiveCrosses(GRID_SIZE, GRID_SIZE);
+		MazeGenerator<OrthogonalGrid> generator = new WilsonUSTRecursiveCrosses(GRID_SIZE, GRID_SIZE);
 		setGrid(generator.getGrid());
 		generator.createMaze(0, 0);
 

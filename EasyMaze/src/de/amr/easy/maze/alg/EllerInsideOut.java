@@ -24,8 +24,8 @@ import java.util.Set;
 import de.amr.easy.data.Partition;
 import de.amr.easy.grid.iterators.shapes.Rectangle;
 import de.amr.easy.grid.iterators.shapes.Square;
+import de.amr.easy.maze.alg.core.MazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * Maze generator similar to Eller's algorithm but growing the maze inside-out. To my knowledge this
@@ -33,7 +33,7 @@ import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
  * 
  * @author Armin Reichert
  */
-public class EllerInsideOut implements OrthogonalMazeGenerator {
+public class EllerInsideOut implements MazeGenerator<OrthogonalGrid> {
 
 	private OrthogonalGrid grid;
 	private Random rnd = new Random();
@@ -46,7 +46,7 @@ public class EllerInsideOut implements OrthogonalMazeGenerator {
 	private int offsetY;
 
 	public EllerInsideOut(int numCols, int numRows) {
-		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
+		grid = emptyGrid(numCols, numRows, UNVISITED);
 	}
 
 	@Override

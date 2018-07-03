@@ -1,12 +1,13 @@
 package de.amr.easy.maze.alg;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
+import static de.amr.easy.maze.alg.core.OrthogonalGrid.fullGrid;
 import static java.util.stream.IntStream.range;
 
 import java.util.Random;
 
+import de.amr.easy.maze.alg.core.MazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * Creates maze by recursive division.
@@ -17,13 +18,13 @@ import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
  *      "http://weblog.jamisbuck.org/2011/1/12/maze-generation-recursive-division-algorithm.html">Maze
  *      Generation: Recursive Division</a>
  */
-public class RecursiveDivision implements OrthogonalMazeGenerator {
+public class RecursiveDivision implements MazeGenerator<OrthogonalGrid> {
 
 	private OrthogonalGrid grid;
 	private Random rnd = new Random();
 
 	public RecursiveDivision(int numCols, int numRows) {
-		grid = OrthogonalGrid.fullGrid(numCols, numRows, COMPLETED);
+		grid = fullGrid(numCols, numRows, COMPLETED);
 	}
 
 	@Override

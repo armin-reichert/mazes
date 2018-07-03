@@ -4,13 +4,14 @@ import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static de.amr.easy.grid.impl.Top4.E;
 import static de.amr.easy.grid.impl.Top4.S;
+import static de.amr.easy.maze.alg.core.OrthogonalGrid.emptyGrid;
 
 import java.util.OptionalInt;
 import java.util.Random;
 import java.util.stream.IntStream;
 
+import de.amr.easy.maze.alg.core.MazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * Creates a random binary spanning tree.
@@ -21,13 +22,13 @@ import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
  *      "http://weblog.jamisbuck.org/2011/2/1/maze-generation-binary-tree-algorithm.html">Maze
  *      Generation: Binary Tree algorithm</a>
  */
-public class BinaryTree implements OrthogonalMazeGenerator {
+public class BinaryTree implements MazeGenerator<OrthogonalGrid> {
 
 	protected OrthogonalGrid grid;
 	protected Random rnd = new Random();
 
 	public BinaryTree(int numCols, int numRows) {
-		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
+		grid = emptyGrid(numCols, numRows, UNVISITED);
 	}
 
 	@Override

@@ -1,10 +1,11 @@
 package de.amr.easy.maze.alg.ust;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
+import static de.amr.easy.maze.alg.core.OrthogonalGrid.emptyGrid;
 import static de.amr.easy.util.StreamUtils.permute;
 
+import de.amr.easy.maze.alg.core.MazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * A hybrid algorithm ("Houston") that first uses Aldous/Broder until some fraction of cells is
@@ -16,12 +17,12 @@ import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
  * 
  * @author Armin Reichert
  */
-public class AldousBroderWilsonUST implements OrthogonalMazeGenerator {
+public class AldousBroderWilsonUST implements MazeGenerator<OrthogonalGrid> {
 
 	private OrthogonalGrid grid;
 
 	public AldousBroderWilsonUST(int numCols, int numRows) {
-		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
+		grid = emptyGrid(numCols, numRows, UNVISITED);
 	}
 
 	@Override

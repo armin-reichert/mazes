@@ -2,14 +2,15 @@ package de.amr.easy.maze.alg;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
+import static de.amr.easy.maze.alg.core.OrthogonalGrid.emptyGrid;
 import static de.amr.easy.util.StreamUtils.permute;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import de.amr.easy.maze.alg.core.MazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * The "Growing-Tree" algorithm.
@@ -20,13 +21,13 @@ import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
  *      "http://weblog.jamisbuck.org/2011/1/27/maze-generation-growing-tree-algorithm.html">Maze
  *      Generation: Growing Tree algorithm</a>
  */
-public class GrowingTree implements OrthogonalMazeGenerator {
+public class GrowingTree implements MazeGenerator<OrthogonalGrid> {
 
 	private OrthogonalGrid grid;
-	private final Random rnd = new Random();
+	private Random rnd = new Random();
 
 	public GrowingTree(int numCols, int numRows) {
-		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
+		grid = emptyGrid(numCols, numRows, UNVISITED);
 	}
 
 	@Override

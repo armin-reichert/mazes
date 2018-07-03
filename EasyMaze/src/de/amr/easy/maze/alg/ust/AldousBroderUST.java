@@ -3,11 +3,12 @@ package de.amr.easy.maze.alg.ust;
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
+import static de.amr.easy.maze.alg.core.OrthogonalGrid.emptyGrid;
 import static de.amr.easy.util.StreamUtils.randomElement;
 
 import de.amr.easy.graph.api.traversal.TraversalState;
+import de.amr.easy.maze.alg.core.MazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * Let G = (V,E) be a graph with vertices V and edge set E.
@@ -31,14 +32,14 @@ import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
  *        Generation: Aldous-Broder algorithm</a>
  * 
  */
-public class AldousBroderUST implements OrthogonalMazeGenerator {
+public class AldousBroderUST implements MazeGenerator<OrthogonalGrid> {
 
 	private OrthogonalGrid grid;
 	private int numVisitedCells;
 	private int currentCell;
 
 	public AldousBroderUST(int numCols, int numRows) {
-		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
+		grid = emptyGrid(numCols, numRows, UNVISITED);
 	}
 
 	@Override

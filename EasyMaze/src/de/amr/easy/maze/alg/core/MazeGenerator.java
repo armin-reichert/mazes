@@ -4,13 +4,16 @@ package de.amr.easy.maze.alg.core;
  * Maze generator interface.
  * 
  * @author Armin Reichert
+ * 
+ * @param <G>
+ *          grid type
  */
-public interface OrthogonalMazeGenerator {
+public interface MazeGenerator<G> {
 
 	/**
 	 * @return the grid this generator operates upon
 	 */
-	OrthogonalGrid getGrid();
+	G getGrid();
 
 	/**
 	 * Creates a maze starting at the grid cell {@code (x, y)}.
@@ -21,5 +24,5 @@ public interface OrthogonalMazeGenerator {
 	 *          y-coordinate (row) of start cell
 	 * @return maze (spanning tree)
 	 */
-	OrthogonalGrid createMaze(int x, int y);
+	G createMaze(int x, int y);
 }

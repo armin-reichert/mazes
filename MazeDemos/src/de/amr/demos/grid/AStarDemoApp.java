@@ -66,6 +66,7 @@ public class AStarDemoApp {
 		target = grid.cell(GridPosition.BOTTOM_RIGHT);
 		current = -1;
 		createUI();
+		updatePath();
 		window.setVisible(true);
 	}
 

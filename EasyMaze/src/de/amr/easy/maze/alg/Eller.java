@@ -2,6 +2,7 @@ package de.amr.easy.maze.alg;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
+import static de.amr.easy.maze.alg.core.OrthogonalGrid.emptyGrid;
 import static java.util.stream.IntStream.range;
 
 import java.util.ArrayList;
@@ -12,8 +13,8 @@ import java.util.Random;
 import java.util.Set;
 
 import de.amr.easy.data.Partition;
+import de.amr.easy.maze.alg.core.MazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * Maze generator using Eller's algorithm.
@@ -24,14 +25,14 @@ import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
  *      Generation: Eller's Algorithm</a>.
  * 
  */
-public class Eller implements OrthogonalMazeGenerator {
+public class Eller implements MazeGenerator<OrthogonalGrid> {
 
 	private OrthogonalGrid grid;
 	private Random rnd = new Random();
 	private Partition<Integer> parts = new Partition<>();
 
 	public Eller(int numCols, int numRows) {
-		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
+		grid = emptyGrid(numCols, numRows, UNVISITED);
 	}
 
 	@Override

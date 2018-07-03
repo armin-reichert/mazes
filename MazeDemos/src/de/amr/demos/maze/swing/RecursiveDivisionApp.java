@@ -6,7 +6,8 @@ import java.util.stream.IntStream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
 import de.amr.easy.maze.alg.RecursiveDivision;
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
+import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 public class RecursiveDivisionApp extends SwingGridSampleApp {
 
@@ -23,7 +24,7 @@ public class RecursiveDivisionApp extends SwingGridSampleApp {
 	public void run() {
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			setCellSize(cellSize);
-			OrthogonalMazeGenerator generator = new RecursiveDivision(getCanvas().getWidth() / cellSize,
+			MazeGenerator<OrthogonalGrid> generator = new RecursiveDivision(getCanvas().getWidth() / cellSize,
 					getCanvas().getHeight() / cellSize);
 			setGrid(generator.getGrid());
 			generator.createMaze(0, 0);

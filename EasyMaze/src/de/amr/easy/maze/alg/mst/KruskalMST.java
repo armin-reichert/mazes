@@ -2,12 +2,13 @@ package de.amr.easy.maze.alg.mst;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
+import static de.amr.easy.maze.alg.core.OrthogonalGrid.emptyGrid;
 import static de.amr.easy.maze.alg.core.OrthogonalGrid.fullGrid;
 import static de.amr.easy.util.StreamUtils.permute;
 
 import de.amr.easy.data.Partition;
+import de.amr.easy.maze.alg.core.MazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * Maze generator derived from Kruskal's minimum spanning tree algorithm.
@@ -20,12 +21,12 @@ import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
  * @see <a href="http://weblog.jamisbuck.org/2011/1/3/maze-generation-kruskal-s-algorithm.html">Maze
  *      Generation: Kruskal's Algorithm</a>
  */
-public class KruskalMST implements OrthogonalMazeGenerator {
+public class KruskalMST implements MazeGenerator<OrthogonalGrid> {
 
 	private OrthogonalGrid grid;
 
 	public KruskalMST(int numCols, int numRows) {
-		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
+		grid = emptyGrid(numCols, numRows, UNVISITED);
 	}
 
 	@Override

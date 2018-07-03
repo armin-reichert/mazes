@@ -2,12 +2,13 @@ package de.amr.easy.maze.alg.ust;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
+import static de.amr.easy.maze.alg.core.OrthogonalGrid.emptyGrid;
 import static de.amr.easy.util.StreamUtils.randomElement;
 
 import java.util.stream.IntStream;
 
+import de.amr.easy.maze.alg.core.MazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * Wilson's algorithm.
@@ -29,14 +30,14 @@ import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
  *      wikipedia.org/wiki/Loop -erased_random_walk</>
  * 
  */
-public abstract class WilsonUST implements OrthogonalMazeGenerator {
+public abstract class WilsonUST implements MazeGenerator<OrthogonalGrid> {
 
 	protected OrthogonalGrid grid;
 	private int[] lastWalkDir;
 	private int current;
 
 	public WilsonUST(int numCols, int numRows) {
-		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
+		grid = emptyGrid(numCols, numRows, UNVISITED);
 	}
 
 	public WilsonUST(OrthogonalGrid grid) {

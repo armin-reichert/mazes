@@ -3,25 +3,26 @@ package de.amr.easy.maze.alg.traversal;
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
+import static de.amr.easy.maze.alg.core.OrthogonalGrid.emptyGrid;
 import static de.amr.easy.util.StreamUtils.randomElement;
 
 import java.util.OptionalInt;
 
 import de.amr.easy.data.Stack;
+import de.amr.easy.maze.alg.core.MazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
- * Generates a maze by iterative random depth-first-traversal of a grid.
+ * Generates a maze by iterative random depth-first traversal of a grid.
  * 
  * @author Armin Reichert
  */
-public class IterativeDFS implements OrthogonalMazeGenerator {
+public class IterativeDFS implements MazeGenerator<OrthogonalGrid> {
 
 	private OrthogonalGrid grid;
 
 	public IterativeDFS(int numCols, int numRows) {
-		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
+		grid = emptyGrid(numCols, numRows, UNVISITED);
 	}
 
 	@Override

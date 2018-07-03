@@ -1,11 +1,12 @@
 package de.amr.easy.maze.alg.mst;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
+import static de.amr.easy.maze.alg.core.OrthogonalGrid.fullGrid;
 import static de.amr.easy.util.StreamUtils.permute;
 
 import de.amr.easy.graph.api.Edge;
+import de.amr.easy.maze.alg.core.MazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
-import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
 
 /**
  * Maze generator derived from the Reverse-Delete-MST algorithm.
@@ -14,12 +15,12 @@ import de.amr.easy.maze.alg.core.OrthogonalMazeGenerator;
  *
  * @see <a href="https://en.wikipedia.org/wiki/Reverse-delete_algorithm">Wikipedia</a>
  */
-public abstract class ReverseDeleteMST implements OrthogonalMazeGenerator {
+public abstract class ReverseDeleteMST implements MazeGenerator<OrthogonalGrid> {
 
 	protected OrthogonalGrid grid;
 
 	public ReverseDeleteMST(int numCols, int numRows) {
-		grid = OrthogonalGrid.fullGrid(numCols, numRows, COMPLETED);
+		grid = fullGrid(numCols, numRows, COMPLETED);
 	}
 
 	@Override
