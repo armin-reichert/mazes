@@ -28,14 +28,14 @@ To achieve the goals mentioned above, there is
 Here is the maze generator based on Kruskal's minimum-spanning-tree algorithm:
 
 ```java
-public class KruskalMST implements OrthogonalMazeGenerator {
+public class KruskalMST implements MazeGenerator<OrthogonalGrid> {
 
 	private OrthogonalGrid grid;
-	
+
 	public KruskalMST(int numCols, int numRows) {
-		grid = OrthogonalGrid.emptyGrid(numCols, numRows, UNVISITED);
+		grid = emptyGrid(numCols, numRows, UNVISITED);
 	}
-	
+
 	@Override
 	public OrthogonalGrid getGrid() {
 		return grid;
