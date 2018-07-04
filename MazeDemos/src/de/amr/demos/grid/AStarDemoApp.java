@@ -18,7 +18,9 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JFrame;
+import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
 
 import de.amr.easy.graph.api.SimpleEdge;
@@ -48,6 +50,8 @@ public class AStarDemoApp {
 	private int source;
 	private int target;
 	private int current;
+	private int popupCell;
+
 	private int cellSize;
 	private ObservableGridGraph<TraversalState, Integer> grid;
 	private GridCanvas canvas;
@@ -57,6 +61,41 @@ public class AStarDemoApp {
 	private BiFunction<Integer, Integer, Integer> manhattan = (u, v) -> grid.manhattan(u, v);
 	private BiFunction<Integer, Integer, Integer> fnDist = euclidean;
 	private JFrame window;
+	private JPopupMenu popupMenu;
+
+	private Action actionSetSource = new AbstractAction("Set Source Here") {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			setSource(popupCell);
+			popupCell = -1;
+		}
+	};
+
+	private Action actionSetTarget = new AbstractAction("Set Target Here") {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			setTarget(popupCell);
+			popupCell = -1;
+		}
+	};
+
+	private Action actionSelectManhattan = new AbstractAction("Manhattan Distance") {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			selectManhattan();
+		}
+	};
+
+	private Action actionSelectEuclidean = new AbstractAction("Euclidean Distance") {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			selectEuclidean();
+		}
+	};
 
 	public AStarDemoApp(int numCols, int numRows, int cellSize) {
 		this.cellSize = cellSize;
@@ -76,6 +115,7 @@ public class AStarDemoApp {
 		canvas = new GridCanvas(grid, cellSize);
 		canvas.pushRenderer(createRenderer());
 		window.getContentPane().add(canvas, BorderLayout.CENTER);
+		popupMenu = createPopupMenu();
 		addMouseActions();
 		addKeyboardAction("SPACE", this::updatePath);
 		addKeyboardAction("typed c", this::clearScene);
@@ -88,6 +128,16 @@ public class AStarDemoApp {
 		window.pack();
 	}
 
+	private JPopupMenu createPopupMenu() {
+		JPopupMenu menu = new JPopupMenu();
+		menu.add(actionSetSource);
+		menu.add(actionSetTarget);
+		menu.addSeparator();
+		menu.add(actionSelectEuclidean);
+		menu.add(actionSelectManhattan);
+		return menu;
+	}
+
 	private void addKeyboardAction(String key, Runnable code) {
 		AbstractAction action = new AbstractAction() {
 
@@ -98,6 +148,16 @@ public class AStarDemoApp {
 		};
 		canvas.getInputMap().put(KeyStroke.getKeyStroke(key), "action_" + key);
 		canvas.getActionMap().put("action_" + key, action);
+	}
+
+	private void setSource(int cell) {
+		source = cell;
+		updatePath();
+	}
+
+	private void setTarget(int cell) {
+		target = cell;
+		updatePath();
 	}
 
 	private void clearScene() {
@@ -125,10 +185,10 @@ public class AStarDemoApp {
 			}
 			if (astar != null) {
 				if (astar.getState(cell) == AStarTraversal.CLOSED) {
-					return Color.GRAY;
+					return new Color(220,220,255);
 				}
 				if (astar.getState(cell) == AStarTraversal.OPEN) {
-					return Color.LIGHT_GRAY;
+					return new Color(240,240,255);
 				}
 			}
 			if (grid.get(cell) == UNVISITED) {
@@ -160,19 +220,26 @@ public class AStarDemoApp {
 		canvas.addMouseListener(new MouseAdapter() {
 
 			@Override
-			public void mouseReleased(MouseEvent mouse) {
-				current = -1;
+			public void mousePressed(MouseEvent mouse) {
+				current = cellAt(mouse.getX(), mouse.getY());
+				if (mouse.getButton() == MouseEvent.BUTTON1) {
+					if (mouse.isShiftDown()) {
+						unblock(current);
+					} else {
+						block(current);
+					}
+				}
 			}
 
 			@Override
-			public void mousePressed(MouseEvent mouse) {
-				current = cellAt(mouse.getX(), mouse.getY());
-				if (mouse.getButton() == MouseEvent.BUTTON3) {
-					unblock(current);
-				} else {
-					block(current);
+			public void mouseReleased(MouseEvent mouse) {
+				current = -1;
+				if (mouse.isPopupTrigger()) {
+					popupCell = cellAt(mouse.getX(), mouse.getY());
+					popupMenu.show(canvas, mouse.getX(), mouse.getY());
 				}
 			}
+
 		});
 
 		canvas.addMouseMotionListener(new MouseMotionAdapter() {
