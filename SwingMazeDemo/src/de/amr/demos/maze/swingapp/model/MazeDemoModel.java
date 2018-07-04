@@ -22,6 +22,7 @@ import de.amr.easy.graph.impl.traversal.BestFirstTraversal;
 import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal;
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
+import de.amr.easy.graph.impl.traversal.DijkstraTraversal;
 import de.amr.easy.graph.impl.traversal.HillClimbing;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.maze.alg.BinaryTree;
@@ -121,6 +122,7 @@ public class MazeDemoModel {
 			new AlgorithmInfo(BreadthFirstTraversal.class, "Breadth-First Search", BFS),
 			new AlgorithmInfo(DepthFirstTraversal2.class, "Depth-First Search", DFS), 
 			new AlgorithmInfo(DepthFirstTraversal.class, "Depth-First Search (alternative)", DFS), 
+			new AlgorithmInfo(DijkstraTraversal.class, "Dijkstra", BFS), 
 			new AlgorithmInfo(BestFirstTraversal.class, "Best-First Search (Manhattan)", BFS, MANHATTAN, INFORMED),
 			new AlgorithmInfo(BestFirstTraversal.class, "Best-First Search (Euclidean)", BFS, EUCLIDEAN, INFORMED),
 			new AlgorithmInfo(BestFirstTraversal.class, "Best-First Search (Chebyshev)", BFS, CHEBYSHEV, INFORMED), 

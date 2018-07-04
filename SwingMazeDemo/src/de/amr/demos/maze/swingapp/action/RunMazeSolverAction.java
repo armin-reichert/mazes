@@ -21,6 +21,7 @@ import de.amr.easy.graph.impl.traversal.BestFirstTraversal;
 import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal;
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
+import de.amr.easy.graph.impl.traversal.DijkstraTraversal;
 import de.amr.easy.graph.impl.traversal.HillClimbing;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
@@ -65,8 +66,8 @@ public class RunMazeSolverAction extends AbstractAction {
 
 	private void runBFSSolverAnimation(AlgorithmInfo solver) {
 		OrthogonalGrid grid = app.model.getGrid();
-		int src = grid.cell(app.model.getPathFinderSource());
-		int tgt = grid.cell(app.model.getPathFinderTarget());
+		int source = grid.cell(app.model.getPathFinderSource());
+		int target = grid.cell(app.model.getPathFinderTarget());
 
 		BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid);
 		anim.fnDelay = () -> app.model.getDelay();
@@ -74,26 +75,33 @@ public class RunMazeSolverAction extends AbstractAction {
 
 		if (solver.getAlgorithmClass() == BreadthFirstTraversal.class) {
 			BreadthFirstTraversal<?, ?> bfs = new BreadthFirstTraversal<>(grid);
-			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), bfs, src, tgt));
+			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), bfs, source, target));
 			app.showMessage(format("Breadth-first search: %.2f seconds.", watch.getSeconds()));
-			anim.showPath(app.wndDisplayArea.getCanvas(), bfs, tgt);
+			anim.showPath(app.wndDisplayArea.getCanvas(), bfs, target);
+		}
+
+		else if (solver.getAlgorithmClass() == DijkstraTraversal.class) {
+			DijkstraTraversal<?> dijkstra = new DijkstraTraversal<>(grid);
+			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), dijkstra, source, target));
+			app.showMessage(format("Dijkstra search: %.2f seconds.", watch.getSeconds()));
+			anim.showPath(app.wndDisplayArea.getCanvas(), dijkstra, target);
 		}
 
 		else if (solver.getAlgorithmClass() == BestFirstTraversal.class) {
-			getHeuristics(solver, grid, tgt).ifPresent(h -> {
+			getHeuristics(solver, grid, target).ifPresent(h -> {
 				BestFirstTraversal<?, ?, Integer> best = new BestFirstTraversal<>(grid, h);
-				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), best, src, tgt));
+				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), best, source, target));
 				app.showMessage(format("Best-first search (%s): %.2f seconds.", getHeuristicsName(solver), watch.getSeconds()));
-				anim.showPath(app.wndDisplayArea.getCanvas(), best, tgt);
+				anim.showPath(app.wndDisplayArea.getCanvas(), best, target);
 			});
 		}
 
 		else if (solver.getAlgorithmClass() == AStarTraversal.class) {
 			getCostFunction(solver, grid).ifPresent(cost -> {
 				AStarTraversal<TraversalState> astar = new AStarTraversal<>(grid, cost);
-				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), astar, src, tgt));
+				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), astar, source, target));
 				app.showMessage(format("A* search (%s): %.2f seconds.", getHeuristicsName(solver), watch.getSeconds()));
-				anim.showPath(app.wndDisplayArea.getCanvas(), astar, tgt);
+				anim.showPath(app.wndDisplayArea.getCanvas(), astar, target);
 			});
 		}
 	}
