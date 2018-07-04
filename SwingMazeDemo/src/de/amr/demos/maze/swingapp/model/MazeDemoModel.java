@@ -9,6 +9,7 @@ import static de.amr.demos.maze.swingapp.model.PathFinderTag.BFS;
 import static de.amr.demos.maze.swingapp.model.PathFinderTag.CHEBYSHEV;
 import static de.amr.demos.maze.swingapp.model.PathFinderTag.DFS;
 import static de.amr.demos.maze.swingapp.model.PathFinderTag.EUCLIDEAN;
+import static de.amr.demos.maze.swingapp.model.PathFinderTag.INFORMED;
 import static de.amr.demos.maze.swingapp.model.PathFinderTag.MANHATTAN;
 
 import java.awt.Color;
@@ -120,18 +121,15 @@ public class MazeDemoModel {
 			new AlgorithmInfo(BreadthFirstTraversal.class, "Breadth-First Search", BFS),
 			new AlgorithmInfo(DepthFirstTraversal2.class, "Depth-First Search", DFS), 
 			new AlgorithmInfo(DepthFirstTraversal.class, "Depth-First Search (alternative)", DFS), 
-			null,
-			new AlgorithmInfo(BestFirstTraversal.class, "Best-First Search (Manhattan)", BFS, MANHATTAN),
-			new AlgorithmInfo(BestFirstTraversal.class, "Best-First Search (Euclidean)", BFS, EUCLIDEAN),
-			new AlgorithmInfo(BestFirstTraversal.class, "Best-First Search (Chebyshev)", BFS, CHEBYSHEV), 
-			null,
-			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Manhattan)", DFS, MANHATTAN),
-			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Euclidean)", DFS, EUCLIDEAN),
-			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Chebyshev)", DFS, CHEBYSHEV),
-			null,
-			new AlgorithmInfo(AStarTraversal.class, "A* Search (Manhattan)", BFS, MANHATTAN),
-			new AlgorithmInfo(AStarTraversal.class, "A* Search (Euclidean)", BFS, EUCLIDEAN),
-			new AlgorithmInfo(AStarTraversal.class, "A* Search (Chebyshev)", BFS, CHEBYSHEV), 
+			new AlgorithmInfo(BestFirstTraversal.class, "Best-First Search (Manhattan)", BFS, MANHATTAN, INFORMED),
+			new AlgorithmInfo(BestFirstTraversal.class, "Best-First Search (Euclidean)", BFS, EUCLIDEAN, INFORMED),
+			new AlgorithmInfo(BestFirstTraversal.class, "Best-First Search (Chebyshev)", BFS, CHEBYSHEV, INFORMED), 
+			new AlgorithmInfo(AStarTraversal.class, "A* Search (Manhattan)", BFS, MANHATTAN, INFORMED),
+			new AlgorithmInfo(AStarTraversal.class, "A* Search (Euclidean)", BFS, EUCLIDEAN, INFORMED),
+			new AlgorithmInfo(AStarTraversal.class, "A* Search (Chebyshev)", BFS, CHEBYSHEV, INFORMED), 
+			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Manhattan)", DFS, MANHATTAN, INFORMED),
+			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Euclidean)", DFS, EUCLIDEAN, INFORMED),
+			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Chebyshev)", DFS, CHEBYSHEV, INFORMED),
 			/*@formatter:on*/
 	};
 
