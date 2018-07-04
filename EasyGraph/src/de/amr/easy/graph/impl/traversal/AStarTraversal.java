@@ -59,7 +59,7 @@ public class AStarTraversal<V> extends BreadthFirstTraversal<V, Integer> {
 		setState(source, OPEN);
 		q.add(source);
 
-		while (!q.isEmpty() && q.peek() != target) {
+		while (!(q.isEmpty() || q.peek() == target)) {
 			int current = q.poll();
 			setState(current, CLOSED);
 			graph.adj(current).filter(neighbor -> getState(neighbor) != CLOSED).forEach(neighbor -> {
