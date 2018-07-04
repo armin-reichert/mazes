@@ -23,7 +23,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
-import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
@@ -59,8 +58,8 @@ public class AStarDemoApp {
 	// model
 	private int source;
 	private int target;
-	private ObservableGridGraph<TraversalState, Integer> grid;
-	private AStarTraversal<TraversalState> astar;
+	private ObservableGridGraph<Void, Integer> grid;
+	private AStarTraversal<Void> astar;
 	private BitSet solution;
 	private BiFunction<Integer, Integer, Integer> fnEuclidean = (u, v) -> (int) round(sqrt(grid.euclidean2(u, v)));
 	private BiFunction<Integer, Integer, Integer> fnManhattan = (u, v) -> grid.manhattan(u, v);
@@ -81,6 +80,7 @@ public class AStarDemoApp {
 		public void actionPerformed(ActionEvent e) {
 			setSource(popupCell);
 			popupCell = -1;
+			updatePath();
 		}
 	};
 
@@ -90,6 +90,7 @@ public class AStarDemoApp {
 		public void actionPerformed(ActionEvent e) {
 			setTarget(popupCell);
 			popupCell = -1;
+			updatePath();
 		}
 	};
 
@@ -98,6 +99,7 @@ public class AStarDemoApp {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			selectManhattan();
+			updatePath();
 		}
 	};
 
@@ -106,6 +108,7 @@ public class AStarDemoApp {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			selectEuclidean();
+			updatePath();
 		}
 	};
 
@@ -113,7 +116,8 @@ public class AStarDemoApp {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			clearScene();
+			resetScene();
+			updatePath();
 		}
 	};
 
@@ -127,38 +131,38 @@ public class AStarDemoApp {
 		solution = new BitSet();
 		fnDist = fnEuclidean;
 		createUI();
+		updatePath();
 	}
 
 	private void createUI() {
-		window = new JFrame("A* demo application");
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		popupMenu = createPopupMenu();
 		canvas = new GridCanvas(grid, cellSize);
-		window.getContentPane().add(canvas, BorderLayout.CENTER);
 		canvas.pushRenderer(createRenderer());
 		canvas.requestFocus();
 		canvas.drawGrid();
 		addMouseActions();
+		createPopupMenu();
+		window = new JFrame("A* demo application");
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.getContentPane().add(canvas, BorderLayout.CENTER);
 		window.pack();
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 	}
 
-	private JPopupMenu createPopupMenu() {
-		JPopupMenu menu = new JPopupMenu();
-		menu.add(actionSetSource);
-		menu.add(actionSetTarget);
-		menu.addSeparator();
-		menu.add(actionClearScene);
-		menu.addSeparator();
+	private void createPopupMenu() {
+		popupMenu = new JPopupMenu();
+		popupMenu.add(actionSetSource);
+		popupMenu.add(actionSetTarget);
+		popupMenu.addSeparator();
+		popupMenu.add(actionClearScene);
+		popupMenu.addSeparator();
 		ButtonGroup bg = new ButtonGroup();
 		JRadioButtonMenuItem rbEuclidean = new JRadioButtonMenuItem(actionSelectEuclidean);
-		bg.add(menu.add(rbEuclidean));
+		bg.add(popupMenu.add(rbEuclidean));
 		JRadioButtonMenuItem rbManhattan = new JRadioButtonMenuItem(actionSelectManhattan);
-		bg.add(menu.add(rbManhattan));
+		bg.add(popupMenu.add(rbManhattan));
 		rbEuclidean.setSelected(fnDist == fnEuclidean);
 		rbManhattan.setSelected(fnDist == fnManhattan);
-		return menu;
 	}
 
 	private ConfigurableGridRenderer createRenderer() {
@@ -179,18 +183,21 @@ public class AStarDemoApp {
 			}
 			if (astar != null) {
 				if (astar.getState(cell) == AStarTraversal.CLOSED) {
-					return new Color(220, 220, 220);
+					return new Color(200, 200, 200);
 				}
 				if (astar.getState(cell) == AStarTraversal.OPEN) {
 					return new Color(240, 240, 240);
 				}
 			}
-			if (grid.get(cell) == UNVISITED) {
-				return Color.WHITE;
-			}
-			return Color.BLACK;
+			return Color.WHITE;
 		};
 		r.fnText = cell -> {
+			if (cell == source) {
+				return "START";
+			}
+			if (cell == target) {
+				return "GOAL";
+			}
 			if (astar != null && astar.getState(cell) != TraversalState.UNVISITED) {
 				return String.format("%d:%d", astar.getDistFromSource(cell), astar.getScore(cell));
 			}
@@ -198,6 +205,9 @@ public class AStarDemoApp {
 		};
 		r.fnTextColor = cell -> {
 			if (solution != null && solution.get(cell)) {
+				return Color.WHITE;
+			}
+			if (cell == source || cell == target) {
 				return Color.WHITE;
 			}
 			return Color.GRAY;
@@ -208,18 +218,6 @@ public class AStarDemoApp {
 		r.fnPassageWidth = () -> cellSize - wallSize;
 		r.fnPassageColor = (cell, dir) -> Color.WHITE;
 		return r;
-	}
-
-	private void addKeyboardAction(String key, Runnable code) {
-		AbstractAction action = new AbstractAction() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				code.run();
-			}
-		};
-		canvas.getInputMap().put(KeyStroke.getKeyStroke(key), "action_" + key);
-		canvas.getActionMap().put("action_" + key, action);
 	}
 
 	private void addMouseActions() {
@@ -234,6 +232,7 @@ public class AStarDemoApp {
 					} else {
 						block(current);
 					}
+					updatePath();
 				}
 			}
 
@@ -243,9 +242,10 @@ public class AStarDemoApp {
 				if (mouse.isPopupTrigger()) {
 					popupCell = cellAt(mouse.getX(), mouse.getY());
 					popupMenu.show(canvas, mouse.getX(), mouse.getY());
+				} else {
+					updatePath();
 				}
 			}
-
 		});
 
 		canvas.addMouseMotionListener(new MouseMotionAdapter() {
@@ -260,6 +260,7 @@ public class AStarDemoApp {
 					} else {
 						block(cell);
 					}
+					updatePath();
 				}
 			}
 		});
@@ -267,47 +268,46 @@ public class AStarDemoApp {
 
 	private void setSource(int cell) {
 		source = cell;
-		updatePath();
 	}
 
 	private void setTarget(int cell) {
 		target = cell;
-		updatePath();
 	}
 
-	private void clearScene() {
+	private void resetScene() {
+		source = grid.cell(GridPosition.TOP_LEFT);
+		target = grid.cell(GridPosition.BOTTOM_RIGHT);
 		grid.vertices().forEach(this::unblock);
 		astar = null;
 		solution.clear();
-		canvas.drawGrid();
 	}
 
 	private void selectEuclidean() {
 		if (fnDist != fnEuclidean) {
-			System.out.println("Euclidean distance selected");
 			fnDist = fnEuclidean;
-			updatePath();
 		}
 	}
 
 	private void selectManhattan() {
 		if (fnDist != fnManhattan) {
-			System.out.println("Manhattan distance selected");
 			fnDist = fnManhattan;
-			updatePath();
 		}
 	}
 
-	private void updatePath() {
+	private void computePath() {
 		astar = new AStarTraversal<>(grid, fnDist);
 		StopWatch watch = new StopWatch();
 		watch.measure(() -> astar.traverseGraph(source, target));
 		List<Integer> path = astar.path(target);
 		solution = new BitSet(grid.numVertices());
 		path.forEach(solution::set);
-		canvas.drawGrid();
 		System.out.println(String.format("A*: %.4f seconds", watch.getSeconds()));
 		System.out.println(String.format("Path length: %d", path.size()));
+	}
+
+	private void updatePath() {
+		computePath();
+		canvas.drawGrid();
 	}
 
 	private int cellAt(int x, int y) {
@@ -324,7 +324,6 @@ public class AStarDemoApp {
 			return;
 		}
 		grid.neighbors(cell).forEach(neighbor -> grid.removeEdge(cell, neighbor));
-		updatePath();
 	}
 
 	private void unblock(int cell) {
@@ -338,10 +337,9 @@ public class AStarDemoApp {
 		if (isBlocked(target)) {
 			connectWithNeighbors(target);
 		}
-		updatePath();
 	}
 
 	private void connectWithNeighbors(int cell) {
-		grid.neighbors(cell).filter(n -> !isBlocked(n)).forEach(neighbor -> grid.addEdge(cell, neighbor));
+		grid.neighbors(cell).filter(neighbor -> !isBlocked(neighbor)).forEach(neighbor -> grid.addEdge(cell, neighbor));
 	}
 }
