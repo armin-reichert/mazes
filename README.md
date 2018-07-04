@@ -61,35 +61,35 @@ Anyone familiar with the Kruskal MST algorithm will immediately recognize it in 
 
 The included [demo application](https://github.com/armin-reichert/mazes/releases/download/July2018/mazedemoapp.jar) demonstrates all implemented maze generators and path finders. Using a control panel you can interactively select the generation algorithm, path finder, grid resolution and rendering style ("walls", "passages").
 
-<img style="width:100%; height=auto" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/mazedemoapp.png">
+<img style="width:100%; height=auto" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/mazedemoapp.png">
 
 Implemented maze generation algorithms:
 
 ### Graph Traversal:
 - [Random Breadth-First-Search](EasyMaze/src/de/amr/easy/maze/alg/traversal/RandomBFS.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_RandomBFS.gif">
+<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_RandomBFS.gif">
 
 - [Random Depth-First-Search, iterative](EasyMaze/src/de/amr/easy/maze/alg/traversal/IterativeDFS.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_IterativeDFS.gif">
+<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_IterativeDFS.gif">
 
 - [Random Depth-First-Search, recursive](EasyMaze/src/de/amr/easy/maze/alg/traversal/RecursiveDFS.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_RecursiveDFS.gif">
+<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_RecursiveDFS.gif">
 
 ### Minimum Spanning Tree: 
 - [Boruvka](EasyMaze/src/de/amr/easy/maze/alg/mst/BoruvkaMST.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_BoruvkaMST.gif">
+<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_BoruvkaMST.gif">
 
 - [Kruskal](EasyMaze/src/de/amr/easy/maze/alg/mst/KruskalMST.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_KruskalMST.gif">
+<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_KruskalMST.gif">
 
 - [Prim](EasyMaze/src/de/amr/easy/maze/alg/mst/PrimMST.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_PrimMST.gif">
+<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_PrimMST.gif">
 
 - [Reverse-Delete, base algorithm](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteMST.java)
 
@@ -101,7 +101,7 @@ Implemented maze generation algorithms:
 
   - [Reverse-Delete, Hill Climbing variant](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteMST_HillClimbing.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_ReverseDeleteMST.gif">
+<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_ReverseDeleteMST.gif">
 
 ### Uniform Spanning Tree:
 - [Aldous-Broder](EasyMaze/src/de/amr/easy/maze/alg/ust/AldousBroderUST.java)
@@ -110,44 +110,44 @@ Implemented maze generation algorithms:
 
 - [Wilson's algorithm](EasyMaze/src/de/amr/easy/maze/alg/ust) (16 different variants)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_WilsonUSTRandomCell.gif">
+<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_WilsonUSTRandomCell.gif">
 
 ### Other algorithms:
 - [Binary Tree, top-to-bottom](EasyMaze/src/de/amr/easy/maze/alg/BinaryTree.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_BinaryTree.gif">
+<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_BinaryTree.gif">
 
 - [Binary Tree, random](EasyMaze/src/de/amr/easy/maze/alg/BinaryTreeRandom.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_BinaryTreeRandom.gif">
+<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_BinaryTreeRandom.gif">
 
 - [Eller's algorithm](EasyMaze/src/de/amr/easy/maze/alg/Eller.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_Eller.gif">
+<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_Eller.gif">
 
 - [Armin's algorithm](EasyMaze/src/de/amr/easy/maze/alg/EllerInsideOut.java) (like Eller's but growing the maze inside-out)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_EllerInsideOut.gif">
+<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_EllerInsideOut.gif">
 
 - [Sidewinder](EasyMaze/src/de/amr/easy/maze/alg/Sidewinder.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_Sidewinder.gif">
+<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_Sidewinder.gif">
 
 - [Growing Tree](EasyMaze/src/de/amr/easy/maze/alg/GrowingTree.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_GrowingTree.gif">
+<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_GrowingTree.gif">
 
 - [Hunt-And-Kill, top-to-bottom](EasyMaze/src/de/amr/easy/maze/alg/HuntAndKill.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_HuntAndKill.gif">
+<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_HuntAndKill.gif">
 
 - [Hunt-And-Kill, random](EasyMaze/src/de/amr/easy/maze/alg/HuntAndKillRandom.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_HuntAndKillRandom.gif">
+<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_HuntAndKillRandom.gif">
 
 - [Recursive division](EasyMaze/src/de/amr/easy/maze/alg/RecursiveDivision.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/maze_40x25_RecursiveDivision.gif">
+<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_RecursiveDivision.gif">
 
 ### Path finding algorithms:
 The [EasyGraph](EasyGraph) library contains the following path finder implementations:
