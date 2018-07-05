@@ -3,23 +3,24 @@ package de.amr.easy.graph.impl;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.amr.easy.data.UnorderedPair;
 import de.amr.easy.graph.api.EdgeLabels;
 
 public class EdgeLabelsMap<E> implements EdgeLabels<E> {
 
 	private E defaultLabel;
 
-	private Map<TwoSet, E> labels = new HashMap<>();
+	private Map<UnorderedPair<Integer>, E> labels = new HashMap<>();
 
 	@Override
 	public E getEdgeLabel(int u, int v) {
-		TwoSet edge = TwoSet.of(u, v);
+		UnorderedPair<Integer> edge = UnorderedPair.of(u, v);
 		return labels.containsKey(edge) ? labels.get(edge) : defaultLabel;
 	}
 
 	@Override
 	public void setEdgeLabel(int u, int v, E e) {
-		labels.put(TwoSet.of(u, v), e);
+		labels.put(UnorderedPair.of(u, v), e);
 	}
 
 	@Override
