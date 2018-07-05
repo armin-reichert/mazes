@@ -76,51 +76,51 @@ public class WallPassageGridRenderer extends ConfigurableGridRenderer {
 				break;
 			}
 		} else if (grid.getTopology() == Top8.get()) {
-			int diagonal = (int) round(longside * sqrt(2));
-			Stroke stroke = new BasicStroke(shortside / 2);
-			g.setStroke(stroke);
-			switch (dir) {
-			case Top8.E:
-				g.translate(centerX - shortside / 2, centerY - shortside / 2);
-				g.fillRect(0, 0, longside, shortside);
-				g.translate(-centerX + shortside / 2, -centerY + shortside / 2);
-				break;
-			case Top8.N:
-				g.translate(centerX - shortside / 2, centerY - getCellSize() / 2);
-				g.fillRect(0, 0, shortside, longside);
-				g.translate(-centerX + shortside / 2, -centerY + getCellSize() / 2);
-				break;
-			case Top8.NE:
-				g.translate(centerX, centerY);
-				g.drawLine(0, 0, diagonal, -diagonal);
-				g.translate(-centerX, -centerY);
-				break;
-			case Top8.NW:
-				g.translate(centerX, centerY);
-				g.drawLine(0, 0, -diagonal, -diagonal);
-				g.translate(-centerX, -centerY);
-				break;
-			case Top8.S:
-				g.translate(centerX - shortside / 2, centerY - shortside / 2);
-				g.fillRect(0, 0, shortside, longside);
-				g.translate(-centerX + shortside / 2, -centerY + shortside / 2);
-				break;
-			case Top8.SE:
-				g.translate(centerX, centerY);
-				g.drawLine(0, 0, diagonal, diagonal);
-				g.translate(-centerX, -centerY);
-				break;
-			case Top8.SW:
-				g.translate(centerX, centerY);
-				g.drawLine(0, 0, -diagonal, diagonal);
-				g.translate(-centerX, -centerY);
-				break;
-			case Top8.W:
-				g.translate(centerX - getCellSize() / 2, centerY - shortside / 2);
-				g.fillRect(0, 0, longside, shortside);
-				g.translate(-centerX + getCellSize() / 2, -centerY + shortside / 2);
-				break;
-			}
+//			int diagonal = (int) round(longside * sqrt(2));
+//			Stroke stroke = new BasicStroke(shortside / 2);
+//			g.setStroke(stroke);
+//			switch (dir) {
+//			case Top8.E:
+//				g.translate(centerX - shortside / 2, centerY - shortside / 2);
+//				g.fillRect(0, 0, longside, shortside);
+//				g.translate(-centerX + shortside / 2, -centerY + shortside / 2);
+//				break;
+//			case Top8.N:
+//				g.translate(centerX - shortside / 2, centerY - getCellSize() / 2);
+//				g.fillRect(0, 0, shortside, longside);
+//				g.translate(-centerX + shortside / 2, -centerY + getCellSize() / 2);
+//				break;
+//			case Top8.NE:
+//				g.translate(centerX, centerY);
+//				g.drawLine(0, 0, diagonal, -diagonal);
+//				g.translate(-centerX, -centerY);
+//				break;
+//			case Top8.NW:
+//				g.translate(centerX, centerY);
+//				g.drawLine(0, 0, -diagonal, -diagonal);
+//				g.translate(-centerX, -centerY);
+//				break;
+//			case Top8.S:
+//				g.translate(centerX - shortside / 2, centerY - shortside / 2);
+//				g.fillRect(0, 0, shortside, longside);
+//				g.translate(-centerX + shortside / 2, -centerY + shortside / 2);
+//				break;
+//			case Top8.SE:
+//				g.translate(centerX, centerY);
+//				g.drawLine(0, 0, diagonal, diagonal);
+//				g.translate(-centerX, -centerY);
+//				break;
+//			case Top8.SW:
+//				g.translate(centerX, centerY);
+//				g.drawLine(0, 0, -diagonal, diagonal);
+//				g.translate(-centerX, -centerY);
+//				break;
+//			case Top8.W:
+//				g.translate(centerX - getCellSize() / 2, centerY - shortside / 2);
+//				g.fillRect(0, 0, longside, shortside);
+//				g.translate(-centerX + getCellSize() / 2, -centerY + shortside / 2);
+//				break;
+//			}
 		}
 		drawCellContent(g, grid, cell);
 	}

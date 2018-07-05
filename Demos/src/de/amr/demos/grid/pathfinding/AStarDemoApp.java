@@ -1,4 +1,4 @@
-package de.amr.demos.grid;
+package de.amr.demos.grid.pathfinding;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static java.lang.Math.min;
@@ -16,6 +16,7 @@ import java.awt.event.MouseMotionAdapter;
 import java.util.BitSet;
 import java.util.List;
 import java.util.function.BiFunction;
+import java.util.stream.Stream;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -32,7 +33,7 @@ import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.graph.impl.traversal.AStarTraversal;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.ObservableGridGraph;
-import de.amr.easy.grid.impl.Top4;
+import de.amr.easy.grid.impl.Top8;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.GridCanvas;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
@@ -66,7 +67,7 @@ public class AStarDemoApp {
 	private BiFunction<Integer, Integer, Integer> fnDist;
 
 	// UI
-	private int current;
+	private int draggedCell;
 	private int popupCell;
 	private int cellSize;
 	private JFrame window;
@@ -112,7 +113,7 @@ public class AStarDemoApp {
 		}
 	};
 
-	private Action actionClearScene = new AbstractAction("Clear Scene") {
+	private Action actionResetScene = new AbstractAction("Reset Scene") {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -123,11 +124,26 @@ public class AStarDemoApp {
 
 	public AStarDemoApp(int numCols, int numRows, int cellSize) {
 		this.cellSize = cellSize;
-		grid = new ObservableGridGraph<>(numCols, numRows, Top4.get(), UNVISITED, 1, SimpleEdge::new);
+		grid = new ObservableGridGraph<>(numCols, numRows, Top8.get(), UNVISITED, 10, SimpleEdge::new);
 		grid.fill();
+		grid.vertices().forEach(cell -> {
+			Stream.of(Top8.NE, Top8.NW, Top8.SE, Top8.SW).forEach(dir -> {
+				grid.neighbor(cell, dir).ifPresent(neighbor -> {
+					grid.edge(cell, neighbor).ifPresent(edge -> {
+						grid.setEdgeLabel(cell, neighbor, 14);
+						System.out.println(String.format("set %d->%d (%d)", cell, neighbor, 14));
+					});
+				});
+			});
+		});
+		grid.edges().forEach(edge -> {
+			int u = edge.either(), v = edge.other();
+			System.out.println(String.format("%d->%d (%d)", u, v, grid.getEdgeLabel(u, v)));
+		});
 		source = grid.cell(GridPosition.TOP_LEFT);
 		target = grid.cell(GridPosition.BOTTOM_RIGHT);
-		current = -1;
+		popupCell = -1;
+		draggedCell = -1;
 		solution = new BitSet();
 		fnDist = fnEuclidean;
 		createUI();
@@ -154,7 +170,7 @@ public class AStarDemoApp {
 		popupMenu.add(actionSetSource);
 		popupMenu.add(actionSetTarget);
 		popupMenu.addSeparator();
-		popupMenu.add(actionClearScene);
+		popupMenu.add(actionResetScene);
 		popupMenu.addSeparator();
 		ButtonGroup bg = new ButtonGroup();
 		JRadioButtonMenuItem rbEuclidean = new JRadioButtonMenuItem(actionSelectEuclidean);
@@ -224,26 +240,26 @@ public class AStarDemoApp {
 		canvas.addMouseListener(new MouseAdapter() {
 
 			@Override
-			public void mousePressed(MouseEvent mouse) {
-				current = cellAt(mouse.getX(), mouse.getY());
+			public void mouseClicked(MouseEvent mouse) {
+				int clickedCell = cellAt(mouse.getX(), mouse.getY());
 				if (mouse.getButton() == MouseEvent.BUTTON1) {
 					if (mouse.isShiftDown()) {
-						unblock(current);
+						unblock(clickedCell, AStarDemoApp.this::updatePath);
 					} else {
-						block(current);
+						block(clickedCell, AStarDemoApp.this::updatePath);
 					}
-					updatePath();
 				}
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent mouse) {
-				current = -1;
-				if (mouse.isPopupTrigger()) {
+				if (draggedCell != -1) {
+					// dragging ends
+					draggedCell = -1;
+					updatePath();
+				} else if (mouse.isPopupTrigger()) {
 					popupCell = cellAt(mouse.getX(), mouse.getY());
 					popupMenu.show(canvas, mouse.getX(), mouse.getY());
-				} else {
-					updatePath();
 				}
 			}
 		});
@@ -253,14 +269,14 @@ public class AStarDemoApp {
 			@Override
 			public void mouseDragged(MouseEvent mouse) {
 				int cell = cellAt(mouse.getX(), mouse.getY());
-				if (cell != current) {
-					current = cell;
+				if (cell != draggedCell) {
+					// dragging into new cell
+					draggedCell = cell;
 					if (mouse.isShiftDown()) {
-						unblock(cell);
+						unblock(cell, AStarDemoApp.this::updatePath);
 					} else {
-						block(cell);
+						block(cell, AStarDemoApp.this::updatePath);
 					}
-					updatePath();
 				}
 			}
 		});
@@ -320,13 +336,24 @@ public class AStarDemoApp {
 	}
 
 	private void block(int cell) {
+		block(cell, () -> {
+		});
+	}
+
+	private void block(int cell, Runnable callback) {
 		if (cell == source || cell == target || isBlocked(cell)) {
 			return;
 		}
 		grid.neighbors(cell).forEach(neighbor -> grid.removeEdge(cell, neighbor));
+		callback.run();
 	}
 
 	private void unblock(int cell) {
+		unblock(cell, () -> {
+		});
+	}
+
+	private void unblock(int cell, Runnable callback) {
 		if (!isBlocked(cell)) {
 			return;
 		}
@@ -337,6 +364,7 @@ public class AStarDemoApp {
 		if (isBlocked(target)) {
 			connectWithNeighbors(target);
 		}
+		callback.run();
 	}
 
 	private void connectWithNeighbors(int cell) {
