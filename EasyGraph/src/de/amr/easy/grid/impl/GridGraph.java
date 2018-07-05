@@ -78,13 +78,13 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 	}
 
 	@Override
-	public E getDefaultEdgeLabel() {
-		return edgeLabels.getDefaultEdgeLabel();
+	public E getDefaultEdgeLabel(int u, int v) {
+		return edgeLabels.getDefaultEdgeLabel(u, v);
 	}
 
 	@Override
-	public void setDefaultEdgeLabel(E e) {
-		edgeLabels.setDefaultEdgeLabel(e);
+	public void setDefaultEdgeLabel(BiFunction<Integer, Integer, E> fnDefaultLabel) {
+		edgeLabels.setDefaultEdgeLabel(fnDefaultLabel);
 	}
 
 	@Override
@@ -140,8 +140,8 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 	 * @param fnEdgeFactory
 	 *          function for creating edges of the correct type
 	 */
-	public GridGraph(int numCols, int numRows, Topology top, V defaultVertexLabel, E defaultEdgeLabel,
-			BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory) {
+	public GridGraph(int numCols, int numRows, Topology top, V defaultVertexLabel,
+			BiFunction<Integer, Integer, E> fnDefaultEdgeLabel, BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory) {
 		if (numCols < 0) {
 			throw new IllegalArgumentException("Illegal number of columns: " + numCols);
 		}
@@ -161,11 +161,8 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 		this.bits = new BitSet(top.dirCount() * numCells);
 		this.fnEdgeFactory = fnEdgeFactory;
 
-		vertexLabels = new VertexLabelsMap<>();
-		vertexLabels.setDefaultVertexLabel(defaultVertexLabel);
-
-		edgeLabels = new EdgeLabelsMap<>();
-		edgeLabels.setDefaultEdgeLabel(defaultEdgeLabel);
+		vertexLabels = new VertexLabelsMap<>(defaultVertexLabel);
+		edgeLabels = new EdgeLabelsMap<>(fnDefaultEdgeLabel);
 	}
 
 	// Implement {@link Graph} interface

@@ -24,7 +24,7 @@ public class OrthogonalGrid extends ObservableGridGraph<TraversalState, Integer>
 	}
 
 	private OrthogonalGrid(int numCols, int numRows, TraversalState defaultState) {
-		super(numCols, numRows, Top4.get(), defaultState, 1, SimpleEdge::new);
+		super(numCols, numRows, Top4.get(), defaultState, (u, v) -> 1, SimpleEdge::new);
 	}
 
 	public boolean isUnvisited(int v) {

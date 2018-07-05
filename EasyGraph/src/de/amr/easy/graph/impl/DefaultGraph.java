@@ -28,7 +28,7 @@ import de.amr.easy.graph.api.VertexLabels;
  */
 public class DefaultGraph<V, E> implements Graph<V, E> {
 
-	protected final VertexLabels<V> vertexLabels = new VertexLabelsMap<>();
+	protected final VertexLabels<V> vertexLabels = new VertexLabelsMap<>(null);
 	protected final BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory;
 	protected final Set<Integer> vertexSet = new HashSet<>();
 	protected final Map<Integer, Set<Edge<E>>> adjEdges = new HashMap<>();
@@ -86,13 +86,13 @@ public class DefaultGraph<V, E> implements Graph<V, E> {
 	}
 
 	@Override
-	public void setDefaultEdgeLabel(E edge) {
+	public void setDefaultEdgeLabel(BiFunction<Integer, Integer, E> fnDefaultLabel) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public E getDefaultEdgeLabel() {
+	public E getDefaultEdgeLabel(int u, int v) {
 		// TODO Auto-generated method stub
 		return null;
 	}

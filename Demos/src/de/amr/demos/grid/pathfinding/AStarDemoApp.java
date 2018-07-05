@@ -1,6 +1,10 @@
 package de.amr.demos.grid.pathfinding;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
+import static de.amr.easy.grid.impl.Top8.NE;
+import static de.amr.easy.grid.impl.Top8.NW;
+import static de.amr.easy.grid.impl.Top8.SE;
+import static de.amr.easy.grid.impl.Top8.SW;
 import static java.lang.Math.min;
 import static java.lang.Math.round;
 import static java.lang.Math.sqrt;
@@ -123,23 +127,17 @@ public class AStarDemoApp {
 	};
 
 	public AStarDemoApp(int numCols, int numRows, int cellSize) {
-		this.cellSize = cellSize;
-		grid = new ObservableGridGraph<>(numCols, numRows, Top8.get(), UNVISITED, 10, SimpleEdge::new);
+		grid = new ObservableGridGraph<>(numCols, numRows, Top8.get(), UNVISITED, (u, v) -> 1, SimpleEdge::new);
 		grid.fill();
-		grid.vertices().forEach(cell -> {
-			Stream.of(Top8.NE, Top8.NW, Top8.SE, Top8.SW).forEach(dir -> {
-				grid.neighbor(cell, dir).ifPresent(neighbor -> {
-					grid.edge(cell, neighbor).ifPresent(edge -> {
-						grid.setEdgeLabel(cell, neighbor, 14);
-						System.out.println(String.format("set %d->%d (%d)", cell, neighbor, 14));
-					});
-				});
-			});
+		grid.setDefaultEdgeLabel((u, v) -> {
+			int direction = grid.direction(u, v).getAsInt();
+			return Stream.of(NE, NW, SE, SW).anyMatch(d -> d == direction) ? 14 : 10;
 		});
 		grid.edges().forEach(edge -> {
 			int u = edge.either(), v = edge.other();
 			System.out.println(String.format("%d->%d (%d)", u, v, grid.getEdgeLabel(u, v)));
 		});
+		this.cellSize = cellSize;
 		source = grid.cell(GridPosition.TOP_LEFT);
 		target = grid.cell(GridPosition.BOTTOM_RIGHT);
 		popupCell = -1;

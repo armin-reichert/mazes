@@ -27,9 +27,9 @@ public class ObservableGridGraph<V, E> extends GridGraph<V, E> implements Observ
 	private final Set<GraphObserver<V, E>> observers;
 	private boolean eventsEnabled;
 
-	public ObservableGridGraph(int numCols, int numRows, Topology top, V v, E e,
-			BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory) {
-		super(numCols, numRows, top, v, e, fnEdgeFactory);
+	public ObservableGridGraph(int numCols, int numRows, Topology top, V v,
+			BiFunction<Integer, Integer, E> fnDefaultEdgeLabel, BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory) {
+		super(numCols, numRows, top, v, fnDefaultEdgeLabel, fnEdgeFactory);
 		observers = new HashSet<>();
 		eventsEnabled = true;
 	}

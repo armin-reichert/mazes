@@ -231,7 +231,8 @@ public abstract class SwingGridSampleApp implements Runnable {
 	}
 
 	public void setGridTopology(Topology topology) {
-		setGrid(new ObservableGridGraph<>(grid.numCols(), grid.numRows(), topology, UNVISITED, 1, SimpleEdge::new));
+		setGrid(
+				new ObservableGridGraph<>(grid.numCols(), grid.numRows(), topology, UNVISITED, (u, v) -> 1, SimpleEdge::new));
 	}
 
 	public int getCellSize() {

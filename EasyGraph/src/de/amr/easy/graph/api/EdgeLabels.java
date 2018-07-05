@@ -1,5 +1,7 @@
 package de.amr.easy.graph.api;
 
+import java.util.function.BiFunction;
+
 public interface EdgeLabels<E> {
 
 	/**
@@ -33,13 +35,13 @@ public interface EdgeLabels<E> {
 	/**
 	 * Sets the default edge label.
 	 * 
-	 * @param e
-	 *          the default edge label
+	 * @param fnDefaultLabel
+	 *          function providing the default edge label
 	 */
-	void setDefaultEdgeLabel(E e);
+	void setDefaultEdgeLabel(BiFunction<Integer, Integer, E> fnDefaultLabel);
 
 	/**
 	 * @return the default edge label of the graph
 	 */
-	E getDefaultEdgeLabel();
+	E getDefaultEdgeLabel(int u, int v);
 }

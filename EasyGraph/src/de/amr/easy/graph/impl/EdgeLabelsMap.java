@@ -2,20 +2,25 @@ package de.amr.easy.graph.impl;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiFunction;
 
 import de.amr.easy.data.UnorderedPair;
 import de.amr.easy.graph.api.EdgeLabels;
 
 public class EdgeLabelsMap<E> implements EdgeLabels<E> {
 
-	private E defaultLabel;
+	private BiFunction<Integer, Integer, E> fnDefaultLabel;
 
 	private Map<UnorderedPair<Integer>, E> labels = new HashMap<>();
+
+	public EdgeLabelsMap(BiFunction<Integer, Integer, E> fnDefaultLabel) {
+		this.fnDefaultLabel = fnDefaultLabel;
+	}
 
 	@Override
 	public E getEdgeLabel(int u, int v) {
 		UnorderedPair<Integer> edge = UnorderedPair.of(u, v);
-		return labels.containsKey(edge) ? labels.get(edge) : defaultLabel;
+		return labels.containsKey(edge) ? labels.get(edge) : fnDefaultLabel.apply(u, v);
 	}
 
 	@Override
@@ -29,12 +34,12 @@ public class EdgeLabelsMap<E> implements EdgeLabels<E> {
 	}
 
 	@Override
-	public void setDefaultEdgeLabel(E label) {
-		defaultLabel = label;
+	public void setDefaultEdgeLabel(BiFunction<Integer, Integer, E> fnDefaultLabel) {
+		this.fnDefaultLabel = fnDefaultLabel;
 	}
 
 	@Override
-	public E getDefaultEdgeLabel() {
-		return defaultLabel;
+	public E getDefaultEdgeLabel(int u, int v) {
+		return fnDefaultLabel.apply(u, v);
 	}
 }

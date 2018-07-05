@@ -18,6 +18,10 @@ public class VertexLabelsMap<V> implements VertexLabels<V> {
 	private final Map<Integer, V> labels = new HashMap<>();
 	private V defaultLabel;
 
+	public VertexLabelsMap(V defaultLabel) {
+		this.defaultLabel = defaultLabel;
+	}
+
 	@Override
 	public V get(int v) {
 		return labels.containsKey(v) ? labels.get(v) : defaultLabel;
