@@ -199,7 +199,7 @@ public class AStarDemoApp {
 			}
 			if (astar != null) {
 				if (astar.getState(cell) == AStarTraversal.CLOSED) {
-					return new Color(200, 200, 200);
+					return new Color(220, 220, 220);
 				}
 				if (astar.getState(cell) == AStarTraversal.OPEN) {
 					return new Color(240, 240, 240);
@@ -226,7 +226,7 @@ public class AStarDemoApp {
 			if (cell == source || cell == target) {
 				return Color.WHITE;
 			}
-			return Color.GRAY;
+			return Color.BLUE;
 
 		};
 		r.fnTextFont = () -> new Font("Arial Narrow", Font.PLAIN, cellSize / 4);
