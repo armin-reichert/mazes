@@ -7,7 +7,6 @@ import java.util.OptionalInt;
 import java.util.stream.IntStream;
 
 import de.amr.easy.graph.api.Graph;
-import de.amr.easy.graph.api.VertexLabels;
 
 /**
  * Interface for 2D grid graph.
@@ -19,7 +18,7 @@ import de.amr.easy.graph.api.VertexLabels;
  * 
  * @author Armin Reichert
  */
-public interface GridGraph2D<V, E> extends Graph<V, E>, VertexLabels<V> {
+public interface GridGraph2D<V, E> extends Graph<V, E> {
 
 	/**
 	 * @return the number of columns (width) of the grid

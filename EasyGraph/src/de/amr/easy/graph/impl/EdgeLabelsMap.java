@@ -4,14 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiFunction;
 
-import de.amr.easy.data.UnorderedPair;
+import de.amr.easy.data.TwoSet;
 import de.amr.easy.graph.api.EdgeLabels;
 
 public class EdgeLabelsMap<E> implements EdgeLabels<E> {
 
 	private BiFunction<Integer, Integer, E> fnDefaultLabel;
 
-	private Map<UnorderedPair<Integer>, E> labels = new HashMap<>();
+	private Map<TwoSet<Integer>, E> labels = new HashMap<>();
 
 	public EdgeLabelsMap(BiFunction<Integer, Integer, E> fnDefaultLabel) {
 		this.fnDefaultLabel = fnDefaultLabel;
@@ -19,13 +19,13 @@ public class EdgeLabelsMap<E> implements EdgeLabels<E> {
 
 	@Override
 	public E getEdgeLabel(int u, int v) {
-		UnorderedPair<Integer> edge = UnorderedPair.of(u, v);
+		TwoSet<Integer> edge = TwoSet.of(u, v);
 		return labels.containsKey(edge) ? labels.get(edge) : fnDefaultLabel.apply(u, v);
 	}
 
 	@Override
 	public void setEdgeLabel(int u, int v, E e) {
-		labels.put(UnorderedPair.of(u, v), e);
+		labels.put(TwoSet.of(u, v), e);
 	}
 
 	@Override

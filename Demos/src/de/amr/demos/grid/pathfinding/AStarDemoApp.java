@@ -16,7 +16,6 @@ import java.awt.event.MouseMotionAdapter;
 import java.util.BitSet;
 import java.util.List;
 import java.util.function.BiFunction;
-import java.util.stream.Stream;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -63,8 +62,8 @@ public class AStarDemoApp {
 	private GridGraph<Void, Integer> grid;
 	private AStarTraversal<Void> astar;
 	private BitSet solution;
-	private BiFunction<Integer, Integer, Integer> fnEuclidean = (u, v) -> (int) round(sqrt(grid.euclidean2(u, v)));
-	private BiFunction<Integer, Integer, Integer> fnManhattan = (u, v) -> grid.manhattan(u, v);
+	private BiFunction<Integer, Integer, Integer> fnEuclidean;
+	private BiFunction<Integer, Integer, Integer> fnManhattan;
 	private BiFunction<Integer, Integer, Integer> fnDist;
 
 	// UI
@@ -125,18 +124,19 @@ public class AStarDemoApp {
 
 	public AStarDemoApp(int numCols, int numRows, int cellSize) {
 		grid = new ObservableGridGraph<>(numCols, numRows, Top8.get(), UNVISITED, (u, v) -> 1, SimpleEdge::new);
+		fnManhattan = grid::manhattan;
+		fnEuclidean = (u, v) -> (int) round(10 * sqrt(grid.euclidean2(u, v)));
+		grid.setDefaultEdgeLabel(fnEuclidean);
 		grid.fill();
-		grid.setDefaultEdgeLabel((u, v) -> {
-			int direction = grid.direction(u, v).getAsInt();
-			return Stream.of(Top8.NE, Top8.NW, Top8.SE, Top8.SW).anyMatch(d -> d == direction) ? 14 : 10;
-		});
+		grid.edges().forEach(edge -> System.out.println(
+				String.format("(%d->%d,%d)", edge.either(), edge.other(), grid.getEdgeLabel(edge.either(), edge.other()))));
 		this.cellSize = cellSize;
 		source = grid.cell(GridPosition.TOP_LEFT);
 		target = grid.cell(GridPosition.BOTTOM_RIGHT);
 		popupCell = -1;
 		draggedCell = -1;
 		solution = new BitSet();
-		fnDist = fnEuclidean;
+		fnDist = grid::manhattan;
 		createUI();
 		updatePath();
 	}
@@ -190,10 +190,10 @@ public class AStarDemoApp {
 			}
 			if (astar != null) {
 				if (astar.getState(cell) == AStarTraversal.CLOSED) {
-					return new Color(220, 220, 220);
+					return Color.GRAY.brighter();
 				}
 				if (astar.getState(cell) == AStarTraversal.OPEN) {
-					return new Color(240, 240, 240);
+					return Color.YELLOW.brighter();
 				}
 			}
 			return Color.WHITE;
@@ -284,15 +284,11 @@ public class AStarDemoApp {
 	}
 
 	private void selectEuclidean() {
-		if (fnDist != fnEuclidean) {
-			fnDist = fnEuclidean;
-		}
+		fnDist = fnEuclidean;
 	}
 
 	private void selectManhattan() {
-		if (fnDist != fnManhattan) {
-			fnDist = fnManhattan;
-		}
+		fnDist = fnManhattan;
 	}
 
 	private void computePath() {

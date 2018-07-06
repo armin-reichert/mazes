@@ -1,19 +1,31 @@
 package de.amr.easy.data.tests;
 
-import org.junit.Assert;
+import static org.junit.Assert.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
 
-import de.amr.easy.data.UnorderedPair;
+import de.amr.easy.data.TwoSet;
 
 public class TwoSetTests {
 
 	@Test
 	public void testEquals() {
-		UnorderedPair<Integer> one = UnorderedPair.of(1, 2);
-		UnorderedPair<Integer> two = UnorderedPair.of(2, 1);
-		Assert.assertEquals(one, two);
-		UnorderedPair<Integer> three = UnorderedPair.of(1, 2);
-		Assert.assertEquals(one, three);
-		Assert.assertEquals(two, three);
+		TwoSet<Integer> one = TwoSet.of(1, 2);
+		TwoSet<Integer> two = TwoSet.of(2, 1);
+		TwoSet<Integer> three = TwoSet.of(1, 3);
+		assertEquals(one, two);
+		assertNotEquals(one, three);
+	}
+	
+	@Test
+	public void testMapAccess() {
+		Map<TwoSet<Integer>, String> map = new HashMap<>();
+		TwoSet<Integer> one = TwoSet.of(1, 2);
+		TwoSet<Integer> two = TwoSet.of(2, 1);
+		map.put(one, "A");
+		assertEquals(map.get(one), map.get(two));
 	}
 }
