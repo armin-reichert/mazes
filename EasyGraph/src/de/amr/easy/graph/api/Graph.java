@@ -31,7 +31,7 @@ public interface Graph<V, E> extends VertexLabels<V>, EdgeLabels<E> {
 	/**
 	 * @return stream of the edges of this graph
 	 */
-	Stream<Edge<E>> edges();
+	Stream<Edge> edges();
 
 	/**
 	 * @return the number of edges of this graph
@@ -85,7 +85,7 @@ public interface Graph<V, E> extends VertexLabels<V>, EdgeLabels<E> {
 	 *          a vertex
 	 * @return the edge between the vertices if it exists
 	 */
-	Optional<Edge<E>> edge(int v, int w);
+	Optional<Edge> edge(int v, int w);
 
 	/**
 	 * Removes the edge between the given vertices from this graph.
@@ -101,7 +101,7 @@ public interface Graph<V, E> extends VertexLabels<V>, EdgeLabels<E> {
 	 * @param edge
 	 *          an edge
 	 */
-	default void removeEdge(Edge<E> edge) {
+	default void removeEdge(Edge edge) {
 		removeEdge(edge.either(), edge.other());
 	}
 

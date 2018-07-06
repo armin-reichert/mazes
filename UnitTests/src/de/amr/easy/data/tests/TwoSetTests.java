@@ -1,6 +1,7 @@
 package de.amr.easy.data.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class TwoSetTests {
 		assertEquals(one, two);
 		assertNotEquals(one, three);
 	}
-	
+
 	@Test
 	public void testMapAccess() {
 		Map<TwoSet<Integer>, String> map = new HashMap<>();

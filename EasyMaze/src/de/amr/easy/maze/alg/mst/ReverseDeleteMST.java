@@ -30,8 +30,8 @@ public abstract class ReverseDeleteMST implements MazeGenerator<OrthogonalGrid> 
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		Iterable<Edge<Integer>> edges = permute(grid.edges())::iterator;
-		for (Edge<Integer> edge : edges) {
+		Iterable<Edge> edges = permute(grid.edges())::iterator;
+		for (Edge edge : edges) {
 			if (grid.numEdges() == grid.numVertices() - 1) {
 				break;
 			}

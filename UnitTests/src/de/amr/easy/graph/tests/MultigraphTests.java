@@ -15,7 +15,7 @@ public class MultigraphTests {
 
 	@Test
 	public void testCreation() {
-		Multigraph<Void> g = new DefaultMultigraph<>();
+		Multigraph g = new DefaultMultigraph();
 		assertEquals(0, g.vertexCount());
 		assertEquals(0, g.edgeCount());
 		assertEquals(0, g.vertexStream().count());
@@ -24,7 +24,7 @@ public class MultigraphTests {
 
 	@Test
 	public void testAddSingleVertex() {
-		Multigraph<Void> g = new DefaultMultigraph<>();
+		Multigraph g = new DefaultMultigraph();
 		g.addVertex(42);
 		assertEquals(1, g.vertexCount());
 		assertTrue(g.vertexStream().findFirst().isPresent());
@@ -33,11 +33,11 @@ public class MultigraphTests {
 
 	@Test
 	public void testAddSingleEdge() {
-		Multigraph<Void> g = new DefaultMultigraph<>();
+		Multigraph g = new DefaultMultigraph();
 		g.addVertex(42);
 		g.addVertex(43);
 		assertEquals(2, g.vertexCount());
-		g.addEdge(new SimpleEdge<>(42, 43));
+		g.addEdge(new SimpleEdge(42, 43));
 		assertEquals(1, g.edgeCount());
 		assertTrue(g.adjacent(42, 43));
 		assertEquals(1, g.edges(42, 43).count());
@@ -45,28 +45,28 @@ public class MultigraphTests {
 
 	@Test
 	public void testTwoAdjacentVertices() {
-		Multigraph<Void> g = new DefaultMultigraph<>();
+		Multigraph g = new DefaultMultigraph();
 		g.addVertex(42);
 		g.addVertex(43);
 		assertEquals(2, g.vertexCount());
 		assertFalse(g.adjacent(42, 43));
-		g.addEdge(new SimpleEdge<>(42, 43));
+		g.addEdge(new SimpleEdge(42, 43));
 		assertEquals(1, g.edgeCount());
 		assertTrue(g.adjacent(42, 43));
 	}
 
 	@Test
 	public void testAdjacentVertices() {
-		Multigraph<Void> g = new DefaultMultigraph<>();
+		Multigraph g = new DefaultMultigraph();
 		g.addVertex(42);
 		g.addVertex(43);
 		g.addVertex(44);
 		assertEquals(3, g.vertexCount());
 		assertFalse(g.adjacent(42, 43));
-		g.addEdge(new SimpleEdge<>(42, 43));
+		g.addEdge(new SimpleEdge(42, 43));
 		assertEquals(1, g.edgeCount());
 		assertTrue(g.adjacent(42, 43));
-		g.addEdge(new SimpleEdge<>(42, 44));
+		g.addEdge(new SimpleEdge(42, 44));
 		assertEquals(2, g.edgeCount());
 		assertTrue(g.adjacent(42, 44));
 		assertEquals(2, g.degree(42));
@@ -76,33 +76,33 @@ public class MultigraphTests {
 
 	@Test
 	public void testDoubleEdge() {
-		Multigraph<Void> g = new DefaultMultigraph<>();
+		Multigraph g = new DefaultMultigraph();
 		g.addVertex(42);
 		g.addVertex(43);
 		assertEquals(2, g.vertexCount());
 		assertFalse(g.adjacent(42, 43));
-		g.addEdge(new SimpleEdge<>(42, 43));
+		g.addEdge(new SimpleEdge(42, 43));
 		assertEquals(1, g.edgeCount());
 		assertTrue(g.adjacent(42, 43));
-		g.addEdge(new SimpleEdge<>(42, 43));
+		g.addEdge(new SimpleEdge(42, 43));
 		assertEquals(2, g.edgeCount());
 	}
 
 	@Test
 	public void testRemoveEdge() {
-		Multigraph<Void> g = new DefaultMultigraph<>();
+		Multigraph g = new DefaultMultigraph();
 		g.addVertex(42);
 		g.addVertex(43);
 
 		assertEquals(0, g.degree(42));
 		assertEquals(0, g.degree(43));
 
-		g.addEdge(new SimpleEdge<>(42, 43));
+		g.addEdge(new SimpleEdge(42, 43));
 		assertTrue(g.adjacent(42, 43));
 		assertEquals(1, g.degree(42));
 		assertEquals(1, g.degree(43));
 
-		g.addEdge(new SimpleEdge<>(42, 43));
+		g.addEdge(new SimpleEdge(42, 43));
 		assertTrue(g.adjacent(42, 43));
 		assertEquals(2, g.degree(42));
 		assertEquals(2, g.degree(43));
@@ -120,12 +120,12 @@ public class MultigraphTests {
 
 	@Test
 	public void testRemoveEdges() {
-		Multigraph<Void> g = new DefaultMultigraph<>();
+		Multigraph g = new DefaultMultigraph();
 		g.addVertex(42);
 		g.addVertex(43);
-		g.addEdge(new SimpleEdge<>(42, 43));
-		g.addEdge(new SimpleEdge<>(42, 43));
-		g.addEdge(new SimpleEdge<>(42, 43));
+		g.addEdge(new SimpleEdge(42, 43));
+		g.addEdge(new SimpleEdge(42, 43));
+		g.addEdge(new SimpleEdge(42, 43));
 		g.removeEdges();
 		assertFalse(g.adjacent(42, 43));
 		assertEquals(0, g.degree(42));
@@ -134,7 +134,7 @@ public class MultigraphTests {
 
 	@Test
 	public void testDualOfGrid() {
-		Multigraph<SimpleEdge<Integer>> g = GraphUtils.dualGraphOfGrid(4, 3);
+		Multigraph g = GraphUtils.dualGraphOfGrid(4, 3);
 		assertEquals(7, g.vertexCount());
 		assertEquals(10, g.degree(-1));
 		assertTrue(g.adjacent(-1, 0));

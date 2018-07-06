@@ -29,7 +29,7 @@ public class LayeredGridCanvas<E> extends LayeredCanvas implements GraphObserver
 		Grid, Distances, Path
 	};
 
-	private final BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory;
+	private final BiFunction<Integer, Integer, Edge> fnEdgeFactory;
 
 	protected int cellSize;
 	protected boolean pathDisplayed;
@@ -39,7 +39,7 @@ public class LayeredGridCanvas<E> extends LayeredCanvas implements GraphObserver
 	protected int maxDistance;
 	protected Iterable<Integer> path;
 
-	public LayeredGridCanvas(int width, int height, int cellSize, BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory) {
+	public LayeredGridCanvas(int width, int height, int cellSize, BiFunction<Integer, Integer, Edge> fnEdgeFactory) {
 		super(width, height);
 		this.fnEdgeFactory = fnEdgeFactory;
 		this.cellSize = cellSize;

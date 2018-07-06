@@ -47,7 +47,7 @@ public class BoruvkaMST implements MazeGenerator<OrthogonalGrid> {
 		return grid;
 	}
 
-	private void combineTrees(Edge<?> edge) {
+	private void combineTrees(Edge edge) {
 		int u = edge.either(), v = edge.other();
 		if (forest.find(u) != forest.find(v)) {
 			grid.addEdge(u, v);
@@ -57,13 +57,13 @@ public class BoruvkaMST implements MazeGenerator<OrthogonalGrid> {
 		}
 	}
 
-	private Optional<Edge<?>> findCombiningEdge(Partition<Integer>.Set tree) {
+	private Optional<Edge> findCombiningEdge(Partition<Integer>.Set tree) {
 		return permute(tree.elements()).flatMap(this::inventCombiningEdges).findFirst();
 	}
 
-	private Stream<Edge<?>> inventCombiningEdges(int cell) {
+	private Stream<Edge> inventCombiningEdges(int cell) {
 		// invent edges combining different subtrees
 		return permute(grid.neighbors(cell).filter(neighbor -> forest.find(cell) != forest.find(neighbor))
-				.mapToObj(neighbor -> new SimpleEdge<>(cell, neighbor)));
+				.mapToObj(neighbor -> new SimpleEdge(cell, neighbor)));
 	}
 }

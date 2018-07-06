@@ -24,7 +24,7 @@ public class DefaultObservableGraph<V, E> extends DefaultGraph<V, E> implements 
 	private Set<GraphObserver<V, E>> observers = new HashSet<>();
 	private boolean eventsEnabled;
 
-	public DefaultObservableGraph(BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory) {
+	public DefaultObservableGraph(BiFunction<Integer, Integer, Edge> fnEdgeFactory) {
 		super(fnEdgeFactory);
 		eventsEnabled = true;
 	}

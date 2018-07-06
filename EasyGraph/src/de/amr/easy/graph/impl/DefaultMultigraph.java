@@ -14,14 +14,11 @@ import de.amr.easy.graph.api.Multigraph;
  * Edge list based implementation of an undirected multigraph.
  * 
  * @author Armin Reichert
- * 
- * @param <E>
- *          edge label type
  */
-public class DefaultMultigraph<E> implements Multigraph<E> {
+public class DefaultMultigraph implements Multigraph {
 
 	private final Set<Integer> vertexSet = new HashSet<>();
-	private final List<Edge<E>> edgeList = new ArrayList<>();
+	private final List<Edge> edgeList = new ArrayList<>();
 
 	public DefaultMultigraph() {
 	}
@@ -32,7 +29,7 @@ public class DefaultMultigraph<E> implements Multigraph<E> {
 	}
 
 	@Override
-	public void addEdge(Edge<E> edge) {
+	public void addEdge(Edge edge) {
 		int u = edge.either(), v = edge.other();
 		assertVertexExists(u);
 		assertVertexExists(v);
@@ -40,7 +37,7 @@ public class DefaultMultigraph<E> implements Multigraph<E> {
 	}
 
 	@Override
-	public Stream<Edge<E>> edges(int v, int w) {
+	public Stream<Edge> edges(int v, int w) {
 		assertVertexExists(v);
 		assertVertexExists(w);
 		return edgeList.stream().filter(edge -> {
@@ -77,7 +74,7 @@ public class DefaultMultigraph<E> implements Multigraph<E> {
 	}
 
 	@Override
-	public Stream<Edge<E>> edgeStream() {
+	public Stream<Edge> edgeStream() {
 		return edgeList.stream();
 	}
 
@@ -115,7 +112,7 @@ public class DefaultMultigraph<E> implements Multigraph<E> {
 		for (int v : vertexSet) {
 			s.append(v).append("\n");
 		}
-		for (Edge<E> e : edgeList) {
+		for (Edge e : edgeList) {
 			s.append(e.either()).append(" ").append(e.other()).append("\n");
 		}
 		return s.toString();

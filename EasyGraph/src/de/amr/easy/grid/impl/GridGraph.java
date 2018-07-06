@@ -35,7 +35,7 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 	protected final int numCols;
 	protected final int numRows;
 	protected final int numCells;
-	protected final BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory;
+	protected final BiFunction<Integer, Integer, Edge> fnEdgeFactory;
 	protected Topology top;
 	protected BitSet bits;
 
@@ -141,7 +141,7 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 	 *          function for creating edges of the correct type
 	 */
 	public GridGraph(int numCols, int numRows, Topology top, V defaultVertexLabel,
-			BiFunction<Integer, Integer, E> fnDefaultEdgeLabel, BiFunction<Integer, Integer, Edge<E>> fnEdgeFactory) {
+			BiFunction<Integer, Integer, E> fnDefaultEdgeLabel, BiFunction<Integer, Integer, Edge> fnEdgeFactory) {
 		if (numCols < 0) {
 			throw new IllegalArgumentException("Illegal number of columns: " + numCols);
 		}
@@ -178,8 +178,8 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 	}
 
 	@Override
-	public Stream<Edge<E>> edges() {
-		List<Edge<E>> edgeList = new ArrayList<>();
+	public Stream<Edge> edges() {
+		List<Edge> edgeList = new ArrayList<>();
 		/*@formatter:off*/
 		vertices().forEach(cell -> {
 			top.dirs()
@@ -210,7 +210,7 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 	}
 
 	@Override
-	public Optional<Edge<E>> edge(int u, int v) {
+	public Optional<Edge> edge(int u, int v) {
 		checkCell(u);
 		checkCell(v);
 		return hasEdge(u, v) ? Optional.of(fnEdgeFactory.apply(u, v)) : Optional.empty();

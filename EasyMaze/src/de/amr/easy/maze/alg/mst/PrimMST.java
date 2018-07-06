@@ -7,7 +7,6 @@ import static de.amr.easy.maze.alg.core.OrthogonalGrid.emptyGrid;
 import java.util.PriorityQueue;
 import java.util.Random;
 
-import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.WeightedEdge;
 import de.amr.easy.maze.alg.core.MazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
@@ -41,7 +40,7 @@ public class PrimMST implements MazeGenerator<OrthogonalGrid> {
 		cut = new PriorityQueue<>();
 		expand(grid.cell(x, y));
 		while (!cut.isEmpty()) {
-			Edge<Integer> minEdge = cut.poll();
+			WeightedEdge<Integer> minEdge = cut.poll();
 			int u = minEdge.either(), v = minEdge.other();
 			if (grid.isUnvisited(u) || grid.isUnvisited(v)) {
 				grid.addEdge(u, v);

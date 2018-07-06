@@ -8,10 +8,8 @@ import java.util.stream.Stream;
  * 
  * @author Armin Reichert
  * 
- * @param <E>
- *          edge label type
  */
-public interface Multigraph<E> {
+public interface Multigraph {
 
 	/**
 	 * @return a stream of the vertices of this graph
@@ -26,7 +24,7 @@ public interface Multigraph<E> {
 	/**
 	 * @return a stream of the edges of this graph
 	 */
-	Stream<Edge<E>> edgeStream();
+	Stream<Edge> edgeStream();
 
 	/**
 	 * @return the number of edges of this graph
@@ -47,7 +45,7 @@ public interface Multigraph<E> {
 	 * @param edge
 	 *          an edge
 	 */
-	void addEdge(Edge<E> edge);
+	void addEdge(Edge edge);
 
 	/**
 	 * @param v
@@ -56,7 +54,7 @@ public interface Multigraph<E> {
 	 *          a vertex
 	 * @return the edges between the vertices if any
 	 */
-	Stream<Edge<E>> edges(int v, int w);
+	Stream<Edge> edges(int v, int w);
 
 	/**
 	 * Removes the edge between the given vertices.
