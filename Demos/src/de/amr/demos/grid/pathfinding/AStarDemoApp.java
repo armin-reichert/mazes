@@ -128,8 +128,9 @@ public class AStarDemoApp {
 		fnEuclidean = (u, v) -> (int) round(10 * sqrt(grid.euclidean2(u, v)));
 		grid.setDefaultEdgeLabel(fnEuclidean);
 		grid.fill();
-		grid.edges().forEach(edge -> System.out.println(
-				String.format("(%d->%d,%d)", edge.either(), edge.other(), grid.getEdgeLabel(edge.either(), edge.other()))));
+		// grid.edges().forEach(edge -> System.out.println(
+		// String.format("(%d->%d,%d)", edge.either(), edge.other(), grid.getEdgeLabel(edge.either(),
+		// edge.other()))));
 		this.cellSize = cellSize;
 		source = grid.cell(GridPosition.TOP_LEFT);
 		target = grid.cell(GridPosition.BOTTOM_RIGHT);
@@ -190,10 +191,10 @@ public class AStarDemoApp {
 			}
 			if (astar != null) {
 				if (astar.getState(cell) == AStarTraversal.CLOSED) {
-					return Color.GRAY.brighter();
+					return new Color(180, 180, 180);
 				}
 				if (astar.getState(cell) == AStarTraversal.OPEN) {
-					return Color.YELLOW.brighter();
+					return new Color(220, 220, 220);
 				}
 			}
 			return Color.WHITE;
