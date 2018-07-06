@@ -7,7 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.graph.api.SimpleEdge;
+import de.amr.easy.graph.api.UndirectedEdge;
 import de.amr.easy.grid.impl.GridGraph;
 import de.amr.easy.grid.impl.Top4;
 
@@ -17,7 +17,7 @@ public class EmptyGridTests {
 
 	@Before
 	public void setUp() {
-		grid = new GridGraph<>(0, 0, Top4.get(), null, (u, v) -> null, SimpleEdge::new);
+		grid = new GridGraph<>(0, 0, Top4.get(), null, (u, v) -> null, UndirectedEdge::new);
 	}
 
 	@After

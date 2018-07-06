@@ -3,10 +3,14 @@ package de.amr.easy.graph.tests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.graph.api.SimpleEdge;
+import de.amr.easy.graph.api.Edge;
+import de.amr.easy.graph.api.UndirectedEdge;
 import de.amr.easy.graph.impl.DefaultGraph;
 
 public class DefaultGraphTests {
@@ -15,7 +19,7 @@ public class DefaultGraphTests {
 
 	@Before
 	public void setUp() {
-		g = new DefaultGraph<>(SimpleEdge::new);
+		g = new DefaultGraph<>(UndirectedEdge::new);
 	}
 
 	@Test
@@ -47,6 +51,27 @@ public class DefaultGraphTests {
 	@Test(expected = IllegalStateException.class)
 	public void removeNonexistingVertex() {
 		g.removeVertex(42);
+	}
+
+	@Test
+	public void testUndirectedEdge() {
+		UndirectedEdge e1 = new UndirectedEdge(0, 1);
+		UndirectedEdge e2 = new UndirectedEdge(1, 0);
+		assertEquals(e1, e2);
+
+		g.addVertex(0);
+		g.addVertex(1);
+		g.addEdge(0, 1);
+		assertTrue(g.edge(0, 1).isPresent());
+		Edge e = g.edge(0, 1).get();
+		assertEquals(e1, e);
+		assertEquals(e2, e);
+
+		Map<Edge, Integer> edgeMap = new HashMap<>();
+		edgeMap.put(e1, 42);
+		assertTrue(edgeMap.get(e) == 42);
+		assertTrue(edgeMap.get(e1) == 42);
+		assertTrue(edgeMap.get(e2) == 42);
 	}
 
 }

@@ -14,16 +14,16 @@ import java.util.Iterator;
  */
 public class TwoSet<T> extends AbstractSet<T> {
 
-	private final T e1;
-	private final T e2;
-
-	private TwoSet(T e1, T e2) {
-		this.e1 = e1;
-		this.e2 = e2;
-	}
-
 	public static <T> TwoSet<T> of(T e1, T e2) {
 		return new TwoSet<>(e1, e2);
+	}
+
+	public final T e1;
+	public final T e2;
+
+	public TwoSet(T e1, T e2) {
+		this.e1 = e1;
+		this.e2 = e2;
 	}
 
 	@Override

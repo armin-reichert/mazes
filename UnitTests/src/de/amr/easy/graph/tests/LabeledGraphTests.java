@@ -9,7 +9,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.graph.api.SimpleEdge;
+import de.amr.easy.graph.api.UndirectedEdge;
 import de.amr.easy.graph.api.event.GraphTraversalObserver;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.graph.impl.DefaultGraph;
@@ -49,7 +49,7 @@ public class LabeledGraphTests {
 	private DefaultGraph<String, Integer> g;
 
 	private DefaultGraph<String, Integer> createSampleGraph() {
-		DefaultGraph<String, Integer> g = new DefaultGraph<>(SimpleEdge::new);
+		DefaultGraph<String, Integer> g = new DefaultGraph<>(UndirectedEdge::new);
 		IntStream.range(0, 8).forEach(g::addVertex);
 		g.set(0, "S");
 		g.set(1, "A");
@@ -73,7 +73,7 @@ public class LabeledGraphTests {
 
 	@Before
 	public void setUp() {
-		g = new DefaultGraph<>(SimpleEdge::new);
+		g = new DefaultGraph<>(UndirectedEdge::new);
 	}
 
 	@Test(expected = IllegalStateException.class)

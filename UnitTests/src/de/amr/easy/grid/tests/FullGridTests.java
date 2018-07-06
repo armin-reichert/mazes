@@ -11,7 +11,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.graph.api.SimpleEdge;
+import de.amr.easy.graph.api.UndirectedEdge;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.GridGraph;
 import de.amr.easy.grid.impl.Top4;
@@ -26,7 +26,7 @@ public class FullGridTests {
 
 	@Before
 	public void setUp() {
-		grid = new GridGraph<>(WIDTH, HEIGHT, Top4.get(), null, (u, v) -> null, SimpleEdge::new);
+		grid = new GridGraph<>(WIDTH, HEIGHT, Top4.get(), null, (u, v) -> null, UndirectedEdge::new);
 		grid.fill();
 	}
 
@@ -126,7 +126,7 @@ public class FullGridTests {
 
 	@Test
 	public void testFullGrid8() {
-		grid = new GridGraph<>(WIDTH, HEIGHT, Top8.get(), null, (u, v) -> null, SimpleEdge::new);
+		grid = new GridGraph<>(WIDTH, HEIGHT, Top8.get(), null, (u, v) -> null, UndirectedEdge::new);
 		grid.fill();
 		int c = grid.numCols(), r = grid.numRows();
 		assertEquals(4 * c * r - 3 * c - 3 * r + 2, grid.numEdges());

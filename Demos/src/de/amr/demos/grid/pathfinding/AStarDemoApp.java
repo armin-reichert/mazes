@@ -27,7 +27,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
-import de.amr.easy.graph.api.SimpleEdge;
+import de.amr.easy.graph.api.UndirectedEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.graph.impl.traversal.AStarTraversal;
 import de.amr.easy.grid.api.GridPosition;
@@ -123,7 +123,7 @@ public class AStarDemoApp {
 	};
 
 	public AStarDemoApp(int numCols, int numRows, int cellSize) {
-		grid = new ObservableGridGraph<>(numCols, numRows, Top8.get(), UNVISITED, (u, v) -> 1, SimpleEdge::new);
+		grid = new ObservableGridGraph<>(numCols, numRows, Top8.get(), UNVISITED, (u, v) -> 1, UndirectedEdge::new);
 		fnManhattan = grid::manhattan;
 		fnEuclidean = (u, v) -> (int) round(10 * sqrt(grid.euclidean2(u, v)));
 		grid.setDefaultEdgeLabel(fnEuclidean);

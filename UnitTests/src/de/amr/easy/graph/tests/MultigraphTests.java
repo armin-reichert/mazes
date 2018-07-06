@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import de.amr.easy.graph.api.Multigraph;
-import de.amr.easy.graph.api.SimpleEdge;
+import de.amr.easy.graph.api.UndirectedEdge;
 import de.amr.easy.graph.impl.DefaultMultigraph;
 import de.amr.easy.util.GraphUtils;
 
@@ -37,7 +37,7 @@ public class MultigraphTests {
 		g.addVertex(42);
 		g.addVertex(43);
 		assertEquals(2, g.vertexCount());
-		g.addEdge(new SimpleEdge(42, 43));
+		g.addEdge(new UndirectedEdge(42, 43));
 		assertEquals(1, g.edgeCount());
 		assertTrue(g.adjacent(42, 43));
 		assertEquals(1, g.edges(42, 43).count());
@@ -50,7 +50,7 @@ public class MultigraphTests {
 		g.addVertex(43);
 		assertEquals(2, g.vertexCount());
 		assertFalse(g.adjacent(42, 43));
-		g.addEdge(new SimpleEdge(42, 43));
+		g.addEdge(new UndirectedEdge(42, 43));
 		assertEquals(1, g.edgeCount());
 		assertTrue(g.adjacent(42, 43));
 	}
@@ -63,10 +63,10 @@ public class MultigraphTests {
 		g.addVertex(44);
 		assertEquals(3, g.vertexCount());
 		assertFalse(g.adjacent(42, 43));
-		g.addEdge(new SimpleEdge(42, 43));
+		g.addEdge(new UndirectedEdge(42, 43));
 		assertEquals(1, g.edgeCount());
 		assertTrue(g.adjacent(42, 43));
-		g.addEdge(new SimpleEdge(42, 44));
+		g.addEdge(new UndirectedEdge(42, 44));
 		assertEquals(2, g.edgeCount());
 		assertTrue(g.adjacent(42, 44));
 		assertEquals(2, g.degree(42));
@@ -81,10 +81,10 @@ public class MultigraphTests {
 		g.addVertex(43);
 		assertEquals(2, g.vertexCount());
 		assertFalse(g.adjacent(42, 43));
-		g.addEdge(new SimpleEdge(42, 43));
+		g.addEdge(new UndirectedEdge(42, 43));
 		assertEquals(1, g.edgeCount());
 		assertTrue(g.adjacent(42, 43));
-		g.addEdge(new SimpleEdge(42, 43));
+		g.addEdge(new UndirectedEdge(42, 43));
 		assertEquals(2, g.edgeCount());
 	}
 
@@ -97,12 +97,12 @@ public class MultigraphTests {
 		assertEquals(0, g.degree(42));
 		assertEquals(0, g.degree(43));
 
-		g.addEdge(new SimpleEdge(42, 43));
+		g.addEdge(new UndirectedEdge(42, 43));
 		assertTrue(g.adjacent(42, 43));
 		assertEquals(1, g.degree(42));
 		assertEquals(1, g.degree(43));
 
-		g.addEdge(new SimpleEdge(42, 43));
+		g.addEdge(new UndirectedEdge(42, 43));
 		assertTrue(g.adjacent(42, 43));
 		assertEquals(2, g.degree(42));
 		assertEquals(2, g.degree(43));
@@ -123,9 +123,9 @@ public class MultigraphTests {
 		Multigraph g = new DefaultMultigraph();
 		g.addVertex(42);
 		g.addVertex(43);
-		g.addEdge(new SimpleEdge(42, 43));
-		g.addEdge(new SimpleEdge(42, 43));
-		g.addEdge(new SimpleEdge(42, 43));
+		g.addEdge(new UndirectedEdge(42, 43));
+		g.addEdge(new UndirectedEdge(42, 43));
+		g.addEdge(new UndirectedEdge(42, 43));
 		g.removeEdges();
 		assertFalse(g.adjacent(42, 43));
 		assertEquals(0, g.degree(42));

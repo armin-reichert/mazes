@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 import de.amr.easy.data.Partition;
 import de.amr.easy.graph.api.Edge;
-import de.amr.easy.graph.api.SimpleEdge;
+import de.amr.easy.graph.api.UndirectedEdge;
 import de.amr.easy.maze.alg.core.MazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
@@ -64,6 +64,6 @@ public class BoruvkaMST implements MazeGenerator<OrthogonalGrid> {
 	private Stream<Edge> inventCombiningEdges(int cell) {
 		// invent edges combining different subtrees
 		return permute(grid.neighbors(cell).filter(neighbor -> forest.find(cell) != forest.find(neighbor))
-				.mapToObj(neighbor -> new SimpleEdge(cell, neighbor)));
+				.mapToObj(neighbor -> new UndirectedEdge(cell, neighbor)));
 	}
 }

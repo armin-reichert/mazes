@@ -1,6 +1,6 @@
 package de.amr.easy.maze.alg.core;
 
-import de.amr.easy.graph.api.SimpleEdge;
+import de.amr.easy.graph.api.UndirectedEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.impl.ObservableGridGraph;
 import de.amr.easy.grid.impl.Top4;
@@ -24,7 +24,7 @@ public class OrthogonalGrid extends ObservableGridGraph<TraversalState, Integer>
 	}
 
 	private OrthogonalGrid(int numCols, int numRows, TraversalState defaultState) {
-		super(numCols, numRows, Top4.get(), defaultState, (u, v) -> 1, SimpleEdge::new);
+		super(numCols, numRows, Top4.get(), defaultState, (u, v) -> 1, UndirectedEdge::new);
 	}
 
 	public boolean isUnvisited(int v) {

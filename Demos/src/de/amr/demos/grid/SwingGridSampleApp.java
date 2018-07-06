@@ -18,7 +18,7 @@ import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
-import de.amr.easy.graph.api.SimpleEdge;
+import de.amr.easy.graph.api.UndirectedEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.api.Topology;
 import de.amr.easy.grid.impl.ObservableGridGraph;
@@ -232,7 +232,7 @@ public abstract class SwingGridSampleApp implements Runnable {
 
 	public void setGridTopology(Topology topology) {
 		setGrid(
-				new ObservableGridGraph<>(grid.numCols(), grid.numRows(), topology, UNVISITED, (u, v) -> 1, SimpleEdge::new));
+				new ObservableGridGraph<>(grid.numCols(), grid.numRows(), topology, UNVISITED, (u, v) -> 1, UndirectedEdge::new));
 	}
 
 	public int getCellSize() {

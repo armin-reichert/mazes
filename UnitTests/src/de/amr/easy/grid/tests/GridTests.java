@@ -14,7 +14,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.graph.api.SimpleEdge;
+import de.amr.easy.graph.api.UndirectedEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.GridGraph;
@@ -38,7 +38,7 @@ public class GridTests {
 
 	@Before
 	public void setUp() {
-		grid = new ObservableGridGraph<>(WIDTH, HEIGHT, Top4.get(), UNVISITED, (u, v) -> 1, SimpleEdge::new);
+		grid = new ObservableGridGraph<>(WIDTH, HEIGHT, Top4.get(), UNVISITED, (u, v) -> 1, UndirectedEdge::new);
 	}
 
 	@After
