@@ -1,16 +1,12 @@
 package de.amr.easy.grid.ui.swing.rendering;
 
 import static java.lang.Math.ceil;
-import static java.lang.Math.round;
-import static java.lang.Math.sqrt;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.awt.Stroke;
 
 import de.amr.easy.grid.impl.GridGraph;
 import de.amr.easy.grid.impl.Top4;
@@ -76,51 +72,51 @@ public class WallPassageGridRenderer extends ConfigurableGridRenderer {
 				break;
 			}
 		} else if (grid.getTopology() == Top8.get()) {
-//			int diagonal = (int) round(longside * sqrt(2));
-//			Stroke stroke = new BasicStroke(shortside / 2);
-//			g.setStroke(stroke);
-//			switch (dir) {
-//			case Top8.E:
-//				g.translate(centerX - shortside / 2, centerY - shortside / 2);
-//				g.fillRect(0, 0, longside, shortside);
-//				g.translate(-centerX + shortside / 2, -centerY + shortside / 2);
-//				break;
-//			case Top8.N:
-//				g.translate(centerX - shortside / 2, centerY - getCellSize() / 2);
-//				g.fillRect(0, 0, shortside, longside);
-//				g.translate(-centerX + shortside / 2, -centerY + getCellSize() / 2);
-//				break;
-//			case Top8.NE:
-//				g.translate(centerX, centerY);
-//				g.drawLine(0, 0, diagonal, -diagonal);
-//				g.translate(-centerX, -centerY);
-//				break;
-//			case Top8.NW:
-//				g.translate(centerX, centerY);
-//				g.drawLine(0, 0, -diagonal, -diagonal);
-//				g.translate(-centerX, -centerY);
-//				break;
-//			case Top8.S:
-//				g.translate(centerX - shortside / 2, centerY - shortside / 2);
-//				g.fillRect(0, 0, shortside, longside);
-//				g.translate(-centerX + shortside / 2, -centerY + shortside / 2);
-//				break;
-//			case Top8.SE:
-//				g.translate(centerX, centerY);
-//				g.drawLine(0, 0, diagonal, diagonal);
-//				g.translate(-centerX, -centerY);
-//				break;
-//			case Top8.SW:
-//				g.translate(centerX, centerY);
-//				g.drawLine(0, 0, -diagonal, diagonal);
-//				g.translate(-centerX, -centerY);
-//				break;
-//			case Top8.W:
-//				g.translate(centerX - getCellSize() / 2, centerY - shortside / 2);
-//				g.fillRect(0, 0, longside, shortside);
-//				g.translate(-centerX + getCellSize() / 2, -centerY + shortside / 2);
-//				break;
-//			}
+			// int diagonal = (int) round(longside * sqrt(2));
+			// Stroke stroke = new BasicStroke(shortside / 2);
+			// g.setStroke(stroke);
+			// switch (dir) {
+			// case Top8.E:
+			// g.translate(centerX - shortside / 2, centerY - shortside / 2);
+			// g.fillRect(0, 0, longside, shortside);
+			// g.translate(-centerX + shortside / 2, -centerY + shortside / 2);
+			// break;
+			// case Top8.N:
+			// g.translate(centerX - shortside / 2, centerY - getCellSize() / 2);
+			// g.fillRect(0, 0, shortside, longside);
+			// g.translate(-centerX + shortside / 2, -centerY + getCellSize() / 2);
+			// break;
+			// case Top8.NE:
+			// g.translate(centerX, centerY);
+			// g.drawLine(0, 0, diagonal, -diagonal);
+			// g.translate(-centerX, -centerY);
+			// break;
+			// case Top8.NW:
+			// g.translate(centerX, centerY);
+			// g.drawLine(0, 0, -diagonal, -diagonal);
+			// g.translate(-centerX, -centerY);
+			// break;
+			// case Top8.S:
+			// g.translate(centerX - shortside / 2, centerY - shortside / 2);
+			// g.fillRect(0, 0, shortside, longside);
+			// g.translate(-centerX + shortside / 2, -centerY + shortside / 2);
+			// break;
+			// case Top8.SE:
+			// g.translate(centerX, centerY);
+			// g.drawLine(0, 0, diagonal, diagonal);
+			// g.translate(-centerX, -centerY);
+			// break;
+			// case Top8.SW:
+			// g.translate(centerX, centerY);
+			// g.drawLine(0, 0, -diagonal, diagonal);
+			// g.translate(-centerX, -centerY);
+			// break;
+			// case Top8.W:
+			// g.translate(centerX - getCellSize() / 2, centerY - shortside / 2);
+			// g.fillRect(0, 0, longside, shortside);
+			// g.translate(-centerX + getCellSize() / 2, -centerY + shortside / 2);
+			// break;
+			// }
 		}
 		drawCellContent(g, grid, cell);
 	}

@@ -9,10 +9,10 @@ public class TwoSetTests {
 
 	@Test
 	public void testEquals() {
-		UnorderedPair one = UnorderedPair.of(1, 2);
-		UnorderedPair two = UnorderedPair.of(2, 1);
+		UnorderedPair<Integer> one = UnorderedPair.of(1, 2);
+		UnorderedPair<Integer> two = UnorderedPair.of(2, 1);
 		Assert.assertEquals(one, two);
-		UnorderedPair three = UnorderedPair.of(1, 2);
+		UnorderedPair<Integer> three = UnorderedPair.of(1, 2);
 		Assert.assertEquals(one, three);
 		Assert.assertEquals(two, three);
 	}

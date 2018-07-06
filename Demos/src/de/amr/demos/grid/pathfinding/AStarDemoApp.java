@@ -1,10 +1,6 @@
 package de.amr.demos.grid.pathfinding;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
-import static de.amr.easy.grid.impl.Top8.NE;
-import static de.amr.easy.grid.impl.Top8.NW;
-import static de.amr.easy.grid.impl.Top8.SE;
-import static de.amr.easy.grid.impl.Top8.SW;
 import static java.lang.Math.min;
 import static java.lang.Math.round;
 import static java.lang.Math.sqrt;
@@ -36,6 +32,7 @@ import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.graph.impl.traversal.AStarTraversal;
 import de.amr.easy.grid.api.GridPosition;
+import de.amr.easy.grid.impl.GridGraph;
 import de.amr.easy.grid.impl.ObservableGridGraph;
 import de.amr.easy.grid.impl.Top8;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
@@ -63,7 +60,7 @@ public class AStarDemoApp {
 	// model
 	private int source;
 	private int target;
-	private ObservableGridGraph<Void, Integer> grid;
+	private GridGraph<Void, Integer> grid;
 	private AStarTraversal<Void> astar;
 	private BitSet solution;
 	private BiFunction<Integer, Integer, Integer> fnEuclidean = (u, v) -> (int) round(sqrt(grid.euclidean2(u, v)));
@@ -131,11 +128,7 @@ public class AStarDemoApp {
 		grid.fill();
 		grid.setDefaultEdgeLabel((u, v) -> {
 			int direction = grid.direction(u, v).getAsInt();
-			return Stream.of(NE, NW, SE, SW).anyMatch(d -> d == direction) ? 14 : 10;
-		});
-		grid.edges().forEach(edge -> {
-			int u = edge.either(), v = edge.other();
-			System.out.println(String.format("%d->%d (%d)", u, v, grid.getEdgeLabel(u, v)));
+			return Stream.of(Top8.NE, Top8.NW, Top8.SE, Top8.SW).anyMatch(d -> d == direction) ? 14 : 10;
 		});
 		this.cellSize = cellSize;
 		source = grid.cell(GridPosition.TOP_LEFT);
@@ -206,12 +199,6 @@ public class AStarDemoApp {
 			return Color.WHITE;
 		};
 		r.fnText = cell -> {
-			if (cell == source) {
-				return "START";
-			}
-			if (cell == target) {
-				return "GOAL";
-			}
 			if (astar != null && astar.getState(cell) != TraversalState.UNVISITED) {
 				return String.format("%d:%d", astar.getDistFromSource(cell), astar.getScore(cell));
 			}

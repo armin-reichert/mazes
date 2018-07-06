@@ -9,7 +9,7 @@ import org.junit.Test;
 import de.amr.easy.graph.api.Multigraph;
 import de.amr.easy.graph.api.SimpleEdge;
 import de.amr.easy.graph.impl.DefaultMultigraph;
-import de.amr.easy.util.GridUtils;
+import de.amr.easy.util.GraphUtils;
 
 public class MultigraphTests {
 
@@ -134,7 +134,7 @@ public class MultigraphTests {
 
 	@Test
 	public void testDualOfGrid() {
-		Multigraph<SimpleEdge<Integer>> g = GridUtils.dualGraphOfGrid(4, 3);
+		Multigraph<SimpleEdge<Integer>> g = GraphUtils.dualGraphOfGrid(4, 3);
 		assertEquals(7, g.vertexCount());
 		assertEquals(10, g.degree(-1));
 		assertTrue(g.adjacent(-1, 0));
