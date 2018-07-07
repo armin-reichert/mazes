@@ -5,7 +5,7 @@ import static java.lang.Math.max;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.grid.iterators.traversals.ExpandingCircle;
+import de.amr.easy.grid.impl.iterators.traversals.ExpandingCircle;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**

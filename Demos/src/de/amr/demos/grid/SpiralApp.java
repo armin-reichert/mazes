@@ -5,7 +5,7 @@ import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 
-import de.amr.easy.grid.iterators.traversals.Spiral;
+import de.amr.easy.grid.impl.iterators.traversals.Spiral;
 
 public class SpiralApp extends SwingGridSampleApp {
 

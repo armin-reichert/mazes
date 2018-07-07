@@ -4,11 +4,11 @@ import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
 import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.grid.api.GridPosition.TOP_RIGHT;
-import static de.amr.easy.grid.curves.CurveUtils.traverse;
 import static de.amr.easy.grid.impl.Top4.E;
 import static de.amr.easy.grid.impl.Top4.N;
 import static de.amr.easy.grid.impl.Top4.S;
 import static de.amr.easy.grid.impl.Top4.W;
+import static de.amr.easy.grid.impl.curves.CurveUtils.traverse;
 import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation.floodFill;
 import static de.amr.easy.util.GraphUtils.log;
 import static java.util.Arrays.asList;
@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
 import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.grid.curves.HilbertCurve;
+import de.amr.easy.grid.impl.curves.HilbertCurve;
 
 /**
  * Creates Hilbert curves of different sizes and shows an animation of the creation and a flood-fill

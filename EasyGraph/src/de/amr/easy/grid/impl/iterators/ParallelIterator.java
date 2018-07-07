@@ -1,4 +1,4 @@
-package de.amr.easy.grid.iterators;
+package de.amr.easy.grid.impl.iterators;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

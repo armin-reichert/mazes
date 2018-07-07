@@ -1,4 +1,4 @@
-package de.amr.easy.grid.iterators.shapes;
+package de.amr.easy.grid.impl.iterators.shapes;
 
 import static de.amr.easy.grid.impl.Top4.E;
 import static de.amr.easy.grid.impl.Top4.N;

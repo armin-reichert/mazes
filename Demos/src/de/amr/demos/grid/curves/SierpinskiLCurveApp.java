@@ -3,7 +3,7 @@ package de.amr.demos.grid.curves;
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 
 import de.amr.demos.grid.SwingGridSampleApp;
-import de.amr.easy.grid.curves.SierpinskiLCurve;
+import de.amr.easy.grid.impl.curves.SierpinskiLCurve;
 
 public class SierpinskiLCurveApp extends SwingGridSampleApp {
 

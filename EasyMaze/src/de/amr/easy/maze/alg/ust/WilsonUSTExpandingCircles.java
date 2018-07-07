@@ -1,14 +1,14 @@
 package de.amr.easy.maze.alg.ust;
 
 import static de.amr.easy.grid.api.GridPosition.CENTER;
-import static de.amr.easy.grid.iterators.IteratorFactory.parallel;
-import static de.amr.easy.grid.iterators.IteratorFactory.sequence;
+import static de.amr.easy.grid.impl.iterators.IteratorFactory.parallel;
+import static de.amr.easy.grid.impl.iterators.IteratorFactory.sequence;
 import static java.lang.Math.max;
 
 import java.util.Iterator;
 import java.util.stream.IntStream;
 
-import de.amr.easy.grid.iterators.traversals.ExpandingCircle;
+import de.amr.easy.grid.impl.iterators.traversals.ExpandingCircle;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.util.StreamUtils;
 

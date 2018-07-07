@@ -4,7 +4,7 @@ import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static java.lang.Math.max;
 
-import de.amr.easy.grid.iterators.shapes.Circle;
+import de.amr.easy.grid.impl.iterators.shapes.Circle;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**

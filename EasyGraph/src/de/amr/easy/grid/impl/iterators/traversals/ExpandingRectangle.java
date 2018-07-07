@@ -1,9 +1,9 @@
-package de.amr.easy.grid.iterators.traversals;
+package de.amr.easy.grid.impl.iterators.traversals;
 
 import java.util.Iterator;
 
 import de.amr.easy.grid.api.CellSequence;
-import de.amr.easy.grid.iterators.shapes.Rectangle;
+import de.amr.easy.grid.impl.iterators.shapes.Rectangle;
 
 /**
  * A sequence of cells filling the grid like an expanding rectangle with left-upper corner at the

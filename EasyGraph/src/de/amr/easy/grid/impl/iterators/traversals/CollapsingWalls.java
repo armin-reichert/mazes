@@ -1,4 +1,4 @@
-package de.amr.easy.grid.iterators.traversals;
+package de.amr.easy.grid.impl.iterators.traversals;
 
 import java.util.Iterator;
 

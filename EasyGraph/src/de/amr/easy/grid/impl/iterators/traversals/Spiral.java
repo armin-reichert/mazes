@@ -1,4 +1,4 @@
-package de.amr.easy.grid.iterators.traversals;
+package de.amr.easy.grid.impl.iterators.traversals;
 
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 
@@ -11,7 +11,7 @@ import de.amr.easy.grid.api.CellSequence;
 import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.impl.GridGraph;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.grid.iterators.shapes.Square;
+import de.amr.easy.grid.impl.iterators.shapes.Square;
 
 /**
  * A sequence of cells starting at the center of the grid and expanding like a spiral until all grid

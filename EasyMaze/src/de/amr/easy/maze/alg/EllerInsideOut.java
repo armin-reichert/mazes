@@ -22,8 +22,8 @@ import java.util.Random;
 import java.util.Set;
 
 import de.amr.easy.data.Partition;
-import de.amr.easy.grid.iterators.shapes.Rectangle;
-import de.amr.easy.grid.iterators.shapes.Square;
+import de.amr.easy.grid.impl.iterators.shapes.Rectangle;
+import de.amr.easy.grid.impl.iterators.shapes.Square;
 import de.amr.easy.maze.alg.core.MazeGenerator;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 

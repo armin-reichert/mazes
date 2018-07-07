@@ -1,13 +1,13 @@
 package de.amr.demos.grid.curves;
 
-import static de.amr.easy.grid.curves.CurveUtils.traverse;
+import static de.amr.easy.grid.impl.curves.CurveUtils.traverse;
 import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation.floodFill;
 import static de.amr.easy.util.GraphUtils.log;
 
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
-import de.amr.easy.grid.curves.MooreLCurve;
+import de.amr.easy.grid.impl.curves.MooreLCurve;
 
 /**
  * Creates Moore curves of different sizes and shows an animation of the creation and BFS-traversal

@@ -1,4 +1,4 @@
-package de.amr.easy.grid.iterators.shapes;
+package de.amr.easy.grid.impl.iterators.shapes;
 
 import de.amr.easy.grid.api.GridGraph2D;
 

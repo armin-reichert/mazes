@@ -1,4 +1,4 @@
-package de.amr.easy.grid.iterators;
+package de.amr.easy.grid.impl.iterators;
 
 import java.util.Iterator;
 import java.util.LinkedList;

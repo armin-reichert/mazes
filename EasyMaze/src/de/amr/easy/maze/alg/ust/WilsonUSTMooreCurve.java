@@ -9,7 +9,7 @@ import static java.util.Arrays.stream;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.grid.curves.MooreLCurve;
+import de.amr.easy.grid.impl.curves.MooreLCurve;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**

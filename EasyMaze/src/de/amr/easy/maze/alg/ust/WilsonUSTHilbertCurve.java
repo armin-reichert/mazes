@@ -14,7 +14,7 @@ import static java.util.Arrays.stream;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.grid.curves.HilbertCurve;
+import de.amr.easy.grid.impl.curves.HilbertCurve;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**

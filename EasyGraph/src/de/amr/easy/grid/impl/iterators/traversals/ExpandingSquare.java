@@ -1,10 +1,10 @@
-package de.amr.easy.grid.iterators.traversals;
+package de.amr.easy.grid.impl.iterators.traversals;
 
 import java.util.Iterator;
 
 import de.amr.easy.grid.api.CellSequence;
 import de.amr.easy.grid.api.GridGraph2D;
-import de.amr.easy.grid.iterators.shapes.Square;
+import de.amr.easy.grid.impl.iterators.shapes.Square;
 
 /**
  * A sequence of cells filling the grid like an expanding square.

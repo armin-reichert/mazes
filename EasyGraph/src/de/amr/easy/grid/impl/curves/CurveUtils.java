@@ -1,4 +1,4 @@
-package de.amr.easy.grid.curves;
+package de.amr.easy.grid.impl.curves;
 
 import java.util.ArrayList;
 import java.util.Arrays;

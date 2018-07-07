@@ -1,4 +1,4 @@
-package de.amr.easy.grid.curves;
+package de.amr.easy.grid.impl.curves;
 
 import static de.amr.easy.grid.impl.Top8.E;
 import static de.amr.easy.grid.impl.Top8.N;

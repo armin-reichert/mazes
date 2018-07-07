@@ -4,7 +4,7 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.grid.iterators.traversals.LeftToRightSweep;
+import de.amr.easy.grid.impl.iterators.traversals.LeftToRightSweep;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**

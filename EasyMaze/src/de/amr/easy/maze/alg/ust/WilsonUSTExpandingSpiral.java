@@ -4,7 +4,7 @@ import static de.amr.easy.grid.api.GridPosition.CENTER;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.grid.iterators.traversals.Spiral;
+import de.amr.easy.grid.impl.iterators.traversals.Spiral;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**

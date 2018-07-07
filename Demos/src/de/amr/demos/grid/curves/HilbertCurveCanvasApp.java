@@ -12,8 +12,8 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-import de.amr.easy.grid.curves.HilbertCurve;
 import de.amr.easy.grid.impl.Top4;
+import de.amr.easy.grid.impl.curves.HilbertCurve;
 
 /**
  * Paints a series of Hilbert curves to a canvas.
