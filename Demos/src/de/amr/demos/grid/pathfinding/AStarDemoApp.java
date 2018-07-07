@@ -14,19 +14,18 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseMotionListener;
 import java.util.BitSet;
 import java.util.List;
 import java.util.function.BiFunction;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JPopupMenu;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import de.amr.easy.graph.api.UndirectedEdge;
@@ -55,8 +54,7 @@ public class AStarDemoApp {
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(NimbusLookAndFeel.class.getCanonicalName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		EventQueue.invokeLater(() -> new AStarDemoApp(20, 20, 40));
@@ -69,8 +67,6 @@ public class AStarDemoApp {
 	private AStarTraversal<Tile> astar;
 	private BitSet solution;
 	private BiFunction<Integer, Integer, Integer> fnEuclidean;
-	private BiFunction<Integer, Integer, Integer> fnManhattan;
-	private BiFunction<Integer, Integer, Integer> fnDist;
 
 	// UI
 	private int draggedCell;
@@ -101,24 +97,6 @@ public class AStarDemoApp {
 		}
 	};
 
-	private Action actionSelectManhattan = new AbstractAction("Manhattan Distance") {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			selectManhattan();
-			updatePath();
-		}
-	};
-
-	private Action actionSelectEuclidean = new AbstractAction("Euclidean Distance") {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			selectEuclidean();
-			updatePath();
-		}
-	};
-
 	private Action actionResetScene = new AbstractAction("Reset Scene") {
 
 		@Override
@@ -128,17 +106,13 @@ public class AStarDemoApp {
 		}
 	};
 
-	private MouseAdapter mouseHandler = new MouseAdapter() {
+	private MouseListener mouseHandler = new MouseAdapter() {
 
 		@Override
 		public void mouseClicked(MouseEvent mouse) {
 			if (mouse.getButton() == MouseEvent.BUTTON1) {
 				int cell = cellAt(mouse.getX(), mouse.getY());
-				if (mouse.isShiftDown()) {
-					setCell(cell, FREE, AStarDemoApp.this::updatePath);
-				} else {
-					setCell(cell, WALL, AStarDemoApp.this::updatePath);
-				}
+				setCell(cell, mouse.isShiftDown() ? FREE : WALL, AStarDemoApp.this::updatePath);
 			}
 		}
 
@@ -155,39 +129,37 @@ public class AStarDemoApp {
 		}
 	};
 
-	private MouseMotionAdapter mouseMotionHandler = new MouseMotionAdapter() {
+	private MouseMotionListener mouseMotionHandler = new MouseMotionAdapter() {
 
 		@Override
 		public void mouseDragged(MouseEvent mouse) {
 			int cell = cellAt(mouse.getX(), mouse.getY());
 			if (cell != draggedCell) {
-				// dragging into new cell
+				// drag enters new cell
 				draggedCell = cell;
-				if (mouse.isShiftDown()) {
-					setCell(cell, FREE, AStarDemoApp.this::updatePath);
-				} else {
-					setCell(cell, WALL, AStarDemoApp.this::updatePath);
-				}
+				setCell(cell, mouse.isShiftDown() ? FREE : WALL, AStarDemoApp.this::updatePath);
 			}
 		}
 	};
 
 	public AStarDemoApp(int numCols, int numRows, int cellSize) {
 		grid = new GridGraph<>(numCols, numRows, Top8.get(), UNVISITED, (u, v) -> 1, UndirectedEdge::new);
-		fnManhattan = grid::manhattan;
 		fnEuclidean = (u, v) -> (int) round(10 * sqrt(grid.euclidean2(u, v)));
 		grid.setDefaultEdgeLabel(fnEuclidean);
-		grid.fill();
-		GraphUtils.print(grid, System.out);
+		fillGrid();
 		this.cellSize = cellSize;
 		source = grid.cell(GridPosition.TOP_LEFT);
 		target = grid.cell(GridPosition.BOTTOM_RIGHT);
 		popupCell = -1;
 		draggedCell = -1;
 		solution = new BitSet();
-		fnDist = grid::manhattan;
 		createUI();
 		updatePath();
+	}
+
+	private void fillGrid() {
+		grid.fill();
+		GraphUtils.print(grid, System.out);
 	}
 
 	private void createUI() {
@@ -213,13 +185,6 @@ public class AStarDemoApp {
 		popupMenu.addSeparator();
 		popupMenu.add(actionResetScene);
 		popupMenu.addSeparator();
-		ButtonGroup bg = new ButtonGroup();
-		JRadioButtonMenuItem rbEuclidean = new JRadioButtonMenuItem(actionSelectEuclidean);
-		bg.add(popupMenu.add(rbEuclidean));
-		JRadioButtonMenuItem rbManhattan = new JRadioButtonMenuItem(actionSelectManhattan);
-		bg.add(popupMenu.add(rbManhattan));
-		rbEuclidean.setSelected(fnDist == fnEuclidean);
-		rbManhattan.setSelected(fnDist == fnManhattan);
 	}
 
 	private ConfigurableGridRenderer createRenderer() {
@@ -287,16 +252,8 @@ public class AStarDemoApp {
 		solution.clear();
 	}
 
-	private void selectEuclidean() {
-		fnDist = fnEuclidean;
-	}
-
-	private void selectManhattan() {
-		fnDist = fnManhattan;
-	}
-
 	private void computePath() {
-		astar = new AStarTraversal<>(grid, fnDist);
+		astar = new AStarTraversal<>(grid, fnEuclidean);
 		StopWatch watch = new StopWatch();
 		watch.measure(() -> astar.traverseGraph(source, target));
 		List<Integer> path = astar.path(target);
