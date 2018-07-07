@@ -22,6 +22,7 @@ import de.amr.easy.grid.impl.curves.HilbertCurve;
  */
 public class HilbertCurveCanvasApp extends Canvas {
 
+	private final Top4 top = new Top4();
 	private int canvasSize;
 	private final Timer timer;
 	private int depth;
@@ -91,8 +92,8 @@ public class HilbertCurveCanvasApp extends Canvas {
 		x1 = getWidth() - 1;
 		y1 = 0;
 		for (int dir : curve) {
-			int x2 = x1 + 2 * Top4.get().dx(dir) * cellSize;
-			int y2 = y1 + 2 * Top4.get().dy(dir) * cellSize;
+			int x2 = x1 + 2 * top.dx(dir) * cellSize;
+			int y2 = y1 + 2 * top.dy(dir) * cellSize;
 			g.setColor(Color.YELLOW);
 			g.setStroke(new BasicStroke(Math.max(1, cellSize / 2)));
 			g.drawLine(x1, y1, x2, y2);

@@ -26,7 +26,7 @@ public class FullGridTests {
 
 	@Before
 	public void setUp() {
-		grid = new GridGraph<>(WIDTH, HEIGHT, Top4.get(), null, (u, v) -> null, UndirectedEdge::new);
+		grid = new GridGraph<>(WIDTH, HEIGHT, new Top4(), null, (u, v) -> null, UndirectedEdge::new);
 		grid.fill();
 	}
 
@@ -126,9 +126,9 @@ public class FullGridTests {
 
 	@Test
 	public void testFullGrid8() {
-		grid = new GridGraph<>(3, 3, Top8.get(), null, (u, v) -> null, UndirectedEdge::new);
+		grid = new GridGraph<>(3, 3, new Top8(), null, (u, v) -> null, UndirectedEdge::new);
 		grid.fill();
-		
+
 		int c = grid.numCols(), r = grid.numRows();
 		assertEquals(4 * c * r - 3 * c - 3 * r + 2, grid.numEdges());
 

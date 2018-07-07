@@ -23,7 +23,7 @@ public class FullGridApp extends SwingGridSampleApp {
 	@Override
 	public void run() {
 		setCanvasAnimation(false);
-		Stream.of(Top8.get(), Top4.get()).forEach(topology -> {
+		Stream.of(new Top8(), new Top4()).forEach(topology -> {
 			IntStream.of(512, 256, 128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 				setCellSize(cellSize);
 				setGridTopology(topology);

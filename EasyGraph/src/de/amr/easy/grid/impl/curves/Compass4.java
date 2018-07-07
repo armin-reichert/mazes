@@ -14,6 +14,7 @@ import de.amr.easy.grid.impl.Top4;
  */
 public class Compass4 {
 
+	private final Top4 top = new Top4();
 	private final int[] dirs;
 
 	public Compass4() {
@@ -38,13 +39,13 @@ public class Compass4 {
 
 	public void turnLeft() {
 		for (int i = 0; i < dirs.length; ++i) {
-			dirs[i] = Top4.get().left(dirs[i]);
+			dirs[i] = top.left(dirs[i]);
 		}
 	}
 
 	public void turnRight() {
 		for (int i = 0; i < dirs.length; ++i) {
-			dirs[i] = Top4.get().right(dirs[i]);
+			dirs[i] = top.right(dirs[i]);
 		}
 	}
 }

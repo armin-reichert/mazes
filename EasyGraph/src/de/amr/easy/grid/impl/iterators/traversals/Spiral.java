@@ -1,7 +1,5 @@
 package de.amr.easy.grid.impl.iterators.traversals;
 
-import static de.amr.easy.grid.api.GridPosition.CENTER;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -9,6 +7,7 @@ import java.util.List;
 import de.amr.easy.graph.api.UndirectedEdge;
 import de.amr.easy.grid.api.CellSequence;
 import de.amr.easy.grid.api.GridGraph2D;
+import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.GridGraph;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.impl.iterators.shapes.Square;
@@ -26,8 +25,8 @@ public class Spiral implements CellSequence {
 	public Spiral(GridGraph2D<?, ?> grid, Integer start) {
 		int size = Math.max(grid.numCols(), grid.numRows());
 		int offsetY = (size - grid.numRows()) / 2;
-		GridGraph2D<?, ?> squareGrid = new GridGraph<>(size, size, Top4.get(), null, (u, v) -> null, UndirectedEdge::new);
-		int leftUpperCorner = squareGrid.cell(CENTER);
+		GridGraph2D<?, ?> squareGrid = new GridGraph<>(size, size, new Top4(), null, (u, v) -> null, UndirectedEdge::new);
+		int leftUpperCorner = squareGrid.cell(GridPosition.CENTER);
 		for (int i = 0, n = size / 2 + 1; i < n; ++i) {
 			Square square = new Square(squareGrid, leftUpperCorner, 2 * i + 1);
 			for (int cell : square) {

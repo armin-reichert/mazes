@@ -48,7 +48,7 @@ public class WallPassageGridRenderer extends ConfigurableGridRenderer {
 		final int longside = (getCellSize() + getPassageWidth()) / 2;
 		final int shortside = getPassageWidth();
 		g.setColor(passageColor);
-		if (grid.getTopology() == Top4.get()) {
+		if (grid.getTopology() instanceof Top4) {
 			switch (dir) {
 			case Top4.E:
 				g.translate(centerX - shortside / 2, centerY - shortside / 2);
@@ -71,7 +71,7 @@ public class WallPassageGridRenderer extends ConfigurableGridRenderer {
 				g.translate(-centerX + shortside / 2, -centerY + getCellSize() / 2);
 				break;
 			}
-		} else if (grid.getTopology() == Top8.get()) {
+		} else if (grid.getTopology() instanceof Top8) {
 			// int diagonal = (int) round(longside * sqrt(2));
 			// Stroke stroke = new BasicStroke(shortside / 2);
 			// g.setStroke(stroke);

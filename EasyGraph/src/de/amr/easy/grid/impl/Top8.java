@@ -23,10 +23,6 @@ public class Top8 implements Topology {
 	private static final int[][] VEC = { { 0, -1 }, { 1, -1 }, { 1, 0 }, { 1, 1 }, { 0, 1 }, { -1, 1 }, { -1, 0 },
 			{ -1, -1 } };
 
-	public static Top8 get() {
-		return new Top8();
-	}
-
 	@Override
 	public IntStream dirs() {
 		return IntStream.of(N, NE, E, SE, S, SW, W, NW);

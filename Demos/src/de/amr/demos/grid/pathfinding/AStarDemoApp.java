@@ -142,7 +142,7 @@ public class AStarDemoApp {
 	};
 
 	public AStarDemoApp(int numCols, int numRows, int canvasSize) {
-		map = new GridGraph<>(numCols, numRows, Top8.get(), UNVISITED, (u, v) -> getDistance(u, v), UndirectedEdge::new);
+		map = new GridGraph<>(numCols, numRows, new Top8(), UNVISITED, (u, v) -> getDistance(u, v), UndirectedEdge::new);
 		map.fill();
 		GraphUtils.print(map, System.out);
 		cellSize = canvasSize / numCols;
