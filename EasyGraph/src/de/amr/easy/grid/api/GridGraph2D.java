@@ -122,53 +122,52 @@ public interface GridGraph2D<V, E> extends Graph<V, E> {
 	boolean isValidRow(int row);
 
 	/**
-	 * Returns all neighbor cells of a cell as specified by the given directions.
+	 * Returns all neighbors of a cell in the given directions.
 	 * 
 	 * @param cell
 	 *          a grid cell
 	 * @param dirs
-	 *          a list of directions
+	 *          a stream of directions
 	 * @return stream of the neighbor cells in the given directions
 	 */
 	IntStream neighbors(int cell, IntStream dirs);
 
 	/**
-	 * Returns all neighbor cells of a cell.
+	 * Returns all neighbors of a cell. A neighbor is a cell that possibly can be connected to the
+	 * cell by an edge. The neighbors are defined by the grid's topology (4 neighbors, 8 neighbors
+	 * etc.).
 	 * 
 	 * @param cell
 	 *          a grid cell
-	 * @return stream of the neighbor cells in the given directions
+	 * @return stream of all neighbor cells
 	 */
 	IntStream neighbors(int cell);
 
 	/**
-	 * 
 	 * @param cell
 	 *          a grid position
 	 * @param dir
 	 *          a direction
-	 * @return the optional neighbor in the given direction
+	 * @return the (optional) neighbor in the given direction
 	 */
 	OptionalInt neighbor(int cell, int dir);
 
 	/**
-	 * Tells if the given cells are "neighbors". Two cells are neighbors if you can reach one from the
-	 * other by going one step in any of the 4 directions.
+	 * Tells if the given cells are "neighbors".
 	 * 
 	 * @param either
-	 *          a cell
+	 *          either cell
 	 * @param other
 	 *          another cell
-	 * @return {@code true} if the cells are neighbors
+	 * @return {@code true} if the cells are neighbors wrt. to the grid's topology
 	 */
 	boolean areNeighbors(int either, int other);
 
 	/**
-	 * 
 	 * @param cell
 	 *          a grid cell
 	 * @param dir
-	 *          the direction to which the cell is checked for connectivity
+	 *          a direction
 	 * @return {@code true} if the cell is connected to the neighbor in the given direction
 	 *         ("passage", no "wall")
 	 */
@@ -179,7 +178,7 @@ public interface GridGraph2D<V, E> extends Graph<V, E> {
 	 *          either cell
 	 * @param other
 	 *          other cell
-	 * @return the direction from either to other cell (if those cells are neighbors)
+	 * @return (optional) direction from either to other (if those cells are neighbors)
 	 */
 	OptionalInt direction(int either, int other);
 
