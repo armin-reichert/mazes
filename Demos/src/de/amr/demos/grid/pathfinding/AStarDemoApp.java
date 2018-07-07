@@ -32,11 +32,11 @@ import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.graph.impl.traversal.AStarTraversal;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.GridGraph;
-import de.amr.easy.grid.impl.ObservableGridGraph;
 import de.amr.easy.grid.impl.Top8;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.GridCanvas;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
+import de.amr.easy.util.GraphUtils;
 import de.amr.easy.util.StopWatch;
 
 /**
@@ -53,7 +53,7 @@ public class AStarDemoApp {
 				| UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-		EventQueue.invokeLater(() -> new AStarDemoApp(20, 20, 40));
+		EventQueue.invokeLater(() -> new AStarDemoApp(4, 4, 40));
 	}
 
 	// model
@@ -123,14 +123,12 @@ public class AStarDemoApp {
 	};
 
 	public AStarDemoApp(int numCols, int numRows, int cellSize) {
-		grid = new ObservableGridGraph<>(numCols, numRows, Top8.get(), UNVISITED, (u, v) -> 1, UndirectedEdge::new);
+		grid = new GridGraph<>(numCols, numRows, Top8.get(), UNVISITED, (u, v) -> 1, UndirectedEdge::new);
 		fnManhattan = grid::manhattan;
 		fnEuclidean = (u, v) -> (int) round(10 * sqrt(grid.euclidean2(u, v)));
 		grid.setDefaultEdgeLabel(fnEuclidean);
 		grid.fill();
-		// grid.edges().forEach(edge -> System.out.println(
-		// String.format("(%d->%d,%d)", edge.either(), edge.other(), grid.getEdgeLabel(edge.either(),
-		// edge.other()))));
+		GraphUtils.print(grid, System.out);
 		this.cellSize = cellSize;
 		source = grid.cell(GridPosition.TOP_LEFT);
 		target = grid.cell(GridPosition.BOTTOM_RIGHT);
@@ -326,7 +324,11 @@ public class AStarDemoApp {
 		if (cell == source || cell == target || isBlocked(cell)) {
 			return;
 		}
-		grid.neighbors(cell).forEach(neighbor -> grid.removeEdge(cell, neighbor));
+		grid.neighbors(cell).forEach(neighbor -> {
+			if (grid.hasEdge(cell, neighbor)) {
+				grid.removeEdge(cell, neighbor);
+			}
+		});
 		callback.run();
 	}
 
@@ -350,6 +352,10 @@ public class AStarDemoApp {
 	}
 
 	private void connectWithNeighbors(int cell) {
-		grid.neighbors(cell).filter(neighbor -> !isBlocked(neighbor)).forEach(neighbor -> grid.addEdge(cell, neighbor));
+		grid.neighbors(cell).forEach(neighbor -> {
+			if (!grid.hasEdge(cell, neighbor)) {
+				grid.addEdge(cell, neighbor);
+			}
+		});
 	}
 }

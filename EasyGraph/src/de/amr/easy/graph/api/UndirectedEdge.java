@@ -1,44 +1,41 @@
 package de.amr.easy.graph.api;
 
-import de.amr.easy.data.TwoSet;
-
 /**
- * Undirected edge implementation.
+ * Undirected edge implementation. Two undirected edges are equal if their vertex sets are equal.
  * 
  * @author Armin Reichert
  */
 public class UndirectedEdge implements Edge {
 
-	private final TwoSet<Integer> vertices;
+	private final int u;
+	private final int v;
 
 	public UndirectedEdge(int u, int v) {
-		vertices = TwoSet.of(u, v);
+		this.u = u;
+		this.v = v;
 	}
 
 	@Override
 	public int either() {
-		return vertices.e1;
+		return u;
 	}
 
 	@Override
 	public int other() {
-		return vertices.e2;
+		return v;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
+		if (obj instanceof UndirectedEdge) {
+			UndirectedEdge other = (UndirectedEdge) obj;
+			return u == other.u && v == other.v || u == other.v && v == other.u;
 		}
-		if (!(obj instanceof UndirectedEdge)) {
-			return false;
-		}
-		UndirectedEdge other = (UndirectedEdge) obj;
-		return vertices.equals(other.vertices);
+		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return vertices.hashCode();
+		return Integer.hashCode(u) + Integer.hashCode(v);
 	}
 }

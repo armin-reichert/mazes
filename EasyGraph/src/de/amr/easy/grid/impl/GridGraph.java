@@ -37,7 +37,7 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 	protected final int numCells;
 	protected final BiFunction<Integer, Integer, Edge> fnEdgeFactory;
 	protected Topology top;
-	protected BitSet bits;
+	protected BitSet wires;
 
 	// {@link VertexLabels}
 
@@ -119,9 +119,9 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 		return cell * top.dirCount() + dir;
 	}
 
-	protected void connect(int u, int v, int dir, boolean connected) {
-		bits.set(bit(u, dir), connected);
-		bits.set(bit(v, top.inv(dir)), connected);
+	protected void wire(int u, int v, int dir, boolean connected) {
+		wires.set(bit(u, dir), connected);
+		wires.set(bit(v, top.inv(dir)), connected);
 	}
 
 	/**
@@ -158,7 +158,7 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 		this.numRows = numRows;
 		this.numCells = numCols * numRows;
 		this.top = top;
-		this.bits = new BitSet(top.dirCount() * numCells);
+		this.wires = new BitSet(top.dirCount() * numCells);
 		this.fnEdgeFactory = fnEdgeFactory;
 
 		vertexLabels = new VertexLabelsMap<>(defaultVertexLabel);
@@ -196,7 +196,7 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 
 	@Override
 	public int numEdges() {
-		return bits.cardinality() / 2; // two bits are used to store one edge
+		return wires.cardinality() / 2; // two bits are used to store one edge
 	}
 
 	@Override
@@ -219,12 +219,12 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 	@Override
 	public void addEdge(int u, int v) {
 		if (!areNeighbors(u, v)) {
-			throw new IllegalStateException("Cannot add edge between cells which are not neighbors");
+			throw new IllegalStateException(String.format("Cannot add edge {%d, %d}, cells are no grid neighbors.", u, v));
 		}
 		if (hasEdge(u, v)) {
-			throw new IllegalStateException(String.format("Cannot add edge {%s,%s} twice", u, v));
+			throw new IllegalStateException(String.format("Cannot add edge {%d, %d}, edge already exists.", u, v));
 		}
-		direction(u, v).ifPresent(dir -> connect(u, v, dir, true));
+		direction(u, v).ifPresent(dir -> wire(u, v, dir, true));
 	}
 
 	@Override
@@ -236,14 +236,14 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 	@Override
 	public void removeEdge(int u, int v) {
 		if (!hasEdge(u, v)) {
-			throw new IllegalStateException(String.format("Cannot remove non-existing edge {%s,%s}", u, v));
+			throw new IllegalStateException(String.format("Cannot remove edge {%d, %d}, edge does not exist.", u, v));
 		}
-		direction(u, v).ifPresent(dir -> connect(u, v, dir, false));
+		direction(u, v).ifPresent(dir -> wire(u, v, dir, false));
 	}
 
 	@Override
 	public void removeEdges() {
-		bits.clear();
+		wires.clear();
 	}
 
 	@Override
@@ -254,6 +254,7 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 
 	@Override
 	public boolean hasEdge(int u, int v) {
+		checkCell(u);
 		checkCell(v);
 		return adj(u).anyMatch(x -> x == v);
 	}
@@ -323,24 +324,8 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 
 	@Override
 	public void fill() {
-		bits.clear();
-		range(0, numCols).forEach(col -> {
-			range(0, numRows).forEach(row -> {
-				int u = index(col, row);
-				BitSet used = new BitSet(top.dirCount());
-				top.dirs().forEach(dir -> {
-					if (!used.get(dir)) {
-						used.set(dir);
-						used.set(top.inv(dir));
-						int col_v = col + top.dx(dir), row_v = row + top.dy(dir);
-						if (isValidCol(col_v) && isValidRow(row_v)) {
-							int v = index(col_v, row_v);
-							connect(u, v, dir, true);
-						}
-					}
-				});
-			});
-		});
+		wires.clear();
+		vertices().forEach(v -> top.dirs().forEach(dir -> neighbor(v, dir).ifPresent(w -> wire(v, w, dir, true))));
 	}
 
 	@Override
@@ -381,7 +366,7 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 	public boolean isConnected(int v, int dir) {
 		checkCell(v);
 		checkDir(dir);
-		return bits.get(bit(v, dir));
+		return wires.get(bit(v, dir));
 	}
 
 	@Override

@@ -1,5 +1,10 @@
 package de.amr.easy.util;
 
+import static java.lang.String.format;
+
+import java.io.PrintStream;
+import java.util.stream.Collectors;
+
 import de.amr.easy.data.Partition;
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.Graph;
@@ -14,6 +19,25 @@ import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
  * @author Armin Reichert
  */
 public class GraphUtils {
+
+	/**
+	 * Prints the graph content to the given stream.
+	 * 
+	 * @param g
+	 *          a graph
+	 * @param out
+	 *          output stream
+	 */
+	public static void print(Graph<?, ?> g, PrintStream out) {
+		out.println(format("Graph: %d vertices, %d edges", g.numVertices(), g.numEdges()));
+		out.println("Vertices:");
+		out.println(g.vertices().mapToObj(String::valueOf).collect(Collectors.joining(",")));
+		out.println("Edges:");
+		g.edges().forEach(edge -> {
+			int u = edge.either(), v = edge.other();
+			out.println(format("{%d, %d}(%s)", u, v, g.getEdgeLabel(u, v)));
+		});
+	}
 
 	/**
 	 * Checks whether a graph contains a cycle.

@@ -126,9 +126,30 @@ public class FullGridTests {
 
 	@Test
 	public void testFullGrid8() {
-		grid = new GridGraph<>(WIDTH, HEIGHT, Top8.get(), null, (u, v) -> null, UndirectedEdge::new);
+		grid = new GridGraph<>(3, 3, Top8.get(), null, (u, v) -> null, UndirectedEdge::new);
 		grid.fill();
+		
 		int c = grid.numCols(), r = grid.numRows();
 		assertEquals(4 * c * r - 3 * c - 3 * r + 2, grid.numEdges());
+
+		assertTrue(grid.hasEdge(4, 0));
+		assertTrue(grid.hasEdge(4, 1));
+		assertTrue(grid.hasEdge(4, 2));
+		assertTrue(grid.hasEdge(4, 3));
+		assertTrue(!grid.hasEdge(4, 4));
+		assertTrue(grid.hasEdge(4, 5));
+		assertTrue(grid.hasEdge(4, 6));
+		assertTrue(grid.hasEdge(4, 7));
+		assertTrue(grid.hasEdge(4, 8));
+
+		assertTrue(grid.hasEdge(0, 4));
+		assertTrue(grid.hasEdge(1, 4));
+		assertTrue(grid.hasEdge(2, 4));
+		assertTrue(grid.hasEdge(3, 4));
+		assertTrue(grid.hasEdge(5, 4));
+		assertTrue(grid.hasEdge(6, 4));
+		assertTrue(grid.hasEdge(7, 4));
+		assertTrue(grid.hasEdge(8, 4));
+
 	}
 }
