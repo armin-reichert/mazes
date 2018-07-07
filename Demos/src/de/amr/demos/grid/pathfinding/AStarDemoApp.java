@@ -1,5 +1,7 @@
 package de.amr.demos.grid.pathfinding;
 
+import static de.amr.demos.grid.pathfinding.AStarDemoApp.Tile.FREE;
+import static de.amr.demos.grid.pathfinding.AStarDemoApp.Tile.WALL;
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static java.lang.Math.min;
 import static java.lang.Math.round;
@@ -46,6 +48,10 @@ import de.amr.easy.util.StopWatch;
  */
 public class AStarDemoApp {
 
+	enum Tile {
+		WALL, FREE;
+	}
+
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(NimbusLookAndFeel.class.getCanonicalName());
@@ -53,14 +59,14 @@ public class AStarDemoApp {
 				| UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-		EventQueue.invokeLater(() -> new AStarDemoApp(4, 4, 40));
+		EventQueue.invokeLater(() -> new AStarDemoApp(20, 20, 40));
 	}
 
 	// model
 	private int source;
 	private int target;
-	private GridGraph<Void, Integer> grid;
-	private AStarTraversal<Void> astar;
+	private GridGraph<Tile, Integer> grid;
+	private AStarTraversal<Tile> astar;
 	private BitSet solution;
 	private BiFunction<Integer, Integer, Integer> fnEuclidean;
 	private BiFunction<Integer, Integer, Integer> fnManhattan;
@@ -122,6 +128,50 @@ public class AStarDemoApp {
 		}
 	};
 
+	private MouseAdapter mouseHandler = new MouseAdapter() {
+
+		@Override
+		public void mouseClicked(MouseEvent mouse) {
+			if (mouse.getButton() == MouseEvent.BUTTON1) {
+				int cell = cellAt(mouse.getX(), mouse.getY());
+				if (mouse.isShiftDown()) {
+					setCell(cell, FREE, AStarDemoApp.this::updatePath);
+				} else {
+					setCell(cell, WALL, AStarDemoApp.this::updatePath);
+				}
+			}
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent mouse) {
+			if (draggedCell != -1) {
+				// dragging ends
+				draggedCell = -1;
+				updatePath();
+			} else if (mouse.isPopupTrigger()) {
+				popupCell = cellAt(mouse.getX(), mouse.getY());
+				popupMenu.show(canvas, mouse.getX(), mouse.getY());
+			}
+		}
+	};
+
+	private MouseMotionAdapter mouseMotionHandler = new MouseMotionAdapter() {
+
+		@Override
+		public void mouseDragged(MouseEvent mouse) {
+			int cell = cellAt(mouse.getX(), mouse.getY());
+			if (cell != draggedCell) {
+				// dragging into new cell
+				draggedCell = cell;
+				if (mouse.isShiftDown()) {
+					setCell(cell, FREE, AStarDemoApp.this::updatePath);
+				} else {
+					setCell(cell, WALL, AStarDemoApp.this::updatePath);
+				}
+			}
+		}
+	};
+
 	public AStarDemoApp(int numCols, int numRows, int cellSize) {
 		grid = new GridGraph<>(numCols, numRows, Top8.get(), UNVISITED, (u, v) -> 1, UndirectedEdge::new);
 		fnManhattan = grid::manhattan;
@@ -145,7 +195,8 @@ public class AStarDemoApp {
 		canvas.pushRenderer(createRenderer());
 		canvas.requestFocus();
 		canvas.drawGrid();
-		addMouseActions();
+		canvas.addMouseListener(mouseHandler);
+		canvas.addMouseMotionListener(mouseMotionHandler);
 		createPopupMenu();
 		window = new JFrame("A* demo application");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -181,11 +232,11 @@ public class AStarDemoApp {
 			if (cell == target) {
 				return Color.BLUE;
 			}
-			if (isBlocked(cell)) {
+			if (isWall(cell)) {
 				return new Color(139, 69, 19);
 			}
 			if (solution != null && solution.get(cell)) {
-				return Color.RED;
+				return Color.RED.brighter();
 			}
 			if (astar != null) {
 				if (astar.getState(cell) == AStarTraversal.CLOSED) {
@@ -220,52 +271,6 @@ public class AStarDemoApp {
 		return r;
 	}
 
-	private void addMouseActions() {
-		canvas.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseClicked(MouseEvent mouse) {
-				int clickedCell = cellAt(mouse.getX(), mouse.getY());
-				if (mouse.getButton() == MouseEvent.BUTTON1) {
-					if (mouse.isShiftDown()) {
-						unblock(clickedCell, AStarDemoApp.this::updatePath);
-					} else {
-						block(clickedCell, AStarDemoApp.this::updatePath);
-					}
-				}
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent mouse) {
-				if (draggedCell != -1) {
-					// dragging ends
-					draggedCell = -1;
-					updatePath();
-				} else if (mouse.isPopupTrigger()) {
-					popupCell = cellAt(mouse.getX(), mouse.getY());
-					popupMenu.show(canvas, mouse.getX(), mouse.getY());
-				}
-			}
-		});
-
-		canvas.addMouseMotionListener(new MouseMotionAdapter() {
-
-			@Override
-			public void mouseDragged(MouseEvent mouse) {
-				int cell = cellAt(mouse.getX(), mouse.getY());
-				if (cell != draggedCell) {
-					// dragging into new cell
-					draggedCell = cell;
-					if (mouse.isShiftDown()) {
-						unblock(cell, AStarDemoApp.this::updatePath);
-					} else {
-						block(cell, AStarDemoApp.this::updatePath);
-					}
-				}
-			}
-		});
-	}
-
 	private void setSource(int cell) {
 		source = cell;
 	}
@@ -277,7 +282,7 @@ public class AStarDemoApp {
 	private void resetScene() {
 		source = grid.cell(GridPosition.TOP_LEFT);
 		target = grid.cell(GridPosition.BOTTOM_RIGHT);
-		grid.vertices().forEach(this::unblock);
+		grid.vertices().forEach(cell -> setCell(cell, FREE));
 		astar = null;
 		solution.clear();
 	}
@@ -311,51 +316,30 @@ public class AStarDemoApp {
 		return grid.cell(gridX, gridY);
 	}
 
-	private boolean isBlocked(int cell) {
-		return grid.neighbors(cell).noneMatch(neighbor -> grid.hasEdge(cell, neighbor));
+	private boolean isWall(int cell) {
+		return grid.get(cell) == WALL;
 	}
 
-	private void block(int cell) {
-		block(cell, () -> {
-		});
-	}
-
-	private void block(int cell, Runnable callback) {
-		if (cell == source || cell == target || isBlocked(cell)) {
+	private void setCell(int cell, Tile type) {
+		if (cell == source || cell == target || grid.get(cell) == type) {
 			return;
 		}
+		grid.set(cell, type);
 		grid.neighbors(cell).forEach(neighbor -> {
-			if (grid.hasEdge(cell, neighbor)) {
-				grid.removeEdge(cell, neighbor);
+			if (type == FREE) {
+				if (!grid.hasEdge(cell, neighbor)) {
+					grid.addEdge(cell, neighbor);
+				}
+			} else {
+				if (grid.hasEdge(cell, neighbor)) {
+					grid.removeEdge(cell, neighbor);
+				}
 			}
 		});
+	}
+
+	private void setCell(int cell, Tile type, Runnable callback) {
+		setCell(cell, type);
 		callback.run();
-	}
-
-	private void unblock(int cell) {
-		unblock(cell, () -> {
-		});
-	}
-
-	private void unblock(int cell, Runnable callback) {
-		if (!isBlocked(cell)) {
-			return;
-		}
-		connectWithNeighbors(cell);
-		if (isBlocked(source)) {
-			connectWithNeighbors(source);
-		}
-		if (isBlocked(target)) {
-			connectWithNeighbors(target);
-		}
-		callback.run();
-	}
-
-	private void connectWithNeighbors(int cell) {
-		grid.neighbors(cell).forEach(neighbor -> {
-			if (!grid.hasEdge(cell, neighbor)) {
-				grid.addEdge(cell, neighbor);
-			}
-		});
 	}
 }
