@@ -54,8 +54,8 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 	}
 
 	@Override
-	public void setDefaultVertexLabel(V vertex) {
-		vertexLabels.setDefaultVertexLabel(vertex);
+	public void setDefaultVertexLabel(V label) {
+		vertexLabels.setDefaultVertexLabel(label);
 	}
 
 	@Override
@@ -160,9 +160,8 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 		this.top = top;
 		this.wires = new BitSet(top.dirCount() * numCells);
 		this.fnEdgeFactory = fnEdgeFactory;
-
-		vertexLabels = new VertexLabelsMap<>(defaultVertexLabel);
-		edgeLabels = new EdgeLabelsMap<>(fnDefaultEdgeLabel);
+		this.vertexLabels = new VertexLabelsMap<>(defaultVertexLabel);
+		this.edgeLabels = new EdgeLabelsMap<>(fnDefaultEdgeLabel);
 	}
 
 	// Implement {@link Graph} interface
