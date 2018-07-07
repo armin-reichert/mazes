@@ -111,7 +111,8 @@ public class AStarDemoApp {
 		public void mouseClicked(MouseEvent mouse) {
 			if (mouse.getButton() == MouseEvent.BUTTON1) {
 				int cell = cellAt(mouse.getX(), mouse.getY());
-				setCell(cell, mouse.isShiftDown() ? FREE : WALL, AStarDemoApp.this::updatePath);
+				setTile(cell, mouse.isShiftDown() ? FREE : WALL);
+				updatePath();
 			}
 		}
 
@@ -136,7 +137,8 @@ public class AStarDemoApp {
 			if (cell != draggedCell) {
 				// drag enters new cell
 				draggedCell = cell;
-				setCell(cell, mouse.isShiftDown() ? FREE : WALL, AStarDemoApp.this::updatePath);
+				setTile(cell, mouse.isShiftDown() ? FREE : WALL);
+				updatePath();
 			}
 		}
 	};
@@ -169,7 +171,7 @@ public class AStarDemoApp {
 		createPopupMenu();
 		window = new JFrame("A* demo application");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.getContentPane().add(canvas, BorderLayout.CENTER);
+		window.add(canvas, BorderLayout.CENTER);
 		window.pack();
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
@@ -216,10 +218,10 @@ public class AStarDemoApp {
 			return "";
 		};
 		r.fnTextColor = cell -> {
-			if (solution != null && solution.get(cell)) {
+			if (cell == source || cell == target) {
 				return Color.WHITE;
 			}
-			if (cell == source || cell == target) {
+			if (solution != null && solution.get(cell)) {
 				return Color.WHITE;
 			}
 			return Color.BLUE;
@@ -243,7 +245,7 @@ public class AStarDemoApp {
 	private void resetScene() {
 		source = map.cell(GridPosition.TOP_LEFT);
 		target = map.cell(GridPosition.BOTTOM_RIGHT);
-		map.vertices().forEach(cell -> setCell(cell, FREE));
+		map.vertices().forEach(cell -> setTile(cell, FREE));
 		astar = null;
 		solution.clear();
 	}
@@ -269,12 +271,12 @@ public class AStarDemoApp {
 		return map.cell(gridX, gridY);
 	}
 
-	private void setCell(int cell, Tile type) {
+	private void setTile(int cell, Tile type) {
 		if (cell == source || cell == target || map.get(cell) == type) {
 			return;
 		}
 		map.set(cell, type);
-		map.neighbors(cell).forEach(neighbor -> {
+		map.neighbors(cell).filter(neighbor -> map.get(neighbor) != WALL).forEach(neighbor -> {
 			if (type == FREE) {
 				if (!map.adjacent(cell, neighbor)) {
 					map.addEdge(cell, neighbor);
@@ -285,10 +287,5 @@ public class AStarDemoApp {
 				}
 			}
 		});
-	}
-
-	private void setCell(int cell, Tile type, Runnable callback) {
-		setCell(cell, type);
-		callback.run();
 	}
 }
