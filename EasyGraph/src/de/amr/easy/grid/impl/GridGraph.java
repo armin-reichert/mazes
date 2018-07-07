@@ -213,7 +213,7 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 	public Optional<Edge> edge(int u, int v) {
 		checkCell(u);
 		checkCell(v);
-		return hasEdge(u, v) ? Optional.of(fnEdgeFactory.apply(u, v)) : Optional.empty();
+		return adjacent(u, v) ? Optional.of(fnEdgeFactory.apply(u, v)) : Optional.empty();
 	}
 
 	@Override
@@ -221,7 +221,7 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 		if (!areNeighbors(u, v)) {
 			throw new IllegalStateException(String.format("Cannot add edge {%d, %d}, cells are no grid neighbors.", u, v));
 		}
-		if (hasEdge(u, v)) {
+		if (adjacent(u, v)) {
 			throw new IllegalStateException(String.format("Cannot add edge {%d, %d}, edge already exists.", u, v));
 		}
 		direction(u, v).ifPresent(dir -> wire(u, v, dir, true));
@@ -235,7 +235,7 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 
 	@Override
 	public void removeEdge(int u, int v) {
-		if (!hasEdge(u, v)) {
+		if (!adjacent(u, v)) {
 			throw new IllegalStateException(String.format("Cannot remove edge {%d, %d}, edge does not exist.", u, v));
 		}
 		direction(u, v).ifPresent(dir -> wire(u, v, dir, false));
@@ -253,7 +253,7 @@ public class GridGraph<V, E> implements GridGraph2D<V, E> {
 	}
 
 	@Override
-	public boolean hasEdge(int u, int v) {
+	public boolean adjacent(int u, int v) {
 		checkCell(u);
 		checkCell(v);
 		return adj(u).anyMatch(x -> x == v);

@@ -100,15 +100,15 @@ public class LabeledGraphTests {
 	@Test
 	public void testSampleGraph() {
 		DefaultGraph<String, Integer> g = createSampleGraph();
-		Assert.assertTrue(g.hasEdge(0, 1));
-		Assert.assertTrue(g.hasEdge(1, 2));
-		Assert.assertTrue(g.hasEdge(2, 3));
-		Assert.assertTrue(g.hasEdge(0, 4));
-		Assert.assertTrue(g.hasEdge(4, 1));
-		Assert.assertTrue(g.hasEdge(4, 5));
-		Assert.assertTrue(g.hasEdge(5, 2));
-		Assert.assertTrue(g.hasEdge(5, 6));
-		Assert.assertTrue(g.hasEdge(6, 7));
+		Assert.assertTrue(g.adjacent(0, 1));
+		Assert.assertTrue(g.adjacent(1, 2));
+		Assert.assertTrue(g.adjacent(2, 3));
+		Assert.assertTrue(g.adjacent(0, 4));
+		Assert.assertTrue(g.adjacent(4, 1));
+		Assert.assertTrue(g.adjacent(4, 5));
+		Assert.assertTrue(g.adjacent(5, 2));
+		Assert.assertTrue(g.adjacent(5, 6));
+		Assert.assertTrue(g.adjacent(6, 7));
 	}
 
 	@Test

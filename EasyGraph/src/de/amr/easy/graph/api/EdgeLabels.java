@@ -2,6 +2,14 @@ package de.amr.easy.graph.api;
 
 import java.util.function.BiFunction;
 
+/**
+ * Interface for labeling graph edges.
+ * 
+ * @author Armin Reichert
+ *
+ * @param <E>
+ *          edge label type
+ */
 public interface EdgeLabels<E> {
 
 	/**

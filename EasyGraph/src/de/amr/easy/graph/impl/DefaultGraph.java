@@ -165,7 +165,7 @@ public class DefaultGraph<V, E> implements Graph<V, E> {
 	}
 
 	@Override
-	public boolean hasEdge(int v, int w) {
+	public boolean adjacent(int v, int w) {
 		assertVertexExists(v);
 		assertVertexExists(w);
 		for (Edge edge : adjEdges.get(v)) {

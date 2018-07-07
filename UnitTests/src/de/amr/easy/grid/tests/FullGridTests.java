@@ -132,24 +132,24 @@ public class FullGridTests {
 		int c = grid.numCols(), r = grid.numRows();
 		assertEquals(4 * c * r - 3 * c - 3 * r + 2, grid.numEdges());
 
-		assertTrue(grid.hasEdge(4, 0));
-		assertTrue(grid.hasEdge(4, 1));
-		assertTrue(grid.hasEdge(4, 2));
-		assertTrue(grid.hasEdge(4, 3));
-		assertTrue(!grid.hasEdge(4, 4));
-		assertTrue(grid.hasEdge(4, 5));
-		assertTrue(grid.hasEdge(4, 6));
-		assertTrue(grid.hasEdge(4, 7));
-		assertTrue(grid.hasEdge(4, 8));
+		assertTrue(grid.adjacent(4, 0));
+		assertTrue(grid.adjacent(4, 1));
+		assertTrue(grid.adjacent(4, 2));
+		assertTrue(grid.adjacent(4, 3));
+		assertTrue(!grid.adjacent(4, 4));
+		assertTrue(grid.adjacent(4, 5));
+		assertTrue(grid.adjacent(4, 6));
+		assertTrue(grid.adjacent(4, 7));
+		assertTrue(grid.adjacent(4, 8));
 
-		assertTrue(grid.hasEdge(0, 4));
-		assertTrue(grid.hasEdge(1, 4));
-		assertTrue(grid.hasEdge(2, 4));
-		assertTrue(grid.hasEdge(3, 4));
-		assertTrue(grid.hasEdge(5, 4));
-		assertTrue(grid.hasEdge(6, 4));
-		assertTrue(grid.hasEdge(7, 4));
-		assertTrue(grid.hasEdge(8, 4));
+		assertTrue(grid.adjacent(0, 4));
+		assertTrue(grid.adjacent(1, 4));
+		assertTrue(grid.adjacent(2, 4));
+		assertTrue(grid.adjacent(3, 4));
+		assertTrue(grid.adjacent(5, 4));
+		assertTrue(grid.adjacent(6, 4));
+		assertTrue(grid.adjacent(7, 4));
+		assertTrue(grid.adjacent(8, 4));
 
 	}
 }

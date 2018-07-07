@@ -285,11 +285,11 @@ public class AStarDemoApp {
 		grid.set(cell, type);
 		grid.neighbors(cell).forEach(neighbor -> {
 			if (type == FREE) {
-				if (!grid.hasEdge(cell, neighbor)) {
+				if (!grid.adjacent(cell, neighbor)) {
 					grid.addEdge(cell, neighbor);
 				}
 			} else {
-				if (grid.hasEdge(cell, neighbor)) {
+				if (grid.adjacent(cell, neighbor)) {
 					grid.removeEdge(cell, neighbor);
 				}
 			}

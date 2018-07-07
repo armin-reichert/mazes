@@ -5,7 +5,9 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
- * Interface for undirected graph with vertex and edge labels.
+ * Interface for a graph with vertex and edge labels. Vertices are integers which may be labeled by
+ * some arbitrary label objects of a given type. Edges can also be labeled by objects an arbitrary
+ * type.
  * 
  * @author Armin Reichert
  *
@@ -17,7 +19,7 @@ import java.util.stream.Stream;
 public interface Graph<V, E> extends VertexLabels<V>, EdgeLabels<E> {
 
 	/**
-	 * @return stream of the vertex indices of this graph
+	 * @return stream of the vertices of this graph
 	 */
 	IntStream vertices();
 
@@ -41,20 +43,45 @@ public interface Graph<V, E> extends VertexLabels<V>, EdgeLabels<E> {
 	}
 
 	/**
-	 * Adds the given vertex (index) to this graph.
+	 * Adds the given vertex to this graph.
 	 * 
 	 * @param v
-	 *          a vertex index
+	 *          a vertex
 	 */
 	void addVertex(int v);
 
 	/**
-	 * Removes the given vertex (index) from this graph.
+	 * Removes the given vertex from this graph.
 	 * 
 	 * @param v
-	 *          a vertex index
+	 *          a vertex
 	 */
 	void removeVertex(int v);
+
+	/**
+	 * @param v
+	 *          a vertex
+	 * @return all "adjacent" vertices (connected by some edge) to the given vertex
+	 */
+	IntStream adj(int v);
+
+	/**
+	 * Tells if the given vertices are connected by some edge.
+	 * 
+	 * @param v
+	 *          a vertex
+	 * @param w
+	 *          a vertex
+	 * @return {@code true} if there exists an edge between the vertices
+	 */
+	boolean adjacent(int v, int w);
+
+	/**
+	 * @param v
+	 *          a vertex
+	 * @return the number of vertices adjacent to <code>v</code>
+	 */
+	int degree(int v);
 
 	/**
 	 * Adds an edge between the given vertices.
@@ -67,7 +94,7 @@ public interface Graph<V, E> extends VertexLabels<V>, EdgeLabels<E> {
 	void addEdge(int v, int w);
 
 	/**
-	 * Adds an edge between the given vertices.
+	 * Adds an edge wit a label between the given vertices.
 	 * 
 	 * @param v
 	 *          a vertex
@@ -76,7 +103,7 @@ public interface Graph<V, E> extends VertexLabels<V>, EdgeLabels<E> {
 	 * @param e
 	 *          edge label
 	 */
-	void addEdge(int u, int v, E e);
+	void addEdge(int v, int w, E e);
 
 	/**
 	 * @param v
@@ -88,7 +115,7 @@ public interface Graph<V, E> extends VertexLabels<V>, EdgeLabels<E> {
 	Optional<Edge> edge(int v, int w);
 
 	/**
-	 * Removes the edge between the given vertices from this graph.
+	 * Removes the edge between the given vertices.
 	 * 
 	 * @param edge
 	 *          an edge
@@ -109,29 +136,4 @@ public interface Graph<V, E> extends VertexLabels<V>, EdgeLabels<E> {
 	 * Removes all edges from this graph.
 	 */
 	void removeEdges();
-
-	/**
-	 * @param v
-	 *          a vertex
-	 * @return all vertices adjacent to the given vertex
-	 */
-	IntStream adj(int v);
-
-	/**
-	 * Tells if the given vertices are connected by an edge.
-	 * 
-	 * @param v
-	 *          some vertex
-	 * @param w
-	 *          some vertex
-	 * @return {@code true} if there exists an edge between the vertices
-	 */
-	boolean hasEdge(int v, int w);
-
-	/**
-	 * @param v
-	 *          a vertex
-	 * @return the number of vertices adjacent to <code>v</code>
-	 */
-	int degree(int v);
 }
