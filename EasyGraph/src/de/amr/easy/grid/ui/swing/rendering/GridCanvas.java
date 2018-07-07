@@ -11,6 +11,7 @@ import java.util.Optional;
 import javax.swing.JComponent;
 
 import de.amr.easy.data.Stack;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.impl.GridGraph;
 
 /**
@@ -21,11 +22,11 @@ import de.amr.easy.grid.impl.GridGraph;
 public class GridCanvas extends JComponent {
 
 	protected final Stack<GridRenderer> rendererStack = new Stack<>();
-	protected GridGraph<?, ?> grid;
+	protected GridGraph2D<?, ?> grid;
 	protected BufferedImage buffer;
 	protected Graphics2D g2;
 
-	public GridCanvas(GridGraph<?, ?> grid, int cellSize) {
+	public GridCanvas(GridGraph2D<?, ?> grid, int cellSize) {
 		if (grid == null) {
 			throw new IllegalArgumentException("No grid specified");
 		}
@@ -34,7 +35,7 @@ public class GridCanvas extends JComponent {
 		resizeTo(cellSize);
 	}
 
-	public GridGraph<?, ?> getGrid() {
+	public GridGraph2D<?, ?> getGrid() {
 		return grid;
 	}
 

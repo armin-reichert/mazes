@@ -2,7 +2,7 @@ package de.amr.easy.grid.ui.swing.rendering;
 
 import java.awt.Graphics2D;
 
-import de.amr.easy.grid.impl.GridGraph;
+import de.amr.easy.grid.api.GridGraph2D;
 
 /**
  * Common interface for grid renderer implementations.
@@ -24,7 +24,7 @@ public interface GridRenderer {
 	 * @param grid
 	 *          the grid graph
 	 */
-	default void drawGrid(Graphics2D g, GridGraph<?, ?> grid) {
+	default void drawGrid(Graphics2D g, GridGraph2D<?, ?> grid) {
 		grid.edges().forEach(edge -> drawPassage(g, grid, edge.either(), edge.other(), true));
 		grid.vertices().forEach(cell -> drawCell(g, grid, cell));
 	}
@@ -43,7 +43,7 @@ public interface GridRenderer {
 	 * @param visible
 	 *          if {@code true} the edge is drawn, otherwise is is hidden
 	 */
-	void drawPassage(Graphics2D g, GridGraph<?, ?> grid, int either, int other, boolean visible);
+	void drawPassage(Graphics2D g, GridGraph2D<?, ?> grid, int either, int other, boolean visible);
 
 	/**
 	 * Draws a single grid "cell".
@@ -55,5 +55,5 @@ public interface GridRenderer {
 	 * @param cell
 	 *          the cell
 	 */
-	void drawCell(Graphics2D g, GridGraph<?, ?> grid, int cell);
+	void drawCell(Graphics2D g, GridGraph2D<?, ?> grid, int cell);
 }

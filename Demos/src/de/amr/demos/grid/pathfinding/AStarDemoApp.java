@@ -31,6 +31,7 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import de.amr.easy.graph.api.UndirectedEdge;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.graph.impl.traversal.AStarTraversal;
+import de.amr.easy.grid.api.GridGraph2D;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.GridGraph;
 import de.amr.easy.grid.impl.Top8;
@@ -63,8 +64,8 @@ public class AStarDemoApp {
 	// model
 	private int source;
 	private int target;
-	private GridGraph<Tile, Integer> grid;
-	private AStarTraversal<Tile> astar;
+	private GridGraph2D<Tile, Integer> grid;
+	private AStarTraversal<?> astar;
 	private BitSet solution;
 	private BiFunction<Integer, Integer, Integer> fnEuclidean;
 
