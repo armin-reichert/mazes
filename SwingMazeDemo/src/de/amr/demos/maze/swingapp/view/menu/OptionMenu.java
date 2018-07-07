@@ -45,7 +45,8 @@ public class OptionMenu extends JMenu {
 		JMenu menu = new JMenu(title);
 		ButtonGroup group = new ButtonGroup();
 		for (GridPosition pos : GridPosition.values()) {
-			JRadioButtonMenuItem radio = new JRadioButtonMenuItem(pos.toString());
+			JRadioButtonMenuItem radio = new JRadioButtonMenuItem();
+			radio.setText(app.texts.getString(pos.name()));
 			radio.setSelected(pos == selection.get());
 			radio.addItemListener(e -> {
 				if (e.getStateChange() == ItemEvent.SELECTED) {

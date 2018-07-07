@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.DisplayMode;
 import java.awt.EventQueue;
 import java.awt.GraphicsEnvironment;
+import java.util.ResourceBundle;
 
 import javax.swing.Action;
 import javax.swing.KeyStroke;
@@ -57,6 +58,7 @@ public class MazeDemoApp {
 	public static final DisplayMode DISPLAY_MODE = GraphicsEnvironment.getLocalGraphicsEnvironment()
 			.getDefaultScreenDevice().getDisplayMode();
 
+	public final ResourceBundle texts = ResourceBundle.getBundle("texts");
 	public final MazeDemoModel model;
 	public final SettingsWindow wndSettings;
 	public final DisplayAreaWindow wndDisplayArea;
