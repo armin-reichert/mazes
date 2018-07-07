@@ -5,24 +5,24 @@ package de.amr.easy.graph.api;
  * 
  * @author Armin Reichert
  *
- * @param <E>
+ * @param <W>
  *          edge weight type
  */
-public class WeightedEdge<E extends Comparable<E>> extends UndirectedEdge implements Comparable<WeightedEdge<E>> {
+public class WeightedEdge<W extends Comparable<W>> extends UndirectedEdge implements Comparable<WeightedEdge<W>> {
 
-	private final E weight;
+	private final W weight;
 
-	public WeightedEdge(int u, int v, E label) {
+	public WeightedEdge(int u, int v, W weight) {
 		super(u, v);
-		this.weight = label;
+		this.weight = weight;
 	}
 
-	public E getWeight() {
+	public W getWeight() {
 		return weight;
 	}
 
 	@Override
-	public int compareTo(WeightedEdge<E> other) {
+	public int compareTo(WeightedEdge<W> other) {
 		if (weight == null) {
 			return other.weight == null ? 0 : 1;
 		}
