@@ -15,13 +15,6 @@ public interface Topology {
 	IntStream dirs();
 
 	/**
-	 * @param dir
-	 *          direction
-	 * @return readable name for given direction
-	 */
-	String getName(int dir);
-
-	/**
 	 * @return the number of directions of this topology
 	 */
 	int dirCount();

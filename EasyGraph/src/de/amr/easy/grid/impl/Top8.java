@@ -11,12 +11,6 @@ import de.amr.easy.grid.api.Topology;
  */
 public class Top8 implements Topology {
 
-	private static final Top8 INSTANCE = new Top8();
-
-	private static final int DX[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
-	private static final int DY[] = { -1, -1, 0, 1, 1, 1, 0, -1 };
-	private static final String NAMES[] = { "N", "NE", "E", "SE", "S", "SW", "W", "NW" };
-
 	public static final int N = 0;
 	public static final int NE = 1;
 	public static final int E = 2;
@@ -26,14 +20,11 @@ public class Top8 implements Topology {
 	public static final int W = 6;
 	public static final int NW = 7;
 
-	/**
-	 * @return the singleton instance of this topology
-	 */
-	public static Top8 get() {
-		return INSTANCE;
-	}
+	private static final int[][] VEC = { { 0, -1 }, { 1, -1 }, { 1, 0 }, { 1, 1 }, { 0, 1 }, { -1, 1 }, { -1, 0 },
+			{ -1, -1 } };
 
-	private Top8() {
+	public static Top8 get() {
+		return new Top8();
 	}
 
 	@Override
@@ -44,11 +35,6 @@ public class Top8 implements Topology {
 	@Override
 	public int dirCount() {
 		return 8;
-	}
-
-	@Override
-	public String getName(int dir) {
-		return NAMES[dir];
 	}
 
 	@Override
@@ -68,11 +54,11 @@ public class Top8 implements Topology {
 
 	@Override
 	public int dx(int dir) {
-		return DX[dir];
+		return VEC[dir][0];
 	}
 
 	@Override
 	public int dy(int dir) {
-		return DY[dir];
+		return VEC[dir][1];
 	};
 }
