@@ -19,7 +19,6 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.util.BitSet;
 import java.util.List;
-import java.util.function.BiFunction;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -48,34 +47,33 @@ import de.amr.easy.util.StopWatch;
  */
 public class AStarDemoApp {
 
-	enum Tile {
-		WALL, FREE;
-	}
-
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(NimbusLookAndFeel.class.getCanonicalName());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		EventQueue.invokeLater(() -> new AStarDemoApp(20, 20, 40));
+		EventQueue.invokeLater(() -> new AStarDemoApp(20, 20, 800));
 	}
 
 	// model
+	enum Tile {
+		FREE, WALL;
+	}
+
+	private GridGraph2D<Tile, Integer> map;
 	private int source;
 	private int target;
-	private GridGraph2D<Tile, Integer> grid;
 	private AStarTraversal<?> astar;
 	private BitSet solution;
-	private BiFunction<Integer, Integer, Integer> fnEuclidean;
 
 	// UI
 	private int draggedCell;
 	private int popupCell;
 	private int cellSize;
+	private int wallSize = 1;
 	private JFrame window;
 	private GridCanvas canvas;
-	private int wallSize = 1;
 	private JPopupMenu popupMenu;
 
 	private Action actionSetSource = new AbstractAction("Set Source Here") {
@@ -143,14 +141,13 @@ public class AStarDemoApp {
 		}
 	};
 
-	public AStarDemoApp(int numCols, int numRows, int cellSize) {
-		grid = new GridGraph<>(numCols, numRows, Top8.get(), UNVISITED, (u, v) -> 1, UndirectedEdge::new);
-		fnEuclidean = (u, v) -> (int) round(10 * sqrt(grid.euclidean2(u, v)));
-		grid.setDefaultEdgeLabel(fnEuclidean);
-		fillGrid();
-		this.cellSize = cellSize;
-		source = grid.cell(GridPosition.TOP_LEFT);
-		target = grid.cell(GridPosition.BOTTOM_RIGHT);
+	public AStarDemoApp(int numCols, int numRows, int canvasSize) {
+		map = new GridGraph<>(numCols, numRows, Top8.get(), UNVISITED, (u, v) -> getDistance(u, v), UndirectedEdge::new);
+		map.fill();
+		GraphUtils.print(map, System.out);
+		cellSize = canvasSize / numCols;
+		source = map.cell(GridPosition.TOP_LEFT);
+		target = map.cell(GridPosition.BOTTOM_RIGHT);
 		popupCell = -1;
 		draggedCell = -1;
 		solution = new BitSet();
@@ -158,13 +155,12 @@ public class AStarDemoApp {
 		updatePath();
 	}
 
-	private void fillGrid() {
-		grid.fill();
-		GraphUtils.print(grid, System.out);
+	private int getDistance(int u, int v) {
+		return (int) round(10 * sqrt(map.euclidean2(u, v)));
 	}
 
 	private void createUI() {
-		canvas = new GridCanvas(grid, cellSize);
+		canvas = new GridCanvas(map, cellSize);
 		canvas.pushRenderer(createRenderer());
 		canvas.requestFocus();
 		canvas.drawGrid();
@@ -185,7 +181,6 @@ public class AStarDemoApp {
 		popupMenu.add(actionSetTarget);
 		popupMenu.addSeparator();
 		popupMenu.add(actionResetScene);
-		popupMenu.addSeparator();
 	}
 
 	private ConfigurableGridRenderer createRenderer() {
@@ -198,9 +193,6 @@ public class AStarDemoApp {
 			if (cell == target) {
 				return Color.BLUE;
 			}
-			if (isWall(cell)) {
-				return new Color(139, 69, 19);
-			}
 			if (solution != null && solution.get(cell)) {
 				return Color.RED.brighter();
 			}
@@ -211,6 +203,9 @@ public class AStarDemoApp {
 				if (astar.getState(cell) == AStarTraversal.OPEN) {
 					return new Color(220, 220, 220);
 				}
+			}
+			if (map.get(cell) == WALL) {
+				return new Color(139, 69, 19);
 			}
 			return Color.WHITE;
 		};
@@ -246,19 +241,19 @@ public class AStarDemoApp {
 	}
 
 	private void resetScene() {
-		source = grid.cell(GridPosition.TOP_LEFT);
-		target = grid.cell(GridPosition.BOTTOM_RIGHT);
-		grid.vertices().forEach(cell -> setCell(cell, FREE));
+		source = map.cell(GridPosition.TOP_LEFT);
+		target = map.cell(GridPosition.BOTTOM_RIGHT);
+		map.vertices().forEach(cell -> setCell(cell, FREE));
 		astar = null;
 		solution.clear();
 	}
 
 	private void computePath() {
-		astar = new AStarTraversal<>(grid, fnEuclidean);
+		astar = new AStarTraversal<>(map, this::getDistance);
 		StopWatch watch = new StopWatch();
 		watch.measure(() -> astar.traverseGraph(source, target));
 		List<Integer> path = astar.path(target);
-		solution = new BitSet(grid.numVertices());
+		solution = new BitSet(map.numVertices());
 		path.forEach(solution::set);
 		System.out.println(String.format("A*: %.4f seconds", watch.getSeconds()));
 		System.out.println(String.format("Path length: %d", path.size()));
@@ -270,27 +265,23 @@ public class AStarDemoApp {
 	}
 
 	private int cellAt(int x, int y) {
-		int gridX = min(x / cellSize, grid.numCols() - 1), gridY = min(y / cellSize, grid.numRows() - 1);
-		return grid.cell(gridX, gridY);
-	}
-
-	private boolean isWall(int cell) {
-		return grid.get(cell) == WALL;
+		int gridX = min(x / cellSize, map.numCols() - 1), gridY = min(y / cellSize, map.numRows() - 1);
+		return map.cell(gridX, gridY);
 	}
 
 	private void setCell(int cell, Tile type) {
-		if (cell == source || cell == target || grid.get(cell) == type) {
+		if (cell == source || cell == target || map.get(cell) == type) {
 			return;
 		}
-		grid.set(cell, type);
-		grid.neighbors(cell).forEach(neighbor -> {
+		map.set(cell, type);
+		map.neighbors(cell).forEach(neighbor -> {
 			if (type == FREE) {
-				if (!grid.adjacent(cell, neighbor)) {
-					grid.addEdge(cell, neighbor);
+				if (!map.adjacent(cell, neighbor)) {
+					map.addEdge(cell, neighbor);
 				}
 			} else {
-				if (grid.adjacent(cell, neighbor)) {
-					grid.removeEdge(cell, neighbor);
+				if (map.adjacent(cell, neighbor)) {
+					map.removeEdge(cell, neighbor);
 				}
 			}
 		});
