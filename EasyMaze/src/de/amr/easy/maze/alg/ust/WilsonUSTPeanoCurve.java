@@ -10,7 +10,6 @@ import static java.util.Arrays.stream;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.grid.curves.Curve;
 import de.amr.easy.grid.curves.PeanoCurve;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
@@ -32,7 +31,7 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 		int[] walkStartCells = new int[grid.numVertices()];
 		int n = nextPow(3, max(grid.numCols(), grid.numRows()));
 		OrthogonalGrid square = emptyGrid(n, n, UNVISITED);
-		Curve peano = new PeanoCurve(log(3, n));
+		PeanoCurve peano = new PeanoCurve(log(3, n));
 		int current = square.cell(BOTTOM_LEFT);
 		addCell(walkStartCells, square.col(current), square.row(current));
 		for (int dir : peano) {

@@ -9,7 +9,6 @@ import static java.util.Arrays.stream;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.grid.curves.Curve;
 import de.amr.easy.grid.curves.MooreLCurve;
 import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
@@ -29,7 +28,7 @@ public class WilsonUSTMooreCurve extends WilsonUST {
 		int[] walkStartCells = new int[grid.numVertices()];
 		int n = nextPow(2, max(grid.numCols(), grid.numRows()));
 		OrthogonalGrid square = emptyGrid(n, n, UNVISITED);
-		Curve mooreCurve = new MooreLCurve(log(2, n));
+		MooreLCurve mooreCurve = new MooreLCurve(log(2, n));
 		int cell = square.cell(n / 2, n - 1);
 		int i = 0;
 		if (grid.isValidCol(n / 2) && grid.isValidRow(n - 1)) {

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import de.amr.easy.grid.api.CellSequence;
+
 /**
  * Computes a Hilbert curve as a list of directions.
  * <p>
@@ -16,7 +18,7 @@ import java.util.List;
  *
  * @author Armin Reichert
  */
-public class HilbertCurve implements Curve {
+public class HilbertCurve implements CellSequence {
 
 	private final List<Integer> dirs = new ArrayList<>();
 
