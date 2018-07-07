@@ -11,15 +11,15 @@ import org.junit.Test;
 
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.UndirectedEdge;
-import de.amr.easy.graph.impl.DefaultGraph;
+import de.amr.easy.graph.impl.UGraph;
 
-public class DefaultGraphTests {
+public class UGraphTests {
 
-	private DefaultGraph<Void, Void> g;
+	private UGraph<Void, Void> g;
 
 	@Before
 	public void setUp() {
-		g = new DefaultGraph<>(UndirectedEdge::new);
+		g = new UGraph<>();
 	}
 
 	@Test

@@ -13,11 +13,15 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import de.amr.easy.graph.api.Edge;
+import de.amr.easy.graph.api.EdgeLabels;
 import de.amr.easy.graph.api.Graph;
+import de.amr.easy.graph.api.UndirectedEdge;
 import de.amr.easy.graph.api.VertexLabels;
 
 /**
  * Adjacency set based implementation of an undirected graph.
+ * 
+ * TODO: thorough testing
  * 
  * @author Armin Reichert
  * 
@@ -26,16 +30,15 @@ import de.amr.easy.graph.api.VertexLabels;
  * @param <E>
  *          edge type
  */
-public class DefaultGraph<V, E> implements Graph<V, E> {
+public class UGraph<V, E> implements Graph<V, E> {
 
 	protected final VertexLabels<V> vertexLabels = new VertexLabelsMap<>(null);
-	protected final BiFunction<Integer, Integer, Edge> fnEdgeFactory;
+	protected final EdgeLabels<E> edgeLabels = new EdgeLabelsMap<>((u, v) -> null);
 	protected final Set<Integer> vertexSet = new HashSet<>();
 	protected final Map<Integer, Set<Edge>> adjEdges = new HashMap<>();
 	protected int numEdges; // number of undirected edges
 
-	public DefaultGraph(BiFunction<Integer, Integer, Edge> fnEdgeFactory) {
-		this.fnEdgeFactory = fnEdgeFactory;
+	public UGraph() {
 	}
 
 	@Override
@@ -44,11 +47,11 @@ public class DefaultGraph<V, E> implements Graph<V, E> {
 	}
 
 	@Override
-	public void set(int v, V vertex) {
+	public void set(int v, V label) {
 		if (!vertexSet.contains(v)) {
 			throw new IllegalStateException();
 		}
-		vertexLabels.set(v, vertex);
+		vertexLabels.set(v, label);
 	}
 
 	@Override
@@ -68,33 +71,27 @@ public class DefaultGraph<V, E> implements Graph<V, E> {
 
 	@Override
 	public void clearEdgeLabels() {
-		edges().forEach(edge -> {
-
-		});
+		edgeLabels.clearEdgeLabels();
 	}
 
 	@Override
 	public E getEdgeLabel(int u, int v) {
-		// TODO Auto-generated method stub
-		return null;
+		return edgeLabels.getEdgeLabel(u, v);
 	}
 
 	@Override
-	public void setEdgeLabel(int u, int v, E edge) {
-		// TODO Auto-generated method stub
-
+	public void setEdgeLabel(int u, int v, E e) {
+		edgeLabels.setEdgeLabel(u, v, e);
 	}
 
 	@Override
 	public void setDefaultEdgeLabel(BiFunction<Integer, Integer, E> fnDefaultLabel) {
-		// TODO Auto-generated method stub
-
+		edgeLabels.setDefaultEdgeLabel(fnDefaultLabel);
 	}
 
 	@Override
 	public E getDefaultEdgeLabel(int u, int v) {
-		// TODO Auto-generated method stub
-		return null;
+		return edgeLabels.getDefaultEdgeLabel(u, v);
 	}
 
 	@Override
@@ -116,7 +113,7 @@ public class DefaultGraph<V, E> implements Graph<V, E> {
 	public void addEdge(int v, int w, E e) {
 		assertVertexExists(v);
 		assertVertexExists(w);
-		Edge edge = fnEdgeFactory.apply(v, w);
+		Edge edge = new UndirectedEdge(v, w);
 		adjEdges.get(v).add(edge);
 		adjEdges.get(w).add(edge);
 		numEdges += 1;
@@ -126,7 +123,7 @@ public class DefaultGraph<V, E> implements Graph<V, E> {
 	public void addEdge(int v, int w) {
 		assertVertexExists(v);
 		assertVertexExists(w);
-		Edge edge = fnEdgeFactory.apply(v, w);
+		Edge edge = new UndirectedEdge(v, w);
 		adjEdges.get(v).add(edge);
 		adjEdges.get(w).add(edge);
 		numEdges += 1;
@@ -152,7 +149,6 @@ public class DefaultGraph<V, E> implements Graph<V, E> {
 			adjEdges.get(v).remove(edge);
 			adjEdges.get(w).remove(edge);
 			numEdges -= 1;
-
 		});
 	}
 
@@ -198,7 +194,7 @@ public class DefaultGraph<V, E> implements Graph<V, E> {
 
 	@Override
 	public Stream<Edge> edges() {
-		return createEdgeSet().stream(); // TODO more efficient way possible?
+		return createEdgeSet().stream();
 	}
 
 	@Override

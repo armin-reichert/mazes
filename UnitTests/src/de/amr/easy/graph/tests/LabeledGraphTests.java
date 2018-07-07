@@ -9,20 +9,19 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.graph.api.UndirectedEdge;
 import de.amr.easy.graph.api.event.GraphTraversalObserver;
 import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.graph.impl.DefaultGraph;
+import de.amr.easy.graph.impl.UGraph;
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal;
 
 public class LabeledGraphTests {
 
 	private class DFSTracer implements GraphTraversalObserver {
 
-		private final DefaultGraph<String, Integer> graph;
+		private final UGraph<String, Integer> graph;
 		private final List<Integer> trace = new ArrayList<>();
 
-		public DFSTracer(DefaultGraph<String, Integer> graph) {
+		public DFSTracer(UGraph<String, Integer> graph) {
 			this.graph = graph;
 		}
 
@@ -46,10 +45,10 @@ public class LabeledGraphTests {
 
 	};
 
-	private DefaultGraph<String, Integer> g;
+	private UGraph<String, Integer> g;
 
-	private DefaultGraph<String, Integer> createSampleGraph() {
-		DefaultGraph<String, Integer> g = new DefaultGraph<>(UndirectedEdge::new);
+	private UGraph<String, Integer> createSampleGraph() {
+		UGraph<String, Integer> g = new UGraph<>();
 		IntStream.range(0, 8).forEach(g::addVertex);
 		g.set(0, "S");
 		g.set(1, "A");
@@ -73,7 +72,7 @@ public class LabeledGraphTests {
 
 	@Before
 	public void setUp() {
-		g = new DefaultGraph<>(UndirectedEdge::new);
+		g = new UGraph<>();
 	}
 
 	@Test(expected = IllegalStateException.class)
@@ -99,7 +98,7 @@ public class LabeledGraphTests {
 
 	@Test
 	public void testSampleGraph() {
-		DefaultGraph<String, Integer> g = createSampleGraph();
+		UGraph<String, Integer> g = createSampleGraph();
 		Assert.assertTrue(g.adjacent(0, 1));
 		Assert.assertTrue(g.adjacent(1, 2));
 		Assert.assertTrue(g.adjacent(2, 3));
@@ -113,7 +112,7 @@ public class LabeledGraphTests {
 
 	@Test
 	public void testSampleGraphDFS() {
-		DefaultGraph<String, Integer> g = createSampleGraph();
+		UGraph<String, Integer> g = createSampleGraph();
 		DepthFirstTraversal dfs = new DepthFirstTraversal(g);
 		DFSTracer tracer = new DFSTracer(g);
 		dfs.addObserver(tracer);

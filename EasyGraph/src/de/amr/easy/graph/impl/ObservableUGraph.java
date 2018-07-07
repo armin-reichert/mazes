@@ -2,15 +2,13 @@ package de.amr.easy.graph.impl;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.BiFunction;
 
-import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.event.EdgeEvent;
 import de.amr.easy.graph.api.event.GraphObserver;
 import de.amr.easy.graph.api.event.ObservableGraph;
 
 /**
- * Adjacency set based implementation of an undirected, observable graph.
+ * Undirected graph that may be observed.
  * 
  * @author Armin Reichert
  * 
@@ -19,13 +17,12 @@ import de.amr.easy.graph.api.event.ObservableGraph;
  * @param <E>
  *          edge label type
  */
-public class DefaultObservableGraph<V, E> extends DefaultGraph<V, E> implements ObservableGraph<V, E> {
+public class ObservableUGraph<V, E> extends UGraph<V, E> implements ObservableGraph<V, E> {
 
 	private Set<GraphObserver<V, E>> observers = new HashSet<>();
 	private boolean eventsEnabled;
 
-	public DefaultObservableGraph(BiFunction<Integer, Integer, Edge> fnEdgeFactory) {
-		super(fnEdgeFactory);
+	public ObservableUGraph() {
 		eventsEnabled = true;
 	}
 
