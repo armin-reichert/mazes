@@ -7,28 +7,36 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Union-find data structure.
+ * Union-find data structure derived from the Python version at David Eppstein's
+ * <a href="http://www.ics.uci.edu/~eppstein/PADS">PADS site</a>.
  * 
+ * <p>
  * Each unionFind instance X maintains a family of disjoint sets of hashable objects, supporting the
  * following two methods:
- * 
- * - X.find(item) returns a name for the set containing the given item. Each set is named by an
+ * <ul>
+ * <li>X.find(item) returns a name for the set containing the given item. Each set is named by an
  * arbitrarily-chosen one of its members; as long as the set remains unchanged it will keep the same
  * name. If the item is not yet part of a set in X, a new singleton set is created for it.
  * 
- * - X.union(item1, item2, ...) merges the sets containing each item into a single larger set. If
+ * <li>X.union(item1, item2, ...) merges the sets containing each item into a single larger set. If
  * any item is not yet part of a set in X, it is added to X as one of the members of the merged set.
+ * </ul>
  * 
- * @param <T>
+ * <p>
+ * This implementation seems to perform worse than my {@link Partition} class so I used that other
+ * one for the maze algorithms.
  * 
  * @author Armin Reichert
  * 
  * @see http://www.ics.uci.edu/~eppstein/PADS/UnionFind.py
+ * 
+ * @param <T>
+ *          element type
  */
 public class UnionFind<T> implements Iterable<T> {
 
-	private final Map<T, Integer> weights = new HashMap<T, Integer>();
-	private final Map<T, T> parents = new HashMap<T, T>();
+	private final Map<T, Integer> weights = new HashMap<>();
+	private final Map<T, T> parents = new HashMap<>();
 	private int size = 0;
 
 	/** Create a new empty union-find structure. */
@@ -52,7 +60,7 @@ public class UnionFind<T> implements Iterable<T> {
 			return object;
 		}
 		// find path of objects leading to the root
-		List<T> path = new ArrayList<T>();
+		List<T> path = new ArrayList<>();
 		path.add(object);
 		T root = parents.get(object);
 		while (root != parents.get(root)) {
@@ -80,7 +88,7 @@ public class UnionFind<T> implements Iterable<T> {
 	/** Find the sets containing the objects and merge them all. */
 	@SuppressWarnings("unchecked")
 	public void union(T... objects) {
-		List<T> roots = new ArrayList<T>();
+		List<T> roots = new ArrayList<>();
 		for (T object : objects) {
 			roots.add(find(object));
 		}
