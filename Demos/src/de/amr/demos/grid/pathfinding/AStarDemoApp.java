@@ -71,7 +71,6 @@ public class AStarDemoApp {
 	private int draggedCell;
 	private int popupCell;
 	private int cellSize;
-	private int wallSize = 1;
 	private JFrame window;
 	private GridCanvas canvas;
 	private JPopupMenu popupMenu;
@@ -165,24 +164,19 @@ public class AStarDemoApp {
 		canvas = new GridCanvas(map, cellSize);
 		canvas.pushRenderer(createRenderer());
 		canvas.requestFocus();
-		canvas.drawGrid();
 		canvas.addMouseListener(mouseHandler);
 		canvas.addMouseMotionListener(mouseMotionHandler);
-		createPopupMenu();
+		popupMenu = new JPopupMenu();
+		popupMenu.add(actionSetSource);
+		popupMenu.add(actionSetTarget);
+		popupMenu.addSeparator();
+		popupMenu.add(actionResetScene);
 		window = new JFrame("A* demo application");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.add(canvas, BorderLayout.CENTER);
 		window.pack();
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
-	}
-
-	private void createPopupMenu() {
-		popupMenu = new JPopupMenu();
-		popupMenu.add(actionSetSource);
-		popupMenu.add(actionSetTarget);
-		popupMenu.addSeparator();
-		popupMenu.add(actionResetScene);
 	}
 
 	private ConfigurableGridRenderer createRenderer() {
@@ -229,7 +223,7 @@ public class AStarDemoApp {
 		};
 		r.fnTextFont = () -> new Font("Arial Narrow", Font.PLAIN, cellSize / 4);
 		r.fnMinFontSize = () -> 4;
-		r.fnPassageWidth = () -> cellSize - wallSize;
+		r.fnPassageWidth = () -> cellSize - 1;
 		r.fnPassageColor = (cell, dir) -> Color.WHITE;
 		return r;
 	}
@@ -271,13 +265,13 @@ public class AStarDemoApp {
 		return map.cell(gridX, gridY);
 	}
 
-	private void setTile(int cell, Tile type) {
-		if (cell == source || cell == target || map.get(cell) == type) {
+	private void setTile(int cell, Tile tile) {
+		if (cell == source || cell == target || map.get(cell) == tile) {
 			return;
 		}
-		map.set(cell, type);
+		map.set(cell, tile);
 		map.neighbors(cell).filter(neighbor -> map.get(neighbor) != WALL).forEach(neighbor -> {
-			if (type == FREE) {
+			if (tile == FREE) {
 				if (!map.adjacent(cell, neighbor)) {
 					map.addEdge(cell, neighbor);
 				}

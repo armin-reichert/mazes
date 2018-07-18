@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import de.amr.easy.graph.api.GraphTraversal;
 import de.amr.easy.graph.api.event.GraphTraversalObserver;
 import de.amr.easy.graph.api.traversal.TraversalState;
 
@@ -19,7 +20,7 @@ import de.amr.easy.graph.api.traversal.TraversalState;
  * 
  * @author Armin Reichert
  */
-public abstract class ObservableGraphTraversal {
+public abstract class ObservableGraphTraversal implements GraphTraversal {
 
 	private final Map<Integer, Integer> parentMap = new HashMap<>();
 
@@ -35,15 +36,6 @@ public abstract class ObservableGraphTraversal {
 		stateMap.clear();
 	}
 
-	/**
-	 * Traverses the graph starting from the given source until the target is reached.
-	 * 
-	 * @param source
-	 *          source vertex
-	 * @param target
-	 *          target vertex
-	 */
-	public abstract void traverseGraph(int source, int target);
 
 	/**
 	 * Traverses the graph starting from the given source until all reachable vertices are visited.
@@ -60,6 +52,7 @@ public abstract class ObservableGraphTraversal {
 	 *          target vertex
 	 * @return path from source to target vertex
 	 */
+	@Override
 	public List<Integer> path(int target) {
 		List<Integer> path = new ArrayList<>();
 		for (int v = target; v != -1; v = getParent(v)) {
