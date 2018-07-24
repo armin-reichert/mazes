@@ -3,7 +3,6 @@ package de.amr.easy.grid.ui.swing.rendering;
 import static java.lang.Math.ceil;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
@@ -143,7 +142,7 @@ public class WallPassageGridRenderer extends ConfigurableGridRenderer {
 			return;
 		}
 		g.setColor(getTextColor(cell));
-		g.setFont(getTextFont().deriveFont(Font.PLAIN, fontSize));
+		g.setFont(getTextFont().deriveFont(fontSize));
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		Rectangle textBox = g.getFontMetrics().getStringBounds(text, g).getBounds();
 		g.drawString(text, (getCellSize() - textBox.width) / 2, (getCellSize() + textBox.height / 2) / 2);
