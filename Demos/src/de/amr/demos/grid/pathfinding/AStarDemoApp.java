@@ -2,7 +2,6 @@ package de.amr.demos.grid.pathfinding;
 
 import static de.amr.demos.grid.pathfinding.AStarDemoApp.Tile.FREE;
 import static de.amr.demos.grid.pathfinding.AStarDemoApp.Tile.WALL;
-import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static java.lang.Math.min;
 import static java.lang.Math.round;
 import static java.lang.Math.sqrt;
@@ -57,7 +56,7 @@ public class AStarDemoApp {
 	}
 
 	// model
-	enum Tile {
+	public enum Tile {
 		FREE, WALL;
 	}
 
@@ -143,7 +142,8 @@ public class AStarDemoApp {
 	};
 
 	public AStarDemoApp(int numCols, int numRows, int canvasSize) {
-		map = new GridGraph<>(numCols, numRows, new Top8(), UNVISITED, (u, v) -> getDistance(u, v), UndirectedEdge::new);
+		map = new GridGraph<>(numCols, numRows, new Top8(), Tile.FREE, (u, v) -> getDistance(u, v),
+				UndirectedEdge::new);
 		map.fill();
 		GraphUtils.print(map, System.out);
 		cellSize = canvasSize / numCols;
