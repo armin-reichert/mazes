@@ -27,7 +27,7 @@ public class FullGridApp extends SwingGridSampleApp {
 			IntStream.of(512, 256, 128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 				setCellSize(cellSize);
 				setGridTopology(topology);
-				getGrid().setDefaultVertexLabel(COMPLETED);
+				getGrid().setDefaultVertexLabel(v -> COMPLETED);
 				getGrid().fill();
 				watch.measure(getCanvas()::drawGrid);
 				System.out.println(String.format("Grid (%d cells @%d) rendered in %.2f seconds", getGrid().numVertices(),

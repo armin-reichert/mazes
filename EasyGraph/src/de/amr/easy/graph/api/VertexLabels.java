@@ -1,5 +1,7 @@
 package de.amr.easy.graph.api;
 
+import java.util.function.Function;
+
 /**
  * Interface for labeling graph vertices.
  *
@@ -35,13 +37,13 @@ public interface VertexLabels<V> {
 	/**
 	 * Sets the default vertex label.
 	 * 
-	 * @param vertexLabel
-	 *          the default vertex label
+	 * @param fnDefaultLabel
+	 *          function providing the default vertex label
 	 */
-	void setDefaultVertexLabel(V vertexLabel);
+	void setDefaultVertexLabel(Function<Integer, V> fnDefaultLabel);
 
 	/**
-	 * @return the default vertex label of the graph
+	 * @return the default label of the given vertex
 	 */
-	V getDefaultVertexLabel();
+	V getDefaultVertexLabel(int v);
 }

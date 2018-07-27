@@ -2,6 +2,7 @@ package de.amr.easy.graph.impl;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 import de.amr.easy.graph.api.VertexLabels;
 
@@ -16,15 +17,15 @@ import de.amr.easy.graph.api.VertexLabels;
 public class VertexLabelsMap<V> implements VertexLabels<V> {
 
 	private final Map<Integer, V> labels = new HashMap<>();
-	private V defaultLabel;
+	private Function<Integer, V> fnDefaultLabel;
 
-	public VertexLabelsMap(V defaultLabel) {
-		this.defaultLabel = defaultLabel;
+	public VertexLabelsMap(Function<Integer, V> defaultLabel) {
+		this.fnDefaultLabel = defaultLabel;
 	}
 
 	@Override
 	public V get(int v) {
-		return labels.containsKey(v) ? labels.get(v) : defaultLabel;
+		return labels.containsKey(v) ? labels.get(v) : fnDefaultLabel.apply(v);
 	}
 
 	@Override
@@ -38,12 +39,12 @@ public class VertexLabelsMap<V> implements VertexLabels<V> {
 	}
 
 	@Override
-	public V getDefaultVertexLabel() {
-		return defaultLabel;
+	public V getDefaultVertexLabel(int v) {
+		return fnDefaultLabel.apply(v);
 	}
 
 	@Override
-	public void setDefaultVertexLabel(V label) {
-		defaultLabel = label;
+	public void setDefaultVertexLabel(Function<Integer, V> fnDefaultLabel) {
+		this.fnDefaultLabel = fnDefaultLabel;
 	}
 }

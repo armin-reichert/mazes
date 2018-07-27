@@ -1,5 +1,7 @@
 package de.amr.demos.grid.ui.experimental;
 
+import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -23,7 +25,8 @@ import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
  * 
  * @author Armin Reichert
  */
-public class LayeredGridCanvas<E> extends LayeredCanvas implements GraphObserver<TraversalState, E> {
+public class LayeredGridCanvas<E> extends LayeredCanvas
+		implements GraphObserver<TraversalState, E> {
 
 	private enum Layers {
 		Grid, Distances, Path
@@ -39,7 +42,8 @@ public class LayeredGridCanvas<E> extends LayeredCanvas implements GraphObserver
 	protected int maxDistance;
 	protected Iterable<Integer> path;
 
-	public LayeredGridCanvas(int width, int height, int cellSize, BiFunction<Integer, Integer, Edge> fnEdgeFactory) {
+	public LayeredGridCanvas(int width, int height, int cellSize,
+			BiFunction<Integer, Integer, Edge> fnEdgeFactory) {
 		super(width, height);
 		this.fnEdgeFactory = fnEdgeFactory;
 		this.cellSize = cellSize;
@@ -58,7 +62,7 @@ public class LayeredGridCanvas<E> extends LayeredCanvas implements GraphObserver
 		if (grid != null) {
 			grid.removeGraphObserver(this);
 		}
-		grid = new ObservableGridGraph<>(cols, rows, new Top4(), TraversalState.UNVISITED, null, fnEdgeFactory);
+		grid = new ObservableGridGraph<>(cols, rows, new Top4(), v -> UNVISITED, null, fnEdgeFactory);
 		grid.addGraphObserver(this);
 	}
 

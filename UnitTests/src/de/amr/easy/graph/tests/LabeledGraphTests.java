@@ -89,7 +89,7 @@ public class LabeledGraphTests {
 
 	@Test
 	public void testDefaultVertexLabel() {
-		g.setDefaultVertexLabel("42");
+		g.setDefaultVertexLabel(v -> "42");
 		g.addVertex(0);
 		Assert.assertEquals("42", g.get(0));
 		g.set(0, "43");

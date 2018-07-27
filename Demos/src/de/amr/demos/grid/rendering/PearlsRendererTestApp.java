@@ -7,7 +7,6 @@ import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation.floodFill;
 
 import de.amr.demos.grid.SwingGridSampleApp;
-import de.amr.demos.grid.SwingGridSampleApp.Style;
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
 import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
 import de.amr.easy.maze.alg.core.MazeGenerator;
@@ -34,7 +33,7 @@ public class PearlsRendererTestApp extends SwingGridSampleApp {
 	public void run() {
 		clear();
 		setCanvasAnimation(false);
-		getGrid().setDefaultVertexLabel(COMPLETED);
+		getGrid().setDefaultVertexLabel(v -> COMPLETED);
 		getGrid().fill();
 		getCanvas().drawGrid();
 
@@ -46,8 +45,8 @@ public class PearlsRendererTestApp extends SwingGridSampleApp {
 		generator.createMaze(0, 0);
 
 		sleep(2000);
-		new DepthFirstTraversalAnimation(getGrid()).run(getCanvas(), new DepthFirstTraversal2(getGrid()), 0,
-				getGrid().cell(BOTTOM_RIGHT));
+		new DepthFirstTraversalAnimation(getGrid()).run(getCanvas(),
+				new DepthFirstTraversal2(getGrid()), 0, getGrid().cell(BOTTOM_RIGHT));
 
 		sleep(2000);
 		getCanvas().clear();
@@ -57,7 +56,7 @@ public class PearlsRendererTestApp extends SwingGridSampleApp {
 	private void clear() {
 		getGrid().removeEdges();
 		getGrid().clearVertexLabels();
-		getGrid().setDefaultVertexLabel(UNVISITED);
+		getGrid().setDefaultVertexLabel(v -> UNVISITED);
 		getCanvas().clear();
 	}
 }

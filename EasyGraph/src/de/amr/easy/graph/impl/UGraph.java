@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -60,13 +61,13 @@ public class UGraph<V, E> implements Graph<V, E> {
 	}
 
 	@Override
-	public void setDefaultVertexLabel(V vertex) {
-		vertexLabels.setDefaultVertexLabel(vertex);
+	public void setDefaultVertexLabel(Function<Integer, V> fnDefaultLabel) {
+		vertexLabels.setDefaultVertexLabel(fnDefaultLabel);
 	}
 
 	@Override
-	public V getDefaultVertexLabel() {
-		return vertexLabels.getDefaultVertexLabel();
+	public V getDefaultVertexLabel(int v) {
+		return vertexLabels.getDefaultVertexLabel(v);
 	}
 
 	@Override

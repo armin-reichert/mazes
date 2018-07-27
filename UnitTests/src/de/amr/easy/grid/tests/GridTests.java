@@ -38,7 +38,7 @@ public class GridTests {
 
 	@Before
 	public void setUp() {
-		grid = new ObservableGridGraph<>(WIDTH, HEIGHT, new Top4(), UNVISITED, (u, v) -> 1, UndirectedEdge::new);
+		grid = new ObservableGridGraph<>(WIDTH, HEIGHT, new Top4(), v -> UNVISITED, (u, v) -> 1, UndirectedEdge::new);
 	}
 
 	@After

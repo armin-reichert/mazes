@@ -3,6 +3,7 @@ package de.amr.easy.grid.impl;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.event.EdgeEvent;
@@ -22,14 +23,16 @@ import de.amr.easy.grid.api.Topology;
  * @param <E>
  *          edge label type
  */
-public class ObservableGridGraph<V, E> extends GridGraph<V, E> implements ObservableGridGraph2D<V, E> {
+public class ObservableGridGraph<V, E> extends GridGraph<V, E>
+		implements ObservableGridGraph2D<V, E> {
 
 	private final Set<GraphObserver<V, E>> observers;
 	private boolean eventsEnabled;
 
-	public ObservableGridGraph(int numCols, int numRows, Topology top, V v,
-			BiFunction<Integer, Integer, E> fnDefaultEdgeLabel, BiFunction<Integer, Integer, Edge> fnEdgeFactory) {
-		super(numCols, numRows, top, v, fnDefaultEdgeLabel, fnEdgeFactory);
+	public ObservableGridGraph(int numCols, int numRows, Topology top,
+			Function<Integer, V> fnDefaultVertexLabel, BiFunction<Integer, Integer, E> fnDefaultEdgeLabel,
+			BiFunction<Integer, Integer, Edge> fnEdgeFactory) {
+		super(numCols, numRows, top, fnDefaultVertexLabel, fnDefaultEdgeLabel, fnEdgeFactory);
 		observers = new HashSet<>();
 		eventsEnabled = true;
 	}
@@ -41,8 +44,8 @@ public class ObservableGridGraph<V, E> extends GridGraph<V, E> implements Observ
 	}
 
 	@Override
-	public void setDefaultVertexLabel(V vertex) {
-		super.setDefaultVertexLabel(vertex);
+	public void setDefaultVertexLabel(Function<Integer, V> fnDefaultLabel) {
+		super.setDefaultVertexLabel(fnDefaultLabel);
 		fireGraphChange(this);
 	}
 

@@ -1,5 +1,7 @@
 package de.amr.easy.graph.impl;
 
+import java.util.function.Function;
+
 import de.amr.easy.graph.api.VertexLabels;
 
 /**
@@ -13,7 +15,7 @@ import de.amr.easy.graph.api.VertexLabels;
 public class VertexLabelsArray<V> implements VertexLabels<V> {
 
 	private Object[] labels;
-	private V defaultLabel;
+	private Function<Integer, V> fnDefaultLabel;
 
 	public VertexLabelsArray(int size) {
 		labels = new Object[size];
@@ -22,7 +24,7 @@ public class VertexLabelsArray<V> implements VertexLabels<V> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public V get(int v) {
-		return (V) (labels[v] != null ? labels[v] : defaultLabel);
+		return (V) (labels[v] != null ? labels[v] : fnDefaultLabel);
 	}
 
 	@Override
@@ -36,12 +38,12 @@ public class VertexLabelsArray<V> implements VertexLabels<V> {
 	}
 
 	@Override
-	public V getDefaultVertexLabel() {
-		return defaultLabel;
+	public V getDefaultVertexLabel(int v) {
+		return fnDefaultLabel.apply(v);
 	}
 
 	@Override
-	public void setDefaultVertexLabel(V label) {
-		defaultLabel = label;
+	public void setDefaultVertexLabel(Function<Integer, V> fnDefaultLabel) {
+		this.fnDefaultLabel = fnDefaultLabel;
 	}
 }

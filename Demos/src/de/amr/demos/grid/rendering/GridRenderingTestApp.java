@@ -26,7 +26,7 @@ public class GridRenderingTestApp extends SwingGridSampleApp {
 		setCanvasAnimation(false);
 		IntStream.of(256, 128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			setCellSize(cellSize);
-			getGrid().setDefaultVertexLabel(COMPLETED);
+			getGrid().setDefaultVertexLabel(v -> COMPLETED);
 			getGrid().fill();
 			watch.measure(getCanvas()::drawGrid);
 			out.println(
