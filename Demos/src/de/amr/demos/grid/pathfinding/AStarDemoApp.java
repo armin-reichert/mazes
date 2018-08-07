@@ -63,7 +63,7 @@ public class AStarDemoApp {
 	private GridGraph2D<Tile, Integer> map;
 	private int source;
 	private int target;
-	private AStarTraversal<?> astar;
+	private AStarTraversal<Tile, Integer> astar;
 	private BitSet solution;
 
 	// UI
@@ -245,7 +245,7 @@ public class AStarDemoApp {
 	}
 
 	private void computePath() {
-		astar = new AStarTraversal<>(map, this::getDistance);
+		astar = new AStarTraversal<>(map, i -> i, this::getDistance);
 		StopWatch watch = new StopWatch();
 		watch.measure(() -> astar.traverseGraph(source, target));
 		List<Integer> path = astar.path(target);

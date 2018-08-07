@@ -1,5 +1,7 @@
 package de.amr.easy.graph.impl.traversal;
 
+import java.util.function.Function;
+
 import de.amr.easy.graph.api.Graph;
 
 /**
@@ -10,10 +12,12 @@ import de.amr.easy.graph.api.Graph;
  *
  * @param <V>
  *          vertex label type
+ * @param <E>
+ *          edge label type
  */
-public class DijkstraTraversal<V> extends AStarTraversal<V> {
+public class DijkstraTraversal<V, E> extends AStarTraversal<V, E> {
 
-	public DijkstraTraversal(Graph<V, Integer> graph) {
-		super(graph, (u, v) -> 0);
+	public DijkstraTraversal(Graph<V, E> graph, Function<E, Integer> fnEdgeCost) {
+		super(graph, fnEdgeCost, (u, v) -> 0);
 	}
 }

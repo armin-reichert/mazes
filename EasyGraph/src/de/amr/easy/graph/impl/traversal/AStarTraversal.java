@@ -5,6 +5,7 @@ import static java.util.Comparator.comparingInt;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import de.amr.easy.graph.api.Graph;
 import de.amr.easy.graph.api.traversal.TraversalState;
@@ -29,16 +30,19 @@ import de.amr.easy.graph.api.traversal.TraversalState;
  * @see <a href="https://en.wikipedia.org/wiki/A*_search_algorithm">Wikipedia</a>
  * @see <a href="#">Patrick Henry Winston, Artificial Intelligence, Addison-Wesley, 1984</a>
  */
-public class AStarTraversal<V> extends BreadthFirstTraversal<V, Integer> {
+public class AStarTraversal<V, E> extends BreadthFirstTraversal<V, E> {
 
 	public static final TraversalState OPEN = TraversalState.VISITED;
 	public static final TraversalState CLOSED = TraversalState.COMPLETED;
 
+	private final Function<E, Integer> fnEdgeCost;
 	private final BiFunction<Integer, Integer, Integer> fnEstimatedDist;
 	private final int[] score;
 
-	public AStarTraversal(Graph<V, Integer> graph, BiFunction<Integer, Integer, Integer> fnEstimatedDist) {
+	public AStarTraversal(Graph<V, E> graph, Function<E, Integer> fnEdgeCost,
+			BiFunction<Integer, Integer, Integer> fnEstimatedDist) {
 		this.graph = graph;
+		this.fnEdgeCost = fnEdgeCost;
 		this.fnEstimatedDist = fnEstimatedDist;
 		score = new int[graph.numVertices()];
 		distFromSource = new int[graph.numVertices()];
@@ -69,7 +73,7 @@ public class AStarTraversal<V> extends BreadthFirstTraversal<V, Integer> {
 			int current = q.poll();
 			setState(current, CLOSED);
 			graph.adj(current).filter(neighbor -> getState(neighbor) != CLOSED).forEach(neighbor -> {
-				int newDist = distFromSource[current] + graph.getEdgeLabel(current, neighbor);
+				int newDist = distFromSource[current] + fnEdgeCost.apply(graph.getEdgeLabel(current, neighbor));
 				if (getState(neighbor) != OPEN || newDist < distFromSource[neighbor]) {
 					distFromSource[neighbor] = newDist;
 					score[neighbor] = newDist + fnEstimatedDist.apply(neighbor, target);

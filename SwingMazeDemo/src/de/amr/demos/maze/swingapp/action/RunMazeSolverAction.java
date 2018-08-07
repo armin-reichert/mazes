@@ -81,7 +81,7 @@ public class RunMazeSolverAction extends AbstractAction {
 		}
 
 		else if (solver.getAlgorithmClass() == DijkstraTraversal.class) {
-			DijkstraTraversal<?> dijkstra = new DijkstraTraversal<>(grid);
+			DijkstraTraversal<TraversalState, Integer> dijkstra = new DijkstraTraversal<>(grid, edge -> 1);
 			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), dijkstra, source, target));
 			app.showMessage(format("Dijkstra search: %.2f seconds.", watch.getSeconds()));
 			anim.showPath(app.wndDisplayArea.getCanvas(), dijkstra, target);
@@ -98,7 +98,7 @@ public class RunMazeSolverAction extends AbstractAction {
 
 		else if (solver.getAlgorithmClass() == AStarTraversal.class) {
 			getCostFunction(solver, grid).ifPresent(cost -> {
-				AStarTraversal<TraversalState> astar = new AStarTraversal<>(grid, cost);
+				AStarTraversal<TraversalState, Integer> astar = new AStarTraversal<>(grid, edge -> 1, cost);
 				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), astar, source, target));
 				app.showMessage(format("A* search (%s): %.2f seconds.", getHeuristicsName(solver), watch.getSeconds()));
 				anim.showPath(app.wndDisplayArea.getCanvas(), astar, target);
