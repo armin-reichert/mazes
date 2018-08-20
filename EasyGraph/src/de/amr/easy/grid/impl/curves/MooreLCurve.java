@@ -66,7 +66,7 @@ public class MooreLCurve implements CellSequence {
 	 * {@code S -> L f L + f + L f L}
 	 * 
 	 * @param i
-	 *          the recursion depth
+	 *            the recursion depth
 	 */
 	private void S(int i) {
 		if (i > 0) {
@@ -86,7 +86,7 @@ public class MooreLCurve implements CellSequence {
 	 * {@code L -> - R f + L f L + f R -}
 	 * 
 	 * @param i
-	 *          the recursion depth
+	 *            the recursion depth
 	 */
 	private void L(int i) {
 		if (i > 0) {
@@ -108,7 +108,7 @@ public class MooreLCurve implements CellSequence {
 	 * {@code R -> + L f - R f R - f L +}
 	 * 
 	 * @param i
-	 *          the recursion depth
+	 *            the recursion depth
 	 */
 	private void R(int i) {
 		if (i > 0) {

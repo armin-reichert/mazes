@@ -24,9 +24,9 @@ public class GraphUtils {
 	 * Prints the graph content to the given stream.
 	 * 
 	 * @param g
-	 *          a graph
+	 *              a graph
 	 * @param out
-	 *          output stream
+	 *              output stream
 	 */
 	public static void print(Graph<?, ?> g, PrintStream out) {
 		out.println(format("Graph: %d vertices, %d edges", g.numVertices(), g.numEdges()));
@@ -44,12 +44,12 @@ public class GraphUtils {
 	/**
 	 * Checks whether a graph contains a cycle.
 	 * 
-	 * @param <V>
-	 *          vertex label type
-	 * @param <E>
-	 *          edge label type
+	 * @param   <V>
+	 *            vertex label type
+	 * @param   <E>
+	 *            edge label type
 	 * @param g
-	 *          an undirected graph
+	 *            an undirected graph
 	 * @return {@code true} if the graph contains a cycle
 	 */
 	public static <V, E> boolean containsCycle(Graph<V, E> g) {
@@ -69,9 +69,9 @@ public class GraphUtils {
 	 * Checks if the given cells are connected by some path.
 	 * 
 	 * @param u
-	 *          a cell
+	 *            a cell
 	 * @param v
-	 *          a cell
+	 *            a cell
 	 * @return {@code true} if there exists a path connecting the given cells
 	 */
 	public static <V, E> boolean areConnected(Graph<V, E> graph, int u, int v) {
@@ -82,9 +82,9 @@ public class GraphUtils {
 
 	/**
 	 * @param base
-	 *          the base of the logarithm
+	 *               the base of the logarithm
 	 * @param n
-	 *          a number
+	 *               a number
 	 * @return the next lower integer to the logarithm of the number
 	 */
 	public static int log(int base, int n) {
@@ -97,9 +97,9 @@ public class GraphUtils {
 
 	/**
 	 * @param base
-	 *          base of power
+	 *               base of power
 	 * @param n
-	 *          number
+	 *               number
 	 * @return next integer which is greater or equals to n and a power of the given base
 	 */
 	public static int nextPow(int base, int n) {

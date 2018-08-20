@@ -101,7 +101,7 @@ public class Partition<E> implements Iterable<Partition<E>.Set> {
 	 * set, an exception is thrown.
 	 * 
 	 * @param el
-	 *          an element
+	 *             an element
 	 * @return a new set
 	 */
 	public Set makeSet(E el) {
@@ -118,7 +118,7 @@ public class Partition<E> implements Iterable<Partition<E>.Set> {
 	 * Returns the set (equivalence class) for the given element. Maybe creates a new set.
 	 * 
 	 * @param el
-	 *          element from the partitioned set
+	 *             element from the partitioned set
 	 * @return set (equivalence class) containing the given element (created on demand if not yet
 	 *         existing)
 	 */
@@ -145,9 +145,9 @@ public class Partition<E> implements Iterable<Partition<E>.Set> {
 	 * find-operations.
 	 * 
 	 * @param x
-	 *          first element
+	 *            first element
 	 * @param y
-	 *          second element
+	 *            second element
 	 */
 	public void union(E x, E y) {
 		Set cx = find(x), cy = find(y);

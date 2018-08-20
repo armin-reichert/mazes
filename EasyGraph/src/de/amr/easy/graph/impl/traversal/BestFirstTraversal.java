@@ -22,9 +22,9 @@ public class BestFirstTraversal<V, E, C extends Comparable<C>> extends BreadthFi
 	 * Creates a best-first traversal instance for the given graph and vertex cost function.
 	 * 
 	 * @param graph
-	 *          a graph
+	 *                 a graph
 	 * @param fnCost
-	 *          vertex cost function. Queue is always sorted by increasing cost.
+	 *                 vertex cost function. Queue is always sorted by increasing cost.
 	 */
 	public BestFirstTraversal(Graph<V, E> graph, Function<Integer, C> fnCost) {
 		this.graph = graph;

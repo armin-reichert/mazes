@@ -36,12 +36,11 @@ public abstract class ObservableGraphTraversal implements GraphTraversal {
 		stateMap.clear();
 	}
 
-
 	/**
 	 * Traverses the graph starting from the given source until all reachable vertices are visited.
 	 * 
 	 * @param source
-	 *          source vertex
+	 *                 source vertex
 	 */
 	public void traverseGraph(int source) {
 		traverseGraph(source, -1);
@@ -49,7 +48,7 @@ public abstract class ObservableGraphTraversal implements GraphTraversal {
 
 	/**
 	 * @param target
-	 *          target vertex
+	 *                 target vertex
 	 * @return path from source to target vertex
 	 */
 	@Override

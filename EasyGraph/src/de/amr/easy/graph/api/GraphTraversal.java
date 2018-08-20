@@ -8,15 +8,15 @@ public interface GraphTraversal {
 	 * Traverses the graph starting from the given source until the target is reached.
 	 * 
 	 * @param source
-	 *          source vertex
+	 *                 source vertex
 	 * @param target
-	 *          target vertex
+	 *                 target vertex
 	 */
 	void traverseGraph(int source, int target);
 
 	/**
 	 * @param target
-	 *          target vertex
+	 *                 target vertex
 	 * @return path from source to target vertex
 	 */
 	List<Integer> path(int target);

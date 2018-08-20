@@ -35,7 +35,7 @@ public interface Multigraph {
 	 * Adds the given vertex to this graph.
 	 * 
 	 * @param vertex
-	 *          a vertex
+	 *                 a vertex
 	 */
 	void addVertex(int vertex);
 
@@ -43,15 +43,15 @@ public interface Multigraph {
 	 * Connects the given vertices.
 	 * 
 	 * @param edge
-	 *          an edge
+	 *               an edge
 	 */
 	void addEdge(Edge edge);
 
 	/**
 	 * @param v
-	 *          a vertex
+	 *            a vertex
 	 * @param w
-	 *          a vertex
+	 *            a vertex
 	 * @return the edges between the vertices if any
 	 */
 	Stream<Edge> edges(int v, int w);
@@ -60,9 +60,9 @@ public interface Multigraph {
 	 * Removes the edge between the given vertices.
 	 * 
 	 * @param u
-	 *          a vertex
+	 *            a vertex
 	 * @param v
-	 *          a vertex
+	 *            a vertex
 	 */
 	void removeEdge(int u, int v);
 
@@ -73,7 +73,7 @@ public interface Multigraph {
 
 	/**
 	 * @param v
-	 *          a vertex
+	 *            a vertex
 	 * @return all vertices adjacent to the given vertex
 	 */
 	IntStream adjVertices(int v);
@@ -82,16 +82,16 @@ public interface Multigraph {
 	 * Tells if the given vertices are "adjacent" that is connected by an edge.
 	 * 
 	 * @param v
-	 *          a vertex
+	 *            a vertex
 	 * @param w
-	 *          a vertex
+	 *            a vertex
 	 * @return <code>true</code> if there exists an edge between the vertices
 	 */
 	boolean adjacent(int v, int w);
 
 	/**
 	 * @param v
-	 *          a vertex
+	 *            a vertex
 	 * @return the number of vertices adjacent to <code>v</code>
 	 */
 	int degree(int v);

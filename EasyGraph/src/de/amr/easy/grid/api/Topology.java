@@ -23,28 +23,28 @@ public interface Topology {
 	 * TODO: this make no sense for odd number of directions
 	 * 
 	 * @param dir
-	 *          direction
+	 *              direction
 	 * @return opposite of given direction
 	 */
 	int inv(int dir);
 
 	/**
 	 * @param dir
-	 *          direction
+	 *              direction
 	 * @return direction left (counter-clockwise) of given direction
 	 */
 	int left(int dir);
 
 	/**
 	 * @param dir
-	 *          direction
+	 *              direction
 	 * @return direction right (clockwise) of given direction
 	 */
 	int right(int dir);
 
 	/**
 	 * @param dir
-	 *          direction
+	 *              direction
 	 * @return x-difference when moving towards given direction
 	 */
 	int dx(int dir);
@@ -52,7 +52,7 @@ public interface Topology {
 	/**
 	 * 
 	 * @param dir
-	 *          direction
+	 *              direction
 	 * @return y-difference when moving towards given direction
 	 */
 	int dy(int dir);

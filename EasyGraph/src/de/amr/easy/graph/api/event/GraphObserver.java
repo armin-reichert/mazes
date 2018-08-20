@@ -16,7 +16,7 @@ public interface GraphObserver<V, E> {
 	 * Called when a vertex has changed.
 	 * 
 	 * @param event
-	 *          information about the vertex change
+	 *                information about the vertex change
 	 */
 	void vertexChanged(VertexEvent<V, E> event);
 
@@ -24,7 +24,7 @@ public interface GraphObserver<V, E> {
 	 * Called when an edge has changed or was touched.
 	 * 
 	 * @param event
-	 *          information about the edge
+	 *                information about the edge
 	 */
 	void edgeChanged(EdgeEvent<V, E> event);
 
@@ -32,7 +32,7 @@ public interface GraphObserver<V, E> {
 	 * Called when an edge has been added.
 	 * 
 	 * @param event
-	 *          information about the new edge
+	 *                information about the new edge
 	 */
 	void edgeAdded(EdgeEvent<V, E> event);
 
@@ -40,7 +40,7 @@ public interface GraphObserver<V, E> {
 	 * Called when an edge has been removed.
 	 * 
 	 * @param event
-	 *          information about the removed edge
+	 *                information about the removed edge
 	 */
 	void edgeRemoved(EdgeEvent<V, E> event);
 
@@ -48,7 +48,7 @@ public interface GraphObserver<V, E> {
 	 * Called when the graph as a whole has changed.
 	 * 
 	 * @param graph
-	 *          the new or changed graph
+	 *                the new or changed graph
 	 */
 	void graphChanged(ObservableGraph<V, E> graph);
 }

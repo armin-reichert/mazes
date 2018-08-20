@@ -44,7 +44,7 @@ public class GifRecorder implements AutoCloseable {
 	 * Starts the recording.
 	 * 
 	 * @param gifFilePath
-	 *          path to the GIF file where the recording will be stored
+	 *                      path to the GIF file where the recording will be stored
 	 */
 	public void start(String gifFilePath) {
 		try {
@@ -67,7 +67,7 @@ public class GifRecorder implements AutoCloseable {
 	 * resulting file.
 	 * 
 	 * @param frame
-	 *          the frame to be added
+	 *                the frame to be added
 	 */
 	public void addFrame(RenderedImage frame) {
 		if (requests % scanRate == 0) {
@@ -107,7 +107,7 @@ public class GifRecorder implements AutoCloseable {
 	 * Specifies if the animation should loop.
 	 * 
 	 * @param loop
-	 *          if it should loop
+	 *               if it should loop
 	 */
 	public void setLoop(boolean loop) {
 		this.loop = loop;
@@ -117,7 +117,7 @@ public class GifRecorder implements AutoCloseable {
 	 * Sets the delay between frames.
 	 * 
 	 * @param delayMillis
-	 *          delay between frames in milliseconds
+	 *                      delay between frames in milliseconds
 	 */
 	public void setDelayMillis(int delayMillis) {
 		this.delayMillis = delayMillis;

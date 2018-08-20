@@ -21,8 +21,7 @@ public abstract class ConfigurableGridRenderer implements GridRenderer, GridRend
 	/** Function providing the grid background color. */
 	public Supplier<Color> fnGridBgColor;
 	/**
-	 * Function {@code (cell, direction) -> color} providing the passage color toward a given
-	 * direction.
+	 * Function {@code (cell, direction) -> color} providing the passage color toward a given direction.
 	 */
 	public BiFunction<Integer, Integer, Color> fnPassageColor;
 	/** Function providing the background color for a cell. */

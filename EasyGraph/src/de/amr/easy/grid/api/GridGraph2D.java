@@ -37,30 +37,30 @@ public interface GridGraph2D<V, E> extends Graph<V, E> {
 
 	/**
 	 * @param col
-	 *          a column index
+	 *              a column index
 	 * @param row
-	 *          a row index
+	 *              a row index
 	 * @return the cell index ("cell") for coordinate (col, row)
 	 */
 	int cell(int col, int row);
 
 	/**
 	 * @param position
-	 *          a symbolic grid position like TOP_LEFT
+	 *                   a symbolic grid position like TOP_LEFT
 	 * @return the cell index at the given position
 	 */
 	int cell(GridPosition position);
 
 	/**
 	 * @param cell
-	 *          a cell index
+	 *               a cell index
 	 * @return the column index of the given cell
 	 */
 	int col(int cell);
 
 	/**
 	 * @param cell
-	 *          a cell index
+	 *               a cell index
 	 * @return the row index of the given cell
 	 */
 	int row(int cell);
@@ -69,9 +69,9 @@ public interface GridGraph2D<V, E> extends Graph<V, E> {
 	 * Returns the Chebyshev distance between the given grid cells.
 	 * 
 	 * @param u
-	 *          grid cell
+	 *            grid cell
 	 * @param v
-	 *          grid cell
+	 *            grid cell
 	 * @return Chebyshev distance between cells
 	 */
 	default int chebyshev(int u, int v) {
@@ -83,9 +83,9 @@ public interface GridGraph2D<V, E> extends Graph<V, E> {
 	 * Returns the Manhattan distance between the given grid cells.
 	 * 
 	 * @param u
-	 *          grid cell
+	 *            grid cell
 	 * @param v
-	 *          grid cell
+	 *            grid cell
 	 * @return Manhattan distance between cells
 	 */
 	default int manhattan(int u, int v) {
@@ -97,9 +97,9 @@ public interface GridGraph2D<V, E> extends Graph<V, E> {
 	 * Returns the (squared) Euclidean distance between the given grid cells.
 	 * 
 	 * @param u
-	 *          grid cell
+	 *            grid cell
 	 * @param v
-	 *          grid cell
+	 *            grid cell
 	 * @return squared Euclidean distance between cells
 	 */
 	default int euclidean2(int u, int v) {
@@ -109,14 +109,14 @@ public interface GridGraph2D<V, E> extends Graph<V, E> {
 
 	/**
 	 * @param col
-	 *          the column index
+	 *              the column index
 	 * @return {@code true} if the given column index is valid
 	 */
 	boolean isValidCol(int col);
 
 	/**
 	 * @param row
-	 *          the row index
+	 *              the row index
 	 * @return if given row index is valid
 	 */
 	boolean isValidRow(int row);
@@ -125,29 +125,28 @@ public interface GridGraph2D<V, E> extends Graph<V, E> {
 	 * Returns all neighbors of a cell in the given directions.
 	 * 
 	 * @param cell
-	 *          a grid cell
+	 *               a grid cell
 	 * @param dirs
-	 *          a stream of directions
+	 *               a stream of directions
 	 * @return stream of the neighbor cells in the given directions
 	 */
 	IntStream neighbors(int cell, IntStream dirs);
 
 	/**
-	 * Returns all neighbors of a cell. A neighbor is a cell that possibly can be connected to the
-	 * cell by an edge. The neighbors are defined by the grid's topology (4 neighbors, 8 neighbors
-	 * etc.).
+	 * Returns all neighbors of a cell. A neighbor is a cell that possibly can be connected to the cell
+	 * by an edge. The neighbors are defined by the grid's topology (4 neighbors, 8 neighbors etc.).
 	 * 
 	 * @param cell
-	 *          a grid cell
+	 *               a grid cell
 	 * @return stream of all neighbor cells
 	 */
 	IntStream neighbors(int cell);
 
 	/**
 	 * @param cell
-	 *          a grid position
+	 *               a grid position
 	 * @param dir
-	 *          a direction
+	 *               a direction
 	 * @return the (optional) neighbor in the given direction
 	 */
 	OptionalInt neighbor(int cell, int dir);
@@ -156,28 +155,28 @@ public interface GridGraph2D<V, E> extends Graph<V, E> {
 	 * Tells if the given cells are "neighbors".
 	 * 
 	 * @param either
-	 *          either cell
+	 *                 either cell
 	 * @param other
-	 *          another cell
+	 *                 another cell
 	 * @return {@code true} if the cells are neighbors wrt. to the grid's topology
 	 */
 	boolean areNeighbors(int either, int other);
 
 	/**
 	 * @param cell
-	 *          a grid cell
+	 *               a grid cell
 	 * @param dir
-	 *          a direction
-	 * @return {@code true} if the cell is connected to the neighbor in the given direction
-	 *         ("passage", no "wall")
+	 *               a direction
+	 * @return {@code true} if the cell is connected to the neighbor in the given direction ("passage",
+	 *         no "wall")
 	 */
 	boolean isConnected(int cell, int dir);
 
 	/**
 	 * @param either
-	 *          either cell
+	 *                 either cell
 	 * @param other
-	 *          other cell
+	 *                 other cell
 	 * @return (optional) direction from either to other (if those cells are neighbors)
 	 */
 	OptionalInt direction(int either, int other);

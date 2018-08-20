@@ -35,7 +35,7 @@ public class Stack<T> implements Iterable<T> {
 	 * Pushes the given element on top of the stack.
 	 * 
 	 * @param e
-	 *          some element
+	 *            some element
 	 */
 	public void push(T e) {
 		Objects.requireNonNull(e);
@@ -47,7 +47,7 @@ public class Stack<T> implements Iterable<T> {
 	 * 
 	 * @return the top stack element
 	 * @throws NoSuchElementException
-	 *           if this stack is empty
+	 *                                  if this stack is empty
 	 */
 	public T pop() {
 		return stack.pop();
@@ -69,7 +69,7 @@ public class Stack<T> implements Iterable<T> {
 
 	/**
 	 * @param e
-	 *          some element
+	 *            some element
 	 * @return {@code true} if the element is contained in the stack
 	 */
 	public boolean contains(T e) {

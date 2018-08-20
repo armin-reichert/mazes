@@ -75,7 +75,7 @@ public class BreadthFirstTraversal<V, E> extends ObservableGraphTraversal {
 	 * The distance of the given vertex from the source.
 	 * 
 	 * @param v
-	 *          some vertex
+	 *            some vertex
 	 * @return the distance from the source or {@code -1} if the vertex is not reachable
 	 */
 	public int getDistFromSource(int v) {

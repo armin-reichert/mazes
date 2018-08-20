@@ -46,7 +46,7 @@ public interface Graph<V, E> extends VertexLabels<V>, EdgeLabels<E> {
 	 * Adds the given vertex to this graph.
 	 * 
 	 * @param v
-	 *          a vertex
+	 *            a vertex
 	 */
 	void addVertex(int v);
 
@@ -54,13 +54,13 @@ public interface Graph<V, E> extends VertexLabels<V>, EdgeLabels<E> {
 	 * Removes the given vertex from this graph.
 	 * 
 	 * @param v
-	 *          a vertex
+	 *            a vertex
 	 */
 	void removeVertex(int v);
 
 	/**
 	 * @param v
-	 *          a vertex
+	 *            a vertex
 	 * @return all "adjacent" vertices (connected by some edge) to the given vertex
 	 */
 	IntStream adj(int v);
@@ -69,16 +69,16 @@ public interface Graph<V, E> extends VertexLabels<V>, EdgeLabels<E> {
 	 * Tells if the given vertices are connected by some edge.
 	 * 
 	 * @param v
-	 *          a vertex
+	 *            a vertex
 	 * @param w
-	 *          a vertex
+	 *            a vertex
 	 * @return {@code true} if there exists an edge between the vertices
 	 */
 	boolean adjacent(int v, int w);
 
 	/**
 	 * @param v
-	 *          a vertex
+	 *            a vertex
 	 * @return the number of vertices adjacent to <code>v</code>
 	 */
 	int degree(int v);
@@ -87,9 +87,9 @@ public interface Graph<V, E> extends VertexLabels<V>, EdgeLabels<E> {
 	 * Adds an edge between the given vertices.
 	 * 
 	 * @param v
-	 *          a vertex
+	 *            a vertex
 	 * @param w
-	 *          a vertex
+	 *            a vertex
 	 */
 	void addEdge(int v, int w);
 
@@ -97,19 +97,19 @@ public interface Graph<V, E> extends VertexLabels<V>, EdgeLabels<E> {
 	 * Adds an edge wit a label between the given vertices.
 	 * 
 	 * @param v
-	 *          a vertex
+	 *            a vertex
 	 * @param w
-	 *          a vertex
+	 *            a vertex
 	 * @param e
-	 *          edge label
+	 *            edge label
 	 */
 	void addEdge(int v, int w, E e);
 
 	/**
 	 * @param v
-	 *          a vertex
+	 *            a vertex
 	 * @param w
-	 *          a vertex
+	 *            a vertex
 	 * @return the edge between the vertices if it exists
 	 */
 	Optional<Edge> edge(int v, int w);
@@ -118,7 +118,7 @@ public interface Graph<V, E> extends VertexLabels<V>, EdgeLabels<E> {
 	 * Removes the edge between the given vertices.
 	 * 
 	 * @param edge
-	 *          an edge
+	 *               an edge
 	 */
 	void removeEdge(int v, int w);
 
@@ -126,7 +126,7 @@ public interface Graph<V, E> extends VertexLabels<V>, EdgeLabels<E> {
 	 * Removes the given edge.
 	 * 
 	 * @param edge
-	 *          an edge
+	 *               an edge
 	 */
 	default void removeEdge(Edge edge) {
 		removeEdge(edge.either(), edge.other());

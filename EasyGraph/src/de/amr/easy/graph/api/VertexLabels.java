@@ -14,7 +14,7 @@ public interface VertexLabels<V> {
 	 * Returns the vertex label for the given vertex.
 	 * 
 	 * @param v
-	 *          a vertex
+	 *            a vertex
 	 * @return the label for the vertex or the default vertex label
 	 */
 	V get(int v);
@@ -23,9 +23,9 @@ public interface VertexLabels<V> {
 	 * Sets the vertex label for the given vertex.
 	 * 
 	 * @param v
-	 *          a vertex
+	 *                      a vertex
 	 * @param vertexLabel
-	 *          the vertex label for this vertex
+	 *                      the vertex label for this vertex
 	 */
 	void set(int v, V vertexLabel);
 
@@ -38,7 +38,7 @@ public interface VertexLabels<V> {
 	 * Sets the default vertex label.
 	 * 
 	 * @param fnDefaultLabel
-	 *          function providing the default vertex label
+	 *                         function providing the default vertex label
 	 */
 	void setDefaultVertexLabel(Function<Integer, V> fnDefaultLabel);
 

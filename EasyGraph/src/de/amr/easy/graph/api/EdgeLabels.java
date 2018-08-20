@@ -16,9 +16,9 @@ public interface EdgeLabels<E> {
 	 * Returns the edge label for the edge with the given end points.
 	 * 
 	 * @param u
-	 *          either end of edge
+	 *            either end of edge
 	 * @param v
-	 *          other end of edge
+	 *            other end of edge
 	 * @return the edge label for this edge if defined or the default edge label
 	 */
 	E getEdgeLabel(int u, int v);
@@ -27,11 +27,11 @@ public interface EdgeLabels<E> {
 	 * Sets the edge label for the edge with the given end points.
 	 * 
 	 * @param u
-	 *          either end of edge
+	 *            either end of edge
 	 * @param v
-	 *          other end of edge
+	 *            other end of edge
 	 * @param e
-	 *          edge label
+	 *            edge label
 	 */
 	void setEdgeLabel(int u, int v, E e);
 
@@ -44,7 +44,7 @@ public interface EdgeLabels<E> {
 	 * Sets the default edge label.
 	 * 
 	 * @param fnDefaultLabel
-	 *          function providing the default edge label
+	 *                         function providing the default edge label
 	 */
 	void setDefaultEdgeLabel(BiFunction<Integer, Integer, E> fnDefaultLabel);
 

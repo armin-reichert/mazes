@@ -61,7 +61,7 @@ public class HilbertLCurve implements CellSequence {
 	 * <code>A → − B f + A f A + f B −</code>
 	 * 
 	 * @param i
-	 *          the recursion depth
+	 *            the recursion depth
 	 */
 	private void A(int i) {
 		if (i > 0) {
@@ -83,7 +83,7 @@ public class HilbertLCurve implements CellSequence {
 	 * <code>B → + A f − B f B − f A +</code>
 	 * 
 	 * @param i
-	 *          the recursion depth
+	 *            the recursion depth
 	 */
 	private void B(int i) {
 		if (i > 0) {

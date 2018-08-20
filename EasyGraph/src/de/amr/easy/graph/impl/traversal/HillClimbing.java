@@ -27,9 +27,9 @@ public class HillClimbing<C extends Comparable<C>> extends DepthFirstTraversal {
 
 	/**
 	 * @param graph
-	 *          a graph
+	 *                a graph
 	 * @param cost
-	 *          cost function for vertices
+	 *                cost function for vertices
 	 */
 	public HillClimbing(Graph<?, ?> graph, Function<Integer, C> fnCost) {
 		super(graph);

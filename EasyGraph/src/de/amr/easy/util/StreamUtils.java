@@ -37,7 +37,7 @@ public class StreamUtils {
 	 * Returns a reversed version of a stream.
 	 * 
 	 * @param source
-	 *          some stream
+	 *                 some stream
 	 * @return the stream content in reversed order
 	 */
 	public static <T> Stream<T> reversed(Stream<T> source) {
@@ -48,7 +48,7 @@ public class StreamUtils {
 	 * Returns a reversed version of a stream of integer values.
 	 * 
 	 * @param source
-	 *          some stream
+	 *                 some stream
 	 * @return the stream content in reversed order
 	 */
 	public static IntStream reversed(IntStream source) {
@@ -59,7 +59,7 @@ public class StreamUtils {
 	 * Returns a permutation of a stream.
 	 * 
 	 * @param source
-	 *          some stream
+	 *                 some stream
 	 * @return the stream content in randomly permuted order
 	 */
 	public static <T> Stream<T> permute(Stream<T> source) {
@@ -70,7 +70,7 @@ public class StreamUtils {
 	 * Returns a permutation of a stream of integer values.
 	 * 
 	 * @param source
-	 *          some stream
+	 *                 some stream
 	 * @return the stream content in randomly permuted order
 	 */
 	public static IntStream permute(IntStream source) {
@@ -81,7 +81,7 @@ public class StreamUtils {
 	 * Returns a random element from a stream of integer values.
 	 * 
 	 * @param source
-	 *          some stream
+	 *                 some stream
 	 * @return a random (optional) element from the stream
 	 */
 	public static OptionalInt randomElement(IntStream source) {
@@ -92,7 +92,7 @@ public class StreamUtils {
 	 * Converts an iterable sequence to a stream.
 	 * 
 	 * @param sequence
-	 *          an iterable sequence
+	 *                   an iterable sequence
 	 * @return a stream of the sequence elements
 	 */
 	public static <T> Stream<T> toStream(Iterable<T> sequence) {
@@ -103,7 +103,7 @@ public class StreamUtils {
 	 * Converts an iterable sequence of integers to a stream.
 	 * 
 	 * @param sequence
-	 *          an iterable sequence of integers
+	 *                   an iterable sequence of integers
 	 * @return a stream of the sequence elements
 	 */
 	public static IntStream toIntStream(Iterable<Integer> sequence) {

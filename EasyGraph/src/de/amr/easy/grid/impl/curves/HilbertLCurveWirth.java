@@ -47,7 +47,7 @@ public class HilbertLCurveWirth implements CellSequence {
 	 * <code> A -> D w A s A e B </code>
 	 * 
 	 * @param i
-	 *          the recursion depth
+	 *            the recursion depth
 	 */
 	private void A(int i) {
 		if (i > 0) {
@@ -65,7 +65,7 @@ public class HilbertLCurveWirth implements CellSequence {
 	 * <code> B -> C n B e B s A</code>
 	 * 
 	 * @param i
-	 *          the recursion depth
+	 *            the recursion depth
 	 */
 	private void B(int i) {
 		if (i > 0) {
@@ -83,7 +83,7 @@ public class HilbertLCurveWirth implements CellSequence {
 	 * <code> C -> B e C n C w D</code>
 	 * 
 	 * @param i
-	 *          the recursion depth
+	 *            the recursion depth
 	 */
 	private void C(int i) {
 		if (i > 0) {
@@ -101,7 +101,7 @@ public class HilbertLCurveWirth implements CellSequence {
 	 * <code> D -> A s D w D n C</code>
 	 * 
 	 * @param i
-	 *          the recursion depth
+	 *            the recursion depth
 	 */
 	private void D(int i) {
 		if (i > 0) {

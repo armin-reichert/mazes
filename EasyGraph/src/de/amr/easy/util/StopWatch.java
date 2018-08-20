@@ -24,7 +24,7 @@ public class StopWatch {
 	 * Measures execution of given code.
 	 * 
 	 * @param code
-	 *          code that is executed and measured
+	 *               code that is executed and measured
 	 */
 	public void measure(Runnable code) {
 		start();

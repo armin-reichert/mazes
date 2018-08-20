@@ -32,11 +32,11 @@ public class BreadthFirstTraversalAnimation {
 	 * Runs a "flood-fill" on the given grid.
 	 * 
 	 * @param canvas
-	 *          grid canvas
+	 *                 grid canvas
 	 * @param grid
-	 *          grid
+	 *                 grid
 	 * @param source
-	 *          cell where flood-fill starts
+	 *                 cell where flood-fill starts
 	 */
 	public static void floodFill(GridCanvas canvas, GridGraph<?, ?> grid, int source) {
 		floodFill(canvas, grid, source, true);
@@ -46,13 +46,13 @@ public class BreadthFirstTraversalAnimation {
 	 * Runs a "flood-fill" on the given grid.
 	 * 
 	 * @param canvas
-	 *          grid canvas
+	 *                          grid canvas
 	 * @param grid
-	 *          grid
+	 *                          grid
 	 * @param source
-	 *          cell where flood-fill starts
+	 *                          cell where flood-fill starts
 	 * @param distanceVisible
-	 *          if distances should be displayed as text
+	 *                          if distances should be displayed as text
 	 */
 	public static void floodFill(GridCanvas canvas, GridGraph<?, ?> grid, int source, boolean distanceVisible) {
 		BreadthFirstTraversal<?, ?> bfs = new BreadthFirstTraversal<>(grid);
@@ -87,11 +87,11 @@ public class BreadthFirstTraversalAnimation {
 
 	/**
 	 * @param canvas
-	 *          grid canvas displaying the animation
+	 *                 grid canvas displaying the animation
 	 * @param source
-	 *          the source cell
+	 *                 the source cell
 	 * @param target
-	 *          the target cell
+	 *                 the target cell
 	 */
 	public void run(GridCanvas canvas, BreadthFirstTraversal<?, ?> bfs, int source, int target) {
 		canvas.getRenderer().ifPresent(canvasRenderer -> {

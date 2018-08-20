@@ -16,7 +16,7 @@ public interface ObservableGraph<V, E> extends Graph<V, E> {
 	 * Adds the given observer to this graph.
 	 * 
 	 * @param observer
-	 *          graph observer
+	 *                   graph observer
 	 */
 	void addGraphObserver(GraphObserver<V, E> observer);
 
@@ -24,7 +24,7 @@ public interface ObservableGraph<V, E> extends Graph<V, E> {
 	 * Removes the given observer to this graph.
 	 * 
 	 * @param observer
-	 *          graph observer
+	 *                   graph observer
 	 */
 	void removeGraphObserver(GraphObserver<V, E> observer);
 
@@ -32,7 +32,7 @@ public interface ObservableGraph<V, E> extends Graph<V, E> {
 	 * Enables/disables event firing.
 	 * 
 	 * @param enabled
-	 *          tells if events are raised
+	 *                  tells if events are raised
 	 */
 	void setEventsEnabled(boolean enabled);
 }

@@ -27,23 +27,23 @@ public interface GridRenderingModel {
 
 	/**
 	 * @param cell
-	 *          a cell
+	 *               a cell
 	 * @param dir
-	 *          a direction
+	 *               a direction
 	 * @return the color of the passage / edge towards the given direction
 	 */
 	Color getPassageColor(int cell, int dir);
 
 	/**
 	 * @param cell
-	 *          a cell
+	 *               a cell
 	 * @return the background color of the given cell
 	 */
 	Color getCellBgColor(int cell);
 
 	/**
 	 * @param cell
-	 *          a cell
+	 *               a cell
 	 * @return the text for the given cell
 	 */
 	String getText(int cell);
@@ -60,7 +60,7 @@ public interface GridRenderingModel {
 
 	/**
 	 * @param cell
-	 *          a cell
+	 *               a cell
 	 * @return the color for cell texts
 	 */
 	Color getTextColor(int cell);
