@@ -6,8 +6,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
+import de.amr.easy.grid.impl.OrthogonalGrid;
 import de.amr.easy.maze.alg.core.MazeGenerator;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Helper class for visualizing maze creation and flood-fill.

@@ -1,13 +1,13 @@
 package de.amr.easy.maze.alg;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
-import static de.amr.easy.maze.alg.core.OrthogonalGrid.fullGrid;
+import static de.amr.easy.grid.impl.OrthogonalGrid.fullGrid;
 import static java.util.stream.IntStream.range;
 
 import java.util.Random;
 
+import de.amr.easy.grid.impl.OrthogonalGrid;
 import de.amr.easy.maze.alg.core.MazeGenerator;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Creates maze by recursive division.

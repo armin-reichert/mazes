@@ -17,9 +17,9 @@ import javax.swing.KeyStroke;
 
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
 import de.amr.easy.grid.api.GridPosition;
+import de.amr.easy.grid.impl.OrthogonalGrid;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 
 /**

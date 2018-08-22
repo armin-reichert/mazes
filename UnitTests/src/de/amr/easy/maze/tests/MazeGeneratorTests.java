@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.amr.easy.grid.impl.OrthogonalGrid;
 import de.amr.easy.maze.alg.BinaryTree;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
 import de.amr.easy.maze.alg.Eller;
@@ -25,7 +26,6 @@ import de.amr.easy.maze.alg.HuntAndKillRandom;
 import de.amr.easy.maze.alg.RecursiveDivision;
 import de.amr.easy.maze.alg.Sidewinder;
 import de.amr.easy.maze.alg.core.MazeGenerator;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.mst.BoruvkaMST;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 import de.amr.easy.maze.alg.mst.PrimMST;

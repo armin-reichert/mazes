@@ -9,8 +9,8 @@ import javax.swing.AbstractAction;
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.easy.grid.api.GridPosition;
+import de.amr.easy.grid.impl.OrthogonalGrid;
 import de.amr.easy.maze.alg.core.MazeGenerator;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.util.StopWatch;
 
 /**

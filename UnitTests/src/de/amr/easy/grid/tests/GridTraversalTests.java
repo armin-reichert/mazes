@@ -26,12 +26,12 @@ import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal;
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
 import de.amr.easy.graph.impl.traversal.HillClimbing;
+import de.amr.easy.grid.impl.OrthogonalGrid;
 import de.amr.easy.grid.impl.curves.HilbertCurve;
 import de.amr.easy.grid.impl.curves.HilbertLCurve;
 import de.amr.easy.grid.impl.curves.HilbertLCurveWirth;
 import de.amr.easy.grid.impl.curves.MooreLCurve;
 import de.amr.easy.grid.impl.curves.PeanoCurve;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
 import de.amr.easy.util.StreamUtils;
 

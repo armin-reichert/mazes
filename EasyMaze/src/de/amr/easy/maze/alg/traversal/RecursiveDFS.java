@@ -3,13 +3,13 @@ package de.amr.easy.maze.alg.traversal;
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
-import static de.amr.easy.maze.alg.core.OrthogonalGrid.emptyGrid;
+import static de.amr.easy.grid.impl.OrthogonalGrid.emptyGrid;
 import static de.amr.easy.util.StreamUtils.randomElement;
 
 import java.util.OptionalInt;
 
+import de.amr.easy.grid.impl.OrthogonalGrid;
 import de.amr.easy.maze.alg.core.MazeGenerator;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Maze generator using randomized recursive depth-first-search. Not suited for larger grids because

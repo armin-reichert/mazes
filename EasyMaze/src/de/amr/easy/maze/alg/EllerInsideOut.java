@@ -4,11 +4,11 @@ import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
+import static de.amr.easy.grid.impl.OrthogonalGrid.emptyGrid;
 import static de.amr.easy.grid.impl.Top4.E;
 import static de.amr.easy.grid.impl.Top4.N;
 import static de.amr.easy.grid.impl.Top4.S;
 import static de.amr.easy.grid.impl.Top4.W;
-import static de.amr.easy.maze.alg.core.OrthogonalGrid.emptyGrid;
 import static java.lang.Math.max;
 
 import java.util.ArrayList;
@@ -22,10 +22,10 @@ import java.util.Random;
 import java.util.Set;
 
 import de.amr.easy.data.Partition;
+import de.amr.easy.grid.impl.OrthogonalGrid;
 import de.amr.easy.grid.impl.iterators.shapes.Rectangle;
 import de.amr.easy.grid.impl.iterators.shapes.Square;
 import de.amr.easy.maze.alg.core.MazeGenerator;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Maze generator similar to Eller's algorithm but growing the maze inside-out. To my knowledge this

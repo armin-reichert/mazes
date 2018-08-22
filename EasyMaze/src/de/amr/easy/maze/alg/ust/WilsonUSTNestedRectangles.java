@@ -7,10 +7,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import de.amr.easy.grid.impl.OrthogonalGrid;
 import de.amr.easy.grid.impl.iterators.IteratorFactory;
 import de.amr.easy.grid.impl.iterators.shapes.Rectangle;
 import de.amr.easy.grid.impl.iterators.traversals.ExpandingRectangle;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.util.StreamUtils;
 
 /**

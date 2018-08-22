@@ -19,8 +19,8 @@ import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.api.GridPosition;
 import de.amr.easy.grid.impl.GridGraph;
 import de.amr.easy.grid.impl.ObservableGridGraph;
+import de.amr.easy.grid.impl.OrthogonalGrid;
 import de.amr.easy.grid.impl.Top4;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.traversal.RandomBFS;
 import de.amr.easy.util.GraphUtils;
 

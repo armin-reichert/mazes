@@ -5,8 +5,8 @@ import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
+import de.amr.easy.grid.impl.OrthogonalGrid;
 import de.amr.easy.maze.alg.core.MazeGenerator;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.mst.ReverseDeleteMST_DFS;
 
 public class ReverseDeleteDFSApp extends SwingGridSampleApp {

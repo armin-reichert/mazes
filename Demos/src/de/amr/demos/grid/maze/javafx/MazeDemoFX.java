@@ -7,6 +7,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
+import de.amr.easy.grid.impl.OrthogonalGrid;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
 import de.amr.easy.maze.alg.Eller;
 import de.amr.easy.maze.alg.EllerInsideOut;
@@ -14,7 +15,6 @@ import de.amr.easy.maze.alg.GrowingTree;
 import de.amr.easy.maze.alg.HuntAndKillRandom;
 import de.amr.easy.maze.alg.RecursiveDivision;
 import de.amr.easy.maze.alg.core.MazeGenerator;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 import de.amr.easy.maze.alg.mst.PrimMST;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;

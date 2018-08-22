@@ -35,7 +35,7 @@ import de.amr.demos.maze.swingapp.view.DisplayAreaWindow;
 import de.amr.demos.maze.swingapp.view.SettingsWindow;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
+import de.amr.easy.grid.impl.OrthogonalGrid;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
 
 /**

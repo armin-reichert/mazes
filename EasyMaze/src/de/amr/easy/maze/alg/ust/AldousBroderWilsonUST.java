@@ -1,11 +1,11 @@
 package de.amr.easy.maze.alg.ust;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
-import static de.amr.easy.maze.alg.core.OrthogonalGrid.emptyGrid;
+import static de.amr.easy.grid.impl.OrthogonalGrid.emptyGrid;
 import static de.amr.easy.util.StreamUtils.permute;
 
+import de.amr.easy.grid.impl.OrthogonalGrid;
 import de.amr.easy.maze.alg.core.MazeGenerator;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * A hybrid algorithm ("Houston") that first uses Aldous/Broder until some fraction of cells is

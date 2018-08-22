@@ -8,8 +8,8 @@ import static java.lang.Math.max;
 import java.util.Iterator;
 import java.util.stream.IntStream;
 
+import de.amr.easy.grid.impl.OrthogonalGrid;
 import de.amr.easy.grid.impl.iterators.traversals.ExpandingCircle;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.util.StreamUtils;
 
 /**

@@ -8,9 +8,9 @@ import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation
 
 import de.amr.demos.grid.SwingGridSampleApp;
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
+import de.amr.easy.grid.impl.OrthogonalGrid;
 import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
 import de.amr.easy.maze.alg.core.MazeGenerator;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.maze.alg.ust.WilsonUSTRecursiveCrosses;
 
 public class PearlsRendererTestApp extends SwingGridSampleApp {

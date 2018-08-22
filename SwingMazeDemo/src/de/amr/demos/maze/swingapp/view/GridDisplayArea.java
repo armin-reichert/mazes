@@ -7,12 +7,12 @@ import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
 import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.grid.impl.GridGraph;
+import de.amr.easy.grid.impl.OrthogonalGrid;
 import de.amr.easy.grid.ui.swing.animation.GridCanvasAnimation;
 import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.GridCanvas;
 import de.amr.easy.grid.ui.swing.rendering.PearlsGridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Display area for the maze/grid. Supports animation.

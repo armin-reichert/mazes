@@ -2,15 +2,15 @@ package de.amr.easy.maze.alg;
 
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
-import static de.amr.easy.maze.alg.core.OrthogonalGrid.emptyGrid;
+import static de.amr.easy.grid.impl.OrthogonalGrid.emptyGrid;
 import static de.amr.easy.util.StreamUtils.permute;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import de.amr.easy.grid.impl.OrthogonalGrid;
 import de.amr.easy.maze.alg.core.MazeGenerator;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * The "Growing-Tree" algorithm.

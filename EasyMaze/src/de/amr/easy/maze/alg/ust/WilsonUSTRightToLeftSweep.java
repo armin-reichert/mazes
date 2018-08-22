@@ -4,8 +4,8 @@ import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
 
 import java.util.stream.IntStream;
 
+import de.amr.easy.grid.impl.OrthogonalGrid;
 import de.amr.easy.grid.impl.iterators.traversals.RightToLeftSweep;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Wilson's algorithm where the vertices are selected column-wise left-to-right.

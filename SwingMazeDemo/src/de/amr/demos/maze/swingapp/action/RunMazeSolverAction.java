@@ -23,9 +23,9 @@ import de.amr.easy.graph.impl.traversal.DepthFirstTraversal;
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
 import de.amr.easy.graph.impl.traversal.DijkstraTraversal;
 import de.amr.easy.graph.impl.traversal.HillClimbing;
+import de.amr.easy.grid.impl.OrthogonalGrid;
 import de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
 import de.amr.easy.util.StopWatch;
 
 /**

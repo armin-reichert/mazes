@@ -3,7 +3,7 @@ package de.amr.easy.maze.alg.ust;
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 import static java.util.stream.IntStream.range;
 
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
+import de.amr.easy.grid.impl.OrthogonalGrid;
 
 /**
  * Wilson's algorithm where the random walks start row-wise from top to bottom.

@@ -3,8 +3,8 @@ package de.amr.easy.maze.alg.ust;
 import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
 import static de.amr.easy.grid.api.GridPosition.CENTER;
 
+import de.amr.easy.grid.impl.OrthogonalGrid;
 import de.amr.easy.grid.impl.iterators.shapes.Rectangle;
-import de.amr.easy.maze.alg.core.OrthogonalGrid;
 
 /**
  * Wilson's algorithm where the vertices are selected from a collapsing rectangle.
