@@ -19,9 +19,9 @@ public interface MazeGenerator<G> {
 	 * Creates a maze starting at the grid cell {@code (x, y)}.
 	 * 
 	 * @param x
-	 *          x-coordinate (column) of start cell
+	 *            x-coordinate (column) of start cell
 	 * @param y
-	 *          y-coordinate (row) of start cell
+	 *            y-coordinate (row) of start cell
 	 * @return maze (spanning tree)
 	 */
 	G createMaze(int x, int y);

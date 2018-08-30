@@ -47,9 +47,10 @@ public class MazeDemoFX extends Application {
 
 	private static final int MAZE_WIDTH = 1000;
 	private static final Random RAND = new Random();
-	private static final Class<?> GENERATOR_CLASSES[] = { BinaryTreeRandom.class, Eller.class, EllerInsideOut.class,
-			GrowingTree.class, HuntAndKillRandom.class, KruskalMST.class, PrimMST.class, IterativeDFS.class, RandomBFS.class,
-			RecursiveDivision.class, WilsonUSTRandomCell.class, WilsonUSTCollapsingRectangle.class };
+	private static final Class<?> GENERATOR_CLASSES[] = { BinaryTreeRandom.class, Eller.class,
+			EllerInsideOut.class, GrowingTree.class, HuntAndKillRandom.class, KruskalMST.class,
+			PrimMST.class, IterativeDFS.class, RandomBFS.class, RecursiveDivision.class,
+			WilsonUSTRandomCell.class, WilsonUSTCollapsingRectangle.class };
 
 	private Canvas canvas;
 	private Timer timer;
@@ -119,8 +120,8 @@ public class MazeDemoFX extends Application {
 	private MazeGenerator<OrthogonalGrid> randomMazeGenerator() {
 		Class<?> generatorClass = GENERATOR_CLASSES[RAND.nextInt(GENERATOR_CLASSES.length)];
 		try {
-			return (MazeGenerator<OrthogonalGrid>) generatorClass.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(cols,
-					rows);
+			return (MazeGenerator<OrthogonalGrid>) generatorClass
+					.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(cols, rows);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Could not create maze generator instance");
@@ -129,7 +130,8 @@ public class MazeDemoFX extends Application {
 
 	private void drawPassage(Integer u, Integer v) {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-		gc.strokeLine(maze.col(u) * cellSize, maze.row(u) * cellSize, maze.col(v) * cellSize, maze.row(v) * cellSize);
+		gc.strokeLine(maze.col(u) * cellSize, maze.row(u) * cellSize, maze.col(v) * cellSize,
+				maze.row(v) * cellSize);
 	}
 
 	private void drawGrid() {

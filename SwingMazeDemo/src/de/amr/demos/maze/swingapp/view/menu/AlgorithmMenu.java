@@ -24,8 +24,8 @@ public abstract class AlgorithmMenu extends JMenu {
 	}
 
 	public Optional<AlgorithmInfo> getSelectedAlgorithm() {
-		return btnStream().filter(AbstractButton::isSelected).map(btn -> (AlgorithmInfo) btn.getClientProperty("algorithm"))
-				.findFirst();
+		return btnStream().filter(AbstractButton::isSelected)
+				.map(btn -> (AlgorithmInfo) btn.getClientProperty("algorithm")).findFirst();
 	}
 
 	public void selectAlgorithm(AlgorithmInfo alg) {

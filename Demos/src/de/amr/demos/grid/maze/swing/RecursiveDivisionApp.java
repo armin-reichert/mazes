@@ -24,8 +24,8 @@ public class RecursiveDivisionApp extends SwingGridSampleApp {
 	public void run() {
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			setCellSize(cellSize);
-			MazeGenerator<OrthogonalGrid> generator = new RecursiveDivision(getCanvas().getWidth() / cellSize,
-					getCanvas().getHeight() / cellSize);
+			MazeGenerator<OrthogonalGrid> generator = new RecursiveDivision(
+					getCanvas().getWidth() / cellSize, getCanvas().getHeight() / cellSize);
 			setGrid(generator.getGrid());
 			generator.createMaze(0, 0);
 			sleep(1000);

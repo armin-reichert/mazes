@@ -93,8 +93,8 @@ public class MazeGeneratorTests {
 	private void test(MazeGenerator<OrthogonalGrid> algorithm) {
 		StopWatch watch = new StopWatch();
 		watch.measure(() -> grid = algorithm.createMaze(0, 0));
-		REPORT.add(format("%-30s (%6d cells): %.3f sec", algorithm.getClass().getSimpleName(), grid.numVertices(),
-				watch.getSeconds()));
+		REPORT.add(format("%-30s (%6d cells): %.3f sec", algorithm.getClass().getSimpleName(),
+				grid.numVertices(), watch.getSeconds()));
 
 	}
 

@@ -30,7 +30,8 @@ public class MazeDemoApp extends SwingGridSampleApp {
 	public static void main(String[] args) {
 		if (args.length > 0) {
 			try {
-				launch((Class<? extends MazeGenerator<OrthogonalGrid>>) ClassLoader.getSystemClassLoader().loadClass(args[0]));
+				launch((Class<? extends MazeGenerator<OrthogonalGrid>>) ClassLoader.getSystemClassLoader()
+						.loadClass(args[0]));
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -45,7 +46,8 @@ public class MazeDemoApp extends SwingGridSampleApp {
 
 	private final Class<? extends MazeGenerator<OrthogonalGrid>> generatorClass;
 
-	public MazeDemoApp(String appName, Class<? extends MazeGenerator<OrthogonalGrid>> generatorClass) {
+	public MazeDemoApp(String appName,
+			Class<? extends MazeGenerator<OrthogonalGrid>> generatorClass) {
 		super(128);
 		this.generatorClass = generatorClass;
 		setAppName(appName);
@@ -54,8 +56,8 @@ public class MazeDemoApp extends SwingGridSampleApp {
 	private MazeGenerator<OrthogonalGrid> createGenerator(int width, int height) {
 		try {
 			return generatorClass.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(width, height);
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-				| NoSuchMethodException | SecurityException e) {
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}

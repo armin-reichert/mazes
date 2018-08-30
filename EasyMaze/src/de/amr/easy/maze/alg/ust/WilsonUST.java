@@ -72,7 +72,7 @@ public abstract class WilsonUST implements MazeGenerator<OrthogonalGrid> {
 	 * tree created so far. If the start cell is already in the tree, the method does nothing.
 	 * 
 	 * @param walkStart
-	 *          the start cell of the random walk
+	 *                    the start cell of the random walk
 	 */
 	protected final void loopErasedRandomWalk(int walkStart) {
 		if (lastWalkDir == null) {

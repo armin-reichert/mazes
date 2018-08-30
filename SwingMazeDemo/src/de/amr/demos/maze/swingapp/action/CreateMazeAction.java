@@ -50,9 +50,11 @@ public class CreateMazeAction extends AbstractAction {
 	protected void runMazeGenerator(AlgorithmInfo generatorInfo, GridPosition startPosition)
 			throws Exception, StackOverflowError {
 		@SuppressWarnings("unchecked")
-		MazeGenerator<OrthogonalGrid> generator = (MazeGenerator<OrthogonalGrid>) generatorInfo.getAlgorithmClass()
-				.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(app.model.getGridWidth(), app.model.getGridHeight());
-		app.showMessage(format("\n%s (%d cells)", generatorInfo.getDescription(), generator.getGrid().numVertices()));
+		MazeGenerator<OrthogonalGrid> generator = (MazeGenerator<OrthogonalGrid>) generatorInfo
+				.getAlgorithmClass().getConstructor(Integer.TYPE, Integer.TYPE)
+				.newInstance(app.model.getGridWidth(), app.model.getGridHeight());
+		app.showMessage(format("\n%s (%d cells)", generatorInfo.getDescription(),
+				generator.getGrid().numVertices()));
 		app.wndDisplayArea.getCanvas().setGrid(generator.getGrid());
 		app.wndDisplayArea.getCanvas().clear();
 		app.wndDisplayArea.getCanvas().drawGrid();

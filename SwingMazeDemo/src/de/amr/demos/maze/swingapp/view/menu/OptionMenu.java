@@ -25,11 +25,15 @@ public class OptionMenu extends JMenu {
 	public OptionMenu(MazeDemoApp demo) {
 		this.app = demo;
 		setText("Options");
-		addPositionMenu("Generation Start", app.model::setGenerationStart, app.model::getGenerationStart);
-		addPositionMenu("Solution Start", app.model::setPathFinderStart, app.model::getPathFinderSource);
-		addPositionMenu("Solution Target", app.model::setPathFinderTarget, app.model::getPathFinderTarget);
+		addPositionMenu("Generation Start", app.model::setGenerationStart,
+				app.model::getGenerationStart);
+		addPositionMenu("Solution Start", app.model::setPathFinderStart,
+				app.model::getPathFinderSource);
+		addPositionMenu("Solution Target", app.model::setPathFinderTarget,
+				app.model::getPathFinderTarget);
 		addSeparator();
-		addCheckBox("Animate Generation", app.model::setGenerationAnimated, app.model::isGenerationAnimated);
+		addCheckBox("Animate Generation", app.model::setGenerationAnimated,
+				app.model::isGenerationAnimated);
 		addCheckBox("Hide dialog when running", app.model::setHidingControlsWhenRunning,
 				app.model::isHidingControlsWhenRunning);
 	}
@@ -41,7 +45,8 @@ public class OptionMenu extends JMenu {
 		add(checkBox);
 	}
 
-	private void addPositionMenu(String title, Consumer<GridPosition> onSelection, Supplier<GridPosition> selection) {
+	private void addPositionMenu(String title, Consumer<GridPosition> onSelection,
+			Supplier<GridPosition> selection) {
 		JMenu menu = new JMenu(title);
 		ButtonGroup group = new ButtonGroup();
 		for (GridPosition pos : GridPosition.values()) {

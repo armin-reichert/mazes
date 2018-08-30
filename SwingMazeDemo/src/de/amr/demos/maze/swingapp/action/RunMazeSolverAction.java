@@ -81,7 +81,8 @@ public class RunMazeSolverAction extends AbstractAction {
 		}
 
 		else if (solver.getAlgorithmClass() == DijkstraTraversal.class) {
-			DijkstraTraversal<TraversalState, Integer> dijkstra = new DijkstraTraversal<>(grid, edge -> 1);
+			DijkstraTraversal<TraversalState, Integer> dijkstra = new DijkstraTraversal<>(grid,
+					edge -> 1);
 			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), dijkstra, source, target));
 			app.showMessage(format("Dijkstra search: %.2f seconds.", watch.getSeconds()));
 			anim.showPath(app.wndDisplayArea.getCanvas(), dijkstra, target);
@@ -91,7 +92,8 @@ public class RunMazeSolverAction extends AbstractAction {
 			getHeuristics(solver, grid, target).ifPresent(h -> {
 				BestFirstTraversal<?, ?, Integer> best = new BestFirstTraversal<>(grid, h);
 				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), best, source, target));
-				app.showMessage(format("Best-first search (%s): %.2f seconds.", getHeuristicsName(solver), watch.getSeconds()));
+				app.showMessage(format("Best-first search (%s): %.2f seconds.", getHeuristicsName(solver),
+						watch.getSeconds()));
 				anim.showPath(app.wndDisplayArea.getCanvas(), best, target);
 			});
 		}
@@ -100,7 +102,8 @@ public class RunMazeSolverAction extends AbstractAction {
 			getCostFunction(solver, grid).ifPresent(cost -> {
 				AStarTraversal<TraversalState, Integer> astar = new AStarTraversal<>(grid, edge -> 1, cost);
 				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), astar, source, target));
-				app.showMessage(format("A* search (%s): %.2f seconds.", getHeuristicsName(solver), watch.getSeconds()));
+				app.showMessage(
+						format("A* search (%s): %.2f seconds.", getHeuristicsName(solver), watch.getSeconds()));
 				anim.showPath(app.wndDisplayArea.getCanvas(), astar, target);
 			});
 		}
@@ -116,19 +119,23 @@ public class RunMazeSolverAction extends AbstractAction {
 		anim.setPathColor(app.model.getPathColor());
 
 		if (solver.getAlgorithmClass() == DepthFirstTraversal.class) {
-			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), new DepthFirstTraversal(grid), source, target));
+			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), new DepthFirstTraversal(grid),
+					source, target));
 			app.showMessage(format("Depth-first search: %.2f seconds.", watch.getSeconds()));
 		}
 
 		else if (solver.getAlgorithmClass() == DepthFirstTraversal2.class) {
-			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), new DepthFirstTraversal2(grid), source, target));
+			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), new DepthFirstTraversal2(grid),
+					source, target));
 			app.showMessage(format("Depth-first search: %.2f seconds.", watch.getSeconds()));
 		}
 
 		else if (solver.getAlgorithmClass() == HillClimbing.class) {
 			getHeuristics(solver, grid, target).ifPresent(h -> {
-				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), new HillClimbing<>(grid, h), source, target));
-				app.showMessage(format("Hill Climbing (%s): %.2f seconds.", getHeuristicsName(solver), watch.getSeconds()));
+				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), new HillClimbing<>(grid, h),
+						source, target));
+				app.showMessage(format("Hill Climbing (%s): %.2f seconds.", getHeuristicsName(solver),
+						watch.getSeconds()));
 			});
 		}
 	}
@@ -146,13 +153,15 @@ public class RunMazeSolverAction extends AbstractAction {
 		return "";
 	}
 
-	private Optional<Function<Integer, Integer>> getHeuristics(AlgorithmInfo solver, OrthogonalGrid grid, int target) {
+	private Optional<Function<Integer, Integer>> getHeuristics(AlgorithmInfo solver,
+			OrthogonalGrid grid, int target) {
 		Optional<BiFunction<Integer, Integer, Integer>> cost = getCostFunction(solver, grid);
 		Function<Integer, Integer> h = cost.isPresent() ? v -> cost.get().apply(v, target) : null;
 		return Optional.ofNullable(h);
 	}
 
-	private Optional<BiFunction<Integer, Integer, Integer>> getCostFunction(AlgorithmInfo solver, OrthogonalGrid grid) {
+	private Optional<BiFunction<Integer, Integer, Integer>> getCostFunction(AlgorithmInfo solver,
+			OrthogonalGrid grid) {
 		BiFunction<Integer, Integer, Integer> cost = null;
 		if (solver.isTagged(CHEBYSHEV)) {
 			cost = (u, v) -> grid.chebyshev(u, v);

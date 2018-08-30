@@ -42,13 +42,13 @@ public class RecursiveDivision implements MazeGenerator<OrthogonalGrid> {
 	 * Divides the {@code (w x h)}-subgrid with top-left position {@code (x0, y0)}.
 	 * 
 	 * @param x0
-	 *          x-position of subgrid
+	 *             x-position of subgrid
 	 * @param y0
-	 *          y-position subgrid
+	 *             y-position subgrid
 	 * @param w
-	 *          width of subgrid
+	 *             width of subgrid
 	 * @param h
-	 *          height of subgrid
+	 *             height of subgrid
 	 */
 	private void divide(int x0, int y0, int w, int h) {
 		if (w <= 1 && h <= 1) {

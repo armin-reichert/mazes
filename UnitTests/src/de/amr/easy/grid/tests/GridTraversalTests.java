@@ -77,7 +77,8 @@ public class GridTraversalTests {
 	public void testBestFS() {
 		grid = new IterativeDFS(N, N).createMaze(0, 0);
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		BestFirstTraversal<?, ?, Integer> best = new BestFirstTraversal<>(grid, x -> grid.manhattan(x, target));
+		BestFirstTraversal<?, ?, Integer> best = new BestFirstTraversal<>(grid,
+				x -> grid.manhattan(x, target));
 		assertState(grid.vertices(), best::getState, UNVISITED);
 		best.traverseGraph(source);
 		assertState(grid.vertices(), best::getState, COMPLETED);
@@ -164,7 +165,8 @@ public class GridTraversalTests {
 
 	@Test
 	public void testCurveStream() {
-		cells(new HilbertCurve(K), grid, grid.cell(TOP_RIGHT)).forEach(cell -> grid.set(cell, COMPLETED));
+		cells(new HilbertCurve(K), grid, grid.cell(TOP_RIGHT))
+				.forEach(cell -> grid.set(cell, COMPLETED));
 		assertAllCells(COMPLETED);
 	}
 }

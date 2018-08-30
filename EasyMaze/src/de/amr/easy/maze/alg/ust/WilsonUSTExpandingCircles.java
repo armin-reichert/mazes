@@ -62,7 +62,8 @@ public class WilsonUSTExpandingCircles extends WilsonUST {
 		return StreamUtils.toIntStream(it);
 	}
 
-	private Iterator<Integer> expandingCircle(OrthogonalGrid grid, int centerX, int centerY, int rmin, int rmax) {
+	private Iterator<Integer> expandingCircle(OrthogonalGrid grid, int centerX, int centerY, int rmin,
+			int rmax) {
 		return new ExpandingCircle(grid, grid.cell(centerX, centerY), rmin, rmax).iterator();
 	}
 }

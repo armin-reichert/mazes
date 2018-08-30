@@ -135,7 +135,8 @@ public class MazeGenerationRecordingApp {
 	}
 
 	private String createFileName(Class<?> generatorClass) {
-		return format("images/maze_%dx%d_%s.gif", grid.numCols(), grid.numRows(), generatorClass.getSimpleName());
+		return format("images/maze_%dx%d_%s.gif", grid.numCols(), grid.numRows(),
+				generatorClass.getSimpleName());
 	}
 
 	private void attachRecorderToGrid(GifRecorder recorder) {

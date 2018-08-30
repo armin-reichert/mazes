@@ -24,8 +24,8 @@ public class ReverseDeleteBFSApp extends SwingGridSampleApp {
 	public void run() {
 		IntStream.of(128, 64, 32).forEach(cellSize -> {
 			setCellSize(cellSize);
-			MazeGenerator<OrthogonalGrid> generator = new ReverseDeleteMST_BFS(getCanvas().getWidth() / cellSize,
-					getCanvas().getHeight() / cellSize);
+			MazeGenerator<OrthogonalGrid> generator = new ReverseDeleteMST_BFS(
+					getCanvas().getWidth() / cellSize, getCanvas().getHeight() / cellSize);
 			setGrid(generator.getGrid());
 			generator.createMaze(0, 0);
 			floodFill(getCanvas(), getGrid(), 0);

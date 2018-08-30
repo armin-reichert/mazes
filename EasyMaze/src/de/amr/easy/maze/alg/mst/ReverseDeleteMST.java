@@ -46,9 +46,9 @@ public abstract class ReverseDeleteMST implements MazeGenerator<OrthogonalGrid> 
 
 	/**
 	 * @param u
-	 *          a cell
+	 *            a cell
 	 * @param v
-	 *          a cell
+	 *            a cell
 	 * @return {@code true} if given cells are connected by some path
 	 */
 	protected abstract boolean connected(int u, int v);

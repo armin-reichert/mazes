@@ -131,8 +131,8 @@ public class EllerInsideOut implements MazeGenerator<OrthogonalGrid> {
 			}
 			prevCell = cell;
 		}
-		if (prevCell != -1 && firstCell != -1 && prevCell != firstCell && grid.areNeighbors(prevCell, firstCell)
-				&& !grid.adjacent(prevCell, firstCell)) {
+		if (prevCell != -1 && firstCell != -1 && prevCell != firstCell
+				&& grid.areNeighbors(prevCell, firstCell) && !grid.adjacent(prevCell, firstCell)) {
 			if (all || rnd.nextBoolean()) {
 				if (mazeParts.find(prevCell) != mazeParts.find(firstCell)) {
 					connectCells(prevCell, firstCell);

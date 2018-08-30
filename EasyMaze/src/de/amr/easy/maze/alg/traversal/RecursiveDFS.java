@@ -42,7 +42,8 @@ public class RecursiveDFS implements MazeGenerator<OrthogonalGrid> {
 
 	private void randomDFS(int v) {
 		grid.set(v, VISITED);
-		for (OptionalInt nb = randomUnvisitedNeighbor(v); nb.isPresent(); nb = randomUnvisitedNeighbor(v)) {
+		for (OptionalInt nb = randomUnvisitedNeighbor(v); nb
+				.isPresent(); nb = randomUnvisitedNeighbor(v)) {
 			int neighbor = nb.getAsInt();
 			grid.addEdge(v, neighbor);
 			randomDFS(neighbor);

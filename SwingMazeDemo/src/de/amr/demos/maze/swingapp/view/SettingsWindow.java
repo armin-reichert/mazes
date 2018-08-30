@@ -60,7 +60,8 @@ public class SettingsWindow extends JFrame {
 		controlPanel = new ControlPanel();
 
 		controlPanel.getComboGridResolution().setModel(createGridResolutionModel(app.model));
-		controlPanel.getComboGridResolution().setSelectedIndex(getSelectedGridResolutionIndex(app.model));
+		controlPanel.getComboGridResolution()
+				.setSelectedIndex(getSelectedGridResolutionIndex(app.model));
 		controlPanel.getComboGridResolution().setAction(app.actionChangeGridResolution);
 
 		controlPanel.getSliderPassageWidth().setValue(app.model.getPassageWidthPercentage());

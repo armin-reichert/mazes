@@ -26,7 +26,8 @@ public class GeneratorMenu extends AlgorithmMenu {
 		addMenu(app, "Graph Traversal", alg -> alg.isTagged(Traversal));
 		addMenu(app, "Minimum Spanning Tree", alg -> alg.isTagged(MST));
 		addMenu(app, "Uniform Spanning Tree", alg -> alg.isTagged(UST));
-		addMenu(app, "Others", alg -> !(alg.isTagged(Traversal) || alg.isTagged(MST) || alg.isTagged(UST)));
+		addMenu(app, "Others",
+				alg -> !(alg.isTagged(Traversal) || alg.isTagged(MST) || alg.isTagged(UST)));
 	}
 
 	private void addMenu(MazeDemoApp app, String title, Predicate<AlgorithmInfo> filter) {

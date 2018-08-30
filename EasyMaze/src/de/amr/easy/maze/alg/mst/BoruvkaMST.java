@@ -41,8 +41,8 @@ public class BoruvkaMST implements MazeGenerator<OrthogonalGrid> {
 		forest = new Partition<>();
 		grid.vertices().forEach(forest::makeSet);
 		while (forest.size() > 1) {
-			permute(forest.sets()).map(this::findCombiningEdge).filter(Optional::isPresent).map(Optional::get)
-					.forEach(this::combineTrees);
+			permute(forest.sets()).map(this::findCombiningEdge).filter(Optional::isPresent)
+					.map(Optional::get).forEach(this::combineTrees);
 		}
 		return grid;
 	}
@@ -63,7 +63,8 @@ public class BoruvkaMST implements MazeGenerator<OrthogonalGrid> {
 
 	private Stream<Edge> inventCombiningEdges(int cell) {
 		// invent edges combining different subtrees
-		return permute(grid.neighbors(cell).filter(neighbor -> forest.find(cell) != forest.find(neighbor))
-				.mapToObj(neighbor -> new UndirectedEdge(cell, neighbor)));
+		return permute(
+				grid.neighbors(cell).filter(neighbor -> forest.find(cell) != forest.find(neighbor))
+						.mapToObj(neighbor -> new UndirectedEdge(cell, neighbor)));
 	}
 }

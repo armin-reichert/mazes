@@ -73,7 +73,8 @@ public class MazeDemoApp {
 	public final Action actionFullGrid = new FullGridAction(this);
 	public final Action actionChangeGridResolution = new ChangeGridResolutionAction(this);
 	public final Action actionShowSettings = new ShowSettingsAction(this);
-	public final ToggleControlPanelAction actionToggleControlPanel = new ToggleControlPanelAction(this);
+	public final ToggleControlPanelAction actionToggleControlPanel = new ToggleControlPanelAction(
+			this);
 
 	private Thread workerThread;
 	private volatile boolean threadStopped;
@@ -118,7 +119,8 @@ public class MazeDemoApp {
 			wndSettings.generatorMenu.selectAlgorithm(alg);
 			onGeneratorChange(alg);
 		});
-		MazeDemoModel.find(PATHFINDER_ALGORITHMS, alg -> alg.getAlgorithmClass() == BreadthFirstTraversal.class)
+		MazeDemoModel
+				.find(PATHFINDER_ALGORITHMS, alg -> alg.getAlgorithmClass() == BreadthFirstTraversal.class)
 				.ifPresent(alg -> {
 					wndSettings.solverMenu.selectAlgorithm(alg);
 					onSolverChange(alg);
@@ -133,8 +135,10 @@ public class MazeDemoApp {
 
 	public OrthogonalGrid createDefaultGrid(boolean full) {
 		OrthogonalGrid grid = full
-				? OrthogonalGrid.fullGrid(model.getGridWidth(), model.getGridHeight(), TraversalState.COMPLETED)
-				: OrthogonalGrid.emptyGrid(model.getGridWidth(), model.getGridHeight(), TraversalState.COMPLETED);
+				? OrthogonalGrid.fullGrid(model.getGridWidth(), model.getGridHeight(),
+						TraversalState.COMPLETED)
+				: OrthogonalGrid.emptyGrid(model.getGridWidth(), model.getGridHeight(),
+						TraversalState.COMPLETED);
 		return grid;
 	}
 
