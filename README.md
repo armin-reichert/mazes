@@ -144,7 +144,7 @@ Implemented maze generation algorithms:
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_RecursiveDivision.gif">
 
 ### Path finding algorithms:
-The [https://github.com/armin-reichert/graph/tree/master/EasyGraph](https://github.com/armin-reichert/graph/tree/master/EasyGraph) library contains the following path finder implementations:
+The [EasyGraph](https://github.com/armin-reichert/graph/tree/master/EasyGraph) library contains the following path finder implementations:
 - [Breadth-First Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/de/amr/easy/graph/impl/traversal/BreadthFirstTraversal.java)
 - [Depth-First Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/de/amr/easy/graph/impl/traversal/DepthFirstTraversal.java)
 - [(Greedy) Best-First Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/de/amr/easy/graph/impl/traversal/BestFirstTraversal.java). Can be used with Euclidean, Manhattan and Chebyshev distance heuristics.
