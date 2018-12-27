@@ -10,15 +10,15 @@ Initially I intended to implement some of these algorithms in Java to learn abou
 
 In the end, all of the algorithms presented in Jamis Buck's blog and even some new algorithms have been implemented. One new algorithm is a modification of Eller's algorithm that in contrast to the original doesn't generate the maze row-wise but from the center of the grid towards the outer borders. The resulting maze however is heavily biased. Other new algorithms are variations of Wilson's uniform spanning tree algorithm. They result from the different possibilities for selecting the random walk start cells. 
 
-As the order in which the random walk start cells are selected is arbitrary, we have a number of interesting choices. For example, you can start the random walks in the order defined by a space-filling curves like [Hilbert](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/de/amr/easy/grid/impl/curves/HilbertCurve.java), [Peano](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/de/amr/easy/grid/impl/curves/PeanoCurve.java) or [Moore](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/de/amr/easy/grid/impl/curves/MooreLCurve.java) curves. You can also use other interesting patterns of filling a grid. In any case you will get visually appealing maze creation processes. 
+As the order in which the random walk start cells are selected is arbitrary, we have a number of interesting choices. For example, you can start the random walks in the order defined by a space-filling curves like [Hilbert](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/grid/impl/curves/HilbertCurve.java), [Peano](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/grid/impl/curves/PeanoCurve.java) or [Moore](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/grid/impl/curves/MooreLCurve.java) curves. You can also use other interesting patterns of filling a grid. In any case you will get visually appealing maze creation processes. 
 
 Also implemented in this project are path finding algorithms for "solving" the generated mazes: "Breadth-First" and "Depth-First" search together with their informed variants "Best-First" search and "Hill Climbing". For completeness, the A* path finder has also been included, but for perfect mazes which are trees with equal edge costs and a unique path between every two vertices, the A* or Dijkstra algorithm do not really provide additional value.
 
 The included [demo application](https://github.com/armin-reichert/mazes/releases/download/July2018/mazedemoapp.jar) demonstrates all implemented maze generators and path finders. Using a control panel you can interactively select the generation algorithm, path finder, grid resolution and rendering style ("walls", "passages").
 
 To achieve the goals mentioned above, there is
-- an API for [graph](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/de/amr/easy/graph/api/Graph.java) and [2D-grid](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/de/amr/easy/grid/api/GridGraph2D.java) data structures 
-- an implementation of a [2D-grid](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/de/amr/easy/grid/impl/GridGraph.java) with cell and edge content
+- an API for [graph](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/api/Graph.java) and [2D-grid](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/grid/api/GridGraph2D.java) data structures 
+- an implementation of a [2D-grid](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/grid/impl/GridGraph.java) with cell and edge content
 - a publish-subscribe mechanism for observing graph/grid operations and traversal algorithms
 
 Here is the maze generator based on Kruskal's minimum spanning tree algorithm:
@@ -60,94 +60,94 @@ Anybody familiar with the Kruskal algorithm will immediately recognize it in thi
 Implemented maze generation algorithms:
 
 ### Graph Traversal:
-- [Random Breadth-First-Search](EasyMaze/src/de/amr/easy/maze/alg/traversal/RandomBFS.java)
+- [Random Breadth-First-Search](EasyMaze/src/main/java/de/amr/easy/maze/alg/traversal/RandomBFS.java)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_RandomBFS.gif">
 
-- [Random Depth-First-Search, iterative](EasyMaze/src/de/amr/easy/maze/alg/traversal/IterativeDFS.java)
+- [Random Depth-First-Search, iterative](EasyMaze/src/main/java/de/amr/easy/maze/alg/traversal/IterativeDFS.java)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_IterativeDFS.gif">
 
-- [Random Depth-First-Search, recursive](EasyMaze/src/de/amr/easy/maze/alg/traversal/RecursiveDFS.java)
+- [Random Depth-First-Search, recursive](EasyMaze/src/main/java/de/amr/easy/maze/alg/traversal/RecursiveDFS.java)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_RecursiveDFS.gif">
 
 ### Minimum Spanning Tree: 
-- [Boruvka](EasyMaze/src/de/amr/easy/maze/alg/mst/BoruvkaMST.java)
+- [Boruvka](EasyMaze/src/main/java/de/amr/easy/maze/alg/mst/BoruvkaMST.java)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_BoruvkaMST.gif">
 
-- [Kruskal](EasyMaze/src/de/amr/easy/maze/alg/mst/KruskalMST.java)
+- [Kruskal](EasyMaze/src/main/java/de/amr/easy/maze/alg/mst/KruskalMST.java)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_KruskalMST.gif">
 
-- [Prim](EasyMaze/src/de/amr/easy/maze/alg/mst/PrimMST.java)
+- [Prim](EasyMaze/src/main/java/de/amr/easy/maze/alg/mst/PrimMST.java)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_PrimMST.gif">
 
-- [Reverse-Delete, base algorithm](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteMST.java)
+- [Reverse-Delete, base algorithm](EasyMaze/src/main/java/de/amr/easy/maze/alg/mst/ReverseDeleteMST.java)
 
-  - [Reverse-Delete, DFS variant](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteMST_DFS.java)
+  - [Reverse-Delete, DFS variant](EasyMaze/src/main/java/de/amr/easy/maze/alg/mst/ReverseDeleteMST_DFS.java)
 
-  - [Reverse-Delete, BFS variant](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteMST_BFS.java)
+  - [Reverse-Delete, BFS variant](EasyMaze/src/main/java/de/amr/easy/maze/alg/mst/ReverseDeleteMST_BFS.java)
 
-  - [Reverse-Delete, Best FS variant](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteMST_BestFS.java)
+  - [Reverse-Delete, Best FS variant](EasyMaze/src/main/java/de/amr/easy/maze/alg/mst/ReverseDeleteMST_BestFS.java)
 
-  - [Reverse-Delete, Hill Climbing variant](EasyMaze/src/de/amr/easy/maze/alg/mst/ReverseDeleteMST_HillClimbing.java)
+  - [Reverse-Delete, Hill Climbing variant](EasyMaze/src/main/java/de/amr/easy/maze/alg/mst/ReverseDeleteMST_HillClimbing.java)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_ReverseDeleteMST.gif">
 
 ### Uniform Spanning Tree:
-- [Aldous-Broder](EasyMaze/src/de/amr/easy/maze/alg/ust/AldousBroderUST.java)
+- [Aldous-Broder](EasyMaze/src/main/java/de/amr/easy/maze/alg/ust/AldousBroderUST.java)
 
-- [Houston](EasyMaze/src/de/amr/easy/maze/alg/ust/AldousBroderWilsonUST.java)
+- [Houston](EasyMaze/src/main/java/de/amr/easy/maze/alg/ust/AldousBroderWilsonUST.java)
 
-- [Wilson's algorithm](EasyMaze/src/de/amr/easy/maze/alg/ust) (16 different variants)
+- [Wilson's algorithm](EasyMaze/src/main/java/de/amr/easy/maze/alg/ust) (16 different variants)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_WilsonUSTRandomCell.gif">
 
 ### Other algorithms:
-- [Binary Tree, top-to-bottom](EasyMaze/src/de/amr/easy/maze/alg/BinaryTree.java)
+- [Binary Tree, top-to-bottom](EasyMaze/src/main/java/de/amr/easy/maze/alg/BinaryTree.java)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_BinaryTree.gif">
 
-- [Binary Tree, random](EasyMaze/src/de/amr/easy/maze/alg/BinaryTreeRandom.java)
+- [Binary Tree, random](EasyMaze/src/main/java/de/amr/easy/maze/alg/BinaryTreeRandom.java)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_BinaryTreeRandom.gif">
 
-- [Eller's algorithm](EasyMaze/src/de/amr/easy/maze/alg/Eller.java)
+- [Eller's algorithm](EasyMaze/src/main/java/de/amr/easy/maze/alg/Eller.java)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_Eller.gif">
 
-- [Armin's algorithm](EasyMaze/src/de/amr/easy/maze/alg/EllerInsideOut.java) (like Eller's but growing the maze inside-out)
+- [Armin's algorithm](EasyMaze/src/main/java/de/amr/easy/maze/alg/EllerInsideOut.java) (like Eller's but growing the maze inside-out)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_EllerInsideOut.gif">
 
-- [Sidewinder](EasyMaze/src/de/amr/easy/maze/alg/Sidewinder.java)
+- [Sidewinder](EasyMaze/src/main/java/de/amr/easy/maze/alg/Sidewinder.java)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_Sidewinder.gif">
 
-- [Growing Tree](EasyMaze/src/de/amr/easy/maze/alg/GrowingTree.java)
+- [Growing Tree](EasyMaze/src/main/java/de/amr/easy/maze/alg/GrowingTree.java)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_GrowingTree.gif">
 
-- [Hunt-And-Kill, top-to-bottom](EasyMaze/src/de/amr/easy/maze/alg/HuntAndKill.java)
+- [Hunt-And-Kill, top-to-bottom](EasyMaze/src/main/java/de/amr/easy/maze/alg/HuntAndKill.java)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_HuntAndKill.gif">
 
-- [Hunt-And-Kill, random](EasyMaze/src/de/amr/easy/maze/alg/HuntAndKillRandom.java)
+- [Hunt-And-Kill, random](EasyMaze/src/main/java/de/amr/easy/maze/alg/HuntAndKillRandom.java)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_HuntAndKillRandom.gif">
 
-- [Recursive division](EasyMaze/src/de/amr/easy/maze/alg/RecursiveDivision.java)
+- [Recursive division](EasyMaze/src/main/java/de/amr/easy/maze/alg/RecursiveDivision.java)
 
 <img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/maze_40x25_RecursiveDivision.gif">
 
 ### Path finding algorithms:
 The [EasyGraph](https://github.com/armin-reichert/graph/tree/master/EasyGraph) library contains the following path finder implementations:
-- [Breadth-First Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/de/amr/easy/graph/impl/traversal/BreadthFirstTraversal.java)
-- [Depth-First Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/de/amr/easy/graph/impl/traversal/DepthFirstTraversal.java)
-- [(Greedy) Best-First Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/de/amr/easy/graph/impl/traversal/BestFirstTraversal.java). Can be used with Euclidean, Manhattan and Chebyshev distance heuristics.
-- [Hill Climbing](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/de/amr/easy/graph/impl/traversal/HillClimbing.java). Can be used with Euclidean, Manhattan and Chebyshev distance heuristics.
-- [A* Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/de/amr/easy/graph/impl/traversal/AStarTraversal.java). Not really useful for path finding in perfect mazes as explained above.
-- [Dijkstra](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/de/amr/easy/graph/impl/traversal/DijkstraTraversal.java). Not so difficult when A* is available :-)
+- [Breadth-First Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/impl/traversal/BreadthFirstTraversal.java)
+- [Depth-First Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/impl/traversal/DepthFirstTraversal.java)
+- [(Greedy) Best-First Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/impl/traversal/BestFirstTraversal.java). Can be used with Euclidean, Manhattan and Chebyshev distance heuristics.
+- [Hill Climbing](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/impl/traversal/HillClimbing.java). Can be used with Euclidean, Manhattan and Chebyshev distance heuristics.
+- [A* Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/impl/traversal/AStarTraversal.java). Not really useful for path finding in perfect mazes as explained above.
+- [Dijkstra](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/impl/traversal/DijkstraTraversal.java). Not so difficult when A* is available :-)
