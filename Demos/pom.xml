@@ -17,8 +17,8 @@
   </build>
   <dependencies>
   	<dependency>
-  		<groupId>de.amr.easy.maze.EasyMaze</groupId>
-  		<artifactId>de.amr.easy.maze.EasyMaze</artifactId>
+  		<groupId>de.amr.easy.maze</groupId>
+  		<artifactId>EasyMaze</artifactId>
   		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
   </dependencies>
