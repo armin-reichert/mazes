@@ -56,7 +56,7 @@ import de.amr.easy.maze.alg.ust.WilsonUSTRowsTopDown;
 import de.amr.easy.util.GraphUtils;
 import de.amr.easy.util.StopWatch;
 
-public class MazeGeneratorTests {
+public class MazeGeneratorTest {
 
 	private static final int WIDTH = 100;
 	private static final int HEIGHT = 100;

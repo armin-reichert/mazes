@@ -35,7 +35,7 @@ import de.amr.easy.grid.impl.curves.PeanoCurve;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
 import de.amr.easy.util.StreamUtils;
 
-public class GridTraversalTests {
+public class GridTraversalTest {
 
 	private static final int K = 8;
 	private static final int N = 1 << K; // N = 2^K

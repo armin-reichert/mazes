@@ -29,7 +29,7 @@ import de.amr.easy.util.GraphUtils;
  * 
  * @author Armin Reichert
  */
-public class GridTests {
+public class GridTest {
 
 	private static final int WIDTH = 100;
 	private static final int HEIGHT = 100;

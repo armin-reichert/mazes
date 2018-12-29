@@ -11,7 +11,7 @@ import de.amr.easy.graph.api.UndirectedEdge;
 import de.amr.easy.graph.impl.DefaultMultigraph;
 import de.amr.easy.util.GraphUtils;
 
-public class MultigraphTests {
+public class MultigraphTest {
 
 	@Test
 	public void testCreation() {

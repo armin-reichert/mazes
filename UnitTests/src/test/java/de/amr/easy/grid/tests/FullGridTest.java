@@ -17,7 +17,7 @@ import de.amr.easy.grid.impl.GridGraph;
 import de.amr.easy.grid.impl.Top4;
 import de.amr.easy.grid.impl.Top8;
 
-public class FullGridTests {
+public class FullGridTest {
 
 	private static final int WIDTH = 15;
 	private static final int HEIGHT = 10;

@@ -13,7 +13,7 @@ import de.amr.easy.graph.api.Edge;
 import de.amr.easy.graph.api.UndirectedEdge;
 import de.amr.easy.graph.impl.UGraph;
 
-public class UGraphTests {
+public class UGraphTest {
 
 	private UGraph<Void, Void> g;
 

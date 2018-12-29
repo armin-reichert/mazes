@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import de.amr.easy.data.TwoSet;
 
-public class TwoSetTests {
+public class TwoSetTest {
 
 	@Test
 	public void testEquals() {

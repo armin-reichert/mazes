@@ -5,7 +5,7 @@ import org.junit.Test;
 import de.amr.easy.maze.alg.RecursiveDivision;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 
-public class LargeMazesTests {
+public class LargeMazesTest {
 
 	private void test_Kruskal(int numCols, int numRows) {
 		new KruskalMST(numCols, numRows).createMaze(0, 0);

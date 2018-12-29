@@ -11,7 +11,7 @@ import de.amr.easy.graph.api.UndirectedEdge;
 import de.amr.easy.grid.impl.GridGraph;
 import de.amr.easy.grid.impl.Top4;
 
-public class EmptyGridTests {
+public class EmptyGridTest {
 
 	private GridGraph<Void, Void> grid;
 

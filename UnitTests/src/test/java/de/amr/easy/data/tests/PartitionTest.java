@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import de.amr.easy.data.Partition;
 
-public class PartitionTests {
+public class PartitionTest {
 
 	@Test
 	public void testEmptyPartition() {

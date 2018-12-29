@@ -14,7 +14,7 @@ import de.amr.easy.graph.api.traversal.TraversalState;
 import de.amr.easy.graph.impl.UGraph;
 import de.amr.easy.graph.impl.traversal.DepthFirstTraversal;
 
-public class LabeledGraphTests {
+public class LabeledGraphTest {
 
 	private class DFSTracer implements GraphTraversalObserver {
 
