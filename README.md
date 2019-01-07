@@ -14,7 +14,7 @@ As the order in which the random walk start cells are selected is arbitrary, we 
 
 Also implemented in this project are path finding algorithms for "solving" the generated mazes: "Breadth-First" and "Depth-First" search together with their informed variants "Best-First" search and "Hill Climbing". For completeness, the A* path finder has also been included, but for perfect mazes which are trees with equal edge costs and a unique path between every two vertices, the A* or Dijkstra algorithm do not really provide additional value.
 
-The included [demo application](https://github.com/armin-reichert/mazes/releases/download/July2018/mazedemoapp.jar) demonstrates all implemented maze generators and path finders. Using a control panel you can interactively select the generation algorithm, path finder, grid resolution and rendering style ("walls", "passages").
+The included [demo application](https://github.com/armin-reichert/mazes/releases/) demonstrates all implemented maze generators and path finders. Using a control panel you can interactively select the generation algorithm, path finder, grid resolution and rendering style ("walls", "passages").
 
 To achieve the goals mentioned above, there is
 - an API for [graph](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/api/Graph.java) and [2D-grid](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/grid/api/GridGraph2D.java) data structures 
