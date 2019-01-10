@@ -47,7 +47,7 @@ public class LargeMazeTest {
 	}
 
 	@Test
-	public void test_Prim_100_000() {
-		test("Prim", grid -> createMazeByPrim(grid, 0), 100, 1000);
+	public void test_Prim_50_000() {
+		test("Prim", grid -> createMazeByPrim(grid, 0), 50, 1000);
 	}
 }
