@@ -6,6 +6,7 @@ import java.util.BitSet;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
+import java.util.Random;
 
 import de.amr.easy.data.Partition;
 
@@ -50,6 +51,25 @@ public class MazeGeneration {
 					grid.connect(vertex, dir);
 					visited.set(neighbor);
 					stack.push(neighbor);
+				}
+			}
+		}
+	}
+
+	public static void createMazeByBFS(Grid grid, int startVertex) {
+		BitSet visited = new BitSet();
+		List<Integer> frontier = new ArrayList<>();
+		Random rnd = new Random();
+		visited.set(startVertex);
+		frontier.add(startVertex);
+		while (!frontier.isEmpty()) {
+			int vertex = frontier.remove(rnd.nextInt(frontier.size()));
+			for (Dir dir : Dir.values()) {
+				int neighbor = grid.neighbor(vertex, dir);
+				if (neighbor != -1 && !visited.get(neighbor)) {
+					grid.connect(vertex, dir);
+					visited.set(neighbor);
+					frontier.add(neighbor);
 				}
 			}
 		}

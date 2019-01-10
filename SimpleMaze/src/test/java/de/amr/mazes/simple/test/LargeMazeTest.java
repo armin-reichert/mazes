@@ -1,5 +1,6 @@
 package de.amr.mazes.simple.test;
 
+import static de.amr.mazes.simple.MazeGeneration.createMazeByBFS;
 import static de.amr.mazes.simple.MazeGeneration.createMazeByDFS;
 import static de.amr.mazes.simple.MazeGeneration.createMazeByKruskal;
 
@@ -24,21 +25,21 @@ public class LargeMazeTest {
 		return grid;
 	}
 
-	// @Test
-	public void test_DFS_100_000() {
-		test("Non-Recursive DFS", grid -> createMazeByDFS(grid, 0), 100, 1000);
-	}
-
 	@Test
 	public void test_DFS_1_000_000() {
-		test("Non-Recursive DFS", grid -> createMazeByDFS(grid, 0), 1000, 1000);
+		test("DFS", grid -> createMazeByDFS(grid, 0), 1000, 1000);
 	}
 
 	@Test
 	public void test_DFS_10_000_000() {
-		test("Non-Recursive DFS", grid -> createMazeByDFS(grid, 0), 10_000, 1000);
+		test("DFS", grid -> createMazeByDFS(grid, 0), 10_000, 1000);
 	}
 
+	@Test
+	public void test_BFS_1_000_000() {
+		test("BFS", grid -> createMazeByBFS(grid, 0), 1000, 1000);
+	}
+	
 	@Test
 	public void test_Kruskal_1_000_000() {
 		test("Kruskal", grid -> createMazeByKruskal(grid), 1000, 1000);
