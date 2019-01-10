@@ -18,8 +18,6 @@ import de.amr.easy.data.Partition;
  */
 public class MazeAlgorithms {
 
-	
-
 	// Random Depth-First-Search (recursive)
 
 	public static void createMazeByDFSRecursive(Grid grid, int vertex, BitSet visited) {
