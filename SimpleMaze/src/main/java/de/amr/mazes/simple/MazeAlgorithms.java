@@ -6,26 +6,41 @@ import java.util.BitSet;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Random;
 
 import de.amr.easy.data.Partition;
 
 /**
- * Maze generation functions.
+ * Collection of maze generation algorithms.
  * 
  * @author Armin Reichert
  */
-public class MazeGeneration {
+public class MazeAlgorithms {
 
-	private static class Edge {
+	private static class Edge implements Comparable<Edge> {
 
-		int either, other;
+		public final int either;
+		public final int other;
+		public final int weight;
 
 		public Edge(int either, int other) {
+			this(either, other, 0);
+		}
+
+		public Edge(int either, int other, int weight) {
 			this.either = either;
 			this.other = other;
+			this.weight = weight;
+		}
+
+		@Override
+		public int compareTo(Edge other) {
+			return Integer.compare(weight, other.weight);
 		}
 	}
+
+	// Random Depth-First-Search (recursive)
 
 	public static void createMazeByDFSRecursive(Grid grid, int vertex, BitSet visited) {
 		visited.set(vertex);
@@ -37,6 +52,8 @@ public class MazeGeneration {
 			}
 		}
 	}
+
+	// Random Depth-First-Search (non-recursive)
 
 	public static void createMazeByDFS(Grid grid, int startVertex) {
 		BitSet visited = new BitSet();
@@ -56,6 +73,8 @@ public class MazeGeneration {
 		}
 	}
 
+	// Random Breadth-First-Search
+
 	public static void createMazeByBFS(Grid grid, int startVertex) {
 		BitSet visited = new BitSet();
 		List<Integer> frontier = new ArrayList<>();
@@ -74,6 +93,8 @@ public class MazeGeneration {
 			}
 		}
 	}
+
+	// Kruskal's MST algorithm
 
 	public static void createMazeByKruskal(Grid grid) {
 		List<Edge> edges = new ArrayList<>();
@@ -95,6 +116,33 @@ public class MazeGeneration {
 			if (forest.find(u) != forest.find(v)) {
 				grid.connect(u, v);
 				forest.union(u, v);
+			}
+		}
+	}
+
+	// Prim's MST algorithm
+
+	public static void createMazeByPrim(Grid grid, int startVertex) {
+		BitSet visited = new BitSet();
+		PriorityQueue<Edge> cut = new PriorityQueue<>();
+		expand(grid, startVertex, cut, visited);
+		while (!cut.isEmpty()) {
+			Edge edge = cut.poll();
+			int u = edge.either, v = edge.other;
+			if (!visited.get(u) || !visited.get(v)) {
+				grid.connect(u, v);
+				expand(grid, visited.get(u) ? v : u, cut, visited);
+			}
+		}
+	}
+
+	private static void expand(Grid grid, int vertex, PriorityQueue<Edge> cut, BitSet visited) {
+//		System.out.println("Expanding " + grid.name(vertex));
+		visited.set(vertex);
+		for (Dir dir : Dir.shuffled()) {
+			int neighbor = grid.neighbor(vertex, dir);
+			if (neighbor != -1 && !visited.get(neighbor)) {
+				cut.add(new Edge(vertex, neighbor, new Random().nextInt()));
 			}
 		}
 	}

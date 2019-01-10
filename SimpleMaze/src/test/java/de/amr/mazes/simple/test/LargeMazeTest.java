@@ -1,8 +1,9 @@
 package de.amr.mazes.simple.test;
 
-import static de.amr.mazes.simple.MazeGeneration.createMazeByBFS;
-import static de.amr.mazes.simple.MazeGeneration.createMazeByDFS;
-import static de.amr.mazes.simple.MazeGeneration.createMazeByKruskal;
+import static de.amr.mazes.simple.MazeAlgorithms.createMazeByBFS;
+import static de.amr.mazes.simple.MazeAlgorithms.createMazeByDFS;
+import static de.amr.mazes.simple.MazeAlgorithms.createMazeByKruskal;
+import static de.amr.mazes.simple.MazeAlgorithms.createMazeByPrim;
 
 import java.util.function.Consumer;
 
@@ -17,7 +18,7 @@ public class LargeMazeTest {
 		long start = System.currentTimeMillis();
 		generator.accept(grid);
 		long time = System.currentTimeMillis() - start;
-		System.out.println(String.format(name + ": %,d vertices, time %d ms", grid.numVertices(), time));
+		System.out.println(String.format("%10s: %,d vertices, time %d ms", name, grid.numVertices(), time));
 		if (grid.numEdges() != grid.numVertices() - 1) {
 			throw new IllegalStateException(
 					String.format("Wrong #edges: %d (expected %d)", grid.numEdges(), grid.numVertices() - 1));
@@ -39,9 +40,14 @@ public class LargeMazeTest {
 	public void test_BFS_1_000_000() {
 		test("BFS", grid -> createMazeByBFS(grid, 0), 1000, 1000);
 	}
-	
+
 	@Test
 	public void test_Kruskal_1_000_000() {
 		test("Kruskal", grid -> createMazeByKruskal(grid), 1000, 1000);
+	}
+
+	@Test
+	public void test_Prim_100_000() {
+		test("Prim", grid -> createMazeByPrim(grid, 0), 100, 1000);
 	}
 }

@@ -1,6 +1,6 @@
 package de.amr.mazes.simple;
 
-import static de.amr.mazes.simple.MazeGeneration.createMazeByDFSRecursive;
+import static de.amr.mazes.simple.MazeAlgorithms.createMazeByDFSRecursive;
 
 import java.util.BitSet;
 import java.util.function.Consumer;
