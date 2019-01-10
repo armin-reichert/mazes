@@ -66,6 +66,16 @@ public class Grid {
 		}
 	}
 
+	public void connect(int vertex, int neighbor) {
+		for (Dir dir : Dir.values()) {
+			if (neighbor == neighbor(vertex, dir)) {
+				connect(vertex, dir);
+				return;
+			}
+		}
+		throw new IllegalStateException();
+	}
+
 	public boolean connected(int vertex, Dir dir) {
 		int neighbor = neighbor(vertex, dir);
 		return neighbor != -1 && edges.get(4 * vertex + dir.ordinal());
