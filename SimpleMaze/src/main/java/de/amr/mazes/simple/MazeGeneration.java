@@ -26,13 +26,13 @@ public class MazeGeneration {
 		}
 	}
 
-	public static void createMazeByRecursiveDFS(Grid grid, int vertex, BitSet visited) {
+	public static void createMazeByDFSRecursive(Grid grid, int vertex, BitSet visited) {
 		visited.set(vertex);
 		for (Dir dir : Dir.shuffled()) {
 			int neighbor = grid.neighbor(vertex, dir);
 			if (neighbor != -1 && !visited.get(neighbor)) {
 				grid.connect(vertex, dir);
-				createMazeByRecursiveDFS(grid, neighbor, visited);
+				createMazeByDFSRecursive(grid, neighbor, visited);
 			}
 		}
 	}

@@ -1,6 +1,6 @@
 package de.amr.mazes.simple;
 
-import static de.amr.mazes.simple.MazeGeneration.createMazeByRecursiveDFS;
+import static de.amr.mazes.simple.MazeGeneration.createMazeByDFSRecursive;
 
 import java.util.BitSet;
 import java.util.function.Consumer;
@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 public class SimpleMazeApp {
 
 	public static void main(String[] args) {
-		Grid maze = test("Recursive DFS", grid -> createMazeByRecursiveDFS(grid, 0, new BitSet()), 8, 8);
+		Grid maze = test("Recursive DFS", grid -> createMazeByDFSRecursive(grid, 0, new BitSet()), 8, 8);
 		Goodies.printGrid(maze);
 	}
 
