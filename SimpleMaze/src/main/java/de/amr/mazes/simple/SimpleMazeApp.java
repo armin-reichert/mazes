@@ -1,10 +1,12 @@
 package de.amr.mazes.simple;
 
-import static de.amr.mazes.simple.Goodies.printGrid;
 import static de.amr.mazes.simple.MazeAlgorithms.*;
+import static de.amr.mazes.simple.graph.GraphFunctions.printGrid;
 
 import java.util.BitSet;
 import java.util.function.Consumer;
+
+import de.amr.mazes.simple.graph.GridGraph;
 
 /**
  * Sample app for stripped down maze generation implementation.

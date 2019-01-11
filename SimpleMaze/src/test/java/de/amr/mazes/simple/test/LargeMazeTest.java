@@ -10,7 +10,7 @@ import java.util.function.Consumer;
 
 import org.junit.Test;
 
-import de.amr.mazes.simple.GridGraph;
+import de.amr.mazes.simple.graph.GridGraph;
 
 public class LargeMazeTest {
 

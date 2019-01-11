@@ -1,9 +1,9 @@
-package de.amr.mazes.simple;
+package de.amr.mazes.simple.graph;
 
 import java.util.BitSet;
 import java.util.function.IntConsumer;
 
-public class Goodies {
+public class GraphFunctions {
 
 	public static void dfs(GridGraph grid, int vertex, BitSet visited, IntConsumer fnAction) {
 		visited.set(vertex);

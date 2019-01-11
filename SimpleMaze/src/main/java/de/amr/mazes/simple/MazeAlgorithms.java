@@ -10,6 +10,9 @@ import java.util.PriorityQueue;
 import java.util.Random;
 
 import de.amr.easy.data.Partition;
+import de.amr.mazes.simple.graph.Dir;
+import de.amr.mazes.simple.graph.Edge;
+import de.amr.mazes.simple.graph.GridGraph;
 
 /**
  * Collection of maze generation algorithms.

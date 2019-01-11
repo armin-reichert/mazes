@@ -1,4 +1,4 @@
-package de.amr.mazes.simple;
+package de.amr.mazes.simple.graph;
 
 public class Edge implements Comparable<Edge> {
 
