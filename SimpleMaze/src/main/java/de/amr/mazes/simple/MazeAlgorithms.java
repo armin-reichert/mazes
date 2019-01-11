@@ -61,7 +61,7 @@ public class MazeAlgorithms {
 		frontier.add(startVertex);
 		while (!frontier.isEmpty()) {
 			int vertex = frontier.remove(rnd.nextInt(frontier.size()));
-			for (Dir dir : Dir.values()) {
+			for (Dir dir : Dir.shuffled()) {
 				int neighbor = grid.neighbor(vertex, dir);
 				if (neighbor != -1 && !visited.get(neighbor)) {
 					grid.connect(vertex, dir);
@@ -103,24 +103,24 @@ public class MazeAlgorithms {
 	public static void createMazeByPrim(Grid grid, int startVertex) {
 		BitSet visited = new BitSet();
 		PriorityQueue<Edge> cut = new PriorityQueue<>();
-		expand(grid, startVertex, cut, visited);
+		Random rnd = new Random();
+		expand(grid, startVertex, cut, visited, rnd);
 		while (!cut.isEmpty()) {
 			Edge edge = cut.poll();
 			int u = edge.either, v = edge.other;
 			if (!visited.get(u) || !visited.get(v)) {
 				grid.connect(u, v);
-				expand(grid, visited.get(u) ? v : u, cut, visited);
+				expand(grid, !visited.get(u) ? u : v, cut, visited, rnd);
 			}
 		}
 	}
 
-	private static void expand(Grid grid, int vertex, PriorityQueue<Edge> cut, BitSet visited) {
-//		System.out.println("Expanding " + grid.name(vertex));
+	private static void expand(Grid grid, int vertex, PriorityQueue<Edge> cut, BitSet visited, Random rnd) {
 		visited.set(vertex);
 		for (Dir dir : Dir.shuffled()) {
 			int neighbor = grid.neighbor(vertex, dir);
 			if (neighbor != -1 && !visited.get(neighbor)) {
-				cut.add(new Edge(vertex, neighbor, new Random().nextInt()));
+				cut.add(new Edge(vertex, neighbor, rnd.nextInt()));
 			}
 		}
 	}
