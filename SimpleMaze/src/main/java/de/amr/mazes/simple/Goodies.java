@@ -5,7 +5,7 @@ import java.util.function.IntConsumer;
 
 public class Goodies {
 
-	public static void dfs(Grid grid, int vertex, BitSet visited, IntConsumer fnAction) {
+	public static void dfs(GridGraph grid, int vertex, BitSet visited, IntConsumer fnAction) {
 		visited.set(vertex);
 		fnAction.accept(vertex);
 		System.out.println("Visit " + grid.name(vertex));
@@ -17,7 +17,7 @@ public class Goodies {
 		}
 	}
 
-	public static void printGrid(Grid grid) {
+	public static void printGrid(GridGraph grid) {
 		for (int row = 0; row < grid.rows; ++row) {
 			for (int col = 0; col < grid.cols; ++col) {
 				int vertex = grid.vertex(row, col);

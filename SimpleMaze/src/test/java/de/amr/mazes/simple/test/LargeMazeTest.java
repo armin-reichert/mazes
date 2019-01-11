@@ -10,13 +10,12 @@ import java.util.function.Consumer;
 
 import org.junit.Test;
 
-import de.amr.mazes.simple.Grid;
-import de.amr.mazes.simple.MazeAlgorithms;
+import de.amr.mazes.simple.GridGraph;
 
 public class LargeMazeTest {
 
-	static Grid test(String name, Consumer<Grid> generator, int rows, int cols) {
-		Grid grid = new Grid(rows, cols);
+	static GridGraph test(String name, Consumer<GridGraph> generator, int rows, int cols) {
+		GridGraph grid = new GridGraph(rows, cols);
 		long start = System.currentTimeMillis();
 		generator.accept(grid);
 		long time = System.currentTimeMillis() - start;

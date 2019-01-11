@@ -7,13 +7,13 @@ import java.util.BitSet;
  * 
  * @author Armin Reichert
  */
-public class Grid {
+public class GridGraph {
 
 	public final int rows;
 	public final int cols;
 	private final BitSet edges;
 
-	public Grid(int rows, int cols) {
+	public GridGraph(int rows, int cols) {
 		this.rows = rows;
 		this.cols = cols;
 		edges = new BitSet(4 * rows * cols);

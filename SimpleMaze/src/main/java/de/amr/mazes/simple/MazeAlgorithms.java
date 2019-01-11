@@ -20,7 +20,7 @@ public class MazeAlgorithms {
 
 	// Random Depth-First-Search (recursive)
 
-	public static void createMazeByDFSRecursive(Grid grid, int vertex, BitSet visited) {
+	public static void createMazeByDFSRecursive(GridGraph grid, int vertex, BitSet visited) {
 		visited.set(vertex);
 		for (Dir dir : Dir.shuffled()) {
 			int neighbor = grid.neighbor(vertex, dir);
@@ -33,7 +33,7 @@ public class MazeAlgorithms {
 
 	// Random Depth-First-Search (non-recursive)
 
-	public static void createMazeByDFS(Grid grid, int startVertex) {
+	public static void createMazeByDFS(GridGraph grid, int startVertex) {
 		BitSet visited = new BitSet();
 		Deque<Integer> stack = new ArrayDeque<>();
 		visited.set(startVertex);
@@ -53,7 +53,7 @@ public class MazeAlgorithms {
 
 	// Random Breadth-First-Search
 
-	public static void createMazeByBFS(Grid grid, int startVertex) {
+	public static void createMazeByBFS(GridGraph grid, int startVertex) {
 		BitSet visited = new BitSet();
 		List<Integer> frontier = new ArrayList<>();
 		Random rnd = new Random();
@@ -74,7 +74,7 @@ public class MazeAlgorithms {
 
 	// Kruskal's MST algorithm
 
-	public static void createMazeByKruskal(Grid grid) {
+	public static void createMazeByKruskal(GridGraph grid) {
 		List<Edge> edges = new ArrayList<>();
 		for (int row = 0; row < grid.rows; ++row) {
 			for (int col = 0; col < grid.cols; ++col) {
@@ -100,7 +100,7 @@ public class MazeAlgorithms {
 
 	// Prim's MST algorithm
 
-	public static void createMazeByPrim(Grid grid, int startVertex) {
+	public static void createMazeByPrim(GridGraph grid, int startVertex) {
 		BitSet visited = new BitSet();
 		PriorityQueue<Edge> cut = new PriorityQueue<>();
 		Random rnd = new Random();
@@ -115,7 +115,7 @@ public class MazeAlgorithms {
 		}
 	}
 
-	private static void expand(Grid grid, int vertex, PriorityQueue<Edge> cut, BitSet visited, Random rnd) {
+	private static void expand(GridGraph grid, int vertex, PriorityQueue<Edge> cut, BitSet visited, Random rnd) {
 		visited.set(vertex);
 		for (Dir dir : Dir.shuffled()) {
 			int neighbor = grid.neighbor(vertex, dir);
@@ -127,7 +127,7 @@ public class MazeAlgorithms {
 
 	// Binary tree algorithm
 
-	public static void createMazeByBinaryTree(Grid grid) {
+	public static void createMazeByBinaryTree(GridGraph grid) {
 		Random rnd = new Random();
 		Dir[] dirs = { Dir.E, Dir.S };
 		for (int vertex = 0; vertex < grid.numVertices(); ++vertex) {
