@@ -124,4 +124,23 @@ public class MazeAlgorithms {
 			}
 		}
 	}
+
+	// Binary tree algorithm
+
+	public static void createMazeByBinaryTree(Grid grid) {
+		Random rnd = new Random();
+		Dir[] dirs = { Dir.E, Dir.S };
+		for (int vertex = 0; vertex < grid.numVertices(); ++vertex) {
+			int choice = rnd.nextInt(2);
+			int neighbor = grid.neighbor(vertex, dirs[choice]);
+			if (neighbor != -1) {
+				grid.connect(vertex, dirs[choice]);
+			} else {
+				neighbor = grid.neighbor(vertex, dirs[1 - choice]);
+				if (neighbor != -1) {
+					grid.connect(vertex, dirs[1 - choice]);
+				}
+			}
+		}
+	}
 }

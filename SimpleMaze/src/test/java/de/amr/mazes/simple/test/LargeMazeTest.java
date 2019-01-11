@@ -1,6 +1,7 @@
 package de.amr.mazes.simple.test;
 
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeByBFS;
+import static de.amr.mazes.simple.MazeAlgorithms.createMazeByBinaryTree;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeByDFS;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeByKruskal;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeByPrim;
@@ -10,6 +11,7 @@ import java.util.function.Consumer;
 import org.junit.Test;
 
 import de.amr.mazes.simple.Grid;
+import de.amr.mazes.simple.MazeAlgorithms;
 
 public class LargeMazeTest {
 
@@ -49,5 +51,10 @@ public class LargeMazeTest {
 	@Test
 	public void test_Prim_10_000() {
 		test("Prim", grid -> createMazeByPrim(grid, 0), 100, 100);
+	}
+
+	@Test
+	public void test_BinaryTree_1_000_000() {
+		test("Binary Tree", grid -> createMazeByBinaryTree(grid), 1000, 1000);
 	}
 }

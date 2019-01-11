@@ -1,6 +1,7 @@
 package de.amr.mazes.simple;
 
-import static de.amr.mazes.simple.MazeAlgorithms.createMazeByDFSRecursive;
+import static de.amr.mazes.simple.Goodies.printGrid;
+import static de.amr.mazes.simple.MazeAlgorithms.*;
 
 import java.util.BitSet;
 import java.util.function.Consumer;
@@ -14,8 +15,11 @@ import java.util.function.Consumer;
 public class SimpleMazeApp {
 
 	public static void main(String[] args) {
-		Grid maze = test("Recursive DFS", grid -> createMazeByDFSRecursive(grid, 0, new BitSet()), 8, 8);
-		Goodies.printGrid(maze);
+		Grid maze;
+		maze = test("Recursive DFS", grid -> createMazeByDFSRecursive(grid, 0, new BitSet()), 8, 8);
+		printGrid(maze);
+		maze = test("Binary Tree", grid -> createMazeByBinaryTree(grid), 8, 8);
+		printGrid(maze);
 	}
 
 	static Grid test(String name, Consumer<Grid> generator, int rows, int cols) {
