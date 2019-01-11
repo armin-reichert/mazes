@@ -1,1 +1,1 @@
-Stripped down grid graph and maze algorithms
+Stripped down grid graph data structure and maze algorithms
