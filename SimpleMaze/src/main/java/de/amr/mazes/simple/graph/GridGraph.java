@@ -28,11 +28,11 @@ public class GridGraph {
 	}
 
 	public int vertex(int row, int col) {
-		return row * rows + col;
+		return row * cols + col;
 	}
 
 	public int row(int vertex) {
-		return vertex / rows;
+		return vertex / cols;
 	}
 
 	public int col(int vertex) {
@@ -55,15 +55,22 @@ public class GridGraph {
 		}
 	}
 
+	public boolean connected(int vertex, Dir dir) {
+		return edges.get(4 * vertex + dir.ordinal());
+	}
+
 	public void connect(int vertex, Dir dir) {
+		if (connected(vertex, dir)) {
+			System.err.println(this);
+			throw new IllegalStateException(String.format("Already connected: %s, %s", name(vertex), dir));
+		}
 		int neighbor = neighbor(vertex, dir);
-		if (neighbor != -1) {
-			edges.set(4 * vertex + dir.ordinal());
-			edges.set(4 * neighbor + dir.opposite().ordinal());
-		} else {
+		if (neighbor == -1) {
 			throw new IllegalArgumentException(
 					String.format("Cannot connect vertex %s towards %s", name(vertex), dir.name()));
 		}
+		edges.set(4 * vertex + dir.ordinal());
+		edges.set(4 * neighbor + dir.opposite().ordinal());
 	}
 
 	public void connect(int vertex, int neighbor) {
@@ -76,12 +83,20 @@ public class GridGraph {
 		throw new IllegalStateException();
 	}
 
-	public boolean connected(int vertex, Dir dir) {
-		int neighbor = neighbor(vertex, dir);
-		return neighbor != -1 && edges.get(4 * vertex + dir.ordinal());
-	}
-
 	public String name(int vertex) {
 		return String.format("(%d,%d)", row(vertex), col(vertex));
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (int vertex = 0; vertex < numVertices(); ++vertex) {
+			for (Dir dir : Dir.values()) {
+				if (connected(vertex, dir)) {
+					sb.append(name(vertex)).append("->").append(name(neighbor(vertex, dir))).append("\n");
+				}
+			}
+		}
+		return sb.toString();
 	}
 }

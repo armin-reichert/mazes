@@ -8,6 +8,7 @@ import static de.amr.mazes.simple.MazeAlgorithms.createMazeByPrim;
 
 import java.util.function.Consumer;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import de.amr.mazes.simple.graph.GridGraph;
@@ -19,41 +20,33 @@ public class LargeMazeTest {
 		long start = System.currentTimeMillis();
 		generator.accept(grid);
 		long time = System.currentTimeMillis() - start;
-		System.out.println(String.format("%10s: %,d vertices, time %d ms", name, grid.numVertices(), time));
-		if (grid.numEdges() != grid.numVertices() - 1) {
-			throw new IllegalStateException(
-					String.format("Wrong #edges: %d (expected %d)", grid.numEdges(), grid.numVertices() - 1));
-		}
+		System.out.println(String.format("%15s: %,d vertices, (%d ms)", name, grid.numVertices(), time));
+		Assert.assertEquals("Wrong #edges", grid.numVertices() - 1, grid.numEdges());
 		return grid;
 	}
 
 	@Test
-	public void test_DFS_1_000_000() {
+	public void test_DFS() {
 		test("DFS", grid -> createMazeByDFS(grid, 0), 1000, 1000);
 	}
 
 	@Test
-	public void test_DFS_10_000_000() {
-		test("DFS", grid -> createMazeByDFS(grid, 0), 10_000, 1000);
-	}
-
-	@Test
-	public void test_BFS_1_000_000() {
+	public void test_BFS() {
 		test("BFS", grid -> createMazeByBFS(grid, 0), 1000, 1000);
 	}
 
 	@Test
-	public void test_Kruskal_1_000_000() {
+	public void test_Kruskal() {
 		test("Kruskal", grid -> createMazeByKruskal(grid), 1000, 1000);
 	}
 
 	@Test
-	public void test_Prim_10_000() {
-		test("Prim", grid -> createMazeByPrim(grid, 0), 100, 100);
+	public void test_Prim() {
+		test("Prim", grid -> createMazeByPrim(grid, 0), 1000, 1000);
 	}
 
 	@Test
-	public void test_BinaryTree_1_000_000() {
-		test("Binary Tree", grid -> createMazeByBinaryTree(grid), 1000, 1000);
+	public void test_BinaryTree() {
+		test("Binary Tree", grid -> createMazeByBinaryTree(grid), 1_000, 1_000);
 	}
 }

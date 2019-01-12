@@ -83,10 +83,10 @@ public class MazeAlgorithms {
 			for (int col = 0; col < grid.cols; ++col) {
 				int vertex = grid.vertex(row, col);
 				if (row > 0) {
-					edges.add(new Edge(vertex, grid.neighbor(vertex, Dir.N)));
+					edges.add(new Edge(grid, vertex, grid.neighbor(vertex, Dir.N)));
 				}
 				if (col > 0) {
-					edges.add(new Edge(vertex, grid.neighbor(vertex, Dir.W)));
+					edges.add(new Edge(grid, vertex, grid.neighbor(vertex, Dir.W)));
 				}
 			}
 		}
@@ -118,12 +118,14 @@ public class MazeAlgorithms {
 		}
 	}
 
-	private static void expand(GridGraph grid, int vertex, PriorityQueue<Edge> cut, BitSet visited, Random rnd) {
+	private static void expand(GridGraph grid, int vertex, PriorityQueue<Edge> cut, BitSet visited,
+			Random rnd) {
 		visited.set(vertex);
-		for (Dir dir : Dir.shuffled()) {
+		for (Dir dir : Dir.values()) {
 			int neighbor = grid.neighbor(vertex, dir);
 			if (neighbor != -1 && !visited.get(neighbor)) {
-				cut.add(new Edge(vertex, neighbor, rnd.nextInt()));
+				Edge edge = new Edge(grid, vertex, neighbor, rnd.nextInt());
+				cut.add(edge);
 			}
 		}
 	}
