@@ -11,6 +11,7 @@ import java.util.function.Consumer;
 import org.junit.Assert;
 import org.junit.Test;
 
+import de.amr.mazes.simple.graph.GraphFunctions;
 import de.amr.mazes.simple.graph.GridGraph;
 
 public class LargeMazeTest {
@@ -22,6 +23,7 @@ public class LargeMazeTest {
 		long time = System.currentTimeMillis() - start;
 		System.out.println(String.format("%15s: %,d vertices, (%d ms)", name, grid.numVertices(), time));
 		Assert.assertEquals("Wrong #edges", grid.numVertices() - 1, grid.numEdges());
+		Assert.assertTrue(!GraphFunctions.containsCycle(grid));
 		return grid;
 	}
 
@@ -47,7 +49,7 @@ public class LargeMazeTest {
 
 	@Test
 	public void test_BinaryTree() {
-		test("Binary Tree", grid -> createMazeByBinaryTree(grid), 1_000, 1_000);
+		test("Binary Tree", grid -> createMazeByBinaryTree(grid), 1000, 1000);
 	}
 	
 	@Test
