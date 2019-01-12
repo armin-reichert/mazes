@@ -3,6 +3,8 @@ package de.amr.mazes.simple.graph;
 import java.util.BitSet;
 import java.util.function.IntConsumer;
 
+import de.amr.easy.data.Partition;
+
 public class GraphFunctions {
 
 	public static void dfs(GridGraph grid, int vertex, BitSet visited, IntConsumer fnAction) {
@@ -17,7 +19,19 @@ public class GraphFunctions {
 		}
 	}
 
-	public static void printGrid(GridGraph grid) {
+	public static boolean containsCycle(GridGraph grid) {
+		Partition<Integer> p = new Partition<>();
+		for (Edge edge : grid.edges()) {
+			int u = edge.either, v = edge.other;
+			if (p.find(u) == p.find(v)) {
+				return true;
+			}
+			p.union(u, v);
+		}
+		return false;
+	}
+
+	public static void prettyPrint(GridGraph grid) {
 		for (int row = 0; row < grid.rows; ++row) {
 			for (int col = 0; col < grid.cols; ++col) {
 				int vertex = grid.vertex(row, col);

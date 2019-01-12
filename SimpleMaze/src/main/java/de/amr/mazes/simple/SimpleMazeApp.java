@@ -17,7 +17,8 @@ public class SimpleMazeApp {
 
 	public static void main(String[] args) {
 		GridGraph maze = createMaze("Prim", grid -> createMazeByPrim(grid, 0), 100, 200);
-		GraphFunctions.printGrid(maze);
+		GraphFunctions.prettyPrint(maze);
+		System.out.println(maze);
 	}
 
 	static GridGraph createMaze(String name, Consumer<GridGraph> generator, int rows, int cols) {

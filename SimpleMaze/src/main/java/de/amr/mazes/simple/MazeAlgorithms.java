@@ -148,4 +148,24 @@ public class MazeAlgorithms {
 			}
 		}
 	}
+
+	// Aldous/Broder algorithm
+
+	public static void createMazeByAldousBroder(GridGraph grid, int startVertex) {
+		Random rnd = new Random();
+		BitSet visited = new BitSet();
+		int vertex = startVertex;
+		visited.set(vertex);
+		while (visited.cardinality() < grid.numVertices()) {
+			Dir dir = Dir.values()[rnd.nextInt(4)];
+			int neighbor = grid.neighbor(vertex, dir);
+			if (neighbor != -1) {
+				if (!visited.get(neighbor)) {
+					grid.connect(vertex, dir);
+					visited.set(neighbor);
+				}
+				vertex = neighbor;
+			}
+		}
+	}
 }

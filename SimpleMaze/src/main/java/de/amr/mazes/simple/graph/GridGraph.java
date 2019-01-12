@@ -1,6 +1,8 @@
 package de.amr.mazes.simple.graph;
 
+import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 
 /**
  * Stripped down grid graph implementation.
@@ -83,6 +85,18 @@ public class GridGraph {
 		throw new IllegalStateException();
 	}
 
+	public Iterable<Edge> edges() {
+		List<Edge> edges = new ArrayList<>();
+		for (int vertex = 0; vertex < numVertices(); ++vertex) {
+			for (Dir dir : new Dir[] { Dir.E, Dir.S }) {
+				if (connected(vertex, dir)) {
+					edges.add(new Edge(this, vertex, neighbor(vertex, dir)));
+				}
+			}
+		}
+		return edges;
+	}
+
 	public String name(int vertex) {
 		return String.format("(%d,%d)", row(vertex), col(vertex));
 	}
@@ -90,12 +104,8 @@ public class GridGraph {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		for (int vertex = 0; vertex < numVertices(); ++vertex) {
-			for (Dir dir : Dir.values()) {
-				if (connected(vertex, dir)) {
-					sb.append(name(vertex)).append("->").append(name(neighbor(vertex, dir))).append("\n");
-				}
-			}
+		for (Edge edge : edges()) {
+			sb.append(name(edge.either)).append("->").append(name(edge.other)).append("\n");
 		}
 		return sb.toString();
 	}

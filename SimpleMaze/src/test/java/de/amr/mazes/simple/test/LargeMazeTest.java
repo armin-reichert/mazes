@@ -1,6 +1,6 @@
 package de.amr.mazes.simple.test;
 
-import static de.amr.mazes.simple.MazeAlgorithms.createMazeByBFS;
+import static de.amr.mazes.simple.MazeAlgorithms.*;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeByBinaryTree;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeByDFS;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeByKruskal;
@@ -49,4 +49,10 @@ public class LargeMazeTest {
 	public void test_BinaryTree() {
 		test("Binary Tree", grid -> createMazeByBinaryTree(grid), 1_000, 1_000);
 	}
+	
+	@Test
+	public void test_AldousBroder() {
+		test("Aldous Broder", grid -> createMazeByAldousBroder(grid, 0), 1000, 1000);
+	}
+
 }
