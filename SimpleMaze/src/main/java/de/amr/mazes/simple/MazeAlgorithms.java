@@ -149,6 +149,28 @@ public class MazeAlgorithms {
 		}
 	}
 
+	// Growing tree algorithm
+
+	public static void createMazeByGrowingTree(GridGraph grid, int startVertex) {
+		Random rnd = new Random();
+		BitSet visited = new BitSet();
+		List<Integer> vertices = new ArrayList<>();
+		vertices.add(startVertex);
+		do {
+			int index = rnd.nextBoolean() ? vertices.size() - 1 : rnd.nextInt(vertices.size());
+			int vertex = vertices.remove(index);
+			for (Dir dir : Dir.shuffled()) {
+				int neighbor = grid.neighbor(vertex, dir);
+				if (neighbor != -1 && !visited.get(neighbor)) {
+					grid.connect(vertex, dir);
+					vertices.add(neighbor);
+					visited.set(vertex);
+					visited.set(neighbor);
+				}
+			}
+		} while (!vertices.isEmpty());
+	}
+
 	// Aldous/Broder algorithm
 
 	public static void createMazeByAldousBroder(GridGraph grid, int startVertex) {

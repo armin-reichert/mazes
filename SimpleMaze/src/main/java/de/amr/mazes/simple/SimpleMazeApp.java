@@ -18,6 +18,10 @@ public class SimpleMazeApp {
 			GridGraph maze = createMaze("AldousBroder", grid -> MazeAlgorithms.createMazeByAldousBroder(grid, 0),
 					100, 100);
 		});
+		GraphFunctions.prettyPrint(
+				createMaze("AldousBroder", grid -> MazeAlgorithms.createMazeByAldousBroder(grid, 0), 10, 10));
+		GraphFunctions.prettyPrint(
+				createMaze("Growing Tree", grid -> MazeAlgorithms.createMazeByGrowingTree(grid, 0), 10, 10));
 	}
 
 	static GridGraph createMaze(String name, Consumer<GridGraph> generator, int rows, int cols) {
