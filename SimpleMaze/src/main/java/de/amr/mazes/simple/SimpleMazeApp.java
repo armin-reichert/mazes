@@ -14,14 +14,15 @@ import de.amr.mazes.simple.graph.GridGraph;
 public class SimpleMazeApp {
 
 	public static void main(String[] args) {
-		IntStream.range(0, 100).forEach(i -> {
-			GridGraph maze = createMaze("AldousBroder", grid -> MazeAlgorithms.createMazeByAldousBroder(grid, 0),
-					100, 100);
+		IntStream.range(0, 10).forEach(i -> {
+			createMaze("AldousBroder", grid -> MazeAlgorithms.createMazeByAldousBroder(grid, 0), 100, 100);
 		});
 		GraphFunctions.prettyPrint(
 				createMaze("AldousBroder", grid -> MazeAlgorithms.createMazeByAldousBroder(grid, 0), 10, 10));
 		GraphFunctions.prettyPrint(
 				createMaze("Growing Tree", grid -> MazeAlgorithms.createMazeByGrowingTree(grid, 0), 10, 10));
+		GraphFunctions.prettyPrint(
+				createMaze("Recursive Division", grid -> MazeAlgorithms.createMazeByRecursiveDivision(grid), 8, 8));
 	}
 
 	static GridGraph createMaze(String name, Consumer<GridGraph> generator, int rows, int cols) {

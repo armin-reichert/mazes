@@ -63,7 +63,6 @@ public class GridGraph {
 
 	public void connect(int vertex, Dir dir) {
 		if (connected(vertex, dir)) {
-			System.err.println(this);
 			throw new IllegalStateException(String.format("Already connected: %s, %s", name(vertex), dir));
 		}
 		int neighbor = neighbor(vertex, dir);
@@ -83,6 +82,19 @@ public class GridGraph {
 			}
 		}
 		throw new IllegalStateException();
+	}
+
+	public void disconnect(int vertex, Dir dir) {
+		if (!connected(vertex, dir)) {
+			throw new IllegalStateException(String.format("Not connected: %s, %s", name(vertex), dir));
+		}
+		int neighbor = neighbor(vertex, dir);
+		if (neighbor == -1) {
+			throw new IllegalArgumentException(
+					String.format("Cannot disconnect vertex %s towards %s", name(vertex), dir.name()));
+		}
+		edges.clear(4 * vertex + dir.ordinal());
+		edges.clear(4 * neighbor + dir.opposite().ordinal());
 	}
 
 	public Iterable<Edge> edges() {

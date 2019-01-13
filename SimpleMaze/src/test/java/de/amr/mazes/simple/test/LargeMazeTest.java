@@ -1,6 +1,6 @@
 package de.amr.mazes.simple.test;
 
-import static de.amr.mazes.simple.MazeAlgorithms.createMazeByAldousBroder;
+import static de.amr.mazes.simple.MazeAlgorithms.*;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeByBFS;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeByBinaryTree;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeByDFS;
@@ -17,7 +17,7 @@ import de.amr.mazes.simple.graph.GraphFunctions;
 import de.amr.mazes.simple.graph.GridGraph;
 
 public class LargeMazeTest {
-	
+
 	static final int L = 1000;
 	static final int M = 100;
 
@@ -26,7 +26,7 @@ public class LargeMazeTest {
 		long start = System.currentTimeMillis();
 		generator.accept(grid);
 		long time = System.currentTimeMillis() - start;
-		System.out.println(String.format("%15s: %,d vertices, (%d ms)", name, grid.numVertices(), time));
+		System.out.println(String.format("%20s: %,d vertices, (%d ms)", name, grid.numVertices(), time));
 		Assert.assertEquals("Wrong #edges", grid.numVertices() - 1, grid.numEdges());
 		Assert.assertTrue(!GraphFunctions.containsCycle(grid));
 		return grid;
@@ -60,6 +60,11 @@ public class LargeMazeTest {
 	@Test
 	public void test_GrowingTree() {
 		test("Growing Tree", grid -> createMazeByGrowingTree(grid, 0), L, L);
+	}
+
+	@Test
+	public void test_RecursiveDivision() {
+		test("Recursive Division", grid -> createMazeByRecursiveDivision(grid), L, L);
 	}
 
 	@Test
