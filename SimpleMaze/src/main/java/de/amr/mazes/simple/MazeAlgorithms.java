@@ -202,7 +202,6 @@ public class MazeAlgorithms {
 					grid.disconnect(vertex, Dir.S);
 				}
 			}
-			// GraphFunctions.prettyPrint(grid);
 			divide(grid, rnd, x0, y0, w, y - y0);
 			divide(grid, rnd, x0, y, w, h - (y - y0));
 		} else {
