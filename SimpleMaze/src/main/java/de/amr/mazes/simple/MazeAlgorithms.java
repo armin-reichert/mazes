@@ -196,14 +196,10 @@ public class MazeAlgorithms {
 			// Build "horizontal wall" at random y from [y0 + 1, y0 + h - 1], keep random door
 			int y = y0 + 1 + rnd.nextInt(h - 1);
 			int door = x0 + rnd.nextInt(w);
-			// System.out.println(String.format("Horizontal wall between rows %d and %d, door at %d", y - 1, y,
-			// door));
 			for (int x = x0; x < x0 + w; ++x) {
 				if (x != door) {
 					int vertex = grid.vertex(y - 1, x);
-					if (grid.connected(vertex, Dir.S)) {
-						grid.disconnect(vertex, Dir.S);
-					}
+					grid.disconnect(vertex, Dir.S);
 				}
 			}
 			// GraphFunctions.prettyPrint(grid);
@@ -213,17 +209,12 @@ public class MazeAlgorithms {
 			// Build "vertical wall" at random x from [x0 + 1, x0 + w - 1], keep random door
 			int x = x0 + 1 + rnd.nextInt(w - 1);
 			int door = y0 + rnd.nextInt(h);
-			// System.out.println(String.format("Vertical wall between cols %d and %d, door at %d", x - 1, x,
-			// door));
 			for (int y = y0; y < y0 + h; ++y) {
 				if (y != door) {
 					int vertex = grid.vertex(y, x - 1);
-					if (grid.connected(vertex, Dir.E)) {
-						grid.disconnect(vertex, Dir.E);
-					}
+					grid.disconnect(vertex, Dir.E);
 				}
 			}
-			// GraphFunctions.prettyPrint(grid);
 			divide(grid, rnd, x0, y0, x - x0, h);
 			divide(grid, rnd, x, y0, w - (x - x0), h);
 		}
