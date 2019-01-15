@@ -21,10 +21,10 @@ public class SimpleMazeApp {
 				createMaze("AldousBroder", grid -> MazeAlgorithms.createMazeByAldousBroder(grid, 0), 10, 10));
 		GraphFunctions.prettyPrint(
 				createMaze("Growing Tree", grid -> MazeAlgorithms.createMazeByGrowingTree(grid, 0), 10, 10));
+		GraphFunctions
+				.prettyPrint(createMaze("Sidewinder", grid -> MazeAlgorithms.createMazeBySidewinder(grid), 10, 10));
 		GraphFunctions.prettyPrint(
-				createMaze("Sidewinder", grid -> MazeAlgorithms.createMazeBySidewinder(grid), 8, 8));
-		GraphFunctions.prettyPrint(
-				createMaze("Recursive Division", grid -> MazeAlgorithms.createMazeByRecursiveDivision(grid), 8, 8));
+				createMaze("Recursive Division", grid -> MazeAlgorithms.createMazeByRecursiveDivision(grid), 10, 10));
 	}
 
 	static GridGraph createMaze(String name, Consumer<GridGraph> generator, int rows, int cols) {
