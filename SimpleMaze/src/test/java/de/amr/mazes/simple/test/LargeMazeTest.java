@@ -25,10 +25,11 @@ public class LargeMazeTest {
 
 	static GridGraph test(String name, Consumer<GridGraph> generator, int rows, int cols) {
 		GridGraph grid = new GridGraph(rows, cols);
-		long start = System.currentTimeMillis();
+		long start = System.nanoTime();
 		generator.accept(grid);
-		long time = System.currentTimeMillis() - start;
-		System.out.println(String.format("%20s: %,d vertices, (%d ms)", name, grid.numVertices(), time));
+		long time = System.nanoTime() - start;
+		System.out
+				.println(String.format("%20s: %,d vertices, (%d ms)", name, grid.numVertices(), time / 1_000_000));
 		Assert.assertEquals("Wrong #edges", grid.numVertices() - 1, grid.numEdges());
 		Assert.assertTrue(!GraphFunctions.containsCycle(grid));
 		return grid;
