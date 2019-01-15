@@ -171,6 +171,31 @@ public class MazeAlgorithms {
 		} while (!vertices.isEmpty());
 	}
 
+	// Sidewinder algorithm
+
+	public static void createMazeBySidewinder(GridGraph grid) {
+		Random rnd = new Random();
+		BitSet visited = new BitSet();
+		for (int row = 0; row < grid.rows; ++row) {
+			int current = 0;
+			for (int col = 0; col < grid.cols; ++col) {
+				if (row > 0 && (col == grid.cols - 1 || rnd.nextBoolean())) {
+					int passageCol = current + rnd.nextInt(col - current + 1);
+					int north = grid.vertex(row - 1, passageCol), south = grid.vertex(row, passageCol);
+					grid.connect(north, Dir.S);
+					visited.set(north);
+					visited.set(south);
+					current = col + 1;
+				} else if (col + 1 < grid.cols) {
+					int west = grid.vertex(row, col), east = grid.vertex(row, col + 1);
+					grid.connect(west, Dir.E);
+					visited.set(west);
+					visited.set(east);
+				}
+			}
+		}
+	}
+
 	// Recursive division
 
 	public static void createMazeByRecursiveDivision(GridGraph grid) {

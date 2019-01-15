@@ -1,12 +1,14 @@
 package de.amr.mazes.simple.test;
 
-import static de.amr.mazes.simple.MazeAlgorithms.*;
+import static de.amr.mazes.simple.MazeAlgorithms.createMazeByAldousBroder;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeByBFS;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeByBinaryTree;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeByDFS;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeByGrowingTree;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeByKruskal;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeByPrim;
+import static de.amr.mazes.simple.MazeAlgorithms.createMazeByRecursiveDivision;
+import static de.amr.mazes.simple.MazeAlgorithms.createMazeBySidewinder;
 
 import java.util.function.Consumer;
 
@@ -60,6 +62,11 @@ public class LargeMazeTest {
 	@Test
 	public void test_GrowingTree() {
 		test("Growing Tree", grid -> createMazeByGrowingTree(grid, 0), L, L);
+	}
+
+	@Test
+	public void test_Sidewinder() {
+		test("Sidewinder", grid -> createMazeBySidewinder(grid), L, L);
 	}
 
 	@Test

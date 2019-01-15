@@ -22,6 +22,8 @@ public class SimpleMazeApp {
 		GraphFunctions.prettyPrint(
 				createMaze("Growing Tree", grid -> MazeAlgorithms.createMazeByGrowingTree(grid, 0), 10, 10));
 		GraphFunctions.prettyPrint(
+				createMaze("Sidewinder", grid -> MazeAlgorithms.createMazeBySidewinder(grid), 8, 8));
+		GraphFunctions.prettyPrint(
 				createMaze("Recursive Division", grid -> MazeAlgorithms.createMazeByRecursiveDivision(grid), 8, 8));
 	}
 
