@@ -47,7 +47,8 @@ public class GraphFunctions {
 			}
 			System.out.println();
 		}
-		System.out.println("Num edges " + grid.numEdges());
+		System.out.println(
+				String.format("Num vertices: %d (%d rows, %d cols)", grid.numVertices(), grid.rows, grid.cols));
+		System.out.println("Num edges: " + grid.numEdges());
 	}
-
 }

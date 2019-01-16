@@ -1,7 +1,12 @@
 package de.amr.mazes.simple;
 
+import static de.amr.mazes.simple.MazeAlgorithms.createMazeByAldousBroder;
+import static de.amr.mazes.simple.MazeAlgorithms.createMazeByGrowingTree;
+import static de.amr.mazes.simple.MazeAlgorithms.createMazeByRecursiveDivision;
+import static de.amr.mazes.simple.MazeAlgorithms.createMazeBySidewinder;
+import static de.amr.mazes.simple.graph.GraphFunctions.prettyPrint;
+
 import java.util.function.Consumer;
-import java.util.stream.IntStream;
 
 import de.amr.mazes.simple.graph.GraphFunctions;
 import de.amr.mazes.simple.graph.GridGraph;
@@ -14,20 +19,13 @@ import de.amr.mazes.simple.graph.GridGraph;
 public class SimpleMazeApp {
 
 	public static void main(String[] args) {
-		IntStream.range(0, 10).forEach(i -> {
-			createMaze("AldousBroder", grid -> MazeAlgorithms.createMazeByAldousBroder(grid, 0), 100, 100);
-		});
-		GraphFunctions.prettyPrint(
-				createMaze("AldousBroder", grid -> MazeAlgorithms.createMazeByAldousBroder(grid, 0), 10, 10));
-		GraphFunctions.prettyPrint(
-				createMaze("Growing Tree", grid -> MazeAlgorithms.createMazeByGrowingTree(grid, 0), 10, 10));
-		GraphFunctions
-				.prettyPrint(createMaze("Sidewinder", grid -> MazeAlgorithms.createMazeBySidewinder(grid), 10, 10));
-		GraphFunctions.prettyPrint(
-				createMaze("Recursive Division", grid -> MazeAlgorithms.createMazeByRecursiveDivision(grid), 10, 10));
+		printMaze("AldousBroder", grid -> createMazeByAldousBroder(grid, 0), 10, 10);
+		printMaze("Growing Tree", grid -> createMazeByGrowingTree(grid, 0), 10, 10);
+		printMaze("Sidewinder", grid -> createMazeBySidewinder(grid), 10, 10);
+		printMaze("Recursive Division", grid -> createMazeByRecursiveDivision(grid), 10, 10);
 	}
 
-	static GridGraph createMaze(String name, Consumer<GridGraph> generator, int rows, int cols) {
+	static void printMaze(String name, Consumer<GridGraph> generator, int rows, int cols) {
 		GridGraph grid = new GridGraph(rows, cols);
 		long start = System.currentTimeMillis();
 		generator.accept(grid);
@@ -40,6 +38,6 @@ public class SimpleMazeApp {
 		if (GraphFunctions.containsCycle(grid)) {
 			throw new IllegalStateException("Graph contains cycle");
 		}
-		return grid;
+		prettyPrint(grid);
 	}
 }
