@@ -223,8 +223,7 @@ public class MazeAlgorithms {
 			int door = x0 + rnd.nextInt(w);
 			for (int x = x0; x < x0 + w; ++x) {
 				if (x != door) {
-					int vertex = grid.vertex(y - 1, x);
-					grid.disconnect(vertex, Dir.S);
+					grid.disconnect(grid.vertex(y - 1, x), Dir.S);
 				}
 			}
 			divide(grid, rnd, x0, y0, w, y - y0);
@@ -235,8 +234,7 @@ public class MazeAlgorithms {
 			int door = y0 + rnd.nextInt(h);
 			for (int y = y0; y < y0 + h; ++y) {
 				if (y != door) {
-					int vertex = grid.vertex(y, x - 1);
-					grid.disconnect(vertex, Dir.E);
+					grid.disconnect(grid.vertex(y, x - 1), Dir.E);
 				}
 			}
 			divide(grid, rnd, x0, y0, x - x0, h);
