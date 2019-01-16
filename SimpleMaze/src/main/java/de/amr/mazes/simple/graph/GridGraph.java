@@ -1,124 +1,39 @@
 package de.amr.mazes.simple.graph;
 
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.List;
-
 /**
- * Stripped down grid graph implementation.
+ * Grid graph interface as used by maze generation algorithms.
  * 
  * @author Armin Reichert
  */
-public class GridGraph {
+public interface GridGraph {
 
-	public final int rows;
-	public final int cols;
-	private final BitSet edges;
+	int numRows();
 
-	public GridGraph(int rows, int cols) {
-		this.rows = rows;
-		this.cols = cols;
-		edges = new BitSet(4 * rows * cols);
-	}
+	int numCols();
 
-	public int numVertices() {
-		return rows * cols;
-	}
+	int numVertices();
 
-	public int numEdges() {
-		return edges.cardinality() / 2;
-	}
+	int numEdges();
 
-	public int vertex(int row, int col) {
-		return row * cols + col;
-	}
+	int col(int vertex);
 
-	public int row(int vertex) {
-		return vertex / cols;
-	}
+	int row(int vertex);
 
-	public int col(int vertex) {
-		return vertex % cols;
-	}
+	int vertex(int row, int col);
 
-	public int neighbor(int vertex, Dir dir) {
-		int row = row(vertex), col = col(vertex);
-		switch (dir) {
-		case N:
-			return row - 1 >= 0 ? vertex(row - 1, col) : -1;
-		case E:
-			return col + 1 < cols ? vertex(row, col + 1) : -1;
-		case S:
-			return row + 1 < rows ? vertex(row + 1, col) : -1;
-		case W:
-			return col - 1 >= 0 ? vertex(row, col - 1) : -1;
-		default:
-			throw new IllegalArgumentException();
-		}
-	}
+	String name(int vertex);
 
-	public boolean connected(int vertex, Dir dir) {
-		return edges.get(4 * vertex + dir.ordinal());
-	}
+	void connect(int vertex, Dir dir);
 
-	public void connect(int vertex, Dir dir) {
-		if (connected(vertex, dir)) {
-			throw new IllegalStateException(String.format("Already connected: %s, %s", name(vertex), dir));
-		}
-		int neighbor = neighbor(vertex, dir);
-		if (neighbor == -1) {
-			throw new IllegalArgumentException(
-					String.format("Cannot connect vertex %s towards %s", name(vertex), dir.name()));
-		}
-		edges.set(4 * vertex + dir.ordinal());
-		edges.set(4 * neighbor + dir.opposite().ordinal());
-	}
+	void connect(int vertex, int neighbor);
 
-	public void connect(int vertex, int neighbor) {
-		for (Dir dir : Dir.values()) {
-			if (neighbor == neighbor(vertex, dir)) {
-				connect(vertex, dir);
-				return;
-			}
-		}
-		throw new IllegalStateException();
-	}
+	void disconnect(int vertex, Dir dir);
 
-	public void disconnect(int vertex, Dir dir) {
-		if (!connected(vertex, dir)) {
-			throw new IllegalStateException(String.format("Not connected: %s, %s", name(vertex), dir));
-		}
-		int neighbor = neighbor(vertex, dir);
-		if (neighbor == -1) {
-			throw new IllegalArgumentException(
-					String.format("Cannot disconnect vertex %s towards %s", name(vertex), dir.name()));
-		}
-		edges.clear(4 * vertex + dir.ordinal());
-		edges.clear(4 * neighbor + dir.opposite().ordinal());
-	}
+	void disconnect(int vertex, int neighbor);
 
-	public Iterable<Edge> edges() {
-		List<Edge> edges = new ArrayList<>();
-		for (int vertex = 0; vertex < numVertices(); ++vertex) {
-			for (Dir dir : new Dir[] { Dir.E, Dir.S }) {
-				if (connected(vertex, dir)) {
-					edges.add(new Edge(this, vertex, neighbor(vertex, dir)));
-				}
-			}
-		}
-		return edges;
-	}
+	boolean connected(int vertex, Dir dir);
 
-	public String name(int vertex) {
-		return String.format("(%d,%d)", row(vertex), col(vertex));
-	}
+	int neighbor(int vertex, Dir dir);
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		for (Edge edge : edges()) {
-			sb.append(name(edge.either)).append("->").append(name(edge.other)).append("\n");
-		}
-		return sb.toString();
-	}
+	Iterable<Edge> edges();
 }

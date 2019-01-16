@@ -79,8 +79,8 @@ public class MazeAlgorithms {
 
 	public static void createMazeByKruskal(GridGraph grid) {
 		List<Edge> edges = new ArrayList<>();
-		for (int row = 0; row < grid.rows; ++row) {
-			for (int col = 0; col < grid.cols; ++col) {
+		for (int row = 0; row < grid.numRows(); ++row) {
+			for (int col = 0; col < grid.numCols(); ++col) {
 				int vertex = grid.vertex(row, col);
 				if (row > 0) {
 					edges.add(new Edge(grid, vertex, grid.neighbor(vertex, Dir.N)));
@@ -176,17 +176,17 @@ public class MazeAlgorithms {
 	public static void createMazeBySidewinder(GridGraph grid) {
 		Random rnd = new Random();
 		BitSet visited = new BitSet();
-		for (int row = 0; row < grid.rows; ++row) {
+		for (int row = 0; row < grid.numRows(); ++row) {
 			int current = 0;
-			for (int col = 0; col < grid.cols; ++col) {
-				if (row > 0 && (col == grid.cols - 1 || rnd.nextBoolean())) {
+			for (int col = 0; col < grid.numCols(); ++col) {
+				if (row > 0 && (col == grid.numCols() - 1 || rnd.nextBoolean())) {
 					int passageCol = current + rnd.nextInt(col - current + 1);
 					int north = grid.vertex(row - 1, passageCol), south = grid.vertex(row, passageCol);
 					grid.connect(north, Dir.S);
 					visited.set(north);
 					visited.set(south);
 					current = col + 1;
-				} else if (col + 1 < grid.cols) {
+				} else if (col + 1 < grid.numCols()) {
 					int west = grid.vertex(row, col), east = grid.vertex(row, col + 1);
 					grid.connect(west, Dir.E);
 					visited.set(west);
@@ -199,8 +199,8 @@ public class MazeAlgorithms {
 	// Recursive division
 
 	public static void createMazeByRecursiveDivision(GridGraph grid) {
-		for (int row = 0; row < grid.rows; ++row) {
-			for (int col = 0; col < grid.cols; ++col) {
+		for (int row = 0; row < grid.numRows(); ++row) {
+			for (int col = 0; col < grid.numCols(); ++col) {
 				int vertex = grid.vertex(row, col);
 				if (row > 0) {
 					grid.connect(vertex, Dir.N);
@@ -210,7 +210,7 @@ public class MazeAlgorithms {
 				}
 			}
 		}
-		divide(grid, new Random(), 0, 0, grid.cols, grid.rows);
+		divide(grid, new Random(), 0, 0, grid.numCols(), grid.numRows());
 	}
 
 	private static void divide(GridGraph grid, Random rnd, int x0, int y0, int w, int h) {

@@ -17,6 +17,7 @@ import org.junit.Test;
 
 import de.amr.mazes.simple.graph.GraphFunctions;
 import de.amr.mazes.simple.graph.GridGraph;
+import de.amr.mazes.simple.graph.GridGraphImpl;
 
 public class LargeMazeTest {
 
@@ -24,7 +25,7 @@ public class LargeMazeTest {
 	static final int M = 100;
 
 	static GridGraph test(String name, Consumer<GridGraph> generator, int rows, int cols) {
-		GridGraph grid = new GridGraph(rows, cols);
+		GridGraph grid = new GridGraphImpl(rows, cols);
 		long start = System.nanoTime();
 		generator.accept(grid);
 		long time = System.nanoTime() - start;

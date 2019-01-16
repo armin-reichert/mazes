@@ -9,7 +9,7 @@ import static de.amr.mazes.simple.graph.GraphFunctions.prettyPrint;
 import java.util.function.Consumer;
 
 import de.amr.mazes.simple.graph.GraphFunctions;
-import de.amr.mazes.simple.graph.GridGraph;
+import de.amr.mazes.simple.graph.GridGraphImpl;
 
 /**
  * Sample app for stripped down maze generation implementation.
@@ -25,8 +25,8 @@ public class SimpleMazeApp {
 		printMaze("Recursive Division", grid -> createMazeByRecursiveDivision(grid), 10, 10);
 	}
 
-	static void printMaze(String name, Consumer<GridGraph> generator, int rows, int cols) {
-		GridGraph grid = new GridGraph(rows, cols);
+	static void printMaze(String name, Consumer<GridGraphImpl> generator, int rows, int cols) {
+		GridGraphImpl grid = new GridGraphImpl(rows, cols);
 		long start = System.currentTimeMillis();
 		generator.accept(grid);
 		long time = System.currentTimeMillis() - start;

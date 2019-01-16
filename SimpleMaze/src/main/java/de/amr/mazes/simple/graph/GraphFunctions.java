@@ -32,23 +32,23 @@ public class GraphFunctions {
 	}
 
 	public static void prettyPrint(GridGraph grid) {
-		for (int row = 0; row < grid.rows; ++row) {
-			for (int col = 0; col < grid.cols; ++col) {
+		for (int row = 0; row < grid.numRows(); ++row) {
+			for (int col = 0; col < grid.numCols(); ++col) {
 				int vertex = grid.vertex(row, col);
 				System.out.print(grid.name(vertex));
 				System.out.print(grid.connected(vertex, Dir.E) ? "\u2014" : " ");
 			}
-			if (row < grid.rows - 1) {
+			if (row < grid.numRows() - 1) {
 				System.out.println();
-				for (int col = 0; col < grid.cols; ++col) {
+				for (int col = 0; col < grid.numCols(); ++col) {
 					int below = grid.vertex(row + 1, col);
 					System.out.print(grid.connected(below, Dir.N) ? "  |   " : "      ");
 				}
 			}
 			System.out.println();
 		}
-		System.out.println(
-				String.format("Num vertices: %d (%d rows, %d cols)", grid.numVertices(), grid.rows, grid.cols));
+		System.out.println(String.format("Num vertices: %d (%d rows, %d cols)", grid.numVertices(),
+				grid.numRows(), grid.numCols()));
 		System.out.println("Num edges: " + grid.numEdges());
 	}
 }
