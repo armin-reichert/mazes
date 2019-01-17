@@ -246,12 +246,11 @@ public class MazeAlgorithms {
 	// Aldous/Broder algorithm
 
 	public static void createMazeByAldousBroder(GridGraph grid, int startVertex) {
-		Random rnd = new Random();
 		BitSet visited = new BitSet();
 		int vertex = startVertex;
 		visited.set(vertex);
 		while (visited.cardinality() < grid.numVertices()) {
-			Dir dir = Dir.values()[rnd.nextInt(4)];
+			Dir dir = Dir.random();
 			int neighbor = grid.neighbor(vertex, dir);
 			if (neighbor != -1) {
 				if (!visited.get(neighbor)) {
@@ -266,7 +265,7 @@ public class MazeAlgorithms {
 	// Wilson's algorithm
 
 	public static void createMazeByWilson(GridGraph grid) {
-		List<Integer> vertices = new ArrayList<>();
+		List<Integer> vertices = new ArrayList<>(grid.numVertices());
 		for (int vertex = 0; vertex < grid.numVertices(); ++vertex) {
 			vertices.add(vertex);
 		}
@@ -285,10 +284,10 @@ public class MazeAlgorithms {
 		if (visited.get(walkStart)) {
 			return;
 		}
-		// do a random walk until it touches the tree created so far
+		// do a random walk until visited vertex is touched
 		int current = walkStart;
 		while (!visited.get(current)) {
-			Dir walkDir = Dir.shuffled().iterator().next();
+			Dir walkDir = Dir.random();
 			int neighbor = grid.neighbor(current, walkDir);
 			if (neighbor != -1) {
 				lastWalkDir.set(current, walkDir);
@@ -298,13 +297,13 @@ public class MazeAlgorithms {
 		// add the (loop-erased) random walk to the tree
 		current = walkStart;
 		while (!visited.get(current)) {
-			int neighbor = grid.neighbor(current, lastWalkDir.get(current));
+			Dir walkDir = lastWalkDir.get(current);
+			int neighbor = grid.neighbor(current, walkDir);
 			if (neighbor != -1) {
 				visited.set(current);
-				grid.connect(current, lastWalkDir.get(current));
+				grid.connect(current, walkDir);
 				current = neighbor;
 			}
 		}
 	}
-
 }

@@ -3,6 +3,7 @@ package de.amr.mazes.simple.graph;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public enum Dir {
 	N, E, S, W;
@@ -11,6 +12,10 @@ public enum Dir {
 
 	public Dir opposite() {
 		return OPPOSITE[ordinal()];
+	}
+
+	public static Dir random() {
+		return values()[new Random().nextInt(4)];
 	}
 
 	public static Iterable<Dir> shuffled() {
