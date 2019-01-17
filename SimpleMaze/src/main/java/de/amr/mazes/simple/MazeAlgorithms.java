@@ -11,6 +11,7 @@ import java.util.Random;
 
 import de.amr.easy.data.Partition;
 import de.amr.mazes.simple.graph.Dir;
+import de.amr.mazes.simple.graph.DirMap;
 import de.amr.mazes.simple.graph.Edge;
 import de.amr.mazes.simple.graph.GridGraph;
 
@@ -272,13 +273,13 @@ public class MazeAlgorithms {
 		Collections.shuffle(vertices);
 		BitSet visited = new BitSet();
 		visited.set(vertices.get(0));
-		Dir[] lastWalkDir = new Dir[grid.numVertices()];
+		DirMap lastWalkDir = new DirMap();
 		for (int vertex : vertices) {
 			loopErasedRandomWalk(grid, vertex, lastWalkDir, visited);
 		}
 	}
 
-	protected static void loopErasedRandomWalk(GridGraph grid, int walkStart, Dir[] lastWalkDir,
+	protected static void loopErasedRandomWalk(GridGraph grid, int walkStart, DirMap lastWalkDir,
 			BitSet visited) {
 		// if walk start is already inside tree, do nothing
 		if (visited.get(walkStart)) {
@@ -290,17 +291,17 @@ public class MazeAlgorithms {
 			Dir walkDir = Dir.shuffled().iterator().next();
 			int neighbor = grid.neighbor(current, walkDir);
 			if (neighbor != -1) {
-				lastWalkDir[current] = walkDir;
+				lastWalkDir.set(current, walkDir);
 				current = neighbor;
 			}
 		}
 		// add the (loop-erased) random walk to the tree
 		current = walkStart;
 		while (!visited.get(current)) {
-			int neighbor = grid.neighbor(current, lastWalkDir[current]);
+			int neighbor = grid.neighbor(current, lastWalkDir.get(current));
 			if (neighbor != -1) {
 				visited.set(current);
-				grid.connect(current, lastWalkDir[current]);
+				grid.connect(current, lastWalkDir.get(current));
 				current = neighbor;
 			}
 		}
