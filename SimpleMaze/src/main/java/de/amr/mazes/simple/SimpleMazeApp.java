@@ -1,6 +1,6 @@
 package de.amr.mazes.simple;
 
-import static de.amr.mazes.simple.MazeAlgorithms.createMazeByAldousBroder;
+import static de.amr.mazes.simple.MazeAlgorithms.*;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeByGrowingTree;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeByRecursiveDivision;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeBySidewinder;
@@ -23,6 +23,7 @@ public class SimpleMazeApp {
 		printMaze("Growing Tree", grid -> createMazeByGrowingTree(grid, 0), 10, 10);
 		printMaze("Sidewinder", grid -> createMazeBySidewinder(grid), 10, 10);
 		printMaze("Recursive Division", grid -> createMazeByRecursiveDivision(grid), 10, 10);
+		printMaze("Wilson", grid -> createMazeByWilson(grid), 10, 10);
 	}
 
 	static void printMaze(String name, Consumer<GridGraphImpl> generator, int rows, int cols) {

@@ -261,4 +261,48 @@ public class MazeAlgorithms {
 			}
 		}
 	}
+
+	// Wilson's algorithm
+
+	public static void createMazeByWilson(GridGraph grid) {
+		List<Integer> vertices = new ArrayList<>();
+		for (int vertex = 0; vertex < grid.numVertices(); ++vertex) {
+			vertices.add(vertex);
+		}
+		Collections.shuffle(vertices);
+		BitSet visited = new BitSet();
+		visited.set(vertices.get(0));
+		for (int vertex : vertices) {
+			loopErasedRandomWalk(grid, vertex, new Dir[grid.numVertices()], visited);
+		}
+	}
+
+	protected static void loopErasedRandomWalk(GridGraph grid, int walkStart, Dir[] lastWalkDir,
+			BitSet visited) {
+		// if walk start is already inside tree, do nothing
+		if (visited.get(walkStart)) {
+			return;
+		}
+		// do a random walk until it touches the tree created so far
+		int current = walkStart;
+		while (!visited.get(current)) {
+			Dir walkDir = Dir.shuffled().iterator().next();
+			int neighbor = grid.neighbor(current, walkDir);
+			if (neighbor != -1) {
+				lastWalkDir[current] = walkDir;
+				current = neighbor;
+			}
+		}
+		// add the (loop-erased) random walk to the tree
+		current = walkStart;
+		while (!visited.get(current)) {
+			int neighbor = grid.neighbor(current, lastWalkDir[current]);
+			if (neighbor != -1) {
+				visited.set(current);
+				grid.connect(current, lastWalkDir[current]);
+				current = neighbor;
+			}
+		}
+	}
+
 }

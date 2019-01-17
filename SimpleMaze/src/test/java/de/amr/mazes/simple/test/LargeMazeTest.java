@@ -9,6 +9,7 @@ import static de.amr.mazes.simple.MazeAlgorithms.createMazeByKruskal;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeByPrim;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeByRecursiveDivision;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeBySidewinder;
+import static de.amr.mazes.simple.MazeAlgorithms.createMazeByWilson;
 
 import java.util.function.Consumer;
 
@@ -81,4 +82,8 @@ public class LargeMazeTest {
 		test("Aldous Broder", grid -> createMazeByAldousBroder(grid, 0), M, M);
 	}
 
+	@Test
+	public void test_Wilson() {
+		test("Wilson", grid -> createMazeByWilson(grid), M, M);
+	}
 }
