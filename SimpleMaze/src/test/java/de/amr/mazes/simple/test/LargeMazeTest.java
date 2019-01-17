@@ -84,6 +84,6 @@ public class LargeMazeTest {
 
 	@Test
 	public void test_Wilson() {
-		test("Wilson", grid -> createMazeByWilson(grid), M, M);
+		test("Wilson", grid -> createMazeByWilson(grid), L, L);
 	}
 }

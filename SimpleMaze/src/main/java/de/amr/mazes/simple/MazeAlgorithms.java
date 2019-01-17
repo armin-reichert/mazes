@@ -272,8 +272,9 @@ public class MazeAlgorithms {
 		Collections.shuffle(vertices);
 		BitSet visited = new BitSet();
 		visited.set(vertices.get(0));
+		Dir[] lastWalkDir = new Dir[grid.numVertices()];
 		for (int vertex : vertices) {
-			loopErasedRandomWalk(grid, vertex, new Dir[grid.numVertices()], visited);
+			loopErasedRandomWalk(grid, vertex, lastWalkDir, visited);
 		}
 	}
 
