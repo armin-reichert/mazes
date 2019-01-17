@@ -8,6 +8,8 @@ import java.util.Deque;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import de.amr.easy.data.Partition;
 import de.amr.mazes.simple.graph.Dir;
@@ -265,10 +267,7 @@ public class MazeAlgorithms {
 	// Wilson's algorithm
 
 	public static void createMazeByWilson(GridGraph grid) {
-		List<Integer> vertices = new ArrayList<>(grid.numVertices());
-		for (int vertex = 0; vertex < grid.numVertices(); ++vertex) {
-			vertices.add(vertex);
-		}
+		List<Integer> vertices = IntStream.range(0, grid.numVertices()).boxed().collect(Collectors.toList());
 		Collections.shuffle(vertices);
 		BitSet visited = new BitSet();
 		visited.set(vertices.get(0));
@@ -280,29 +279,29 @@ public class MazeAlgorithms {
 
 	protected static void loopErasedRandomWalk(GridGraph grid, int walkStart, DirMap lastWalkDir,
 			BitSet visited) {
-		// if walk start is already inside tree, do nothing
+		// if walk start vertex is already in tree, do nothing
 		if (visited.get(walkStart)) {
 			return;
 		}
 		// do a random walk until visited vertex is touched
-		int current = walkStart;
-		while (!visited.get(current)) {
+		int vertex = walkStart;
+		while (!visited.get(vertex)) {
 			Dir walkDir = Dir.random();
-			int neighbor = grid.neighbor(current, walkDir);
+			int neighbor = grid.neighbor(vertex, walkDir);
 			if (neighbor != -1) {
-				lastWalkDir.set(current, walkDir);
-				current = neighbor;
+				lastWalkDir.set(vertex, walkDir);
+				vertex = neighbor;
 			}
 		}
 		// add the (loop-erased) random walk to the tree
-		current = walkStart;
-		while (!visited.get(current)) {
-			Dir walkDir = lastWalkDir.get(current);
-			int neighbor = grid.neighbor(current, walkDir);
+		vertex = walkStart;
+		while (!visited.get(vertex)) {
+			Dir walkDir = lastWalkDir.get(vertex);
+			int neighbor = grid.neighbor(vertex, walkDir);
 			if (neighbor != -1) {
-				visited.set(current);
-				grid.connect(current, walkDir);
-				current = neighbor;
+				visited.set(vertex);
+				grid.connect(vertex, walkDir);
+				vertex = neighbor;
 			}
 		}
 	}
