@@ -3,44 +3,57 @@ package de.amr.mazes.simple.graph;
 import java.util.BitSet;
 
 /**
- * A map from vertex to direction implemented using bitmaps.
+ * A mapping from vertices to directions.
+ * <p>
+ * Note that each vertex always is mapped to a direction, the default direction is <code>N</code>.
  * 
  * @author Armin Reichert
  */
 public class DirMap {
 
-	private final BitSet[] bits = new BitSet[2];
+	private final BitSet b0 = new BitSet();
+	private final BitSet b1 = new BitSet();
 
-	public DirMap() {
-		bits[0] = new BitSet();
-		bits[1] = new BitSet();
-	}
-
+	/**
+	 * Gets the direction for the given vertex.
+	 * 
+	 * @param vertex
+	 *                 a vertex
+	 * @return the direction for this vertex
+	 */
 	public Dir get(int vertex) {
-		if (bits[0].get(vertex)) {
-			return bits[1].get(vertex) ? Dir.W : Dir.S;
+		if (b0.get(vertex)) {
+			return b1.get(vertex) ? Dir.W : Dir.E;
 		} else {
-			return bits[1].get(vertex) ? Dir.E : Dir.N;
+			return b1.get(vertex) ? Dir.S : Dir.N;
 		}
 	}
 
+	/**
+	 * Sets the direction for the given vertex.
+	 * 
+	 * @param vertex
+	 *                 a vertex
+	 * @param dir
+	 *                 a direction
+	 */
 	public void set(int vertex, Dir dir) {
 		switch (dir) {
 		case N:
-			bits[0].clear(vertex);
-			bits[1].clear(vertex);
+			b0.clear(vertex);
+			b1.clear(vertex);
 			break;
 		case E:
-			bits[0].clear(vertex);
-			bits[1].set(vertex);
+			b0.set(vertex);
+			b1.clear(vertex);
 			break;
 		case S:
-			bits[0].set(vertex);
-			bits[1].clear(vertex);
+			b0.clear(vertex);
+			b1.set(vertex);
 			break;
 		case W:
-			bits[0].set(vertex);
-			bits[1].set(vertex);
+			b0.set(vertex);
+			b1.set(vertex);
 			break;
 		default:
 			throw new IllegalArgumentException("Illegal dir: " + dir);

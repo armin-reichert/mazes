@@ -149,6 +149,8 @@ public class GridGraphImpl implements GridGraph {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		sb.append("Rows: ").append(rows).append("\n");
+		sb.append("Cols: ").append(cols).append("\n");
 		for (Edge edge : edges()) {
 			sb.append(name(edge.either)).append("->").append(name(edge.other)).append("\n");
 		}

@@ -15,11 +15,15 @@ public interface GridGraph {
 
 	int numEdges();
 
+	Iterable<Edge> edges();
+
 	int col(int vertex);
 
 	int row(int vertex);
 
 	int vertex(int row, int col);
+
+	int neighbor(int vertex, Dir dir);
 
 	String name(int vertex);
 
@@ -32,8 +36,4 @@ public interface GridGraph {
 	void disconnect(int vertex, int neighbor);
 
 	boolean connected(int vertex, Dir dir);
-
-	int neighbor(int vertex, Dir dir);
-
-	Iterable<Edge> edges();
 }
