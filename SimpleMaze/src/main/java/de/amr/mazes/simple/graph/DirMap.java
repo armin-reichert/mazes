@@ -40,20 +40,20 @@ public class DirMap {
 	public void set(int vertex, Dir dir) {
 		switch (dir) {
 		case N:
-			b0.clear(vertex);
 			b1.clear(vertex);
+			b0.clear(vertex);
 			break;
 		case E:
-			b0.set(vertex);
 			b1.clear(vertex);
+			b0.set(vertex);
 			break;
 		case S:
-			b0.clear(vertex);
 			b1.set(vertex);
+			b0.clear(vertex);
 			break;
 		case W:
-			b0.set(vertex);
 			b1.set(vertex);
+			b0.set(vertex);
 			break;
 		default:
 			throw new IllegalArgumentException("Illegal dir: " + dir);
