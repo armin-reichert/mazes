@@ -10,10 +10,11 @@ import static de.amr.mazes.simple.MazeAlgorithms.createMazeByPrim;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeByRecursiveDivision;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeBySidewinder;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeByWilson;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.function.Consumer;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import de.amr.mazes.simple.graph.GraphFunctions;
@@ -31,9 +32,9 @@ public class LargeMazeTest {
 		generator.accept(grid);
 		long time = System.nanoTime() - start;
 		System.out
-				.println(String.format("%20s: %,d vertices, (%d ms)", name, grid.numVertices(), time / 1_000_000));
-		Assert.assertEquals("Wrong #edges", grid.numVertices() - 1, grid.numEdges());
-		Assert.assertTrue(!GraphFunctions.containsCycle(grid));
+				.println(String.format("%20s: %,d vertices (%d ms)", name, grid.numVertices(), time / 1_000_000));
+		assertEquals("Wrong #edges", grid.numVertices() - 1, grid.numEdges());
+		assertTrue(!GraphFunctions.containsCycle(grid));
 		return grid;
 	}
 
