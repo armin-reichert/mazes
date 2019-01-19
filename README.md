@@ -149,5 +149,5 @@ The [EasyGraph](https://github.com/armin-reichert/graph/tree/master/EasyGraph) l
 - [Depth-First Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/impl/traversal/DepthFirstTraversal.java)
 - [(Greedy) Best-First Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/impl/traversal/BestFirstTraversal.java). Can be used with Euclidean, Manhattan and Chebyshev distance heuristics.
 - [Hill Climbing](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/impl/traversal/HillClimbing.java). Can be used with Euclidean, Manhattan and Chebyshev distance heuristics.
-- [A* Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/impl/traversal/AStarTraversal.java). Not really useful for path finding in perfect mazes as explained above.
-- [Dijkstra](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/impl/traversal/DijkstraTraversal.java). Not so difficult when A* is available :-)
+- [A* Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/impl/traversal/AStarTraversal.java).
+- [Dijkstra](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/impl/traversal/DijkstraTraversal.java). Not really useful for path finding in perfect mazes as explained above.
