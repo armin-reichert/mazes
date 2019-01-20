@@ -1,8 +1,5 @@
 ## Maze generation algorithms
 
-![RandomBFS](Demos/images/gen/maze_80x60_RandomBFS.gif)
-
-
 This project provides Java implementations of more than 35 algorithms for generating so called "perfect mazes" (which are just spanning trees of undirected graphs).
 
 <img style="width:100%; height=auto" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/mazedemoapp.png">
