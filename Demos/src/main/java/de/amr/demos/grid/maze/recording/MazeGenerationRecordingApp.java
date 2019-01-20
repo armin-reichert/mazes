@@ -31,7 +31,6 @@ import de.amr.easy.maze.alg.mst.PrimMST;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
 import de.amr.easy.maze.alg.traversal.RandomBFS;
 import de.amr.easy.maze.alg.traversal.RecursiveDFS;
-import de.amr.easy.maze.alg.ust.AldousBroderUST;
 import de.amr.easy.maze.alg.ust.WilsonUSTCollapsingCircle;
 import de.amr.easy.maze.alg.ust.WilsonUSTCollapsingWalls;
 import de.amr.easy.maze.alg.ust.WilsonUSTExpandingCircle;
@@ -92,7 +91,7 @@ public class MazeGenerationRecordingApp {
 		int numCols = 80, numRows = 60, cellSize = 4, scanRate = 80, delayMillis = 50;
 		run(numCols, numRows, cellSize, scanRate, delayMillis, HANDSOME_GENERATORS);
 
-		run(10, 8, 8, 1, 40, AldousBroderUST.class);
+		// run(10, 8, 8, 1, 40, AldousBroderUST.class);
 		// run(numCols, numRows, cellSize, scanRate, delayMillis, ReverseDeleteMST_DFS.class);
 		run(numCols, numRows, 2, 10, 80, RecursiveDivision.class);
 	}
@@ -133,37 +132,44 @@ public class MazeGenerationRecordingApp {
 		}
 	}
 
+	private static BufferedImage createImage(GridCanvas canvas) {
+		BufferedImage img = new BufferedImage(canvas.getWidth() + 1, canvas.getHeight() + 1,
+				BufferedImage.TYPE_BYTE_BINARY);
+		img.getGraphics().drawImage(canvas.getDrawingBuffer(), 0, 0, null);
+		return img;
+	}
+
 	private static void attach(GifRecorder recorder, OrthogonalGrid grid, GridCanvas canvas) {
 		grid.addGraphObserver(new GraphObserver<TraversalState, Integer>() {
 
 			@Override
 			public void vertexChanged(VertexEvent<TraversalState, Integer> event) {
 				canvas.drawGridCell(event.getVertex());
-				recorder.addFrame(canvas.getDrawingBuffer());
+				recorder.addFrame(createImage(canvas));
 			}
 
 			@Override
 			public void graphChanged(ObservableGraph<TraversalState, Integer> graph) {
 				canvas.drawGrid();
-				recorder.addFrame(canvas.getDrawingBuffer());
+				recorder.addFrame(createImage(canvas));
 			}
 
 			@Override
 			public void edgeRemoved(EdgeEvent<TraversalState, Integer> event) {
 				canvas.drawGridPassage(event.getEither(), event.getOther(), false);
-				recorder.addFrame(canvas.getDrawingBuffer());
+				recorder.addFrame(createImage(canvas));
 			}
 
 			@Override
 			public void edgeChanged(EdgeEvent<TraversalState, Integer> event) {
 				canvas.drawGridPassage(event.getEither(), event.getOther(), true);
-				recorder.addFrame(canvas.getDrawingBuffer());
+				recorder.addFrame(createImage(canvas));
 			}
 
 			@Override
 			public void edgeAdded(EdgeEvent<TraversalState, Integer> event) {
 				canvas.drawGridPassage(event.getEither(), event.getOther(), true);
-				recorder.addFrame(canvas.getDrawingBuffer());
+				recorder.addFrame(createImage(canvas));
 			}
 		});
 	}
