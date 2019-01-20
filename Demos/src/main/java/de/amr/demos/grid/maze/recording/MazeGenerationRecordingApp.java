@@ -1,4 +1,4 @@
-package de.amr.demos.grid.maze.swing;
+package de.amr.demos.grid.maze.recording;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
