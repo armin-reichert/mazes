@@ -63,6 +63,7 @@ Implemented maze generation algorithms:
 - [Random Breadth-First-Search](EasyMaze/src/main/java/de/amr/easy/maze/alg/traversal/RandomBFS.java)
 
 <img width="320" height="240" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_RandomBFS.gif">
+![RandomBFS](/Demos/images/gen/maze_80x60_RandomBFS.gif)
 
 - [Random Depth-First-Search, iterative](EasyMaze/src/main/java/de/amr/easy/maze/alg/traversal/IterativeDFS.java)
 
