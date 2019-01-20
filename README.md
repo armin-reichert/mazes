@@ -70,7 +70,7 @@ Implemented maze generation algorithms:
 
 - [Random Depth-First-Search, recursive](EasyMaze/src/main/java/de/amr/easy/maze/alg/traversal/RecursiveDFS.java)
 
-![](Demos/images/gen/maze_80x60_RecursiveDFS.gif)
+![](Demos/images/gen/maze_40x30_RecursiveDFS.gif)
 
 ### Minimum Spanning Tree: 
 - [Boruvka](EasyMaze/src/main/java/de/amr/easy/maze/alg/mst/BoruvkaMST.java)
