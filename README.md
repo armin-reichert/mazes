@@ -147,7 +147,7 @@ Implemented maze generation algorithms:
 
 - [Recursive division](EasyMaze/src/main/java/de/amr/easy/maze/alg/RecursiveDivision.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_40x25_RecursiveDivision.gif">
+<img width="320" height="240" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_RecursiveDivision.gif">
 
 ### Path finding algorithms:
 The [EasyGraph](https://github.com/armin-reichert/graph/tree/master/EasyGraph) library contains the following path finder implementations:

@@ -28,7 +28,6 @@ import de.amr.easy.maze.alg.core.MazeGenerator;
 import de.amr.easy.maze.alg.mst.BoruvkaMST;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 import de.amr.easy.maze.alg.mst.PrimMST;
-import de.amr.easy.maze.alg.mst.ReverseDeleteMST_DFS;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
 import de.amr.easy.maze.alg.traversal.RandomBFS;
 import de.amr.easy.maze.alg.traversal.RecursiveDFS;
@@ -94,12 +93,12 @@ public class MazeGenerationRecordingApp {
 		run(numCols, numRows, cellSize, scanRate, delayMillis, HANDSOME_GENERATORS);
 
 		run(10, 8, 8, 1, 40, AldousBroderUST.class);
-//		run(numCols, numRows, cellSize, scanRate, delayMillis, ReverseDeleteMST_DFS.class);
-//		run(numCols, numRows, cellSize, scanRate, delayMillis, RecursiveDivision.class);
+		// run(numCols, numRows, cellSize, scanRate, delayMillis, ReverseDeleteMST_DFS.class);
+		run(numCols, numRows, 2, 10, 80, RecursiveDivision.class);
 	}
 
-	private static void run(int numCols, int numRows, int cellSize, int scanRate,
-			int delayMillis,Class<?>... generatorClasses) {
+	private static void run(int numCols, int numRows, int cellSize, int scanRate, int delayMillis,
+			Class<?>... generatorClasses) {
 		for (Class<?> generatorClass : generatorClasses) {
 			JFrame window = new JFrame();
 			try {
@@ -116,6 +115,7 @@ public class MazeGenerationRecordingApp {
 				window.setTitle(generatorClass.getSimpleName());
 				window.setVisible(true);
 
+				canvas.drawGrid();
 				try (GifRecorder recorder = new GifRecorder(BufferedImage.TYPE_INT_RGB)) {
 					attach(recorder, grid, canvas);
 					recorder.setDelayMillis(delayMillis);
