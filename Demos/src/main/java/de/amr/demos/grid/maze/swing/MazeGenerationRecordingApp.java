@@ -1,9 +1,8 @@
 package de.amr.demos.grid.maze.swing;
 
-import static java.lang.String.format;
-
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 import javax.swing.JFrame;
 
@@ -16,59 +15,93 @@ import de.amr.easy.grid.impl.OrthogonalGrid;
 import de.amr.easy.grid.ui.swing.rendering.GridCanvas;
 import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
 import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
+import de.amr.easy.maze.alg.BinaryTree;
+import de.amr.easy.maze.alg.BinaryTreeRandom;
+import de.amr.easy.maze.alg.Eller;
+import de.amr.easy.maze.alg.EllerInsideOut;
+import de.amr.easy.maze.alg.GrowingTree;
+import de.amr.easy.maze.alg.HuntAndKill;
+import de.amr.easy.maze.alg.HuntAndKillRandom;
+import de.amr.easy.maze.alg.RecursiveDivision;
+import de.amr.easy.maze.alg.Sidewinder;
 import de.amr.easy.maze.alg.core.MazeGenerator;
 import de.amr.easy.maze.alg.mst.BoruvkaMST;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 import de.amr.easy.maze.alg.mst.PrimMST;
+import de.amr.easy.maze.alg.mst.ReverseDeleteMST_DFS;
+import de.amr.easy.maze.alg.traversal.IterativeDFS;
+import de.amr.easy.maze.alg.traversal.RandomBFS;
+import de.amr.easy.maze.alg.traversal.RecursiveDFS;
+import de.amr.easy.maze.alg.ust.AldousBroderUST;
+import de.amr.easy.maze.alg.ust.WilsonUSTCollapsingCircle;
+import de.amr.easy.maze.alg.ust.WilsonUSTCollapsingWalls;
+import de.amr.easy.maze.alg.ust.WilsonUSTExpandingCircle;
+import de.amr.easy.maze.alg.ust.WilsonUSTExpandingCircles;
+import de.amr.easy.maze.alg.ust.WilsonUSTExpandingRectangle;
+import de.amr.easy.maze.alg.ust.WilsonUSTExpandingSpiral;
+import de.amr.easy.maze.alg.ust.WilsonUSTHilbertCurve;
+import de.amr.easy.maze.alg.ust.WilsonUSTLeftToRightSweep;
+import de.amr.easy.maze.alg.ust.WilsonUSTMooreCurve;
+import de.amr.easy.maze.alg.ust.WilsonUSTNestedRectangles;
+import de.amr.easy.maze.alg.ust.WilsonUSTPeanoCurve;
+import de.amr.easy.maze.alg.ust.WilsonUSTRandomCell;
+import de.amr.easy.maze.alg.ust.WilsonUSTRecursiveCrosses;
+import de.amr.easy.maze.alg.ust.WilsonUSTRightToLeftSweep;
+import de.amr.easy.maze.alg.ust.WilsonUSTRowsTopDown;
 import de.amr.easy.util.GifRecorder;
 
 public class MazeGenerationRecordingApp {
 
-	private static final Class<?>[] GENERATORS = {
-	/*@formatter:off*/
-//		BoruvkaMST.class, 
-//		KruskalMST.class, 
+	private static final File IMAGE_PATH = new File(System.getProperty("user.dir") + "/images/gen");
+	private static final String IMAGE_NAME = "maze_%dx%d_%s.gif";
+
+	private static final Class<?>[] HANDSOME_GENERATORS = {
+		/*@formatter:off*/
+		BoruvkaMST.class, 
+		KruskalMST.class, 
 		PrimMST.class, 
-//		ReverseDeleteMST_DFS.class,
-//		AldousBroderUST.class, 
-//		BinaryTree.class,
-//		BinaryTreeRandom.class, 
-//		Eller.class,
-//		EllerInsideOut.class, 
-//		GrowingTree.class, 
-//		HuntAndKill.class, 
-//		HuntAndKillRandom.class,
-//		IterativeDFS.class, 
-//		RandomBFS.class, 
-//		RecursiveDFS.class, 
-//		RecursiveDivision.class, 
-//		Sidewinder.class,
-//		WilsonUSTCollapsingCircle.class, 
-//		WilsonUSTCollapsingWalls.class,
-//		WilsonUSTExpandingCircle.class, 
-//		WilsonUSTExpandingCircles.class, 
-//		WilsonUSTExpandingRectangle.class, 
-//		WilsonUSTExpandingSpiral.class, 
-//		WilsonUSTHilbertCurve.class, 
-//		WilsonUSTLeftToRightSweep.class, 
-//		WilsonUSTMooreCurve.class, 
-//		WilsonUSTNestedRectangles.class, 
-//		WilsonUSTPeanoCurve.class, 
-//		WilsonUSTRandomCell.class,
-//		WilsonUSTRecursiveCrosses.class, 
-//		WilsonUSTRightToLeftSweep.class, 
-//		WilsonUSTRowsTopDown.class, 
-	/*@formatter:on*/
+		BinaryTree.class,
+		BinaryTreeRandom.class, 
+		Eller.class,
+		EllerInsideOut.class, 
+		GrowingTree.class, 
+		HuntAndKill.class, 
+		HuntAndKillRandom.class,
+		IterativeDFS.class, 
+		RandomBFS.class, 
+		RecursiveDFS.class, 
+		Sidewinder.class,
+		WilsonUSTCollapsingCircle.class, 
+		WilsonUSTCollapsingWalls.class,
+		WilsonUSTExpandingCircle.class, 
+		WilsonUSTExpandingCircles.class, 
+		WilsonUSTExpandingRectangle.class, 
+		WilsonUSTExpandingSpiral.class, 
+		WilsonUSTHilbertCurve.class, 
+		WilsonUSTLeftToRightSweep.class, 
+		WilsonUSTMooreCurve.class, 
+		WilsonUSTNestedRectangles.class, 
+		WilsonUSTPeanoCurve.class, 
+		WilsonUSTRandomCell.class,
+		WilsonUSTRecursiveCrosses.class, 
+		WilsonUSTRightToLeftSweep.class, 
+		WilsonUSTRowsTopDown.class, 
+		/*@formatter:on*/
 	};
 
 	public static void main(String[] args) {
-		run(20, 20, 16, 10, 100);
+		int numCols = 80, numRows = 60, cellSize = 4, scanRate = 80, delayMillis = 50;
+		run(numCols, numRows, cellSize, scanRate, delayMillis, HANDSOME_GENERATORS);
+
+		run(10, 8, 8, 1, 40, AldousBroderUST.class);
+//		run(numCols, numRows, cellSize, scanRate, delayMillis, ReverseDeleteMST_DFS.class);
+//		run(numCols, numRows, cellSize, scanRate, delayMillis, RecursiveDivision.class);
 	}
 
-	private static void run(int numCols, int numRows, int cellSize, int scanRate, int delayMillis) {
-		
-		JFrame window = new JFrame();
-		for (Class<?> generatorClass : GENERATORS) {
+	private static void run(int numCols, int numRows, int cellSize, int scanRate,
+			int delayMillis,Class<?>... generatorClasses) {
+		for (Class<?> generatorClass : generatorClasses) {
+			JFrame window = new JFrame();
 			try {
 				@SuppressWarnings("unchecked")
 				MazeGenerator<OrthogonalGrid> generator = (MazeGenerator<OrthogonalGrid>) generatorClass
@@ -76,24 +109,63 @@ public class MazeGenerationRecordingApp {
 				OrthogonalGrid grid = generator.getGrid();
 				GridCanvas canvas = new GridCanvas(grid, cellSize);
 				canvas.pushRenderer(createRenderer(grid, cellSize));
-				
+
 				window.getContentPane().add(canvas);
 				window.pack();
+				window.setLocationRelativeTo(null);
 				window.setTitle(generatorClass.getSimpleName());
 				window.setVisible(true);
-				
+
 				try (GifRecorder recorder = new GifRecorder(BufferedImage.TYPE_INT_RGB)) {
 					attach(recorder, grid, canvas);
 					recorder.setDelayMillis(delayMillis);
 					recorder.setLoop(true);
 					recorder.setScanRate(scanRate);
-					recorder.start(path(generatorClass, grid));
+					recorder.start(IMAGE_PATH,
+							String.format(IMAGE_NAME, grid.numCols(), grid.numRows(), generatorClass.getSimpleName()));
 					generator.createMaze(0, 0);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+			} finally {
+				window.dispose();
 			}
 		}
+	}
+
+	private static void attach(GifRecorder recorder, OrthogonalGrid grid, GridCanvas canvas) {
+		grid.addGraphObserver(new GraphObserver<TraversalState, Integer>() {
+
+			@Override
+			public void vertexChanged(VertexEvent<TraversalState, Integer> event) {
+				canvas.drawGridCell(event.getVertex());
+				recorder.addFrame(canvas.getDrawingBuffer());
+			}
+
+			@Override
+			public void graphChanged(ObservableGraph<TraversalState, Integer> graph) {
+				canvas.drawGrid();
+				recorder.addFrame(canvas.getDrawingBuffer());
+			}
+
+			@Override
+			public void edgeRemoved(EdgeEvent<TraversalState, Integer> event) {
+				canvas.drawGridPassage(event.getEither(), event.getOther(), false);
+				recorder.addFrame(canvas.getDrawingBuffer());
+			}
+
+			@Override
+			public void edgeChanged(EdgeEvent<TraversalState, Integer> event) {
+				canvas.drawGridPassage(event.getEither(), event.getOther(), true);
+				recorder.addFrame(canvas.getDrawingBuffer());
+			}
+
+			@Override
+			public void edgeAdded(EdgeEvent<TraversalState, Integer> event) {
+				canvas.drawGridPassage(event.getEither(), event.getOther(), true);
+				recorder.addFrame(canvas.getDrawingBuffer());
+			}
+		});
 	}
 
 	private static GridRenderer createRenderer(OrthogonalGrid grid, int cellSize) {
@@ -109,46 +181,7 @@ public class MazeGenerationRecordingApp {
 			}
 		};
 		renderer.fnCellSize = () -> cellSize;
-		renderer.fnPassageWidth = () -> cellSize / 2;
+		renderer.fnPassageWidth = () -> cellSize - 1;
 		return renderer;
 	}
-
-	private static String path(Class<?> generatorClass, OrthogonalGrid grid) {
-		return format("images/maze_%dx%d_%s.gif", grid.numCols(), grid.numRows(), generatorClass.getSimpleName());
-	}
-
-	private static void attach(GifRecorder recorder, OrthogonalGrid grid, GridCanvas canvas) {
-		grid.addGraphObserver(new GraphObserver<TraversalState, Integer>() {
-
-			@Override
-			public void vertexChanged(VertexEvent<TraversalState, Integer> event) {
-				addFrame(recorder, canvas);
-			}
-
-			@Override
-			public void graphChanged(ObservableGraph<TraversalState, Integer> graph) {
-				addFrame(recorder, canvas);
-			}
-
-			@Override
-			public void edgeRemoved(EdgeEvent<TraversalState, Integer> event) {
-				addFrame(recorder, canvas);
-			}
-
-			@Override
-			public void edgeChanged(EdgeEvent<TraversalState, Integer> event) {
-				addFrame(recorder, canvas);
-			}
-
-			@Override
-			public void edgeAdded(EdgeEvent<TraversalState, Integer> event) {
-				addFrame(recorder, canvas);
-			}
-		});
-	}
-	
-	private static void addFrame(GifRecorder recorder, GridCanvas canvas) {
-		recorder.addFrame(canvas.getDrawingBuffer());
-	}
-	
 }
