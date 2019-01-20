@@ -1,5 +1,8 @@
 ## Maze generation algorithms
 
+![RandomBFS](Demos/images/gen/maze_80x60_RandomBFS.gif)
+
+
 This project provides Java implementations of more than 35 algorithms for generating so called "perfect mazes" (which are just spanning trees of undirected graphs).
 
 <img style="width:100%; height=auto" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/mazedemoapp.png">
@@ -63,7 +66,6 @@ Implemented maze generation algorithms:
 - [Random Breadth-First-Search](EasyMaze/src/main/java/de/amr/easy/maze/alg/traversal/RandomBFS.java)
 
 <img width="320" height="240" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_RandomBFS.gif">
-![RandomBFS](Demos/images/gen/maze_80x60_RandomBFS.gif)
 
 - [Random Depth-First-Search, iterative](EasyMaze/src/main/java/de/amr/easy/maze/alg/traversal/IterativeDFS.java)
 
