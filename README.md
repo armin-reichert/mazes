@@ -1,4 +1,4 @@
-## Maze generation algorithms in Java 8
+## Maze generation algorithms
 
 This project provides Java implementations of more than 35 algorithms for generating so called "perfect mazes" (which are just spanning trees of undirected graphs).
 
