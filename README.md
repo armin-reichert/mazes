@@ -62,28 +62,28 @@ Implemented maze generation algorithms:
 ### Graph Traversal:
 - [Random Breadth-First-Search](EasyMaze/src/main/java/de/amr/easy/maze/alg/traversal/RandomBFS.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_RandomBFS.gif">
+<img width="320" height="240" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_RandomBFS.gif">
 
 - [Random Depth-First-Search, iterative](EasyMaze/src/main/java/de/amr/easy/maze/alg/traversal/IterativeDFS.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_IterativeDFS.gif">
+<img width="320" height="240" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_IterativeDFS.gif">
 
 - [Random Depth-First-Search, recursive](EasyMaze/src/main/java/de/amr/easy/maze/alg/traversal/RecursiveDFS.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_RecursiveDFS.gif">
+<img width="320" height="240" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_RecursiveDFS.gif">
 
 ### Minimum Spanning Tree: 
 - [Boruvka](EasyMaze/src/main/java/de/amr/easy/maze/alg/mst/BoruvkaMST.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_BoruvkaMST.gif">
+<img width="320" height="240" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_BoruvkaMST.gif">
 
 - [Kruskal](EasyMaze/src/main/java/de/amr/easy/maze/alg/mst/KruskalMST.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_KruskalMST.gif">
+<img width="320" height="240" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_KruskalMST.gif">
 
 - [Prim](EasyMaze/src/main/java/de/amr/easy/maze/alg/mst/PrimMST.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_PrimMST.gif">
+<img width="320" height="240" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_PrimMST.gif">
 
 - [Reverse-Delete, base algorithm](EasyMaze/src/main/java/de/amr/easy/maze/alg/mst/ReverseDeleteMST.java)
 
@@ -100,46 +100,46 @@ Implemented maze generation algorithms:
 ### Uniform Spanning Tree:
 - [Aldous-Broder](EasyMaze/src/main/java/de/amr/easy/maze/alg/ust/AldousBroderUST.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_10x8_AldousBroderUST.gif">
+<img width="320" height="256" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_10x8_AldousBroderUST.gif">
 
 - [Houston](EasyMaze/src/main/java/de/amr/easy/maze/alg/ust/AldousBroderWilsonUST.java)
 
 - [Wilson's algorithm](EasyMaze/src/main/java/de/amr/easy/maze/alg/ust) (16 different variants)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_WilsonUSTRandomCell.gif">
+<img width="320" height="240" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_WilsonUSTRandomCell.gif">
 
 ### Other algorithms:
 - [Binary Tree, top-to-bottom](EasyMaze/src/main/java/de/amr/easy/maze/alg/BinaryTree.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_BinaryTree.gif">
+<img width="320" height="240" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_BinaryTree.gif">
 
 - [Binary Tree, random](EasyMaze/src/main/java/de/amr/easy/maze/alg/BinaryTreeRandom.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_BinaryTreeRandom.gif">
+<img width="320" height="240" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_BinaryTreeRandom.gif">
 
 - [Eller's algorithm](EasyMaze/src/main/java/de/amr/easy/maze/alg/Eller.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_Eller.gif">
+<img width="320" height="240" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_Eller.gif">
 
 - [Armin's algorithm](EasyMaze/src/main/java/de/amr/easy/maze/alg/EllerInsideOut.java) (like Eller's but growing the maze inside-out)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_EllerInsideOut.gif">
+<img width="320" height="240" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_EllerInsideOut.gif">
 
 - [Sidewinder](EasyMaze/src/main/java/de/amr/easy/maze/alg/Sidewinder.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_Sidewinder.gif">
+<img width="320" height="240" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_Sidewinder.gif">
 
 - [Growing Tree](EasyMaze/src/main/java/de/amr/easy/maze/alg/GrowingTree.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_GrowingTree.gif">
+<img width="320" height="240" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_GrowingTree.gif">
 
 - [Hunt-And-Kill, top-to-bottom](EasyMaze/src/main/java/de/amr/easy/maze/alg/HuntAndKill.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_HuntAndKill.gif">
+<img width="320" height="240" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_HuntAndKill.gif">
 
 - [Hunt-And-Kill, random](EasyMaze/src/main/java/de/amr/easy/maze/alg/HuntAndKillRandom.java)
 
-<img width="320" height="200" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_HuntAndKillRandom.gif">
+<img width="320" height="240" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_HuntAndKillRandom.gif">
 
 - [Recursive division](EasyMaze/src/main/java/de/amr/easy/maze/alg/RecursiveDivision.java)
 
