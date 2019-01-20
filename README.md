@@ -60,32 +60,33 @@ Anybody familiar with the Kruskal algorithm will immediately recognize it in thi
 Implemented maze generation algorithms:
 
 ### Graph Traversal:
-- [Random Breadth-First-Search](EasyMaze/src/main/java/de/amr/easy/maze/alg/traversal/RandomBFS.java)
+
+#### [Random Breadth-First-Search](EasyMaze/src/main/java/de/amr/easy/maze/alg/traversal/RandomBFS.java)
 
 ![](Demos/images/gen/maze_80x60_RandomBFS.gif)
 
-- [Random Depth-First-Search, iterative](EasyMaze/src/main/java/de/amr/easy/maze/alg/traversal/IterativeDFS.java)
+#### [Random Depth-First-Search, iterative](EasyMaze/src/main/java/de/amr/easy/maze/alg/traversal/IterativeDFS.java)
 
 ![](Demos/images/gen/maze_80x60_IterativeDFS.gif)
 
-- [Random Depth-First-Search, recursive](EasyMaze/src/main/java/de/amr/easy/maze/alg/traversal/RecursiveDFS.java)
+#### [Random Depth-First-Search, recursive](EasyMaze/src/main/java/de/amr/easy/maze/alg/traversal/RecursiveDFS.java)
 
 ![](Demos/images/gen/maze_40x30_RecursiveDFS.gif)
 
 ### Minimum Spanning Tree: 
-- [Boruvka](EasyMaze/src/main/java/de/amr/easy/maze/alg/mst/BoruvkaMST.java)
+#### [Boruvka](EasyMaze/src/main/java/de/amr/easy/maze/alg/mst/BoruvkaMST.java)
 
 ![](Demos/images/gen/maze_80x60_BoruvkaMST.gif)
 
-- [Kruskal](EasyMaze/src/main/java/de/amr/easy/maze/alg/mst/KruskalMST.java)
+#### [Kruskal](EasyMaze/src/main/java/de/amr/easy/maze/alg/mst/KruskalMST.java)
 
 ![](Demos/images/gen/maze_80x60_KruskalMST.gif)
 
-- [Prim](EasyMaze/src/main/java/de/amr/easy/maze/alg/mst/PrimMST.java)
+#### [Prim](EasyMaze/src/main/java/de/amr/easy/maze/alg/mst/PrimMST.java)
 
 ![](Demos/images/gen/maze_80x60_PrimMST.gif)
 
-- [Reverse-Delete, base algorithm](EasyMaze/src/main/java/de/amr/easy/maze/alg/mst/ReverseDeleteMST.java)
+#### [Reverse-Delete, base algorithm](EasyMaze/src/main/java/de/amr/easy/maze/alg/mst/ReverseDeleteMST.java)
 
   - [Reverse-Delete, DFS variant](EasyMaze/src/main/java/de/amr/easy/maze/alg/mst/ReverseDeleteMST_DFS.java)
 
@@ -98,13 +99,14 @@ Implemented maze generation algorithms:
 ![](Demos/images/gen/maze_40x25_ReverseDeleteMST.gif)
 
 ### Uniform Spanning Tree:
-- [Aldous-Broder](EasyMaze/src/main/java/de/amr/easy/maze/alg/ust/AldousBroderUST.java)
+
+#### [Aldous-Broder](EasyMaze/src/main/java/de/amr/easy/maze/alg/ust/AldousBroderUST.java)
 
 ![](Demos/images/gen/maze_10x8_AldousBroderUST.gif)
 
-- [Houston](EasyMaze/src/main/java/de/amr/easy/maze/alg/ust/AldousBroderWilsonUST.java)
+#### [Houston](EasyMaze/src/main/java/de/amr/easy/maze/alg/ust/AldousBroderWilsonUST.java)
 
-- [Wilson's algorithm](EasyMaze/src/main/java/de/amr/easy/maze/alg/ust) (16 different variants)
+#### [Wilson's algorithm](EasyMaze/src/main/java/de/amr/easy/maze/alg/ust) (16 different variants)
 
 ![](Demos/images/gen/maze_80x60_WilsonUSTRandomCell.gif)
 
@@ -113,39 +115,40 @@ Implemented maze generation algorithms:
 ![](Demos/images/gen/maze_80x60_WilsonUSTRecursiveCrosses.gif)
 
 ### Other algorithms:
-- [Binary Tree, top-to-bottom](EasyMaze/src/main/java/de/amr/easy/maze/alg/BinaryTree.java)
+
+#### [Binary Tree, top-to-bottom](EasyMaze/src/main/java/de/amr/easy/maze/alg/BinaryTree.java)
 
 ![](Demos/images/gen/maze_80x60_BinaryTree.gif)
 
-- [Binary Tree, random](EasyMaze/src/main/java/de/amr/easy/maze/alg/BinaryTreeRandom.java)
+#### [Binary Tree, random](EasyMaze/src/main/java/de/amr/easy/maze/alg/BinaryTreeRandom.java)
 
 ![](Demos/images/gen/maze_80x60_BinaryTreeRandom.gif)
 
-- [Eller's algorithm](EasyMaze/src/main/java/de/amr/easy/maze/alg/Eller.java)
+#### [Eller's algorithm](EasyMaze/src/main/java/de/amr/easy/maze/alg/Eller.java)
 
 ![](Demos/images/gen/maze_80x60_Eller.gif)
 
-- [Armin's algorithm](EasyMaze/src/main/java/de/amr/easy/maze/alg/EllerInsideOut.java) (like Eller's but growing the maze inside-out)
+#### [Armin's algorithm](EasyMaze/src/main/java/de/amr/easy/maze/alg/EllerInsideOut.java) (like Eller's but growing the maze inside-out)
 
 ![](Demos/images/gen/maze_80x60_EllerInsideOut.gif)
 
-- [Sidewinder](EasyMaze/src/main/java/de/amr/easy/maze/alg/Sidewinder.java)
+#### [Sidewinder](EasyMaze/src/main/java/de/amr/easy/maze/alg/Sidewinder.java)
 
 ![](Demos/images/gen/maze_80x60_Sidewinder.gif)
 
-- [Growing Tree](EasyMaze/src/main/java/de/amr/easy/maze/alg/GrowingTree.java)
+#### [Growing Tree](EasyMaze/src/main/java/de/amr/easy/maze/alg/GrowingTree.java)
 
 ![](Demos/images/gen/maze_80x60_GrowingTree.gif)
 
-- [Hunt-And-Kill, top-to-bottom](EasyMaze/src/main/java/de/amr/easy/maze/alg/HuntAndKill.java)
+#### [Hunt-And-Kill, top-to-bottom](EasyMaze/src/main/java/de/amr/easy/maze/alg/HuntAndKill.java)
 
 ![](Demos/images/gen/maze_80x60_HuntAndKill.gif)
 
-- [Hunt-And-Kill, random](EasyMaze/src/main/java/de/amr/easy/maze/alg/HuntAndKillRandom.java)
+#### [Hunt-And-Kill, random](EasyMaze/src/main/java/de/amr/easy/maze/alg/HuntAndKillRandom.java)
 
 ![](Demos/images/gen/maze_80x60_HuntAndKillRandom.gif)
 
-- [Recursive division](EasyMaze/src/main/java/de/amr/easy/maze/alg/RecursiveDivision.java)
+#### [Recursive division](EasyMaze/src/main/java/de/amr/easy/maze/alg/RecursiveDivision.java)
 
 ![](Demos/images/gen/maze_80x60_RecursiveDivision.gif)
 
