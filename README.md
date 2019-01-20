@@ -102,7 +102,7 @@ Implemented maze generation algorithms:
 
 #### [Aldous-Broder](EasyMaze/src/main/java/de/amr/easy/maze/alg/ust/AldousBroderUST.java)
 
-![](Demos/images/gen/maze_10x8_AldousBroderUST.gif)
+![](Demos/images/gen/maze_8x8_AldousBroderUST.gif)
 
 #### [Houston](EasyMaze/src/main/java/de/amr/easy/maze/alg/ust/AldousBroderWilsonUST.java)
 
