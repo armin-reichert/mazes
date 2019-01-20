@@ -108,6 +108,10 @@ Implemented maze generation algorithms:
 
 <img width="320" height="240" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_WilsonUSTRandomCell.gif">
 
+<img width="320" height="240" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_WilsonUSTCollapsingCircle.gif">
+
+<img width="320" height="240" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/gen/maze_80x60_WilsonUSTRecursiveCrosses.gif">
+
 ### Other algorithms:
 - [Binary Tree, top-to-bottom](EasyMaze/src/main/java/de/amr/easy/maze/alg/BinaryTree.java)
 
