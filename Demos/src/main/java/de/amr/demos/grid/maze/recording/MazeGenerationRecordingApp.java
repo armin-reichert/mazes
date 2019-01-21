@@ -22,7 +22,6 @@ import de.amr.easy.maze.alg.EllerInsideOut;
 import de.amr.easy.maze.alg.GrowingTree;
 import de.amr.easy.maze.alg.HuntAndKill;
 import de.amr.easy.maze.alg.HuntAndKillRandom;
-import de.amr.easy.maze.alg.RecursiveDivision;
 import de.amr.easy.maze.alg.Sidewinder;
 import de.amr.easy.maze.alg.core.MazeGenerator;
 import de.amr.easy.maze.alg.mst.BoruvkaMST;
@@ -48,6 +47,11 @@ import de.amr.easy.maze.alg.ust.WilsonUSTRightToLeftSweep;
 import de.amr.easy.maze.alg.ust.WilsonUSTRowsTopDown;
 import de.amr.easy.util.GifRecorder;
 
+/**
+ * Runs maze generation algorithms and saves the mazes as animated GIF images.
+ * 
+ * @author Armin Reichert
+ */
 public class MazeGenerationRecordingApp {
 
 	private static final File IMAGE_PATH = new File(System.getProperty("user.dir") + "/images/gen");
@@ -67,7 +71,6 @@ public class MazeGenerationRecordingApp {
 		HuntAndKillRandom.class,
 		IterativeDFS.class, 
 		RandomBFS.class, 
-		RecursiveDFS.class, 
 		Sidewinder.class,
 		WilsonUSTCollapsingCircle.class, 
 		WilsonUSTCollapsingWalls.class,
@@ -88,12 +91,12 @@ public class MazeGenerationRecordingApp {
 	};
 
 	public static void main(String[] args) {
-		int numCols = 80, numRows = 60, cellSize = 4, scanRate = 80, delayMillis = 50;
+		int numCols = 80, numRows = 60, cellSize = 4, scanRate = 200, delayMillis = 50;
 		run(numCols, numRows, cellSize, scanRate, delayMillis, HANDSOME_GENERATORS);
-
-		// run(10, 8, 8, 1, 40, AldousBroderUST.class);
+		run(40, 30, 8, scanRate, delayMillis, RecursiveDFS.class);
+		// run(8, 8, 16, 3, 40, AldousBroderUST.class);
 		// run(numCols, numRows, cellSize, scanRate, delayMillis, ReverseDeleteMST_DFS.class);
-		run(numCols, numRows, 2, 10, 80, RecursiveDivision.class);
+		// run(numCols, numRows, 2, 10, 80, RecursiveDivision.class);
 	}
 
 	private static void run(int numCols, int numRows, int cellSize, int scanRate, int delayMillis,
@@ -107,17 +110,16 @@ public class MazeGenerationRecordingApp {
 				OrthogonalGrid grid = generator.getGrid();
 				GridCanvas canvas = new GridCanvas(grid, cellSize);
 				canvas.pushRenderer(createRenderer(grid, cellSize));
-
+				canvas.drawGrid();
 				window.getContentPane().add(canvas);
 				window.pack();
 				window.setLocationRelativeTo(null);
 				window.setTitle(generatorClass.getSimpleName());
 				window.setVisible(true);
-
-				canvas.drawGrid();
-				try (GifRecorder recorder = new GifRecorder(BufferedImage.TYPE_INT_RGB)) {
+				try (GifRecorder recorder = new GifRecorder(canvas.getDrawingBuffer().getType())) {
 					attach(recorder, grid, canvas);
 					recorder.setDelayMillis(delayMillis);
+					recorder.setEndDelayMillis(2000); // 2 seconds before loop
 					recorder.setLoop(true);
 					recorder.setScanRate(scanRate);
 					recorder.start(IMAGE_PATH,
@@ -130,48 +132,6 @@ public class MazeGenerationRecordingApp {
 				window.dispose();
 			}
 		}
-	}
-
-	private static BufferedImage createImage(GridCanvas canvas) {
-		BufferedImage img = new BufferedImage(canvas.getWidth() + 1, canvas.getHeight() + 1,
-				BufferedImage.TYPE_BYTE_BINARY);
-		img.getGraphics().drawImage(canvas.getDrawingBuffer(), 0, 0, null);
-		return img;
-	}
-
-	private static void attach(GifRecorder recorder, OrthogonalGrid grid, GridCanvas canvas) {
-		grid.addGraphObserver(new GraphObserver<TraversalState, Integer>() {
-
-			@Override
-			public void vertexChanged(VertexEvent<TraversalState, Integer> event) {
-				canvas.drawGridCell(event.getVertex());
-				recorder.addFrame(createImage(canvas));
-			}
-
-			@Override
-			public void graphChanged(ObservableGraph<TraversalState, Integer> graph) {
-				canvas.drawGrid();
-				recorder.addFrame(createImage(canvas));
-			}
-
-			@Override
-			public void edgeRemoved(EdgeEvent<TraversalState, Integer> event) {
-				canvas.drawGridPassage(event.getEither(), event.getOther(), false);
-				recorder.addFrame(createImage(canvas));
-			}
-
-			@Override
-			public void edgeChanged(EdgeEvent<TraversalState, Integer> event) {
-				canvas.drawGridPassage(event.getEither(), event.getOther(), true);
-				recorder.addFrame(createImage(canvas));
-			}
-
-			@Override
-			public void edgeAdded(EdgeEvent<TraversalState, Integer> event) {
-				canvas.drawGridPassage(event.getEither(), event.getOther(), true);
-				recorder.addFrame(createImage(canvas));
-			}
-		});
 	}
 
 	private static GridRenderer createRenderer(OrthogonalGrid grid, int cellSize) {
@@ -189,5 +149,48 @@ public class MazeGenerationRecordingApp {
 		renderer.fnCellSize = () -> cellSize;
 		renderer.fnPassageWidth = () -> cellSize - 1;
 		return renderer;
+	}
+
+	// TODO why is there this 1 pixel offset?
+	private static BufferedImage fixImage(GridCanvas canvas) {
+		BufferedImage img = new BufferedImage(canvas.getWidth() + 1, canvas.getHeight() + 1,
+				canvas.getDrawingBuffer().getType());
+		img.getGraphics().drawImage(canvas.getDrawingBuffer(), 0, 0, null);
+		return img;
+	}
+
+	private static void attach(GifRecorder recorder, OrthogonalGrid grid, GridCanvas canvas) {
+		grid.addGraphObserver(new GraphObserver<TraversalState, Integer>() {
+
+			@Override
+			public void vertexChanged(VertexEvent<TraversalState, Integer> event) {
+				canvas.drawGridCell(event.getVertex());
+				recorder.requestFrame(fixImage(canvas));
+			}
+
+			@Override
+			public void graphChanged(ObservableGraph<TraversalState, Integer> graph) {
+				canvas.drawGrid();
+				recorder.requestFrame(fixImage(canvas));
+			}
+
+			@Override
+			public void edgeRemoved(EdgeEvent<TraversalState, Integer> event) {
+				canvas.drawGridPassage(event.getEither(), event.getOther(), false);
+				recorder.requestFrame(fixImage(canvas));
+			}
+
+			@Override
+			public void edgeChanged(EdgeEvent<TraversalState, Integer> event) {
+				canvas.drawGridPassage(event.getEither(), event.getOther(), true);
+				recorder.requestFrame(fixImage(canvas));
+			}
+
+			@Override
+			public void edgeAdded(EdgeEvent<TraversalState, Integer> event) {
+				canvas.drawGridPassage(event.getEither(), event.getOther(), true);
+				recorder.requestFrame(fixImage(canvas));
+			}
+		});
 	}
 }
