@@ -154,7 +154,7 @@ Implemented maze generation algorithms:
 
 ### Path finding algorithms:
 The [EasyGraph](https://github.com/armin-reichert/graph) library contains the following path finder implementations:
-- [Breadth-First-Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/pathfinder/impl/BreadthFirstSearchPathFinderl.java)
+- [Breadth-First-Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/pathfinder/impl/BreadthFirstSearchPathFinder.java)
 - [Depth-First-Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/pathfinder/impl/DepthFirstSearchPathFinder.java)
 - [(Greedy) Best-First-Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/pathfinder/impl/BestFirstSearchPathFinder.java). Can be used with Euclidean, Manhattan and Chebyshev distance heuristics.
 - [Hill Climbing](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/pathfinder/impl/HillClimbingPathFinder.java). Can be used with Euclidean, Manhattan and Chebyshev distance heuristics.
