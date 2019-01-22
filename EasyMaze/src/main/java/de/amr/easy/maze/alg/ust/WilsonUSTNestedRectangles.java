@@ -1,16 +1,16 @@
 package de.amr.easy.maze.alg.ust;
 
-import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
+import static de.amr.easy.graph.grid.api.GridPosition.TOP_LEFT;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import de.amr.easy.grid.impl.OrthogonalGrid;
-import de.amr.easy.grid.impl.iterators.IteratorFactory;
-import de.amr.easy.grid.impl.iterators.shapes.Rectangle;
-import de.amr.easy.grid.impl.iterators.traversals.ExpandingRectangle;
+import de.amr.easy.graph.grid.impl.OrthogonalGrid;
+import de.amr.easy.graph.grid.iterators.IteratorFactory;
+import de.amr.easy.graph.grid.shapes.Rectangle;
+import de.amr.easy.graph.grid.traversals.ExpandingRectangle;
 import de.amr.easy.util.StreamUtils;
 
 /**

@@ -1,15 +1,15 @@
 package de.amr.easy.grid.tests;
 
-import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
-import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
-import static de.amr.easy.graph.api.traversal.TraversalState.VISITED;
-import static de.amr.easy.grid.api.GridPosition.BOTTOM_LEFT;
-import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
-import static de.amr.easy.grid.api.GridPosition.CENTER;
-import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
-import static de.amr.easy.grid.api.GridPosition.TOP_RIGHT;
-import static de.amr.easy.grid.impl.curves.CurveUtils.cells;
-import static de.amr.easy.grid.impl.curves.CurveUtils.traverse;
+import static de.amr.easy.graph.grid.api.GridPosition.BOTTOM_LEFT;
+import static de.amr.easy.graph.grid.api.GridPosition.BOTTOM_RIGHT;
+import static de.amr.easy.graph.grid.api.GridPosition.CENTER;
+import static de.amr.easy.graph.grid.api.GridPosition.TOP_LEFT;
+import static de.amr.easy.graph.grid.api.GridPosition.TOP_RIGHT;
+import static de.amr.easy.graph.grid.curves.CurveUtils.cells;
+import static de.amr.easy.graph.grid.curves.CurveUtils.traverse;
+import static de.amr.easy.graph.pathfinder.api.TraversalState.COMPLETED;
+import static de.amr.easy.graph.pathfinder.api.TraversalState.UNVISITED;
+import static de.amr.easy.graph.pathfinder.api.TraversalState.VISITED;
 import static org.junit.Assert.assertTrue;
 
 import java.util.function.Function;
@@ -19,19 +19,19 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.graph.impl.traversal.AStarTraversal;
-import de.amr.easy.graph.impl.traversal.BestFirstTraversal;
-import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
-import de.amr.easy.graph.impl.traversal.DepthFirstTraversal;
-import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
-import de.amr.easy.graph.impl.traversal.HillClimbing;
-import de.amr.easy.grid.impl.OrthogonalGrid;
-import de.amr.easy.grid.impl.curves.HilbertCurve;
-import de.amr.easy.grid.impl.curves.HilbertLCurve;
-import de.amr.easy.grid.impl.curves.HilbertLCurveWirth;
-import de.amr.easy.grid.impl.curves.MooreLCurve;
-import de.amr.easy.grid.impl.curves.PeanoCurve;
+import de.amr.easy.graph.grid.curves.HilbertCurve;
+import de.amr.easy.graph.grid.curves.HilbertLCurve;
+import de.amr.easy.graph.grid.curves.HilbertLCurveWirth;
+import de.amr.easy.graph.grid.curves.MooreLCurve;
+import de.amr.easy.graph.grid.curves.PeanoCurve;
+import de.amr.easy.graph.grid.impl.OrthogonalGrid;
+import de.amr.easy.graph.pathfinder.api.TraversalState;
+import de.amr.easy.graph.pathfinder.impl.AStarPathFinder;
+import de.amr.easy.graph.pathfinder.impl.BestFirstSearchPathFinder;
+import de.amr.easy.graph.pathfinder.impl.BreadthFirstSearchPathFinder;
+import de.amr.easy.graph.pathfinder.impl.DepthFirstSearchPathFinder;
+import de.amr.easy.graph.pathfinder.impl.DepthFirstSearchPathFinder2;
+import de.amr.easy.graph.pathfinder.impl.HillClimbingPathFinder;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
 import de.amr.easy.util.StreamUtils;
 
@@ -67,7 +67,7 @@ public class GridTraversalTest {
 
 	@Test
 	public void testBFS() {
-		BreadthFirstTraversal<TraversalState, ?> bfs = new BreadthFirstTraversal<>(grid);
+		BreadthFirstSearchPathFinder<TraversalState, ?> bfs = new BreadthFirstSearchPathFinder<>(grid);
 		assertState(grid.vertices(), bfs::getState, UNVISITED);
 		bfs.traverseGraph(grid.cell(CENTER));
 		assertState(grid.vertices(), bfs::getState, COMPLETED);
@@ -77,7 +77,7 @@ public class GridTraversalTest {
 	public void testBestFS() {
 		grid = new IterativeDFS(N, N).createMaze(0, 0);
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		BestFirstTraversal<?, ?, Integer> best = new BestFirstTraversal<>(grid,
+		BestFirstSearchPathFinder<?, ?, Integer> best = new BestFirstSearchPathFinder<>(grid,
 				x -> grid.manhattan(x, target));
 		assertState(grid.vertices(), best::getState, UNVISITED);
 		best.traverseGraph(source);
@@ -90,7 +90,7 @@ public class GridTraversalTest {
 		grid = new IterativeDFS(N, N).createMaze(0, 0);
 		grid.setDefaultEdgeLabel((u, v) -> 1);
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		AStarTraversal<TraversalState, Integer> astar = new AStarTraversal<>(grid, edge -> 1,
+		AStarPathFinder<TraversalState, Integer> astar = new AStarPathFinder<>(grid, edge -> 1,
 				(u, v) -> grid.manhattan(u, v));
 		assertState(grid.vertices(), astar::getState, UNVISITED);
 		astar.traverseGraph(source, target);
@@ -102,7 +102,7 @@ public class GridTraversalTest {
 	@Test
 	public void testDFS() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		DepthFirstTraversal dfs = new DepthFirstTraversal(grid);
+		DepthFirstSearchPathFinder dfs = new DepthFirstSearchPathFinder(grid);
 		assertState(grid.vertices(), dfs::getState, UNVISITED);
 		dfs.traverseGraph(source, target);
 		assertState(StreamUtils.toIntStream(dfs.path(target)), dfs::getState, VISITED);
@@ -111,7 +111,7 @@ public class GridTraversalTest {
 	@Test
 	public void testDFS2() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		DepthFirstTraversal2 dfs = new DepthFirstTraversal2(grid);
+		DepthFirstSearchPathFinder2 dfs = new DepthFirstSearchPathFinder2(grid);
 		assertState(grid.vertices(), dfs::getState, UNVISITED);
 		dfs.traverseGraph(source, target);
 		assertState(StreamUtils.toIntStream(dfs.path(target)), dfs::getState, COMPLETED);
@@ -121,7 +121,7 @@ public class GridTraversalTest {
 	public void testHillClimbing() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
 		Function<Integer, Integer> cost = u -> grid.manhattan(u, target);
-		HillClimbing<Integer> hillClimbing = new HillClimbing<>(grid, cost);
+		HillClimbingPathFinder<Integer> hillClimbing = new HillClimbingPathFinder<>(grid, cost);
 		assertState(grid.vertices(), hillClimbing::getState, UNVISITED);
 		hillClimbing.traverseGraph(source, target);
 		hillClimbing.path(target).forEach(cell -> assertTrue(hillClimbing.getState(cell) != UNVISITED));

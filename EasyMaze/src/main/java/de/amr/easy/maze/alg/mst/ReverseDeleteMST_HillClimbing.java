@@ -1,6 +1,6 @@
 package de.amr.easy.maze.alg.mst;
 
-import de.amr.easy.graph.impl.traversal.HillClimbing;
+import de.amr.easy.graph.pathfinder.impl.HillClimbingPathFinder;
 
 /**
  * Reverse-Delete-MST algorithm using "hill climbing" for connectivity test.
@@ -17,7 +17,7 @@ public class ReverseDeleteMST_HillClimbing extends ReverseDeleteMST {
 
 	@Override
 	protected boolean connected(int u, int v) {
-		HillClimbing<Integer> search = new HillClimbing<>(grid, x -> grid.manhattan(x, v));
+		HillClimbingPathFinder<Integer> search = new HillClimbingPathFinder<>(grid, x -> grid.manhattan(x, v));
 		search.traverseGraph(u, v);
 		return search.getParent(v) != -1;
 	}

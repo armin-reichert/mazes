@@ -7,9 +7,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.graph.api.UndirectedEdge;
-import de.amr.easy.grid.impl.GridGraph;
-import de.amr.easy.grid.impl.Top4;
+import de.amr.easy.graph.core.api.UndirectedEdge;
+import de.amr.easy.graph.grid.impl.GridGraph;
+import de.amr.easy.graph.grid.impl.Top4;
 
 public class EmptyGridTest {
 

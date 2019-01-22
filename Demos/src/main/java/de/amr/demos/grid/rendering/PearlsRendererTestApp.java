@@ -1,15 +1,15 @@
 package de.amr.demos.grid.rendering;
 
-import static de.amr.easy.graph.api.traversal.TraversalState.COMPLETED;
-import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
-import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
-import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
-import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation.floodFill;
+import static de.amr.easy.graph.grid.api.GridPosition.BOTTOM_RIGHT;
+import static de.amr.easy.graph.grid.api.GridPosition.TOP_LEFT;
+import static de.amr.easy.graph.grid.ui.animation.BreadthFirstTraversalAnimation.floodFill;
+import static de.amr.easy.graph.pathfinder.api.TraversalState.COMPLETED;
+import static de.amr.easy.graph.pathfinder.api.TraversalState.UNVISITED;
 
 import de.amr.demos.grid.SwingGridSampleApp;
-import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
-import de.amr.easy.grid.impl.OrthogonalGrid;
-import de.amr.easy.grid.ui.swing.animation.DepthFirstTraversalAnimation;
+import de.amr.easy.graph.grid.impl.OrthogonalGrid;
+import de.amr.easy.graph.grid.ui.animation.DepthFirstTraversalAnimation;
+import de.amr.easy.graph.pathfinder.impl.DepthFirstSearchPathFinder2;
 import de.amr.easy.maze.alg.core.MazeGenerator;
 import de.amr.easy.maze.alg.ust.WilsonUSTRecursiveCrosses;
 
@@ -46,7 +46,7 @@ public class PearlsRendererTestApp extends SwingGridSampleApp {
 
 		sleep(2000);
 		new DepthFirstTraversalAnimation(getGrid()).run(getCanvas(),
-				new DepthFirstTraversal2(getGrid()), 0, getGrid().cell(BOTTOM_RIGHT));
+				new DepthFirstSearchPathFinder2(getGrid()), 0, getGrid().cell(BOTTOM_RIGHT));
 
 		sleep(2000);
 		getCanvas().clear();

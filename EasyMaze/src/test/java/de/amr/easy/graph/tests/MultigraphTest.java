@@ -6,10 +6,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import de.amr.easy.graph.api.Multigraph;
-import de.amr.easy.graph.api.UndirectedEdge;
-import de.amr.easy.graph.impl.DefaultMultigraph;
-import de.amr.easy.util.GraphUtils;
+import de.amr.easy.graph.core.api.Multigraph;
+import de.amr.easy.graph.core.api.UndirectedEdge;
+import de.amr.easy.graph.core.impl.DefaultMultigraph;
+import de.amr.easy.graph.util.GraphUtils;
 
 public class MultigraphTest {
 

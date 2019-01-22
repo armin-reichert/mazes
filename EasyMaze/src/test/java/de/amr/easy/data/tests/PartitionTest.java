@@ -9,7 +9,7 @@ import java.util.HashSet;
 
 import org.junit.Test;
 
-import de.amr.easy.data.Partition;
+import de.amr.easy.datastruct.Partition;
 
 public class PartitionTest {
 

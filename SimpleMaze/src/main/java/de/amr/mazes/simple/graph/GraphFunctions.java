@@ -3,7 +3,7 @@ package de.amr.mazes.simple.graph;
 import java.util.BitSet;
 import java.util.function.IntConsumer;
 
-import de.amr.easy.data.Partition;
+import de.amr.easy.datastruct.Partition;
 
 public class GraphFunctions {
 

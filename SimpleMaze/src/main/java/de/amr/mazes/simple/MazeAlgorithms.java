@@ -11,7 +11,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import de.amr.easy.data.Partition;
+import de.amr.easy.datastruct.Partition;
 import de.amr.mazes.simple.graph.Dir;
 import de.amr.mazes.simple.graph.DirMap;
 import de.amr.mazes.simple.graph.Edge;

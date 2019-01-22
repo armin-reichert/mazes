@@ -1,11 +1,11 @@
 package de.amr.easy.maze.alg.ust;
 
-import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
+import static de.amr.easy.graph.grid.api.GridPosition.BOTTOM_RIGHT;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.grid.impl.OrthogonalGrid;
-import de.amr.easy.grid.impl.iterators.traversals.RightToLeftSweep;
+import de.amr.easy.graph.grid.impl.OrthogonalGrid;
+import de.amr.easy.graph.grid.traversals.RightToLeftSweep;
 
 /**
  * Wilson's algorithm where the vertices are selected column-wise left-to-right.

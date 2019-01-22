@@ -2,9 +2,9 @@ package de.amr.demos.maze.swingapp;
 
 import static de.amr.demos.maze.swingapp.model.MazeDemoModel.GENERATOR_ALGORITHMS;
 import static de.amr.demos.maze.swingapp.model.MazeDemoModel.PATHFINDER_ALGORITHMS;
-import static de.amr.easy.grid.api.GridPosition.BOTTOM_RIGHT;
-import static de.amr.easy.grid.api.GridPosition.CENTER;
-import static de.amr.easy.grid.api.GridPosition.TOP_LEFT;
+import static de.amr.easy.graph.grid.api.GridPosition.BOTTOM_RIGHT;
+import static de.amr.easy.graph.grid.api.GridPosition.CENTER;
+import static de.amr.easy.graph.grid.api.GridPosition.TOP_LEFT;
 
 import java.awt.Color;
 import java.awt.DisplayMode;
@@ -33,9 +33,9 @@ import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
 import de.amr.demos.maze.swingapp.view.DisplayAreaWindow;
 import de.amr.demos.maze.swingapp.view.SettingsWindow;
-import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
-import de.amr.easy.grid.impl.OrthogonalGrid;
+import de.amr.easy.graph.grid.impl.OrthogonalGrid;
+import de.amr.easy.graph.pathfinder.api.TraversalState;
+import de.amr.easy.graph.pathfinder.impl.BreadthFirstSearchPathFinder;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
 
 /**
@@ -120,7 +120,7 @@ public class MazeDemoApp {
 			onGeneratorChange(alg);
 		});
 		MazeDemoModel
-				.find(PATHFINDER_ALGORITHMS, alg -> alg.getAlgorithmClass() == BreadthFirstTraversal.class)
+				.find(PATHFINDER_ALGORITHMS, alg -> alg.getAlgorithmClass() == BreadthFirstSearchPathFinder.class)
 				.ifPresent(alg -> {
 					wndSettings.solverMenu.selectAlgorithm(alg);
 					onSolverChange(alg);

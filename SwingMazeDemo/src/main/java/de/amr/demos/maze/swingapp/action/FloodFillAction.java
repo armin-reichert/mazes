@@ -1,6 +1,6 @@
 package de.amr.demos.maze.swingapp.action;
 
-import static de.amr.easy.grid.ui.swing.animation.BreadthFirstTraversalAnimation.floodFill;
+import static de.amr.easy.graph.grid.ui.animation.BreadthFirstTraversalAnimation.floodFill;
 
 import java.awt.event.ActionEvent;
 

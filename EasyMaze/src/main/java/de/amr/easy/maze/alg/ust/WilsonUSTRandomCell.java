@@ -4,7 +4,7 @@ import static de.amr.easy.util.StreamUtils.permute;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.grid.impl.OrthogonalGrid;
+import de.amr.easy.graph.grid.impl.OrthogonalGrid;
 
 /**
  * Wilson's algorithm with random start cells of the loop-erased random walks.

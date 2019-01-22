@@ -17,15 +17,15 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import de.amr.easy.graph.impl.traversal.AStarTraversal;
-import de.amr.easy.graph.impl.traversal.BestFirstTraversal;
-import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
-import de.amr.easy.graph.impl.traversal.DepthFirstTraversal;
-import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
-import de.amr.easy.graph.impl.traversal.DijkstraTraversal;
-import de.amr.easy.graph.impl.traversal.HillClimbing;
-import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.grid.impl.OrthogonalGrid;
+import de.amr.easy.graph.grid.api.GridPosition;
+import de.amr.easy.graph.grid.impl.OrthogonalGrid;
+import de.amr.easy.graph.pathfinder.impl.AStarPathFinder;
+import de.amr.easy.graph.pathfinder.impl.BestFirstSearchPathFinder;
+import de.amr.easy.graph.pathfinder.impl.BreadthFirstSearchPathFinder;
+import de.amr.easy.graph.pathfinder.impl.DepthFirstSearchPathFinder;
+import de.amr.easy.graph.pathfinder.impl.DepthFirstSearchPathFinder2;
+import de.amr.easy.graph.pathfinder.impl.DijkstraPathFinder;
+import de.amr.easy.graph.pathfinder.impl.HillClimbingPathFinder;
 import de.amr.easy.maze.alg.BinaryTree;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
 import de.amr.easy.maze.alg.Eller;
@@ -119,19 +119,19 @@ public class MazeDemoModel {
 
 	public static final AlgorithmInfo[] PATHFINDER_ALGORITHMS = {
 			/*@formatter:off*/
-			new AlgorithmInfo(BreadthFirstTraversal.class, "Breadth-First Search", BFS),
-			new AlgorithmInfo(DepthFirstTraversal2.class, "Depth-First Search", DFS), 
-			new AlgorithmInfo(DepthFirstTraversal.class, "Depth-First Search (alternative)", DFS), 
-			new AlgorithmInfo(DijkstraTraversal.class, "Dijkstra", BFS), 
-			new AlgorithmInfo(BestFirstTraversal.class, "Best-First Search (Manhattan)", BFS, MANHATTAN, INFORMED),
-			new AlgorithmInfo(BestFirstTraversal.class, "Best-First Search (Euclidean)", BFS, EUCLIDEAN, INFORMED),
-			new AlgorithmInfo(BestFirstTraversal.class, "Best-First Search (Chebyshev)", BFS, CHEBYSHEV, INFORMED), 
-			new AlgorithmInfo(AStarTraversal.class, "A* Search (Manhattan)", BFS, MANHATTAN, INFORMED),
-			new AlgorithmInfo(AStarTraversal.class, "A* Search (Euclidean)", BFS, EUCLIDEAN, INFORMED),
-			new AlgorithmInfo(AStarTraversal.class, "A* Search (Chebyshev)", BFS, CHEBYSHEV, INFORMED), 
-			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Manhattan)", DFS, MANHATTAN, INFORMED),
-			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Euclidean)", DFS, EUCLIDEAN, INFORMED),
-			new AlgorithmInfo(HillClimbing.class, "Hill Climbing (Chebyshev)", DFS, CHEBYSHEV, INFORMED),
+			new AlgorithmInfo(BreadthFirstSearchPathFinder.class, "Breadth-First Search", BFS),
+			new AlgorithmInfo(DepthFirstSearchPathFinder2.class, "Depth-First Search", DFS), 
+			new AlgorithmInfo(DepthFirstSearchPathFinder.class, "Depth-First Search (alternative)", DFS), 
+			new AlgorithmInfo(DijkstraPathFinder.class, "Dijkstra", BFS), 
+			new AlgorithmInfo(BestFirstSearchPathFinder.class, "Best-First Search (Manhattan)", BFS, MANHATTAN, INFORMED),
+			new AlgorithmInfo(BestFirstSearchPathFinder.class, "Best-First Search (Euclidean)", BFS, EUCLIDEAN, INFORMED),
+			new AlgorithmInfo(BestFirstSearchPathFinder.class, "Best-First Search (Chebyshev)", BFS, CHEBYSHEV, INFORMED), 
+			new AlgorithmInfo(AStarPathFinder.class, "A* Search (Manhattan)", BFS, MANHATTAN, INFORMED),
+			new AlgorithmInfo(AStarPathFinder.class, "A* Search (Euclidean)", BFS, EUCLIDEAN, INFORMED),
+			new AlgorithmInfo(AStarPathFinder.class, "A* Search (Chebyshev)", BFS, CHEBYSHEV, INFORMED), 
+			new AlgorithmInfo(HillClimbingPathFinder.class, "Hill Climbing (Manhattan)", DFS, MANHATTAN, INFORMED),
+			new AlgorithmInfo(HillClimbingPathFinder.class, "Hill Climbing (Euclidean)", DFS, EUCLIDEAN, INFORMED),
+			new AlgorithmInfo(HillClimbingPathFinder.class, "Hill Climbing (Chebyshev)", DFS, CHEBYSHEV, INFORMED),
 			/*@formatter:on*/
 	};
 

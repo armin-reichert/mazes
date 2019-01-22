@@ -15,7 +15,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import de.amr.easy.grid.impl.OrthogonalGrid;
+import de.amr.easy.graph.grid.impl.OrthogonalGrid;
+import de.amr.easy.graph.util.GraphUtils;
 import de.amr.easy.maze.alg.BinaryTree;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
 import de.amr.easy.maze.alg.Eller;
@@ -53,7 +54,6 @@ import de.amr.easy.maze.alg.ust.WilsonUSTRandomCell;
 import de.amr.easy.maze.alg.ust.WilsonUSTRecursiveCrosses;
 import de.amr.easy.maze.alg.ust.WilsonUSTRightToLeftSweep;
 import de.amr.easy.maze.alg.ust.WilsonUSTRowsTopDown;
-import de.amr.easy.util.GraphUtils;
 import de.amr.easy.util.StopWatch;
 
 public class MazeGeneratorTest {

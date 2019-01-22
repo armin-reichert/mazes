@@ -1,10 +1,10 @@
 package de.amr.easy.maze.alg.ust;
 
-import static de.amr.easy.graph.api.traversal.TraversalState.UNVISITED;
-import static de.amr.easy.grid.impl.OrthogonalGrid.emptyGrid;
+import static de.amr.easy.graph.grid.impl.OrthogonalGrid.emptyGrid;
+import static de.amr.easy.graph.pathfinder.api.TraversalState.UNVISITED;
 import static de.amr.easy.util.StreamUtils.permute;
 
-import de.amr.easy.grid.impl.OrthogonalGrid;
+import de.amr.easy.graph.grid.impl.OrthogonalGrid;
 import de.amr.easy.maze.alg.core.MazeGenerator;
 
 /**

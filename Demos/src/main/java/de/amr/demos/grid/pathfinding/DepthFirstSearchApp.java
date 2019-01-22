@@ -15,11 +15,11 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
-import de.amr.easy.graph.impl.traversal.DepthFirstTraversal2;
-import de.amr.easy.grid.api.GridPosition;
-import de.amr.easy.grid.impl.OrthogonalGrid;
-import de.amr.easy.grid.ui.swing.rendering.ConfigurableGridRenderer;
-import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
+import de.amr.easy.graph.grid.api.GridPosition;
+import de.amr.easy.graph.grid.impl.OrthogonalGrid;
+import de.amr.easy.graph.grid.ui.rendering.ConfigurableGridRenderer;
+import de.amr.easy.graph.grid.ui.rendering.WallPassageGridRenderer;
+import de.amr.easy.graph.pathfinder.impl.DepthFirstSearchPathFinder2;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 
 /**
@@ -137,7 +137,7 @@ public class DepthFirstSearchApp {
 	}
 
 	private void dfs() {
-		DepthFirstTraversal2 dfs = new DepthFirstTraversal2(grid);
+		DepthFirstSearchPathFinder2 dfs = new DepthFirstSearchPathFinder2(grid);
 		dfs.traverseGraph(grid.cell(GridPosition.TOP_LEFT), grid.cell(GridPosition.BOTTOM_RIGHT));
 		solution = dfs.path(grid.cell(GridPosition.BOTTOM_RIGHT));
 	}

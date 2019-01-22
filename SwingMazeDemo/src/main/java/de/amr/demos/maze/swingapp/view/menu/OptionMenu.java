@@ -11,7 +11,7 @@ import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
-import de.amr.easy.grid.api.GridPosition;
+import de.amr.easy.graph.grid.api.GridPosition;
 
 /**
  * Menu for selecting generation and path finder options.

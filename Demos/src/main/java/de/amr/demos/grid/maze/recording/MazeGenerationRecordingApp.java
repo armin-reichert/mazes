@@ -6,15 +6,15 @@ import java.io.File;
 
 import javax.swing.JFrame;
 
-import de.amr.easy.graph.api.event.EdgeEvent;
-import de.amr.easy.graph.api.event.GraphObserver;
-import de.amr.easy.graph.api.event.ObservableGraph;
-import de.amr.easy.graph.api.event.VertexEvent;
-import de.amr.easy.graph.api.traversal.TraversalState;
-import de.amr.easy.grid.impl.OrthogonalGrid;
-import de.amr.easy.grid.ui.swing.rendering.GridCanvas;
-import de.amr.easy.grid.ui.swing.rendering.GridRenderer;
-import de.amr.easy.grid.ui.swing.rendering.WallPassageGridRenderer;
+import de.amr.easy.graph.event.api.EdgeEvent;
+import de.amr.easy.graph.event.api.GraphObserver;
+import de.amr.easy.graph.event.api.ObservableGraph;
+import de.amr.easy.graph.event.api.VertexEvent;
+import de.amr.easy.graph.grid.impl.OrthogonalGrid;
+import de.amr.easy.graph.grid.ui.rendering.GridCanvas;
+import de.amr.easy.graph.grid.ui.rendering.GridRenderer;
+import de.amr.easy.graph.grid.ui.rendering.WallPassageGridRenderer;
+import de.amr.easy.graph.pathfinder.api.TraversalState;
 import de.amr.easy.maze.alg.BinaryTree;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
 import de.amr.easy.maze.alg.Eller;

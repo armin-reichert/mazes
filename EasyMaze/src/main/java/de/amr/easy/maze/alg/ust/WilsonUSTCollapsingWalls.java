@@ -2,7 +2,7 @@ package de.amr.easy.maze.alg.ust;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.grid.impl.iterators.traversals.CollapsingWalls;
+import de.amr.easy.graph.grid.traversals.CollapsingWalls;
 
 /**
  * Wilson's algorithm where the vertices are selected alternating left-to-right and right-to-left

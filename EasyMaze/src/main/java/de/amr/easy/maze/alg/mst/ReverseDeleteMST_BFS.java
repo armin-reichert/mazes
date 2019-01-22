@@ -1,6 +1,6 @@
 package de.amr.easy.maze.alg.mst;
 
-import de.amr.easy.graph.impl.traversal.BreadthFirstTraversal;
+import de.amr.easy.graph.pathfinder.impl.BreadthFirstSearchPathFinder;
 
 /**
  * Reverse-Delete-MST algorithm using breadth-first search for connectivity test.
@@ -17,7 +17,7 @@ public class ReverseDeleteMST_BFS extends ReverseDeleteMST {
 
 	@Override
 	protected boolean connected(int u, int v) {
-		BreadthFirstTraversal<?, ?> bfs = new BreadthFirstTraversal<>(grid);
+		BreadthFirstSearchPathFinder<?, ?> bfs = new BreadthFirstSearchPathFinder<>(grid);
 		bfs.traverseGraph(u, v);
 		return bfs.getParent(v) != -1;
 	}

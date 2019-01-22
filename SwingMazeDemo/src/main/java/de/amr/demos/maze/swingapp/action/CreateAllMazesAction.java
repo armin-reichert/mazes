@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
-import de.amr.easy.grid.api.GridPosition;
+import de.amr.easy.graph.grid.api.GridPosition;
 
 /**
  * Action for running a sequence of all (except very slow ones) maze generators in sequence.

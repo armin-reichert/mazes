@@ -2,7 +2,7 @@ package de.amr.easy.maze.alg.ust;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.grid.impl.iterators.traversals.RecursiveCrosses;
+import de.amr.easy.graph.grid.traversals.RecursiveCrosses;
 
 /**
  * Wilson's algorithm where the vertices are selected from recursive crosses.
