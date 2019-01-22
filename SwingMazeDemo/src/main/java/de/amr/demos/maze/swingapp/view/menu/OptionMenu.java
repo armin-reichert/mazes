@@ -27,6 +27,9 @@ public class OptionMenu extends JMenu {
 		setText("Options");
 		addPositionMenu("Generation Start", app.model::setGenerationStart,
 				app.model::getGenerationStart);
+		addCheckBox("Flood-fill after generation", app.model::setFloodFillAfterGeneration,
+				app.model::isFloodFillAfterGeneration);
+		addSeparator();
 		addPositionMenu("Solution Start", app.model::setPathFinderStart,
 				app.model::getPathFinderSource);
 		addPositionMenu("Solution Target", app.model::setPathFinderTarget,

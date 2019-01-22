@@ -8,8 +8,10 @@ import javax.swing.AbstractAction;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
+import de.amr.demos.maze.swingapp.view.GridDisplayArea;
 import de.amr.easy.graph.grid.api.GridPosition;
 import de.amr.easy.graph.grid.impl.OrthogonalGrid;
+import de.amr.easy.graph.grid.ui.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.maze.alg.core.MazeGenerator;
 import de.amr.easy.util.StopWatch;
 
@@ -36,7 +38,11 @@ public class CreateMazeAction extends AbstractAction {
 		app.enableUI(false);
 		app.startWorkerThread(() -> {
 			try {
-				runMazeGenerator(generatorInfo, app.model.getGenerationStart());
+				MazeGenerator<OrthogonalGrid> generator = runMazeGenerator(generatorInfo,
+						app.model.getGenerationStart());
+				if (app.model.isFloodFillAfterGeneration()) {
+					floodFill(generator.getGrid());
+				}
 			} catch (Exception | StackOverflowError x) {
 				x.printStackTrace(System.err);
 				app.showMessage("Maze generation aborted: " + x.getClass().getSimpleName());
@@ -47,30 +53,39 @@ public class CreateMazeAction extends AbstractAction {
 		});
 	}
 
-	protected void runMazeGenerator(AlgorithmInfo generatorInfo, GridPosition startPosition)
-			throws Exception, StackOverflowError {
+	protected void floodFill(OrthogonalGrid grid) {
+		BreadthFirstTraversalAnimation.floodFill(getCanvas(), grid, grid.cell(app.model.getGenerationStart()));
+	}
+
+	protected GridDisplayArea getCanvas() {
+		return app.wndDisplayArea.getCanvas();
+	}
+
+	protected MazeGenerator<OrthogonalGrid> runMazeGenerator(AlgorithmInfo generatorInfo,
+			GridPosition startPosition) throws Exception, StackOverflowError {
 		@SuppressWarnings("unchecked")
 		MazeGenerator<OrthogonalGrid> generator = (MazeGenerator<OrthogonalGrid>) generatorInfo
 				.getAlgorithmClass().getConstructor(Integer.TYPE, Integer.TYPE)
 				.newInstance(app.model.getGridWidth(), app.model.getGridHeight());
-		app.showMessage(format("\n%s (%d cells)", generatorInfo.getDescription(),
-				generator.getGrid().numVertices()));
-		app.wndDisplayArea.getCanvas().setGrid(generator.getGrid());
-		app.wndDisplayArea.getCanvas().clear();
-		app.wndDisplayArea.getCanvas().drawGrid();
+		app.showMessage(
+				format("\n%s (%d cells)", generatorInfo.getDescription(), generator.getGrid().numVertices()));
+		getCanvas().setGrid(generator.getGrid());
+		getCanvas().clear();
+		getCanvas().drawGrid();
 		int startCell = generator.getGrid().cell(startPosition);
 		int x = generator.getGrid().col(startCell), y = generator.getGrid().row(startCell);
 		if (app.model.isGenerationAnimated()) {
 			generator.createMaze(x, y);
 		} else {
-			app.wndDisplayArea.getCanvas().getAnimation().setEnabled(false);
+			getCanvas().getAnimation().setEnabled(false);
 			StopWatch watch = new StopWatch();
 			watch.measure(() -> generator.createMaze(x, y));
 			app.showMessage(format("Maze generation: %.2f seconds.", watch.getSeconds()));
-			app.wndDisplayArea.getCanvas().clear();
-			watch.measure(() -> app.wndDisplayArea.getCanvas().drawGrid());
+			getCanvas().clear();
+			watch.measure(() -> getCanvas().drawGrid());
 			app.showMessage(format("Grid rendering:  %.2f seconds.", watch.getSeconds()));
-			app.wndDisplayArea.getCanvas().getAnimation().setEnabled(true);
+			getCanvas().getAnimation().setEnabled(true);
 		}
+		return generator;
 	}
 }

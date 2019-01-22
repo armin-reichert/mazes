@@ -9,6 +9,8 @@ import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.easy.graph.grid.api.GridPosition;
+import de.amr.easy.graph.grid.impl.OrthogonalGrid;
+import de.amr.easy.maze.alg.core.MazeGenerator;
 
 /**
  * Action for running a sequence of all (except very slow ones) maze generators in sequence.
@@ -46,7 +48,10 @@ public class CreateAllMazesAction extends CreateMazeAction {
 					return;
 				}
 				if (ready) {
-					createNextMaze(generatorInfo, app.model.getGenerationStart());
+					MazeGenerator<OrthogonalGrid> generator = createNextMaze(generatorInfo, app.model.getGenerationStart());
+					if (generator != null && app.model.isFloodFillAfterGeneration()) {
+						floodFill(generator.getGrid());
+					}
 					try {
 						Thread.sleep(1500);
 					} catch (InterruptedException e) {
@@ -58,16 +63,17 @@ public class CreateAllMazesAction extends CreateMazeAction {
 		app.showMessage("Done.");
 	}
 
-	private void createNextMaze(AlgorithmInfo generatorInfo, GridPosition startPosition) {
+	private MazeGenerator<OrthogonalGrid> createNextMaze(AlgorithmInfo generatorInfo, GridPosition startPosition) {
 		ready = false;
 		app.wndDisplayArea.getCanvas().clear();
 		app.wndSettings.generatorMenu.selectAlgorithm(generatorInfo);
 		app.onGeneratorChange(generatorInfo);
 		try {
-			runMazeGenerator(generatorInfo, startPosition);
+			return runMazeGenerator(generatorInfo, startPosition);
 		} catch (Exception | StackOverflowError x) {
 			app.showMessage("Maze generation aborted: " + x.getClass().getSimpleName());
 			app.resetDisplay();
+			return null;
 		} finally {
 			ready = true;
 		}

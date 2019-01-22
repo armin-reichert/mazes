@@ -139,8 +139,7 @@ public class MazeDemoModel {
 		return find(algorithms, alg -> alg.getAlgorithmClass() == clazz);
 	}
 
-	public static Optional<AlgorithmInfo> find(AlgorithmInfo[] algorithms,
-			Predicate<AlgorithmInfo> filter) {
+	public static Optional<AlgorithmInfo> find(AlgorithmInfo[] algorithms, Predicate<AlgorithmInfo> filter) {
 		return Arrays.stream(algorithms).filter(alg -> alg != null).filter(filter).findFirst();
 	}
 
@@ -154,6 +153,7 @@ public class MazeDemoModel {
 	private boolean hidingControlsWhenRunning;
 	private int delay;
 	private GridPosition generationStart;
+	private boolean floodFillAfterGeneration;
 	private GridPosition pathFinderStart;
 	private GridPosition pathFinderTarget;
 	private Color unvisitedCellColor;
@@ -248,6 +248,14 @@ public class MazeDemoModel {
 
 	public void setGenerationStart(GridPosition pos) {
 		this.generationStart = pos;
+	}
+
+	public boolean isFloodFillAfterGeneration() {
+		return floodFillAfterGeneration;
+	}
+
+	public void setFloodFillAfterGeneration(boolean floodFillAfterGeneration) {
+		this.floodFillAfterGeneration = floodFillAfterGeneration;
 	}
 
 	public GridPosition getPathFinderSource() {
