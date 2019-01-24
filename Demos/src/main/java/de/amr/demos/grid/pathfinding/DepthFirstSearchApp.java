@@ -23,22 +23,35 @@ import de.amr.easy.graph.pathfinder.impl.DepthFirstSearchPathFinder2;
 import de.amr.easy.maze.alg.mst.KruskalMST;
 
 /**
- * A simple test application.
+ * A simple test application for maze generation and path finding.
  * 
  * @author Armin Reichert
  */
 public class DepthFirstSearchApp {
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(DepthFirstSearchApp::new);
-	}
-
 	private OrthogonalGrid grid;
 	private Iterable<Integer> solution;
-	private DrawingArea canvas;
-	private ConfigurableGridRenderer renderer;
+	private GridCanvas canvas;
 
-	private class DrawingArea extends JComponent {
+	private class GridCanvas extends JComponent {
+
+		private ConfigurableGridRenderer renderer;
+
+		public GridCanvas(ConfigurableGridRenderer renderer) {
+			this.renderer = renderer;
+		}
+
+		public void addKeyboardAction(char key, Runnable code) {
+			getInputMap().put(KeyStroke.getKeyStroke(key), "action_" + key);
+			getActionMap().put("action_" + key, new AbstractAction() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					code.run();
+					repaint();
+				}
+			});
+		}
 
 		@Override
 		protected void paintComponent(Graphics g) {
@@ -49,7 +62,7 @@ public class DepthFirstSearchApp {
 		private void drawGrid(Graphics2D g) {
 			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			g.setColor(renderer.getGridBgColor());
-			g.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+			g.fillRect(0, 0, getWidth(), getHeight());
 			renderer.drawGrid(g, grid);
 			if (solution != null) {
 				drawSolution(g);
@@ -72,13 +85,14 @@ public class DepthFirstSearchApp {
 		}
 	};
 
+	public static void main(String[] args) {
+		EventQueue.invokeLater(DepthFirstSearchApp::new);
+	}
+
 	public DepthFirstSearchApp() {
 		newMaze(8);
 
-		canvas = new DrawingArea();
-		canvas.setPreferredSize(new Dimension(800, 800));
-
-		renderer = new WallPassageGridRenderer();
+		WallPassageGridRenderer renderer = new WallPassageGridRenderer();
 		renderer.fnCellBgColor = cell -> Color.WHITE;
 		renderer.fnCellSize = () -> Math.min(canvas.getHeight(), canvas.getWidth()) / grid.numRows();
 		renderer.fnGridBgColor = () -> Color.BLACK;
@@ -88,10 +102,12 @@ public class DepthFirstSearchApp {
 		renderer.fnTextColor = cell -> Color.LIGHT_GRAY;
 		renderer.fnTextFont = () -> new Font(Font.SANS_SERIF, Font.PLAIN, renderer.getCellSize() / 3);
 
-		addKeyboardAction('s', this::dfs);
-		addKeyboardAction(' ', this::newMaze);
-		addKeyboardAction('+', this::largerMaze);
-		addKeyboardAction('-', this::smallerMaze);
+		canvas = new GridCanvas(renderer);
+		canvas.setPreferredSize(new Dimension(800, 800));
+		canvas.addKeyboardAction('s', this::dfs);
+		canvas.addKeyboardAction(' ', this::newMaze);
+		canvas.addKeyboardAction('+', this::largerMaze);
+		canvas.addKeyboardAction('-', this::smallerMaze);
 
 		JFrame window = new JFrame();
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -99,20 +115,6 @@ public class DepthFirstSearchApp {
 		window.getContentPane().add(canvas);
 		window.pack();
 		window.setVisible(true);
-	}
-
-	private void addKeyboardAction(char key, Runnable code) {
-		canvas.getInputMap().put(KeyStroke.getKeyStroke(key), "action_" + key);
-		canvas.getActionMap().put("action_" + key, new AbstractAction() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				code.run();
-				if (canvas != null) {
-					canvas.repaint();
-				}
-			}
-		});
 	}
 
 	private void largerMaze() {
