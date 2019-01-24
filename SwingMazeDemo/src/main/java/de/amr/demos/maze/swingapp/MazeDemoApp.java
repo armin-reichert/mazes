@@ -30,7 +30,9 @@ import de.amr.demos.maze.swingapp.action.StopTaskAction;
 import de.amr.demos.maze.swingapp.action.ToggleControlPanelAction;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
+import de.amr.demos.maze.swingapp.model.MazeDemoModel.Heuristics;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
+import de.amr.demos.maze.swingapp.model.PathFinderTag;
 import de.amr.demos.maze.swingapp.view.DisplayAreaWindow;
 import de.amr.demos.maze.swingapp.view.SettingsWindow;
 import de.amr.easy.graph.grid.impl.OrthogonalGrid;
@@ -73,8 +75,7 @@ public class MazeDemoApp {
 	public final Action actionFullGrid = new FullGridAction(this);
 	public final Action actionChangeGridResolution = new ChangeGridResolutionAction(this);
 	public final Action actionShowSettings = new ShowSettingsAction(this);
-	public final ToggleControlPanelAction actionToggleControlPanel = new ToggleControlPanelAction(
-			this);
+	public final ToggleControlPanelAction actionToggleControlPanel = new ToggleControlPanelAction(this);
 
 	private Thread workerThread;
 	private volatile boolean threadStopped;
@@ -94,6 +95,7 @@ public class MazeDemoApp {
 		model.setGenerationStart(CENTER);
 		model.setPathFinderStart(TOP_LEFT);
 		model.setPathFinderTarget(BOTTOM_RIGHT);
+		model.setHeuristics(Heuristics.EUCLIDEAN);
 		model.setGenerationAnimated(true);
 		model.setHidingControlsWhenRunning(false);
 
@@ -135,10 +137,8 @@ public class MazeDemoApp {
 
 	public OrthogonalGrid createDefaultGrid(boolean full) {
 		OrthogonalGrid grid = full
-				? OrthogonalGrid.fullGrid(model.getGridWidth(), model.getGridHeight(),
-						TraversalState.COMPLETED)
-				: OrthogonalGrid.emptyGrid(model.getGridWidth(), model.getGridHeight(),
-						TraversalState.COMPLETED);
+				? OrthogonalGrid.fullGrid(model.getGridWidth(), model.getGridHeight(), TraversalState.COMPLETED)
+				: OrthogonalGrid.emptyGrid(model.getGridWidth(), model.getGridHeight(), TraversalState.COMPLETED);
 		return grid;
 	}
 
@@ -183,7 +183,13 @@ public class MazeDemoApp {
 	}
 
 	public void onSolverChange(AlgorithmInfo solverInfo) {
-		wndSettings.controlPanel.getLblSolver().setText(solverInfo.getDescription());
+		String label = solverInfo.getDescription();
+		if (solverInfo.isTagged(PathFinderTag.INFORMED)) {
+			String text = model.getHeuristics().name().substring(0, 1)
+					+ model.getHeuristics().name().substring(1).toLowerCase();
+			label += " (" + text + ")";
+		}
+		wndSettings.controlPanel.getLblSolver().setText(label);
 	}
 
 	public void startWorkerThread(Runnable work) {

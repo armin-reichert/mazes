@@ -6,11 +6,8 @@ import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.SmallG
 import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.Traversal;
 import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.UST;
 import static de.amr.demos.maze.swingapp.model.PathFinderTag.BFS;
-import static de.amr.demos.maze.swingapp.model.PathFinderTag.CHEBYSHEV;
 import static de.amr.demos.maze.swingapp.model.PathFinderTag.DFS;
-import static de.amr.demos.maze.swingapp.model.PathFinderTag.EUCLIDEAN;
 import static de.amr.demos.maze.swingapp.model.PathFinderTag.INFORMED;
-import static de.amr.demos.maze.swingapp.model.PathFinderTag.MANHATTAN;
 
 import java.awt.Color;
 import java.util.Arrays;
@@ -75,6 +72,10 @@ public class MazeDemoModel {
 		WALL_PASSAGES, PEARLS
 	};
 
+	public enum Heuristics {
+		EUCLIDEAN, MANHATTAN, CHEBYSHEV
+	}
+
 	public static final AlgorithmInfo[] GENERATOR_ALGORITHMS = {
 		/*@formatter:off*/
 		new AlgorithmInfo(RecursiveDFS.class, "Depth-First-Traversal (recursive, small grids only!)", Traversal, SmallGrid),
@@ -123,15 +124,9 @@ public class MazeDemoModel {
 			new AlgorithmInfo(DepthFirstSearchPathFinder2.class, "Depth-First Search", DFS), 
 			new AlgorithmInfo(DepthFirstSearchPathFinder.class, "Depth-First Search (alternative)", DFS), 
 			new AlgorithmInfo(DijkstraPathFinder.class, "Dijkstra", BFS), 
-			new AlgorithmInfo(BestFirstSearchPathFinder.class, "Best-First Search (Manhattan)", BFS, MANHATTAN, INFORMED),
-			new AlgorithmInfo(BestFirstSearchPathFinder.class, "Best-First Search (Euclidean)", BFS, EUCLIDEAN, INFORMED),
-			new AlgorithmInfo(BestFirstSearchPathFinder.class, "Best-First Search (Chebyshev)", BFS, CHEBYSHEV, INFORMED), 
-			new AlgorithmInfo(AStarPathFinder.class, "A* Search (Manhattan)", BFS, MANHATTAN, INFORMED),
-			new AlgorithmInfo(AStarPathFinder.class, "A* Search (Euclidean)", BFS, EUCLIDEAN, INFORMED),
-			new AlgorithmInfo(AStarPathFinder.class, "A* Search (Chebyshev)", BFS, CHEBYSHEV, INFORMED), 
-			new AlgorithmInfo(HillClimbingPathFinder.class, "Hill Climbing (Manhattan)", DFS, MANHATTAN, INFORMED),
-			new AlgorithmInfo(HillClimbingPathFinder.class, "Hill Climbing (Euclidean)", DFS, EUCLIDEAN, INFORMED),
-			new AlgorithmInfo(HillClimbingPathFinder.class, "Hill Climbing (Chebyshev)", DFS, CHEBYSHEV, INFORMED),
+			new AlgorithmInfo(BestFirstSearchPathFinder.class, "Best-First Search", BFS, INFORMED),
+			new AlgorithmInfo(AStarPathFinder.class, "A* Search", BFS, INFORMED),
+			new AlgorithmInfo(HillClimbingPathFinder.class, "Hill Climbing", DFS, INFORMED),
 			/*@formatter:on*/
 	};
 
@@ -154,6 +149,7 @@ public class MazeDemoModel {
 	private int delay;
 	private GridPosition generationStart;
 	private boolean floodFillAfterGeneration;
+	private Heuristics heuristics;
 	private GridPosition pathFinderStart;
 	private GridPosition pathFinderTarget;
 	private Color unvisitedCellColor;
@@ -248,6 +244,14 @@ public class MazeDemoModel {
 
 	public void setGenerationStart(GridPosition pos) {
 		this.generationStart = pos;
+	}
+
+	public Heuristics getHeuristics() {
+		return heuristics;
+	}
+
+	public void setHeuristics(Heuristics heuristics) {
+		this.heuristics = heuristics;
 	}
 
 	public boolean isFloodFillAfterGeneration() {

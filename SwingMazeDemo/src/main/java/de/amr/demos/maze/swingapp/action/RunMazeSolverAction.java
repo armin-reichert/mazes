@@ -1,8 +1,5 @@
 package de.amr.demos.maze.swingapp.action;
 
-import static de.amr.demos.maze.swingapp.model.PathFinderTag.CHEBYSHEV;
-import static de.amr.demos.maze.swingapp.model.PathFinderTag.EUCLIDEAN;
-import static de.amr.demos.maze.swingapp.model.PathFinderTag.MANHATTAN;
 import static java.lang.String.format;
 
 import java.awt.event.ActionEvent;
@@ -81,8 +78,7 @@ public class RunMazeSolverAction extends AbstractAction {
 		}
 
 		else if (solver.getAlgorithmClass() == DijkstraPathFinder.class) {
-			DijkstraPathFinder<TraversalState, Integer> dijkstra = new DijkstraPathFinder<>(grid,
-					edge -> 1);
+			DijkstraPathFinder<TraversalState, Integer> dijkstra = new DijkstraPathFinder<>(grid, edge -> 1);
 			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), dijkstra, source, target));
 			app.showMessage(format("Dijkstra search: %.2f seconds.", watch.getSeconds()));
 			anim.showPath(app.wndDisplayArea.getCanvas(), dijkstra, target);
@@ -92,8 +88,8 @@ public class RunMazeSolverAction extends AbstractAction {
 			getHeuristics(solver, grid, target).ifPresent(h -> {
 				BestFirstSearchPathFinder<?, ?, Integer> best = new BestFirstSearchPathFinder<>(grid, h);
 				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), best, source, target));
-				app.showMessage(format("Best-first search (%s): %.2f seconds.", getHeuristicsName(solver),
-						watch.getSeconds()));
+				app.showMessage(
+						format("Best-first search (%s): %.2f seconds.", getHeuristicsName(solver), watch.getSeconds()));
 				anim.showPath(app.wndDisplayArea.getCanvas(), best, target);
 			});
 		}
@@ -134,27 +130,18 @@ public class RunMazeSolverAction extends AbstractAction {
 			getHeuristics(solver, grid, target).ifPresent(h -> {
 				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), new HillClimbingPathFinder<>(grid, h),
 						source, target));
-				app.showMessage(format("Hill Climbing (%s): %.2f seconds.", getHeuristicsName(solver),
-						watch.getSeconds()));
+				app.showMessage(
+						format("Hill Climbing (%s): %.2f seconds.", getHeuristicsName(solver), watch.getSeconds()));
 			});
 		}
 	}
 
 	private String getHeuristicsName(AlgorithmInfo solver) {
-		if (solver.isTagged(MANHATTAN)) {
-			return "Manhattan";
-		}
-		if (solver.isTagged(EUCLIDEAN)) {
-			return "Euclidean";
-		}
-		if (solver.isTagged(EUCLIDEAN)) {
-			return "Chebyshev";
-		}
-		return "";
+		return app.model.getHeuristics().toString();
 	}
 
-	private Optional<Function<Integer, Integer>> getHeuristics(AlgorithmInfo solver,
-			OrthogonalGrid grid, int target) {
+	private Optional<Function<Integer, Integer>> getHeuristics(AlgorithmInfo solver, OrthogonalGrid grid,
+			int target) {
 		Optional<BiFunction<Integer, Integer, Integer>> cost = getCostFunction(solver, grid);
 		Function<Integer, Integer> h = cost.isPresent() ? v -> cost.get().apply(v, target) : null;
 		return Optional.ofNullable(h);
@@ -163,12 +150,16 @@ public class RunMazeSolverAction extends AbstractAction {
 	private Optional<BiFunction<Integer, Integer, Integer>> getCostFunction(AlgorithmInfo solver,
 			OrthogonalGrid grid) {
 		BiFunction<Integer, Integer, Integer> cost = null;
-		if (solver.isTagged(CHEBYSHEV)) {
+		switch (app.model.getHeuristics()) {
+		case CHEBYSHEV:
 			cost = (u, v) -> grid.chebyshev(u, v);
-		} else if (solver.isTagged(EUCLIDEAN)) {
+			break;
+		case EUCLIDEAN:
 			cost = (u, v) -> grid.euclidean2(u, v);
-		} else if (solver.isTagged(MANHATTAN)) {
+			break;
+		case MANHATTAN:
 			cost = (u, v) -> grid.manhattan(u, v);
+			break;
 		}
 		return Optional.ofNullable(cost);
 	}
