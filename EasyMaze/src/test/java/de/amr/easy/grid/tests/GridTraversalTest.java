@@ -19,6 +19,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.amr.easy.datastruct.StreamUtils;
 import de.amr.easy.graph.grid.curves.HilbertCurve;
 import de.amr.easy.graph.grid.curves.HilbertLCurve;
 import de.amr.easy.graph.grid.curves.HilbertLCurveWirth;
@@ -33,7 +34,6 @@ import de.amr.easy.graph.pathfinder.impl.DepthFirstSearch;
 import de.amr.easy.graph.pathfinder.impl.DepthFirstSearch2;
 import de.amr.easy.graph.pathfinder.impl.HillClimbingSearch;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
-import de.amr.easy.util.StreamUtils;
 
 public class GridTraversalTest {
 

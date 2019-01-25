@@ -7,11 +7,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import de.amr.easy.datastruct.StreamUtils;
 import de.amr.easy.graph.grid.impl.OrthogonalGrid;
 import de.amr.easy.graph.grid.iterators.IteratorFactory;
 import de.amr.easy.graph.grid.shapes.Rectangle;
 import de.amr.easy.graph.grid.traversals.ExpandingRectangle;
-import de.amr.easy.util.StreamUtils;
 
 /**
  * Wilson's algorithm where the vertices are selected from a sequence of nested rectangles.
