@@ -4,8 +4,8 @@ import static java.lang.String.format;
 
 import java.awt.event.ActionEvent;
 import java.util.Optional;
-import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.ToIntBiFunction;
 
 import javax.swing.AbstractAction;
 
@@ -16,13 +16,13 @@ import de.amr.easy.graph.grid.impl.OrthogonalGrid;
 import de.amr.easy.graph.grid.ui.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.graph.grid.ui.animation.DepthFirstTraversalAnimation;
 import de.amr.easy.graph.pathfinder.api.TraversalState;
-import de.amr.easy.graph.pathfinder.impl.AStarPathFinder;
-import de.amr.easy.graph.pathfinder.impl.BestFirstSearchPathFinder;
-import de.amr.easy.graph.pathfinder.impl.BreadthFirstSearchPathFinder;
-import de.amr.easy.graph.pathfinder.impl.DepthFirstSearchPathFinder;
-import de.amr.easy.graph.pathfinder.impl.DepthFirstSearchPathFinder2;
-import de.amr.easy.graph.pathfinder.impl.DijkstraPathFinder;
-import de.amr.easy.graph.pathfinder.impl.HillClimbingPathFinder;
+import de.amr.easy.graph.pathfinder.impl.AStarSearch;
+import de.amr.easy.graph.pathfinder.impl.BestFirstSearch;
+import de.amr.easy.graph.pathfinder.impl.BreadthFirstSearch;
+import de.amr.easy.graph.pathfinder.impl.DepthFirstSearch;
+import de.amr.easy.graph.pathfinder.impl.DepthFirstSearch2;
+import de.amr.easy.graph.pathfinder.impl.DijkstraSearch;
+import de.amr.easy.graph.pathfinder.impl.HillClimbingSearch;
 import de.amr.easy.util.StopWatch;
 
 /**
@@ -70,23 +70,23 @@ public class RunMazeSolverAction extends AbstractAction {
 		anim.fnDelay = () -> app.model.getDelay();
 		anim.fnPathColor = () -> app.model.getPathColor();
 
-		if (solver.getAlgorithmClass() == BreadthFirstSearchPathFinder.class) {
-			BreadthFirstSearchPathFinder<?, ?> bfs = new BreadthFirstSearchPathFinder<>(grid);
+		if (solver.getAlgorithmClass() == BreadthFirstSearch.class) {
+			BreadthFirstSearch<?, ?> bfs = new BreadthFirstSearch<>(grid);
 			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), bfs, source, target));
 			app.showMessage(format("Breadth-first search: %.2f seconds.", watch.getSeconds()));
 			anim.showPath(app.wndDisplayArea.getCanvas(), bfs, target);
 		}
 
-		else if (solver.getAlgorithmClass() == DijkstraPathFinder.class) {
-			DijkstraPathFinder<TraversalState, Integer> dijkstra = new DijkstraPathFinder<>(grid, edge -> 1);
+		else if (solver.getAlgorithmClass() == DijkstraSearch.class) {
+			DijkstraSearch<TraversalState, Integer> dijkstra = new DijkstraSearch<>(grid, edge -> 1);
 			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), dijkstra, source, target));
 			app.showMessage(format("Dijkstra search: %.2f seconds.", watch.getSeconds()));
 			anim.showPath(app.wndDisplayArea.getCanvas(), dijkstra, target);
 		}
 
-		else if (solver.getAlgorithmClass() == BestFirstSearchPathFinder.class) {
+		else if (solver.getAlgorithmClass() == BestFirstSearch.class) {
 			getHeuristics(solver, grid, target).ifPresent(h -> {
-				BestFirstSearchPathFinder<?, ?, Integer> best = new BestFirstSearchPathFinder<>(grid, h);
+				BestFirstSearch<?, ?, Integer> best = new BestFirstSearch<>(grid, h);
 				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), best, source, target));
 				app.showMessage(
 						format("Best-first search (%s): %.2f seconds.", getHeuristicsName(solver), watch.getSeconds()));
@@ -94,9 +94,9 @@ public class RunMazeSolverAction extends AbstractAction {
 			});
 		}
 
-		else if (solver.getAlgorithmClass() == AStarPathFinder.class) {
+		else if (solver.getAlgorithmClass() == AStarSearch.class) {
 			getCostFunction(solver, grid).ifPresent(cost -> {
-				AStarPathFinder<TraversalState, Integer> astar = new AStarPathFinder<>(grid, edge -> 1, cost);
+				AStarSearch<TraversalState, Integer> astar = new AStarSearch<>(grid, edge -> 1, cost);
 				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), astar, source, target));
 				app.showMessage(
 						format("A* search (%s): %.2f seconds.", getHeuristicsName(solver), watch.getSeconds()));
@@ -114,21 +114,21 @@ public class RunMazeSolverAction extends AbstractAction {
 		anim.fnDelay = () -> app.model.getDelay();
 		anim.setPathColor(app.model.getPathColor());
 
-		if (solver.getAlgorithmClass() == DepthFirstSearchPathFinder.class) {
-			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), new DepthFirstSearchPathFinder(grid),
+		if (solver.getAlgorithmClass() == DepthFirstSearch.class) {
+			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), new DepthFirstSearch(grid),
 					source, target));
 			app.showMessage(format("Depth-first search: %.2f seconds.", watch.getSeconds()));
 		}
 
-		else if (solver.getAlgorithmClass() == DepthFirstSearchPathFinder2.class) {
-			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), new DepthFirstSearchPathFinder2(grid),
+		else if (solver.getAlgorithmClass() == DepthFirstSearch2.class) {
+			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), new DepthFirstSearch2(grid),
 					source, target));
 			app.showMessage(format("Depth-first search: %.2f seconds.", watch.getSeconds()));
 		}
 
-		else if (solver.getAlgorithmClass() == HillClimbingPathFinder.class) {
+		else if (solver.getAlgorithmClass() == HillClimbingSearch.class) {
 			getHeuristics(solver, grid, target).ifPresent(h -> {
-				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), new HillClimbingPathFinder<>(grid, h),
+				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), new HillClimbingSearch<>(grid, h),
 						source, target));
 				app.showMessage(
 						format("Hill Climbing (%s): %.2f seconds.", getHeuristicsName(solver), watch.getSeconds()));
@@ -142,14 +142,14 @@ public class RunMazeSolverAction extends AbstractAction {
 
 	private Optional<Function<Integer, Integer>> getHeuristics(AlgorithmInfo solver, OrthogonalGrid grid,
 			int target) {
-		Optional<BiFunction<Integer, Integer, Integer>> cost = getCostFunction(solver, grid);
-		Function<Integer, Integer> h = cost.isPresent() ? v -> cost.get().apply(v, target) : null;
+		Optional<ToIntBiFunction<Integer, Integer>> cost = getCostFunction(solver, grid);
+		Function<Integer, Integer> h = cost.isPresent() ? v -> cost.get().applyAsInt(v, target) : null;
 		return Optional.ofNullable(h);
 	}
 
-	private Optional<BiFunction<Integer, Integer, Integer>> getCostFunction(AlgorithmInfo solver,
+	private Optional<ToIntBiFunction<Integer, Integer>> getCostFunction(AlgorithmInfo solver,
 			OrthogonalGrid grid) {
-		BiFunction<Integer, Integer, Integer> cost = null;
+		ToIntBiFunction<Integer, Integer> cost = null;
 		switch (app.model.getHeuristics()) {
 		case CHEBYSHEV:
 			cost = (u, v) -> grid.chebyshev(u, v);

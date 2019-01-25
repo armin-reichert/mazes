@@ -26,12 +26,12 @@ import de.amr.easy.graph.grid.curves.MooreLCurve;
 import de.amr.easy.graph.grid.curves.PeanoCurve;
 import de.amr.easy.graph.grid.impl.OrthogonalGrid;
 import de.amr.easy.graph.pathfinder.api.TraversalState;
-import de.amr.easy.graph.pathfinder.impl.AStarPathFinder;
-import de.amr.easy.graph.pathfinder.impl.BestFirstSearchPathFinder;
-import de.amr.easy.graph.pathfinder.impl.BreadthFirstSearchPathFinder;
-import de.amr.easy.graph.pathfinder.impl.DepthFirstSearchPathFinder;
-import de.amr.easy.graph.pathfinder.impl.DepthFirstSearchPathFinder2;
-import de.amr.easy.graph.pathfinder.impl.HillClimbingPathFinder;
+import de.amr.easy.graph.pathfinder.impl.AStarSearch;
+import de.amr.easy.graph.pathfinder.impl.BestFirstSearch;
+import de.amr.easy.graph.pathfinder.impl.BreadthFirstSearch;
+import de.amr.easy.graph.pathfinder.impl.DepthFirstSearch;
+import de.amr.easy.graph.pathfinder.impl.DepthFirstSearch2;
+import de.amr.easy.graph.pathfinder.impl.HillClimbingSearch;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
 import de.amr.easy.util.StreamUtils;
 
@@ -67,7 +67,7 @@ public class GridTraversalTest {
 
 	@Test
 	public void testBFS() {
-		BreadthFirstSearchPathFinder<TraversalState, ?> bfs = new BreadthFirstSearchPathFinder<>(grid);
+		BreadthFirstSearch<TraversalState, ?> bfs = new BreadthFirstSearch<>(grid);
 		assertState(grid.vertices(), bfs::getState, UNVISITED);
 		bfs.traverseGraph(grid.cell(CENTER));
 		assertState(grid.vertices(), bfs::getState, COMPLETED);
@@ -77,7 +77,7 @@ public class GridTraversalTest {
 	public void testBestFS() {
 		grid = new IterativeDFS(N, N).createMaze(0, 0);
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		BestFirstSearchPathFinder<?, ?, Integer> best = new BestFirstSearchPathFinder<>(grid,
+		BestFirstSearch<?, ?, Integer> best = new BestFirstSearch<>(grid,
 				x -> grid.manhattan(x, target));
 		assertState(grid.vertices(), best::getState, UNVISITED);
 		best.traverseGraph(source);
@@ -90,7 +90,7 @@ public class GridTraversalTest {
 		grid = new IterativeDFS(N, N).createMaze(0, 0);
 		grid.setDefaultEdgeLabel((u, v) -> 1);
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		AStarPathFinder<TraversalState, Integer> astar = new AStarPathFinder<>(grid, edge -> 1,
+		AStarSearch<TraversalState, Integer> astar = new AStarSearch<>(grid, edge -> 1,
 				(u, v) -> grid.manhattan(u, v));
 		assertState(grid.vertices(), astar::getState, UNVISITED);
 		astar.traverseGraph(source, target);
@@ -102,7 +102,7 @@ public class GridTraversalTest {
 	@Test
 	public void testDFS() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		DepthFirstSearchPathFinder dfs = new DepthFirstSearchPathFinder(grid);
+		DepthFirstSearch dfs = new DepthFirstSearch(grid);
 		assertState(grid.vertices(), dfs::getState, UNVISITED);
 		dfs.traverseGraph(source, target);
 		assertState(StreamUtils.toIntStream(dfs.path(target)), dfs::getState, VISITED);
@@ -111,7 +111,7 @@ public class GridTraversalTest {
 	@Test
 	public void testDFS2() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		DepthFirstSearchPathFinder2 dfs = new DepthFirstSearchPathFinder2(grid);
+		DepthFirstSearch2 dfs = new DepthFirstSearch2(grid);
 		assertState(grid.vertices(), dfs::getState, UNVISITED);
 		dfs.traverseGraph(source, target);
 		assertState(StreamUtils.toIntStream(dfs.path(target)), dfs::getState, COMPLETED);
@@ -121,7 +121,7 @@ public class GridTraversalTest {
 	public void testHillClimbing() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
 		Function<Integer, Integer> cost = u -> grid.manhattan(u, target);
-		HillClimbingPathFinder<Integer> hillClimbing = new HillClimbingPathFinder<>(grid, cost);
+		HillClimbingSearch<Integer> hillClimbing = new HillClimbingSearch<>(grid, cost);
 		assertState(grid.vertices(), hillClimbing::getState, UNVISITED);
 		hillClimbing.traverseGraph(source, target);
 		hillClimbing.path(target).forEach(cell -> assertTrue(hillClimbing.getState(cell) != UNVISITED));

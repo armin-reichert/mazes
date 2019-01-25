@@ -37,7 +37,7 @@ import de.amr.demos.maze.swingapp.view.DisplayAreaWindow;
 import de.amr.demos.maze.swingapp.view.SettingsWindow;
 import de.amr.easy.graph.grid.impl.OrthogonalGrid;
 import de.amr.easy.graph.pathfinder.api.TraversalState;
-import de.amr.easy.graph.pathfinder.impl.BreadthFirstSearchPathFinder;
+import de.amr.easy.graph.pathfinder.impl.BreadthFirstSearch;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
 
 /**
@@ -122,7 +122,7 @@ public class MazeDemoApp {
 			onGeneratorChange(alg);
 		});
 		MazeDemoModel
-				.find(PATHFINDER_ALGORITHMS, alg -> alg.getAlgorithmClass() == BreadthFirstSearchPathFinder.class)
+				.find(PATHFINDER_ALGORITHMS, alg -> alg.getAlgorithmClass() == BreadthFirstSearch.class)
 				.ifPresent(alg -> {
 					wndSettings.solverMenu.selectAlgorithm(alg);
 					onSolverChange(alg);

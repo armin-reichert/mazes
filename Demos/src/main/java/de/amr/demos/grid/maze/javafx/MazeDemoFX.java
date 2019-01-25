@@ -7,7 +7,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import de.amr.easy.graph.grid.impl.OrthogonalGrid;
-import de.amr.easy.graph.pathfinder.impl.BreadthFirstSearchPathFinder;
+import de.amr.easy.graph.pathfinder.impl.BreadthFirstSearch;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
 import de.amr.easy.maze.alg.Eller;
 import de.amr.easy.maze.alg.EllerInsideOut;
@@ -111,7 +111,7 @@ public class MazeDemoFX extends Application {
 		MazeGenerator<OrthogonalGrid> generator = randomMazeGenerator();
 		maze = generator.createMaze(0, 0);
 		drawGrid();
-		BreadthFirstSearchPathFinder<?, ?> bfs = new BreadthFirstSearchPathFinder<>(maze);
+		BreadthFirstSearch<?, ?> bfs = new BreadthFirstSearch<>(maze);
 		bfs.traverseGraph(maze.cell(0, 0), maze.cell(BOTTOM_RIGHT));
 		drawPath(bfs.path(maze.cell(BOTTOM_RIGHT))::iterator);
 	}

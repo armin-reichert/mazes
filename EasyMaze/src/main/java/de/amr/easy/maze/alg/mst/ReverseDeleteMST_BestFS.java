@@ -1,6 +1,6 @@
 package de.amr.easy.maze.alg.mst;
 
-import de.amr.easy.graph.pathfinder.impl.BestFirstSearchPathFinder;
+import de.amr.easy.graph.pathfinder.impl.BestFirstSearch;
 
 /**
  * Reverse-Delete-MST algorithm using best-first search for connectivity test.
@@ -17,7 +17,7 @@ public class ReverseDeleteMST_BestFS extends ReverseDeleteMST {
 
 	@Override
 	protected boolean connected(int u, int v) {
-		BestFirstSearchPathFinder<?, ?, Integer> bfs = new BestFirstSearchPathFinder<>(grid,
+		BestFirstSearch<?, ?, Integer> bfs = new BestFirstSearch<>(grid,
 				x -> grid.manhattan(x, v));
 		bfs.traverseGraph(u, v);
 		return bfs.getParent(v) != -1;
