@@ -153,10 +153,12 @@ Implemented maze generation algorithms:
 ![](Demos/images/gen/maze_80x60_RecursiveDivision.gif)
 
 ### Path finding algorithms:
-The [EasyGraph](https://github.com/armin-reichert/graph) library contains the following path finder implementations:
-- [Breadth-First-Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/pathfinder/impl/BreadthFirstSearchPathFinder.java)
-- [Depth-First-Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/pathfinder/impl/DepthFirstSearchPathFinder.java)
-- [(Greedy) Best-First-Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/pathfinder/impl/BestFirstSearchPathFinder.java). Can be used with Euclidean, Manhattan and Chebyshev distance heuristics.
-- [Hill Climbing](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/pathfinder/impl/HillClimbingPathFinder.java). Can be used with Euclidean, Manhattan and Chebyshev distance heuristics.
-- [A* Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/pathfinder/impl/AStarPathFinder.java).
-- [Dijkstra](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/pathfinder/impl/DijkstraPathFinder.java).
+The [graph](https://github.com/armin-reichert/graph) library contains the following path finder implementations:
+- [Breadth-First-Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/pathfinder/impl/BreadthFirstSearch.java)
+- [Depth-First-Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/pathfinder/impl/DepthFirstSearch.java)
+- [(Greedy) Best-First-Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/pathfinder/impl/BestFirstSearch.java).
+- [Hill Climbing](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/pathfinder/impl/HillClimbingSearch.java).
+- [A* Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/pathfinder/impl/AStarSearch.java).
+- [Dijkstra](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/pathfinder/impl/DijkstraSearch.java).
+
+ The "informed" path finders can be used with Euclidean, Manhattan and Chebyshev distance heuristics.

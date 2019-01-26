@@ -1,9 +1,9 @@
 package de.amr.easy.maze.alg;
 
+import static de.amr.easy.datastruct.StreamUtils.permute;
 import static de.amr.easy.graph.grid.impl.OrthogonalGrid.emptyGrid;
 import static de.amr.easy.graph.pathfinder.api.TraversalState.COMPLETED;
 import static de.amr.easy.graph.pathfinder.api.TraversalState.UNVISITED;
-import static de.amr.easy.util.StreamUtils.permute;
 
 import java.util.ArrayList;
 import java.util.List;

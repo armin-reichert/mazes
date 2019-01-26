@@ -1,6 +1,6 @@
 package de.amr.easy.maze.alg.mst;
 
-import de.amr.easy.graph.pathfinder.impl.DepthFirstSearchPathFinder2;
+import de.amr.easy.graph.pathfinder.impl.DepthFirstSearch2;
 
 /**
  * Reverse-Delete-MST algorithm using depth-first search for connectivity test.
@@ -17,7 +17,7 @@ public class ReverseDeleteMST_DFS extends ReverseDeleteMST {
 
 	@Override
 	protected boolean connected(int u, int v) {
-		DepthFirstSearchPathFinder2 dfs = new DepthFirstSearchPathFinder2(grid);
+		DepthFirstSearch2 dfs = new DepthFirstSearch2(grid);
 		dfs.traverseGraph(u, v);
 		return dfs.getParent(v) != -1;
 	}

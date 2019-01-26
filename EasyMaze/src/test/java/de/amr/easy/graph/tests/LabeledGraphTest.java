@@ -12,7 +12,7 @@ import org.junit.Test;
 import de.amr.easy.graph.core.impl.UGraph;
 import de.amr.easy.graph.event.api.GraphTraversalObserver;
 import de.amr.easy.graph.pathfinder.api.TraversalState;
-import de.amr.easy.graph.pathfinder.impl.DepthFirstSearchPathFinder;
+import de.amr.easy.graph.pathfinder.impl.DepthFirstSearch;
 
 public class LabeledGraphTest {
 
@@ -113,7 +113,7 @@ public class LabeledGraphTest {
 	@Test
 	public void testSampleGraphDFS() {
 		UGraph<String, Integer> g = createSampleGraph();
-		DepthFirstSearchPathFinder dfs = new DepthFirstSearchPathFinder(g);
+		DepthFirstSearch dfs = new DepthFirstSearch(g);
 		DFSTracer tracer = new DFSTracer(g);
 		dfs.addObserver(tracer);
 		dfs.traverseGraph(0);

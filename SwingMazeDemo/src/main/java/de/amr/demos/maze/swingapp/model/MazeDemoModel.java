@@ -16,13 +16,13 @@ import java.util.function.Predicate;
 
 import de.amr.easy.graph.grid.api.GridPosition;
 import de.amr.easy.graph.grid.impl.OrthogonalGrid;
-import de.amr.easy.graph.pathfinder.impl.AStarPathFinder;
-import de.amr.easy.graph.pathfinder.impl.BestFirstSearchPathFinder;
-import de.amr.easy.graph.pathfinder.impl.BreadthFirstSearchPathFinder;
-import de.amr.easy.graph.pathfinder.impl.DepthFirstSearchPathFinder;
-import de.amr.easy.graph.pathfinder.impl.DepthFirstSearchPathFinder2;
-import de.amr.easy.graph.pathfinder.impl.DijkstraPathFinder;
-import de.amr.easy.graph.pathfinder.impl.HillClimbingPathFinder;
+import de.amr.easy.graph.pathfinder.impl.AStarSearch;
+import de.amr.easy.graph.pathfinder.impl.BestFirstSearch;
+import de.amr.easy.graph.pathfinder.impl.BreadthFirstSearch;
+import de.amr.easy.graph.pathfinder.impl.DepthFirstSearch;
+import de.amr.easy.graph.pathfinder.impl.DepthFirstSearch2;
+import de.amr.easy.graph.pathfinder.impl.DijkstraSearch;
+import de.amr.easy.graph.pathfinder.impl.HillClimbingSearch;
 import de.amr.easy.maze.alg.BinaryTree;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
 import de.amr.easy.maze.alg.Eller;
@@ -120,13 +120,13 @@ public class MazeDemoModel {
 
 	public static final AlgorithmInfo[] PATHFINDER_ALGORITHMS = {
 			/*@formatter:off*/
-			new AlgorithmInfo(BreadthFirstSearchPathFinder.class, "Breadth-First Search", BFS),
-			new AlgorithmInfo(DepthFirstSearchPathFinder2.class, "Depth-First Search", DFS), 
-			new AlgorithmInfo(DepthFirstSearchPathFinder.class, "Depth-First Search (alternative)", DFS), 
-			new AlgorithmInfo(DijkstraPathFinder.class, "Dijkstra", BFS), 
-			new AlgorithmInfo(BestFirstSearchPathFinder.class, "Best-First Search", BFS, INFORMED),
-			new AlgorithmInfo(AStarPathFinder.class, "A* Search", BFS, INFORMED),
-			new AlgorithmInfo(HillClimbingPathFinder.class, "Hill Climbing", DFS, INFORMED),
+			new AlgorithmInfo(BreadthFirstSearch.class, "Breadth-First Search", BFS),
+			new AlgorithmInfo(DepthFirstSearch2.class, "Depth-First Search", DFS), 
+			new AlgorithmInfo(DepthFirstSearch.class, "Depth-First Search (alternative)", DFS), 
+			new AlgorithmInfo(DijkstraSearch.class, "Dijkstra", BFS), 
+			new AlgorithmInfo(BestFirstSearch.class, "Best-First Search", BFS, INFORMED),
+			new AlgorithmInfo(AStarSearch.class, "A* Search", BFS, INFORMED),
+			new AlgorithmInfo(HillClimbingSearch.class, "Hill Climbing", DFS, INFORMED),
 			/*@formatter:on*/
 	};
 
