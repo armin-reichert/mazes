@@ -8,18 +8,16 @@ import java.util.stream.Stream;
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
-import de.amr.easy.graph.grid.api.GridPosition;
 import de.amr.easy.graph.grid.impl.OrthogonalGrid;
-import de.amr.easy.maze.alg.core.MazeGenerator;
 
 /**
- * Action for running a sequence of all (except very slow ones) maze generators in sequence.
+ * Action for running all maze generators (except slow ones) one by one.
  * 
  * @author Armin Reichert
  */
-public class CreateAllMazesAction extends CreateMazeAction {
+public class CreateAllMazesAction extends CreateMazeActionBase {
 
-	private boolean ready;
+	private boolean readyForNext;
 
 	public CreateAllMazesAction(MazeDemoApp app) {
 		super(app);
@@ -28,34 +26,32 @@ public class CreateAllMazesAction extends CreateMazeAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app.enableUI(false);
 		app.startWorkerThread(() -> {
+			app.enableUI(false);
 			try {
-				generateAllMazes();
+				createAllMazes();
 			} finally {
 				app.enableUI(true);
 			}
 		});
 	}
 
-	private void generateAllMazes() {
-		ready = true;
+	private void createAllMazes() {
+		readyForNext = true;
 		/*@formatter:off*/
 		Stream.of(MazeDemoModel.GENERATOR_ALGORITHMS)
-			.filter(generatorInfo -> !generatorInfo.isTagged(Slow))
-			.forEach(generatorInfo -> {
-				if (app.isWorkerThreadStopped()) {
-					return;
-				}
-				if (ready) {
-					MazeGenerator<OrthogonalGrid> generator = createNextMaze(generatorInfo, app.model.getGenerationStart());
-					if (generator != null && app.model.isFloodFillAfterGeneration()) {
-						floodFill(generator.getGrid());
-					}
+			.filter(algo -> !algo.isTagged(Slow))
+			.forEach(algo -> {
+				if (readyForNext && !app.isWorkerThreadStopped()) {
 					try {
-						Thread.sleep(1500);
-					} catch (InterruptedException e) {
-						// ignore
+						OrthogonalGrid maze = createNextMaze(algo);
+						if (maze != null && app.model.isFloodFillAfterGeneration()) {
+							pause(1);
+							floodFill(maze);
+						}
+						pause(3);
+					} catch (Exception x) {
+						x.printStackTrace();
 					}
 				}
 		});
@@ -63,19 +59,19 @@ public class CreateAllMazesAction extends CreateMazeAction {
 		app.showMessage("Done.");
 	}
 
-	private MazeGenerator<OrthogonalGrid> createNextMaze(AlgorithmInfo generatorInfo, GridPosition startPosition) {
-		ready = false;
-		app.wndDisplayArea.getCanvas().clear();
-		app.wndSettings.generatorMenu.selectAlgorithm(generatorInfo);
-		app.onGeneratorChange(generatorInfo);
+	private OrthogonalGrid createNextMaze(AlgorithmInfo algo) {
+		getCanvas().clear();
+		app.wndSettings.generatorMenu.selectAlgorithm(algo);
+		app.onGeneratorChange(algo);
 		try {
-			return runMazeGenerator(generatorInfo, startPosition);
+			readyForNext = false;
+			return createMaze(algo, app.model.getGenerationStart());
 		} catch (Exception | StackOverflowError x) {
 			app.showMessage("Maze generation aborted: " + x.getClass().getSimpleName());
 			app.resetDisplay();
 			return null;
 		} finally {
-			ready = true;
+			readyForNext = true;
 		}
 	}
 }

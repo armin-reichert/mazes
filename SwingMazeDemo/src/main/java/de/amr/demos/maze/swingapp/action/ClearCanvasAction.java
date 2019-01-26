@@ -20,5 +20,4 @@ public class ClearCanvasAction extends AbstractAction {
 		app.wndDisplayArea.getCanvas().clear();
 		app.wndDisplayArea.getCanvas().drawGrid();
 	}
-
 }
