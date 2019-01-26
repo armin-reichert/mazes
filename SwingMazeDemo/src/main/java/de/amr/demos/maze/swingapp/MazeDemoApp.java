@@ -25,6 +25,7 @@ import de.amr.demos.maze.swingapp.action.EmptyGridAction;
 import de.amr.demos.maze.swingapp.action.FloodFillAction;
 import de.amr.demos.maze.swingapp.action.FullGridAction;
 import de.amr.demos.maze.swingapp.action.RunMazeSolverAction;
+import de.amr.demos.maze.swingapp.action.SaveImageAction;
 import de.amr.demos.maze.swingapp.action.ShowSettingsAction;
 import de.amr.demos.maze.swingapp.action.StopTaskAction;
 import de.amr.demos.maze.swingapp.action.ToggleControlPanelAction;
@@ -71,6 +72,7 @@ public class MazeDemoApp {
 	public final Action actionStopTask = new StopTaskAction(this);
 	public final Action actionClearCanvas = new ClearCanvasAction(this);
 	public final Action actionFloodFill = new FloodFillAction(this);
+	public final Action actionSaveImage = new SaveImageAction(this);
 	public final Action actionEmptyGrid = new EmptyGridAction(this);
 	public final Action actionFullGrid = new FullGridAction(this);
 	public final Action actionChangeGridResolution = new ChangeGridResolutionAction(this);

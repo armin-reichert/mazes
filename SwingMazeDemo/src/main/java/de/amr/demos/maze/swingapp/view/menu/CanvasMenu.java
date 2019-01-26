@@ -14,5 +14,7 @@ public class CanvasMenu extends JMenu {
 		add(app.actionFullGrid);
 		addSeparator();
 		add(app.actionFloodFill);
+		addSeparator();
+		add(app.actionSaveImage);
 	}
 }
