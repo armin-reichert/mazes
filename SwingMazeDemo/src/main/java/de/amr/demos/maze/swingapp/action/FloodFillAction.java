@@ -17,15 +17,17 @@ import de.amr.easy.util.StopWatch;
 public class FloodFillAction extends AbstractAction {
 
 	private final MazeDemoApp app;
+	private boolean distancesVisible;
 
-	public FloodFillAction(MazeDemoApp app) {
+	public FloodFillAction(MazeDemoApp app, boolean distancesVisible) {
 		this.app = app;
-		putValue(NAME, "Flood-fill");
+		this.distancesVisible = distancesVisible;
+		putValue(NAME, distancesVisible ? "Flood-fill (show distances)" : "Flood-fill");
 	}
 
 	private void runFloodFill() {
 		int source = app.model.getGrid().cell(app.model.getPathFinderSource());
-		floodFill(app.wndDisplayArea.getCanvas(), app.model.getGrid(), source);
+		floodFill(app.wndDisplayArea.getCanvas(), app.model.getGrid(), source, distancesVisible);
 	}
 
 	@Override

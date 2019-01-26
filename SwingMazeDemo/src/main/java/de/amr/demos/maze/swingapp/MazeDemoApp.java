@@ -71,7 +71,8 @@ public class MazeDemoApp {
 	public final Action actionRunMazeSolver = new RunMazeSolverAction(this);
 	public final Action actionStopTask = new StopTaskAction(this);
 	public final Action actionClearCanvas = new ClearCanvasAction(this);
-	public final Action actionFloodFill = new FloodFillAction(this);
+	public final Action actionFloodFill = new FloodFillAction(this, false);
+	public final Action actionFloodFillWithDistance = new FloodFillAction(this, true);
 	public final Action actionSaveImage = new SaveImageAction(this);
 	public final Action actionEmptyGrid = new EmptyGridAction(this);
 	public final Action actionFullGrid = new FullGridAction(this);
