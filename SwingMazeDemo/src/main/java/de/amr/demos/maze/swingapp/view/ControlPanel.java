@@ -49,7 +49,7 @@ public class ControlPanel extends JPanel {
 
 		controls = new JPanel();
 		add(controls, BorderLayout.CENTER);
-		controls.setLayout(new MigLayout("", "[][grow,fill]", "[][][][][][]"));
+		controls.setLayout(new MigLayout("", "[3px:n][][grow,fill]", "[][][][][][]"));
 
 		lblGenerator = new JLabel("Generator");
 		controls.add(lblGenerator, "cell 0 0,growx");
@@ -60,14 +60,14 @@ public class ControlPanel extends JPanel {
 		lblGeneratorName.setForeground(Color.BLUE);
 		lblGeneratorName.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		lblGeneratorName.setHorizontalAlignment(SwingConstants.LEFT);
-		controls.add(lblGeneratorName, "flowy,cell 1 0,alignx left");
+		controls.add(lblGeneratorName, "flowy,cell 2 0,alignx left");
 
 		lblSolver = new JLabel("Solver");
 		controls.add(lblSolver, "flowx,cell 0 1,growx");
 
 		lblSolverName = new JLabel("Solver Algorithm");
 		lblSolver.setLabelFor(lblSolverName);
-		controls.add(lblSolverName, "cell 1 1");
+		controls.add(lblSolverName, "cell 2 1");
 		lblSolverName.setHorizontalAlignment(SwingConstants.LEFT);
 		lblSolverName.setForeground(Color.BLUE);
 		lblSolverName.setFont(new Font("Arial Black", Font.PLAIN, 14));
@@ -79,10 +79,10 @@ public class ControlPanel extends JPanel {
 		comboGridResolution = new JComboBox<>();
 		comboGridResolution.setMaximumRowCount(16);
 		lblGridResolution.setLabelFor(comboGridResolution);
-		controls.add(comboGridResolution, "cell 1 2,growx");
+		controls.add(comboGridResolution, "cell 2 2,growx");
 
 		lblPassageWidth = new JLabel("Passage Width (%)");
-		controls.add(lblPassageWidth, "cell 0 3,growx");
+		controls.add(lblPassageWidth, "cell 0 3,growx,aligny top");
 
 		sliderPassageWidth = new JSlider();
 		lblPassageWidth.setLabelFor(sliderPassageWidth);
@@ -91,7 +91,7 @@ public class ControlPanel extends JPanel {
 		sliderPassageWidth.setPaintLabels(true);
 		sliderPassageWidth.setToolTipText("Passage Width (%)");
 		sliderPassageWidth.setPaintTicks(true);
-		controls.add(sliderPassageWidth, "cell 1 3,growx");
+		controls.add(sliderPassageWidth, "cell 2 3,growx");
 
 		lblDelay = new JLabel("Delay");
 		controls.add(lblDelay, "cell 0 4,growx");
@@ -103,10 +103,10 @@ public class ControlPanel extends JPanel {
 		sliderDelay.setMaximum(50);
 		sliderDelay.setMinorTickSpacing(1);
 		sliderDelay.setMajorTickSpacing(5);
-		controls.add(sliderDelay, "cell 1 4,growx");
+		controls.add(sliderDelay, "cell 2 4,growx");
 
 		scrollPane = new JScrollPane();
-		controls.add(scrollPane, "cell 0 5 2 1,grow");
+		controls.add(scrollPane, "cell 0 5 3 1,grow");
 
 		textArea = new JTextArea();
 		textArea.setEditable(false);
