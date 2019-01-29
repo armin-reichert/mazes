@@ -26,7 +26,7 @@ public class FullGridTest {
 
 	@Before
 	public void setUp() {
-		grid = new GridGraph<>(WIDTH, HEIGHT, new Top4(), null, (u, v) -> null, UndirectedEdge::new);
+		grid = new GridGraph<>(WIDTH, HEIGHT, Top4.get(), null, (u, v) -> null, UndirectedEdge::new);
 		grid.fill();
 	}
 
@@ -60,8 +60,7 @@ public class FullGridTest {
 	@Test
 	public void testAdjVertices() {
 		Integer cell = grid.cell(1, 1);
-		assertContainsExactly(grid.adj(cell), grid.cell(1, 0), grid.cell(1, 2), grid.cell(2, 1),
-				grid.cell(0, 1));
+		assertContainsExactly(grid.adj(cell), grid.cell(1, 0), grid.cell(1, 2), grid.cell(2, 1), grid.cell(0, 1));
 	}
 
 	@Test
@@ -74,8 +73,7 @@ public class FullGridTest {
 		cell = grid.cell(GridPosition.BOTTOM_LEFT);
 		assertContainsExactly(grid.adj(cell), grid.cell(0, HEIGHT - 2), grid.cell(1, HEIGHT - 1));
 		cell = grid.cell(GridPosition.BOTTOM_RIGHT);
-		assertContainsExactly(grid.adj(cell), grid.cell(WIDTH - 1, HEIGHT - 2),
-				grid.cell(WIDTH - 2, HEIGHT - 1));
+		assertContainsExactly(grid.adj(cell), grid.cell(WIDTH - 1, HEIGHT - 2), grid.cell(WIDTH - 2, HEIGHT - 1));
 	}
 
 	@Test
@@ -128,7 +126,7 @@ public class FullGridTest {
 
 	@Test
 	public void testFullGrid8() {
-		grid = new GridGraph<>(3, 3, new Top8(), null, (u, v) -> null, UndirectedEdge::new);
+		grid = new GridGraph<>(3, 3, Top8.get(), null, (u, v) -> null, UndirectedEdge::new);
 		grid.fill();
 
 		int c = grid.numCols(), r = grid.numRows();

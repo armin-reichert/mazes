@@ -38,7 +38,7 @@ public class GridTest {
 
 	@Before
 	public void setUp() {
-		grid = new ObservableGridGraph<>(WIDTH, HEIGHT, new Top4(), v -> UNVISITED, (u, v) -> 1,
+		grid = new ObservableGridGraph<>(WIDTH, HEIGHT, Top4.get(), v -> UNVISITED, (u, v) -> 1,
 				UndirectedEdge::new);
 	}
 
@@ -58,8 +58,7 @@ public class GridTest {
 
 	@Test
 	public void testInitialContent() {
-		assertEquals(grid.vertices().filter(cell -> grid.get(cell) == UNVISITED).count(),
-				grid.numVertices());
+		assertEquals(grid.vertices().filter(cell -> grid.get(cell) == UNVISITED).count(), grid.numVertices());
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
@@ -255,8 +254,7 @@ public class GridTest {
 		int u = grid.cell(GridPosition.TOP_LEFT);
 		int v = grid.cell(GridPosition.BOTTOM_RIGHT);
 		int dist = grid.euclidean2(u, v);
-		assertEquals(
-				(grid.numRows() - 1) * (grid.numRows() - 1) + (grid.numCols() - 1) * (grid.numCols() - 1),
+		assertEquals((grid.numRows() - 1) * (grid.numRows() - 1) + (grid.numCols() - 1) * (grid.numCols() - 1),
 				dist);
 		assertEquals(0, grid.euclidean2(u, u));
 	}

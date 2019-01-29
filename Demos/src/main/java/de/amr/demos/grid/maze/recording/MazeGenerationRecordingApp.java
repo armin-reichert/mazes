@@ -91,9 +91,10 @@ public class MazeGenerationRecordingApp {
 	};
 
 	public static void main(String[] args) {
-		int numCols = 80, numRows = 60, cellSize = 4, scanRate = 200, delayMillis = 50;
-		run(numCols, numRows, cellSize, scanRate, delayMillis, HANDSOME_GENERATORS);
-		run(40, 30, 8, scanRate, delayMillis, RecursiveDFS.class);
+		int numCols = 80, numRows = 60, cellSize = 4, scanRate = 10, delayMillis = 50;
+		run(numCols, numRows, cellSize, scanRate, delayMillis, IterativeDFS.class);
+//		run(numCols, numRows, cellSize, scanRate, delayMillis, HANDSOME_GENERATORS);
+//		run(40, 30, 8, scanRate, delayMillis, RecursiveDFS.class);
 		// run(8, 8, 16, 3, 40, AldousBroderUST.class);
 		// run(numCols, numRows, cellSize, scanRate, delayMillis, ReverseDeleteMST_DFS.class);
 		// run(numCols, numRows, 2, 10, 80, RecursiveDivision.class);
