@@ -73,6 +73,16 @@ Implemented maze generation algorithms:
 
 ![](Demos/images/gen/maze_40x30_RecursiveDFS.gif)
 
+### [Growing tree](Mazes/src/main/java/de/amr/maze/alg/traversal/GrowingTree.java)
+
+#### [Growing tree (always first vertex selected)](Mazes/src/main/java/de/amr/maze/alg/traversal/GrowingTreeAlwaysFirst.java)
+
+#### [Growing tree (always last vertex selected)](Mazes/src/main/java/de/amr/maze/alg/traversal/GrowingTreeAlwaysLast.java)
+
+#### [Growing tree (always random vertex selected)](Mazes/src/main/java/de/amr/maze/alg/traversal/GrowingTreeAlwaysRandom.java)
+
+#### [Growing tree (last or random vertex selected)](Mazes/src/main/java/de/amr/maze/alg/traversal/GrowingTreeLastOrRandom.java)
+
 ### Minimum Spanning Tree: 
 #### [Boruvka](Mazes/src/main/java/de/amr/maze/alg/mst/BoruvkaMST.java)
 
