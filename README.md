@@ -75,15 +75,24 @@ Implemented maze generation algorithms:
 
 ### [Growing tree](Mazes/src/main/java/de/amr/maze/alg/traversal/GrowingTree.java)
 
-#### [Growing tree (always first vertex selected)](Mazes/src/main/java/de/amr/maze/alg/traversal/GrowingTreeAlwaysFirst.java)
+- [Growing tree (always first vertex selected)](Mazes/src/main/java/de/amr/maze/alg/traversal/GrowingTreeAlwaysFirst.java)
 
-#### [Growing tree (always last vertex selected)](Mazes/src/main/java/de/amr/maze/alg/traversal/GrowingTreeAlwaysLast.java)
+![](Demos/images/gen/maze_80x60_GrowingTreeAlwaysFirst.gif)
 
-#### [Growing tree (always random vertex selected)](Mazes/src/main/java/de/amr/maze/alg/traversal/GrowingTreeAlwaysRandom.java)
+- [Growing tree (always last vertex selected)](Mazes/src/main/java/de/amr/maze/alg/traversal/GrowingTreeAlwaysLast.java)
 
-#### [Growing tree (last or random vertex selected)](Mazes/src/main/java/de/amr/maze/alg/traversal/GrowingTreeLastOrRandom.java)
+![](Demos/images/gen/maze_80x60_GrowingTreeAlwaysLast.gif)
 
-### Minimum Spanning Tree: 
+- [Growing tree (always random vertex selected)](Mazes/src/main/java/de/amr/maze/alg/traversal/GrowingTreeAlwaysRandom.java)
+
+![](Demos/images/gen/maze_80x60_GrowingTreeAlwaysRandom.gif)
+
+- [Growing tree (last or random vertex selected)](Mazes/src/main/java/de/amr/maze/alg/traversal/GrowingTreeLastOrRandom.java)
+
+![](Demos/images/gen/maze_80x60_GrowingTreeLastOrRandom.gif)
+
+### Minimum Spanning Tree:
+
 #### [Boruvka](Mazes/src/main/java/de/amr/maze/alg/mst/BoruvkaMST.java)
 
 ![](Demos/images/gen/maze_80x60_BoruvkaMST.gif)
@@ -145,10 +154,6 @@ Implemented maze generation algorithms:
 #### [Sidewinder](Mazes/src/main/java/de/amr/maze/alg/Sidewinder.java)
 
 ![](Demos/images/gen/maze_80x60_Sidewinder.gif)
-
-#### [Growing Tree](Mazes/src/main/java/de/amr/maze/alg/GrowingTree.java)
-
-![](Demos/images/gen/maze_80x60_GrowingTree.gif)
 
 #### [Hunt-And-Kill, top-to-bottom](Mazes/src/main/java/de/amr/maze/alg/HuntAndKill.java)
 

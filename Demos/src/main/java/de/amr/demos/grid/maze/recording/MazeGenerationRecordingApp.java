@@ -26,6 +26,9 @@ import de.amr.maze.alg.core.MazeGenerator;
 import de.amr.maze.alg.mst.BoruvkaMST;
 import de.amr.maze.alg.mst.KruskalMST;
 import de.amr.maze.alg.mst.PrimMST;
+import de.amr.maze.alg.traversal.GrowingTreeAlwaysFirst;
+import de.amr.maze.alg.traversal.GrowingTreeAlwaysLast;
+import de.amr.maze.alg.traversal.GrowingTreeAlwaysRandom;
 import de.amr.maze.alg.traversal.GrowingTreeLastOrRandom;
 import de.amr.maze.alg.traversal.IterativeDFS;
 import de.amr.maze.alg.traversal.RandomBFS;
@@ -58,42 +61,44 @@ public class MazeGenerationRecordingApp {
 
 	private static final Class<?>[] HANDSOME_GENERATORS = {
 		/*@formatter:off*/
-		BoruvkaMST.class, 
-		KruskalMST.class, 
-		PrimMST.class, 
-		BinaryTree.class,
-		BinaryTreeRandom.class, 
-		Eller.class,
-		EllerInsideOut.class, 
-		GrowingTreeLastOrRandom.class, 
-		HuntAndKill.class, 
-		HuntAndKillRandom.class,
-		IterativeDFS.class, 
-		RandomBFS.class, 
-		Sidewinder.class,
-		WilsonUSTCollapsingCircle.class, 
-		WilsonUSTCollapsingWalls.class,
-		WilsonUSTExpandingCircle.class, 
-		WilsonUSTExpandingCircles.class, 
-		WilsonUSTExpandingRectangle.class, 
-		WilsonUSTExpandingSpiral.class, 
-		WilsonUSTHilbertCurve.class, 
-		WilsonUSTLeftToRightSweep.class, 
-		WilsonUSTMooreCurve.class, 
-		WilsonUSTNestedRectangles.class, 
-		WilsonUSTPeanoCurve.class, 
-		WilsonUSTRandomCell.class,
-		WilsonUSTRecursiveCrosses.class, 
-		WilsonUSTRightToLeftSweep.class, 
-		WilsonUSTRowsTopDown.class, 
+//		BoruvkaMST.class, 
+//		KruskalMST.class, 
+//		PrimMST.class, 
+//		BinaryTree.class,
+//		BinaryTreeRandom.class, 
+//		Eller.class,
+//		EllerInsideOut.class, 
+//		HuntAndKill.class, 
+//		HuntAndKillRandom.class,
+//		IterativeDFS.class, 
+//		RandomBFS.class,
+		GrowingTreeLastOrRandom.class,
+		GrowingTreeAlwaysFirst.class,
+		GrowingTreeAlwaysLast.class,
+		GrowingTreeAlwaysRandom.class,
+//		Sidewinder.class,
+//		WilsonUSTCollapsingCircle.class, 
+//		WilsonUSTCollapsingWalls.class,
+//		WilsonUSTExpandingCircle.class, 
+//		WilsonUSTExpandingCircles.class, 
+//		WilsonUSTExpandingRectangle.class, 
+//		WilsonUSTExpandingSpiral.class, 
+//		WilsonUSTHilbertCurve.class, 
+//		WilsonUSTLeftToRightSweep.class, 
+//		WilsonUSTMooreCurve.class, 
+//		WilsonUSTNestedRectangles.class, 
+//		WilsonUSTPeanoCurve.class, 
+//		WilsonUSTRandomCell.class,
+//		WilsonUSTRecursiveCrosses.class, 
+//		WilsonUSTRightToLeftSweep.class, 
+//		WilsonUSTRowsTopDown.class, 
 		/*@formatter:on*/
 	};
 
 	public static void main(String[] args) {
-		int numCols = 80, numRows = 60, cellSize = 4, scanRate = 10, delayMillis = 50;
-		run(numCols, numRows, cellSize, scanRate, delayMillis, IterativeDFS.class);
-//		run(numCols, numRows, cellSize, scanRate, delayMillis, HANDSOME_GENERATORS);
-//		run(40, 30, 8, scanRate, delayMillis, RecursiveDFS.class);
+		int numCols = 80, numRows = 60, cellSize = 4, scanRate = 80, delayMillis = 50;
+		run(numCols, numRows, cellSize, scanRate, delayMillis, HANDSOME_GENERATORS);
+		// run(40, 30, 8, scanRate, delayMillis, RecursiveDFS.class);
 		// run(8, 8, 16, 3, 40, AldousBroderUST.class);
 		// run(numCols, numRows, cellSize, scanRate, delayMillis, ReverseDeleteMST_DFS.class);
 		// run(numCols, numRows, 2, 10, 80, RecursiveDivision.class);
