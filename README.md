@@ -12,15 +12,15 @@ Initially I intended to implement some of these algorithms in Java to learn abou
 
 In the end, all of the algorithms presented in Jamis Buck's blog and even some new algorithms have been implemented. One new algorithm is a modification of Eller's algorithm that in contrast to the original doesn't generate the maze row-wise but from the center of the grid towards the outer borders. The resulting maze however is heavily biased. Other new algorithms are variations of Wilson's uniform spanning tree algorithm. They result from the different possibilities for selecting the random walk start cells. 
 
-As the order in which the random walk start cells are selected is arbitrary, we have a number of interesting choices. For example, you can start the random walks in the order defined by a space-filling curves like [Hilbert](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/grid/curves/HilbertCurve.java), [Peano](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/grid/curves/PeanoCurve.java) or [Moore](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/grid/curves/MooreLCurve.java) curves. You can also use other interesting patterns of filling a grid. In any case you will get visually appealing maze creation processes. 
+As the order in which the random walk start cells are selected is arbitrary, we have a number of interesting choices. For example, you can start the random walks in the order defined by a space-filling curves like [Hilbert](https://github.com/armin-reichert/graph/tree/master/Graph/src/main/java/de/amr/easy/graph/grid/curves/HilbertCurve.java), [Peano](https://github.com/armin-reichert/graph/tree/master/Graph/src/main/java/de/amr/easy/graph/grid/curves/PeanoCurve.java) or [Moore](https://github.com/armin-reichert/graph/tree/master/Graph/src/main/java/de/amr/easy/graph/grid/curves/MooreLCurve.java) curves. You can also use other interesting patterns of filling a grid. In any case you will get visually appealing maze creation processes. 
 
 Also implemented in this project are path finding algorithms for "solving" the generated mazes: "Breadth-First-Search" and "Depth-First-Search" together with their informed variants "Best-First-Search" and "Hill Climbing". For completeness, the A* and Dijkstra algorithms are also included. The Dijkstra algorithm however does not provide additional value because the graphs of the mazes have uniform edge cost.
 
 The included [demo application](https://github.com/armin-reichert/mazes/releases/) demonstrates all implemented maze generators and path finders. Using a control panel you can interactively select the generation algorithm, path finder, grid resolution and rendering style ("walls", "passages").
 
 To achieve the mentioned goals, I implemented
-- an API for [graph](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/core/api/Graph.java) and [2D-grid](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/grid/api/GridGraph2D.java) data structures 
-- a space-efficient implementation of a [2D-grid](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/grid/impl/GridGraph.java) with ability to store cell and edge content
+- an API for [graph](https://github.com/armin-reichert/graph/tree/master/Graph/src/main/java/de/amr/easy/graph/core/api/Graph.java) and [2D-grid](https://github.com/armin-reichert/graph/tree/master/Graph/src/main/java/de/amr/easy/graph/grid/api/GridGraph2D.java) data structures 
+- a space-efficient implementation of a [2D-grid](https://github.com/armin-reichert/graph/tree/master/Graph/src/main/java/de/amr/easy/graph/grid/impl/GridGraph.java) with ability to store cell and edge content
 - a publish-subscribe mechanism for observing graph/grid operations and different path finding algorithms.
 
 This is the maze generator derived from Kruskal's minimum spanning tree algorithm:
@@ -154,11 +154,11 @@ Implemented maze generation algorithms:
 
 ### Path finding algorithms:
 The [graph](https://github.com/armin-reichert/graph) library contains the following path finder implementations:
-- [Breadth-First-Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/pathfinder/impl/BreadthFirstSearch.java)
-- [Depth-First-Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/pathfinder/impl/DepthFirstSearch.java)
-- [(Greedy) Best-First-Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/pathfinder/impl/BestFirstSearch.java).
-- [Hill Climbing](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/pathfinder/impl/HillClimbingSearch.java).
-- [A* Search](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/pathfinder/impl/AStarSearch.java).
-- [Dijkstra](https://github.com/armin-reichert/graph/tree/master/EasyGraph/src/main/java/de/amr/easy/graph/pathfinder/impl/DijkstraSearch.java).
+- [Breadth-First-Search](https://github.com/armin-reichert/graph/tree/master/Graph/src/main/java/de/amr/easy/graph/pathfinder/impl/BreadthFirstSearch.java)
+- [Depth-First-Search](https://github.com/armin-reichert/graph/tree/master/Graph/src/main/java/de/amr/easy/graph/pathfinder/impl/DepthFirstSearch.java)
+- [(Greedy) Best-First-Search](https://github.com/armin-reichert/graph/tree/master/Graph/src/main/java/de/amr/easy/graph/pathfinder/impl/BestFirstSearch.java).
+- [Hill Climbing](https://github.com/armin-reichert/graph/tree/master/Graph/src/main/java/de/amr/easy/graph/pathfinder/impl/HillClimbingSearch.java).
+- [A* Search](https://github.com/armin-reichert/graph/tree/master/Graph/src/main/java/de/amr/easy/graph/pathfinder/impl/AStarSearch.java).
+- [Dijkstra](https://github.com/armin-reichert/graph/tree/master/Graph/src/main/java/de/amr/easy/graph/pathfinder/impl/DijkstraSearch.java).
 
  The "informed" path finders can be used with Euclidean, Manhattan and Chebyshev distance heuristics.
