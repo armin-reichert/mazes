@@ -1,10 +1,10 @@
 package de.amr.easy.maze.alg.ust;
 
-import static de.amr.easy.datastruct.StreamUtils.permute;
+import static de.amr.datastruct.StreamUtils.permute;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
+import de.amr.graph.grid.impl.OrthogonalGrid;
 
 /**
  * Wilson's algorithm with random start cells of the loop-erased random walks.

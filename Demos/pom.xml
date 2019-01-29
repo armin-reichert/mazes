@@ -27,7 +27,7 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>de.amr.easy.graph</groupId>
+			<groupId>de.amr.graph</groupId>
 			<artifactId>GraphDemos</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>

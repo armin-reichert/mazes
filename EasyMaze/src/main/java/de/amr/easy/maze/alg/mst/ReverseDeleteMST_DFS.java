@@ -1,6 +1,6 @@
 package de.amr.easy.maze.alg.mst;
 
-import de.amr.easy.graph.pathfinder.impl.DepthFirstSearch2;
+import de.amr.graph.pathfinder.impl.DepthFirstSearch2;
 
 /**
  * Reverse-Delete-MST algorithm using depth-first search for connectivity test.

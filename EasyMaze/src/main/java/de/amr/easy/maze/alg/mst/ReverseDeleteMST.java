@@ -1,12 +1,12 @@
 package de.amr.easy.maze.alg.mst;
 
-import static de.amr.easy.datastruct.StreamUtils.permute;
-import static de.amr.easy.graph.grid.impl.OrthogonalGrid.fullGrid;
-import static de.amr.easy.graph.pathfinder.api.TraversalState.COMPLETED;
+import static de.amr.datastruct.StreamUtils.permute;
+import static de.amr.graph.grid.impl.OrthogonalGrid.fullGrid;
+import static de.amr.graph.pathfinder.api.TraversalState.COMPLETED;
 
-import de.amr.easy.graph.core.api.Edge;
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
 import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.graph.core.api.Edge;
+import de.amr.graph.grid.impl.OrthogonalGrid;
 
 /**
  * Maze generator derived from the Reverse-Delete-MST algorithm.

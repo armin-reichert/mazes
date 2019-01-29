@@ -1,13 +1,13 @@
 package de.amr.demos.maze.swingapp.action;
 
-import static de.amr.easy.graph.grid.ui.animation.BreadthFirstTraversalAnimation.floodFill;
+import static de.amr.graph.grid.ui.animation.BreadthFirstTraversalAnimation.floodFill;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
-import de.amr.easy.util.StopWatch;
+import de.amr.util.StopWatch;
 
 /**
  * Action for running a "flood-fill" on the current maze.

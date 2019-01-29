@@ -1,9 +1,9 @@
 package de.amr.easy.maze.alg.ust;
 
-import static de.amr.easy.graph.pathfinder.api.TraversalState.COMPLETED;
+import static de.amr.graph.pathfinder.api.TraversalState.COMPLETED;
 import static java.util.stream.IntStream.range;
 
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
+import de.amr.graph.grid.impl.OrthogonalGrid;
 
 /**
  * Wilson's algorithm where the random walks start row-wise from top to bottom.

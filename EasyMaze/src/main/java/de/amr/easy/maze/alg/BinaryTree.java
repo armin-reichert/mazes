@@ -1,17 +1,17 @@
 package de.amr.easy.maze.alg;
 
-import static de.amr.easy.graph.grid.impl.OrthogonalGrid.emptyGrid;
-import static de.amr.easy.graph.grid.impl.Top4.E;
-import static de.amr.easy.graph.grid.impl.Top4.S;
-import static de.amr.easy.graph.pathfinder.api.TraversalState.COMPLETED;
-import static de.amr.easy.graph.pathfinder.api.TraversalState.UNVISITED;
+import static de.amr.graph.grid.impl.OrthogonalGrid.emptyGrid;
+import static de.amr.graph.grid.impl.Top4.E;
+import static de.amr.graph.grid.impl.Top4.S;
+import static de.amr.graph.pathfinder.api.TraversalState.COMPLETED;
+import static de.amr.graph.pathfinder.api.TraversalState.UNVISITED;
 
 import java.util.OptionalInt;
 import java.util.Random;
 import java.util.stream.IntStream;
 
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
 import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.graph.grid.impl.OrthogonalGrid;
 
 /**
  * Creates a random binary spanning tree.

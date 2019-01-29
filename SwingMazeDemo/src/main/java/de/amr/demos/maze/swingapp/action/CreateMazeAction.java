@@ -3,7 +3,7 @@ package de.amr.demos.maze.swingapp.action;
 import java.awt.event.ActionEvent;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
+import de.amr.graph.grid.impl.OrthogonalGrid;
 
 /**
  * Action for creating a maze using the currently selected generation algorithm.

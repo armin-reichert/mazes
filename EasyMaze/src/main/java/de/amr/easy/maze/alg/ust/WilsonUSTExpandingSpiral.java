@@ -1,11 +1,11 @@
 package de.amr.easy.maze.alg.ust;
 
-import static de.amr.easy.graph.grid.api.GridPosition.CENTER;
+import static de.amr.graph.grid.api.GridPosition.CENTER;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
-import de.amr.easy.graph.grid.traversals.Spiral;
+import de.amr.graph.grid.impl.OrthogonalGrid;
+import de.amr.graph.grid.traversals.Spiral;
 
 /**
  * Wilson's algorithm where the vertices are selected from an expanding spiral.

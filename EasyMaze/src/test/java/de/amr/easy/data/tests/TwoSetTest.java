@@ -8,7 +8,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import de.amr.easy.datastruct.TwoSet;
+import de.amr.datastruct.TwoSet;
 
 public class TwoSetTest {
 

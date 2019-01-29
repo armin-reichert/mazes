@@ -1,17 +1,17 @@
 package de.amr.easy.maze.alg.ust;
 
-import static de.amr.easy.graph.grid.api.GridPosition.TOP_LEFT;
+import static de.amr.graph.grid.api.GridPosition.TOP_LEFT;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import de.amr.easy.datastruct.StreamUtils;
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
-import de.amr.easy.graph.grid.iterators.IteratorFactory;
-import de.amr.easy.graph.grid.shapes.Rectangle;
-import de.amr.easy.graph.grid.traversals.ExpandingRectangle;
+import de.amr.datastruct.StreamUtils;
+import de.amr.graph.grid.impl.OrthogonalGrid;
+import de.amr.graph.grid.iterators.IteratorFactory;
+import de.amr.graph.grid.shapes.Rectangle;
+import de.amr.graph.grid.traversals.ExpandingRectangle;
 
 /**
  * Wilson's algorithm where the vertices are selected from a sequence of nested rectangles.

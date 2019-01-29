@@ -1,15 +1,15 @@
 package de.amr.easy.grid.tests;
 
-import static de.amr.easy.graph.grid.api.GridPosition.BOTTOM_LEFT;
-import static de.amr.easy.graph.grid.api.GridPosition.BOTTOM_RIGHT;
-import static de.amr.easy.graph.grid.api.GridPosition.CENTER;
-import static de.amr.easy.graph.grid.api.GridPosition.TOP_LEFT;
-import static de.amr.easy.graph.grid.api.GridPosition.TOP_RIGHT;
-import static de.amr.easy.graph.grid.curves.CurveUtils.cells;
-import static de.amr.easy.graph.grid.curves.CurveUtils.traverse;
-import static de.amr.easy.graph.pathfinder.api.TraversalState.COMPLETED;
-import static de.amr.easy.graph.pathfinder.api.TraversalState.UNVISITED;
-import static de.amr.easy.graph.pathfinder.api.TraversalState.VISITED;
+import static de.amr.graph.grid.api.GridPosition.BOTTOM_LEFT;
+import static de.amr.graph.grid.api.GridPosition.BOTTOM_RIGHT;
+import static de.amr.graph.grid.api.GridPosition.CENTER;
+import static de.amr.graph.grid.api.GridPosition.TOP_LEFT;
+import static de.amr.graph.grid.api.GridPosition.TOP_RIGHT;
+import static de.amr.graph.grid.curves.CurveUtils.cells;
+import static de.amr.graph.grid.curves.CurveUtils.traverse;
+import static de.amr.graph.pathfinder.api.TraversalState.COMPLETED;
+import static de.amr.graph.pathfinder.api.TraversalState.UNVISITED;
+import static de.amr.graph.pathfinder.api.TraversalState.VISITED;
 import static org.junit.Assert.assertTrue;
 
 import java.util.function.Function;
@@ -19,21 +19,21 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.datastruct.StreamUtils;
-import de.amr.easy.graph.grid.curves.HilbertCurve;
-import de.amr.easy.graph.grid.curves.HilbertLCurve;
-import de.amr.easy.graph.grid.curves.HilbertLCurveWirth;
-import de.amr.easy.graph.grid.curves.MooreLCurve;
-import de.amr.easy.graph.grid.curves.PeanoCurve;
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
-import de.amr.easy.graph.pathfinder.api.TraversalState;
-import de.amr.easy.graph.pathfinder.impl.AStarSearch;
-import de.amr.easy.graph.pathfinder.impl.BestFirstSearch;
-import de.amr.easy.graph.pathfinder.impl.BreadthFirstSearch;
-import de.amr.easy.graph.pathfinder.impl.DepthFirstSearch;
-import de.amr.easy.graph.pathfinder.impl.DepthFirstSearch2;
-import de.amr.easy.graph.pathfinder.impl.HillClimbingSearch;
+import de.amr.datastruct.StreamUtils;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
+import de.amr.graph.grid.curves.HilbertCurve;
+import de.amr.graph.grid.curves.HilbertLCurve;
+import de.amr.graph.grid.curves.HilbertLCurveWirth;
+import de.amr.graph.grid.curves.MooreLCurve;
+import de.amr.graph.grid.curves.PeanoCurve;
+import de.amr.graph.grid.impl.OrthogonalGrid;
+import de.amr.graph.pathfinder.api.TraversalState;
+import de.amr.graph.pathfinder.impl.AStarSearch;
+import de.amr.graph.pathfinder.impl.BestFirstSearch;
+import de.amr.graph.pathfinder.impl.BreadthFirstSearch;
+import de.amr.graph.pathfinder.impl.DepthFirstSearch;
+import de.amr.graph.pathfinder.impl.DepthFirstSearch2;
+import de.amr.graph.pathfinder.impl.HillClimbingSearch;
 
 public class GridTraversalTest {
 

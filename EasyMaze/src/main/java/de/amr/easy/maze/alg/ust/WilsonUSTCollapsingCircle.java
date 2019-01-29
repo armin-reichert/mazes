@@ -1,11 +1,11 @@
 package de.amr.easy.maze.alg.ust;
 
-import static de.amr.easy.graph.grid.api.GridPosition.CENTER;
-import static de.amr.easy.graph.pathfinder.api.TraversalState.COMPLETED;
+import static de.amr.graph.grid.api.GridPosition.CENTER;
+import static de.amr.graph.pathfinder.api.TraversalState.COMPLETED;
 import static java.lang.Math.max;
 
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
-import de.amr.easy.graph.grid.shapes.Circle;
+import de.amr.graph.grid.impl.OrthogonalGrid;
+import de.amr.graph.grid.shapes.Circle;
 
 /**
  * Wilson's algorithm where the vertices are selected from a collapsing circle.

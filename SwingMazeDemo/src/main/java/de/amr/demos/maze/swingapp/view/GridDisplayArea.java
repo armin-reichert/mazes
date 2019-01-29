@@ -5,14 +5,14 @@ import static java.lang.Math.min;
 
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
-import de.amr.easy.graph.grid.impl.GridGraph;
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
-import de.amr.easy.graph.grid.ui.animation.GridCanvasAnimation;
-import de.amr.easy.graph.grid.ui.rendering.ConfigurableGridRenderer;
-import de.amr.easy.graph.grid.ui.rendering.GridCanvas;
-import de.amr.easy.graph.grid.ui.rendering.PearlsGridRenderer;
-import de.amr.easy.graph.grid.ui.rendering.WallPassageGridRenderer;
-import de.amr.easy.graph.pathfinder.api.TraversalState;
+import de.amr.graph.grid.impl.GridGraph;
+import de.amr.graph.grid.impl.OrthogonalGrid;
+import de.amr.graph.grid.ui.animation.GridCanvasAnimation;
+import de.amr.graph.grid.ui.rendering.ConfigurableGridRenderer;
+import de.amr.graph.grid.ui.rendering.GridCanvas;
+import de.amr.graph.grid.ui.rendering.PearlsGridRenderer;
+import de.amr.graph.grid.ui.rendering.WallPassageGridRenderer;
+import de.amr.graph.pathfinder.api.TraversalState;
 
 /**
  * Display area for the maze/grid. Supports animation.

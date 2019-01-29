@@ -1,17 +1,17 @@
 package de.amr.easy.maze.alg.traversal;
 
-import static de.amr.easy.datastruct.StreamUtils.permute;
-import static de.amr.easy.graph.grid.impl.OrthogonalGrid.emptyGrid;
-import static de.amr.easy.graph.pathfinder.api.TraversalState.COMPLETED;
-import static de.amr.easy.graph.pathfinder.api.TraversalState.UNVISITED;
-import static de.amr.easy.graph.pathfinder.api.TraversalState.VISITED;
+import static de.amr.datastruct.StreamUtils.permute;
+import static de.amr.graph.grid.impl.OrthogonalGrid.emptyGrid;
+import static de.amr.graph.pathfinder.api.TraversalState.COMPLETED;
+import static de.amr.graph.pathfinder.api.TraversalState.UNVISITED;
+import static de.amr.graph.pathfinder.api.TraversalState.VISITED;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
 import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.graph.grid.impl.OrthogonalGrid;
 
 /**
  * Maze generator using a randomized breadth-first-traversal.

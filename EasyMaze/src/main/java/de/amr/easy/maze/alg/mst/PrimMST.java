@@ -1,15 +1,15 @@
 package de.amr.easy.maze.alg.mst;
 
-import static de.amr.easy.graph.grid.impl.OrthogonalGrid.emptyGrid;
-import static de.amr.easy.graph.pathfinder.api.TraversalState.COMPLETED;
-import static de.amr.easy.graph.pathfinder.api.TraversalState.UNVISITED;
+import static de.amr.graph.grid.impl.OrthogonalGrid.emptyGrid;
+import static de.amr.graph.pathfinder.api.TraversalState.COMPLETED;
+import static de.amr.graph.pathfinder.api.TraversalState.UNVISITED;
 
 import java.util.PriorityQueue;
 import java.util.Random;
 
-import de.amr.easy.graph.core.api.WeightedEdge;
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
 import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.graph.core.api.WeightedEdge;
+import de.amr.graph.grid.impl.OrthogonalGrid;
 
 /**
  * Maze generator based on Prim's minimum spanning tree algorithm with random edge weights.

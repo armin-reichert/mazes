@@ -1,11 +1,11 @@
 package de.amr.easy.grid.tests;
 
-import static de.amr.easy.graph.grid.api.GridPosition.CENTER;
-import static de.amr.easy.graph.grid.impl.Top4.E;
-import static de.amr.easy.graph.grid.impl.Top4.N;
-import static de.amr.easy.graph.grid.impl.Top4.S;
-import static de.amr.easy.graph.grid.impl.Top4.W;
-import static de.amr.easy.graph.pathfinder.api.TraversalState.UNVISITED;
+import static de.amr.graph.grid.api.GridPosition.CENTER;
+import static de.amr.graph.grid.impl.Top4.E;
+import static de.amr.graph.grid.impl.Top4.N;
+import static de.amr.graph.grid.impl.Top4.S;
+import static de.amr.graph.grid.impl.Top4.W;
+import static de.amr.graph.pathfinder.api.TraversalState.UNVISITED;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -14,15 +14,15 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.graph.core.api.UndirectedEdge;
-import de.amr.easy.graph.grid.api.GridPosition;
-import de.amr.easy.graph.grid.impl.GridGraph;
-import de.amr.easy.graph.grid.impl.ObservableGridGraph;
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
-import de.amr.easy.graph.grid.impl.Top4;
-import de.amr.easy.graph.pathfinder.api.TraversalState;
-import de.amr.easy.graph.util.GraphUtils;
 import de.amr.easy.maze.alg.traversal.RandomBFS;
+import de.amr.graph.core.api.UndirectedEdge;
+import de.amr.graph.grid.api.GridPosition;
+import de.amr.graph.grid.impl.GridGraph;
+import de.amr.graph.grid.impl.ObservableGridGraph;
+import de.amr.graph.grid.impl.OrthogonalGrid;
+import de.amr.graph.grid.impl.Top4;
+import de.amr.graph.pathfinder.api.TraversalState;
+import de.amr.graph.util.GraphUtils;
 
 /**
  * Test case for {@link GridGraph}

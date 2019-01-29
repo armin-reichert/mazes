@@ -1,11 +1,11 @@
 package de.amr.easy.maze.alg.ust;
 
-import static de.amr.easy.datastruct.StreamUtils.permute;
-import static de.amr.easy.graph.grid.impl.OrthogonalGrid.emptyGrid;
-import static de.amr.easy.graph.pathfinder.api.TraversalState.UNVISITED;
+import static de.amr.datastruct.StreamUtils.permute;
+import static de.amr.graph.grid.impl.OrthogonalGrid.emptyGrid;
+import static de.amr.graph.pathfinder.api.TraversalState.UNVISITED;
 
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
 import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.graph.grid.impl.OrthogonalGrid;
 
 /**
  * A hybrid algorithm ("Houston") that first uses Aldous/Broder until some fraction of cells is

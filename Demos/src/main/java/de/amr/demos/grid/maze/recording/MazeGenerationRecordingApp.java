@@ -6,15 +6,6 @@ import java.io.File;
 
 import javax.swing.JFrame;
 
-import de.amr.easy.graph.event.api.EdgeEvent;
-import de.amr.easy.graph.event.api.GraphObserver;
-import de.amr.easy.graph.event.api.ObservableGraph;
-import de.amr.easy.graph.event.api.VertexEvent;
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
-import de.amr.easy.graph.grid.ui.rendering.GridCanvas;
-import de.amr.easy.graph.grid.ui.rendering.GridRenderer;
-import de.amr.easy.graph.grid.ui.rendering.WallPassageGridRenderer;
-import de.amr.easy.graph.pathfinder.api.TraversalState;
 import de.amr.easy.maze.alg.BinaryTree;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
 import de.amr.easy.maze.alg.Eller;
@@ -29,7 +20,6 @@ import de.amr.easy.maze.alg.mst.KruskalMST;
 import de.amr.easy.maze.alg.mst.PrimMST;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
 import de.amr.easy.maze.alg.traversal.RandomBFS;
-import de.amr.easy.maze.alg.traversal.RecursiveDFS;
 import de.amr.easy.maze.alg.ust.WilsonUSTCollapsingCircle;
 import de.amr.easy.maze.alg.ust.WilsonUSTCollapsingWalls;
 import de.amr.easy.maze.alg.ust.WilsonUSTExpandingCircle;
@@ -45,7 +35,16 @@ import de.amr.easy.maze.alg.ust.WilsonUSTRandomCell;
 import de.amr.easy.maze.alg.ust.WilsonUSTRecursiveCrosses;
 import de.amr.easy.maze.alg.ust.WilsonUSTRightToLeftSweep;
 import de.amr.easy.maze.alg.ust.WilsonUSTRowsTopDown;
-import de.amr.easy.util.GifRecorder;
+import de.amr.graph.event.api.EdgeEvent;
+import de.amr.graph.event.api.GraphObserver;
+import de.amr.graph.event.api.ObservableGraph;
+import de.amr.graph.event.api.VertexEvent;
+import de.amr.graph.grid.impl.OrthogonalGrid;
+import de.amr.graph.grid.ui.rendering.GridCanvas;
+import de.amr.graph.grid.ui.rendering.GridRenderer;
+import de.amr.graph.grid.ui.rendering.WallPassageGridRenderer;
+import de.amr.graph.pathfinder.api.TraversalState;
+import de.amr.util.GifRecorder;
 
 /**
  * Runs maze generation algorithms and saves the mazes as animated GIF images.

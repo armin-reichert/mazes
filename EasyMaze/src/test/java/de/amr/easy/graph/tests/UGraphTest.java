@@ -9,9 +9,9 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.graph.core.api.Edge;
-import de.amr.easy.graph.core.api.UndirectedEdge;
-import de.amr.easy.graph.core.impl.UGraph;
+import de.amr.graph.core.api.Edge;
+import de.amr.graph.core.api.UndirectedEdge;
+import de.amr.graph.core.impl.UGraph;
 
 public class UGraphTest {
 

@@ -1,9 +1,10 @@
 package de.amr.mazes.simple;
 
-import static de.amr.mazes.simple.MazeAlgorithms.*;
+import static de.amr.mazes.simple.MazeAlgorithms.createMazeByAldousBroder;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeByGrowingTree;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeByRecursiveDivision;
 import static de.amr.mazes.simple.MazeAlgorithms.createMazeBySidewinder;
+import static de.amr.mazes.simple.MazeAlgorithms.createMazeByWilson;
 import static de.amr.mazes.simple.graph.GraphFunctions.prettyPrint;
 
 import java.util.function.Consumer;

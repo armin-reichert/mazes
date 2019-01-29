@@ -2,9 +2,9 @@ package de.amr.demos.maze.swingapp;
 
 import static de.amr.demos.maze.swingapp.model.MazeDemoModel.GENERATOR_ALGORITHMS;
 import static de.amr.demos.maze.swingapp.model.MazeDemoModel.PATHFINDER_ALGORITHMS;
-import static de.amr.easy.graph.grid.api.GridPosition.BOTTOM_RIGHT;
-import static de.amr.easy.graph.grid.api.GridPosition.CENTER;
-import static de.amr.easy.graph.grid.api.GridPosition.TOP_LEFT;
+import static de.amr.graph.grid.api.GridPosition.BOTTOM_RIGHT;
+import static de.amr.graph.grid.api.GridPosition.CENTER;
+import static de.amr.graph.grid.api.GridPosition.TOP_LEFT;
 
 import java.awt.Color;
 import java.awt.DisplayMode;
@@ -36,10 +36,10 @@ import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
 import de.amr.demos.maze.swingapp.model.PathFinderTag;
 import de.amr.demos.maze.swingapp.view.DisplayAreaWindow;
 import de.amr.demos.maze.swingapp.view.SettingsWindow;
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
-import de.amr.easy.graph.pathfinder.api.TraversalState;
-import de.amr.easy.graph.pathfinder.impl.BreadthFirstSearch;
 import de.amr.easy.maze.alg.traversal.IterativeDFS;
+import de.amr.graph.grid.impl.OrthogonalGrid;
+import de.amr.graph.pathfinder.api.TraversalState;
+import de.amr.graph.pathfinder.impl.BreadthFirstSearch;
 
 /**
  * This application visualizes different maze generation algorithms and path finders. The grid size

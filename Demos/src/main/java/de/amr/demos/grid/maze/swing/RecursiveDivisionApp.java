@@ -1,13 +1,13 @@
 package de.amr.demos.grid.maze.swing;
 
-import static de.amr.easy.graph.grid.ui.animation.BreadthFirstTraversalAnimation.floodFill;
+import static de.amr.graph.grid.ui.animation.BreadthFirstTraversalAnimation.floodFill;
 
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
 import de.amr.easy.maze.alg.RecursiveDivision;
 import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.graph.grid.impl.OrthogonalGrid;
 
 public class RecursiveDivisionApp extends SwingGridSampleApp {
 

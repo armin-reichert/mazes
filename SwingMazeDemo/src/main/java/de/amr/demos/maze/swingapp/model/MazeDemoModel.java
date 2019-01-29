@@ -14,15 +14,6 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import de.amr.easy.graph.grid.api.GridPosition;
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
-import de.amr.easy.graph.pathfinder.impl.AStarSearch;
-import de.amr.easy.graph.pathfinder.impl.BestFirstSearch;
-import de.amr.easy.graph.pathfinder.impl.BreadthFirstSearch;
-import de.amr.easy.graph.pathfinder.impl.DepthFirstSearch;
-import de.amr.easy.graph.pathfinder.impl.DepthFirstSearch2;
-import de.amr.easy.graph.pathfinder.impl.DijkstraSearch;
-import de.amr.easy.graph.pathfinder.impl.HillClimbingSearch;
 import de.amr.easy.maze.alg.BinaryTree;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
 import de.amr.easy.maze.alg.Eller;
@@ -60,6 +51,15 @@ import de.amr.easy.maze.alg.ust.WilsonUSTRandomCell;
 import de.amr.easy.maze.alg.ust.WilsonUSTRecursiveCrosses;
 import de.amr.easy.maze.alg.ust.WilsonUSTRightToLeftSweep;
 import de.amr.easy.maze.alg.ust.WilsonUSTRowsTopDown;
+import de.amr.graph.grid.api.GridPosition;
+import de.amr.graph.grid.impl.OrthogonalGrid;
+import de.amr.graph.pathfinder.impl.AStarSearch;
+import de.amr.graph.pathfinder.impl.BestFirstSearch;
+import de.amr.graph.pathfinder.impl.BreadthFirstSearch;
+import de.amr.graph.pathfinder.impl.DepthFirstSearch;
+import de.amr.graph.pathfinder.impl.DepthFirstSearch2;
+import de.amr.graph.pathfinder.impl.DijkstraSearch;
+import de.amr.graph.pathfinder.impl.HillClimbingSearch;
 
 /**
  * Data model of the maze demo application.

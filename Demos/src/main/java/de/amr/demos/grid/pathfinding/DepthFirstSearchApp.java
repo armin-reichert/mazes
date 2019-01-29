@@ -15,12 +15,12 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
-import de.amr.easy.graph.grid.api.GridPosition;
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
-import de.amr.easy.graph.grid.ui.rendering.ConfigurableGridRenderer;
-import de.amr.easy.graph.grid.ui.rendering.WallPassageGridRenderer;
-import de.amr.easy.graph.pathfinder.impl.DepthFirstSearch2;
 import de.amr.easy.maze.alg.mst.KruskalMST;
+import de.amr.graph.grid.api.GridPosition;
+import de.amr.graph.grid.impl.OrthogonalGrid;
+import de.amr.graph.grid.ui.rendering.ConfigurableGridRenderer;
+import de.amr.graph.grid.ui.rendering.WallPassageGridRenderer;
+import de.amr.graph.pathfinder.impl.DepthFirstSearch2;
 
 /**
  * A simple test application for maze generation and path finding.

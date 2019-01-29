@@ -30,8 +30,8 @@
 			<version>4.12</version>
 		</dependency>
 		<dependency>
-			<groupId>de.amr.easy.graph</groupId>
-			<artifactId>EasyGraph</artifactId>
+			<groupId>de.amr.graph</groupId>
+			<artifactId>Graph</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

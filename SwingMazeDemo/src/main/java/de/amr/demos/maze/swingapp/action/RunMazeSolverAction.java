@@ -12,18 +12,18 @@ import javax.swing.AbstractAction;
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.PathFinderTag;
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
-import de.amr.easy.graph.grid.ui.animation.BreadthFirstTraversalAnimation;
-import de.amr.easy.graph.grid.ui.animation.DepthFirstTraversalAnimation;
-import de.amr.easy.graph.pathfinder.api.TraversalState;
-import de.amr.easy.graph.pathfinder.impl.AStarSearch;
-import de.amr.easy.graph.pathfinder.impl.BestFirstSearch;
-import de.amr.easy.graph.pathfinder.impl.BreadthFirstSearch;
-import de.amr.easy.graph.pathfinder.impl.DepthFirstSearch;
-import de.amr.easy.graph.pathfinder.impl.DepthFirstSearch2;
-import de.amr.easy.graph.pathfinder.impl.DijkstraSearch;
-import de.amr.easy.graph.pathfinder.impl.HillClimbingSearch;
-import de.amr.easy.util.StopWatch;
+import de.amr.graph.grid.impl.OrthogonalGrid;
+import de.amr.graph.grid.ui.animation.BreadthFirstTraversalAnimation;
+import de.amr.graph.grid.ui.animation.DepthFirstTraversalAnimation;
+import de.amr.graph.pathfinder.api.TraversalState;
+import de.amr.graph.pathfinder.impl.AStarSearch;
+import de.amr.graph.pathfinder.impl.BestFirstSearch;
+import de.amr.graph.pathfinder.impl.BreadthFirstSearch;
+import de.amr.graph.pathfinder.impl.DepthFirstSearch;
+import de.amr.graph.pathfinder.impl.DepthFirstSearch2;
+import de.amr.graph.pathfinder.impl.DijkstraSearch;
+import de.amr.graph.pathfinder.impl.HillClimbingSearch;
+import de.amr.util.StopWatch;
 
 /**
  * Action for running the selected path finding ("maze solver") algorithm on the current maze.

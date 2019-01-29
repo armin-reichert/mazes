@@ -1,14 +1,14 @@
 package de.amr.easy.maze.alg;
 
-import static de.amr.easy.graph.grid.api.GridPosition.CENTER;
-import static de.amr.easy.graph.grid.api.GridPosition.TOP_LEFT;
-import static de.amr.easy.graph.grid.impl.OrthogonalGrid.emptyGrid;
-import static de.amr.easy.graph.grid.impl.Top4.E;
-import static de.amr.easy.graph.grid.impl.Top4.N;
-import static de.amr.easy.graph.grid.impl.Top4.S;
-import static de.amr.easy.graph.grid.impl.Top4.W;
-import static de.amr.easy.graph.pathfinder.api.TraversalState.COMPLETED;
-import static de.amr.easy.graph.pathfinder.api.TraversalState.UNVISITED;
+import static de.amr.graph.grid.api.GridPosition.CENTER;
+import static de.amr.graph.grid.api.GridPosition.TOP_LEFT;
+import static de.amr.graph.grid.impl.OrthogonalGrid.emptyGrid;
+import static de.amr.graph.grid.impl.Top4.E;
+import static de.amr.graph.grid.impl.Top4.N;
+import static de.amr.graph.grid.impl.Top4.S;
+import static de.amr.graph.grid.impl.Top4.W;
+import static de.amr.graph.pathfinder.api.TraversalState.COMPLETED;
+import static de.amr.graph.pathfinder.api.TraversalState.UNVISITED;
 import static java.lang.Math.max;
 
 import java.util.ArrayList;
@@ -21,11 +21,11 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import de.amr.easy.datastruct.Partition;
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
-import de.amr.easy.graph.grid.shapes.Rectangle;
-import de.amr.easy.graph.grid.shapes.Square;
+import de.amr.datastruct.Partition;
 import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.graph.grid.impl.OrthogonalGrid;
+import de.amr.graph.grid.shapes.Rectangle;
+import de.amr.graph.grid.shapes.Square;
 
 /**
  * Maze generator similar to Eller's algorithm but growing the maze inside-out. To my knowledge this

@@ -1,13 +1,11 @@
 package de.amr.demos.grid.maze.javafx;
 
-import static de.amr.easy.graph.grid.api.GridPosition.BOTTOM_RIGHT;
+import static de.amr.graph.grid.api.GridPosition.BOTTOM_RIGHT;
 
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
-import de.amr.easy.graph.pathfinder.impl.BreadthFirstSearch;
 import de.amr.easy.maze.alg.BinaryTreeRandom;
 import de.amr.easy.maze.alg.Eller;
 import de.amr.easy.maze.alg.EllerInsideOut;
@@ -21,6 +19,8 @@ import de.amr.easy.maze.alg.traversal.IterativeDFS;
 import de.amr.easy.maze.alg.traversal.RandomBFS;
 import de.amr.easy.maze.alg.ust.WilsonUSTCollapsingRectangle;
 import de.amr.easy.maze.alg.ust.WilsonUSTRandomCell;
+import de.amr.graph.grid.impl.OrthogonalGrid;
+import de.amr.graph.pathfinder.impl.BreadthFirstSearch;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;

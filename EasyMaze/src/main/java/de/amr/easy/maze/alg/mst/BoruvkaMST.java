@@ -1,18 +1,18 @@
 package de.amr.easy.maze.alg.mst;
 
-import static de.amr.easy.datastruct.StreamUtils.permute;
-import static de.amr.easy.graph.grid.impl.OrthogonalGrid.emptyGrid;
-import static de.amr.easy.graph.pathfinder.api.TraversalState.COMPLETED;
-import static de.amr.easy.graph.pathfinder.api.TraversalState.UNVISITED;
+import static de.amr.datastruct.StreamUtils.permute;
+import static de.amr.graph.grid.impl.OrthogonalGrid.emptyGrid;
+import static de.amr.graph.pathfinder.api.TraversalState.COMPLETED;
+import static de.amr.graph.pathfinder.api.TraversalState.UNVISITED;
 
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import de.amr.easy.datastruct.Partition;
-import de.amr.easy.graph.core.api.Edge;
-import de.amr.easy.graph.core.api.UndirectedEdge;
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
+import de.amr.datastruct.Partition;
 import de.amr.easy.maze.alg.core.MazeGenerator;
+import de.amr.graph.core.api.Edge;
+import de.amr.graph.core.api.UndirectedEdge;
+import de.amr.graph.grid.impl.OrthogonalGrid;
 
 /**
  * Maze generator derived from Boruvka's minimum spanning tree algorithm.

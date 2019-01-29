@@ -1,10 +1,10 @@
 package de.amr.easy.maze.alg.ust;
 
-import static de.amr.easy.graph.grid.api.GridPosition.CENTER;
-import static de.amr.easy.graph.pathfinder.api.TraversalState.COMPLETED;
+import static de.amr.graph.grid.api.GridPosition.CENTER;
+import static de.amr.graph.pathfinder.api.TraversalState.COMPLETED;
 
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
-import de.amr.easy.graph.grid.shapes.Rectangle;
+import de.amr.graph.grid.impl.OrthogonalGrid;
+import de.amr.graph.grid.shapes.Rectangle;
 
 /**
  * Wilson's algorithm where the vertices are selected from a collapsing rectangle.

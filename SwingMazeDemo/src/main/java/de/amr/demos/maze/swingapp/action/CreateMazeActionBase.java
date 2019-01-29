@@ -7,11 +7,11 @@ import javax.swing.AbstractAction;
 import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.view.GridDisplayArea;
-import de.amr.easy.graph.grid.api.GridPosition;
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
-import de.amr.easy.graph.grid.ui.animation.BreadthFirstTraversalAnimation;
 import de.amr.easy.maze.alg.core.MazeGenerator;
-import de.amr.easy.util.StopWatch;
+import de.amr.graph.grid.api.GridPosition;
+import de.amr.graph.grid.impl.OrthogonalGrid;
+import de.amr.graph.grid.ui.animation.BreadthFirstTraversalAnimation;
+import de.amr.util.StopWatch;
 
 public abstract class CreateMazeActionBase extends AbstractAction {
 

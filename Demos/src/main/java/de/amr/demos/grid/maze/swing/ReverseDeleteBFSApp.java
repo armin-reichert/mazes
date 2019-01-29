@@ -1,13 +1,13 @@
 package de.amr.demos.grid.maze.swing;
 
-import static de.amr.easy.graph.grid.ui.animation.BreadthFirstTraversalAnimation.floodFill;
+import static de.amr.graph.grid.ui.animation.BreadthFirstTraversalAnimation.floodFill;
 
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
 import de.amr.easy.maze.alg.core.MazeGenerator;
 import de.amr.easy.maze.alg.mst.ReverseDeleteMST_BFS;
+import de.amr.graph.grid.impl.OrthogonalGrid;
 
 public class ReverseDeleteBFSApp extends SwingGridSampleApp {
 

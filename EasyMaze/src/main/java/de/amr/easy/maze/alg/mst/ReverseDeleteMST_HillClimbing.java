@@ -1,6 +1,6 @@
 package de.amr.easy.maze.alg.mst;
 
-import de.amr.easy.graph.pathfinder.impl.HillClimbingSearch;
+import de.amr.graph.pathfinder.impl.HillClimbingSearch;
 
 /**
  * Reverse-Delete-MST algorithm using "hill climbing" for connectivity test.

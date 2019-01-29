@@ -1,16 +1,16 @@
 package de.amr.easy.maze.alg.ust;
 
-import static de.amr.easy.graph.grid.impl.OrthogonalGrid.emptyGrid;
-import static de.amr.easy.graph.pathfinder.api.TraversalState.UNVISITED;
-import static de.amr.easy.graph.util.GraphUtils.log;
-import static de.amr.easy.graph.util.GraphUtils.nextPow;
+import static de.amr.graph.grid.impl.OrthogonalGrid.emptyGrid;
+import static de.amr.graph.pathfinder.api.TraversalState.UNVISITED;
+import static de.amr.graph.util.GraphUtils.log;
+import static de.amr.graph.util.GraphUtils.nextPow;
 import static java.lang.Math.max;
 import static java.util.Arrays.stream;
 
 import java.util.stream.IntStream;
 
-import de.amr.easy.graph.grid.curves.MooreLCurve;
-import de.amr.easy.graph.grid.impl.OrthogonalGrid;
+import de.amr.graph.grid.curves.MooreLCurve;
+import de.amr.graph.grid.impl.OrthogonalGrid;
 
 /**
  * Wilson's algorithm where the random walks start in the order defined by a Moore curve.

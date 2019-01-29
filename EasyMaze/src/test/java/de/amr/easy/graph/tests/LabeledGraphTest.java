@@ -9,10 +9,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.graph.core.impl.UGraph;
-import de.amr.easy.graph.event.api.GraphTraversalObserver;
-import de.amr.easy.graph.pathfinder.api.TraversalState;
-import de.amr.easy.graph.pathfinder.impl.DepthFirstSearch;
+import de.amr.graph.core.impl.UGraph;
+import de.amr.graph.event.api.GraphTraversalObserver;
+import de.amr.graph.pathfinder.api.TraversalState;
+import de.amr.graph.pathfinder.impl.DepthFirstSearch;
 
 public class LabeledGraphTest {
 
