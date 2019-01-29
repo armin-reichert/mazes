@@ -11,7 +11,6 @@ import de.amr.maze.alg.core.MazeGenerator;
 
 /**
  * Helper class for visualizing maze creation and flood-fill.
- * 
  * <p>
  * Subclasses just implement a main method, e.g.:
  * 
@@ -36,18 +35,17 @@ public class MazeDemoApp extends SwingGridSampleApp {
 				e.printStackTrace();
 			}
 		} else {
-			System.out.println("Usage: java de.amr.demos.maze.swing.MazeDemoApp <maze generator class>");
+			System.out.println("Usage: java de.amr.demos.grid.maze.swing.MazeDemoApp <maze generator class>");
 		}
 	}
 
 	public static void launch(Class<? extends MazeGenerator<OrthogonalGrid>> generatorClass) {
-		SwingGridSampleApp.launch(new MazeDemoApp(generatorClass.getSimpleName(), generatorClass));
+		launch(new MazeDemoApp(generatorClass.getSimpleName(), generatorClass));
 	}
 
 	private final Class<? extends MazeGenerator<OrthogonalGrid>> generatorClass;
 
-	public MazeDemoApp(String appName,
-			Class<? extends MazeGenerator<OrthogonalGrid>> generatorClass) {
+	public MazeDemoApp(String appName, Class<? extends MazeGenerator<OrthogonalGrid>> generatorClass) {
 		super(128);
 		this.generatorClass = generatorClass;
 		setAppName(appName);
