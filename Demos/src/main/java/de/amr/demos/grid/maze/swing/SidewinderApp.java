@@ -2,7 +2,7 @@ package de.amr.demos.grid.maze.swing;
 
 import static de.amr.demos.grid.maze.swing.MazeDemoApp.launch;
 
-import de.amr.easy.maze.alg.Sidewinder;
+import de.amr.maze.alg.Sidewinder;
 
 public class SidewinderApp {
 

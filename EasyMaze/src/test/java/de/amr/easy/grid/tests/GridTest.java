@@ -14,7 +14,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.amr.easy.maze.alg.traversal.RandomBFS;
 import de.amr.graph.core.api.UndirectedEdge;
 import de.amr.graph.grid.api.GridPosition;
 import de.amr.graph.grid.impl.GridGraph;
@@ -23,6 +22,7 @@ import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.graph.grid.impl.Top4;
 import de.amr.graph.pathfinder.api.TraversalState;
 import de.amr.graph.util.GraphUtils;
+import de.amr.maze.alg.traversal.RandomBFS;
 
 /**
  * Test case for {@link GridGraph}

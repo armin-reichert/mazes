@@ -5,9 +5,9 @@ import static de.amr.graph.grid.ui.animation.BreadthFirstTraversalAnimation.floo
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
-import de.amr.easy.maze.alg.RecursiveDivision;
-import de.amr.easy.maze.alg.core.MazeGenerator;
 import de.amr.graph.grid.impl.OrthogonalGrid;
+import de.amr.maze.alg.RecursiveDivision;
+import de.amr.maze.alg.core.MazeGenerator;
 
 public class RecursiveDivisionApp extends SwingGridSampleApp {
 

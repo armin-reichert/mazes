@@ -2,7 +2,7 @@ package de.amr.demos.grid.maze.swing;
 
 import static de.amr.demos.grid.maze.swing.MazeDemoApp.launch;
 
-import de.amr.easy.maze.alg.HuntAndKillRandom;
+import de.amr.maze.alg.HuntAndKillRandom;
 
 public class HuntAndKillRandomApp {
 

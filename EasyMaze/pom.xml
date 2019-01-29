@@ -5,8 +5,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>de.amr.easy.maze</groupId>
-	<artifactId>EasyMaze</artifactId>
+	<groupId>de.amr.maze</groupId>
+	<artifactId>Mazes</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<build>
 		<plugins>

@@ -2,7 +2,7 @@ package de.amr.demos.grid.maze.swing;
 
 import static de.amr.demos.grid.maze.swing.MazeDemoApp.launch;
 
-import de.amr.easy.maze.alg.ust.AldousBroderWilsonUST;
+import de.amr.maze.alg.ust.AldousBroderWilsonUST;
 
 public class AldousBroderWilsonUSTApp {
 

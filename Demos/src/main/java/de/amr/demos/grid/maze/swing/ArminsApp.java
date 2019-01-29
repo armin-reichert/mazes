@@ -2,7 +2,7 @@ package de.amr.demos.grid.maze.swing;
 
 import static de.amr.demos.grid.maze.swing.MazeDemoApp.launch;
 
-import de.amr.easy.maze.alg.EllerInsideOut;
+import de.amr.maze.alg.EllerInsideOut;
 
 public class ArminsApp {
 

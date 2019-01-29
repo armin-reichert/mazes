@@ -22,13 +22,13 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>de.amr.easy.maze</groupId>
-			<artifactId>EasyMaze</artifactId>
+			<groupId>de.amr.graph</groupId>
+			<artifactId>GraphDemos</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>de.amr.graph</groupId>
-			<artifactId>GraphDemos</artifactId>
+			<groupId>de.amr.maze</groupId>
+			<artifactId>Mazes</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

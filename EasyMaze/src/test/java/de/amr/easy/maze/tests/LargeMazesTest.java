@@ -2,8 +2,8 @@ package de.amr.easy.maze.tests;
 
 import org.junit.Test;
 
-import de.amr.easy.maze.alg.RecursiveDivision;
-import de.amr.easy.maze.alg.mst.KruskalMST;
+import de.amr.maze.alg.RecursiveDivision;
+import de.amr.maze.alg.mst.KruskalMST;
 
 public class LargeMazesTest {
 

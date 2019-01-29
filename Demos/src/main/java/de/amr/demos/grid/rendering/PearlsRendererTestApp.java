@@ -7,11 +7,11 @@ import static de.amr.graph.pathfinder.api.TraversalState.COMPLETED;
 import static de.amr.graph.pathfinder.api.TraversalState.UNVISITED;
 
 import de.amr.demos.grid.SwingGridSampleApp;
-import de.amr.easy.maze.alg.core.MazeGenerator;
-import de.amr.easy.maze.alg.ust.WilsonUSTRecursiveCrosses;
 import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.graph.grid.ui.animation.DepthFirstTraversalAnimation;
 import de.amr.graph.pathfinder.impl.DepthFirstSearch2;
+import de.amr.maze.alg.core.MazeGenerator;
+import de.amr.maze.alg.ust.WilsonUSTRecursiveCrosses;
 
 public class PearlsRendererTestApp extends SwingGridSampleApp {
 

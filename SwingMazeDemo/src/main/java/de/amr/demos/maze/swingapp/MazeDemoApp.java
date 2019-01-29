@@ -36,10 +36,10 @@ import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
 import de.amr.demos.maze.swingapp.model.PathFinderTag;
 import de.amr.demos.maze.swingapp.view.DisplayAreaWindow;
 import de.amr.demos.maze.swingapp.view.SettingsWindow;
-import de.amr.easy.maze.alg.traversal.IterativeDFS;
 import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.graph.pathfinder.api.TraversalState;
 import de.amr.graph.pathfinder.impl.BreadthFirstSearch;
+import de.amr.maze.alg.traversal.IterativeDFS;
 
 /**
  * This application visualizes different maze generation algorithms and path finders. The grid size
