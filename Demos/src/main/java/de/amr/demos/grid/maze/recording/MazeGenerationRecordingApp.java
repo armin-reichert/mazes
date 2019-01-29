@@ -19,7 +19,6 @@ import de.amr.maze.alg.BinaryTree;
 import de.amr.maze.alg.BinaryTreeRandom;
 import de.amr.maze.alg.Eller;
 import de.amr.maze.alg.EllerInsideOut;
-import de.amr.maze.alg.GrowingTree;
 import de.amr.maze.alg.HuntAndKill;
 import de.amr.maze.alg.HuntAndKillRandom;
 import de.amr.maze.alg.Sidewinder;
@@ -27,6 +26,7 @@ import de.amr.maze.alg.core.MazeGenerator;
 import de.amr.maze.alg.mst.BoruvkaMST;
 import de.amr.maze.alg.mst.KruskalMST;
 import de.amr.maze.alg.mst.PrimMST;
+import de.amr.maze.alg.traversal.GrowingTreeLastOrRandom;
 import de.amr.maze.alg.traversal.IterativeDFS;
 import de.amr.maze.alg.traversal.RandomBFS;
 import de.amr.maze.alg.ust.WilsonUSTCollapsingCircle;
@@ -65,7 +65,7 @@ public class MazeGenerationRecordingApp {
 		BinaryTreeRandom.class, 
 		Eller.class,
 		EllerInsideOut.class, 
-		GrowingTree.class, 
+		GrowingTreeLastOrRandom.class, 
 		HuntAndKill.class, 
 		HuntAndKillRandom.class,
 		IterativeDFS.class, 

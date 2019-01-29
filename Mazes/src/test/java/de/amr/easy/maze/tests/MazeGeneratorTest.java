@@ -21,7 +21,6 @@ import de.amr.maze.alg.BinaryTree;
 import de.amr.maze.alg.BinaryTreeRandom;
 import de.amr.maze.alg.Eller;
 import de.amr.maze.alg.EllerInsideOut;
-import de.amr.maze.alg.GrowingTree;
 import de.amr.maze.alg.HuntAndKill;
 import de.amr.maze.alg.HuntAndKillRandom;
 import de.amr.maze.alg.RecursiveDivision;
@@ -34,6 +33,10 @@ import de.amr.maze.alg.mst.ReverseDeleteMST_BFS;
 import de.amr.maze.alg.mst.ReverseDeleteMST_BestFS;
 import de.amr.maze.alg.mst.ReverseDeleteMST_DFS;
 import de.amr.maze.alg.mst.ReverseDeleteMST_HillClimbing;
+import de.amr.maze.alg.traversal.GrowingTreeAlwaysFirst;
+import de.amr.maze.alg.traversal.GrowingTreeAlwaysLast;
+import de.amr.maze.alg.traversal.GrowingTreeAlwaysRandom;
+import de.amr.maze.alg.traversal.GrowingTreeLastOrRandom;
 import de.amr.maze.alg.traversal.IterativeDFS;
 import de.amr.maze.alg.traversal.RandomBFS;
 import de.amr.maze.alg.traversal.RecursiveDFS;
@@ -134,8 +137,23 @@ public class MazeGeneratorTest {
 	}
 
 	@Test
-	public void testGrowingTree() {
-		test(new GrowingTree(WIDTH, HEIGHT));
+	public void testGrowingTreeLastOrRandom() {
+		test(new GrowingTreeLastOrRandom(WIDTH, HEIGHT));
+	}
+
+	@Test
+	public void testGrowingTreeAlwaysFirst() {
+		test(new GrowingTreeAlwaysFirst(WIDTH, HEIGHT));
+	}
+
+	@Test
+	public void testGrowingTreeAlwaysLast() {
+		test(new GrowingTreeAlwaysLast(WIDTH, HEIGHT));
+	}
+
+	@Test
+	public void testGrowingTreeAlwaysRandom() {
+		test(new GrowingTreeAlwaysRandom(WIDTH, HEIGHT));
 	}
 
 	@Test

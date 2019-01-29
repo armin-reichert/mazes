@@ -11,12 +11,12 @@ import de.amr.graph.pathfinder.impl.BreadthFirstSearch;
 import de.amr.maze.alg.BinaryTreeRandom;
 import de.amr.maze.alg.Eller;
 import de.amr.maze.alg.EllerInsideOut;
-import de.amr.maze.alg.GrowingTree;
 import de.amr.maze.alg.HuntAndKillRandom;
 import de.amr.maze.alg.RecursiveDivision;
 import de.amr.maze.alg.core.MazeGenerator;
 import de.amr.maze.alg.mst.KruskalMST;
 import de.amr.maze.alg.mst.PrimMST;
+import de.amr.maze.alg.traversal.GrowingTreeLastOrRandom;
 import de.amr.maze.alg.traversal.IterativeDFS;
 import de.amr.maze.alg.traversal.RandomBFS;
 import de.amr.maze.alg.ust.WilsonUSTCollapsingRectangle;
@@ -48,7 +48,7 @@ public class MazeDemoFX extends Application {
 	private static final int MAZE_WIDTH = 1000;
 	private static final Random RAND = new Random();
 	private static final Class<?> GENERATOR_CLASSES[] = { BinaryTreeRandom.class, Eller.class,
-			EllerInsideOut.class, GrowingTree.class, HuntAndKillRandom.class, KruskalMST.class,
+			EllerInsideOut.class, GrowingTreeLastOrRandom.class, HuntAndKillRandom.class, KruskalMST.class,
 			PrimMST.class, IterativeDFS.class, RandomBFS.class, RecursiveDivision.class,
 			WilsonUSTRandomCell.class, WilsonUSTCollapsingRectangle.class };
 

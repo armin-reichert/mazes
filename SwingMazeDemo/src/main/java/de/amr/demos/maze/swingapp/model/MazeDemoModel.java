@@ -27,7 +27,6 @@ import de.amr.maze.alg.BinaryTree;
 import de.amr.maze.alg.BinaryTreeRandom;
 import de.amr.maze.alg.Eller;
 import de.amr.maze.alg.EllerInsideOut;
-import de.amr.maze.alg.GrowingTree;
 import de.amr.maze.alg.HuntAndKill;
 import de.amr.maze.alg.HuntAndKillRandom;
 import de.amr.maze.alg.RecursiveDivision;
@@ -39,6 +38,7 @@ import de.amr.maze.alg.mst.ReverseDeleteMST_BFS;
 import de.amr.maze.alg.mst.ReverseDeleteMST_BestFS;
 import de.amr.maze.alg.mst.ReverseDeleteMST_DFS;
 import de.amr.maze.alg.mst.ReverseDeleteMST_HillClimbing;
+import de.amr.maze.alg.traversal.GrowingTreeLastOrRandom;
 import de.amr.maze.alg.traversal.IterativeDFS;
 import de.amr.maze.alg.traversal.RandomBFS;
 import de.amr.maze.alg.traversal.RecursiveDFS;
@@ -113,7 +113,7 @@ public class MazeDemoModel {
 		new AlgorithmInfo(EllerInsideOut.class, "Armin's Algorithm"), 
 		new AlgorithmInfo(HuntAndKill.class, "Hunt-And-Kill"),
 		new AlgorithmInfo(HuntAndKillRandom.class, "Hunt-And-Kill (random)"),
-		new AlgorithmInfo(GrowingTree.class, "Growing Tree"),
+		new AlgorithmInfo(GrowingTreeLastOrRandom.class, "Growing Tree"),
 		new AlgorithmInfo(RecursiveDivision.class, "Recursive Division"),
 		/*@formatter:on*/
 	};
