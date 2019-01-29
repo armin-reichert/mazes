@@ -4,13 +4,10 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * The "Growing-Tree" algorithm.
+ * Growing tree algorithm where either the last vertex or a random vertex is selected from the
+ * frontier.
  * 
  * @author Armin Reichert
- * 
- * @see <a href=
- *      "http://weblog.jamisbuck.org/2011/1/27/maze-generation-growing-tree-algorithm.html">Maze
- *      Generation: Growing Tree algorithm</a>
  */
 public class GrowingTreeLastOrRandom extends GrowingTree {
 

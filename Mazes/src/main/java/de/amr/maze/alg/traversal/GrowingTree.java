@@ -13,7 +13,11 @@ import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.maze.alg.core.MazeGenerator;
 
 /**
- * Maze generator using a randomized expansion of a frontier.
+ * "Growing tree" base algorithm.
+ * 
+ * @see <a href=
+ *      "http://weblog.jamisbuck.org/2011/1/27/maze-generation-growing-tree-algorithm.html">Maze
+ *      Generation: Growing Tree algorithm</a>
  * 
  * @author Armin Reichert
  */
@@ -34,14 +38,14 @@ public abstract class GrowingTree implements MazeGenerator<OrthogonalGrid> {
 	public OrthogonalGrid createMaze(int x, int y) {
 		List<Integer> frontier = new ArrayList<>();
 		int start = grid.cell(x, y);
-		frontier.add(start);
 		grid.set(start, VISITED);
+		frontier.add(start);
 		while (!frontier.isEmpty()) {
 			int cell = selectCell(frontier);
 			permute(grid.neighbors(cell).filter(grid::isUnvisited)).forEach(neighbor -> {
-				grid.addEdge(cell, neighbor);
 				grid.set(neighbor, VISITED);
 				frontier.add(neighbor);
+				grid.addEdge(cell, neighbor);
 			});
 			grid.set(cell, COMPLETED);
 		}

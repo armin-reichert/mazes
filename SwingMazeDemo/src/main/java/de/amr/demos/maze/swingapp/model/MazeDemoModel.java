@@ -38,6 +38,9 @@ import de.amr.maze.alg.mst.ReverseDeleteMST_BFS;
 import de.amr.maze.alg.mst.ReverseDeleteMST_BestFS;
 import de.amr.maze.alg.mst.ReverseDeleteMST_DFS;
 import de.amr.maze.alg.mst.ReverseDeleteMST_HillClimbing;
+import de.amr.maze.alg.traversal.GrowingTreeAlwaysFirst;
+import de.amr.maze.alg.traversal.GrowingTreeAlwaysLast;
+import de.amr.maze.alg.traversal.GrowingTreeAlwaysRandom;
 import de.amr.maze.alg.traversal.GrowingTreeLastOrRandom;
 import de.amr.maze.alg.traversal.IterativeDFS;
 import de.amr.maze.alg.traversal.RandomBFS;
@@ -81,6 +84,10 @@ public class MazeDemoModel {
 		new AlgorithmInfo(RecursiveDFS.class, "Depth-First-Traversal (recursive, small grids only!)", Traversal, SmallGrid),
 		new AlgorithmInfo(IterativeDFS.class, "Depth-First-Traversal (non-recursive)", Traversal),
 		new AlgorithmInfo(RandomBFS.class, "Breadth-First-Traversal", Traversal),
+		new AlgorithmInfo(GrowingTreeAlwaysFirst.class, "Growing Tree (always first)", Traversal),
+		new AlgorithmInfo(GrowingTreeAlwaysLast.class, "Growing Tree (always last)", Traversal),
+		new AlgorithmInfo(GrowingTreeAlwaysRandom.class, "Growing Tree (always random)", Traversal),
+		new AlgorithmInfo(GrowingTreeLastOrRandom.class, "Growing Tree (last or random)", Traversal),
 		new AlgorithmInfo(KruskalMST.class, "Kruskal MST", MST),
 		new AlgorithmInfo(PrimMST.class, "Prim MST", MST),
 		new AlgorithmInfo(BoruvkaMST.class, "Boruvka MST", MST),
@@ -113,7 +120,6 @@ public class MazeDemoModel {
 		new AlgorithmInfo(EllerInsideOut.class, "Armin's Algorithm"), 
 		new AlgorithmInfo(HuntAndKill.class, "Hunt-And-Kill"),
 		new AlgorithmInfo(HuntAndKillRandom.class, "Hunt-And-Kill (random)"),
-		new AlgorithmInfo(GrowingTreeLastOrRandom.class, "Growing Tree"),
 		new AlgorithmInfo(RecursiveDivision.class, "Recursive Division"),
 		/*@formatter:on*/
 	};
