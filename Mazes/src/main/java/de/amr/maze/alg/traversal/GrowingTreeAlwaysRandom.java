@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Growing tree algorithm where always a random vertex selected from the frontier.
+ * Growing tree algorithm where always a random vertex is selected from the frontier.
  * 
  * @author Armin Reichert
  */

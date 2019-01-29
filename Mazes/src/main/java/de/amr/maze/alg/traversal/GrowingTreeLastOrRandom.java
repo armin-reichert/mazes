@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Growing tree algorithm where either the last vertex or a random vertex is selected from the
- * frontier.
+ * Growing tree algorithm where either the last or a random vertex is selected from the frontier.
  * 
  * @author Armin Reichert
  */
