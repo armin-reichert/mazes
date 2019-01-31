@@ -94,7 +94,7 @@ public class GridTraversalTest {
 				(u, v) -> grid.manhattan(u, v));
 		assertState(grid.vertices(), astar::getState, UNVISITED);
 		astar.traverseGraph(source, target);
-		assertTrue(astar.getState(target) == VISITED);
+		assertTrue(astar.isClosed(target));
 		assertTrue(astar.getParent(target) != -1);
 		assertTrue(astar.getDistFromSource(target) != -1);
 	}
