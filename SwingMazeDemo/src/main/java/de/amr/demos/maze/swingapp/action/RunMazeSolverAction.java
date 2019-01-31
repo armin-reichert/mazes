@@ -74,14 +74,14 @@ public class RunMazeSolverAction extends AbstractAction {
 			BreadthFirstSearch<?, ?> bfs = new BreadthFirstSearch<>(grid);
 			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), bfs, source, target));
 			app.showMessage(format("Breadth-first search: %.2f seconds.", watch.getSeconds()));
-			anim.showPath(app.wndDisplayArea.getCanvas(), bfs, target);
+			anim.showPath(app.wndDisplayArea.getCanvas(), bfs, source, target);
 		}
 
 		else if (solver.getAlgorithmClass() == DijkstraSearch.class) {
 			DijkstraSearch<TraversalState, Integer> dijkstra = new DijkstraSearch<>(grid, edge -> 1);
 			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), dijkstra, source, target));
 			app.showMessage(format("Dijkstra search: %.2f seconds.", watch.getSeconds()));
-			anim.showPath(app.wndDisplayArea.getCanvas(), dijkstra, target);
+			anim.showPath(app.wndDisplayArea.getCanvas(), dijkstra, source, target);
 		}
 
 		else if (solver.getAlgorithmClass() == BestFirstSearch.class) {
@@ -90,7 +90,7 @@ public class RunMazeSolverAction extends AbstractAction {
 				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), best, source, target));
 				app.showMessage(
 						format("Best-first search (%s): %.2f seconds.", getHeuristicsName(solver), watch.getSeconds()));
-				anim.showPath(app.wndDisplayArea.getCanvas(), best, target);
+				anim.showPath(app.wndDisplayArea.getCanvas(), best, source, target);
 			});
 		}
 
@@ -100,7 +100,7 @@ public class RunMazeSolverAction extends AbstractAction {
 				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), astar, source, target));
 				app.showMessage(
 						format("A* search (%s): %.2f seconds.", getHeuristicsName(solver), watch.getSeconds()));
-				anim.showPath(app.wndDisplayArea.getCanvas(), astar, target);
+				anim.showPath(app.wndDisplayArea.getCanvas(), astar, source, target);
 			});
 		}
 	}
@@ -115,14 +115,14 @@ public class RunMazeSolverAction extends AbstractAction {
 		anim.setPathColor(app.model.getPathColor());
 
 		if (solver.getAlgorithmClass() == DepthFirstSearch.class) {
-			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), new DepthFirstSearch(grid),
-					source, target));
+			watch.measure(
+					() -> anim.run(app.wndDisplayArea.getCanvas(), new DepthFirstSearch(grid), source, target));
 			app.showMessage(format("Depth-first search: %.2f seconds.", watch.getSeconds()));
 		}
 
 		else if (solver.getAlgorithmClass() == DepthFirstSearch2.class) {
-			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), new DepthFirstSearch2(grid),
-					source, target));
+			watch.measure(
+					() -> anim.run(app.wndDisplayArea.getCanvas(), new DepthFirstSearch2(grid), source, target));
 			app.showMessage(format("Depth-first search: %.2f seconds.", watch.getSeconds()));
 		}
 

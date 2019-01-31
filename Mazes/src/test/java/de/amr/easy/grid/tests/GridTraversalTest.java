@@ -77,8 +77,7 @@ public class GridTraversalTest {
 	public void testBestFS() {
 		grid = new IterativeDFS(N, N).createMaze(0, 0);
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		BestFirstSearch<?, ?, Integer> best = new BestFirstSearch<>(grid,
-				x -> grid.manhattan(x, target));
+		BestFirstSearch<?, ?, Integer> best = new BestFirstSearch<>(grid, x -> grid.manhattan(x, target));
 		assertState(grid.vertices(), best::getState, UNVISITED);
 		best.traverseGraph(source);
 		assertState(grid.vertices(), best::getState, COMPLETED);
@@ -104,8 +103,7 @@ public class GridTraversalTest {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
 		DepthFirstSearch dfs = new DepthFirstSearch(grid);
 		assertState(grid.vertices(), dfs::getState, UNVISITED);
-		dfs.traverseGraph(source, target);
-		assertState(StreamUtils.toIntStream(dfs.path(target)), dfs::getState, VISITED);
+		assertState(StreamUtils.toIntStream(dfs.path(source, target)), dfs::getState, VISITED);
 	}
 
 	@Test
@@ -113,8 +111,7 @@ public class GridTraversalTest {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
 		DepthFirstSearch2 dfs = new DepthFirstSearch2(grid);
 		assertState(grid.vertices(), dfs::getState, UNVISITED);
-		dfs.traverseGraph(source, target);
-		assertState(StreamUtils.toIntStream(dfs.path(target)), dfs::getState, COMPLETED);
+		assertState(StreamUtils.toIntStream(dfs.path(source, target)), dfs::getState, COMPLETED);
 	}
 
 	@Test
@@ -123,8 +120,7 @@ public class GridTraversalTest {
 		Function<Integer, Integer> cost = u -> grid.manhattan(u, target);
 		HillClimbingSearch<Integer> hillClimbing = new HillClimbingSearch<>(grid, cost);
 		assertState(grid.vertices(), hillClimbing::getState, UNVISITED);
-		hillClimbing.traverseGraph(source, target);
-		hillClimbing.path(target).forEach(cell -> assertTrue(hillClimbing.getState(cell) != UNVISITED));
+		hillClimbing.path(source, target).forEach(cell -> assertTrue(hillClimbing.getState(cell) != UNVISITED));
 	}
 
 	@Test
@@ -165,8 +161,7 @@ public class GridTraversalTest {
 
 	@Test
 	public void testCurveStream() {
-		cells(new HilbertCurve(K), grid, grid.cell(TOP_RIGHT))
-				.forEach(cell -> grid.set(cell, COMPLETED));
+		cells(new HilbertCurve(K), grid, grid.cell(TOP_RIGHT)).forEach(cell -> grid.set(cell, COMPLETED));
 		assertAllCells(COMPLETED);
 	}
 }

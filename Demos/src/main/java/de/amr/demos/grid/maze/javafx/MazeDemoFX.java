@@ -1,6 +1,7 @@
 package de.amr.demos.grid.maze.javafx;
 
 import static de.amr.graph.grid.api.GridPosition.BOTTOM_RIGHT;
+import static de.amr.graph.grid.api.GridPosition.TOP_LEFT;
 
 import java.util.Random;
 import java.util.Timer;
@@ -49,8 +50,8 @@ public class MazeDemoFX extends Application {
 	private static final Random RAND = new Random();
 	private static final Class<?> GENERATOR_CLASSES[] = { BinaryTreeRandom.class, Eller.class,
 			EllerInsideOut.class, GrowingTreeLastOrRandom.class, HuntAndKillRandom.class, KruskalMST.class,
-			PrimMST.class, IterativeDFS.class, RandomBFS.class, RecursiveDivision.class,
-			WilsonUSTRandomCell.class, WilsonUSTCollapsingRectangle.class };
+			PrimMST.class, IterativeDFS.class, RandomBFS.class, RecursiveDivision.class, WilsonUSTRandomCell.class,
+			WilsonUSTCollapsingRectangle.class };
 
 	private Canvas canvas;
 	private Timer timer;
@@ -112,16 +113,15 @@ public class MazeDemoFX extends Application {
 		maze = generator.createMaze(0, 0);
 		drawGrid();
 		BreadthFirstSearch<?, ?> bfs = new BreadthFirstSearch<>(maze);
-		bfs.traverseGraph(maze.cell(0, 0), maze.cell(BOTTOM_RIGHT));
-		drawPath(bfs.path(maze.cell(BOTTOM_RIGHT))::iterator);
+		drawPath(bfs.path(maze.cell(TOP_LEFT), maze.cell(BOTTOM_RIGHT))::iterator);
 	}
 
 	@SuppressWarnings("unchecked")
 	private MazeGenerator<OrthogonalGrid> randomMazeGenerator() {
 		Class<?> generatorClass = GENERATOR_CLASSES[RAND.nextInt(GENERATOR_CLASSES.length)];
 		try {
-			return (MazeGenerator<OrthogonalGrid>) generatorClass
-					.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(cols, rows);
+			return (MazeGenerator<OrthogonalGrid>) generatorClass.getConstructor(Integer.TYPE, Integer.TYPE)
+					.newInstance(cols, rows);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Could not create maze generator instance");

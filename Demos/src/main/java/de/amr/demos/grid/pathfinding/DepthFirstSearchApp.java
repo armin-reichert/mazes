@@ -140,7 +140,6 @@ public class DepthFirstSearchApp {
 
 	private void dfs() {
 		DepthFirstSearch2 dfs = new DepthFirstSearch2(grid);
-		dfs.traverseGraph(grid.cell(GridPosition.TOP_LEFT), grid.cell(GridPosition.BOTTOM_RIGHT));
-		solution = dfs.path(grid.cell(GridPosition.BOTTOM_RIGHT));
+		solution = dfs.path(grid.cell(GridPosition.TOP_LEFT), grid.cell(GridPosition.BOTTOM_RIGHT));
 	}
 }
