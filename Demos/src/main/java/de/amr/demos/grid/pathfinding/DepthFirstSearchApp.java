@@ -19,6 +19,7 @@ import de.amr.graph.grid.api.GridPosition;
 import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.graph.grid.ui.rendering.ConfigurableGridRenderer;
 import de.amr.graph.grid.ui.rendering.WallPassageGridRenderer;
+import de.amr.graph.pathfinder.impl.AbstractSearch;
 import de.amr.graph.pathfinder.impl.DepthFirstSearch2;
 import de.amr.maze.alg.mst.KruskalMST;
 
@@ -139,7 +140,7 @@ public class DepthFirstSearchApp {
 	}
 
 	private void dfs() {
-		DepthFirstSearch2 dfs = new DepthFirstSearch2(grid);
+		AbstractSearch dfs = new DepthFirstSearch2<>(grid);
 		solution = dfs.path(grid.cell(GridPosition.TOP_LEFT), grid.cell(GridPosition.BOTTOM_RIGHT));
 	}
 }

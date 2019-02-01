@@ -101,7 +101,7 @@ public class GridTraversalTest {
 	@Test
 	public void testDFS() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		DepthFirstSearch dfs = new DepthFirstSearch(grid);
+		DepthFirstSearch<?, ?> dfs = new DepthFirstSearch<>(grid);
 		assertState(grid.vertices(), dfs::getState, UNVISITED);
 		assertState(StreamUtils.toIntStream(dfs.path(source, target)), dfs::getState, VISITED);
 	}
@@ -109,7 +109,7 @@ public class GridTraversalTest {
 	@Test
 	public void testDFS2() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		DepthFirstSearch2 dfs = new DepthFirstSearch2(grid);
+		DepthFirstSearch2<?, ?> dfs = new DepthFirstSearch2<>(grid);
 		assertState(grid.vertices(), dfs::getState, UNVISITED);
 		assertState(StreamUtils.toIntStream(dfs.path(source, target)), dfs::getState, COMPLETED);
 	}
@@ -118,7 +118,7 @@ public class GridTraversalTest {
 	public void testHillClimbing() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
 		Function<Integer, Integer> cost = u -> grid.manhattan(u, target);
-		HillClimbingSearch<Integer> hillClimbing = new HillClimbingSearch<>(grid, cost);
+		HillClimbingSearch<?, ?, Integer> hillClimbing = new HillClimbingSearch<>(grid, cost);
 		assertState(grid.vertices(), hillClimbing::getState, UNVISITED);
 		hillClimbing.path(source, target).forEach(cell -> assertTrue(hillClimbing.getState(cell) != UNVISITED));
 	}

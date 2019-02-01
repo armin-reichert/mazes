@@ -45,8 +45,8 @@ public class PearlsRendererTestApp extends SwingGridSampleApp {
 		generator.createMaze(0, 0);
 
 		sleep(2000);
-		new DepthFirstTraversalAnimation(getGrid()).run(getCanvas(),
-				new DepthFirstSearch2(getGrid()), 0, getGrid().cell(BOTTOM_RIGHT));
+		new DepthFirstTraversalAnimation(getGrid()).run(getCanvas(), new DepthFirstSearch2<>(getGrid()), 0,
+				getGrid().cell(BOTTOM_RIGHT));
 
 		sleep(2000);
 		getCanvas().clear();

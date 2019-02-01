@@ -116,13 +116,13 @@ public class RunMazeSolverAction extends AbstractAction {
 
 		if (solver.getAlgorithmClass() == DepthFirstSearch.class) {
 			watch.measure(
-					() -> anim.run(app.wndDisplayArea.getCanvas(), new DepthFirstSearch(grid), source, target));
+					() -> anim.run(app.wndDisplayArea.getCanvas(), new DepthFirstSearch<>(grid), source, target));
 			app.showMessage(format("Depth-first search: %.2f seconds.", watch.getSeconds()));
 		}
 
 		else if (solver.getAlgorithmClass() == DepthFirstSearch2.class) {
 			watch.measure(
-					() -> anim.run(app.wndDisplayArea.getCanvas(), new DepthFirstSearch2(grid), source, target));
+					() -> anim.run(app.wndDisplayArea.getCanvas(), new DepthFirstSearch2<>(grid), source, target));
 			app.showMessage(format("Depth-first search: %.2f seconds.", watch.getSeconds()));
 		}
 
