@@ -14,6 +14,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 import java.util.stream.IntStream;
 
 import org.junit.After;
@@ -78,7 +79,7 @@ public class GridTraversalTest {
 	public void testBestFS() {
 		grid = new IterativeDFS(N, N).createMaze(0, 0);
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		BestFirstSearch<?, ?, Integer> best = new BestFirstSearch<>(grid, x -> grid.manhattan(x, target));
+		BestFirstSearch<?, ?> best = new BestFirstSearch<>(grid, x -> grid.manhattan(x, target));
 		assertState(grid.vertices(), best::getState, UNVISITED);
 		best.traverseGraph(source);
 		assertState(grid.vertices(), best::getState, VISITED, COMPLETED);
@@ -118,8 +119,8 @@ public class GridTraversalTest {
 	@Test
 	public void testHillClimbing() {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		Function<Integer, Integer> cost = u -> grid.manhattan(u, target);
-		HillClimbingSearch<?, ?, Integer> hillClimbing = new HillClimbingSearch<>(grid, cost);
+		ToDoubleFunction<Integer> cost = u -> grid.manhattan(u, target);
+		HillClimbingSearch<?, ?> hillClimbing = new HillClimbingSearch<>(grid, cost);
 		assertState(grid.vertices(), hillClimbing::getState, UNVISITED);
 		hillClimbing.path(source, target).forEach(cell -> assertTrue(hillClimbing.getState(cell) != UNVISITED));
 	}

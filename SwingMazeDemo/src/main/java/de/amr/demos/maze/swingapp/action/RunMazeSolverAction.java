@@ -4,7 +4,7 @@ import static java.lang.String.format;
 
 import java.awt.event.ActionEvent;
 import java.util.Optional;
-import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntBiFunction;
 
 import javax.swing.AbstractAction;
@@ -86,7 +86,7 @@ public class RunMazeSolverAction extends AbstractAction {
 
 		else if (solver.getAlgorithmClass() == BestFirstSearch.class) {
 			getHeuristics(solver, grid, target).ifPresent(h -> {
-				BestFirstSearch<?, ?, Integer> best = new BestFirstSearch<>(grid, h);
+				BestFirstSearch<?, ?> best = new BestFirstSearch<>(grid, h);
 				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), best, source, target));
 				app.showMessage(
 						format("Best-first search (%s): %.2f seconds.", getHeuristicsName(solver), watch.getSeconds()));
@@ -140,10 +140,10 @@ public class RunMazeSolverAction extends AbstractAction {
 		return app.model.getHeuristics().toString();
 	}
 
-	private Optional<Function<Integer, Integer>> getHeuristics(AlgorithmInfo solver, OrthogonalGrid grid,
+	private Optional<ToDoubleFunction<Integer>> getHeuristics(AlgorithmInfo solver, OrthogonalGrid grid,
 			int target) {
 		Optional<ToIntBiFunction<Integer, Integer>> cost = getCostFunction(solver, grid);
-		Function<Integer, Integer> h = cost.isPresent() ? v -> cost.get().applyAsInt(v, target) : null;
+		ToDoubleFunction<Integer> h = cost.isPresent() ? v -> cost.get().applyAsInt(v, target) : null;
 		return Optional.ofNullable(h);
 	}
 
