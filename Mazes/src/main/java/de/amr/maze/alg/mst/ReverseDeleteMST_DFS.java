@@ -18,7 +18,7 @@ public class ReverseDeleteMST_DFS extends ReverseDeleteMST {
 
 	@Override
 	protected boolean connected(int u, int v) {
-		AbstractSearch dfs = new DepthFirstSearch2<>(grid);
+		AbstractSearch<?, ?> dfs = new DepthFirstSearch2<>(grid);
 		dfs.traverseGraph(u, v);
 		return dfs.getParent(v) != -1;
 	}
