@@ -4,8 +4,8 @@ import static java.lang.String.format;
 
 import java.awt.event.ActionEvent;
 import java.util.Optional;
+import java.util.function.ToDoubleBiFunction;
 import java.util.function.ToDoubleFunction;
-import java.util.function.ToIntBiFunction;
 
 import javax.swing.AbstractAction;
 
@@ -142,14 +142,14 @@ public class RunMazeSolverAction extends AbstractAction {
 
 	private Optional<ToDoubleFunction<Integer>> getHeuristics(AlgorithmInfo solver, OrthogonalGrid grid,
 			int target) {
-		Optional<ToIntBiFunction<Integer, Integer>> cost = getCostFunction(solver, grid);
-		ToDoubleFunction<Integer> h = cost.isPresent() ? v -> cost.get().applyAsInt(v, target) : null;
+		Optional<ToDoubleBiFunction<Integer, Integer>> cost = getCostFunction(solver, grid);
+		ToDoubleFunction<Integer> h = cost.isPresent() ? v -> cost.get().applyAsDouble(v, target) : null;
 		return Optional.ofNullable(h);
 	}
 
-	private Optional<ToIntBiFunction<Integer, Integer>> getCostFunction(AlgorithmInfo solver,
+	private Optional<ToDoubleBiFunction<Integer, Integer>> getCostFunction(AlgorithmInfo solver,
 			OrthogonalGrid grid) {
-		ToIntBiFunction<Integer, Integer> cost = null;
+		ToDoubleBiFunction<Integer, Integer> cost = null;
 		switch (app.model.getHeuristics()) {
 		case CHEBYSHEV:
 			cost = (u, v) -> grid.chebyshev(u, v);

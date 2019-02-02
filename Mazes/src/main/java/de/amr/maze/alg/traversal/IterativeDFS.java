@@ -6,9 +6,10 @@ import static de.amr.graph.pathfinder.api.TraversalState.COMPLETED;
 import static de.amr.graph.pathfinder.api.TraversalState.UNVISITED;
 import static de.amr.graph.pathfinder.api.TraversalState.VISITED;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.OptionalInt;
 
-import de.amr.datastruct.Stack;
 import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.maze.alg.core.MazeGenerator;
 
@@ -32,7 +33,7 @@ public class IterativeDFS implements MazeGenerator<OrthogonalGrid> {
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		Stack<Integer> stack = new Stack<>();
+		Deque<Integer> stack = new ArrayDeque<>();
 		int current = grid.cell(x, y);
 		grid.set(current, VISITED);
 		stack.push(current);
