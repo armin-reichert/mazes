@@ -64,11 +64,11 @@ public class MazeDemoApp {
 	public static MazeDemoApp app() {
 		return APP;
 	}
-	
+
 	public static MazeDemoModel model() {
 		return APP.model;
 	}
-	
+
 	public static GridDisplayArea canvas() {
 		return APP.wndDisplayArea.getCanvas();
 	}
