@@ -14,7 +14,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
-import de.amr.demos.maze.swingapp.model.MazeDemoModel.Heuristics;
+import de.amr.demos.maze.swingapp.model.MazeDemoModel.Metric;
 import de.amr.demos.maze.swingapp.model.PathFinderTag;
 
 /**
@@ -45,18 +45,18 @@ public class SolverMenu extends AlgorithmMenu {
 	}
 
 	private void addHeuristicsMenu() {
-		JMenu menu = new JMenu("Heuristics");
+		JMenu menu = new JMenu("Metric");
 		ButtonGroup radio = new ButtonGroup();
-		for (Heuristics h : Heuristics.values()) {
-			String text = h.name().substring(0, 1) + h.name().substring(1).toLowerCase();
+		for (Metric metric : Metric.values()) {
+			String text = metric.name().substring(0, 1) + metric.name().substring(1).toLowerCase();
 			JRadioButtonMenuItem rb = new JRadioButtonMenuItem(text);
 			rb.addActionListener(e -> {
-				model().setHeuristics(h);
+				model().setMetric(metric);
 				getSelectedAlgorithm().ifPresent(app()::onSolverChange);
 			});
 			radio.add(rb);
 			menu.add(rb);
-			rb.setSelected(h == model().getHeuristics());
+			rb.setSelected(metric == model().getMetric());
 		}
 		add(menu);
 	}

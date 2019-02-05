@@ -31,7 +31,7 @@ import de.amr.demos.maze.swingapp.action.StopTaskAction;
 import de.amr.demos.maze.swingapp.action.ToggleControlPanelAction;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
-import de.amr.demos.maze.swingapp.model.MazeDemoModel.Heuristics;
+import de.amr.demos.maze.swingapp.model.MazeDemoModel.Metric;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
 import de.amr.demos.maze.swingapp.model.PathFinderTag;
 import de.amr.demos.maze.swingapp.view.DisplayAreaWindow;
@@ -115,7 +115,7 @@ public class MazeDemoApp {
 		model.setGenerationStart(CENTER);
 		model.setPathFinderStart(TOP_LEFT);
 		model.setPathFinderTarget(BOTTOM_RIGHT);
-		model.setHeuristics(Heuristics.EUCLIDEAN);
+		model.setMetric(Metric.EUCLIDEAN);
 		model.setGenerationAnimated(true);
 		model.setHidingControlsWhenRunning(false);
 
@@ -204,8 +204,8 @@ public class MazeDemoApp {
 	public void onSolverChange(AlgorithmInfo solverInfo) {
 		String label = solverInfo.getDescription();
 		if (solverInfo.isTagged(PathFinderTag.INFORMED)) {
-			String text = model.getHeuristics().name().substring(0, 1)
-					+ model.getHeuristics().name().substring(1).toLowerCase();
+			String text = model.getMetric().name().substring(0, 1)
+					+ model.getMetric().name().substring(1).toLowerCase();
 			label += " (" + text + ")";
 		}
 		wndSettings.controlPanel.getLblSolver().setText(label);

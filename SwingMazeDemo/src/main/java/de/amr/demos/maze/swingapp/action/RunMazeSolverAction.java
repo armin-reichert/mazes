@@ -95,7 +95,7 @@ public class RunMazeSolverAction extends AbstractAction {
 		}
 
 		else if (solver.getAlgorithmClass() == AStarSearch.class) {
-			getCostFunction(solver, grid).ifPresent(cost -> {
+			getMetric(solver, grid).ifPresent(cost -> {
 				AStarSearch<TraversalState, Integer> astar = new AStarSearch<>(grid, edge -> 1, cost);
 				watch.measure(() -> anim.run(canvas(), astar, source, target));
 				app().showMessage(
@@ -134,20 +134,20 @@ public class RunMazeSolverAction extends AbstractAction {
 	}
 
 	private String getHeuristicsName(AlgorithmInfo solver) {
-		return model().getHeuristics().toString();
+		return model().getMetric().toString();
 	}
 
 	private Optional<ToDoubleFunction<Integer>> getHeuristics(AlgorithmInfo solver, OrthogonalGrid grid,
 			int target) {
-		Optional<ToDoubleBiFunction<Integer, Integer>> cost = getCostFunction(solver, grid);
-		ToDoubleFunction<Integer> h = cost.isPresent() ? v -> cost.get().applyAsDouble(v, target) : null;
+		Optional<ToDoubleBiFunction<Integer, Integer>> metric = getMetric(solver, grid);
+		ToDoubleFunction<Integer> h = metric.isPresent() ? v -> metric.get().applyAsDouble(v, target) : null;
 		return Optional.ofNullable(h);
 	}
 
-	private Optional<ToDoubleBiFunction<Integer, Integer>> getCostFunction(AlgorithmInfo solver,
+	private Optional<ToDoubleBiFunction<Integer, Integer>> getMetric(AlgorithmInfo solver,
 			OrthogonalGrid grid) {
 		ToDoubleBiFunction<Integer, Integer> cost = null;
-		switch (model().getHeuristics()) {
+		switch (model().getMetric()) {
 		case CHEBYSHEV:
 			cost = (u, v) -> grid.chebyshev(u, v);
 			break;

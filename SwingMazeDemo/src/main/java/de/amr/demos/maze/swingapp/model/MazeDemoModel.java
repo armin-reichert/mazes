@@ -75,7 +75,7 @@ public class MazeDemoModel {
 		WALL_PASSAGES, PEARLS
 	};
 
-	public enum Heuristics {
+	public enum Metric {
 		EUCLIDEAN, MANHATTAN, CHEBYSHEV
 	}
 
@@ -155,7 +155,7 @@ public class MazeDemoModel {
 	private int delay;
 	private GridPosition generationStart;
 	private boolean floodFillAfterGeneration;
-	private Heuristics heuristics;
+	private Metric metric;
 	private GridPosition pathFinderStart;
 	private GridPosition pathFinderTarget;
 	private Color unvisitedCellColor;
@@ -252,12 +252,12 @@ public class MazeDemoModel {
 		this.generationStart = pos;
 	}
 
-	public Heuristics getHeuristics() {
-		return heuristics;
+	public Metric getMetric() {
+		return metric;
 	}
 
-	public void setHeuristics(Heuristics heuristics) {
-		this.heuristics = heuristics;
+	public void setMetric(Metric metric) {
+		this.metric = metric;
 	}
 
 	public boolean isFloodFillAfterGeneration() {
