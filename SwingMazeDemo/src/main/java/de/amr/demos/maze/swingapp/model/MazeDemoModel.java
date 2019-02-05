@@ -128,11 +128,11 @@ public class MazeDemoModel {
 			/*@formatter:off*/
 			new AlgorithmInfo(BreadthFirstSearch.class, "Breadth-First Search", BFS),
 			new AlgorithmInfo(DepthFirstSearch2.class, "Depth-First Search", DFS), 
-			new AlgorithmInfo(DepthFirstSearch.class, "Depth-First Search (alternative)", DFS), 
-			new AlgorithmInfo(DijkstraSearch.class, "Dijkstra", BFS), 
+			new AlgorithmInfo(DepthFirstSearch.class, "Depth-First Search (variant)", DFS), 
+			new AlgorithmInfo(DijkstraSearch.class, "Dijkstra Search", BFS), 
 			new AlgorithmInfo(BestFirstSearch.class, "Best-First Search", BFS, INFORMED),
 			new AlgorithmInfo(AStarSearch.class, "A* Search", BFS, INFORMED),
-			new AlgorithmInfo(HillClimbingSearch.class, "Hill Climbing", DFS, INFORMED),
+			new AlgorithmInfo(HillClimbingSearch.class, "Hill-Climbing Search", DFS, INFORMED),
 			/*@formatter:on*/
 	};
 

@@ -24,7 +24,7 @@ import de.amr.demos.maze.swingapp.action.CreateMazeAction;
 import de.amr.demos.maze.swingapp.action.EmptyGridAction;
 import de.amr.demos.maze.swingapp.action.FloodFillAction;
 import de.amr.demos.maze.swingapp.action.FullGridAction;
-import de.amr.demos.maze.swingapp.action.RunMazeSolverAction;
+import de.amr.demos.maze.swingapp.action.SolveMazeAction;
 import de.amr.demos.maze.swingapp.action.SaveImageAction;
 import de.amr.demos.maze.swingapp.action.ShowSettingsAction;
 import de.amr.demos.maze.swingapp.action.StopTaskAction;
@@ -83,7 +83,7 @@ public class MazeDemoApp {
 
 	public final Action actionCreateMaze = new CreateMazeAction();
 	public final Action actionCreateAllMazes = new CreateAllMazesAction();
-	public final Action actionRunMazeSolver = new RunMazeSolverAction();
+	public final Action actionRunMazeSolver = new SolveMazeAction();
 	public final Action actionStopTask = new StopTaskAction();
 	public final Action actionClearCanvas = new ClearCanvasAction();
 	public final Action actionFloodFill = new FloodFillAction(false);
