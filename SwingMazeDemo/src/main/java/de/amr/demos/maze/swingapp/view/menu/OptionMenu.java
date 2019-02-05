@@ -1,5 +1,8 @@
 package de.amr.demos.maze.swingapp.view.menu;
 
+import static de.amr.demos.maze.swingapp.MazeDemoApp.app;
+import static de.amr.demos.maze.swingapp.MazeDemoApp.model;
+
 import java.awt.event.ItemEvent;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
@@ -10,7 +13,6 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
 
-import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.graph.grid.api.GridPosition;
 
 /**
@@ -20,25 +22,18 @@ import de.amr.graph.grid.api.GridPosition;
  */
 public class OptionMenu extends JMenu {
 
-	private final MazeDemoApp app;
-
-	public OptionMenu(MazeDemoApp demo) {
-		this.app = demo;
+	public OptionMenu() {
 		setText("Options");
-		addPositionMenu("Generation Start", app.model::setGenerationStart,
-				app.model::getGenerationStart);
-		addCheckBox("Flood-fill after generation", app.model::setFloodFillAfterGeneration,
-				app.model::isFloodFillAfterGeneration);
+		addPositionMenu("Generation Start", model()::setGenerationStart, model()::getGenerationStart);
+		addCheckBox("Flood-fill after generation", model()::setFloodFillAfterGeneration,
+				model()::isFloodFillAfterGeneration);
 		addSeparator();
-		addPositionMenu("Solution Start", app.model::setPathFinderStart,
-				app.model::getPathFinderSource);
-		addPositionMenu("Solution Target", app.model::setPathFinderTarget,
-				app.model::getPathFinderTarget);
+		addPositionMenu("Solution Start", model()::setPathFinderStart, model()::getPathFinderSource);
+		addPositionMenu("Solution Target", model()::setPathFinderTarget, model()::getPathFinderTarget);
 		addSeparator();
-		addCheckBox("Animate Generation", app.model::setGenerationAnimated,
-				app.model::isGenerationAnimated);
-		addCheckBox("Hide dialog when running", app.model::setHidingControlsWhenRunning,
-				app.model::isHidingControlsWhenRunning);
+		addCheckBox("Animate Generation", model()::setGenerationAnimated, model()::isGenerationAnimated);
+		addCheckBox("Hide dialog when running", model()::setHidingControlsWhenRunning,
+				model()::isHidingControlsWhenRunning);
 	}
 
 	private void addCheckBox(String title, Consumer<Boolean> onChecked, BooleanSupplier selection) {
@@ -54,7 +49,7 @@ public class OptionMenu extends JMenu {
 		ButtonGroup group = new ButtonGroup();
 		for (GridPosition pos : GridPosition.values()) {
 			JRadioButtonMenuItem radio = new JRadioButtonMenuItem();
-			radio.setText(app.texts.getString(pos.name()));
+			radio.setText(app().texts.getString(pos.name()));
 			radio.setSelected(pos == selection.get());
 			radio.addItemListener(e -> {
 				if (e.getStateChange() == ItemEvent.SELECTED) {

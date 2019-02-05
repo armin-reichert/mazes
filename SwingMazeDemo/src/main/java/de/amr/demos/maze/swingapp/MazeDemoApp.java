@@ -35,6 +35,7 @@ import de.amr.demos.maze.swingapp.model.MazeDemoModel.Heuristics;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
 import de.amr.demos.maze.swingapp.model.PathFinderTag;
 import de.amr.demos.maze.swingapp.view.DisplayAreaWindow;
+import de.amr.demos.maze.swingapp.view.GridDisplayArea;
 import de.amr.demos.maze.swingapp.view.SettingsWindow;
 import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.graph.pathfinder.api.TraversalState;
@@ -58,6 +59,20 @@ public class MazeDemoApp {
 		EventQueue.invokeLater(MazeDemoApp::new);
 	}
 
+	private static MazeDemoApp APP;
+
+	public static MazeDemoApp app() {
+		return APP;
+	}
+	
+	public static MazeDemoModel model() {
+		return APP.model;
+	}
+	
+	public static GridDisplayArea canvas() {
+		return APP.wndDisplayArea.getCanvas();
+	}
+
 	public static final DisplayMode DISPLAY_MODE = GraphicsEnvironment.getLocalGraphicsEnvironment()
 			.getDefaultScreenDevice().getDisplayMode();
 
@@ -66,24 +81,26 @@ public class MazeDemoApp {
 	public final SettingsWindow wndSettings;
 	public final DisplayAreaWindow wndDisplayArea;
 
-	public final Action actionCreateMaze = new CreateMazeAction(this);
-	public final Action actionCreateAllMazes = new CreateAllMazesAction(this);
-	public final Action actionRunMazeSolver = new RunMazeSolverAction(this);
-	public final Action actionStopTask = new StopTaskAction(this);
-	public final Action actionClearCanvas = new ClearCanvasAction(this);
-	public final Action actionFloodFill = new FloodFillAction(this, false);
-	public final Action actionFloodFillWithDistance = new FloodFillAction(this, true);
-	public final Action actionSaveImage = new SaveImageAction(this);
-	public final Action actionEmptyGrid = new EmptyGridAction(this);
-	public final Action actionFullGrid = new FullGridAction(this);
-	public final Action actionChangeGridResolution = new ChangeGridResolutionAction(this);
-	public final Action actionShowSettings = new ShowSettingsAction(this);
-	public final ToggleControlPanelAction actionToggleControlPanel = new ToggleControlPanelAction(this);
+	public final Action actionCreateMaze = new CreateMazeAction();
+	public final Action actionCreateAllMazes = new CreateAllMazesAction();
+	public final Action actionRunMazeSolver = new RunMazeSolverAction();
+	public final Action actionStopTask = new StopTaskAction();
+	public final Action actionClearCanvas = new ClearCanvasAction();
+	public final Action actionFloodFill = new FloodFillAction(false);
+	public final Action actionFloodFillWithDistance = new FloodFillAction(true);
+	public final Action actionSaveImage = new SaveImageAction();
+	public final Action actionEmptyGrid = new EmptyGridAction();
+	public final Action actionFullGrid = new FullGridAction();
+	public final Action actionChangeGridResolution = new ChangeGridResolutionAction();
+	public final Action actionShowSettings = new ShowSettingsAction();
+	public final ToggleControlPanelAction actionToggleControlPanel = new ToggleControlPanelAction();
 
 	private Thread workerThread;
 	private volatile boolean threadStopped;
 
 	public MazeDemoApp() {
+
+		APP = this;
 
 		// initialize data
 		model = new MazeDemoModel();
@@ -109,14 +126,14 @@ public class MazeDemoApp {
 		model.setGrid(createDefaultGrid(true));
 
 		// create new canvas in its own window
-		wndDisplayArea = new DisplayAreaWindow(this);
+		wndDisplayArea = new DisplayAreaWindow();
 		wndDisplayArea.getCanvas().getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
 		wndDisplayArea.getCanvas().getActionMap().put("showSettings", actionShowSettings);
 		wndDisplayArea.getCanvas().drawGrid();
 		wndDisplayArea.setVisible(true);
 
 		// create settings window
-		wndSettings = new SettingsWindow(this);
+		wndSettings = new SettingsWindow();
 		wndSettings.setAlwaysOnTop(true);
 
 		// initialize generator and pathfinder selection
@@ -124,8 +141,7 @@ public class MazeDemoApp {
 			wndSettings.generatorMenu.selectAlgorithm(alg);
 			onGeneratorChange(alg);
 		});
-		MazeDemoModel
-				.find(PATHFINDER_ALGORITHMS, alg -> alg.getAlgorithmClass() == BreadthFirstSearch.class)
+		MazeDemoModel.find(PATHFINDER_ALGORITHMS, alg -> alg.getAlgorithmClass() == BreadthFirstSearch.class)
 				.ifPresent(alg -> {
 					wndSettings.solverMenu.selectAlgorithm(alg);
 					onSolverChange(alg);

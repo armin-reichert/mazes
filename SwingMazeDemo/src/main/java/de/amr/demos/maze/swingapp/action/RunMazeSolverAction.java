@@ -1,5 +1,8 @@
 package de.amr.demos.maze.swingapp.action;
 
+import static de.amr.demos.maze.swingapp.MazeDemoApp.app;
+import static de.amr.demos.maze.swingapp.MazeDemoApp.canvas;
+import static de.amr.demos.maze.swingapp.MazeDemoApp.model;
 import static java.lang.String.format;
 
 import java.awt.event.ActionEvent;
@@ -9,7 +12,6 @@ import java.util.function.ToDoubleFunction;
 
 import javax.swing.AbstractAction;
 
-import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.PathFinderTag;
 import de.amr.graph.grid.impl.OrthogonalGrid;
@@ -32,20 +34,18 @@ import de.amr.util.StopWatch;
  */
 public class RunMazeSolverAction extends AbstractAction {
 
-	private final MazeDemoApp app;
 	private final StopWatch watch = new StopWatch();
 
-	public RunMazeSolverAction(MazeDemoApp app) {
-		this.app = app;
+	public RunMazeSolverAction() {
 		putValue(NAME, "Solve");
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app.wndSettings.solverMenu.getSelectedAlgorithm().ifPresent(solver -> {
-			app.enableUI(false);
-			app.wndDisplayArea.getCanvas().drawGrid();
-			app.startWorkerThread(() -> {
+		app().wndSettings.solverMenu.getSelectedAlgorithm().ifPresent(solver -> {
+			app().enableUI(false);
+			canvas().drawGrid();
+			app().startWorkerThread(() -> {
 				try {
 					if (solver.isTagged(PathFinderTag.DFS)) {
 						runDFSSolverAnimation(solver);
@@ -55,89 +55,86 @@ public class RunMazeSolverAction extends AbstractAction {
 				} catch (Exception x) {
 					x.printStackTrace();
 				} finally {
-					app.enableUI(true);
+					app().enableUI(true);
 				}
 			});
 		});
 	}
 
 	private void runBFSSolverAnimation(AlgorithmInfo solver) {
-		OrthogonalGrid grid = app.model.getGrid();
-		int source = grid.cell(app.model.getPathFinderSource());
-		int target = grid.cell(app.model.getPathFinderTarget());
+		OrthogonalGrid grid = model().getGrid();
+		int source = grid.cell(model().getPathFinderSource());
+		int target = grid.cell(model().getPathFinderTarget());
 
 		BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid);
-		anim.fnDelay = () -> app.model.getDelay();
-		anim.fnPathColor = () -> app.model.getPathColor();
+		anim.fnDelay = () -> model().getDelay();
+		anim.fnPathColor = () -> model().getPathColor();
 
 		if (solver.getAlgorithmClass() == BreadthFirstSearch.class) {
 			BreadthFirstSearch<?, ?> bfs = new BreadthFirstSearch<>(grid);
-			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), bfs, source, target));
-			app.showMessage(format("Breadth-first search: %.2f seconds.", watch.getSeconds()));
-			anim.showPath(app.wndDisplayArea.getCanvas(), bfs, source, target);
+			watch.measure(() -> anim.run(canvas(), bfs, source, target));
+			app().showMessage(format("Breadth-first search: %.2f seconds.", watch.getSeconds()));
+			anim.showPath(canvas(), bfs, source, target);
 		}
 
 		else if (solver.getAlgorithmClass() == DijkstraSearch.class) {
 			DijkstraSearch<TraversalState, Integer> dijkstra = new DijkstraSearch<>(grid, edge -> 1);
-			watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), dijkstra, source, target));
-			app.showMessage(format("Dijkstra search: %.2f seconds.", watch.getSeconds()));
-			anim.showPath(app.wndDisplayArea.getCanvas(), dijkstra, source, target);
+			watch.measure(() -> anim.run(canvas(), dijkstra, source, target));
+			app().showMessage(format("Dijkstra search: %.2f seconds.", watch.getSeconds()));
+			anim.showPath(canvas(), dijkstra, source, target);
 		}
 
 		else if (solver.getAlgorithmClass() == BestFirstSearch.class) {
 			getHeuristics(solver, grid, target).ifPresent(h -> {
 				BestFirstSearch<?, ?> best = new BestFirstSearch<>(grid, h);
-				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), best, source, target));
-				app.showMessage(
+				watch.measure(() -> anim.run(canvas(), best, source, target));
+				app().showMessage(
 						format("Best-first search (%s): %.2f seconds.", getHeuristicsName(solver), watch.getSeconds()));
-				anim.showPath(app.wndDisplayArea.getCanvas(), best, source, target);
+				anim.showPath(canvas(), best, source, target);
 			});
 		}
 
 		else if (solver.getAlgorithmClass() == AStarSearch.class) {
 			getCostFunction(solver, grid).ifPresent(cost -> {
 				AStarSearch<TraversalState, Integer> astar = new AStarSearch<>(grid, edge -> 1, cost);
-				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), astar, source, target));
-				app.showMessage(
+				watch.measure(() -> anim.run(canvas(), astar, source, target));
+				app().showMessage(
 						format("A* search (%s): %.2f seconds.", getHeuristicsName(solver), watch.getSeconds()));
-				anim.showPath(app.wndDisplayArea.getCanvas(), astar, source, target);
+				anim.showPath(canvas(), astar, source, target);
 			});
 		}
 	}
 
 	private void runDFSSolverAnimation(AlgorithmInfo solver) {
-		OrthogonalGrid grid = app.model.getGrid();
-		int source = grid.cell(app.model.getPathFinderSource());
-		int target = grid.cell(app.model.getPathFinderTarget());
+		OrthogonalGrid grid = model().getGrid();
+		int source = grid.cell(model().getPathFinderSource());
+		int target = grid.cell(model().getPathFinderTarget());
 
 		DepthFirstTraversalAnimation anim = new DepthFirstTraversalAnimation(grid);
-		anim.fnDelay = () -> app.model.getDelay();
-		anim.setPathColor(app.model.getPathColor());
+		anim.fnDelay = () -> model().getDelay();
+		anim.setPathColor(model().getPathColor());
 
 		if (solver.getAlgorithmClass() == DepthFirstSearch.class) {
-			watch.measure(
-					() -> anim.run(app.wndDisplayArea.getCanvas(), new DepthFirstSearch<>(grid), source, target));
-			app.showMessage(format("Depth-first search: %.2f seconds.", watch.getSeconds()));
+			watch.measure(() -> anim.run(canvas(), new DepthFirstSearch<>(grid), source, target));
+			app().showMessage(format("Depth-first search: %.2f seconds.", watch.getSeconds()));
 		}
 
 		else if (solver.getAlgorithmClass() == DepthFirstSearch2.class) {
-			watch.measure(
-					() -> anim.run(app.wndDisplayArea.getCanvas(), new DepthFirstSearch2<>(grid), source, target));
-			app.showMessage(format("Depth-first search: %.2f seconds.", watch.getSeconds()));
+			watch.measure(() -> anim.run(canvas(), new DepthFirstSearch2<>(grid), source, target));
+			app().showMessage(format("Depth-first search: %.2f seconds.", watch.getSeconds()));
 		}
 
 		else if (solver.getAlgorithmClass() == HillClimbingSearch.class) {
 			getHeuristics(solver, grid, target).ifPresent(h -> {
-				watch.measure(() -> anim.run(app.wndDisplayArea.getCanvas(), new HillClimbingSearch<>(grid, h),
-						source, target));
-				app.showMessage(
+				watch.measure(() -> anim.run(canvas(), new HillClimbingSearch<>(grid, h), source, target));
+				app().showMessage(
 						format("Hill Climbing (%s): %.2f seconds.", getHeuristicsName(solver), watch.getSeconds()));
 			});
 		}
 	}
 
 	private String getHeuristicsName(AlgorithmInfo solver) {
-		return app.model.getHeuristics().toString();
+		return model().getHeuristics().toString();
 	}
 
 	private Optional<ToDoubleFunction<Integer>> getHeuristics(AlgorithmInfo solver, OrthogonalGrid grid,
@@ -150,7 +147,7 @@ public class RunMazeSolverAction extends AbstractAction {
 	private Optional<ToDoubleBiFunction<Integer, Integer>> getCostFunction(AlgorithmInfo solver,
 			OrthogonalGrid grid) {
 		ToDoubleBiFunction<Integer, Integer> cost = null;
-		switch (app.model.getHeuristics()) {
+		switch (model().getHeuristics()) {
 		case CHEBYSHEV:
 			cost = (u, v) -> grid.chebyshev(u, v);
 			break;

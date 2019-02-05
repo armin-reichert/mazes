@@ -1,24 +1,22 @@
 package de.amr.demos.maze.swingapp.action;
 
+import static de.amr.demos.maze.swingapp.MazeDemoApp.app;
+import static de.amr.demos.maze.swingapp.MazeDemoApp.canvas;
+
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import de.amr.demos.maze.swingapp.MazeDemoApp;
-
 public class FullGridAction extends AbstractAction {
 
-	private final MazeDemoApp app;
-
-	public FullGridAction(MazeDemoApp app) {
-		this.app = app;
+	public FullGridAction() {
 		putValue(NAME, "Full Grid");
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app.wndDisplayArea.getCanvas().setGrid(app.createDefaultGrid(true));
-		app.wndDisplayArea.getCanvas().clear();
-		app.wndDisplayArea.getCanvas().drawGrid();
+		canvas().setGrid(app().createDefaultGrid(true));
+		canvas().clear();
+		canvas().drawGrid();
 	}
 }

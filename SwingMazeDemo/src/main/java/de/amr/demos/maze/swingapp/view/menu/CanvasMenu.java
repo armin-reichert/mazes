@@ -1,21 +1,21 @@
 package de.amr.demos.maze.swingapp.view.menu;
 
-import javax.swing.JMenu;
+import static de.amr.demos.maze.swingapp.MazeDemoApp.app;
 
-import de.amr.demos.maze.swingapp.MazeDemoApp;
+import javax.swing.JMenu;
 
 public class CanvasMenu extends JMenu {
 
-	public CanvasMenu(MazeDemoApp app) {
+	public CanvasMenu() {
 		setText("Canvas");
-		add(app.actionClearCanvas);
+		add(app().actionClearCanvas);
 		addSeparator();
-		add(app.actionEmptyGrid);
-		add(app.actionFullGrid);
+		add(app().actionEmptyGrid);
+		add(app().actionFullGrid);
 		addSeparator();
-		add(app.actionFloodFill);
-		add(app.actionFloodFillWithDistance);
+		add(app().actionFloodFill);
+		add(app().actionFloodFillWithDistance);
 		addSeparator();
-		add(app.actionSaveImage);
+		add(app().actionSaveImage);
 	}
 }

@@ -2,8 +2,6 @@ package de.amr.demos.maze.swingapp.view;
 
 import javax.swing.JFrame;
 
-import de.amr.demos.maze.swingapp.MazeDemoApp;
-
 /**
  * Full-screen window containing the canvas displaying the grid/maze.
  * 
@@ -11,12 +9,10 @@ import de.amr.demos.maze.swingapp.MazeDemoApp;
  */
 public class DisplayAreaWindow extends JFrame {
 
-	private final MazeDemoApp app;
 	private GridDisplayArea canvas;
 
-	public DisplayAreaWindow(MazeDemoApp app) {
-		this.app = app;
-		canvas = new GridDisplayArea(app);
+	public DisplayAreaWindow() {
+		canvas = new GridDisplayArea();
 		setContentPane(canvas);
 		setTitle("Canvas Window");
 		setExtendedState(MAXIMIZED_BOTH);
@@ -28,7 +24,7 @@ public class DisplayAreaWindow extends JFrame {
 	}
 
 	public void newCanvas() {
-		canvas = new GridDisplayArea(app);
+		canvas = new GridDisplayArea();
 		setContentPane(canvas);
 		repaint();
 	}

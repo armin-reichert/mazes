@@ -1,5 +1,7 @@
 package de.amr.demos.maze.swingapp.view.menu;
 
+import static de.amr.demos.maze.swingapp.MazeDemoApp.app;
+import static de.amr.demos.maze.swingapp.MazeDemoApp.model;
 import static de.amr.demos.maze.swingapp.model.MazeDemoModel.PATHFINDER_ALGORITHMS;
 
 import java.util.ArrayList;
@@ -11,7 +13,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 
-import de.amr.demos.maze.swingapp.MazeDemoApp;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel.Heuristics;
 import de.amr.demos.maze.swingapp.model.PathFinderTag;
@@ -23,12 +24,10 @@ import de.amr.demos.maze.swingapp.model.PathFinderTag;
  */
 public class SolverMenu extends AlgorithmMenu {
 
-	private final MazeDemoApp app;
 	private final List<AlgorithmInfo> informedSolvers = new ArrayList<>();
 	private final List<AlgorithmInfo> uninformedSolvers = new ArrayList<>();
 
-	public SolverMenu(MazeDemoApp app) {
-		this.app = app;
+	public SolverMenu() {
 		setText("Solvers");
 		Stream.of(PATHFINDER_ALGORITHMS).forEach(alg -> {
 			if (alg.isTagged(PathFinderTag.INFORMED)) {
@@ -52,19 +51,19 @@ public class SolverMenu extends AlgorithmMenu {
 			String text = h.name().substring(0, 1) + h.name().substring(1).toLowerCase();
 			JRadioButtonMenuItem rb = new JRadioButtonMenuItem(text);
 			rb.addActionListener(e -> {
-				app.model.setHeuristics(h);
-				getSelectedAlgorithm().ifPresent(app::onSolverChange);
+				model().setHeuristics(h);
+				getSelectedAlgorithm().ifPresent(app()::onSolverChange);
 			});
 			radio.add(rb);
 			menu.add(rb);
-			rb.setSelected(h == app.model.getHeuristics());
+			rb.setSelected(h == model().getHeuristics());
 		}
 		add(menu);
 	}
 
 	private void addRadioButton(AlgorithmInfo alg) {
 		JRadioButtonMenuItem item = new JRadioButtonMenuItem();
-		item.addActionListener(e -> app.onSolverChange(alg));
+		item.addActionListener(e -> app().onSolverChange(alg));
 		item.setText(alg.getDescription());
 		item.putClientProperty("algorithm", alg);
 		btnGroup.add(item);

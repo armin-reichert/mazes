@@ -1,13 +1,13 @@
 package de.amr.demos.maze.swingapp.action;
 
+import static de.amr.demos.maze.swingapp.MazeDemoApp.app;
+
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-
-import de.amr.demos.maze.swingapp.MazeDemoApp;
 
 /**
  * Action for expanding/collapsing the control panel.
@@ -16,33 +16,31 @@ import de.amr.demos.maze.swingapp.MazeDemoApp;
  */
 public class ToggleControlPanelAction extends AbstractAction {
 
-	private final MazeDemoApp app;
 	private final ImageIcon zoomIn = new ImageIcon(getClass().getResource("/zoom_in.png"));
 	private final ImageIcon zoomOut = new ImageIcon(getClass().getResource("/zoom_out.png"));
 
-	public ToggleControlPanelAction(MazeDemoApp app) {
-		this.app = app;
+	public ToggleControlPanelAction() {
 		putValue(NAME, "Toggle Control Panel");
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		setMinimized(app.wndSettings.controlPanel.getControls().isVisible());
+		setMinimized(app().wndSettings.controlPanel.getControls().isVisible());
 	}
 
 	public void setMinimized(boolean minimized) {
-		JPanel controls = app.wndSettings.controlPanel.getControls();
+		JPanel controls = app().wndSettings.controlPanel.getControls();
 		if (minimized) {
 			putValue(Action.NAME, "Show Details");
 			putValue(Action.LARGE_ICON_KEY, zoomIn);
 			controls.setVisible(false);
-			app.wndSettings.pack();
-			app.wndSettings.setSize(app.wndSettings.getWidth(), 120);
+			app().wndSettings.pack();
+			app().wndSettings.setSize(app().wndSettings.getWidth(), 120);
 		} else {
 			putValue(Action.NAME, "Hide Details");
 			putValue(Action.LARGE_ICON_KEY, zoomOut);
 			controls.setVisible(true);
-			app.wndSettings.pack();
+			app().wndSettings.pack();
 		}
 	}
 }
