@@ -24,9 +24,12 @@ public class SaveImageAction extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setFileFilter(new FileNameExtensionFilter("Portable Network Graphics", "png"));
-		int result = fileChooser.showSaveDialog(app.wndSettings);
-		if (result == JFileChooser.APPROVE_OPTION) {
+		if (fileChooser.showSaveDialog(app.wndSettings) == JFileChooser.APPROVE_OPTION) {
 			File pngFile = fileChooser.getSelectedFile();
+			String fileName = pngFile.getName();
+			if (!fileName.endsWith(".png")) {
+				pngFile = new File(pngFile.getParentFile(), fileName + ".png");
+			}
 			try {
 				ImageIO.write(app.wndDisplayArea.getCanvas().getDrawingBuffer(), "png", pngFile);
 				app.showMessage("Image saved as " + pngFile);
