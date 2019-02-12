@@ -12,8 +12,8 @@ import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.maze.alg.core.MazeGenerator;
 
 /**
- * Maze generator using randomized recursive depth-first-search. Not suited for larger grids because
- * of stack overflow.
+ * Maze generator using randomized, recursive depth-first search. Not suited for larger grids
+ * because of stack overflow.
  * 
  * @author Armin Reichert
  * 
@@ -36,22 +36,20 @@ public class RecursiveDFS implements MazeGenerator<OrthogonalGrid> {
 
 	@Override
 	public OrthogonalGrid createMaze(int x, int y) {
-		randomDFS(grid.cell(x, y));
+		dfs(grid.cell(x, y));
 		return grid;
 	}
 
-	private void randomDFS(int v) {
+	private void dfs(int v) {
 		grid.set(v, VISITED);
-		for (OptionalInt nb = randomUnvisitedNeighbor(v); nb
-				.isPresent(); nb = randomUnvisitedNeighbor(v)) {
-			int neighbor = nb.getAsInt();
-			grid.addEdge(v, neighbor);
-			randomDFS(neighbor);
+		for (OptionalInt next = neighbor(v); next.isPresent(); next = neighbor(v)) {
+			grid.addEdge(v, next.getAsInt());
+			dfs(next.getAsInt());
 		}
 		grid.set(v, COMPLETED);
 	}
 
-	private OptionalInt randomUnvisitedNeighbor(int v) {
+	private OptionalInt neighbor(int v) {
 		return randomElement(grid.neighbors(v).filter(grid::isUnvisited));
 	}
 }
