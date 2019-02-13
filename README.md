@@ -2,7 +2,7 @@
 
 This project provides Java implementations of more than 35 algorithms for generating so called "perfect mazes" (which are just spanning trees of undirected graphs).
 
-<img style="width:100%; height=auto" src="https://github.com/armin-reichert/mazes/blob/master/Demos/images/mazedemoapp.png">
+<img style="width:100%; height=auto" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/mazedemoapp.png">
 
 On the web, many maze generation implementations in all possible programming languages can be found. The popularity of these algorithms probably comes from the fact that mazes and their creation processes are visually appealing and not really difficult to implement. The most popular algorithm seems to be "recursive backtracking" which is random depth-first traversal of a graph. 
 
@@ -61,111 +61,111 @@ Implemented maze generation algorithms:
 
 ### Graph Traversal:
 
-#### [Random Breadth-First-Search](Mazes/src/main/java/de/amr/maze/alg/traversal/RandomBFS.java)
+#### [Random Breadth-First-Search](MazeAlgorithms/src/main/java/de/amr/maze/alg/traversal/RandomBFS.java)
 
-![](Demos/images/gen/maze_80x60_RandomBFS.gif)
+![](MazeDemos/images/gen/maze_80x60_RandomBFS.gif)
 
-#### [Random Depth-First-Search, iterative](Mazes/src/main/java/de/amr/maze/alg/traversal/IterativeDFS.java)
+#### [Random Depth-First-Search, iterative](MazeAlgorithms/src/main/java/de/amr/maze/alg/traversal/IterativeDFS.java)
 
-![](Demos/images/gen/maze_80x60_IterativeDFS.gif)
+![](MazeDemos/images/gen/maze_80x60_IterativeDFS.gif)
 
-#### [Random Depth-First-Search, recursive](Mazes/src/main/java/de/amr/maze/alg/traversal/RecursiveDFS.java)
+#### [Random Depth-First-Search, recursive](MazeAlgorithms/src/main/java/de/amr/maze/alg/traversal/RecursiveDFS.java)
 
-![](Demos/images/gen/maze_40x30_RecursiveDFS.gif)
+![](MazeDemos/images/gen/maze_40x30_RecursiveDFS.gif)
 
-### [Growing tree](Mazes/src/main/java/de/amr/maze/alg/traversal/GrowingTree.java)
+### [Growing tree](MazeAlgorithms/src/main/java/de/amr/maze/alg/traversal/GrowingTree.java)
 
-- [Growing tree (always first vertex selected)](Mazes/src/main/java/de/amr/maze/alg/traversal/GrowingTreeAlwaysFirst.java)
+- [Growing tree (always first vertex selected)](MazeAlgorithms/src/main/java/de/amr/maze/alg/traversal/GrowingTreeAlwaysFirst.java)
 
-![](Demos/images/gen/maze_80x60_GrowingTreeAlwaysFirst.gif)
+![](MazeDemos/images/gen/maze_80x60_GrowingTreeAlwaysFirst.gif)
 
-- [Growing tree (always last vertex selected)](Mazes/src/main/java/de/amr/maze/alg/traversal/GrowingTreeAlwaysLast.java)
+- [Growing tree (always last vertex selected)](MazeAlgorithms/src/main/java/de/amr/maze/alg/traversal/GrowingTreeAlwaysLast.java)
 
-![](Demos/images/gen/maze_80x60_GrowingTreeAlwaysLast.gif)
+![](MazeDemos/images/gen/maze_80x60_GrowingTreeAlwaysLast.gif)
 
-- [Growing tree (always random vertex selected)](Mazes/src/main/java/de/amr/maze/alg/traversal/GrowingTreeAlwaysRandom.java)
+- [Growing tree (always random vertex selected)](MazeAlgorithms/src/main/java/de/amr/maze/alg/traversal/GrowingTreeAlwaysRandom.java)
 
-![](Demos/images/gen/maze_80x60_GrowingTreeAlwaysRandom.gif)
+![](MazeDemos/images/gen/maze_80x60_GrowingTreeAlwaysRandom.gif)
 
-- [Growing tree (last or random vertex selected)](Mazes/src/main/java/de/amr/maze/alg/traversal/GrowingTreeLastOrRandom.java)
+- [Growing tree (last or random vertex selected)](MazeAlgorithms/src/main/java/de/amr/maze/alg/traversal/GrowingTreeLastOrRandom.java)
 
-![](Demos/images/gen/maze_80x60_GrowingTreeLastOrRandom.gif)
+![](MazeDemos/images/gen/maze_80x60_GrowingTreeLastOrRandom.gif)
 
 ### Minimum Spanning Tree:
 
-#### [Boruvka](Mazes/src/main/java/de/amr/maze/alg/mst/BoruvkaMST.java)
+#### [Boruvka](MazeAlgorithms/src/main/java/de/amr/maze/alg/mst/BoruvkaMST.java)
 
-![](Demos/images/gen/maze_80x60_BoruvkaMST.gif)
+![](MazeDemos/images/gen/maze_80x60_BoruvkaMST.gif)
 
-#### [Kruskal](Mazes/src/main/java/de/amr/maze/alg/mst/KruskalMST.java)
+#### [Kruskal](MazeAlgorithms/src/main/java/de/amr/maze/alg/mst/KruskalMST.java)
 
-![](Demos/images/gen/maze_80x60_KruskalMST.gif)
+![](MazeDemos/images/gen/maze_80x60_KruskalMST.gif)
 
-#### [Prim](Mazes/src/main/java/de/amr/maze/alg/mst/PrimMST.java)
+#### [Prim](MazeAlgorithms/src/main/java/de/amr/maze/alg/mst/PrimMST.java)
 
-![](Demos/images/gen/maze_80x60_PrimMST.gif)
+![](MazeDemos/images/gen/maze_80x60_PrimMST.gif)
 
-#### [Reverse-Delete, base algorithm](Mazes/src/main/java/de/amr/maze/alg/mst/ReverseDeleteMST.java)
+#### [Reverse-Delete, base algorithm](MazeAlgorithms/src/main/java/de/amr/maze/alg/mst/ReverseDeleteMST.java)
 
-  - [Reverse-Delete, DFS variant](Mazes/src/main/java/de/amr/maze/alg/mst/ReverseDeleteMST_DFS.java)
+  - [Reverse-Delete, DFS variant](MazeAlgorithms/src/main/java/de/amr/maze/alg/mst/ReverseDeleteMST_DFS.java)
 
-  - [Reverse-Delete, BFS variant](Mazes/src/main/java/de/amr/maze/alg/mst/ReverseDeleteMST_BFS.java)
+  - [Reverse-Delete, BFS variant](MazeAlgorithms/src/main/java/de/amr/maze/alg/mst/ReverseDeleteMST_BFS.java)
 
-  - [Reverse-Delete, Best FS variant](Mazes/src/main/java/de/amr/maze/alg/mst/ReverseDeleteMST_BestFS.java)
+  - [Reverse-Delete, Best FS variant](MazeAlgorithms/src/main/java/de/amr/maze/alg/mst/ReverseDeleteMST_BestFS.java)
 
-  - [Reverse-Delete, Hill Climbing variant](Mazes/src/main/java/de/amr/maze/alg/mst/ReverseDeleteMST_HillClimbing.java)
+  - [Reverse-Delete, Hill Climbing variant](MazeAlgorithms/src/main/java/de/amr/maze/alg/mst/ReverseDeleteMST_HillClimbing.java)
 
-![](Demos/images/gen/maze_40x25_ReverseDeleteMST.gif)
+![](MazeDemos/images/gen/maze_40x25_ReverseDeleteMST.gif)
 
 ### Uniform Spanning Tree:
 
-#### [Aldous-Broder](Mazes/src/main/java/de/amr/maze/alg/ust/AldousBroderUST.java)
+#### [Aldous-Broder](MazeAlgorithms/src/main/java/de/amr/maze/alg/ust/AldousBroderUST.java)
 
-![](Demos/images/gen/maze_8x8_AldousBroderUST.gif)
+![](MazeDemos/images/gen/maze_8x8_AldousBroderUST.gif)
 
-#### [Houston](Mazes/src/main/java/de/amr/maze/alg/ust/AldousBroderWilsonUST.java)
+#### [Houston](MazeAlgorithms/src/main/java/de/amr/maze/alg/ust/AldousBroderWilsonUST.java)
 
-#### [Wilson's algorithm](Mazes/src/main/java/de/amr/maze/alg/ust) (16 different variants)
+#### [Wilson's algorithm](MazeAlgorithms/src/main/java/de/amr/maze/alg/ust) (16 different variants)
 
-![](Demos/images/gen/maze_80x60_WilsonUSTRandomCell.gif)
+![](MazeDemos/images/gen/maze_80x60_WilsonUSTRandomCell.gif)
 
-![](Demos/images/gen/maze_80x60_WilsonUSTCollapsingCircle.gif)
+![](MazeDemos/images/gen/maze_80x60_WilsonUSTCollapsingCircle.gif)
 
-![](Demos/images/gen/maze_80x60_WilsonUSTRecursiveCrosses.gif)
+![](MazeDemos/images/gen/maze_80x60_WilsonUSTRecursiveCrosses.gif)
 
 ### Other algorithms:
 
-#### [Binary Tree, top-to-bottom](Mazes/src/main/java/de/amr/maze/alg/BinaryTree.java)
+#### [Binary Tree, top-to-bottom](MazeAlgorithms/src/main/java/de/amr/maze/alg/BinaryTree.java)
 
-![](Demos/images/gen/maze_80x60_BinaryTree.gif)
+![](MazeDemos/images/gen/maze_80x60_BinaryTree.gif)
 
-#### [Binary Tree, random](Mazes/src/main/java/de/amr/maze/alg/BinaryTreeRandom.java)
+#### [Binary Tree, random](MazeAlgorithms/src/main/java/de/amr/maze/alg/BinaryTreeRandom.java)
 
-![](Demos/images/gen/maze_80x60_BinaryTreeRandom.gif)
+![](MazeDemos/images/gen/maze_80x60_BinaryTreeRandom.gif)
 
-#### [Eller's algorithm](Mazes/src/main/java/de/amr/maze/alg/Eller.java)
+#### [Eller's algorithm](MazeAlgorithms/src/main/java/de/amr/maze/alg/Eller.java)
 
-![](Demos/images/gen/maze_80x60_Eller.gif)
+![](MazeDemos/images/gen/maze_80x60_Eller.gif)
 
-#### [Armin's algorithm](Mazes/src/main/java/de/amr/maze/alg/EllerInsideOut.java) (like Eller's but growing the maze inside-out)
+#### [Armin's algorithm](MazeAlgorithms/src/main/java/de/amr/maze/alg/EllerInsideOut.java) (like Eller's but growing the maze inside-out)
 
-![](Demos/images/gen/maze_80x60_EllerInsideOut.gif)
+![](MazeDemos/images/gen/maze_80x60_EllerInsideOut.gif)
 
-#### [Sidewinder](Mazes/src/main/java/de/amr/maze/alg/Sidewinder.java)
+#### [Sidewinder](MazeAlgorithms/src/main/java/de/amr/maze/alg/Sidewinder.java)
 
-![](Demos/images/gen/maze_80x60_Sidewinder.gif)
+![](MazeDemos/images/gen/maze_80x60_Sidewinder.gif)
 
-#### [Hunt-And-Kill, top-to-bottom](Mazes/src/main/java/de/amr/maze/alg/HuntAndKill.java)
+#### [Hunt-And-Kill, top-to-bottom](MazeAlgorithms/src/main/java/de/amr/maze/alg/HuntAndKill.java)
 
-![](Demos/images/gen/maze_80x60_HuntAndKill.gif)
+![](MazeDemos/images/gen/maze_80x60_HuntAndKill.gif)
 
-#### [Hunt-And-Kill, random](Mazes/src/main/java/de/amr/maze/alg/HuntAndKillRandom.java)
+#### [Hunt-And-Kill, random](MazeAlgorithms/src/main/java/de/amr/maze/alg/HuntAndKillRandom.java)
 
-![](Demos/images/gen/maze_80x60_HuntAndKillRandom.gif)
+![](MazeDemos/images/gen/maze_80x60_HuntAndKillRandom.gif)
 
-#### [Recursive division](Mazes/src/main/java/de/amr/maze/alg/RecursiveDivision.java)
+#### [Recursive division](MazeAlgorithms/src/main/java/de/amr/maze/alg/RecursiveDivision.java)
 
-![](Demos/images/gen/maze_80x60_RecursiveDivision.gif)
+![](MazeDemos/images/gen/maze_80x60_RecursiveDivision.gif)
 
 ### Path finding algorithms:
 The [graph](https://github.com/armin-reichert/graph) library contains the following path finder implementations:
