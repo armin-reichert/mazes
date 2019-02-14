@@ -113,7 +113,7 @@ public class MazeDemoFX extends Application {
 		maze = generator.createMaze(0, 0);
 		drawGrid();
 		BreadthFirstSearch<?, ?> bfs = new BreadthFirstSearch<>(maze);
-		drawPath(bfs.path(maze.cell(TOP_LEFT), maze.cell(BOTTOM_RIGHT))::iterator);
+		drawPath(bfs.findPath(maze.cell(TOP_LEFT), maze.cell(BOTTOM_RIGHT))::iterator);
 	}
 
 	@SuppressWarnings("unchecked")

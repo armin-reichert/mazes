@@ -1,6 +1,6 @@
 package de.amr.maze.alg.mst;
 
-import de.amr.graph.pathfinder.impl.AbstractSearch;
+import de.amr.graph.pathfinder.impl.GraphSearch;
 import de.amr.graph.pathfinder.impl.DepthFirstSearch2;
 
 /**
@@ -18,8 +18,8 @@ public class ReverseDeleteMST_DFS extends ReverseDeleteMST {
 
 	@Override
 	protected boolean connected(int u, int v) {
-		AbstractSearch<?, ?> dfs = new DepthFirstSearch2<>(grid);
-		dfs.traverseGraph(u, v);
+		GraphSearch<?, ?> dfs = new DepthFirstSearch2<>(grid);
+		dfs.exploreGraph(u, v);
 		return dfs.getParent(v) != -1;
 	}
 }

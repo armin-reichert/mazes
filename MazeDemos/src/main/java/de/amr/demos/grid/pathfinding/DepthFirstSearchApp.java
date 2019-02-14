@@ -139,7 +139,7 @@ public class DepthFirstSearchApp {
 	}
 
 	private void dfs() {
-		solution = new DepthFirstSearch2<>(grid).path(grid.cell(GridPosition.TOP_LEFT),
+		solution = new DepthFirstSearch2<>(grid).findPath(grid.cell(GridPosition.TOP_LEFT),
 				grid.cell(GridPosition.BOTTOM_RIGHT));
 	}
 }
