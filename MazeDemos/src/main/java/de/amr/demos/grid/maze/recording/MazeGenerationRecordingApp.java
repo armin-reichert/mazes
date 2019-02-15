@@ -6,9 +6,9 @@ import java.io.File;
 
 import javax.swing.JFrame;
 
+import de.amr.graph.core.api.ObservableGraph;
 import de.amr.graph.event.api.EdgeEvent;
 import de.amr.graph.event.api.GraphObserver;
-import de.amr.graph.event.api.ObservableGraph;
 import de.amr.graph.event.api.VertexEvent;
 import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.graph.grid.ui.rendering.GridCanvas;

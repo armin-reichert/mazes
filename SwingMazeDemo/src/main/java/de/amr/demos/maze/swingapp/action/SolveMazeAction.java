@@ -24,6 +24,7 @@ import de.amr.graph.pathfinder.impl.DepthFirstSearch;
 import de.amr.graph.pathfinder.impl.DepthFirstSearch2;
 import de.amr.graph.pathfinder.impl.DijkstraSearch;
 import de.amr.graph.pathfinder.impl.HillClimbingSearch;
+import de.amr.graph.pathfinder.impl.IterativeDeepeningSearch;
 import de.amr.util.StopWatch;
 
 /**
@@ -89,6 +90,10 @@ public class SolveMazeAction extends AbstractAction {
 			dfsSolver(new DepthFirstSearch2<>(model().getGrid()), dfsSolverInfo.getDescription(), false);
 		}
 
+		else if (dfsSolverInfo.getAlgorithmClass() == IterativeDeepeningSearch.class) {
+			dfsSolver(new IterativeDeepeningSearch<>(model().getGrid()), dfsSolverInfo.getDescription(), false);
+		}
+		
 		else if (dfsSolverInfo.getAlgorithmClass() == HillClimbingSearch.class) {
 			dfsSolver(new HillClimbingSearch<>(model().getGrid(), heuristics()), dfsSolverInfo.getDescription(),
 					true);

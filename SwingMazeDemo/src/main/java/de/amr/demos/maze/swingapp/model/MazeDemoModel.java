@@ -23,6 +23,7 @@ import de.amr.graph.pathfinder.impl.DepthFirstSearch;
 import de.amr.graph.pathfinder.impl.DepthFirstSearch2;
 import de.amr.graph.pathfinder.impl.DijkstraSearch;
 import de.amr.graph.pathfinder.impl.HillClimbingSearch;
+import de.amr.graph.pathfinder.impl.IterativeDeepeningSearch;
 import de.amr.maze.alg.BinaryTree;
 import de.amr.maze.alg.BinaryTreeRandom;
 import de.amr.maze.alg.Eller;
@@ -128,7 +129,8 @@ public class MazeDemoModel {
 			/*@formatter:off*/
 			new AlgorithmInfo(BreadthFirstSearch.class, "Breadth-First Search", BFS),
 			new AlgorithmInfo(DepthFirstSearch2.class, "Depth-First Search", DFS), 
-			new AlgorithmInfo(DepthFirstSearch.class, "Depth-First Search (variant)", DFS), 
+			new AlgorithmInfo(DepthFirstSearch.class, "Depth-First Search (variant)", DFS),
+			new AlgorithmInfo(IterativeDeepeningSearch.class, "Iterative Deepening Depth-First Search", DFS),
 			new AlgorithmInfo(DijkstraSearch.class, "Dijkstra Search", BFS), 
 			new AlgorithmInfo(BestFirstSearch.class, "Best-First Search", BFS, INFORMED),
 			new AlgorithmInfo(AStarSearch.class, "A* Search", BFS, INFORMED),
