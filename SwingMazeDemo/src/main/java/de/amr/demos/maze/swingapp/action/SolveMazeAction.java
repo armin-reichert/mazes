@@ -14,7 +14,6 @@ import javax.swing.AbstractAction;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.PathFinderTag;
 import de.amr.graph.grid.api.GridPosition;
-import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.graph.grid.ui.animation.BFSAnimation;
 import de.amr.graph.grid.ui.animation.DFSAnimation;
 import de.amr.graph.pathfinder.impl.AStarSearch;
@@ -93,9 +92,8 @@ public class SolveMazeAction extends AbstractAction {
 	}
 
 	private void runSolver(GraphSearch<?, ?> solver, AlgorithmInfo solverInfo) {
-		OrthogonalGrid grid = model().getGrid();
-		int source = grid.cell(model().getPathFinderSource());
-		int target = grid.cell(model().getPathFinderTarget());
+		int source = model().getGrid().cell(model().getPathFinderSource());
+		int target = model().getGrid().cell(model().getPathFinderTarget());
 		boolean informed = solverInfo.isTagged(PathFinderTag.INFORMED);
 		StopWatch watch = new StopWatch();
 		if (solverInfo.isTagged(PathFinderTag.BFS)) {
@@ -105,10 +103,10 @@ public class SolveMazeAction extends AbstractAction {
 			watch.measure(() -> anim.run(solver, source, target));
 			anim.showPath(solver, source, target);
 		} else if (solverInfo.isTagged(PathFinderTag.DFS)) {
-			DFSAnimation anim = new DFSAnimation(grid);
+			DFSAnimation anim = new DFSAnimation(canvas());
 			anim.fnDelay = () -> model().getDelay();
 			anim.setPathColor(model().getPathColor());
-			watch.measure(() -> anim.run(canvas(), solver, source, target));
+			watch.measure(() -> anim.run(solver, source, target));
 		}
 		app().showMessage(informed
 				? format("%s (%s): %.2f seconds.", solverInfo.getDescription(), model().getMetric(),
