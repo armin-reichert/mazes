@@ -1,6 +1,6 @@
 package de.amr.demos.grid.maze.swing;
 
-import static de.amr.graph.grid.ui.animation.BreadthFirstTraversalAnimation.floodFill;
+import static de.amr.graph.grid.ui.animation.BFSAnimation.floodFill;
 
 import java.util.stream.IntStream;
 
@@ -24,12 +24,12 @@ public class RecursiveDivisionApp extends SwingGridSampleApp {
 	public void run() {
 		IntStream.of(128, 64, 32, 16, 8, 4, 2).forEach(cellSize -> {
 			setCellSize(cellSize);
-			MazeGenerator<OrthogonalGrid> generator = new RecursiveDivision(
-					getCanvas().getWidth() / cellSize, getCanvas().getHeight() / cellSize);
+			MazeGenerator<OrthogonalGrid> generator = new RecursiveDivision(getCanvas().getWidth() / cellSize,
+					getCanvas().getHeight() / cellSize);
 			setGrid(generator.getGrid());
 			generator.createMaze(0, 0);
 			sleep(1000);
-			floodFill(getCanvas(), getGrid(), 0);
+			floodFill(getCanvas(), 0);
 			sleep(1000);
 		});
 		System.exit(0);

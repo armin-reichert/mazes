@@ -9,7 +9,7 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 
 import de.amr.graph.grid.impl.OrthogonalGrid;
-import de.amr.graph.grid.ui.animation.BreadthFirstTraversalAnimation;
+import de.amr.graph.grid.ui.animation.BFSAnimation;
 import de.amr.graph.grid.ui.rendering.GridCanvas;
 import de.amr.graph.grid.ui.rendering.WallPassageGridRenderer;
 import de.amr.maze.alg.RecursiveDivision;
@@ -58,7 +58,7 @@ public class MazeToImage {
 			gr.fnCellSize = () -> p.cellSize;
 			canvas.pushRenderer(gr);
 			if (p.floodfill) {
-				BreadthFirstTraversalAnimation.floodFill(canvas, maze, 0);
+				BFSAnimation.floodFill(canvas, 0);
 			}
 			ImageIO.write(canvas.getDrawingBuffer(), "png", new File("maze.png"));
 		} catch (IOException e) {

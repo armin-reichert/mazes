@@ -15,16 +15,17 @@ import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.PathFinderTag;
 import de.amr.graph.grid.api.GridPosition;
 import de.amr.graph.grid.impl.OrthogonalGrid;
-import de.amr.graph.grid.ui.animation.BreadthFirstTraversalAnimation;
-import de.amr.graph.grid.ui.animation.DepthFirstTraversalAnimation;
+import de.amr.graph.grid.ui.animation.BFSAnimation;
+import de.amr.graph.grid.ui.animation.DFSAnimation;
 import de.amr.graph.pathfinder.impl.AStarSearch;
 import de.amr.graph.pathfinder.impl.BestFirstSearch;
 import de.amr.graph.pathfinder.impl.BreadthFirstSearch;
 import de.amr.graph.pathfinder.impl.DepthFirstSearch;
 import de.amr.graph.pathfinder.impl.DepthFirstSearch2;
 import de.amr.graph.pathfinder.impl.DijkstraSearch;
+import de.amr.graph.pathfinder.impl.GraphSearch;
 import de.amr.graph.pathfinder.impl.HillClimbingSearch;
-import de.amr.graph.pathfinder.impl.IterativeDeepeningSearch;
+import de.amr.graph.pathfinder.impl.IDDFS;
 import de.amr.util.StopWatch;
 
 /**
@@ -90,19 +91,19 @@ public class SolveMazeAction extends AbstractAction {
 			dfsSolver(new DepthFirstSearch2<>(model().getGrid()), dfsSolverInfo.getDescription(), false);
 		}
 
-		else if (dfsSolverInfo.getAlgorithmClass() == IterativeDeepeningSearch.class) {
-			dfsSolver(new IterativeDeepeningSearch<>(model().getGrid()), dfsSolverInfo.getDescription(), false);
+		else if (dfsSolverInfo.getAlgorithmClass() == IDDFS.class) {
+			dfsSolver(new IDDFS<>(model().getGrid()), dfsSolverInfo.getDescription(), false);
 		}
-		
+
 		else if (dfsSolverInfo.getAlgorithmClass() == HillClimbingSearch.class) {
 			dfsSolver(new HillClimbingSearch<>(model().getGrid(), heuristics()), dfsSolverInfo.getDescription(),
 					true);
 		}
 	}
 
-	private void bfsSolver(BreadthFirstSearch<?, ?> solver, String solverName, boolean informed) {
+	private void bfsSolver(GraphSearch<?, ?> solver, String solverName, boolean informed) {
 		OrthogonalGrid grid = model().getGrid();
-		BreadthFirstTraversalAnimation anim = new BreadthFirstTraversalAnimation(grid);
+		BFSAnimation anim = new BFSAnimation(grid);
 		anim.fnDelay = () -> model().getDelay();
 		anim.fnPathColor = () -> model().getPathColor();
 		StopWatch watch = new StopWatch();
@@ -115,9 +116,9 @@ public class SolveMazeAction extends AbstractAction {
 		anim.showPath(canvas(), solver, source, target);
 	}
 
-	private void dfsSolver(DepthFirstSearch<?, ?> solver, String solverName, boolean informed) {
+	private void dfsSolver(GraphSearch<?, ?> solver, String solverName, boolean informed) {
 		OrthogonalGrid grid = model().getGrid();
-		DepthFirstTraversalAnimation anim = new DepthFirstTraversalAnimation(grid);
+		DFSAnimation anim = new DFSAnimation(grid);
 		anim.fnDelay = () -> model().getDelay();
 		anim.setPathColor(model().getPathColor());
 		StopWatch watch = new StopWatch();

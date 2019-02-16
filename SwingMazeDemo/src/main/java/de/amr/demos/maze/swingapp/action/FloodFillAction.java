@@ -3,7 +3,7 @@ package de.amr.demos.maze.swingapp.action;
 import static de.amr.demos.maze.swingapp.MazeDemoApp.app;
 import static de.amr.demos.maze.swingapp.MazeDemoApp.canvas;
 import static de.amr.demos.maze.swingapp.MazeDemoApp.model;
-import static de.amr.graph.grid.ui.animation.BreadthFirstTraversalAnimation.floodFill;
+import static de.amr.graph.grid.ui.animation.BFSAnimation.floodFill;
 
 import java.awt.event.ActionEvent;
 
@@ -27,7 +27,7 @@ public class FloodFillAction extends AbstractAction {
 
 	private void runFloodFill() {
 		int source = model().getGrid().cell(model().getPathFinderSource());
-		floodFill(canvas(), model().getGrid(), source, distancesVisible);
+		floodFill(canvas(), source, distancesVisible);
 	}
 
 	@Override

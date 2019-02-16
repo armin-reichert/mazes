@@ -2,13 +2,13 @@ package de.amr.demos.grid.rendering;
 
 import static de.amr.graph.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.graph.grid.api.GridPosition.TOP_LEFT;
-import static de.amr.graph.grid.ui.animation.BreadthFirstTraversalAnimation.floodFill;
+import static de.amr.graph.grid.ui.animation.BFSAnimation.floodFill;
 import static de.amr.graph.pathfinder.api.TraversalState.COMPLETED;
 import static de.amr.graph.pathfinder.api.TraversalState.UNVISITED;
 
 import de.amr.demos.grid.SwingGridSampleApp;
 import de.amr.graph.grid.impl.OrthogonalGrid;
-import de.amr.graph.grid.ui.animation.DepthFirstTraversalAnimation;
+import de.amr.graph.grid.ui.animation.DFSAnimation;
 import de.amr.graph.pathfinder.impl.DepthFirstSearch2;
 import de.amr.maze.alg.core.MazeGenerator;
 import de.amr.maze.alg.ust.WilsonUSTRecursiveCrosses;
@@ -45,12 +45,12 @@ public class PearlsRendererTestApp extends SwingGridSampleApp {
 		generator.createMaze(0, 0);
 
 		sleep(2000);
-		new DepthFirstTraversalAnimation(getGrid()).run(getCanvas(), new DepthFirstSearch2<>(getGrid()), 0,
+		new DFSAnimation(getGrid()).run(getCanvas(), new DepthFirstSearch2<>(getGrid()), 0,
 				getGrid().cell(BOTTOM_RIGHT));
 
 		sleep(2000);
 		getCanvas().clear();
-		floodFill(getCanvas(), getGrid(), getGrid().cell(TOP_LEFT), true);
+		floodFill(getCanvas(), getGrid().cell(TOP_LEFT), true);
 	}
 
 	private void clear() {

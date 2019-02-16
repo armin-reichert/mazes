@@ -10,7 +10,7 @@ import javax.swing.AbstractAction;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.graph.grid.api.GridPosition;
 import de.amr.graph.grid.impl.OrthogonalGrid;
-import de.amr.graph.grid.ui.animation.BreadthFirstTraversalAnimation;
+import de.amr.graph.grid.ui.animation.BFSAnimation;
 import de.amr.maze.alg.core.MazeGenerator;
 import de.amr.util.StopWatch;
 
@@ -24,7 +24,7 @@ public abstract class CreateMazeActionBase extends AbstractAction {
 	}
 
 	protected void floodFill(OrthogonalGrid grid) {
-		BreadthFirstTraversalAnimation.floodFill(canvas(), grid, grid.cell(model().getGenerationStart()));
+		BFSAnimation.floodFill(canvas(), grid.cell(model().getGenerationStart()));
 	}
 
 	@SuppressWarnings("unchecked")
