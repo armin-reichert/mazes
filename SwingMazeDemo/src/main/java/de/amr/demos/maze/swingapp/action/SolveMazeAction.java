@@ -46,11 +46,7 @@ public class SolveMazeAction extends AbstractAction {
 			canvas().drawGrid();
 			app().startWorkerThread(() -> {
 				try {
-					if (solver.isTagged(PathFinderTag.DFS)) {
-						dfsSolverAnimation(solver);
-					} else if (solver.isTagged(PathFinderTag.BFS)) {
-						bfsSolverAnimation(solver);
-					}
+					runSolverAnimation(solver);
 				} catch (Exception x) {
 					x.printStackTrace();
 					app().showMessage("Error during path finding: " + x.getMessage());
@@ -61,73 +57,63 @@ public class SolveMazeAction extends AbstractAction {
 		});
 	}
 
-	private void bfsSolverAnimation(AlgorithmInfo bfsSolverInfo) {
+	private void runSolverAnimation(AlgorithmInfo solverInfo) {
 
-		if (bfsSolverInfo.getAlgorithmClass() == BreadthFirstSearch.class) {
-			bfsSolver(new BreadthFirstSearch<>(model().getGrid()), bfsSolverInfo.getDescription(), false);
+		if (solverInfo.getAlgorithmClass() == BreadthFirstSearch.class) {
+			runSolver(new BreadthFirstSearch<>(model().getGrid()), solverInfo);
 		}
 
-		else if (bfsSolverInfo.getAlgorithmClass() == DijkstraSearch.class) {
-			bfsSolver(new DijkstraSearch<>(model().getGrid(), edge -> 1), bfsSolverInfo.getDescription(), false);
+		else if (solverInfo.getAlgorithmClass() == DijkstraSearch.class) {
+			runSolver(new DijkstraSearch<>(model().getGrid(), edge -> 1), solverInfo);
 		}
 
-		else if (bfsSolverInfo.getAlgorithmClass() == BestFirstSearch.class) {
-			bfsSolver(new BestFirstSearch<>(model().getGrid(), heuristics()), bfsSolverInfo.getDescription(), true);
+		else if (solverInfo.getAlgorithmClass() == BestFirstSearch.class) {
+			runSolver(new BestFirstSearch<>(model().getGrid(), heuristics()), solverInfo);
 		}
 
-		else if (bfsSolverInfo.getAlgorithmClass() == AStarSearch.class) {
-			bfsSolver(new AStarSearch<>(model().getGrid(), edge -> 1, metric()), bfsSolverInfo.getDescription(),
-					true);
-		}
-	}
-
-	private void dfsSolverAnimation(AlgorithmInfo dfsSolverInfo) {
-
-		if (dfsSolverInfo.getAlgorithmClass() == DepthFirstSearch.class) {
-			dfsSolver(new DepthFirstSearch<>(model().getGrid()), dfsSolverInfo.getDescription(), false);
+		else if (solverInfo.getAlgorithmClass() == AStarSearch.class) {
+			runSolver(new AStarSearch<>(model().getGrid(), edge -> 1, metric()), solverInfo);
 		}
 
-		else if (dfsSolverInfo.getAlgorithmClass() == DepthFirstSearch2.class) {
-			dfsSolver(new DepthFirstSearch2<>(model().getGrid()), dfsSolverInfo.getDescription(), false);
+		if (solverInfo.getAlgorithmClass() == DepthFirstSearch.class) {
+			runSolver(new DepthFirstSearch<>(model().getGrid()), solverInfo);
 		}
 
-		else if (dfsSolverInfo.getAlgorithmClass() == IDDFS.class) {
-			dfsSolver(new IDDFS<>(model().getGrid()), dfsSolverInfo.getDescription(), false);
+		else if (solverInfo.getAlgorithmClass() == DepthFirstSearch2.class) {
+			runSolver(new DepthFirstSearch2<>(model().getGrid()), solverInfo);
 		}
 
-		else if (dfsSolverInfo.getAlgorithmClass() == HillClimbingSearch.class) {
-			dfsSolver(new HillClimbingSearch<>(model().getGrid(), heuristics()), dfsSolverInfo.getDescription(),
-					true);
+		else if (solverInfo.getAlgorithmClass() == IDDFS.class) {
+			runSolver(new IDDFS<>(model().getGrid()), solverInfo);
+		}
+
+		else if (solverInfo.getAlgorithmClass() == HillClimbingSearch.class) {
+			runSolver(new HillClimbingSearch<>(model().getGrid(), heuristics()), solverInfo);
 		}
 	}
 
-	private void bfsSolver(GraphSearch<?, ?> solver, String solverName, boolean informed) {
+	private void runSolver(GraphSearch<?, ?> solver, AlgorithmInfo solverInfo) {
 		OrthogonalGrid grid = model().getGrid();
-		BFSAnimation anim = new BFSAnimation(canvas());
-		anim.fnDelay = () -> model().getDelay();
-		anim.fnPathColor = () -> model().getPathColor();
-		StopWatch watch = new StopWatch();
 		int source = grid.cell(model().getPathFinderSource());
 		int target = grid.cell(model().getPathFinderTarget());
-		watch.measure(() -> anim.run(solver, source, target));
-		app().showMessage(
-				informed ? format("%s (%s): %.2f seconds.", solverName, model().getMetric(), watch.getSeconds())
-						: format("%s: %.2f seconds.", solverName, watch.getSeconds()));
-		anim.showPath(solver, source, target);
-	}
-
-	private void dfsSolver(GraphSearch<?, ?> solver, String solverName, boolean informed) {
-		OrthogonalGrid grid = model().getGrid();
-		DFSAnimation anim = new DFSAnimation(grid);
-		anim.fnDelay = () -> model().getDelay();
-		anim.setPathColor(model().getPathColor());
+		boolean informed = solverInfo.isTagged(PathFinderTag.INFORMED);
 		StopWatch watch = new StopWatch();
-		int source = grid.cell(model().getPathFinderSource());
-		int target = grid.cell(model().getPathFinderTarget());
-		watch.measure(() -> anim.run(canvas(), solver, source, target));
-		app().showMessage(
-				informed ? format("%s (%s): %.2f seconds.", solverName, model().getMetric(), watch.getSeconds())
-						: format("%s: %.2f seconds.", solverName, watch.getSeconds()));
+		if (solverInfo.isTagged(PathFinderTag.BFS)) {
+			BFSAnimation anim = new BFSAnimation(canvas());
+			anim.fnDelay = () -> model().getDelay();
+			anim.fnPathColor = () -> model().getPathColor();
+			watch.measure(() -> anim.run(solver, source, target));
+			anim.showPath(solver, source, target);
+		} else if (solverInfo.isTagged(PathFinderTag.DFS)) {
+			DFSAnimation anim = new DFSAnimation(grid);
+			anim.fnDelay = () -> model().getDelay();
+			anim.setPathColor(model().getPathColor());
+			watch.measure(() -> anim.run(canvas(), solver, source, target));
+		}
+		app().showMessage(informed
+				? format("%s (%s): %.2f seconds.", solverInfo.getDescription(), model().getMetric(),
+						watch.getSeconds())
+				: format("%s: %.2f seconds.", solverInfo.getDescription(), watch.getSeconds()));
 	}
 
 	private ToDoubleFunction<Integer> heuristics() {
