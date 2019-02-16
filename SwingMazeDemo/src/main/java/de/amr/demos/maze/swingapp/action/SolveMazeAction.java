@@ -103,17 +103,17 @@ public class SolveMazeAction extends AbstractAction {
 
 	private void bfsSolver(GraphSearch<?, ?> solver, String solverName, boolean informed) {
 		OrthogonalGrid grid = model().getGrid();
-		BFSAnimation anim = new BFSAnimation(grid);
+		BFSAnimation anim = new BFSAnimation(canvas());
 		anim.fnDelay = () -> model().getDelay();
 		anim.fnPathColor = () -> model().getPathColor();
 		StopWatch watch = new StopWatch();
 		int source = grid.cell(model().getPathFinderSource());
 		int target = grid.cell(model().getPathFinderTarget());
-		watch.measure(() -> anim.run(canvas(), solver, source, target));
+		watch.measure(() -> anim.run(solver, source, target));
 		app().showMessage(
 				informed ? format("%s (%s): %.2f seconds.", solverName, model().getMetric(), watch.getSeconds())
 						: format("%s: %.2f seconds.", solverName, watch.getSeconds()));
-		anim.showPath(canvas(), solver, source, target);
+		anim.showPath(solver, source, target);
 	}
 
 	private void dfsSolver(GraphSearch<?, ?> solver, String solverName, boolean informed) {
