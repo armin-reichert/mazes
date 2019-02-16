@@ -27,7 +27,7 @@ public class CreateMazeAction extends CreateMazeActionBase {
 					OrthogonalGrid maze = createMaze(algo, model().getGenerationStart());
 					if (maze != null && model().isFloodFillAfterGeneration()) {
 						pause(1);
-						floodFill(maze);
+						floodFill();
 					}
 				} catch (Exception | StackOverflowError x) {
 					app().showMessage("Error during generation: " + x.getClass().getSimpleName());

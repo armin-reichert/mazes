@@ -48,7 +48,7 @@ public class CreateAllMazesAction extends CreateMazeActionBase {
 						OrthogonalGrid maze = createNextMaze(algo);
 						if (maze != null && model().isFloodFillAfterGeneration()) {
 							pause(1);
-							floodFill(maze);
+							floodFill();
 						}
 						pause(3);
 					} catch (Exception x) {

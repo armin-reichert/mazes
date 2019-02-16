@@ -23,8 +23,8 @@ public abstract class CreateMazeActionBase extends AbstractAction {
 		}
 	}
 
-	protected void floodFill(OrthogonalGrid grid) {
-		BFSAnimation.floodFill(canvas(), grid.cell(model().getGenerationStart()));
+	protected void floodFill() {
+		BFSAnimation.floodFill(canvas(), model().getGenerationStart(), false);
 	}
 
 	@SuppressWarnings("unchecked")

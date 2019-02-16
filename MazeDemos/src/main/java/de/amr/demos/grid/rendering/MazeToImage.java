@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 
+import de.amr.graph.grid.api.GridPosition;
 import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.graph.grid.ui.animation.BFSAnimation;
 import de.amr.graph.grid.ui.rendering.GridCanvas;
@@ -58,7 +59,7 @@ public class MazeToImage {
 			gr.fnCellSize = () -> p.cellSize;
 			canvas.pushRenderer(gr);
 			if (p.floodfill) {
-				BFSAnimation.floodFill(canvas, 0);
+				BFSAnimation.floodFill(canvas, GridPosition.CENTER, false);
 			}
 			ImageIO.write(canvas.getDrawingBuffer(), "png", new File("maze.png"));
 		} catch (IOException e) {

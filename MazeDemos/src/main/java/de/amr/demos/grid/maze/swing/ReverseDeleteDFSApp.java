@@ -28,7 +28,7 @@ public class ReverseDeleteDFSApp extends SwingGridSampleApp {
 					getCanvas().getHeight() / cellSize);
 			setGrid(generator.getGrid());
 			generator.createMaze(0, 0);
-			floodFill(getCanvas(), 0);
+			floodFill(getCanvas(), 0, false);
 			sleep(1000);
 		});
 		System.exit(0);

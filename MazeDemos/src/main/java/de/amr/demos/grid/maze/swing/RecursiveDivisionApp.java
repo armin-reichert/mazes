@@ -29,7 +29,7 @@ public class RecursiveDivisionApp extends SwingGridSampleApp {
 			setGrid(generator.getGrid());
 			generator.createMaze(0, 0);
 			sleep(1000);
-			floodFill(getCanvas(), 0);
+			floodFill(getCanvas(), 0, false);
 			sleep(1000);
 		});
 		System.exit(0);
