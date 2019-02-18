@@ -11,6 +11,7 @@ import static de.amr.demos.maze.swingapp.model.PathFinderTag.INFORMED;
 
 import java.awt.Color;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -126,24 +127,24 @@ public class MazeDemoModel {
 	};
 
 	public static final AlgorithmInfo[] PATHFINDER_ALGORITHMS = {
-			/*@formatter:off*/
-			new AlgorithmInfo(BreadthFirstSearch.class, "Breadth-First Search", BFS),
-			new AlgorithmInfo(DepthFirstSearch2.class, "Depth-First Search", DFS), 
-			new AlgorithmInfo(DepthFirstSearch.class, "Depth-First Search (variant)", DFS),
-			new AlgorithmInfo(IDDFS.class, "Iterative Deepening Depth-First Search", DFS),
-			new AlgorithmInfo(DijkstraSearch.class, "Dijkstra Search", BFS), 
-			new AlgorithmInfo(BestFirstSearch.class, "Best-First Search", BFS, INFORMED),
-			new AlgorithmInfo(AStarSearch.class, "A* Search", BFS, INFORMED),
-			new AlgorithmInfo(HillClimbingSearch.class, "Hill-Climbing Search", DFS, INFORMED),
-			/*@formatter:on*/
+		/*@formatter:off*/
+		new AlgorithmInfo(BreadthFirstSearch.class, "Breadth-First Search", BFS),
+		new AlgorithmInfo(DepthFirstSearch.class, "Depth-First Search", DFS),
+		new AlgorithmInfo(DepthFirstSearch2.class, "Depth-First Search (variation)", DFS), 
+		new AlgorithmInfo(IDDFS.class, "Iterative Deepening DFS", DFS),
+		new AlgorithmInfo(DijkstraSearch.class, "Uniform Cost (Dijkstra) Search", BFS), 
+		new AlgorithmInfo(HillClimbingSearch.class, "Hill-Climbing Search", DFS, INFORMED),
+		new AlgorithmInfo(BestFirstSearch.class, "Greedy Best-First Search", BFS, INFORMED),
+		new AlgorithmInfo(AStarSearch.class, "A* Search", BFS, INFORMED),
+		/*@formatter:on*/
 	};
 
 	public static Optional<AlgorithmInfo> find(AlgorithmInfo[] algorithms, Class<?> clazz) {
 		return find(algorithms, alg -> alg.getAlgorithmClass() == clazz);
 	}
 
-	public static Optional<AlgorithmInfo> find(AlgorithmInfo[] algorithms, Predicate<AlgorithmInfo> filter) {
-		return Arrays.stream(algorithms).filter(alg -> alg != null).filter(filter).findFirst();
+	public static Optional<AlgorithmInfo> find(AlgorithmInfo[] algorithms, Predicate<AlgorithmInfo> predicate) {
+		return Arrays.stream(algorithms).filter(Objects::nonNull).filter(predicate).findFirst();
 	}
 
 	private int gridWidth;
