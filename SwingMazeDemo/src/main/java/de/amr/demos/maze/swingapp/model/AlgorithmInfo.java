@@ -15,9 +15,9 @@ public class AlgorithmInfo {
 
 	private final Class<?> algorithmClass;
 	private final String description;
-	private final Object[] tags;
+	private final Tag[] tags;
 
-	public AlgorithmInfo(Class<?> algorithmClass, String description, Object... tags) {
+	public AlgorithmInfo(Class<?> algorithmClass, String description, Tag... tags) {
 		Objects.requireNonNull(algorithmClass);
 		this.algorithmClass = algorithmClass;
 		this.description = description;
@@ -32,11 +32,11 @@ public class AlgorithmInfo {
 		return description;
 	}
 
-	public boolean isTagged(Object tag) {
+	public boolean isTagged(Tag tag) {
 		return tags().anyMatch(t -> t.equals(tag));
 	}
 
-	public Stream<?> tags() {
+	public Stream<Tag> tags() {
 		return Arrays.stream(tags);
 	}
 }

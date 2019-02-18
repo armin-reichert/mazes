@@ -1,5 +1,5 @@
 package de.amr.demos.maze.swingapp.model;
 
-public enum PathFinderTag {
+public enum PathFinderTag implements Tag {
 	DFS, BFS, INFORMED;
 }
