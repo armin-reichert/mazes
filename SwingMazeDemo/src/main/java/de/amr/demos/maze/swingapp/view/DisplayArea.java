@@ -15,15 +15,15 @@ import de.amr.graph.grid.ui.rendering.WallPassageGridRenderer;
 import de.amr.graph.pathfinder.api.TraversalState;
 
 /**
- * Display area for the maze/grid. Supports animation.
+ * Display area for maze generation and traversal.
  * 
  * @author Armin Reichert
  */
-public class GridDisplayArea extends GridCanvas {
+public class DisplayArea extends GridCanvas {
 
 	private final GridCanvasAnimation<TraversalState, Integer> animation;
 
-	public GridDisplayArea() {
+	public DisplayArea() {
 		super(model().getGrid(), model().getGridCellSize());
 		pushRenderer(createRenderer());
 		animation = new GridCanvasAnimation<>(this);
@@ -31,8 +31,8 @@ public class GridDisplayArea extends GridCanvas {
 		model().getGrid().addGraphObserver(animation);
 	}
 
-	public GridCanvasAnimation<TraversalState, Integer> getAnimation() {
-		return animation;
+	public void enableAnimation(boolean enabled) {
+		animation.setEnabled(enabled);
 	}
 
 	@Override
@@ -58,13 +58,6 @@ public class GridDisplayArea extends GridCanvas {
 			return passageWidth;
 		};
 		r.fnPassageColor = (u, v) -> {
-			TraversalState s_u = model().getGrid().get(u), s_v = model().getGrid().get(v);
-			if (s_u == s_v) {
-				return r.getCellBgColor(u);
-			}
-			// if (s_u == COMPLETED || s_v == COMPLETED) {
-			// return model().getCompletedCellColor();
-			// }
 			return r.getCellBgColor(u);
 		};
 		r.fnCellBgColor = cell -> {

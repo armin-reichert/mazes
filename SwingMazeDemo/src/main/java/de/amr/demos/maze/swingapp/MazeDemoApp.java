@@ -10,9 +10,9 @@ import java.awt.Color;
 import java.awt.DisplayMode;
 import java.awt.EventQueue;
 import java.awt.GraphicsEnvironment;
-import java.util.ResourceBundle;
 
 import javax.swing.Action;
+import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
@@ -24,9 +24,9 @@ import de.amr.demos.maze.swingapp.action.CreateMazeAction;
 import de.amr.demos.maze.swingapp.action.EmptyGridAction;
 import de.amr.demos.maze.swingapp.action.FloodFillAction;
 import de.amr.demos.maze.swingapp.action.FullGridAction;
-import de.amr.demos.maze.swingapp.action.SolveMazeAction;
 import de.amr.demos.maze.swingapp.action.SaveImageAction;
 import de.amr.demos.maze.swingapp.action.ShowSettingsAction;
+import de.amr.demos.maze.swingapp.action.SolveMazeAction;
 import de.amr.demos.maze.swingapp.action.StopTaskAction;
 import de.amr.demos.maze.swingapp.action.ToggleControlPanelAction;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
@@ -34,9 +34,8 @@ import de.amr.demos.maze.swingapp.model.MazeDemoModel;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel.Metric;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
 import de.amr.demos.maze.swingapp.model.PathFinderTag;
-import de.amr.demos.maze.swingapp.view.DisplayAreaWindow;
-import de.amr.demos.maze.swingapp.view.GridDisplayArea;
-import de.amr.demos.maze.swingapp.view.SettingsWindow;
+import de.amr.demos.maze.swingapp.view.ControlWindow;
+import de.amr.demos.maze.swingapp.view.DisplayArea;
 import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.graph.pathfinder.api.TraversalState;
 import de.amr.graph.pathfinder.impl.BreadthFirstSearch;
@@ -69,17 +68,18 @@ public class MazeDemoApp {
 		return APP.model;
 	}
 
-	public static GridDisplayArea canvas() {
-		return APP.wndDisplayArea.getCanvas();
+	public static DisplayArea canvas() {
+		return APP.canvas;
 	}
 
 	public static final DisplayMode DISPLAY_MODE = GraphicsEnvironment.getLocalGraphicsEnvironment()
 			.getDefaultScreenDevice().getDisplayMode();
 
-	public final ResourceBundle texts = ResourceBundle.getBundle("texts");
 	public final MazeDemoModel model;
-	public final SettingsWindow wndSettings;
-	public final DisplayAreaWindow wndDisplayArea;
+	public final ControlWindow wndControl;
+
+	private final JFrame wndDisplayArea;
+	private DisplayArea canvas;
 
 	public final Action actionCreateMaze = new CreateMazeAction();
 	public final Action actionCreateAllMazes = new CreateAllMazesAction();
@@ -92,7 +92,7 @@ public class MazeDemoApp {
 	public final Action actionEmptyGrid = new EmptyGridAction();
 	public final Action actionFullGrid = new FullGridAction();
 	public final Action actionChangeGridResolution = new ChangeGridResolutionAction();
-	public final Action actionShowSettings = new ShowSettingsAction();
+	public final Action actionShowControls = new ShowSettingsAction();
 	public final ToggleControlPanelAction actionToggleControlPanel = new ToggleControlPanelAction();
 
 	private Thread workerThread;
@@ -125,33 +125,35 @@ public class MazeDemoApp {
 		model.setGridHeight(DISPLAY_MODE.getHeight() / model.getGridCellSize());
 		model.setGrid(createDefaultGrid(true));
 
-		// create new canvas in its own window
-		wndDisplayArea = new DisplayAreaWindow();
-		wndDisplayArea.getCanvas().getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
-		wndDisplayArea.getCanvas().getActionMap().put("showSettings", actionShowSettings);
-		wndDisplayArea.getCanvas().drawGrid();
-		wndDisplayArea.setVisible(true);
+		// create new canvas inside fullscreen window
+		newCanvas();
 
-		// create settings window
-		wndSettings = new SettingsWindow();
-		wndSettings.setAlwaysOnTop(true);
+		wndDisplayArea = new JFrame("Maze Display Window");
+		wndDisplayArea.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		wndDisplayArea.setUndecorated(true);
+		wndDisplayArea.setVisible(true);
+		wndDisplayArea.setContentPane(canvas);
+
+		// create control window
+		wndControl = new ControlWindow();
+		wndControl.setAlwaysOnTop(true);
 
 		// initialize generator and pathfinder selection
 		MazeDemoModel.find(GENERATOR_ALGORITHMS, IterativeDFS.class).ifPresent(alg -> {
-			wndSettings.generatorMenu.selectAlgorithm(alg);
+			wndControl.generatorMenu.selectAlgorithm(alg);
 			onGeneratorChange(alg);
 		});
 		MazeDemoModel.find(PATHFINDER_ALGORITHMS, alg -> alg.getAlgorithmClass() == BreadthFirstSearch.class)
 				.ifPresent(alg -> {
-					wndSettings.solverMenu.selectAlgorithm(alg);
+					wndControl.solverMenu.selectAlgorithm(alg);
 					onSolverChange(alg);
 				});
 
 		// hide details initially
 		actionToggleControlPanel.setMinimized(true);
 
-		wndSettings.setVisible(true);
-		wndSettings.setLocation((DISPLAY_MODE.getWidth() - wndSettings.getWidth()) / 2, 42);
+		wndControl.setVisible(true);
+		wndControl.setLocation((DISPLAY_MODE.getWidth() - wndControl.getWidth()) / 2, 42);
 	}
 
 	public OrthogonalGrid createDefaultGrid(boolean full) {
@@ -161,44 +163,49 @@ public class MazeDemoApp {
 		return grid;
 	}
 
-	public void resetDisplay() {
-		model.setGrid(createDefaultGrid(true));
-		wndDisplayArea.newCanvas();
-		wndDisplayArea.getCanvas().getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
-		wndDisplayArea.getCanvas().getActionMap().put("showSettings", actionShowSettings);
-		// TODO how to handle this better?
-		if (model.getGrid().numVertices() < 100_000) {
-			wndDisplayArea.getCanvas().drawGrid();
+	private void newCanvas() {
+		canvas = new DisplayArea();
+		canvas.getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"), "showSettings");
+		canvas.getActionMap().put("showSettings", actionShowControls);
+		if (model.getGrid().numVertices() < 10_000) {
+			canvas.drawGrid();
 		} else {
-			wndDisplayArea.getCanvas().fill(Color.WHITE);
+			canvas.fill(Color.WHITE);
 		}
 	}
 
+	public void resetDisplay() {
+		model.setGrid(createDefaultGrid(true));
+		newCanvas();
+		wndDisplayArea.setContentPane(canvas);
+		wndDisplayArea.repaint();
+	}
+
 	public void showMessage(String msg) {
-		wndSettings.controlPanel.showMessage(msg + "\n");
+		wndControl.controlPanel.showMessage(msg + "\n");
 	}
 
 	public void setGridPassageThickness(int percent) {
 		model.setPassageWidthPercentage(percent);
-		wndDisplayArea.getCanvas().clear();
-		wndDisplayArea.getCanvas().drawGrid();
+		canvas.clear();
+		canvas.drawGrid();
 	}
 
 	public void enableUI(boolean enabled) {
-		wndSettings.setVisible(enabled || !model.isHidingControlsWhenRunning());
-		wndSettings.generatorMenu.setEnabled(enabled);
-		wndSettings.solverMenu.setEnabled(enabled);
-		wndSettings.canvasMenu.setEnabled(enabled);
-		wndSettings.optionMenu.setEnabled(enabled);
+		wndControl.setVisible(enabled || !model.isHidingControlsWhenRunning());
+		wndControl.generatorMenu.setEnabled(enabled);
+		wndControl.solverMenu.setEnabled(enabled);
+		wndControl.canvasMenu.setEnabled(enabled);
+		wndControl.optionMenu.setEnabled(enabled);
 		actionChangeGridResolution.setEnabled(enabled);
 		actionCreateMaze.setEnabled(enabled);
 		actionCreateAllMazes.setEnabled(enabled);
 		actionRunMazeSolver.setEnabled(enabled);
-		wndSettings.controlPanel.getSliderPassageWidth().setEnabled(enabled);
+		wndControl.controlPanel.getSliderPassageWidth().setEnabled(enabled);
 	}
 
 	public void onGeneratorChange(AlgorithmInfo generatorInfo) {
-		wndSettings.controlPanel.getLblGenerationAlgorithm().setText(generatorInfo.getDescription());
+		wndControl.controlPanel.getLblGenerationAlgorithm().setText(generatorInfo.getDescription());
 	}
 
 	public void onSolverChange(AlgorithmInfo solverInfo) {
@@ -208,7 +215,7 @@ public class MazeDemoApp {
 					+ model.getMetric().name().substring(1).toLowerCase();
 			label += " (" + text + ")";
 		}
-		wndSettings.controlPanel.getLblSolver().setText(label);
+		wndControl.controlPanel.getLblSolver().setText(label);
 	}
 
 	public void startWorkerThread(Runnable work) {

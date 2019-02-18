@@ -62,7 +62,7 @@ public class CreateAllMazesAction extends CreateMazeActionBase {
 
 	private OrthogonalGrid createNextMaze(AlgorithmInfo algo) {
 		canvas().clear();
-		app().wndSettings.generatorMenu.selectAlgorithm(algo);
+		app().wndControl.generatorMenu.selectAlgorithm(algo);
 		app().onGeneratorChange(algo);
 		try {
 			readyForNext = false;

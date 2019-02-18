@@ -1,9 +1,9 @@
 package de.amr.demos.maze.swingapp.view.menu;
 
-import static de.amr.demos.maze.swingapp.MazeDemoApp.app;
 import static de.amr.demos.maze.swingapp.MazeDemoApp.model;
 
 import java.awt.event.ItemEvent;
+import java.util.ResourceBundle;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -47,9 +47,10 @@ public class OptionMenu extends JMenu {
 			Supplier<GridPosition> selection) {
 		JMenu menu = new JMenu(title);
 		ButtonGroup group = new ButtonGroup();
+		ResourceBundle texts = ResourceBundle.getBundle("texts");
 		for (GridPosition pos : GridPosition.values()) {
 			JRadioButtonMenuItem radio = new JRadioButtonMenuItem();
-			radio.setText(app().texts.getString(pos.name()));
+			radio.setText(texts.getString(pos.name()));
 			radio.setSelected(pos == selection.get());
 			radio.addItemListener(e -> {
 				if (e.getStateChange() == ItemEvent.SELECTED) {

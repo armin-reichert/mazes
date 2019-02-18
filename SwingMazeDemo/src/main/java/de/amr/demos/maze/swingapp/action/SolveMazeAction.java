@@ -40,7 +40,7 @@ public class SolveMazeAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app().wndSettings.solverMenu.getSelectedAlgorithm().ifPresent(solver -> {
+		app().wndControl.solverMenu.getSelectedAlgorithm().ifPresent(solver -> {
 			app().enableUI(false);
 			canvas().drawGrid();
 			app().startWorkerThread(() -> {

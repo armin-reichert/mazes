@@ -24,7 +24,7 @@ import de.amr.demos.maze.swingapp.view.menu.SolverMenu;
  * 
  * @author Armin Reichert
  */
-public class SettingsWindow extends JFrame {
+public class ControlWindow extends JFrame {
 
 	public final GeneratorMenu generatorMenu;
 	public final CanvasMenu canvasMenu;
@@ -53,7 +53,7 @@ public class SettingsWindow extends JFrame {
 		return -1;
 	}
 
-	public SettingsWindow() {
+	public ControlWindow() {
 		setTitle("Mazes");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

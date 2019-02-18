@@ -20,7 +20,7 @@ public class CreateMazeAction extends CreateMazeActionBase {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app().wndSettings.generatorMenu.getSelectedAlgorithm().ifPresent(algo -> {
+		app().wndControl.generatorMenu.getSelectedAlgorithm().ifPresent(algo -> {
 			app().enableUI(false);
 			app().startWorkerThread(() -> {
 				try {

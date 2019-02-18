@@ -45,14 +45,14 @@ public abstract class CreateMazeActionBase extends AbstractAction {
 		if (model().isGenerationAnimated()) {
 			generator.createMaze(x, y);
 		} else {
-			canvas().getAnimation().setEnabled(false);
+			canvas().enableAnimation(false);
 			StopWatch watch = new StopWatch();
 			watch.measure(() -> generator.createMaze(x, y));
 			app().showMessage(format("Maze generation: %.2f seconds.", watch.getSeconds()));
 			canvas().clear();
 			watch.measure(() -> canvas().drawGrid());
 			app().showMessage(format("Grid rendering:  %.2f seconds.", watch.getSeconds()));
-			canvas().getAnimation().setEnabled(true);
+			canvas().enableAnimation(true);
 		}
 		return generator.getGrid();
 	}

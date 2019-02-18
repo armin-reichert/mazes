@@ -25,22 +25,22 @@ public class ToggleControlPanelAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		setMinimized(app().wndSettings.controlPanel.getControls().isVisible());
+		setMinimized(app().wndControl.controlPanel.getControls().isVisible());
 	}
 
 	public void setMinimized(boolean minimized) {
-		JPanel controls = app().wndSettings.controlPanel.getControls();
+		JPanel controls = app().wndControl.controlPanel.getControls();
 		if (minimized) {
 			putValue(Action.NAME, "Show Details");
 			putValue(Action.LARGE_ICON_KEY, zoomIn);
 			controls.setVisible(false);
-			app().wndSettings.pack();
-			app().wndSettings.setSize(app().wndSettings.getWidth(), 120);
+			app().wndControl.pack();
+			app().wndControl.setSize(app().wndControl.getWidth(), 120);
 		} else {
 			putValue(Action.NAME, "Hide Details");
 			putValue(Action.LARGE_ICON_KEY, zoomOut);
 			controls.setVisible(true);
-			app().wndSettings.pack();
+			app().wndControl.pack();
 		}
 	}
 }

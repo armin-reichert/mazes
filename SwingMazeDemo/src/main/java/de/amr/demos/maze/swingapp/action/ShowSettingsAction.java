@@ -14,6 +14,6 @@ public class ShowSettingsAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app().wndSettings.setVisible(true);
+		app().wndControl.setVisible(true);
 	}
 }
