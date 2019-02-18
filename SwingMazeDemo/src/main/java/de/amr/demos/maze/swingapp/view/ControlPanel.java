@@ -49,7 +49,7 @@ public class ControlPanel extends JPanel {
 
 		controls = new JPanel();
 		add(controls, BorderLayout.CENTER);
-		controls.setLayout(new MigLayout("", "[3px:n][][grow,fill]", "[][][][][][]"));
+		controls.setLayout(new MigLayout("", "[100px:n][3px:n][grow,fill]", "[][][][][][]"));
 
 		lblGenerator = new JLabel("Generator");
 		controls.add(lblGenerator, "cell 0 0,growx");
