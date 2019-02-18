@@ -20,7 +20,7 @@ import de.amr.graph.util.GraphUtils;
 import de.amr.maze.alg.BinaryTree;
 import de.amr.maze.alg.BinaryTreeRandom;
 import de.amr.maze.alg.Eller;
-import de.amr.maze.alg.EllerInsideOut;
+import de.amr.maze.alg.Armin;
 import de.amr.maze.alg.HuntAndKill;
 import de.amr.maze.alg.HuntAndKillRandom;
 import de.amr.maze.alg.RecursiveDivision;
@@ -133,7 +133,7 @@ public class MazeGeneratorTest {
 
 	@Test
 	public void testEllerInsideOut() {
-		test(new EllerInsideOut(WIDTH, HEIGHT));
+		test(new Armin(WIDTH, HEIGHT));
 	}
 
 	@Test

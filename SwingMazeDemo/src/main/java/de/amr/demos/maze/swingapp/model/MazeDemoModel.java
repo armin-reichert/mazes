@@ -24,10 +24,10 @@ import de.amr.graph.pathfinder.impl.DepthFirstSearch2;
 import de.amr.graph.pathfinder.impl.DijkstraSearch;
 import de.amr.graph.pathfinder.impl.HillClimbingSearch;
 import de.amr.graph.pathfinder.impl.IDDFS;
+import de.amr.maze.alg.Armin;
 import de.amr.maze.alg.BinaryTree;
 import de.amr.maze.alg.BinaryTreeRandom;
 import de.amr.maze.alg.Eller;
-import de.amr.maze.alg.EllerInsideOut;
 import de.amr.maze.alg.HuntAndKill;
 import de.amr.maze.alg.HuntAndKillRandom;
 import de.amr.maze.alg.RecursiveDivision;
@@ -82,27 +82,27 @@ public class MazeDemoModel {
 
 	public static final AlgorithmInfo[] GENERATOR_ALGORITHMS = {
 		/*@formatter:off*/
-		new AlgorithmInfo(RecursiveDFS.class, "Depth-First-Traversal (recursive, small grids only!)", Traversal, SmallGrid),
-		new AlgorithmInfo(IterativeDFS.class, "Depth-First-Traversal (non-recursive)", Traversal),
-		new AlgorithmInfo(RandomBFS.class, "Breadth-First-Traversal", Traversal),
-		new AlgorithmInfo(GrowingTreeAlwaysFirst.class, "Growing Tree (always first)", Traversal),
-		new AlgorithmInfo(GrowingTreeAlwaysLast.class, "Growing Tree (always last)", Traversal),
-		new AlgorithmInfo(GrowingTreeAlwaysRandom.class, "Growing Tree (always random)", Traversal),
+		new AlgorithmInfo(RecursiveDFS.class, "Random recursive DFS (small grids only!)", Traversal, SmallGrid),
+		new AlgorithmInfo(IterativeDFS.class, "Random nonrecursive DFS", Traversal),
+		new AlgorithmInfo(RandomBFS.class, "Random BFS", Traversal),
+		new AlgorithmInfo(GrowingTreeAlwaysFirst.class, "Growing Tree (always select first)", Traversal),
+		new AlgorithmInfo(GrowingTreeAlwaysLast.class, "Growing Tree (always select last)", Traversal),
+		new AlgorithmInfo(GrowingTreeAlwaysRandom.class, "Growing Tree (always select random)", Traversal),
 		new AlgorithmInfo(GrowingTreeLastOrRandom.class, "Growing Tree (last or random)", Traversal),
 		new AlgorithmInfo(KruskalMST.class, "Kruskal MST", MST),
 		new AlgorithmInfo(PrimMST.class, "Prim MST", MST),
 		new AlgorithmInfo(BoruvkaMST.class, "Boruvka MST", MST),
-		new AlgorithmInfo(ReverseDeleteMST_BFS.class, "Reverse-Delete MST (BFS, very slow)", MST, Slow),
-		new AlgorithmInfo(ReverseDeleteMST_BestFS.class, "Reverse-Delete MST (Best-First-Search, very slow)", MST, Slow),
-		new AlgorithmInfo(ReverseDeleteMST_DFS.class, "Reverse-Delete MST (DFS, very slow)", MST, Slow),
-		new AlgorithmInfo(ReverseDeleteMST_HillClimbing.class, "Reverse-Delete MST (Hill-Climbing, very slow)", MST, Slow),
+		new AlgorithmInfo(ReverseDeleteMST_BFS.class, "Reverse-Delete MST (BFS, very slow!)", MST, Slow),
+		new AlgorithmInfo(ReverseDeleteMST_BestFS.class, "Reverse-Delete MST (Best-First Search, very slow!)", MST, Slow),
+		new AlgorithmInfo(ReverseDeleteMST_DFS.class, "Reverse-Delete MST (DFS, very slow!)", MST, Slow),
+		new AlgorithmInfo(ReverseDeleteMST_HillClimbing.class, "Reverse-Delete MST (Hill-Climbing, very slow!)", MST, Slow),
 		new AlgorithmInfo(AldousBroderUST.class, "Aldous-Broder UST (rather slow)", UST, Slow),
 		new AlgorithmInfo(AldousBroderWilsonUST.class, "Houston UST (rather slow)", UST, Slow),
 		new AlgorithmInfo(WilsonUSTRandomCell.class, "Wilson UST (random)", UST, Slow),
-		new AlgorithmInfo(WilsonUSTRowsTopDown.class, "Wilson UST (row-wise top-to-bottom)", UST),
-		new AlgorithmInfo(WilsonUSTLeftToRightSweep.class, "Wilson UST (column-wise left to right)", UST),
-		new AlgorithmInfo(WilsonUSTRightToLeftSweep.class, "Wilson UST (column-wise right to left)", UST),
-		new AlgorithmInfo(WilsonUSTCollapsingWalls.class, "Wilson UST (column-wise collapsing)", UST),
+		new AlgorithmInfo(WilsonUSTRowsTopDown.class, "Wilson UST (row-wise, top-to-bottom)", UST),
+		new AlgorithmInfo(WilsonUSTLeftToRightSweep.class, "Wilson UST (column-wise, left to right)", UST),
+		new AlgorithmInfo(WilsonUSTRightToLeftSweep.class, "Wilson UST (column-wise, right to left)", UST),
+		new AlgorithmInfo(WilsonUSTCollapsingWalls.class, "Wilson UST (column-wise, collapsing)", UST),
 		new AlgorithmInfo(WilsonUSTCollapsingRectangle.class, "Wilson UST (collapsing rectangle)", UST),
 		new AlgorithmInfo(WilsonUSTExpandingCircle.class, "Wilson UST (expanding circle)", UST),
 		new AlgorithmInfo(WilsonUSTCollapsingCircle.class, "Wilson UST (collapsing circle)", UST),
@@ -118,7 +118,7 @@ public class MazeDemoModel {
 		new AlgorithmInfo(BinaryTreeRandom.class, "Binary Tree (random)"), 
 		new AlgorithmInfo(Sidewinder.class, "Sidewinder"),
 		new AlgorithmInfo(Eller.class, "Eller's Algorithm"), 
-		new AlgorithmInfo(EllerInsideOut.class, "Armin's Algorithm"), 
+		new AlgorithmInfo(Armin.class, "Armin's Algorithm"), 
 		new AlgorithmInfo(HuntAndKill.class, "Hunt-And-Kill"),
 		new AlgorithmInfo(HuntAndKillRandom.class, "Hunt-And-Kill (random)"),
 		new AlgorithmInfo(RecursiveDivision.class, "Recursive Division"),

@@ -33,7 +33,7 @@ import de.amr.maze.alg.core.MazeGenerator;
  * 
  * @author Armin Reichert
  */
-public class EllerInsideOut implements MazeGenerator<OrthogonalGrid> {
+public class Armin implements MazeGenerator<OrthogonalGrid> {
 
 	private OrthogonalGrid grid;
 	private Random rnd = new Random();
@@ -45,7 +45,7 @@ public class EllerInsideOut implements MazeGenerator<OrthogonalGrid> {
 	private int offsetX;
 	private int offsetY;
 
-	public EllerInsideOut(int numCols, int numRows) {
+	public Armin(int numCols, int numRows) {
 		grid = emptyGrid(numCols, numRows, UNVISITED);
 	}
 

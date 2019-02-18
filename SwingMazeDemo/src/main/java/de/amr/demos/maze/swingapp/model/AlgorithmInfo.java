@@ -11,8 +11,6 @@ import java.util.stream.Stream;
  */
 public class AlgorithmInfo {
 
-	public static final AlgorithmInfo NONE = new AlgorithmInfo(Object.class, "None");
-
 	private final Class<?> algorithmClass;
 	private final String description;
 	private final Tag[] tags;
