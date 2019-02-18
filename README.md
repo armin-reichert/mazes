@@ -147,7 +147,7 @@ Implemented maze generation algorithms:
 
 ![](MazeDemos/images/gen/maze_80x60_Eller.gif)
 
-#### [Armin's algorithm](MazeAlgorithms/src/main/java/de/amr/maze/alg/EllerInsideOut.java) (like Eller's but growing the maze inside-out)
+#### [Armin's algorithm](MazeAlgorithms/src/main/java/de/amr/maze/alg/Armin.java) (like Eller's but growing the maze inside-out)
 
 ![](MazeDemos/images/gen/maze_80x60_EllerInsideOut.gif)
 
