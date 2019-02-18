@@ -1,6 +1,7 @@
 package de.amr.demos.maze.swingapp.action;
 
 import static de.amr.demos.maze.swingapp.MazeDemoApp.app;
+import static de.amr.demos.maze.swingapp.MazeDemoApp.controlWindow;
 import static de.amr.demos.maze.swingapp.MazeDemoApp.model;
 
 import java.awt.event.ActionEvent;
@@ -20,7 +21,7 @@ public class CreateMazeAction extends CreateMazeActionBase {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app().wndControl.generatorMenu.getSelectedAlgorithm().ifPresent(algo -> {
+		controlWindow().generatorMenu.getSelectedAlgorithm().ifPresent(algo -> {
 			app().enableUI(false);
 			app().startWorkerThread(() -> {
 				try {

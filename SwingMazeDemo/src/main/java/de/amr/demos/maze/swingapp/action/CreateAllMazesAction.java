@@ -2,6 +2,7 @@ package de.amr.demos.maze.swingapp.action;
 
 import static de.amr.demos.maze.swingapp.MazeDemoApp.app;
 import static de.amr.demos.maze.swingapp.MazeDemoApp.canvas;
+import static de.amr.demos.maze.swingapp.MazeDemoApp.controlWindow;
 import static de.amr.demos.maze.swingapp.MazeDemoApp.model;
 import static de.amr.demos.maze.swingapp.model.MazeDemoModel.GENERATOR_ALGORITHMS;
 import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.Slow;
@@ -62,7 +63,7 @@ public class CreateAllMazesAction extends CreateMazeActionBase {
 
 	private OrthogonalGrid createNextMaze(AlgorithmInfo algo) {
 		canvas().clear();
-		app().wndControl.generatorMenu.selectAlgorithm(algo);
+		controlWindow().generatorMenu.selectAlgorithm(algo);
 		app().onGeneratorChange(algo);
 		try {
 			readyForNext = false;

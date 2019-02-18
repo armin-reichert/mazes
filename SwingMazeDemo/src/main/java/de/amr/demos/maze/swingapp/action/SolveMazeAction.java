@@ -2,6 +2,7 @@ package de.amr.demos.maze.swingapp.action;
 
 import static de.amr.demos.maze.swingapp.MazeDemoApp.app;
 import static de.amr.demos.maze.swingapp.MazeDemoApp.canvas;
+import static de.amr.demos.maze.swingapp.MazeDemoApp.controlWindow;
 import static de.amr.demos.maze.swingapp.MazeDemoApp.model;
 import static java.lang.String.format;
 
@@ -40,7 +41,7 @@ public class SolveMazeAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app().wndControl.solverMenu.getSelectedAlgorithm().ifPresent(solver -> {
+		controlWindow().solverMenu.getSelectedAlgorithm().ifPresent(solver -> {
 			app().enableUI(false);
 			canvas().drawGrid();
 			app().startWorkerThread(() -> {

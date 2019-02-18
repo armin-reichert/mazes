@@ -25,7 +25,7 @@ import de.amr.demos.maze.swingapp.action.EmptyGridAction;
 import de.amr.demos.maze.swingapp.action.FloodFillAction;
 import de.amr.demos.maze.swingapp.action.FullGridAction;
 import de.amr.demos.maze.swingapp.action.SaveImageAction;
-import de.amr.demos.maze.swingapp.action.ShowSettingsAction;
+import de.amr.demos.maze.swingapp.action.ShowControlWindowAction;
 import de.amr.demos.maze.swingapp.action.SolveMazeAction;
 import de.amr.demos.maze.swingapp.action.StopTaskAction;
 import de.amr.demos.maze.swingapp.action.ToggleControlPanelAction;
@@ -67,6 +67,10 @@ public class MazeDemoApp {
 	public static MazeDemoModel model() {
 		return APP.model;
 	}
+	
+	public static ControlWindow controlWindow() {
+		return APP.wndControl;
+	}
 
 	public static DisplayArea canvas() {
 		return APP.canvas;
@@ -75,9 +79,8 @@ public class MazeDemoApp {
 	public static final DisplayMode DISPLAY_MODE = GraphicsEnvironment.getLocalGraphicsEnvironment()
 			.getDefaultScreenDevice().getDisplayMode();
 
-	public final MazeDemoModel model;
-	public final ControlWindow wndControl;
-
+	private final MazeDemoModel model;
+	private final ControlWindow wndControl;
 	private final JFrame wndDisplayArea;
 	private DisplayArea canvas;
 
@@ -92,7 +95,7 @@ public class MazeDemoApp {
 	public final Action actionEmptyGrid = new EmptyGridAction();
 	public final Action actionFullGrid = new FullGridAction();
 	public final Action actionChangeGridResolution = new ChangeGridResolutionAction();
-	public final Action actionShowControls = new ShowSettingsAction();
+	public final Action actionShowControls = new ShowControlWindowAction();
 	public final ToggleControlPanelAction actionToggleControlPanel = new ToggleControlPanelAction();
 
 	private Thread workerThread;

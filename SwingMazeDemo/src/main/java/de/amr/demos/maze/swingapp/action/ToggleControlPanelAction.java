@@ -1,6 +1,6 @@
 package de.amr.demos.maze.swingapp.action;
 
-import static de.amr.demos.maze.swingapp.MazeDemoApp.app;
+import static de.amr.demos.maze.swingapp.MazeDemoApp.controlWindow;
 
 import java.awt.event.ActionEvent;
 
@@ -25,22 +25,24 @@ public class ToggleControlPanelAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		setMinimized(app().wndControl.controlPanel.getControls().isVisible());
+		setMinimized(controlWindow().controlPanel.getControls().isVisible());
 	}
 
 	public void setMinimized(boolean minimized) {
-		JPanel controls = app().wndControl.controlPanel.getControls();
+		JPanel controls = controlWindow().controlPanel.getControls();
 		if (minimized) {
 			putValue(Action.NAME, "Show Details");
 			putValue(Action.LARGE_ICON_KEY, zoomIn);
 			controls.setVisible(false);
-			app().wndControl.pack();
-			app().wndControl.setSize(app().wndControl.getWidth(), 120);
+			controlWindow().pack();
+			controlWindow().setSize(controlWindow().getWidth(), 120);
 		} else {
 			putValue(Action.NAME, "Hide Details");
 			putValue(Action.LARGE_ICON_KEY, zoomOut);
+			controlWindow().setVisible(false);
 			controls.setVisible(true);
-			app().wndControl.pack();
+			controlWindow().pack();
+			controlWindow().setVisible(true);
 		}
 	}
 }
