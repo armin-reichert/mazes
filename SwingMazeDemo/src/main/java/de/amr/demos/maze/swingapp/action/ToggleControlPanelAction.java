@@ -35,7 +35,7 @@ public class ToggleControlPanelAction extends AbstractAction {
 			putValue(Action.LARGE_ICON_KEY, zoomIn);
 			controls.setVisible(false);
 			controlWindow().pack();
-			controlWindow().setSize(controlWindow().getWidth(), 120);
+			controlWindow().setSize(controlWindow().getWidth(), 140);
 		} else {
 			putValue(Action.NAME, "Hide Details");
 			putValue(Action.LARGE_ICON_KEY, zoomOut);

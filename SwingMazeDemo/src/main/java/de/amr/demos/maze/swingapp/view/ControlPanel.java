@@ -30,7 +30,6 @@ public class ControlPanel extends JPanel {
 	private JTextArea textArea;
 	private JLabel lblPassageWidth;
 	private JSlider sliderPassageWidth;
-	private JLabel lblDelay;
 	private JButton btnCreateAllMazes;
 	private JButton btnStop;
 	private JLabel lblGeneratorName;
@@ -93,18 +92,6 @@ public class ControlPanel extends JPanel {
 		sliderPassageWidth.setPaintTicks(true);
 		controls.add(sliderPassageWidth, "cell 2 3,growx");
 
-		lblDelay = new JLabel("Delay");
-		controls.add(lblDelay, "cell 0 4,growx");
-
-		sliderDelay = new JSlider();
-		lblDelay.setLabelFor(sliderDelay);
-		sliderDelay.setToolTipText("Rendering Delay");
-		sliderDelay.setValue(10);
-		sliderDelay.setMaximum(50);
-		sliderDelay.setMinorTickSpacing(1);
-		sliderDelay.setMajorTickSpacing(5);
-		controls.add(sliderDelay, "cell 2 4,growx");
-
 		scrollPane = new JScrollPane();
 		controls.add(scrollPane, "cell 0 5 3 1,grow");
 
@@ -116,11 +103,11 @@ public class ControlPanel extends JPanel {
 		textArea.setRows(100);
 
 		JPanel buttons = new JPanel();
-		add(buttons, BorderLayout.SOUTH);
-		buttons.setLayout(new MigLayout("", "[][][][][grow,right]", "[28px]"));
+		add(buttons, BorderLayout.NORTH);
+		buttons.setLayout(new MigLayout("", "[][][][][grow][right]", "[28px][]"));
 
 		btnCreateMaze = new JButton("Create");
-		buttons.add(btnCreateMaze, "cell 0 0,alignx left,aligny top");
+		buttons.add(btnCreateMaze, "flowy,cell 0 0,alignx left,aligny top");
 
 		btnSolve = new JButton("Solve");
 		buttons.add(btnSolve, "cell 1 0,alignx left,aligny top");
@@ -133,7 +120,15 @@ public class ControlPanel extends JPanel {
 
 		btnShowHideDetails = new JButton("Show/Hide Details");
 		btnShowHideDetails.setIcon(null);
-		buttons.add(btnShowHideDetails, "cell 4 0,aligny top");
+		buttons.add(btnShowHideDetails, "cell 5 0,aligny top");
+
+		sliderDelay = new JSlider();
+		buttons.add(sliderDelay, "flowx,cell 0 1 6 1,growx");
+		sliderDelay.setToolTipText("Slowdown");
+		sliderDelay.setValue(10);
+		sliderDelay.setMaximum(50);
+		sliderDelay.setMinorTickSpacing(1);
+		sliderDelay.setMajorTickSpacing(5);
 	}
 
 	public void showMessage(String msg) {

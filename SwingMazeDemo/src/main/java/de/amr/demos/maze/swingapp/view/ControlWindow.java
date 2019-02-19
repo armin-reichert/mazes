@@ -4,7 +4,6 @@ import static de.amr.demos.maze.swingapp.MazeDemoApp.DISPLAY_MODE;
 import static de.amr.demos.maze.swingapp.MazeDemoApp.app;
 import static de.amr.demos.maze.swingapp.MazeDemoApp.model;
 
-import java.awt.BorderLayout;
 import java.util.Arrays;
 
 import javax.swing.ComboBoxModel;
@@ -86,7 +85,7 @@ public class ControlWindow extends JFrame {
 		controlPanel.getBtnStop().setAction(app().actionStopTask);
 		controlPanel.getBtnShowHideDetails().setAction(app().actionToggleControlPanel);
 
-		getContentPane().add(controlPanel, BorderLayout.CENTER);
+		setContentPane(controlPanel);
 
 		// Menus
 		JMenuBar mb = new JMenuBar();

@@ -1,6 +1,7 @@
 package de.amr.demos.maze.swingapp.action;
 
 import static de.amr.demos.maze.swingapp.MazeDemoApp.app;
+import static de.amr.demos.maze.swingapp.MazeDemoApp.controlWindow;
 import static de.amr.demos.maze.swingapp.MazeDemoApp.model;
 
 import java.awt.event.ActionEvent;
@@ -15,7 +16,8 @@ public class StopTaskAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app().stopWorkerThread();
 		model().setDelay(0);
+		controlWindow().controlPanel.getSliderDelay().setValue(0);
+		app().stopWorkerThread();
 	}
 }
