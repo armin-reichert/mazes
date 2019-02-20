@@ -5,8 +5,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>de.amr.easy.maze.SwingMazeDemo</groupId>
-	<artifactId>de.amr.easy.maze.SwingMazeDemo</artifactId>
+	<groupId>de.amr.demos.maze.swingapp</groupId>
+	<artifactId>SwingMazeDemo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>SwingMazeDemo</name>
 	<description>Maze generation demo app</description>
