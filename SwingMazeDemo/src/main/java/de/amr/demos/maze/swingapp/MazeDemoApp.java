@@ -67,7 +67,7 @@ public class MazeDemoApp {
 	public static MazeDemoModel model() {
 		return APP.model;
 	}
-	
+
 	public static ControlWindow controlWindow() {
 		return APP.wndControl;
 	}
@@ -99,7 +99,6 @@ public class MazeDemoApp {
 	public final ToggleControlPanelAction actionToggleControlPanel = new ToggleControlPanelAction();
 
 	private Thread workerThread;
-	private volatile boolean threadStopped;
 
 	public MazeDemoApp() {
 
@@ -222,21 +221,11 @@ public class MazeDemoApp {
 	}
 
 	public void startWorkerThread(Runnable work) {
-		threadStopped = false;
 		workerThread = new Thread(work);
 		workerThread.start();
 	}
 
 	public void stopWorkerThread() {
-		threadStopped = true;
-		try {
-			workerThread.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public boolean isWorkerThreadStopped() {
-		return threadStopped;
+		workerThread.interrupt();
 	}
 }

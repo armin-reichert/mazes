@@ -15,6 +15,7 @@ import javax.swing.AbstractAction;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.PathFinderTag;
 import de.amr.graph.grid.api.GridPosition;
+import de.amr.graph.grid.ui.animation.AnimationInterruptedException;
 import de.amr.graph.grid.ui.animation.BFSAnimation;
 import de.amr.graph.grid.ui.animation.DFSAnimation;
 import de.amr.graph.pathfinder.impl.AStarSearch;
@@ -47,6 +48,9 @@ public class SolveMazeAction extends AbstractAction {
 			app().startWorkerThread(() -> {
 				try {
 					runSolverAnimation(solver);
+				} catch (AnimationInterruptedException x) {
+					app().showMessage("Animation interrupted");
+					app().resetDisplay();
 				} catch (Exception x) {
 					x.printStackTrace();
 					app().showMessage("Error during path finding: " + x.getMessage());

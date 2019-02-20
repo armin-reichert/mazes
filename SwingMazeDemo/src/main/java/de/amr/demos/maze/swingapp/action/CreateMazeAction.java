@@ -7,6 +7,7 @@ import static de.amr.demos.maze.swingapp.MazeDemoApp.model;
 import java.awt.event.ActionEvent;
 
 import de.amr.graph.grid.impl.OrthogonalGrid;
+import de.amr.graph.grid.ui.animation.AnimationInterruptedException;
 
 /**
  * Action for creating a maze using the currently selected generation algorithm.
@@ -30,6 +31,9 @@ public class CreateMazeAction extends CreateMazeActionBase {
 						pause(1);
 						floodFill();
 					}
+				} catch (AnimationInterruptedException x) {
+					app().showMessage("Animation interrupted");
+					app().resetDisplay();
 				} catch (Exception | StackOverflowError x) {
 					app().showMessage("Error during generation: " + x.getClass().getSimpleName());
 					app().resetDisplay();
