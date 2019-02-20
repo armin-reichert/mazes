@@ -4,6 +4,8 @@ import static de.amr.demos.maze.swingapp.MazeDemoApp.app;
 import static de.amr.demos.maze.swingapp.MazeDemoApp.canvas;
 import static de.amr.demos.maze.swingapp.MazeDemoApp.controlWindow;
 import static de.amr.demos.maze.swingapp.MazeDemoApp.model;
+import static de.amr.demos.maze.swingapp.model.MazeDemoModel.GENERATOR_ALGORITHMS;
+import static de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag.Slow;
 
 import java.awt.event.ActionEvent;
 import java.util.List;
@@ -11,9 +13,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
-import de.amr.demos.maze.swingapp.model.MazeDemoModel;
-import de.amr.demos.maze.swingapp.model.MazeGenerationAlgorithmTag;
-import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.graph.grid.ui.animation.AnimationInterruptedException;
 
 /**
@@ -47,20 +46,18 @@ public class CreateAllMazesAction extends CreateMazeActionBase {
 	}
 
 	private void createAllMazes() {
-		List<AlgorithmInfo> generators = Stream.of(MazeDemoModel.GENERATOR_ALGORITHMS)
-				.filter(algo -> !algo.isTagged(MazeGenerationAlgorithmTag.Slow)).collect(Collectors.toList());
+		List<AlgorithmInfo> generators = Stream.of(GENERATOR_ALGORITHMS).filter(algo -> !algo.isTagged(Slow))
+				.collect(Collectors.toList());
 		for (AlgorithmInfo algo : generators) {
-			canvas().clear();
 			controlWindow().generatorMenu.selectAlgorithm(algo);
 			app().onGeneratorChange(algo);
-			OrthogonalGrid maze = null;
+			canvas().clear();
 			try {
-				maze = createMaze(algo, model().getGenerationStart());
-				if (maze != null && model().isFloodFillAfterGeneration()) {
+				createMaze(algo, model().getGenerationStart());
+				if (model().isFloodFillAfterGeneration()) {
 					pause(1);
 					floodFill();
 				}
-				pause(3);
 			} catch (AnimationInterruptedException x) {
 				throw x;
 			} catch (StackOverflowError | Exception x) {
@@ -68,7 +65,7 @@ public class CreateAllMazesAction extends CreateMazeActionBase {
 				app().resetDisplay();
 				x.printStackTrace();
 			}
-			pause(1);
+			pause(2);
 		}
 		app().showMessage("Done.");
 	}

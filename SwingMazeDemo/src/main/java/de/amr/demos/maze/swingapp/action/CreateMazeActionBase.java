@@ -10,6 +10,7 @@ import javax.swing.AbstractAction;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.graph.grid.api.GridPosition;
 import de.amr.graph.grid.impl.OrthogonalGrid;
+import de.amr.graph.grid.ui.animation.AnimationInterruptedException;
 import de.amr.graph.grid.ui.animation.BFSAnimation;
 import de.amr.maze.alg.core.MazeGenerator;
 import de.amr.util.StopWatch;
@@ -20,6 +21,7 @@ public abstract class CreateMazeActionBase extends AbstractAction {
 		try {
 			Thread.sleep(Math.round(seconds * 1000));
 		} catch (InterruptedException e) {
+			throw new AnimationInterruptedException();
 		}
 	}
 
