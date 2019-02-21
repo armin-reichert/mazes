@@ -42,7 +42,7 @@ public class ControlPanel extends JPanel {
 	private JButton btnShowHideDetails;
 
 	public ControlPanel() {
-		setPreferredSize(new Dimension(497, 433));
+		setPreferredSize(new Dimension(520, 400));
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(new BorderLayout(0, 0));
 

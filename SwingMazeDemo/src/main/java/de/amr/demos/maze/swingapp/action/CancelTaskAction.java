@@ -6,10 +6,10 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-public class StopTaskAction extends AbstractAction {
+public class CancelTaskAction extends AbstractAction {
 
-	public StopTaskAction() {
-		super("Stop");
+	public CancelTaskAction() {
+		super("Cancel");
 	}
 
 	@Override

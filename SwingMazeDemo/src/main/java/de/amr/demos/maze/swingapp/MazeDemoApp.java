@@ -27,7 +27,7 @@ import de.amr.demos.maze.swingapp.action.FullGridAction;
 import de.amr.demos.maze.swingapp.action.SaveImageAction;
 import de.amr.demos.maze.swingapp.action.ShowControlWindowAction;
 import de.amr.demos.maze.swingapp.action.SolveMazeAction;
-import de.amr.demos.maze.swingapp.action.StopTaskAction;
+import de.amr.demos.maze.swingapp.action.CancelTaskAction;
 import de.amr.demos.maze.swingapp.action.ToggleControlPanelAction;
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.MazeDemoModel;
@@ -87,7 +87,7 @@ public class MazeDemoApp {
 	public final Action actionCreateMaze = new CreateMazeAction();
 	public final Action actionCreateAllMazes = new CreateAllMazesAction();
 	public final Action actionRunMazeSolver = new SolveMazeAction();
-	public final Action actionStopTask = new StopTaskAction();
+	public final Action actionCancelTask = new CancelTaskAction();
 	public final Action actionClearCanvas = new ClearCanvasAction();
 	public final Action actionFloodFill = new FloodFillAction(false);
 	public final Action actionFloodFillWithDistance = new FloodFillAction(true);
@@ -178,9 +178,11 @@ public class MazeDemoApp {
 
 	public void resetDisplay() {
 		model.setGrid(createDefaultGrid(true));
+		wndDisplayArea.setVisible(false);
 		newCanvas();
 		wndDisplayArea.setContentPane(canvas);
-		wndDisplayArea.repaint();
+		canvas.repaint();
+		wndDisplayArea.setVisible(true);
 	}
 
 	public void showMessage(String msg) {

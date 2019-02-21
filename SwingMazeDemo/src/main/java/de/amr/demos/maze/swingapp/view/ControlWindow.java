@@ -82,7 +82,7 @@ public class ControlWindow extends JFrame {
 		controlPanel.getBtnCreateMaze().setAction(app().actionCreateMaze);
 		controlPanel.getBtnCreateAllMazes().setAction(app().actionCreateAllMazes);
 		controlPanel.getBtnFindPath().setAction(app().actionRunMazeSolver);
-		controlPanel.getBtnStop().setAction(app().actionStopTask);
+		controlPanel.getBtnStop().setAction(app().actionCancelTask);
 		controlPanel.getBtnShowHideDetails().setAction(app().actionToggleControlPanel);
 
 		setContentPane(controlPanel);

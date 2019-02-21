@@ -1,8 +1,12 @@
 package de.amr.demos.maze.swingapp.view;
 
+import static de.amr.demos.maze.swingapp.MazeDemoApp.DISPLAY_MODE;
 import static de.amr.demos.maze.swingapp.MazeDemoApp.model;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
+
+import java.awt.Color;
+import java.awt.Graphics;
 
 import de.amr.demos.maze.swingapp.model.MazeDemoModel.Style;
 import de.amr.graph.grid.impl.GridGraph;
@@ -29,6 +33,17 @@ public class DisplayArea extends GridCanvas {
 		animation = new GridCanvasAnimation<>(this);
 		animation.fnDelay = () -> model().getDelay();
 		model().getGrid().addGraphObserver(animation);
+	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, getWidth(), getHeight());
+		int dx = (DISPLAY_MODE.getWidth() - getPreferredSize().width) / 2;
+		int dy = (DISPLAY_MODE.getHeight() - getPreferredSize().height) / 2;
+		g.translate(dx, dy);
+		super.paintComponent(g);
+		g.translate(-dx, -dy);
 	}
 
 	public void enableAnimation(boolean enabled) {
