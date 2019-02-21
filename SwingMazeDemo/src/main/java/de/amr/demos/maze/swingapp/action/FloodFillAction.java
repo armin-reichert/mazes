@@ -3,12 +3,12 @@ package de.amr.demos.maze.swingapp.action;
 import static de.amr.demos.maze.swingapp.MazeDemoApp.app;
 import static de.amr.demos.maze.swingapp.MazeDemoApp.canvas;
 import static de.amr.demos.maze.swingapp.MazeDemoApp.model;
-import static de.amr.graph.grid.ui.animation.BFSAnimation.floodFill;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
+import de.amr.graph.grid.ui.animation.Floodfill;
 import de.amr.util.StopWatch;
 
 /**
@@ -26,8 +26,8 @@ public class FloodFillAction extends AbstractAction {
 	}
 
 	private void runFloodFill() {
-		int source = model().getGrid().cell(model().getPathFinderSource());
-		floodFill(canvas(), source, distancesVisible);
+		Floodfill.builder().canvas(canvas()).source(model().getPathFinderSource())
+				.distanceVisible(distancesVisible).build().run();
 	}
 
 	@Override

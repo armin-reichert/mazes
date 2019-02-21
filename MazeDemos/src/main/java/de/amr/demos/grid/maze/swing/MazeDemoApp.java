@@ -1,7 +1,5 @@
 package de.amr.demos.grid.maze.swing;
 
-import static de.amr.graph.grid.ui.animation.BFSAnimation.floodFill;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.stream.IntStream;
 
@@ -69,7 +67,7 @@ public class MazeDemoApp extends SwingGridSampleApp {
 					getCanvas().getHeight() / cellSize);
 			setGrid(generator.getGrid());
 			generator.createMaze(0, 0);
-			floodFill(getCanvas(), 0, false);
+			floodfill();
 			sleep(1000);
 		});
 		System.exit(0);

@@ -1,7 +1,5 @@
 package de.amr.demos.grid.maze.swing;
 
-import static de.amr.graph.grid.ui.animation.BFSAnimation.floodFill;
-
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
@@ -29,7 +27,7 @@ public class RecursiveDivisionApp extends SwingGridSampleApp {
 			setGrid(generator.getGrid());
 			generator.createMaze(0, 0);
 			sleep(1000);
-			floodFill(getCanvas(), 0, false);
+			floodfill();
 			sleep(1000);
 		});
 		System.exit(0);

@@ -1,10 +1,9 @@
 package de.amr.demos.grid.maze.swing;
 
-import static de.amr.graph.grid.ui.animation.BFSAnimation.floodFill;
-
 import java.util.stream.IntStream;
 
 import de.amr.demos.grid.SwingGridSampleApp;
+import de.amr.graph.grid.api.GridPosition;
 import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.maze.alg.core.MazeGenerator;
 import de.amr.maze.alg.mst.ReverseDeleteMST_BFS;
@@ -28,7 +27,7 @@ public class ReverseDeleteBFSApp extends SwingGridSampleApp {
 					getCanvas().getHeight() / cellSize);
 			setGrid(generator.getGrid());
 			generator.createMaze(0, 0);
-			floodFill(getCanvas(), 0, false);
+			floodfill(GridPosition.TOP_LEFT);
 			sleep(1000);
 		});
 		System.exit(0);

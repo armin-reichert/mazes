@@ -2,7 +2,6 @@ package de.amr.demos.grid.rendering;
 
 import static de.amr.graph.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.graph.grid.api.GridPosition.TOP_LEFT;
-import static de.amr.graph.grid.ui.animation.BFSAnimation.floodFill;
 import static de.amr.graph.pathfinder.api.TraversalState.COMPLETED;
 import static de.amr.graph.pathfinder.api.TraversalState.UNVISITED;
 
@@ -49,7 +48,7 @@ public class PearlsRendererTestApp extends SwingGridSampleApp {
 
 		sleep(2000);
 		getCanvas().clear();
-		floodFill(getCanvas(), getGrid().cell(TOP_LEFT), true);
+		floodfill(TOP_LEFT);
 	}
 
 	private void clear() {
