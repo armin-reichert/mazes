@@ -103,15 +103,13 @@ public class SolveMazeAction extends AbstractAction {
 		StopWatch watch = new StopWatch();
 		if (solverInfo.isTagged(PathFinderTag.BFS)) {
 			BreadthFirstSearch<?, ?> bfs = (BreadthFirstSearch<?, ?>) solver;
-			BFSAnimation anim = new BFSAnimation(canvas());
-			anim.fnDelay = () -> model().getDelay();
-			anim.fnPathColor = () -> model().getPathColor();
+			BFSAnimation anim = BFSAnimation.builder().canvas(canvas()).delay(() -> model().getDelay())
+					.pathColor(() -> model().getPathColor()).build();
 			watch.measure(() -> anim.run(bfs, source, target));
 			anim.showPath(bfs, source, target);
 		} else if (solverInfo.isTagged(PathFinderTag.DFS)) {
-			DFSAnimation anim = new DFSAnimation(canvas());
-			anim.fnDelay = () -> model().getDelay();
-			anim.setPathColor(model().getPathColor());
+			DFSAnimation anim = DFSAnimation.builder().canvas(canvas()).delay(() -> model().getDelay())
+					.pathColor(model().getPathColor()).build();
 			watch.measure(() -> anim.run(solver, source, target));
 		}
 		app().showMessage(informed
