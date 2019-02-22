@@ -18,16 +18,13 @@ import de.amr.util.StopWatch;
  */
 public class FloodFillAction extends AbstractAction {
 
-	private boolean distancesVisible;
-
-	public FloodFillAction(boolean distancesVisible) {
-		this.distancesVisible = distancesVisible;
-		putValue(NAME, distancesVisible ? "Flood-fill (show distances)" : "Flood-fill");
+	public FloodFillAction() {
+		putValue(NAME, "Flood-fill");
 	}
 
 	private void runFloodFill() {
 		Floodfill.builder().canvas(canvas()).source(model().getPathFinderSource())
-				.distanceVisible(distancesVisible).build().run();
+				.distanceVisible(model().isDistancesVisible()).build().run();
 	}
 
 	@Override

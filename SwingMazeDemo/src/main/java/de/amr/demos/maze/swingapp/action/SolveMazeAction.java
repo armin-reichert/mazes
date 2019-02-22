@@ -104,7 +104,7 @@ public class SolveMazeAction extends AbstractAction {
 		if (solverInfo.isTagged(PathFinderTag.BFS)) {
 			BreadthFirstSearch<?, ?> bfs = (BreadthFirstSearch<?, ?>) solver;
 			BFSAnimation anim = BFSAnimation.builder().canvas(canvas()).delay(() -> model().getDelay())
-					.pathColor(() -> model().getPathColor()).build();
+					.pathColor(() -> model().getPathColor()).distanceVisible(model().isDistancesVisible()).build();
 			watch.measure(() -> anim.run(bfs, source, target));
 			anim.showPath(bfs, source, target);
 		} else if (solverInfo.isTagged(PathFinderTag.DFS)) {

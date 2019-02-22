@@ -7,15 +7,15 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-public class FullGridAction extends AbstractAction {
+public class CreateEmptyGridAction extends AbstractAction {
 
-	public FullGridAction() {
-		putValue(NAME, "Full Grid");
+	public CreateEmptyGridAction() {
+		putValue(NAME, "Create Empty Grid");
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		canvas().setGrid(app().createDefaultGrid(true));
+		canvas().setGrid(app().createDefaultGrid(false));
 		canvas().clear();
 		canvas().drawGrid();
 	}

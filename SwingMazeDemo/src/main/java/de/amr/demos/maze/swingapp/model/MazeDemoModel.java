@@ -158,6 +158,7 @@ public class MazeDemoModel {
 	private int delay;
 	private GridPosition generationStart;
 	private boolean floodFillAfterGeneration;
+	private boolean distancesVisible;
 	private Metric metric;
 	private GridPosition pathFinderStart;
 	private GridPosition pathFinderTarget;
@@ -269,6 +270,14 @@ public class MazeDemoModel {
 
 	public void setFloodFillAfterGeneration(boolean floodFillAfterGeneration) {
 		this.floodFillAfterGeneration = floodFillAfterGeneration;
+	}
+
+	public boolean isDistancesVisible() {
+		return distancesVisible;
+	}
+
+	public void setDistancesVisible(boolean distancesVisible) {
+		this.distancesVisible = distancesVisible;
 	}
 
 	public GridPosition getPathFinderSource() {

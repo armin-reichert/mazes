@@ -9,12 +9,10 @@ public class CanvasMenu extends JMenu {
 	public CanvasMenu() {
 		setText("Canvas");
 		add(app().actionClearCanvas);
+		add(app().actionFloodFill);
 		addSeparator();
 		add(app().actionEmptyGrid);
 		add(app().actionFullGrid);
-		addSeparator();
-		add(app().actionFloodFill);
-		add(app().actionFloodFillWithDistance);
 		addSeparator();
 		add(app().actionSaveImage);
 	}

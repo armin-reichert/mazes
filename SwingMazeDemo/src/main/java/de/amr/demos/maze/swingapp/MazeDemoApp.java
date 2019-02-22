@@ -21,9 +21,9 @@ import de.amr.demos.maze.swingapp.action.ChangeGridResolutionAction;
 import de.amr.demos.maze.swingapp.action.ClearCanvasAction;
 import de.amr.demos.maze.swingapp.action.CreateAllMazesAction;
 import de.amr.demos.maze.swingapp.action.CreateMazeAction;
-import de.amr.demos.maze.swingapp.action.EmptyGridAction;
+import de.amr.demos.maze.swingapp.action.CreateEmptyGridAction;
 import de.amr.demos.maze.swingapp.action.FloodFillAction;
-import de.amr.demos.maze.swingapp.action.FullGridAction;
+import de.amr.demos.maze.swingapp.action.CreateFullGridAction;
 import de.amr.demos.maze.swingapp.action.SaveImageAction;
 import de.amr.demos.maze.swingapp.action.ShowControlWindowAction;
 import de.amr.demos.maze.swingapp.action.SolveMazeAction;
@@ -89,11 +89,10 @@ public class MazeDemoApp {
 	public final Action actionRunMazeSolver = new SolveMazeAction();
 	public final Action actionCancelTask = new CancelTaskAction();
 	public final Action actionClearCanvas = new ClearCanvasAction();
-	public final Action actionFloodFill = new FloodFillAction(false);
-	public final Action actionFloodFillWithDistance = new FloodFillAction(true);
+	public final Action actionFloodFill = new FloodFillAction();
 	public final Action actionSaveImage = new SaveImageAction();
-	public final Action actionEmptyGrid = new EmptyGridAction();
-	public final Action actionFullGrid = new FullGridAction();
+	public final Action actionEmptyGrid = new CreateEmptyGridAction();
+	public final Action actionFullGrid = new CreateFullGridAction();
 	public final Action actionChangeGridResolution = new ChangeGridResolutionAction();
 	public final Action actionShowControls = new ShowControlWindowAction();
 	public final ToggleControlPanelAction actionToggleControlPanel = new ToggleControlPanelAction();
@@ -119,6 +118,8 @@ public class MazeDemoApp {
 		model.setPathFinderTarget(BOTTOM_RIGHT);
 		model.setMetric(Metric.EUCLIDEAN);
 		model.setGenerationAnimated(true);
+		model.setFloodFillAfterGeneration(false);
+		model.setDistancesVisible(false);
 		model.setHidingControlsWhenRunning(false);
 
 		// create initial grid

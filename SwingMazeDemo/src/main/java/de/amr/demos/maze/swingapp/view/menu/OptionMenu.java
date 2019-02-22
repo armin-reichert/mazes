@@ -25,14 +25,15 @@ public class OptionMenu extends JMenu {
 	public OptionMenu() {
 		setText("Options");
 		addPositionMenu("Generation Start", model()::setGenerationStart, model()::getGenerationStart);
-		addCheckBox("Flood-fill after generation", model()::setFloodFillAfterGeneration,
-				model()::isFloodFillAfterGeneration);
-		addSeparator();
 		addPositionMenu("Solution Start", model()::setPathFinderStart, model()::getPathFinderSource);
 		addPositionMenu("Solution Target", model()::setPathFinderTarget, model()::getPathFinderTarget);
 		addSeparator();
 		addCheckBox("Animate Generation", model()::setGenerationAnimated, model()::isGenerationAnimated);
-		addCheckBox("Hide dialog when running", model()::setHidingControlsWhenRunning,
+		addCheckBox("Flood-fill after generation", model()::setFloodFillAfterGeneration,
+				model()::isFloodFillAfterGeneration);
+		addCheckBox("Show distances", model()::setDistancesVisible, model()::isDistancesVisible);
+		addSeparator();
+		addCheckBox("Hide this dialog when running", model()::setHidingControlsWhenRunning,
 				model()::isHidingControlsWhenRunning);
 	}
 
