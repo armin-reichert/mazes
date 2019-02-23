@@ -87,7 +87,7 @@ public class MazeTest {
 				(u, v) -> grid.manhattan(u, v));
 		assertState(grid.vertices(), astar::getState, UNVISITED);
 		astar.exploreGraph(source, target);
-		assertTrue(astar.isClosed(target));
+		assertTrue(astar.getState(target) == AStarSearch.CLOSED);
 		assertTrue(astar.getParent(target) != -1);
 		assertTrue(astar.getCost(target) != -1);
 	}
