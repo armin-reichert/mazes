@@ -11,7 +11,6 @@
 	<name>SimpleMaze</name>
 	<description>Stripped down maze generator</description>
 	<build>
-		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
