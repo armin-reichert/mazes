@@ -18,7 +18,7 @@ Also implemented in this project are path finding algorithms for "solving" the g
 
 The included [demo application](https://github.com/armin-reichert/mazes/releases/) demonstrates all implemented maze generators and path finders. Using a control panel you can interactively select the generation algorithm, path finder, grid resolution and rendering style ("walls", "passages").
 
-Maze generation implementations often make a discrimination between "walls" and "passages". I find this misleading as it is jst a matter of displaying the underlying graph. Therefore the demo application has an option for rendering a grid/maze with fluent passage width:
+Maze generation implementations often make a sharp discrimination between "walls" and "passages". I find this misleading as it is just a matter of displaying the underlying graph. Therefore the demo application has an option for rendering a grid/maze with fluent passage width:
 
 <img style="width:100%; height=auto" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/fluent-passage-width-maze.png">
 
