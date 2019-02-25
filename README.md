@@ -18,7 +18,7 @@ Also implemented in this project are path finding algorithms for "solving" the g
 
 The included [demo application](https://github.com/armin-reichert/mazes/releases/) demonstrates all implemented maze generators and path finders. Using a control panel you can interactively select the generation algorithm, path finder, grid resolution and rendering style ("walls", "passages").
 
-In many implementations of maze generators a sharp differentiation is made between "wall builders" and "passage carvers" which I find slightly misleading. Interpreting a missing edge as a "wall" between two rooms is more a matter of rendering the grid:
+In many implementations of maze generators a sharp differentiation is made between "wall builders" and "passage carvers" which I find slightly misleading. Interpreting a grid vertex as a "room" and a missing edge between two grid neighbors as a "wall" between them is just a matter of rendering the grid:
 
 <img style="width:100%; height=auto" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/fluent-passage-width-maze.png">
 
