@@ -68,12 +68,12 @@ public class DisplayArea extends GridCanvas {
 		r.fnCellSize = () -> model().getGridCellSize();
 		r.fnPassageWidth = (u, v) -> {
 			int passageWidth = model().getGridCellSize() * model().getPassageWidthPercentage() / 100;
+			if (model().isPassageWidthFluent()) {
+				float factor = (float) model().getGrid().col(u) / model().getGridWidth();
+				passageWidth = Math.round(factor * passageWidth);
+			}
 			passageWidth = max(1, passageWidth);
 			passageWidth = min(model().getGridCellSize() - 1, passageWidth);
-			if (model().isPassageWidthGradient()) {
-				int col = model().getGrid().col(u);
-				return Math.max(1, Math.round(((float) col / model().getGridWidth()) * passageWidth));
-			}
 			return passageWidth;
 		};
 		r.fnPassageColor = (u, v) -> {

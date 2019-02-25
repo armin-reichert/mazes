@@ -153,7 +153,7 @@ public class MazeDemoModel {
 	private int[] gridCellSizes;
 	private int gridCellSize;
 	private int passageWidthPercentage;
-	private boolean passageWidthGradient;
+	private boolean passageWidthFluent;
 	private boolean generationAnimated;
 	private boolean hidingControlsWhenRunning;
 	private int delay;
@@ -193,12 +193,12 @@ public class MazeDemoModel {
 		this.passageWidthPercentage = percent;
 	}
 
-	public boolean isPassageWidthGradient() {
-		return passageWidthGradient;
+	public boolean isPassageWidthFluent() {
+		return passageWidthFluent;
 	}
 
-	public void setPassageWidthGradient(boolean passageWidthGradient) {
-		this.passageWidthGradient = passageWidthGradient;
+	public void setPassageWidthFluent(boolean fluent) {
+		this.passageWidthFluent = fluent;
 	}
 
 	public Style getStyle() {
