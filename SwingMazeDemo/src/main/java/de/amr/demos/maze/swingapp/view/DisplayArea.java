@@ -66,10 +66,14 @@ public class DisplayArea extends GridCanvas {
 		ConfigurableGridRenderer r = model().getStyle() == Style.PEARLS ? new PearlsGridRenderer()
 				: new WallPassageGridRenderer();
 		r.fnCellSize = () -> model().getGridCellSize();
-		r.fnPassageWidth = () -> {
+		r.fnPassageWidth = (u, v) -> {
 			int passageWidth = model().getGridCellSize() * model().getPassageWidthPercentage() / 100;
 			passageWidth = max(1, passageWidth);
 			passageWidth = min(model().getGridCellSize() - 1, passageWidth);
+			if (model().isPassageWidthGradient()) {
+				int col = model().getGrid().col(u);
+				return Math.max(1, Math.round(((float) col / model().getGridWidth()) * passageWidth));
+			}
 			return passageWidth;
 		};
 		r.fnPassageColor = (u, v) -> {

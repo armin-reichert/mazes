@@ -125,7 +125,7 @@ public class MazeGenerationRecordingApp {
 			}
 		};
 		renderer.fnCellSize = () -> cellSize;
-		renderer.fnPassageWidth = () -> cellSize - 1;
+		renderer.fnPassageWidth = (u, v) -> cellSize - 1;
 		return renderer;
 	}
 
