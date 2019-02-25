@@ -18,6 +18,10 @@ Also implemented in this project are path finding algorithms for "solving" the g
 
 The included [demo application](https://github.com/armin-reichert/mazes/releases/) demonstrates all implemented maze generators and path finders. Using a control panel you can interactively select the generation algorithm, path finder, grid resolution and rendering style ("walls", "passages").
 
+Maze generation implementations often make a discrimination between "walls" and "passages". I find this misleading as it is jst a matter of displaying the underlying graph. Therefore the demo application has an option for rendering a grid/maze with fluent passage width:
+
+<img style="width:100%; height=auto" src="https://github.com/armin-reichert/mazes/blob/master/MazeDemos/images/fluent-passage-width-maze.png">
+
 To achieve the mentioned goals, I implemented
 - an API for [graph](https://github.com/armin-reichert/graph/tree/master/Graph/src/main/java/de/amr/graph/core/api/Graph.java) and [2D-grid](https://github.com/armin-reichert/graph/tree/master/Graph/src/main/java/de/amr/graph/grid/api/GridGraph2D.java) data structures 
 - a space-efficient implementation of a [2D-grid](https://github.com/armin-reichert/graph/tree/master/Graph/src/main/java/de/amr/graph/grid/impl/GridGraph.java) with ability to store cell and edge content
