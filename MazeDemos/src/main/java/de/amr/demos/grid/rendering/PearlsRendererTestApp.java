@@ -2,12 +2,11 @@ package de.amr.demos.grid.rendering;
 
 import static de.amr.graph.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.graph.grid.api.GridPosition.TOP_LEFT;
-import static de.amr.graph.pathfinder.api.TraversalState.COMPLETED;
-import static de.amr.graph.pathfinder.api.TraversalState.UNVISITED;
 
-import de.amr.demos.grid.SwingGridSampleApp;
+import de.amr.demos.graph.SwingGridSampleApp;
 import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.graph.grid.ui.animation.DFSAnimation;
+import de.amr.graph.pathfinder.api.TraversalState;
 import de.amr.graph.pathfinder.impl.DepthFirstSearch2;
 import de.amr.maze.alg.core.MazeGenerator;
 import de.amr.maze.alg.ust.WilsonUSTRecursiveCrosses;
@@ -32,7 +31,7 @@ public class PearlsRendererTestApp extends SwingGridSampleApp {
 	public void run() {
 		clear();
 		setCanvasAnimation(false);
-		getGrid().setDefaultVertexLabel(v -> COMPLETED);
+		getGrid().setDefaultVertexLabel(v -> TraversalState.COMPLETED);
 		getGrid().fill();
 		getCanvas().drawGrid();
 
@@ -55,7 +54,7 @@ public class PearlsRendererTestApp extends SwingGridSampleApp {
 	private void clear() {
 		getGrid().removeEdges();
 		getGrid().clearVertexLabels();
-		getGrid().setDefaultVertexLabel(v -> UNVISITED);
+		getGrid().setDefaultVertexLabel(v -> TraversalState.UNVISITED);
 		getCanvas().clear();
 	}
 }

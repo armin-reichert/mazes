@@ -22,11 +22,6 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>de.amr.graph</groupId>
-			<artifactId>GraphDemos</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
 			<groupId>de.amr.maze</groupId>
 			<artifactId>Mazes</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
@@ -35,6 +30,11 @@
 			<groupId>com.beust</groupId>
 			<artifactId>jcommander</artifactId>
 			<version>1.72</version>
+		</dependency>
+		<dependency>
+			<groupId>de.amr.demos.graph</groupId>
+			<artifactId>GraphDemos</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
