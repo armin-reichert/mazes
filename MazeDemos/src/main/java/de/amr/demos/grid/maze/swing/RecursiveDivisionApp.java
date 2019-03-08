@@ -2,8 +2,8 @@ package de.amr.demos.grid.maze.swing;
 
 import java.util.stream.IntStream;
 
-import de.amr.demos.graph.SwingGridSampleApp;
 import de.amr.graph.grid.impl.OrthogonalGrid;
+import de.amr.graph.grid.ui.SwingGridSampleApp;
 import de.amr.maze.alg.RecursiveDivision;
 import de.amr.maze.alg.core.MazeGenerator;
 

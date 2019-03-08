@@ -42,11 +42,6 @@
 			<version>5.0</version>
 		</dependency>
 		<dependency>
-			<groupId>de.amr.graph</groupId>
-			<artifactId>Graph</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
 			<groupId>de.amr.maze</groupId>
 			<artifactId>Mazes</artifactId>
 			<version>0.0.1-SNAPSHOT</version>

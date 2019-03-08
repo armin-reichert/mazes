@@ -3,8 +3,8 @@ package de.amr.demos.grid.rendering;
 import static de.amr.graph.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.graph.grid.api.GridPosition.TOP_LEFT;
 
-import de.amr.demos.graph.SwingGridSampleApp;
 import de.amr.graph.grid.impl.OrthogonalGrid;
+import de.amr.graph.grid.ui.SwingGridSampleApp;
 import de.amr.graph.grid.ui.animation.DFSAnimation;
 import de.amr.graph.pathfinder.api.TraversalState;
 import de.amr.graph.pathfinder.impl.DepthFirstSearch2;

@@ -32,8 +32,8 @@
 			<version>1.72</version>
 		</dependency>
 		<dependency>
-			<groupId>de.amr.demos.graph</groupId>
-			<artifactId>GraphDemos</artifactId>
+			<groupId>de.amr.graph.viz</groupId>
+			<artifactId>GraphVisualization</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
