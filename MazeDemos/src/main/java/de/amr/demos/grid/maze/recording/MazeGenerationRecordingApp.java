@@ -86,7 +86,7 @@ public class MazeGenerationRecordingApp {
 				MazeGenerator<OrthogonalGrid> generator = (MazeGenerator<OrthogonalGrid>) generatorClass
 						.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(numCols, numRows);
 				OrthogonalGrid grid = generator.getGrid();
-				GridCanvas canvas = new GridCanvas(grid, cellSize);
+				GridCanvas canvas = new GridCanvas(grid);
 				canvas.pushRenderer(createRenderer(grid, cellSize));
 				canvas.drawGrid();
 				window.getContentPane().add(canvas);

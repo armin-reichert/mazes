@@ -54,7 +54,7 @@ public class MazeToImage {
 			Params p = new Params();
 			JCommander.newBuilder().addObject(p).build().parse(args);
 			OrthogonalGrid maze = maze(p);
-			GridCanvas canvas = new GridCanvas(maze, p.cellSize);
+			GridCanvas canvas = new GridCanvas(maze);
 			WallPassageGridRenderer gr = new WallPassageGridRenderer();
 			gr.fnCellSize = () -> p.cellSize;
 			canvas.pushRenderer(gr);

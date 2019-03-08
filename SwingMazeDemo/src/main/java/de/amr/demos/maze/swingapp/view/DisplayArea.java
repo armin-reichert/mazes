@@ -28,7 +28,7 @@ public class DisplayArea extends GridCanvas {
 	private final GridCanvasAnimation<TraversalState, Integer> animation;
 
 	public DisplayArea() {
-		super(model().getGrid(), model().getGridCellSize());
+		super(model().getGrid());
 		pushRenderer(createRenderer());
 		animation = new GridCanvasAnimation<>(this);
 		animation.fnDelay = () -> model().getDelay();
