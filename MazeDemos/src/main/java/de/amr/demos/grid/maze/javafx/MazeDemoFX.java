@@ -3,6 +3,7 @@ package de.amr.demos.grid.maze.javafx;
 import static de.amr.graph.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.graph.grid.api.GridPosition.TOP_LEFT;
 
+import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -20,7 +21,6 @@ import de.amr.maze.alg.mst.PrimMST;
 import de.amr.maze.alg.traversal.GrowingTreeLastOrRandom;
 import de.amr.maze.alg.traversal.IterativeDFS;
 import de.amr.maze.alg.traversal.RandomBFS;
-import de.amr.maze.alg.ust.WilsonUSTCollapsingRectangle;
 import de.amr.maze.alg.ust.WilsonUSTRandomCell;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -47,11 +47,22 @@ public class MazeDemoFX extends Application {
 	}
 
 	private static final int MAZE_WIDTH = 1000;
-	private static final Random RAND = new Random();
-	private static final Class<?> GENERATOR_CLASSES[] = { BinaryTreeRandom.class, Eller.class,
-			Armin.class, GrowingTreeLastOrRandom.class, HuntAndKillRandom.class, KruskalMST.class,
-			PrimMST.class, IterativeDFS.class, RandomBFS.class, RecursiveDivision.class, WilsonUSTRandomCell.class,
-			WilsonUSTCollapsingRectangle.class };
+
+	private static final Class<?> GENERATOR_CLASSES[] = {
+		/*@formatter:off*/
+		BinaryTreeRandom.class, 
+		Eller.class, 
+		Armin.class,
+		GrowingTreeLastOrRandom.class, 
+		HuntAndKillRandom.class, 
+		KruskalMST.class, 
+		PrimMST.class,
+		IterativeDFS.class, 
+		RandomBFS.class, 
+		RecursiveDivision.class, 
+		WilsonUSTRandomCell.class,
+		/*@formatter:on*/
+	};
 
 	private Canvas canvas;
 	private Timer timer;
@@ -59,6 +70,14 @@ public class MazeDemoFX extends Application {
 	private int cols;
 	private int rows;
 	private int cellSize;
+
+	@Override
+	public void start(Stage primaryStage) {
+		primaryStage.setTitle("Maze Generation & Pathfinding");
+		primaryStage.setOnCloseRequest(event -> timer.cancel());
+		primaryStage.setScene(createScene());
+		primaryStage.show();
+	}
 
 	public MazeDemoFX() {
 		cellSize = 8;
@@ -71,12 +90,12 @@ public class MazeDemoFX extends Application {
 		System.out.println(String.format("Cellsize: %d, cols: %d, rows: %d", cellSize, cols, rows));
 	}
 
-	@Override
-	public void start(Stage primaryStage) throws Exception {
+	private Scene createScene() {
 		Pane root = new Pane();
+		Scene scene = new Scene(root);
+
 		canvas = new Canvas((cols + 1) * cellSize, (rows + 1) * cellSize);
 		root.getChildren().add(canvas);
-		Scene scene = new Scene(root);
 
 		timer = new Timer();
 		timer.schedule(new TimerTask() {
@@ -100,11 +119,7 @@ public class MazeDemoFX extends Application {
 				}
 			}
 		});
-
-		primaryStage.setScene(scene);
-		primaryStage.setTitle("Maze Generation & Pathfinding");
-		primaryStage.setOnCloseRequest(event -> timer.cancel());
-		primaryStage.show();
+		return scene;
 	}
 
 	private void nextMaze() {
@@ -112,13 +127,12 @@ public class MazeDemoFX extends Application {
 		MazeGenerator<OrthogonalGrid> generator = randomMazeGenerator();
 		maze = generator.createMaze(0, 0);
 		drawGrid();
-		BreadthFirstSearch<?, ?> bfs = new BreadthFirstSearch<>(maze);
-		drawPath(bfs.findPath(maze.cell(TOP_LEFT), maze.cell(BOTTOM_RIGHT))::iterator);
+		drawPath(new BreadthFirstSearch<>(maze).findPath(maze.cell(TOP_LEFT), maze.cell(BOTTOM_RIGHT)));
 	}
 
 	@SuppressWarnings("unchecked")
 	private MazeGenerator<OrthogonalGrid> randomMazeGenerator() {
-		Class<?> generatorClass = GENERATOR_CLASSES[RAND.nextInt(GENERATOR_CLASSES.length)];
+		Class<?> generatorClass = GENERATOR_CLASSES[new Random().nextInt(GENERATOR_CLASSES.length)];
 		try {
 			return (MazeGenerator<OrthogonalGrid>) generatorClass.getConstructor(Integer.TYPE, Integer.TYPE)
 					.newInstance(cols, rows);
@@ -149,7 +163,7 @@ public class MazeDemoFX extends Application {
 		gc.translate(-cellSize, -cellSize);
 	}
 
-	private void drawPath(Iterable<Integer> path) {
+	private void drawPath(List<Integer> path) {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.setStroke(Color.RED);
 		gc.setLineWidth(cellSize / 4);
