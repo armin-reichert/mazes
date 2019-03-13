@@ -96,7 +96,7 @@ public class SolveMazeAction extends AbstractAction {
 		}
 	}
 
-	private void runSolver(GraphSearch<?, ?> solver, AlgorithmInfo solverInfo) {
+	private void runSolver(GraphSearch<?, ?, ?> solver, AlgorithmInfo solverInfo) {
 		int source = model().getGrid().cell(model().getPathFinderSource());
 		int target = model().getGrid().cell(model().getPathFinderTarget());
 		boolean informed = solverInfo.isTagged(PathFinderTag.INFORMED);

@@ -69,6 +69,7 @@ public class MazeDemoApp extends SwingGridSampleApp {
 			generator.createMaze(0, 0);
 			floodfill();
 			sleep(1000);
+			getCanvas().clear();
 		});
 		System.exit(0);
 	}

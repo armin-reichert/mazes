@@ -1,6 +1,5 @@
 package de.amr.maze.alg.mst;
 
-import de.amr.graph.pathfinder.impl.GraphSearch;
 import de.amr.graph.pathfinder.impl.BestFirstSearch;
 
 /**
@@ -18,8 +17,8 @@ public class ReverseDeleteMST_BestFS extends ReverseDeleteMST {
 
 	@Override
 	protected boolean connected(int u, int v) {
-		GraphSearch<?, ?> best = new BestFirstSearch<>(grid, x -> grid.manhattan(x, v));
-		best.exploreGraph(u, v);
-		return best.getParent(v) != -1;
+		BestFirstSearch<?, ?> bestFirstSearch = new BestFirstSearch<>(grid, x -> grid.manhattan(x, v));
+		bestFirstSearch.exploreGraph(u, v);
+		return bestFirstSearch.getParent(v) != -1;
 	}
 }
