@@ -3,12 +3,12 @@ package de.amr.demos.grid.maze.javafx;
 import static de.amr.graph.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.graph.grid.api.GridPosition.TOP_LEFT;
 
-import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import de.amr.graph.grid.impl.OrthogonalGrid;
+import de.amr.graph.pathfinder.api.Path;
 import de.amr.graph.pathfinder.impl.BreadthFirstSearch;
 import de.amr.maze.alg.Armin;
 import de.amr.maze.alg.BinaryTreeRandom;
@@ -127,7 +127,9 @@ public class MazeDemoFX extends Application {
 		MazeGenerator<OrthogonalGrid> generator = randomMazeGenerator();
 		maze = generator.createMaze(0, 0);
 		drawGrid();
-		drawPath(new BreadthFirstSearch<>(maze).findPath(maze.cell(TOP_LEFT), maze.cell(BOTTOM_RIGHT)));
+		Path path = Path.computePath(maze.cell(TOP_LEFT), maze.cell(BOTTOM_RIGHT),
+				new BreadthFirstSearch<>(maze));
+		drawPath(path);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -163,7 +165,7 @@ public class MazeDemoFX extends Application {
 		gc.translate(-cellSize, -cellSize);
 	}
 
-	private void drawPath(List<Integer> path) {
+	private void drawPath(Path path) {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.setStroke(Color.RED);
 		gc.setLineWidth(cellSize / 4);

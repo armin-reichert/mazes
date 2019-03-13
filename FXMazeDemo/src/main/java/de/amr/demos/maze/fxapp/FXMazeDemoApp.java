@@ -1,7 +1,6 @@
 package de.amr.demos.maze.fxapp;
 
 import javafx.application.Application;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -22,9 +21,9 @@ public class FXMazeDemoApp extends Application {
 	}
 
 	private Scene createScene(Stage stage) {
-		Parent root = new Pane();
-		Scene scene = new Scene(root);
-		return scene;
+		Pane canvas = new Pane();
+		canvas.setPrefSize(400, 300);
+		return new Scene(canvas);
 	}
 
 }

@@ -14,7 +14,6 @@ import javax.swing.AbstractAction;
 
 import de.amr.demos.maze.swingapp.model.AlgorithmInfo;
 import de.amr.demos.maze.swingapp.model.PathFinderTag;
-import de.amr.graph.grid.api.GridPosition;
 import de.amr.graph.grid.ui.animation.AnimationInterruptedException;
 import de.amr.graph.grid.ui.animation.BFSAnimation;
 import de.amr.graph.grid.ui.animation.DFSAnimation;
@@ -102,11 +101,10 @@ public class SolveMazeAction extends AbstractAction {
 		boolean informed = solverInfo.isTagged(PathFinderTag.INFORMED);
 		StopWatch watch = new StopWatch();
 		if (solverInfo.isTagged(PathFinderTag.BFS)) {
-			BreadthFirstSearch<?, ?> bfs = (BreadthFirstSearch<?, ?>) solver;
 			BFSAnimation anim = BFSAnimation.builder().canvas(canvas()).delay(() -> model().getDelay())
 					.pathColor(model().getPathColor()).distanceVisible(model().isDistancesVisible()).build();
-			watch.measure(() -> anim.run(bfs, source, target));
-			anim.showPath(bfs, source, target);
+			watch.measure(() -> anim.run(solver, source, target));
+			anim.showPath(solver, source, target);
 		} else if (solverInfo.isTagged(PathFinderTag.DFS)) {
 			DFSAnimation anim = DFSAnimation.builder().canvas(canvas()).delay(() -> model().getDelay())
 					.pathColor(model().getPathColor()).build();
@@ -119,9 +117,8 @@ public class SolveMazeAction extends AbstractAction {
 	}
 
 	private ToDoubleFunction<Integer> heuristics() {
-		GridPosition targetPosition = model().getPathFinderTarget();
-		int targetVertex = model().getGrid().cell(targetPosition);
-		return v -> metric().applyAsDouble(v, targetVertex);
+		int targetCell = model().getGrid().cell(model().getPathFinderTarget());
+		return cell -> metric().applyAsDouble(cell, targetCell);
 	}
 
 	private ToDoubleBiFunction<Integer, Integer> metric() {
@@ -129,7 +126,7 @@ public class SolveMazeAction extends AbstractAction {
 		case CHEBYSHEV:
 			return model().getGrid()::chebyshev;
 		case EUCLIDEAN:
-			return model().getGrid()::euclidean2;
+			return model().getGrid()::euclidean;
 		case MANHATTAN:
 			return model().getGrid()::manhattan;
 		}

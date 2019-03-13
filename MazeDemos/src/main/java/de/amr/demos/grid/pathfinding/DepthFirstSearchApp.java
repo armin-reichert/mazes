@@ -1,5 +1,8 @@
 package de.amr.demos.grid.pathfinding;
 
+import static de.amr.graph.grid.api.GridPosition.BOTTOM_RIGHT;
+import static de.amr.graph.grid.api.GridPosition.TOP_LEFT;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,10 +18,10 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
-import de.amr.graph.grid.api.GridPosition;
 import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.graph.grid.ui.rendering.ConfigurableGridRenderer;
 import de.amr.graph.grid.ui.rendering.WallPassageGridRenderer;
+import de.amr.graph.pathfinder.api.Path;
 import de.amr.graph.pathfinder.impl.DepthFirstSearch2;
 import de.amr.maze.alg.mst.KruskalMST;
 
@@ -30,7 +33,7 @@ import de.amr.maze.alg.mst.KruskalMST;
 public class DepthFirstSearchApp {
 
 	private OrthogonalGrid grid;
-	private Iterable<Integer> solution;
+	private Path solution;
 	private GridCanvas canvas;
 
 	private class GridCanvas extends JComponent {
@@ -139,7 +142,6 @@ public class DepthFirstSearchApp {
 	}
 
 	private void dfs() {
-		solution = new DepthFirstSearch2<>(grid).findPath(grid.cell(GridPosition.TOP_LEFT),
-				grid.cell(GridPosition.BOTTOM_RIGHT));
+		solution = Path.computePath(grid.cell(TOP_LEFT), grid.cell(BOTTOM_RIGHT), new DepthFirstSearch2<>(grid));
 	}
 }
