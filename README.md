@@ -16,7 +16,7 @@ Other new algorithms are variations of Wilson's uniform spanning tree algorithm.
 
 Also implemented in this project are path finding algorithms for "solving" the generated mazes: "Breadth-First-Search" and "Depth-First-Search" together with their informed variants "Best-First-Search" and "Hill Climbing". For completeness, the A* and Dijkstra algorithms are also included. The Dijkstra algorithm however does not provide additional value because the graphs of the mazes have uniform edge cost.
 
-The included [demo application](https://github.com/armin-reichert/mazes/releases/) demonstrates all implemented maze generators and path finders. Using a control panel you can interactively select the generation algorithm, path finder, grid resolution and rendering style ("walls", "passages").
+The included [demo application](https://github.com/armin-reichert/mazes-demos/releases/) demonstrates all implemented maze generators and path finders. Using a control panel you can interactively select the generation algorithm, path finder, grid resolution and rendering style ("walls", "passages").
 
 In many implementations of maze generators a sharp differentiation is made between "wall builders" and "passage carvers" which I find slightly misleading. Interpreting a grid vertex as a "room" and a missing edge between two grid neighbors as a "wall" between them is just a matter of rendering the grid:
 
