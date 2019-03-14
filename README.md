@@ -8,6 +8,8 @@ On the web, many maze generation implementations in all possible programming lan
 
 On the other hand, there are only a few websites where the whole spectrum of maze creation algorithms is investigated. One prominent example is [this blog](http://weblog.jamisbuck.org/2011/2/7/maze-generation-algorithm-recap) where Jamis Buck presents the most popular maze algorithms together with Ruby/Javascript implementations. Reading his blog led myself to investigate this topic too.
 
+[https://github.com/armin-reichert/mazes/wiki](Read more...)
+
 Initially, I just intended to implement some of these algorithms to learn about the (then) new Java features (streams, lambda expressions). I also wanted to implement the needed data structures (graph, grid graph, union-find, ...) not just in an "ad-hoc" fashion. The maze algorithm implementations should become pure *graph algorithms* without any UI or animation related parts. The underlying algorithm, for example a minimum-spanning tree algorithm, should remain recognizable in the maze generator code. Avoiding dependencies to UI frameworks should help in making the code more reusable. For example, the animated GIF images below have been created using a grid graph observer which takes snapshots of the maze while being created. 
 
 In the end, all the algorithms presented in Jamis Buck's blog and even some new algorithms got implemented. One new algorithm is a modification of Eller's algorithm that in contrast to the original doesn't generate the maze row-wise but from the center of the grid towards the outer borders. The resulting maze however is heavily biased. 
