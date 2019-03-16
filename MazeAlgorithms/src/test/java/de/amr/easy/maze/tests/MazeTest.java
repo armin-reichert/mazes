@@ -83,8 +83,7 @@ public class MazeTest {
 		OrthogonalGrid grid = new IterativeDFS(N, N).createMaze(0, 0);
 		grid.setDefaultEdgeLabel((u, v) -> 1);
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		AStarSearch<TraversalState, Integer> astar = new AStarSearch<>(grid, edge -> 1,
-				(u, v) -> grid.manhattan(u, v));
+		AStarSearch<?, ?> astar = new AStarSearch<>(grid, (u, v) -> 1, (u, v) -> grid.manhattan(u, v));
 		assertState(grid.vertices(), astar::getState, UNVISITED);
 		astar.exploreGraph(source, target);
 		assertTrue(astar.getState(target) == AStarSearch.CLOSED);
