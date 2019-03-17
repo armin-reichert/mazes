@@ -17,8 +17,6 @@ public class ReverseDeleteMST_HillClimbing extends ReverseDeleteMST {
 
 	@Override
 	protected boolean connected(int u, int v) {
-		HillClimbingSearch search = new HillClimbingSearch(grid, x -> grid.manhattan(x, v));
-		search.exploreGraph(u, v);
-		return search.getParent(v) != -1;
+		return new HillClimbingSearch(grid, x -> grid.manhattan(x, v)).exploreGraph(u, v);
 	}
 }

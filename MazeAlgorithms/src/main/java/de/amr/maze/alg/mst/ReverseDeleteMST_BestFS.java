@@ -17,8 +17,6 @@ public class ReverseDeleteMST_BestFS extends ReverseDeleteMST {
 
 	@Override
 	protected boolean connected(int u, int v) {
-		BestFirstSearch bestFirstSearch = new BestFirstSearch(grid, x -> grid.manhattan(x, v));
-		bestFirstSearch.exploreGraph(u, v);
-		return bestFirstSearch.getParent(v) != -1;
+		return new BestFirstSearch(grid, x -> grid.manhattan(x, v)).exploreGraph(u, v);
 	}
 }
