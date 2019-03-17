@@ -1,6 +1,5 @@
 package de.amr.maze.alg.mst;
 
-import de.amr.graph.pathfinder.api.TraversalState;
 import de.amr.graph.pathfinder.impl.HillClimbingSearch;
 
 /**
@@ -18,8 +17,7 @@ public class ReverseDeleteMST_HillClimbing extends ReverseDeleteMST {
 
 	@Override
 	protected boolean connected(int u, int v) {
-		HillClimbingSearch<TraversalState, Integer> search = new HillClimbingSearch<>(grid,
-				x -> grid.manhattan(x, v));
+		HillClimbingSearch search = new HillClimbingSearch(grid, x -> grid.manhattan(x, v));
 		search.exploreGraph(u, v);
 		return search.getParent(v) != -1;
 	}

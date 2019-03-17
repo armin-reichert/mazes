@@ -71,7 +71,7 @@ public class MazeTest {
 	public void testBestFS() {
 		OrthogonalGrid grid = new IterativeDFS(N, N).createMaze(0, 0);
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		BestFirstSearch<?, ?> best = new BestFirstSearch<>(grid, x -> grid.manhattan(x, target));
+		BestFirstSearch best = new BestFirstSearch(grid, x -> grid.manhattan(x, target));
 		assertState(grid.vertices(), best::getState, UNVISITED);
 		best.exploreGraph(source);
 		assertState(grid.vertices(), best::getState, VISITED, COMPLETED);
@@ -83,7 +83,7 @@ public class MazeTest {
 		OrthogonalGrid grid = new IterativeDFS(N, N).createMaze(0, 0);
 		grid.setDefaultEdgeLabel((u, v) -> 1);
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		AStarSearch<?, ?> astar = new AStarSearch<>(grid, (u, v) -> 1, (u, v) -> grid.manhattan(u, v));
+		AStarSearch astar = new AStarSearch(grid, (u, v) -> 1, (u, v) -> grid.manhattan(u, v));
 		assertState(grid.vertices(), astar::getState, UNVISITED);
 		astar.exploreGraph(source, target);
 		assertTrue(astar.getState(target) == AStarSearch.CLOSED);
