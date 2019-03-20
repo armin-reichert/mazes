@@ -6,7 +6,7 @@
 	</properties>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.amr.mazes.simple</groupId>
-	<artifactId>SimpleMaze</artifactId>
+	<artifactId>mazes-simplified</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>SimpleMaze</name>
 	<description>Stripped down maze generator</description>
