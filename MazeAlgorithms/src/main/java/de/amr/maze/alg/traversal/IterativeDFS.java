@@ -2,9 +2,9 @@ package de.amr.maze.alg.traversal;
 
 import static de.amr.datastruct.StreamUtils.randomElement;
 import static de.amr.graph.grid.impl.OrthogonalGrid.emptyGrid;
-import static de.amr.graph.pathfinder.api.TraversalState.COMPLETED;
-import static de.amr.graph.pathfinder.api.TraversalState.UNVISITED;
-import static de.amr.graph.pathfinder.api.TraversalState.VISITED;
+import static de.amr.graph.core.api.TraversalState.COMPLETED;
+import static de.amr.graph.core.api.TraversalState.UNVISITED;
+import static de.amr.graph.core.api.TraversalState.VISITED;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

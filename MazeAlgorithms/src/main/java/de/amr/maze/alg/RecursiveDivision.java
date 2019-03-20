@@ -1,7 +1,7 @@
 package de.amr.maze.alg;
 
+import static de.amr.graph.core.api.TraversalState.COMPLETED;
 import static de.amr.graph.grid.impl.OrthogonalGrid.fullGrid;
-import static de.amr.graph.pathfinder.api.TraversalState.COMPLETED;
 import static java.util.stream.IntStream.range;
 
 import java.util.Random;
@@ -63,7 +63,8 @@ public class RecursiveDivision implements MazeGenerator<OrthogonalGrid> {
 			});
 			divide(x0, y0, w, y - y0);
 			divide(x0, y, w, h - (y - y0));
-		} else {
+		}
+		else {
 			// Build "vertical wall" at random x from [x0 + 1, x0 + w - 1], keep random door
 			int x = x0 + 1 + rnd.nextInt(w - 1);
 			int door = y0 + rnd.nextInt(h);

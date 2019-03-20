@@ -26,5 +26,10 @@
 			<artifactId>graph-core</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>de.amr.graph</groupId>
+			<artifactId>graph-search</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

@@ -2,9 +2,9 @@ package de.amr.easy.maze.tests;
 
 import static de.amr.graph.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.graph.grid.api.GridPosition.TOP_LEFT;
-import static de.amr.graph.pathfinder.api.TraversalState.COMPLETED;
-import static de.amr.graph.pathfinder.api.TraversalState.UNVISITED;
-import static de.amr.graph.pathfinder.api.TraversalState.VISITED;
+import static de.amr.graph.core.api.TraversalState.COMPLETED;
+import static de.amr.graph.core.api.TraversalState.UNVISITED;
+import static de.amr.graph.core.api.TraversalState.VISITED;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -17,7 +17,7 @@ import org.junit.Test;
 
 import de.amr.graph.grid.impl.GridGraph;
 import de.amr.graph.grid.impl.OrthogonalGrid;
-import de.amr.graph.pathfinder.api.TraversalState;
+import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.pathfinder.impl.AStarSearch;
 import de.amr.graph.pathfinder.impl.BestFirstSearch;
 import de.amr.graph.util.GraphUtils;

@@ -1,9 +1,9 @@
 package de.amr.maze.alg;
 
 import static de.amr.datastruct.StreamUtils.randomElement;
+import static de.amr.graph.core.api.TraversalState.COMPLETED;
+import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import static de.amr.graph.grid.impl.OrthogonalGrid.emptyGrid;
-import static de.amr.graph.pathfinder.api.TraversalState.COMPLETED;
-import static de.amr.graph.pathfinder.api.TraversalState.UNVISITED;
 
 import java.util.BitSet;
 import java.util.OptionalInt;
@@ -45,7 +45,8 @@ public class HuntAndKill implements MazeGenerator<OrthogonalGrid> {
 				grid.neighbors(animal).filter(this::isAlive).forEach(targets::set);
 				grid.addEdge(animal, livingNeighbor.getAsInt());
 				animal = livingNeighbor.getAsInt();
-			} else if (!targets.isEmpty()) {
+			}
+			else if (!targets.isEmpty()) {
 				animal = hunt();
 				grid.addEdge(animal, randomElement(grid.neighbors(animal).filter(this::isDead)).getAsInt());
 			}

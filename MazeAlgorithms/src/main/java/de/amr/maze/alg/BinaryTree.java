@@ -1,10 +1,10 @@
 package de.amr.maze.alg;
 
+import static de.amr.graph.core.api.TraversalState.COMPLETED;
+import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import static de.amr.graph.grid.impl.OrthogonalGrid.emptyGrid;
 import static de.amr.graph.grid.impl.Top4.E;
 import static de.amr.graph.grid.impl.Top4.S;
-import static de.amr.graph.pathfinder.api.TraversalState.COMPLETED;
-import static de.amr.graph.pathfinder.api.TraversalState.UNVISITED;
 
 import java.util.OptionalInt;
 import java.util.Random;

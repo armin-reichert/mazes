@@ -1,5 +1,7 @@
 package de.amr.maze.alg;
 
+import static de.amr.graph.core.api.TraversalState.COMPLETED;
+import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import static de.amr.graph.grid.api.GridPosition.CENTER;
 import static de.amr.graph.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.graph.grid.impl.OrthogonalGrid.emptyGrid;
@@ -7,8 +9,6 @@ import static de.amr.graph.grid.impl.Top4.E;
 import static de.amr.graph.grid.impl.Top4.N;
 import static de.amr.graph.grid.impl.Top4.S;
 import static de.amr.graph.grid.impl.Top4.W;
-import static de.amr.graph.pathfinder.api.TraversalState.COMPLETED;
-import static de.amr.graph.pathfinder.api.TraversalState.UNVISITED;
 import static java.lang.Math.max;
 
 import java.util.ArrayList;
@@ -77,7 +77,8 @@ public class Armin implements MazeGenerator<OrthogonalGrid> {
 			x = grid.col(center) + offsetX;
 			y = grid.row(center) + offsetY;
 			size = 1;
-		} else {
+		}
+		else {
 			x = squareGrid.col(square.getTopLeft()) - 1;
 			y = squareGrid.row(square.getTopLeft()) - 1;
 			size = square.getSize() + 2;
@@ -131,8 +132,8 @@ public class Armin implements MazeGenerator<OrthogonalGrid> {
 			}
 			prevCell = cell;
 		}
-		if (prevCell != -1 && firstCell != -1 && prevCell != firstCell
-				&& grid.areNeighbors(prevCell, firstCell) && !grid.adjacent(prevCell, firstCell)) {
+		if (prevCell != -1 && firstCell != -1 && prevCell != firstCell && grid.areNeighbors(prevCell, firstCell)
+				&& !grid.adjacent(prevCell, firstCell)) {
 			if (all || rnd.nextBoolean()) {
 				if (mazeParts.find(prevCell) != mazeParts.find(firstCell)) {
 					connectCells(prevCell, firstCell);
@@ -188,19 +189,26 @@ public class Armin implements MazeGenerator<OrthogonalGrid> {
 		int index = cellIndex.get(cell);
 		if (index == 0) {
 			addNeighborsIfAny(result, cell, W, N);
-		} else if (index < squareSize - 1) {
+		}
+		else if (index < squareSize - 1) {
 			addNeighborsIfAny(result, cell, N);
-		} else if (index == squareSize - 1) {
+		}
+		else if (index == squareSize - 1) {
 			addNeighborsIfAny(result, cell, N, E);
-		} else if (index < 2 * (squareSize - 1)) {
+		}
+		else if (index < 2 * (squareSize - 1)) {
 			addNeighborsIfAny(result, cell, E);
-		} else if (index == 2 * (squareSize - 1)) {
+		}
+		else if (index == 2 * (squareSize - 1)) {
 			addNeighborsIfAny(result, cell, E, S);
-		} else if (index < 3 * (squareSize - 1)) {
+		}
+		else if (index < 3 * (squareSize - 1)) {
 			addNeighborsIfAny(result, cell, S);
-		} else if (index == 3 * (squareSize - 1)) {
+		}
+		else if (index == 3 * (squareSize - 1)) {
 			addNeighborsIfAny(result, cell, S, W);
-		} else {
+		}
+		else {
 			addNeighborsIfAny(result, cell, W);
 		}
 		return result;

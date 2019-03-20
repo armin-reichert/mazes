@@ -2,7 +2,7 @@ package de.amr.maze.alg.mst;
 
 import static de.amr.datastruct.StreamUtils.permute;
 import static de.amr.graph.grid.impl.OrthogonalGrid.fullGrid;
-import static de.amr.graph.pathfinder.api.TraversalState.COMPLETED;
+import static de.amr.graph.core.api.TraversalState.COMPLETED;
 
 import de.amr.graph.core.api.Edge;
 import de.amr.graph.grid.impl.OrthogonalGrid;
