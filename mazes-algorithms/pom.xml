@@ -6,7 +6,7 @@
 	</properties>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.amr.maze</groupId>
-	<artifactId>Mazes</artifactId>
+	<artifactId>mazes-algorithms</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<build>
 		<plugins>
