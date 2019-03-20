@@ -1,8 +1,8 @@
 package de.amr.maze.alg;
 
-import static de.amr.graph.grid.impl.OrthogonalGrid.emptyGrid;
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
+import static de.amr.graph.grid.impl.OrthogonalGrid.emptyGrid;
 import static java.util.stream.IntStream.range;
 
 import java.util.Random;

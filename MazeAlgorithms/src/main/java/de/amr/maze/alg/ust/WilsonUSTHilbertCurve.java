@@ -1,12 +1,12 @@
 package de.amr.maze.alg.ust;
 
+import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import static de.amr.graph.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.graph.grid.impl.OrthogonalGrid.emptyGrid;
 import static de.amr.graph.grid.impl.Top4.E;
 import static de.amr.graph.grid.impl.Top4.N;
 import static de.amr.graph.grid.impl.Top4.S;
 import static de.amr.graph.grid.impl.Top4.W;
-import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import static de.amr.graph.util.GraphUtils.log;
 import static de.amr.graph.util.GraphUtils.nextPow;
 import static java.lang.Math.max;

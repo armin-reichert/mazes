@@ -1,13 +1,13 @@
 package de.amr.maze.alg.ust;
 
 import static de.amr.datastruct.StreamUtils.randomElement;
-import static de.amr.graph.grid.impl.OrthogonalGrid.emptyGrid;
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import static de.amr.graph.core.api.TraversalState.VISITED;
+import static de.amr.graph.grid.impl.OrthogonalGrid.emptyGrid;
 
-import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.graph.core.api.TraversalState;
+import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.maze.alg.core.MazeGenerator;
 
 /**

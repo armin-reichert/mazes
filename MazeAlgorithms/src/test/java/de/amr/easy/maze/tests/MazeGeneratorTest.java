@@ -17,10 +17,10 @@ import org.junit.Test;
 
 import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.graph.util.GraphUtils;
+import de.amr.maze.alg.Armin;
 import de.amr.maze.alg.BinaryTree;
 import de.amr.maze.alg.BinaryTreeRandom;
 import de.amr.maze.alg.Eller;
-import de.amr.maze.alg.Armin;
 import de.amr.maze.alg.HuntAndKill;
 import de.amr.maze.alg.HuntAndKillRandom;
 import de.amr.maze.alg.RecursiveDivision;

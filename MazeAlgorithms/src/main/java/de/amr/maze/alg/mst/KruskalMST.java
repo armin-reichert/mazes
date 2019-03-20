@@ -1,10 +1,10 @@
 package de.amr.maze.alg.mst;
 
 import static de.amr.datastruct.StreamUtils.permute;
-import static de.amr.graph.grid.impl.OrthogonalGrid.emptyGrid;
-import static de.amr.graph.grid.impl.OrthogonalGrid.fullGrid;
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
+import static de.amr.graph.grid.impl.OrthogonalGrid.emptyGrid;
+import static de.amr.graph.grid.impl.OrthogonalGrid.fullGrid;
 
 import de.amr.datastruct.Partition;
 import de.amr.graph.grid.impl.OrthogonalGrid;

@@ -1,7 +1,7 @@
 package de.amr.maze.alg.ust;
 
-import static de.amr.graph.grid.api.GridPosition.CENTER;
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
+import static de.amr.graph.grid.api.GridPosition.CENTER;
 
 import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.graph.grid.shapes.Rectangle;
