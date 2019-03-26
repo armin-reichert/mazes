@@ -86,7 +86,7 @@ public class MazeTest {
 		AStarSearch astar = new AStarSearch(grid, (u, v) -> 1, (u, v) -> grid.manhattan(u, v));
 		assertState(grid.vertices(), astar::getState, UNVISITED);
 		astar.exploreGraph(source, target);
-		assertTrue(astar.getState(target) == AStarSearch.CLOSED);
+		assertTrue(astar.getState(target) == COMPLETED);
 		assertTrue(astar.getParent(target) != -1);
 		assertTrue(astar.getCost(target) != -1);
 	}
