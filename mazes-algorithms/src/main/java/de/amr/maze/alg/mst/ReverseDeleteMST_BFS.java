@@ -18,6 +18,6 @@ public class ReverseDeleteMST_BFS extends ReverseDeleteMST {
 
 	@Override
 	protected boolean connected(int u, int v) {
-		return new BreadthFirstSearch(grid).findPath(u, v) != Path.NO_PATH;
+		return new BreadthFirstSearch(grid).findPath(u, v) != Path.NULL;
 	}
 }
