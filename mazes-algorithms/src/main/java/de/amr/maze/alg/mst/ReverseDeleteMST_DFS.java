@@ -1,5 +1,6 @@
 package de.amr.maze.alg.mst;
 
+import de.amr.graph.pathfinder.api.Path;
 import de.amr.graph.pathfinder.impl.DepthFirstSearch2;
 
 /**
@@ -17,6 +18,6 @@ public class ReverseDeleteMST_DFS extends ReverseDeleteMST {
 
 	@Override
 	protected boolean connected(int u, int v) {
-		return new DepthFirstSearch2(grid).exploreGraph(u, v);
+		return new DepthFirstSearch2(grid).findPath(u, v) != Path.NO_PATH;
 	}
 }

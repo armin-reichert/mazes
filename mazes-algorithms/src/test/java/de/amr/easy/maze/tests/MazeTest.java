@@ -75,7 +75,7 @@ public class MazeTest {
 		assertState(grid.vertices(), best::getState, UNVISITED);
 		best.exploreGraph(source);
 		assertState(grid.vertices(), best::getState, VISITED, COMPLETED);
-		best.exploreGraph(source, target);
+		best.findPath(source, target);
 	}
 
 	@Test
@@ -85,7 +85,7 @@ public class MazeTest {
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
 		AStarSearch astar = new AStarSearch(grid, (u, v) -> 1, (u, v) -> grid.manhattan(u, v));
 		assertState(grid.vertices(), astar::getState, UNVISITED);
-		astar.exploreGraph(source, target);
+		astar.findPath(source, target);
 		assertTrue(astar.getState(target) == COMPLETED);
 		assertTrue(astar.getParent(target) != -1);
 		assertTrue(astar.getCost(target) != -1);

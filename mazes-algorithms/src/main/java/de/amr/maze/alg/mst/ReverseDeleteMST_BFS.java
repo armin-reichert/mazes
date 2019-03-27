@@ -1,5 +1,6 @@
 package de.amr.maze.alg.mst;
 
+import de.amr.graph.pathfinder.api.Path;
 import de.amr.graph.pathfinder.impl.BreadthFirstSearch;
 
 /**
@@ -17,6 +18,6 @@ public class ReverseDeleteMST_BFS extends ReverseDeleteMST {
 
 	@Override
 	protected boolean connected(int u, int v) {
-		return new BreadthFirstSearch(grid).exploreGraph(u, v);
+		return new BreadthFirstSearch(grid).findPath(u, v) != Path.NO_PATH;
 	}
 }
