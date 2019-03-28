@@ -4,9 +4,9 @@ import static de.amr.graph.grid.api.GridPosition.TOP_LEFT;
 
 import java.util.stream.IntStream;
 
-import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.graph.grid.shapes.Rectangle;
 import de.amr.graph.grid.traversals.ExpandingRectangle;
+import de.amr.maze.alg.core.OrthogonalGrid;
 
 /**
  * Wilson's algorithm where the vertices are selected from an expanding rectangle.

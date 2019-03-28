@@ -4,8 +4,8 @@ import static de.amr.graph.grid.api.GridPosition.TOP_LEFT;
 
 import java.util.stream.IntStream;
 
-import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.graph.grid.traversals.LeftToRightSweep;
+import de.amr.maze.alg.core.OrthogonalGrid;
 
 /**
  * Wilson's algorithm where the vertices are selected column-wise left-to-right.

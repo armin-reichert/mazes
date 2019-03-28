@@ -4,7 +4,7 @@ import static de.amr.datastruct.StreamUtils.permute;
 
 import java.util.stream.IntStream;
 
-import de.amr.graph.grid.impl.OrthogonalGrid;
+import de.amr.maze.alg.core.OrthogonalGrid;
 
 /**
  * Wilson's algorithm with random start cells of the loop-erased random walks.

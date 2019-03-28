@@ -4,12 +4,12 @@ import static de.amr.datastruct.StreamUtils.randomElement;
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import static de.amr.graph.core.api.TraversalState.VISITED;
-import static de.amr.graph.grid.impl.OrthogonalGrid.emptyGrid;
+import static de.amr.maze.alg.core.OrthogonalGrid.emptyGrid;
 
 import java.util.OptionalInt;
 
-import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.maze.alg.core.MazeGenerator;
+import de.amr.maze.alg.core.OrthogonalGrid;
 
 /**
  * Maze generator using randomized, recursive depth-first search. Not suited for larger grids

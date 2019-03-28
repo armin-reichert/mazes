@@ -9,8 +9,8 @@ import java.util.Iterator;
 import java.util.stream.IntStream;
 
 import de.amr.datastruct.StreamUtils;
-import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.graph.grid.traversals.ExpandingCircle;
+import de.amr.maze.alg.core.OrthogonalGrid;
 
 /**
  * Wilson's algorithm where grid cells are selected from five expanding circles.

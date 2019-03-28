@@ -2,10 +2,10 @@ package de.amr.maze.alg.ust;
 
 import static de.amr.datastruct.StreamUtils.permute;
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
-import static de.amr.graph.grid.impl.OrthogonalGrid.emptyGrid;
+import static de.amr.maze.alg.core.OrthogonalGrid.emptyGrid;
 
-import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.maze.alg.core.MazeGenerator;
+import de.amr.maze.alg.core.OrthogonalGrid;
 
 /**
  * A hybrid algorithm ("Houston") that first uses Aldous/Broder until some fraction of cells is

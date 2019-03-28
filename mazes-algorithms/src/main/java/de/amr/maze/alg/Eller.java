@@ -2,7 +2,7 @@ package de.amr.maze.alg;
 
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
-import static de.amr.graph.grid.impl.OrthogonalGrid.emptyGrid;
+import static de.amr.maze.alg.core.OrthogonalGrid.emptyGrid;
 import static java.util.stream.IntStream.range;
 
 import java.util.ArrayList;
@@ -13,8 +13,8 @@ import java.util.Random;
 import java.util.Set;
 
 import de.amr.datastruct.Partition;
-import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.maze.alg.core.MazeGenerator;
+import de.amr.maze.alg.core.OrthogonalGrid;
 
 /**
  * Maze generator using Eller's algorithm.

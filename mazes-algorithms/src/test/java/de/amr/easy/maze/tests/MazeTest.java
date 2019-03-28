@@ -17,10 +17,10 @@ import org.junit.Test;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.impl.GridGraph;
-import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.graph.pathfinder.impl.AStarSearch;
 import de.amr.graph.pathfinder.impl.BestFirstSearch;
 import de.amr.graph.util.GraphUtils;
+import de.amr.maze.alg.core.OrthogonalGrid;
 import de.amr.maze.alg.traversal.IterativeDFS;
 import de.amr.maze.alg.traversal.RandomBFS;
 

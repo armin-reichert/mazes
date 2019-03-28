@@ -2,16 +2,16 @@ package de.amr.maze.alg.ust;
 
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import static de.amr.graph.grid.api.GridPosition.BOTTOM_LEFT;
-import static de.amr.graph.grid.impl.OrthogonalGrid.emptyGrid;
 import static de.amr.graph.util.GraphUtils.log;
 import static de.amr.graph.util.GraphUtils.nextPow;
+import static de.amr.maze.alg.core.OrthogonalGrid.emptyGrid;
 import static java.lang.Math.max;
 import static java.util.Arrays.stream;
 
 import java.util.stream.IntStream;
 
 import de.amr.graph.grid.curves.PeanoCurve;
-import de.amr.graph.grid.impl.OrthogonalGrid;
+import de.amr.maze.alg.core.OrthogonalGrid;
 
 /**
  * Wilson's algorithm where the random walks start in the order defined by a Peano curve.

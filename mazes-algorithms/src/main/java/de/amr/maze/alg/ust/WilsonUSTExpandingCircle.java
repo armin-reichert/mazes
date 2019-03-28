@@ -5,8 +5,8 @@ import static java.lang.Math.max;
 
 import java.util.stream.IntStream;
 
-import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.graph.grid.traversals.ExpandingCircle;
+import de.amr.maze.alg.core.OrthogonalGrid;
 
 /**
  * Wilson's algorithm where the vertices are selected from an expanding circle.

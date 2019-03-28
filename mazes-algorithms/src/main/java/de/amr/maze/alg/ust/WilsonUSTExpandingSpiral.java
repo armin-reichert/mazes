@@ -4,8 +4,8 @@ import static de.amr.graph.grid.api.GridPosition.CENTER;
 
 import java.util.stream.IntStream;
 
-import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.graph.grid.traversals.Spiral;
+import de.amr.maze.alg.core.OrthogonalGrid;
 
 /**
  * Wilson's algorithm where the vertices are selected from an expanding spiral.

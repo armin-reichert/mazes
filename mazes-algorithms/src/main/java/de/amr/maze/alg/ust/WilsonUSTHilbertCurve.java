@@ -2,20 +2,20 @@ package de.amr.maze.alg.ust;
 
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import static de.amr.graph.grid.api.GridPosition.TOP_LEFT;
-import static de.amr.graph.grid.impl.OrthogonalGrid.emptyGrid;
 import static de.amr.graph.grid.impl.Top4.E;
 import static de.amr.graph.grid.impl.Top4.N;
 import static de.amr.graph.grid.impl.Top4.S;
 import static de.amr.graph.grid.impl.Top4.W;
 import static de.amr.graph.util.GraphUtils.log;
 import static de.amr.graph.util.GraphUtils.nextPow;
+import static de.amr.maze.alg.core.OrthogonalGrid.emptyGrid;
 import static java.lang.Math.max;
 import static java.util.Arrays.stream;
 
 import java.util.stream.IntStream;
 
 import de.amr.graph.grid.curves.HilbertCurve;
-import de.amr.graph.grid.impl.OrthogonalGrid;
+import de.amr.maze.alg.core.OrthogonalGrid;
 
 /**
  * Wilson's algorithm where the random walks start in the order defined by a Hilbert curve.

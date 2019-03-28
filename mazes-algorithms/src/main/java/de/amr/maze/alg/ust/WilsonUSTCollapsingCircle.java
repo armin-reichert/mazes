@@ -4,8 +4,8 @@ import static de.amr.graph.core.api.TraversalState.COMPLETED;
 import static de.amr.graph.grid.api.GridPosition.CENTER;
 import static java.lang.Math.max;
 
-import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.graph.grid.shapes.Circle;
+import de.amr.maze.alg.core.OrthogonalGrid;
 
 /**
  * Wilson's algorithm where the vertices are selected from a collapsing circle.

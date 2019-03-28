@@ -2,14 +2,14 @@ package de.amr.maze.alg.mst;
 
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
-import static de.amr.graph.grid.impl.OrthogonalGrid.emptyGrid;
+import static de.amr.maze.alg.core.OrthogonalGrid.emptyGrid;
 
 import java.util.PriorityQueue;
 import java.util.Random;
 
 import de.amr.graph.core.api.WeightedEdge;
-import de.amr.graph.grid.impl.OrthogonalGrid;
 import de.amr.maze.alg.core.MazeGenerator;
+import de.amr.maze.alg.core.OrthogonalGrid;
 
 /**
  * Maze generator based on Prim's minimum spanning tree algorithm with random edge weights.
