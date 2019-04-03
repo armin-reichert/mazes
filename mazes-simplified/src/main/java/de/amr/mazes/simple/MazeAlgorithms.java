@@ -143,7 +143,8 @@ public class MazeAlgorithms {
 			int neighbor = grid.neighbor(vertex, dirs[choice]);
 			if (neighbor != -1) {
 				grid.connect(vertex, dirs[choice]);
-			} else {
+			}
+			else {
 				neighbor = grid.neighbor(vertex, dirs[1 - choice]);
 				if (neighbor != -1) {
 					grid.connect(vertex, dirs[1 - choice]);
@@ -189,7 +190,8 @@ public class MazeAlgorithms {
 					visited.set(north);
 					visited.set(south);
 					current = col + 1;
-				} else if (col + 1 < grid.numCols()) {
+				}
+				else if (col + 1 < grid.numCols()) {
 					int west = grid.vertex(row, col), east = grid.vertex(row, col + 1);
 					grid.connect(west, Dir.E);
 					visited.set(west);
@@ -231,7 +233,8 @@ public class MazeAlgorithms {
 			}
 			divide(grid, rnd, x0, y0, w, y - y0);
 			divide(grid, rnd, x0, y, w, h - (y - y0));
-		} else {
+		}
+		else {
 			// Build "vertical wall" at random x from [x0 + 1, x0 + w - 1], keep random door
 			int x = x0 + 1 + rnd.nextInt(w - 1);
 			int door = y0 + rnd.nextInt(h);

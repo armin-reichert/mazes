@@ -47,7 +47,8 @@ public class IterativeDFS implements MazeGenerator<OrthogonalGrid> {
 					stack.push(neighbor);
 				}
 				current = neighbor;
-			} else {
+			}
+			else {
 				grid.set(current, COMPLETED);
 				if (!stack.isEmpty()) {
 					current = stack.pop();

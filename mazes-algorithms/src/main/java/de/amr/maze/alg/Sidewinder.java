@@ -46,7 +46,8 @@ public class Sidewinder implements MazeGenerator<OrthogonalGrid> {
 					grid.set(north, COMPLETED);
 					grid.set(south, COMPLETED);
 					current = col + 1;
-				} else if (col + 1 < grid.numCols()) {
+				}
+				else if (col + 1 < grid.numCols()) {
 					int west = grid.cell(col, row), east = grid.cell(col + 1, row);
 					grid.addEdge(west, east);
 					grid.set(west, COMPLETED);

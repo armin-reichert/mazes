@@ -24,7 +24,8 @@ public class DirMap {
 	public Dir get(int vertex) {
 		if (b0.get(vertex)) {
 			return b1.get(vertex) ? Dir.W : Dir.E;
-		} else {
+		}
+		else {
 			return b1.get(vertex) ? Dir.S : Dir.N;
 		}
 	}
