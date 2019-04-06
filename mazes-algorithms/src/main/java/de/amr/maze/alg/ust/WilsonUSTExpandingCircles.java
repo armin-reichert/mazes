@@ -9,8 +9,10 @@ import java.util.Iterator;
 import java.util.stream.IntStream;
 
 import de.amr.datastruct.StreamUtils;
+import de.amr.graph.core.api.TraversalState;
+import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.traversals.ExpandingCircle;
-import de.amr.maze.alg.core.OrthogonalGrid;
+import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Wilson's algorithm where grid cells are selected from five expanding circles.
@@ -19,12 +21,12 @@ import de.amr.maze.alg.core.OrthogonalGrid;
  */
 public class WilsonUSTExpandingCircles extends WilsonUST {
 
-	public WilsonUSTExpandingCircles(int numCols, int numRows) {
-		super(numCols, numRows);
+	public WilsonUSTExpandingCircles(MazeGridFactory factory, int numCols, int numRows) {
+		super(factory, numCols, numRows);
 	}
 
 	@Override
-	public OrthogonalGrid createMaze(int x, int y) {
+	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
 		return runWilsonAlgorithm(grid.cell(CENTER));
 	}
 
@@ -62,8 +64,8 @@ public class WilsonUSTExpandingCircles extends WilsonUST {
 		return StreamUtils.toIntStream(it);
 	}
 
-	private Iterator<Integer> expandingCircle(OrthogonalGrid grid, int centerX, int centerY, int rmin,
-			int rmax) {
+	private Iterator<Integer> expandingCircle(GridGraph2D<TraversalState, Integer> grid, int centerX,
+			int centerY, int rmin, int rmax) {
 		return new ExpandingCircle(grid, grid.cell(centerX, centerY), rmin, rmax).iterator();
 	}
 }

@@ -2,6 +2,8 @@ package de.amr.maze.alg.traversal;
 
 import java.util.List;
 
+import de.amr.maze.alg.core.MazeGridFactory;
+
 /**
  * Growing tree algorithm where always the last vertex is selected from the frontier.
  * 
@@ -9,8 +11,8 @@ import java.util.List;
  */
 public class GrowingTreeAlwaysLast extends GrowingTree {
 
-	public GrowingTreeAlwaysLast(int numCols, int numRows) {
-		super(numCols, numRows);
+	public GrowingTreeAlwaysLast(MazeGridFactory factory, int numCols, int numRows) {
+		super(factory, numCols, numRows);
 	}
 
 	@Override

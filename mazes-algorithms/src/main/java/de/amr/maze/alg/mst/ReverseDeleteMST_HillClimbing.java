@@ -2,6 +2,7 @@ package de.amr.maze.alg.mst;
 
 import de.amr.graph.pathfinder.api.Path;
 import de.amr.graph.pathfinder.impl.HillClimbingSearch;
+import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Reverse-Delete-MST algorithm using "hill climbing" for connectivity test.
@@ -12,8 +13,8 @@ import de.amr.graph.pathfinder.impl.HillClimbingSearch;
  */
 public class ReverseDeleteMST_HillClimbing extends ReverseDeleteMST {
 
-	public ReverseDeleteMST_HillClimbing(int numCols, int numRows) {
-		super(numCols, numRows);
+	public ReverseDeleteMST_HillClimbing(MazeGridFactory factory, int numCols, int numRows) {
+		super(factory, numCols, numRows);
 	}
 
 	@Override

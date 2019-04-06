@@ -4,13 +4,14 @@ import static de.amr.datastruct.StreamUtils.permute;
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import static de.amr.graph.core.api.TraversalState.VISITED;
-import static de.amr.maze.alg.core.OrthogonalGrid.emptyGrid;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.amr.graph.core.api.TraversalState;
+import de.amr.graph.grid.api.GridGraph2D;
+import de.amr.maze.alg.core.MazeGridFactory;
 import de.amr.maze.alg.core.MazeGenerator;
-import de.amr.maze.alg.core.OrthogonalGrid;
 
 /**
  * "Growing tree" base algorithm.
@@ -21,28 +22,28 @@ import de.amr.maze.alg.core.OrthogonalGrid;
  * 
  * @author Armin Reichert
  */
-public abstract class GrowingTree implements MazeGenerator<OrthogonalGrid> {
+public abstract class GrowingTree implements MazeGenerator {
 
-	private final OrthogonalGrid grid;
+	private final GridGraph2D<TraversalState, Integer> grid;
 
-	public GrowingTree(int numCols, int numRows) {
-		grid = emptyGrid(numCols, numRows, UNVISITED);
+	public GrowingTree(MazeGridFactory factory, int numCols, int numRows) {
+		grid = factory.emptyGrid(numCols, numRows, UNVISITED);
 	}
 
 	@Override
-	public OrthogonalGrid getGrid() {
+	public GridGraph2D<TraversalState, Integer> getGrid() {
 		return grid;
 	}
 
 	@Override
-	public OrthogonalGrid createMaze(int x, int y) {
+	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
 		List<Integer> frontier = new ArrayList<>();
 		int start = grid.cell(x, y);
 		grid.set(start, VISITED);
 		frontier.add(start);
 		while (!frontier.isEmpty()) {
 			int cell = selectCell(frontier);
-			permute(grid.neighbors(cell).filter(grid::isUnvisited)).forEach(neighbor -> {
+			permute(grid.neighbors(cell).filter(this::isUnvisited)).forEach(neighbor -> {
 				grid.set(neighbor, VISITED);
 				frontier.add(neighbor);
 				grid.addEdge(cell, neighbor);

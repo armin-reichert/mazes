@@ -15,6 +15,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.amr.graph.core.api.TraversalState;
+import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.util.GraphUtils;
 import de.amr.maze.alg.Armin;
 import de.amr.maze.alg.BinaryTree;
@@ -25,7 +27,7 @@ import de.amr.maze.alg.HuntAndKillRandom;
 import de.amr.maze.alg.RecursiveDivision;
 import de.amr.maze.alg.Sidewinder;
 import de.amr.maze.alg.core.MazeGenerator;
-import de.amr.maze.alg.core.OrthogonalGrid;
+import de.amr.maze.alg.core.UnobservableMazesFactory;
 import de.amr.maze.alg.mst.BoruvkaMST;
 import de.amr.maze.alg.mst.KruskalMST;
 import de.amr.maze.alg.mst.PrimMST;
@@ -68,12 +70,12 @@ public class MazeGeneratorTest {
 
 	private static List<String> REPORT;
 
-	private OrthogonalGrid grid;
+	private GridGraph2D<TraversalState, Integer> grid;
 
 	@BeforeClass
 	public static void beforeAllTests() {
 		// warm-up (class loading etc.)
-		new RandomBFS(WIDTH, HEIGHT).createMaze(0, 0);
+		new RandomBFS(UnobservableMazesFactory.get(), WIDTH, HEIGHT).createMaze(0, 0);
 		REPORT = new ArrayList<>();
 	}
 
@@ -89,11 +91,11 @@ public class MazeGeneratorTest {
 
 	@After
 	public void tearDown() {
-		assertEquals(grid.numEdges(), grid.numVertices() - 1);
+		assertEquals(grid.numVertices() - 1, grid.numEdges());
 		assertFalse(GraphUtils.containsCycle(grid));
 	}
 
-	private void test(MazeGenerator<OrthogonalGrid> algorithm) {
+	private void test(MazeGenerator algorithm) {
 		StopWatch watch = new StopWatch();
 		watch.measure(() -> grid = algorithm.createMaze(0, 0));
 		REPORT.add(format("%-30s (%6d cells): %.3f sec", algorithm.getClass().getSimpleName(), grid.numVertices(),
@@ -103,122 +105,122 @@ public class MazeGeneratorTest {
 
 	@Test
 	public void testAldousBroder() {
-		test(new AldousBroderUST(WIDTH, HEIGHT));
+		test(new AldousBroderUST(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testAldousBroderWilson() {
-		test(new AldousBroderWilsonUST(WIDTH, HEIGHT));
+		test(new AldousBroderWilsonUST(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testBinaryTree() {
-		test(new BinaryTree(WIDTH, HEIGHT));
+		test(new BinaryTree(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testBinaryTreeRandom() {
-		test(new BinaryTreeRandom(WIDTH, HEIGHT));
+		test(new BinaryTreeRandom(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testBoruvka() {
-		test(new BoruvkaMST(WIDTH, HEIGHT));
+		test(new BoruvkaMST(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testEller() {
-		test(new Eller(WIDTH, HEIGHT));
+		test(new Eller(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testEllerInsideOut() {
-		test(new Armin(WIDTH, HEIGHT));
+		test(new Armin(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testGrowingTreeLastOrRandom() {
-		test(new GrowingTreeLastOrRandom(WIDTH, HEIGHT));
+		test(new GrowingTreeLastOrRandom(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testGrowingTreeAlwaysFirst() {
-		test(new GrowingTreeAlwaysFirst(WIDTH, HEIGHT));
+		test(new GrowingTreeAlwaysFirst(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testGrowingTreeAlwaysLast() {
-		test(new GrowingTreeAlwaysLast(WIDTH, HEIGHT));
+		test(new GrowingTreeAlwaysLast(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testGrowingTreeAlwaysRandom() {
-		test(new GrowingTreeAlwaysRandom(WIDTH, HEIGHT));
+		test(new GrowingTreeAlwaysRandom(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testHuntAndKill() {
-		test(new HuntAndKill(WIDTH, HEIGHT));
+		test(new HuntAndKill(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testHuntAndKillRandom() {
-		test(new HuntAndKillRandom(WIDTH, HEIGHT));
+		test(new HuntAndKillRandom(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testIterativeDFS() {
-		test(new IterativeDFS(WIDTH, HEIGHT));
+		test(new IterativeDFS(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testKruskal() {
-		test(new KruskalMST(WIDTH, HEIGHT));
+		test(new KruskalMST(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testPrim() {
-		test(new PrimMST(WIDTH, HEIGHT));
+		test(new PrimMST(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testRandomBFS() {
-		test(new RandomBFS(WIDTH, HEIGHT));
+		test(new RandomBFS(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testRecursiveDFS() {
-		test(new RecursiveDFS(WIDTH_SMALL, HEIGHT_SMALL));
+		test(new RecursiveDFS(UnobservableMazesFactory.get(), WIDTH_SMALL, HEIGHT_SMALL));
 	}
 
 	@Test
 	public void testRecursiveDivision() {
-		test(new RecursiveDivision(WIDTH, HEIGHT));
+		test(new RecursiveDivision(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testReverseDeleteDFSMST() {
-		test(new ReverseDeleteMST_DFS(WIDTH_SMALL, HEIGHT_SMALL));
+		test(new ReverseDeleteMST_DFS(UnobservableMazesFactory.get(), WIDTH_SMALL, HEIGHT_SMALL));
 	}
 
 	@Test
 	public void testReverseDeleteBestFSMST() {
-		test(new ReverseDeleteMST_BestFS(WIDTH_SMALL, HEIGHT_SMALL));
+		test(new ReverseDeleteMST_BestFS(UnobservableMazesFactory.get(), WIDTH_SMALL, HEIGHT_SMALL));
 	}
 
 	@Test
 	public void testReverseDeleteBFSMST() {
-		test(new ReverseDeleteMST_BFS(WIDTH_SMALL, HEIGHT_SMALL));
+		test(new ReverseDeleteMST_BFS(UnobservableMazesFactory.get(), WIDTH_SMALL, HEIGHT_SMALL));
 	}
 
 	@Test
 	public void testReverseDeleteHillClimbingMST() {
-		test(new ReverseDeleteMST_HillClimbing(WIDTH_SMALL, HEIGHT_SMALL));
+		test(new ReverseDeleteMST_HillClimbing(UnobservableMazesFactory.get(), WIDTH_SMALL, HEIGHT_SMALL));
 	}
 
 	@Test
 	public void testSideWinder() {
-		test(new Sidewinder(WIDTH, HEIGHT));
+		test(new Sidewinder(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	// TODO why does this test fail?
@@ -229,76 +231,76 @@ public class MazeGeneratorTest {
 
 	@Test
 	public void testWilsonUSTCollapsingRectangle() {
-		test(new WilsonUSTCollapsingRectangle(WIDTH, HEIGHT));
+		test(new WilsonUSTCollapsingRectangle(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTCollapsingWalls() {
-		test(new WilsonUSTCollapsingWalls(WIDTH, HEIGHT));
+		test(new WilsonUSTCollapsingWalls(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTExpandingCircle() {
-		test(new WilsonUSTExpandingCircle(WIDTH, HEIGHT));
+		test(new WilsonUSTExpandingCircle(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTExpandingCircles() {
-		test(new WilsonUSTExpandingCircles(WIDTH, HEIGHT));
+		test(new WilsonUSTExpandingCircles(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTExpandingRectangle() {
-		test(new WilsonUSTExpandingRectangle(WIDTH, HEIGHT));
+		test(new WilsonUSTExpandingRectangle(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTExpandingSpiral() {
-		test(new WilsonUSTExpandingSpiral(WIDTH, HEIGHT));
+		test(new WilsonUSTExpandingSpiral(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTHilbertCurve() {
-		test(new WilsonUSTHilbertCurve(WIDTH, HEIGHT));
+		test(new WilsonUSTHilbertCurve(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTLeftToRightSweep() {
-		test(new WilsonUSTLeftToRightSweep(WIDTH, HEIGHT));
+		test(new WilsonUSTLeftToRightSweep(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTMooreCurve() {
-		test(new WilsonUSTMooreCurve(WIDTH, HEIGHT));
+		test(new WilsonUSTMooreCurve(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTNestedRectangles() {
-		test(new WilsonUSTNestedRectangles(WIDTH, HEIGHT));
+		test(new WilsonUSTNestedRectangles(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTPeanoCurve() {
-		test(new WilsonUSTPeanoCurve(WIDTH, HEIGHT));
+		test(new WilsonUSTPeanoCurve(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTRandomCell() {
-		test(new WilsonUSTRandomCell(WIDTH, HEIGHT));
+		test(new WilsonUSTRandomCell(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTRecursiveCrosses() {
-		test(new WilsonUSTRecursiveCrosses(WIDTH, HEIGHT));
+		test(new WilsonUSTRecursiveCrosses(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTRightToLeftSweep() {
-		test(new WilsonUSTRightToLeftSweep(WIDTH, HEIGHT));
+		test(new WilsonUSTRightToLeftSweep(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 
 	@Test
 	public void testWilsonUSTRowsTopDown() {
-		test(new WilsonUSTRowsTopDown(WIDTH, HEIGHT));
+		test(new WilsonUSTRowsTopDown(UnobservableMazesFactory.get(), WIDTH, HEIGHT));
 	}
 }

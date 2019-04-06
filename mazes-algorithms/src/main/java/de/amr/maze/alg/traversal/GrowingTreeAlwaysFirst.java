@@ -2,6 +2,8 @@ package de.amr.maze.alg.traversal;
 
 import java.util.List;
 
+import de.amr.maze.alg.core.MazeGridFactory;
+
 /**
  * Growing tree algorithm where always the first vertex is selected from the frontier.
  * 
@@ -9,8 +11,8 @@ import java.util.List;
  */
 public class GrowingTreeAlwaysFirst extends GrowingTree {
 
-	public GrowingTreeAlwaysFirst(int numCols, int numRows) {
-		super(numCols, numRows);
+	public GrowingTreeAlwaysFirst(MazeGridFactory factory, int numCols, int numRows) {
+		super(factory, numCols, numRows);
 	}
 
 	@Override

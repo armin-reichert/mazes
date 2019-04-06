@@ -3,14 +3,15 @@ package de.amr.maze.alg.ust;
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import static de.amr.graph.util.GraphUtils.log;
 import static de.amr.graph.util.GraphUtils.nextPow;
-import static de.amr.maze.alg.core.OrthogonalGrid.emptyGrid;
 import static java.lang.Math.max;
 import static java.util.Arrays.stream;
 
 import java.util.stream.IntStream;
 
+import de.amr.graph.core.api.TraversalState;
+import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.curves.MooreLCurve;
-import de.amr.maze.alg.core.OrthogonalGrid;
+import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Wilson's algorithm where the random walks start in the order defined by a Moore curve.
@@ -19,15 +20,15 @@ import de.amr.maze.alg.core.OrthogonalGrid;
  */
 public class WilsonUSTMooreCurve extends WilsonUST {
 
-	public WilsonUSTMooreCurve(int numCols, int numRows) {
-		super(numCols, numRows);
+	public WilsonUSTMooreCurve(MazeGridFactory factory, int numCols, int numRows) {
+		super(factory, numCols, numRows);
 	}
 
 	@Override
 	protected IntStream randomWalkStartCells() {
 		int[] walkStartCells = new int[grid.numVertices()];
 		int n = nextPow(2, max(grid.numCols(), grid.numRows()));
-		OrthogonalGrid square = emptyGrid(n, n, UNVISITED);
+		GridGraph2D<TraversalState, Integer> square = factory.emptyGrid(n, n, UNVISITED);
 		MooreLCurve mooreCurve = new MooreLCurve(log(2, n));
 		int cell = square.cell(n / 2, n - 1);
 		int i = 0;

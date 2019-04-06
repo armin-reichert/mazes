@@ -2,6 +2,7 @@ package de.amr.maze.alg.mst;
 
 import de.amr.graph.pathfinder.api.Path;
 import de.amr.graph.pathfinder.impl.BestFirstSearch;
+import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Reverse-Delete-MST algorithm using best-first search for connectivity test.
@@ -12,8 +13,8 @@ import de.amr.graph.pathfinder.impl.BestFirstSearch;
  */
 public class ReverseDeleteMST_BestFS extends ReverseDeleteMST {
 
-	public ReverseDeleteMST_BestFS(int numCols, int numRows) {
-		super(numCols, numRows);
+	public ReverseDeleteMST_BestFS(MazeGridFactory factory, int numCols, int numRows) {
+		super(factory, numCols, numRows);
 	}
 
 	@Override

@@ -4,11 +4,11 @@ import static de.amr.datastruct.StreamUtils.randomElement;
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import static de.amr.graph.core.api.TraversalState.VISITED;
-import static de.amr.maze.alg.core.OrthogonalGrid.emptyGrid;
 
 import de.amr.graph.core.api.TraversalState;
+import de.amr.graph.grid.api.GridGraph2D;
+import de.amr.maze.alg.core.MazeGridFactory;
 import de.amr.maze.alg.core.MazeGenerator;
-import de.amr.maze.alg.core.OrthogonalGrid;
 
 /**
  * Let G = (V,E) be a graph with vertices V and edge set E.
@@ -32,27 +32,27 @@ import de.amr.maze.alg.core.OrthogonalGrid;
  *        Generation: Aldous-Broder algorithm</a>
  * 
  */
-public class AldousBroderUST implements MazeGenerator<OrthogonalGrid> {
+public class AldousBroderUST implements MazeGenerator {
 
-	private OrthogonalGrid grid;
+	private GridGraph2D<TraversalState, Integer> grid;
 	private int numVisitedCells;
 	private int currentCell;
 
-	public AldousBroderUST(int numCols, int numRows) {
-		grid = emptyGrid(numCols, numRows, UNVISITED);
+	public AldousBroderUST(MazeGridFactory factory, int numCols, int numRows) {
+		grid = factory.emptyGrid(numCols, numRows, UNVISITED);
 	}
 
 	@Override
-	public OrthogonalGrid getGrid() {
+	public GridGraph2D<TraversalState, Integer> getGrid() {
 		return grid;
 	}
 
-	public AldousBroderUST(OrthogonalGrid grid) {
+	public AldousBroderUST(GridGraph2D<TraversalState, Integer> grid) {
 		this.grid = grid;
 	}
 
 	@Override
-	public OrthogonalGrid createMaze(int x, int y) {
+	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
 		run(grid.cell(x, y), grid.numVertices());
 		return grid;
 	}
@@ -72,7 +72,7 @@ public class AldousBroderUST implements MazeGenerator<OrthogonalGrid> {
 	 */
 	private void visitRandomNeighbor() {
 		int neighbor = randomElement(grid.neighbors(currentCell)).getAsInt();
-		if (grid.isUnvisited(neighbor)) {
+		if (isUnvisited(neighbor)) {
 			grid.addEdge(currentCell, neighbor);
 			grid.set(neighbor, COMPLETED);
 			++numVisitedCells;

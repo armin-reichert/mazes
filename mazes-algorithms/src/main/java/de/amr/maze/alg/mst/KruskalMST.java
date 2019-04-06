@@ -3,12 +3,12 @@ package de.amr.maze.alg.mst;
 import static de.amr.datastruct.StreamUtils.permute;
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
-import static de.amr.maze.alg.core.OrthogonalGrid.emptyGrid;
-import static de.amr.maze.alg.core.OrthogonalGrid.fullGrid;
 
 import de.amr.datastruct.Partition;
+import de.amr.graph.core.api.TraversalState;
+import de.amr.graph.grid.api.GridGraph2D;
+import de.amr.maze.alg.core.MazeGridFactory;
 import de.amr.maze.alg.core.MazeGenerator;
-import de.amr.maze.alg.core.OrthogonalGrid;
 
 /**
  * Maze generator derived from Kruskal's minimum spanning tree algorithm.
@@ -21,23 +21,25 @@ import de.amr.maze.alg.core.OrthogonalGrid;
  * @see <a href="http://weblog.jamisbuck.org/2011/1/3/maze-generation-kruskal-s-algorithm.html">Maze
  *      Generation: Kruskal's Algorithm</a>
  */
-public class KruskalMST implements MazeGenerator<OrthogonalGrid> {
+public class KruskalMST implements MazeGenerator {
 
-	private OrthogonalGrid grid;
+	private GridGraph2D<TraversalState, Integer> grid;
+	private MazeGridFactory factory;
 
-	public KruskalMST(int numCols, int numRows) {
-		grid = emptyGrid(numCols, numRows, UNVISITED);
+	public KruskalMST(MazeGridFactory factory, int numCols, int numRows) {
+		this.factory = factory;
+		grid = factory.emptyGrid(numCols, numRows, UNVISITED);
 	}
 
 	@Override
-	public OrthogonalGrid getGrid() {
+	public GridGraph2D<TraversalState, Integer> getGrid() {
 		return grid;
 	}
 
 	@Override
-	public OrthogonalGrid createMaze(int x, int y) {
+	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
 		Partition<Integer> forest = new Partition<>();
-		permute(fullGrid(grid.numCols(), grid.numRows(), UNVISITED).edges()).forEach(edge -> {
+		permute(factory.fullGrid(grid.numCols(), grid.numRows(), UNVISITED).edges()).forEach(edge -> {
 			int u = edge.either(), v = edge.other();
 			if (forest.find(u) != forest.find(v)) {
 				grid.addEdge(u, v);

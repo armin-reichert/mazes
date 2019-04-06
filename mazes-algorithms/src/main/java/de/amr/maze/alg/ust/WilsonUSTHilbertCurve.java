@@ -8,14 +8,15 @@ import static de.amr.graph.grid.impl.Top4.S;
 import static de.amr.graph.grid.impl.Top4.W;
 import static de.amr.graph.util.GraphUtils.log;
 import static de.amr.graph.util.GraphUtils.nextPow;
-import static de.amr.maze.alg.core.OrthogonalGrid.emptyGrid;
 import static java.lang.Math.max;
 import static java.util.Arrays.stream;
 
 import java.util.stream.IntStream;
 
+import de.amr.graph.core.api.TraversalState;
+import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.curves.HilbertCurve;
-import de.amr.maze.alg.core.OrthogonalGrid;
+import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Wilson's algorithm where the random walks start in the order defined by a Hilbert curve.
@@ -24,15 +25,15 @@ import de.amr.maze.alg.core.OrthogonalGrid;
  */
 public class WilsonUSTHilbertCurve extends WilsonUST {
 
-	public WilsonUSTHilbertCurve(int numCols, int numRows) {
-		super(numCols, numRows);
+	public WilsonUSTHilbertCurve(MazeGridFactory factory, int numCols, int numRows) {
+		super(factory, numCols, numRows);
 	}
 
 	@Override
 	protected IntStream randomWalkStartCells() {
 		int[] walkStartCells = new int[grid.numVertices()];
 		int n = nextPow(2, max(grid.numCols(), grid.numRows()));
-		OrthogonalGrid square = emptyGrid(n, n, UNVISITED);
+		GridGraph2D<TraversalState, Integer> square = factory.emptyGrid(n, n, UNVISITED);
 		int cell = square.cell(TOP_LEFT);
 		int i = 0;
 		walkStartCells[i++] = cell;

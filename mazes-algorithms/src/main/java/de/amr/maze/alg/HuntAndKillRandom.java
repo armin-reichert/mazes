@@ -2,6 +2,8 @@ package de.amr.maze.alg;
 
 import java.util.Random;
 
+import de.amr.maze.alg.core.MazeGridFactory;
+
 /**
  * Variant of "hunt-and-kill" algorithm where the "hunt" picks cells randomly from the set of
  * targets.
@@ -12,8 +14,8 @@ public class HuntAndKillRandom extends HuntAndKill {
 
 	private Random rnd = new Random();
 
-	public HuntAndKillRandom(int numCols, int numRows) {
-		super(numCols, numRows);
+	public HuntAndKillRandom(MazeGridFactory factory, int numCols, int numRows) {
+		super(factory, numCols, numRows);
 	}
 
 	@Override

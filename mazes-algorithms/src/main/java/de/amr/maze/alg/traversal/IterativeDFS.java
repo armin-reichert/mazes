@@ -4,35 +4,36 @@ import static de.amr.datastruct.StreamUtils.randomElement;
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import static de.amr.graph.core.api.TraversalState.VISITED;
-import static de.amr.maze.alg.core.OrthogonalGrid.emptyGrid;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.OptionalInt;
 
+import de.amr.graph.core.api.TraversalState;
+import de.amr.graph.grid.api.GridGraph2D;
+import de.amr.maze.alg.core.MazeGridFactory;
 import de.amr.maze.alg.core.MazeGenerator;
-import de.amr.maze.alg.core.OrthogonalGrid;
 
 /**
  * Generates a maze by iterative random depth-first traversal of a grid.
  * 
  * @author Armin Reichert
  */
-public class IterativeDFS implements MazeGenerator<OrthogonalGrid> {
+public class IterativeDFS implements MazeGenerator {
 
-	private OrthogonalGrid grid;
+	private GridGraph2D<TraversalState, Integer> grid;
 
-	public IterativeDFS(int numCols, int numRows) {
-		grid = emptyGrid(numCols, numRows, UNVISITED);
+	public IterativeDFS(MazeGridFactory factory, int numCols, int numRows) {
+		grid = factory.emptyGrid(numCols, numRows, UNVISITED);
 	}
 
 	@Override
-	public OrthogonalGrid getGrid() {
+	public GridGraph2D<TraversalState, Integer> getGrid() {
 		return grid;
 	}
 
 	@Override
-	public OrthogonalGrid createMaze(int x, int y) {
+	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
 		Deque<Integer> stack = new ArrayDeque<>();
 		int current = grid.cell(x, y);
 		grid.set(current, VISITED);
@@ -53,7 +54,7 @@ public class IterativeDFS implements MazeGenerator<OrthogonalGrid> {
 				if (!stack.isEmpty()) {
 					current = stack.pop();
 				}
-				if (!grid.isCompleted(current)) {
+				if (!isCompleted(current)) {
 					stack.push(current);
 				}
 			}
@@ -62,6 +63,6 @@ public class IterativeDFS implements MazeGenerator<OrthogonalGrid> {
 	}
 
 	private OptionalInt randomUnvisitedNeighbor(int cell) {
-		return randomElement(grid.neighbors(cell).filter(grid::isUnvisited));
+		return randomElement(grid.neighbors(cell).filter(this::isUnvisited));
 	}
 }

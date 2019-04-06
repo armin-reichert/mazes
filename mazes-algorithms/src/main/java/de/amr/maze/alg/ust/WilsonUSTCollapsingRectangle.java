@@ -3,8 +3,10 @@ package de.amr.maze.alg.ust;
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
 import static de.amr.graph.grid.api.GridPosition.CENTER;
 
+import de.amr.graph.core.api.TraversalState;
+import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.shapes.Rectangle;
-import de.amr.maze.alg.core.OrthogonalGrid;
+import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Wilson's algorithm where the vertices are selected from a collapsing rectangle.
@@ -13,12 +15,12 @@ import de.amr.maze.alg.core.OrthogonalGrid;
  */
 public class WilsonUSTCollapsingRectangle extends WilsonUST {
 
-	public WilsonUSTCollapsingRectangle(int numCols, int numRows) {
-		super(numCols, numRows);
+	public WilsonUSTCollapsingRectangle(MazeGridFactory factory, int numCols, int numRows) {
+		super(factory, numCols, numRows);
 	}
 
 	@Override
-	public OrthogonalGrid createMaze(int x, int y) {
+	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
 		int start = grid.cell(CENTER);
 		grid.set(start, COMPLETED);
 		int col = 0, row = 0;

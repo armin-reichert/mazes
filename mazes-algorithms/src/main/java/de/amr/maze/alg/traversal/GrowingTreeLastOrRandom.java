@@ -3,6 +3,8 @@ package de.amr.maze.alg.traversal;
 import java.util.List;
 import java.util.Random;
 
+import de.amr.maze.alg.core.MazeGridFactory;
+
 /**
  * Growing tree algorithm where either the last or a random vertex is selected from the frontier.
  * 
@@ -12,8 +14,8 @@ public class GrowingTreeLastOrRandom extends GrowingTree {
 
 	private Random rnd = new Random();
 
-	public GrowingTreeLastOrRandom(int numCols, int numRows) {
-		super(numCols, numRows);
+	public GrowingTreeLastOrRandom(MazeGridFactory factory, int numCols, int numRows) {
+		super(factory, numCols, numRows);
 	}
 
 	@Override

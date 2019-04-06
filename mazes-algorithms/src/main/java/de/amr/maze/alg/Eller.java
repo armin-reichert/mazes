@@ -2,7 +2,6 @@ package de.amr.maze.alg;
 
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
-import static de.amr.maze.alg.core.OrthogonalGrid.emptyGrid;
 import static java.util.stream.IntStream.range;
 
 import java.util.ArrayList;
@@ -13,8 +12,10 @@ import java.util.Random;
 import java.util.Set;
 
 import de.amr.datastruct.Partition;
+import de.amr.graph.core.api.TraversalState;
+import de.amr.graph.grid.api.GridGraph2D;
+import de.amr.maze.alg.core.MazeGridFactory;
 import de.amr.maze.alg.core.MazeGenerator;
-import de.amr.maze.alg.core.OrthogonalGrid;
 
 /**
  * Maze generator using Eller's algorithm.
@@ -25,23 +26,23 @@ import de.amr.maze.alg.core.OrthogonalGrid;
  *      Generation: Eller's Algorithm</a>.
  * 
  */
-public class Eller implements MazeGenerator<OrthogonalGrid> {
+public class Eller implements MazeGenerator {
 
-	private OrthogonalGrid grid;
+	private GridGraph2D<TraversalState, Integer> grid;
 	private Random rnd = new Random();
 	private Partition<Integer> parts = new Partition<>();
 
-	public Eller(int numCols, int numRows) {
-		grid = emptyGrid(numCols, numRows, UNVISITED);
+	public Eller(MazeGridFactory factory, int numCols, int numRows) {
+		grid = factory.emptyGrid(numCols, numRows, UNVISITED);
 	}
 
 	@Override
-	public OrthogonalGrid getGrid() {
+	public GridGraph2D<TraversalState, Integer> getGrid() {
 		return grid;
 	}
 
 	@Override
-	public OrthogonalGrid createMaze(int x, int y) {
+	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
 		range(0, grid.numRows() - 1).forEach(row -> {
 			connectCellsInsideRow(row, false);
 			connectCellsWithNextRow(row);

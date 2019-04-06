@@ -4,6 +4,8 @@ import static de.amr.datastruct.StreamUtils.permute;
 
 import java.util.stream.IntStream;
 
+import de.amr.maze.alg.core.MazeGridFactory;
+
 /**
  * Creates maze as a binary tree with random cell selection.
  * 
@@ -11,8 +13,8 @@ import java.util.stream.IntStream;
  */
 public class BinaryTreeRandom extends BinaryTree {
 
-	public BinaryTreeRandom(int numCols, int numRows) {
-		super(numCols, numRows);
+	public BinaryTreeRandom(MazeGridFactory factory, int numCols, int numRows) {
+		super(factory, numCols, numRows);
 	}
 
 	@Override

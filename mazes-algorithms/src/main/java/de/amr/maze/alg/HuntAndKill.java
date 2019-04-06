@@ -3,13 +3,14 @@ package de.amr.maze.alg;
 import static de.amr.datastruct.StreamUtils.randomElement;
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
-import static de.amr.maze.alg.core.OrthogonalGrid.emptyGrid;
 
 import java.util.BitSet;
 import java.util.OptionalInt;
 
+import de.amr.graph.core.api.TraversalState;
+import de.amr.graph.grid.api.GridGraph2D;
+import de.amr.maze.alg.core.MazeGridFactory;
 import de.amr.maze.alg.core.MazeGenerator;
-import de.amr.maze.alg.core.OrthogonalGrid;
 
 /**
  * Generates a maze similar to the "hunt-and-kill" algorithm.
@@ -20,22 +21,22 @@ import de.amr.maze.alg.core.OrthogonalGrid;
  *      "http://weblog.jamisbuck.org/2011/1/24/maze-generation-hunt-and-kill-algorithm.html"> Maze
  *      Generation: Hunt-and-Kill algorithm</a>
  */
-public class HuntAndKill implements MazeGenerator<OrthogonalGrid> {
+public class HuntAndKill implements MazeGenerator {
 
-	protected OrthogonalGrid grid;
+	protected GridGraph2D<TraversalState, Integer> grid;
 	protected BitSet targets;
 
-	public HuntAndKill(int numCols, int numRows) {
-		grid = emptyGrid(numCols, numRows, UNVISITED);
+	public HuntAndKill(MazeGridFactory factory, int numCols, int numRows) {
+		grid = factory.emptyGrid(numCols, numRows, UNVISITED);
 	}
 
 	@Override
-	public OrthogonalGrid getGrid() {
+	public GridGraph2D<TraversalState, Integer> getGrid() {
 		return grid;
 	}
 
 	@Override
-	public OrthogonalGrid createMaze(int x, int y) {
+	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
 		targets = new BitSet(grid.numVertices());
 		int animal = grid.cell(x, y);
 		do {
@@ -55,7 +56,7 @@ public class HuntAndKill implements MazeGenerator<OrthogonalGrid> {
 	}
 
 	protected boolean isAlive(int v) {
-		return grid.isUnvisited(v);
+		return isUnvisited(v);
 	}
 
 	protected boolean isDead(int v) {

@@ -2,14 +2,15 @@ package de.amr.maze.alg.mst;
 
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
-import static de.amr.maze.alg.core.OrthogonalGrid.emptyGrid;
 
 import java.util.PriorityQueue;
 import java.util.Random;
 
+import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.core.api.WeightedEdge;
+import de.amr.graph.grid.api.GridGraph2D;
+import de.amr.maze.alg.core.MazeGridFactory;
 import de.amr.maze.alg.core.MazeGenerator;
-import de.amr.maze.alg.core.OrthogonalGrid;
 
 /**
  * Maze generator based on Prim's minimum spanning tree algorithm with random edge weights.
@@ -20,31 +21,31 @@ import de.amr.maze.alg.core.OrthogonalGrid;
  *      Generation: Prim's Algorithm</a>
  * @see <a href="https://en.wikipedia.org/wiki/Prim%27s_algorithm">Wikipedia: Prim's Algorithm</a>
  */
-public class PrimMST implements MazeGenerator<OrthogonalGrid> {
+public class PrimMST implements MazeGenerator {
 
-	private OrthogonalGrid grid;
+	private GridGraph2D<TraversalState, Integer> grid;
 	private PriorityQueue<WeightedEdge<Integer>> cut;
 	private Random rnd = new Random();
 
-	public PrimMST(int numCols, int numRows) {
-		grid = emptyGrid(numCols, numRows, UNVISITED);
+	public PrimMST(MazeGridFactory factory, int numCols, int numRows) {
+		grid = factory.emptyGrid(numCols, numRows, UNVISITED);
 	}
 
 	@Override
-	public OrthogonalGrid getGrid() {
+	public GridGraph2D<TraversalState, Integer> getGrid() {
 		return grid;
 	}
 
 	@Override
-	public OrthogonalGrid createMaze(int x, int y) {
+	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
 		cut = new PriorityQueue<>();
 		expand(grid.cell(x, y));
 		while (!cut.isEmpty()) {
 			WeightedEdge<Integer> minEdge = cut.poll();
 			int u = minEdge.either(), v = minEdge.other();
-			if (grid.isUnvisited(u) || grid.isUnvisited(v)) {
+			if (isUnvisited(u) || isUnvisited(v)) {
 				grid.addEdge(u, v);
-				expand(grid.isUnvisited(u) ? u : v);
+				expand(isUnvisited(u) ? u : v);
 			}
 		}
 		return grid;
@@ -52,7 +53,7 @@ public class PrimMST implements MazeGenerator<OrthogonalGrid> {
 
 	private void expand(int cell) {
 		grid.set(cell, COMPLETED);
-		grid.neighbors(cell).filter(grid::isUnvisited).forEach(neighbor -> {
+		grid.neighbors(cell).filter(this::isUnvisited).forEach(neighbor -> {
 			cut.add(new WeightedEdge<>(cell, neighbor, rnd.nextInt()));
 		});
 	}

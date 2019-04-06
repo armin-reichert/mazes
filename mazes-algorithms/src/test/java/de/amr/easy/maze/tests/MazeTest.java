@@ -16,11 +16,12 @@ import org.junit.After;
 import org.junit.Test;
 
 import de.amr.graph.core.api.TraversalState;
+import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.impl.GridGraph;
 import de.amr.graph.pathfinder.impl.AStarSearch;
 import de.amr.graph.pathfinder.impl.BestFirstSearch;
 import de.amr.graph.util.GraphUtils;
-import de.amr.maze.alg.core.OrthogonalGrid;
+import de.amr.maze.alg.core.UnobservableMazesFactory;
 import de.amr.maze.alg.traversal.IterativeDFS;
 import de.amr.maze.alg.traversal.RandomBFS;
 
@@ -48,7 +49,8 @@ public class MazeTest {
 	@Test
 	public void testCycleChecker() {
 		// create a spanning tree
-		OrthogonalGrid grid = new RandomBFS(WIDTH, HEIGHT).createMaze(0, 0);
+		GridGraph2D<TraversalState, Integer> grid = new RandomBFS(UnobservableMazesFactory.get(), WIDTH, HEIGHT)
+				.createMaze(0, 0);
 		assertFalse(GraphUtils.containsCycle(grid));
 
 		// Find vertex with non-adjacent neighbor. Adding an edge to this neighbor produces a cycle.
@@ -69,7 +71,8 @@ public class MazeTest {
 
 	@Test
 	public void testBestFS() {
-		OrthogonalGrid grid = new IterativeDFS(N, N).createMaze(0, 0);
+		GridGraph2D<TraversalState, Integer> grid = new IterativeDFS(UnobservableMazesFactory.get(), N, N)
+				.createMaze(0, 0);
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
 		BestFirstSearch best = new BestFirstSearch(grid, x -> grid.manhattan(x, target));
 		assertState(grid.vertices(), best::getState, UNVISITED);
@@ -80,7 +83,8 @@ public class MazeTest {
 
 	@Test
 	public void testAStar() {
-		OrthogonalGrid grid = new IterativeDFS(N, N).createMaze(0, 0);
+		GridGraph2D<TraversalState, Integer> grid = new IterativeDFS(UnobservableMazesFactory.get(), N, N)
+				.createMaze(0, 0);
 		grid.setDefaultEdgeLabel((u, v) -> 1);
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
 		AStarSearch astar = new AStarSearch(grid, (u, v) -> 1, (u, v) -> grid.manhattan(u, v));

@@ -3,16 +3,17 @@ package de.amr.easy.maze.tests;
 import org.junit.Test;
 
 import de.amr.maze.alg.RecursiveDivision;
+import de.amr.maze.alg.core.UnobservableMazesFactory;
 import de.amr.maze.alg.mst.KruskalMST;
 
 public class LargeMazesTest {
 
 	private void test_Kruskal(int numCols, int numRows) {
-		new KruskalMST(numCols, numRows).createMaze(0, 0);
+		new KruskalMST(UnobservableMazesFactory.get(), numCols, numRows).createMaze(0, 0);
 	}
 
 	private void test_RecursiveDivision(int numCols, int numRows) {
-		new RecursiveDivision(numCols, numRows).createMaze(0, 0);
+		new RecursiveDivision(UnobservableMazesFactory.get(), numCols, numRows).createMaze(0, 0);
 	}
 
 	@Test

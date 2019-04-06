@@ -3,16 +3,17 @@ package de.amr.maze.alg.mst;
 import static de.amr.datastruct.StreamUtils.permute;
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
-import static de.amr.maze.alg.core.OrthogonalGrid.emptyGrid;
 
 import java.util.Optional;
 import java.util.stream.Stream;
 
 import de.amr.datastruct.Partition;
 import de.amr.graph.core.api.Edge;
+import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.core.api.UndirectedEdge;
+import de.amr.graph.grid.api.GridGraph2D;
+import de.amr.maze.alg.core.MazeGridFactory;
 import de.amr.maze.alg.core.MazeGenerator;
-import de.amr.maze.alg.core.OrthogonalGrid;
 
 /**
  * Maze generator derived from Boruvka's minimum spanning tree algorithm.
@@ -22,22 +23,22 @@ import de.amr.maze.alg.core.OrthogonalGrid;
  * @see <a href="http://iss.ices.utexas.edu/?p=projects/galois/benchmarks/mst">Boruvka's
  *      Algorithm</a>
  */
-public class BoruvkaMST implements MazeGenerator<OrthogonalGrid> {
+public class BoruvkaMST implements MazeGenerator {
 
-	private OrthogonalGrid grid;
+	private GridGraph2D<TraversalState, Integer> grid;
 	private Partition<Integer> forest;
 
-	public BoruvkaMST(int numCols, int numRows) {
-		grid = emptyGrid(numCols, numRows, UNVISITED);
+	public BoruvkaMST(MazeGridFactory factory, int numCols, int numRows) {
+		grid = factory.emptyGrid(numCols, numRows, UNVISITED);
 	}
 
 	@Override
-	public OrthogonalGrid getGrid() {
+	public GridGraph2D<TraversalState, Integer> getGrid() {
 		return grid;
 	}
 
 	@Override
-	public OrthogonalGrid createMaze(int x, int y) {
+	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
 		forest = new Partition<>();
 		grid.vertices().forEach(forest::makeSet);
 		while (forest.size() > 1) {

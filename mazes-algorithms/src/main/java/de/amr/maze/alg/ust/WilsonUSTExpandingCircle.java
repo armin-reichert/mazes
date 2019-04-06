@@ -5,8 +5,10 @@ import static java.lang.Math.max;
 
 import java.util.stream.IntStream;
 
+import de.amr.graph.core.api.TraversalState;
+import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.traversals.ExpandingCircle;
-import de.amr.maze.alg.core.OrthogonalGrid;
+import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Wilson's algorithm where the vertices are selected from an expanding circle.
@@ -15,12 +17,12 @@ import de.amr.maze.alg.core.OrthogonalGrid;
  */
 public class WilsonUSTExpandingCircle extends WilsonUST {
 
-	public WilsonUSTExpandingCircle(int numCols, int numRows) {
-		super(numCols, numRows);
+	public WilsonUSTExpandingCircle(MazeGridFactory factory, int numCols, int numRows) {
+		super(factory, numCols, numRows);
 	}
 
 	@Override
-	public OrthogonalGrid createMaze(int x, int y) {
+	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
 		return runWilsonAlgorithm(grid.cell(CENTER));
 	}
 

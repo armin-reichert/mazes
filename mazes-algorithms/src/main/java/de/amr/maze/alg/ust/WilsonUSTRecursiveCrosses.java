@@ -3,6 +3,7 @@ package de.amr.maze.alg.ust;
 import java.util.stream.IntStream;
 
 import de.amr.graph.grid.traversals.RecursiveCrosses;
+import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Wilson's algorithm where the vertices are selected from recursive crosses.
@@ -11,8 +12,8 @@ import de.amr.graph.grid.traversals.RecursiveCrosses;
  */
 public class WilsonUSTRecursiveCrosses extends WilsonUST {
 
-	public WilsonUSTRecursiveCrosses(int numCols, int numRows) {
-		super(numCols, numRows);
+	public WilsonUSTRecursiveCrosses(MazeGridFactory factory, int numCols, int numRows) {
+		super(factory, numCols, numRows);
 	}
 
 	@Override

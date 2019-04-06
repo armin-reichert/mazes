@@ -1,12 +1,12 @@
 package de.amr.maze.alg.mst;
 
 import static de.amr.datastruct.StreamUtils.permute;
-import static de.amr.graph.core.api.TraversalState.COMPLETED;
-import static de.amr.maze.alg.core.OrthogonalGrid.fullGrid;
 
 import de.amr.graph.core.api.Edge;
+import de.amr.graph.core.api.TraversalState;
+import de.amr.graph.grid.api.GridGraph2D;
+import de.amr.maze.alg.core.MazeGridFactory;
 import de.amr.maze.alg.core.MazeGenerator;
-import de.amr.maze.alg.core.OrthogonalGrid;
 
 /**
  * Maze generator derived from the Reverse-Delete-MST algorithm.
@@ -15,21 +15,21 @@ import de.amr.maze.alg.core.OrthogonalGrid;
  *
  * @see <a href="https://en.wikipedia.org/wiki/Reverse-delete_algorithm">Wikipedia</a>
  */
-public abstract class ReverseDeleteMST implements MazeGenerator<OrthogonalGrid> {
+public abstract class ReverseDeleteMST implements MazeGenerator {
 
-	protected OrthogonalGrid grid;
+	protected GridGraph2D<TraversalState, Integer> grid;
 
-	public ReverseDeleteMST(int numCols, int numRows) {
-		grid = fullGrid(numCols, numRows, COMPLETED);
+	public ReverseDeleteMST(MazeGridFactory factory, int numCols, int numRows) {
+		grid = factory.fullGrid(numCols, numRows, TraversalState.COMPLETED);
 	}
 
 	@Override
-	public OrthogonalGrid getGrid() {
+	public GridGraph2D<TraversalState, Integer> getGrid() {
 		return grid;
 	}
 
 	@Override
-	public OrthogonalGrid createMaze(int x, int y) {
+	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
 		Iterable<Edge> edges = permute(grid.edges())::iterator;
 		for (Edge edge : edges) {
 			if (grid.numEdges() == grid.numVertices() - 1) {

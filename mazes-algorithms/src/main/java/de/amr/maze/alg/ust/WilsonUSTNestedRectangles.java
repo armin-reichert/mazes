@@ -8,10 +8,12 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import de.amr.datastruct.StreamUtils;
+import de.amr.graph.core.api.TraversalState;
+import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.iterators.IteratorFactory;
 import de.amr.graph.grid.shapes.Rectangle;
 import de.amr.graph.grid.traversals.ExpandingRectangle;
-import de.amr.maze.alg.core.OrthogonalGrid;
+import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Wilson's algorithm where the vertices are selected from a sequence of nested rectangles.
@@ -20,12 +22,12 @@ import de.amr.maze.alg.core.OrthogonalGrid;
  */
 public class WilsonUSTNestedRectangles extends WilsonUST {
 
-	public WilsonUSTNestedRectangles(int numCols, int numRows) {
-		super(numCols, numRows);
+	public WilsonUSTNestedRectangles(MazeGridFactory factory, int numCols, int numRows) {
+		super(factory, numCols, numRows);
 	}
 
 	@Override
-	public OrthogonalGrid createMaze(int x, int y) {
+	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
 		return runWilsonAlgorithm(grid.cell(TOP_LEFT));
 	}
 

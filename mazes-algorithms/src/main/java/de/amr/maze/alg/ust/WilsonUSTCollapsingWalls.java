@@ -3,6 +3,7 @@ package de.amr.maze.alg.ust;
 import java.util.stream.IntStream;
 
 import de.amr.graph.grid.traversals.CollapsingWalls;
+import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Wilson's algorithm where the vertices are selected alternating left-to-right and right-to-left
@@ -12,8 +13,8 @@ import de.amr.graph.grid.traversals.CollapsingWalls;
  */
 public class WilsonUSTCollapsingWalls extends WilsonUST {
 
-	public WilsonUSTCollapsingWalls(int numCols, int numRows) {
-		super(numCols, numRows);
+	public WilsonUSTCollapsingWalls(MazeGridFactory factory, int numCols, int numRows) {
+		super(factory, numCols, numRows);
 	}
 
 	@Override

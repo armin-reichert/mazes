@@ -3,12 +3,13 @@ package de.amr.maze.alg.ust;
 import static de.amr.datastruct.StreamUtils.randomElement;
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
-import static de.amr.maze.alg.core.OrthogonalGrid.emptyGrid;
 
 import java.util.stream.IntStream;
 
+import de.amr.graph.core.api.TraversalState;
+import de.amr.graph.grid.api.GridGraph2D;
+import de.amr.maze.alg.core.MazeGridFactory;
 import de.amr.maze.alg.core.MazeGenerator;
-import de.amr.maze.alg.core.OrthogonalGrid;
 
 /**
  * Wilson's algorithm.
@@ -30,31 +31,33 @@ import de.amr.maze.alg.core.OrthogonalGrid;
  *      wikipedia.org/wiki/Loop -erased_random_walk</>
  * 
  */
-public abstract class WilsonUST implements MazeGenerator<OrthogonalGrid> {
+public abstract class WilsonUST implements MazeGenerator {
 
-	protected OrthogonalGrid grid;
+	protected MazeGridFactory factory;
+	protected GridGraph2D<TraversalState, Integer> grid;
 	private int[] lastWalkDir;
 	private int current;
 
-	public WilsonUST(int numCols, int numRows) {
-		grid = emptyGrid(numCols, numRows, UNVISITED);
+	public WilsonUST(MazeGridFactory factory, int numCols, int numRows) {
+		this.factory = factory;
+		grid = factory.emptyGrid(numCols, numRows, UNVISITED);
 	}
 
-	public WilsonUST(OrthogonalGrid grid) {
+	public WilsonUST(GridGraph2D<TraversalState, Integer> grid) {
 		this.grid = grid;
 	}
 
 	@Override
-	public OrthogonalGrid getGrid() {
+	public GridGraph2D<TraversalState, Integer> getGrid() {
 		return grid;
 	}
 
 	@Override
-	public OrthogonalGrid createMaze(int x, int y) {
+	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
 		return runWilsonAlgorithm(grid.cell(x, y));
 	}
 
-	protected OrthogonalGrid runWilsonAlgorithm(int start) {
+	protected GridGraph2D<TraversalState, Integer> runWilsonAlgorithm(int start) {
 		grid.set(start, COMPLETED);
 		randomWalkStartCells().forEach(this::loopErasedRandomWalk);
 		return grid;
@@ -79,12 +82,12 @@ public abstract class WilsonUST implements MazeGenerator<OrthogonalGrid> {
 			lastWalkDir = new int[grid.numVertices()];
 		}
 		// if walk start is already inside tree, do nothing
-		if (grid.isCompleted(walkStart)) {
+		if (isCompleted(walkStart)) {
 			return;
 		}
 		// do a random walk until it touches the tree created so far
 		current = walkStart;
-		while (!grid.isCompleted(current)) {
+		while (!isCompleted(current)) {
 			int walkDir = randomElement(grid.getTopology().dirs()).getAsInt();
 			grid.neighbor(current, walkDir).ifPresent(neighbor -> {
 				lastWalkDir[current] = walkDir;
@@ -93,7 +96,7 @@ public abstract class WilsonUST implements MazeGenerator<OrthogonalGrid> {
 		}
 		// add the (loop-erased) random walk to the tree
 		current = walkStart;
-		while (!grid.isCompleted(current)) {
+		while (!isCompleted(current)) {
 			grid.neighbor(current, lastWalkDir[current]).ifPresent(neighbor -> {
 				grid.set(current, COMPLETED);
 				grid.addEdge(current, neighbor);
