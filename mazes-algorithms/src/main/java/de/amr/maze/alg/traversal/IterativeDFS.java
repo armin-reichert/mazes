@@ -11,8 +11,8 @@ import java.util.OptionalInt;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
-import de.amr.maze.alg.core.MazeGridFactory;
 import de.amr.maze.alg.core.MazeGenerator;
+import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Generates a maze by iterative random depth-first traversal of a grid.
@@ -54,7 +54,7 @@ public class IterativeDFS implements MazeGenerator {
 				if (!stack.isEmpty()) {
 					current = stack.pop();
 				}
-				if (!isCompleted(current)) {
+				if (!isCellCompleted(current)) {
 					stack.push(current);
 				}
 			}
@@ -63,6 +63,6 @@ public class IterativeDFS implements MazeGenerator {
 	}
 
 	private OptionalInt randomUnvisitedNeighbor(int cell) {
-		return randomElement(grid.neighbors(cell).filter(this::isUnvisited));
+		return randomElement(grid.neighbors(cell).filter(this::isCellUnvisited));
 	}
 }

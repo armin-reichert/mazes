@@ -9,8 +9,8 @@ import java.util.OptionalInt;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
-import de.amr.maze.alg.core.MazeGridFactory;
 import de.amr.maze.alg.core.MazeGenerator;
+import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Generates a maze similar to the "hunt-and-kill" algorithm.
@@ -56,7 +56,7 @@ public class HuntAndKill implements MazeGenerator {
 	}
 
 	protected boolean isAlive(int v) {
-		return isUnvisited(v);
+		return isCellUnvisited(v);
 	}
 
 	protected boolean isDead(int v) {

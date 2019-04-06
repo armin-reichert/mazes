@@ -10,16 +10,17 @@ import de.amr.util.StopWatch;
 public class LargeMazesTest {
 
 	private void test_Kruskal(int numCols, int numRows) {
-		
+
 		StopWatch watch = new StopWatch();
-		watch.measure(() -> new KruskalMST(UnobservableMazesFactory.get(),numCols, numRows).createMaze(0, 0));
+		watch.measure(() -> new KruskalMST(UnobservableMazesFactory.get(), numCols, numRows).createMaze(0, 0));
 		System.out.println(String.format("Kruskal: %d vertices (%.0f ms)", numCols * numRows, watch.getMillis()));
 	}
 
 	private void test_RecursiveDivision(int numCols, int numRows) {
-		
+
 		StopWatch watch = new StopWatch();
-		watch.measure(() -> new RecursiveDivision(UnobservableMazesFactory.get(),numCols, numRows).createMaze(0, 0));
+		watch.measure(
+				() -> new RecursiveDivision(UnobservableMazesFactory.get(), numCols, numRows).createMaze(0, 0));
 		System.out.println(
 				String.format("RecursiveDivision: %d vertices (%.0f ms)", numCols * numRows, watch.getMillis()));
 	}

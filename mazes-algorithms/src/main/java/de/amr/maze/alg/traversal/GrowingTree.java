@@ -10,8 +10,8 @@ import java.util.List;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
-import de.amr.maze.alg.core.MazeGridFactory;
 import de.amr.maze.alg.core.MazeGenerator;
+import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * "Growing tree" base algorithm.
@@ -43,7 +43,7 @@ public abstract class GrowingTree implements MazeGenerator {
 		frontier.add(start);
 		while (!frontier.isEmpty()) {
 			int cell = selectCell(frontier);
-			permute(grid.neighbors(cell).filter(this::isUnvisited)).forEach(neighbor -> {
+			permute(grid.neighbors(cell).filter(this::isCellUnvisited)).forEach(neighbor -> {
 				grid.set(neighbor, VISITED);
 				frontier.add(neighbor);
 				grid.addEdge(cell, neighbor);

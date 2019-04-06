@@ -7,8 +7,8 @@ import static de.amr.graph.core.api.TraversalState.VISITED;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
-import de.amr.maze.alg.core.MazeGridFactory;
 import de.amr.maze.alg.core.MazeGenerator;
+import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Let G = (V,E) be a graph with vertices V and edge set E.
@@ -72,7 +72,7 @@ public class AldousBroderUST implements MazeGenerator {
 	 */
 	private void visitRandomNeighbor() {
 		int neighbor = randomElement(grid.neighbors(currentCell)).getAsInt();
-		if (isUnvisited(neighbor)) {
+		if (isCellUnvisited(neighbor)) {
 			grid.addEdge(currentCell, neighbor);
 			grid.set(neighbor, COMPLETED);
 			++numVisitedCells;

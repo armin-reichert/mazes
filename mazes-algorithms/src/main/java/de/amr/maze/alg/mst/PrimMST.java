@@ -9,8 +9,8 @@ import java.util.Random;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.core.api.WeightedEdge;
 import de.amr.graph.grid.api.GridGraph2D;
-import de.amr.maze.alg.core.MazeGridFactory;
 import de.amr.maze.alg.core.MazeGenerator;
+import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Maze generator based on Prim's minimum spanning tree algorithm with random edge weights.
@@ -43,9 +43,9 @@ public class PrimMST implements MazeGenerator {
 		while (!cut.isEmpty()) {
 			WeightedEdge<Integer> minEdge = cut.poll();
 			int u = minEdge.either(), v = minEdge.other();
-			if (isUnvisited(u) || isUnvisited(v)) {
+			if (isCellUnvisited(u) || isCellUnvisited(v)) {
 				grid.addEdge(u, v);
-				expand(isUnvisited(u) ? u : v);
+				expand(isCellUnvisited(u) ? u : v);
 			}
 		}
 		return grid;
@@ -53,7 +53,7 @@ public class PrimMST implements MazeGenerator {
 
 	private void expand(int cell) {
 		grid.set(cell, COMPLETED);
-		grid.neighbors(cell).filter(this::isUnvisited).forEach(neighbor -> {
+		grid.neighbors(cell).filter(this::isCellUnvisited).forEach(neighbor -> {
 			cut.add(new WeightedEdge<>(cell, neighbor, rnd.nextInt()));
 		});
 	}

@@ -11,8 +11,8 @@ import java.util.Random;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
-import de.amr.maze.alg.core.MazeGridFactory;
 import de.amr.maze.alg.core.MazeGenerator;
+import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Maze generator using a randomized breadth-first-traversal.
@@ -42,7 +42,7 @@ public class RandomBFS implements MazeGenerator {
 		while (!frontier.isEmpty()) {
 			int cell = frontier.remove(rnd.nextInt(frontier.size()));
 			grid.set(cell, COMPLETED);
-			permute(grid.neighbors(cell).filter(this::isUnvisited)).forEach(neighbor -> {
+			permute(grid.neighbors(cell).filter(this::isCellUnvisited)).forEach(neighbor -> {
 				grid.addEdge(cell, neighbor);
 				grid.set(neighbor, VISITED);
 				frontier.add(neighbor);

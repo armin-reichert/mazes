@@ -9,8 +9,8 @@ import java.util.OptionalInt;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
-import de.amr.maze.alg.core.MazeGridFactory;
 import de.amr.maze.alg.core.MazeGenerator;
+import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Maze generator using randomized, recursive depth-first search. Not suited for larger grids
@@ -51,6 +51,6 @@ public class RecursiveDFS implements MazeGenerator {
 	}
 
 	private OptionalInt neighbor(int v) {
-		return randomElement(grid.neighbors(v).filter(this::isUnvisited));
+		return randomElement(grid.neighbors(v).filter(this::isCellUnvisited));
 	}
 }

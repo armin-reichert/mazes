@@ -7,8 +7,8 @@ import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import de.amr.datastruct.Partition;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
-import de.amr.maze.alg.core.MazeGridFactory;
 import de.amr.maze.alg.core.MazeGenerator;
+import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Maze generator derived from Kruskal's minimum spanning tree algorithm.

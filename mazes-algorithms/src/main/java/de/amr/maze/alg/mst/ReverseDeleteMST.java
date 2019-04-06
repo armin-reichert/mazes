@@ -5,8 +5,8 @@ import static de.amr.datastruct.StreamUtils.permute;
 import de.amr.graph.core.api.Edge;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
-import de.amr.maze.alg.core.MazeGridFactory;
 import de.amr.maze.alg.core.MazeGenerator;
+import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Maze generator derived from the Reverse-Delete-MST algorithm.

@@ -25,8 +25,8 @@ import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.shapes.Rectangle;
 import de.amr.graph.grid.shapes.Square;
-import de.amr.maze.alg.core.MazeGridFactory;
 import de.amr.maze.alg.core.MazeGenerator;
+import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Maze generator similar to Eller's algorithm but growing the maze inside-out. To my knowledge this

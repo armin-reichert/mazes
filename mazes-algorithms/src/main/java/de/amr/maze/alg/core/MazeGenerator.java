@@ -33,7 +33,7 @@ public interface MazeGenerator {
 	 *               grid cell
 	 * @return {@code true} if cell has not yet been visited
 	 */
-	default boolean isUnvisited(int cell) {
+	default boolean isCellUnvisited(int cell) {
 		return getGrid().get(cell) == TraversalState.UNVISITED;
 	}
 
@@ -44,7 +44,7 @@ public interface MazeGenerator {
 	 *               grid cell
 	 * @return {@code true} if cell has already been visited
 	 */
-	default boolean isVisited(int cell) {
+	default boolean isCellVisited(int cell) {
 		return getGrid().get(cell) == TraversalState.VISITED;
 	}
 
@@ -55,7 +55,7 @@ public interface MazeGenerator {
 	 *               grid cell
 	 * @return {@code true} if cell has been completed
 	 */
-	default boolean isCompleted(int cell) {
+	default boolean isCellCompleted(int cell) {
 		return getGrid().get(cell) == TraversalState.COMPLETED;
 	}
 }

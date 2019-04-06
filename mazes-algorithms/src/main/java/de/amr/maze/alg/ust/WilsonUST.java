@@ -8,8 +8,8 @@ import java.util.stream.IntStream;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
-import de.amr.maze.alg.core.MazeGridFactory;
 import de.amr.maze.alg.core.MazeGenerator;
+import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Wilson's algorithm.
@@ -82,12 +82,12 @@ public abstract class WilsonUST implements MazeGenerator {
 			lastWalkDir = new int[grid.numVertices()];
 		}
 		// if walk start is already inside tree, do nothing
-		if (isCompleted(walkStart)) {
+		if (isCellCompleted(walkStart)) {
 			return;
 		}
 		// do a random walk until it touches the tree created so far
 		current = walkStart;
-		while (!isCompleted(current)) {
+		while (!isCellCompleted(current)) {
 			int walkDir = randomElement(grid.getTopology().dirs()).getAsInt();
 			grid.neighbor(current, walkDir).ifPresent(neighbor -> {
 				lastWalkDir[current] = walkDir;
@@ -96,7 +96,7 @@ public abstract class WilsonUST implements MazeGenerator {
 		}
 		// add the (loop-erased) random walk to the tree
 		current = walkStart;
-		while (!isCompleted(current)) {
+		while (!isCellCompleted(current)) {
 			grid.neighbor(current, lastWalkDir[current]).ifPresent(neighbor -> {
 				grid.set(current, COMPLETED);
 				grid.addEdge(current, neighbor);

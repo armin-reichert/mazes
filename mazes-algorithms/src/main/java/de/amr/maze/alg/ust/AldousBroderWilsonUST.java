@@ -5,8 +5,8 @@ import static de.amr.graph.core.api.TraversalState.UNVISITED;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
-import de.amr.maze.alg.core.MazeGridFactory;
 import de.amr.maze.alg.core.MazeGenerator;
+import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * A hybrid algorithm ("Houston") that first uses Aldous/Broder until some fraction of cells is
@@ -35,7 +35,7 @@ public class AldousBroderWilsonUST implements MazeGenerator {
 	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
 		new AldousBroderUST(grid).run(grid.cell(x, y), Math.round(grid.numVertices() / 3.0f));
 		WilsonUSTRandomCell wilson = new WilsonUSTRandomCell(grid);
-		permute(grid.vertices().filter(this::isUnvisited)).forEach(wilson::loopErasedRandomWalk);
+		permute(grid.vertices().filter(this::isCellUnvisited)).forEach(wilson::loopErasedRandomWalk);
 		return grid;
 	}
 }
