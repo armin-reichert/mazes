@@ -4,15 +4,21 @@ import org.junit.Test;
 
 import de.amr.maze.alg.RecursiveDivision;
 import de.amr.maze.alg.mst.KruskalMST;
+import de.amr.util.StopWatch;
 
 public class LargeMazesTest {
 
 	private void test_Kruskal(int numCols, int numRows) {
-		new KruskalMST(numCols, numRows).createMaze(0, 0);
+		StopWatch watch = new StopWatch();
+		watch.measure(() -> new KruskalMST(numCols, numRows).createMaze(0, 0));
+		System.out.println(String.format("Kruskal: %d vertices (%.0f ms)", numCols * numRows, watch.getMillis()));
 	}
 
 	private void test_RecursiveDivision(int numCols, int numRows) {
-		new RecursiveDivision(numCols, numRows).createMaze(0, 0);
+		StopWatch watch = new StopWatch();
+		watch.measure(() -> new RecursiveDivision(numCols, numRows).createMaze(0, 0));
+		System.out.println(
+				String.format("RecursiveDivision: %d vertices (%.0f ms)", numCols * numRows, watch.getMillis()));
 	}
 
 	@Test

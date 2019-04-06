@@ -21,7 +21,7 @@ import de.amr.mazes.simple.graph.GraphFunctions;
 import de.amr.mazes.simple.graph.GridGraph;
 import de.amr.mazes.simple.graph.GridGraphImpl;
 
-public class LargeMazeTest {
+public class LargeMazesTest {
 
 	static final int L = 1000;
 	static final int M = 100;
