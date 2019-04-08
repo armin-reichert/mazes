@@ -3,6 +3,7 @@ package de.amr.maze.alg.mst;
 import static de.amr.datastruct.StreamUtils.permute;
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
+import static de.amr.graph.grid.impl.GridFactory.fullGrid;
 
 import java.util.stream.Stream;
 
@@ -10,6 +11,7 @@ import de.amr.datastruct.Partition;
 import de.amr.graph.core.api.Edge;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
+import de.amr.graph.grid.impl.Top4;
 import de.amr.maze.alg.core.MazeGenerator;
 
 /**
@@ -32,7 +34,7 @@ public class KruskalMST extends MazeGenerator {
 	@Override
 	public void createMaze(int x, int y) {
 		Partition<Integer> forest = new Partition<>();
-		Stream<Edge> fullGridEdges = fullGrid(grid.numCols(), grid.numRows(), UNVISITED).edges();
+		Stream<Edge> fullGridEdges = fullGrid(grid.numCols(), grid.numRows(), Top4.get(), UNVISITED, 0).edges();
 		permute(fullGridEdges).forEach(edge -> {
 			int u = edge.either(), v = edge.other();
 			if (forest.find(u) != forest.find(v)) {

@@ -22,6 +22,8 @@ import java.util.Set;
 import de.amr.datastruct.Partition;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
+import de.amr.graph.grid.impl.GridFactory;
+import de.amr.graph.grid.impl.Top4;
 import de.amr.graph.grid.shapes.Rectangle;
 import de.amr.graph.grid.shapes.Square;
 import de.amr.maze.alg.core.MazeGenerator;
@@ -45,7 +47,7 @@ public class Armin extends MazeGenerator {
 	public Armin(GridGraph2D<TraversalState, Integer> grid) {
 		super(grid);
 		int n = max(grid.numCols(), grid.numRows());
-		squareGrid = emptyGrid(n, n, UNVISITED);
+		squareGrid = GridFactory.emptyGrid(n, n, Top4.get(), UNVISITED, 0);
 	}
 
 	@Override

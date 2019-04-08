@@ -17,9 +17,10 @@ import org.junit.Test;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
+import de.amr.graph.grid.impl.GridFactory;
+import de.amr.graph.grid.impl.Top4;
 import de.amr.graph.util.GraphUtils;
 import de.amr.maze.alg.core.MazeGenerator;
-import de.amr.maze.alg.core.UnobservableGridFactory;
 import de.amr.maze.alg.mst.ReverseDeleteMST_BFS;
 import de.amr.maze.alg.mst.ReverseDeleteMST_BestFS;
 import de.amr.maze.alg.mst.ReverseDeleteMST_DFS;
@@ -29,8 +30,8 @@ import de.amr.util.StopWatch;
 
 public class MazeGeneratorTestSmall {
 
-	private static final int WIDTH_SMALL = 25;
-	private static final int HEIGHT_SMALL = 25;
+	private static final int WIDTH = 25;
+	private static final int HEIGHT = 25;
 
 	private static List<String> REPORT;
 
@@ -49,7 +50,7 @@ public class MazeGeneratorTestSmall {
 
 	@Before
 	public void setUp() {
-		smallGrid = UnobservableGridFactory.get().emptyGrid(WIDTH_SMALL, HEIGHT_SMALL, TraversalState.UNVISITED);
+		smallGrid = GridFactory.emptyObservableGrid(WIDTH, HEIGHT, Top4.get(), TraversalState.UNVISITED, 0);
 	}
 
 	@After

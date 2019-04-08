@@ -6,7 +6,7 @@ import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 
 /**
- * Common maze generator interface.
+ * Maze generator base class.
  * 
  * @author Armin Reichert
  */
@@ -29,16 +29,6 @@ public abstract class MazeGenerator {
 	 * @return maze (spanning tree)
 	 */
 	public abstract void createMaze(int x, int y);
-
-	protected GridGraph2D<TraversalState, Integer> emptyGrid(int numCols, int numRows,
-			TraversalState defaultState) {
-		return UnobservableGridFactory.get().emptyGrid(numCols, numRows, defaultState);
-	}
-
-	protected GridGraph2D<TraversalState, Integer> fullGrid(int numCols, int numRows,
-			TraversalState defaultState) {
-		return UnobservableGridFactory.get().fullGrid(numCols, numRows, defaultState);
-	}
 
 	/**
 	 * Tells if the given cell is unvisited by the maze generator.

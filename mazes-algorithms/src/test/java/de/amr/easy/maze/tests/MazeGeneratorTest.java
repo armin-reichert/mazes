@@ -1,5 +1,6 @@
 package de.amr.easy.maze.tests;
 
+import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import static java.lang.String.format;
 import static java.lang.System.out;
 import static org.junit.Assert.assertEquals;
@@ -17,6 +18,8 @@ import org.junit.Test;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
+import de.amr.graph.grid.impl.GridFactory;
+import de.amr.graph.grid.impl.Top4;
 import de.amr.graph.util.GraphUtils;
 import de.amr.maze.alg.Armin;
 import de.amr.maze.alg.BinaryTree;
@@ -27,7 +30,6 @@ import de.amr.maze.alg.HuntAndKillRandom;
 import de.amr.maze.alg.RecursiveDivision;
 import de.amr.maze.alg.Sidewinder;
 import de.amr.maze.alg.core.MazeGenerator;
-import de.amr.maze.alg.core.UnobservableGridFactory;
 import de.amr.maze.alg.mst.BoruvkaMST;
 import de.amr.maze.alg.mst.KruskalMST;
 import de.amr.maze.alg.mst.PrimMST;
@@ -78,7 +80,7 @@ public class MazeGeneratorTest {
 
 	@Before
 	public void setUp() {
-		grid = UnobservableGridFactory.get().emptyGrid(WIDTH, HEIGHT, TraversalState.UNVISITED);
+		grid = GridFactory.emptyGrid(WIDTH, HEIGHT, Top4.get(), UNVISITED, 0);
 	}
 
 	@After

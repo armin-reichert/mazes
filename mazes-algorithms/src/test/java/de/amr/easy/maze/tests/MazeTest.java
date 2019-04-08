@@ -18,11 +18,12 @@ import org.junit.Test;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
+import de.amr.graph.grid.impl.GridFactory;
 import de.amr.graph.grid.impl.GridGraph;
+import de.amr.graph.grid.impl.Top4;
 import de.amr.graph.pathfinder.impl.AStarSearch;
 import de.amr.graph.pathfinder.impl.BestFirstSearch;
 import de.amr.graph.util.GraphUtils;
-import de.amr.maze.alg.core.UnobservableGridFactory;
 import de.amr.maze.alg.traversal.IterativeDFS;
 import de.amr.maze.alg.traversal.RandomBFS;
 
@@ -47,7 +48,7 @@ public class MazeTest {
 
 	@Before
 	public void setUp() {
-		grid = UnobservableGridFactory.get().emptyGrid(WIDTH, HEIGHT, UNVISITED);
+		grid = GridFactory.emptyGrid(WIDTH, HEIGHT, Top4.get(), UNVISITED, 0);
 	}
 
 	@After
@@ -78,7 +79,7 @@ public class MazeTest {
 
 	@Test
 	public void testBestFS() {
-		grid = UnobservableGridFactory.get().emptyGrid(N, N, UNVISITED);
+		grid = GridFactory.emptyGrid(N, N, Top4.get(), UNVISITED, 0);
 		new IterativeDFS(grid).createMaze(0, 0);
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
 		BestFirstSearch best = new BestFirstSearch(grid, x -> grid.manhattan(x, target));
@@ -90,7 +91,7 @@ public class MazeTest {
 
 	@Test
 	public void testAStar() {
-		grid = UnobservableGridFactory.get().emptyGrid(N, N, UNVISITED);
+		grid = GridFactory.emptyGrid(N, N, Top4.get(), UNVISITED, 0);
 		new IterativeDFS(grid).createMaze(0, 0);
 		grid.setDefaultEdgeLabel((u, v) -> 1);
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);

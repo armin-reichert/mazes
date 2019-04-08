@@ -11,6 +11,8 @@ import java.util.stream.IntStream;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.curves.MooreLCurve;
+import de.amr.graph.grid.impl.GridFactory;
+import de.amr.graph.grid.impl.Top4;
 
 /**
  * Wilson's algorithm where the random walks start in the order defined by a Moore curve.
@@ -27,7 +29,7 @@ public class WilsonUSTMooreCurve extends WilsonUST {
 	protected IntStream randomWalkStartCells() {
 		int[] walkStartCells = new int[grid.numVertices()];
 		int n = nextPow(2, max(grid.numCols(), grid.numRows()));
-		GridGraph2D<TraversalState, Integer> square = emptyGrid(n, n, UNVISITED);
+		GridGraph2D<TraversalState, Integer> square = GridFactory.emptyGrid(n, n, Top4.get(), UNVISITED, 0);
 		MooreLCurve mooreCurve = new MooreLCurve(log(2, n));
 		int cell = square.cell(n / 2, n - 1);
 		int i = 0;

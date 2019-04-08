@@ -1,27 +1,30 @@
 package de.amr.easy.maze.tests;
 
+import static de.amr.graph.core.api.TraversalState.UNVISITED;
+
 import org.junit.Test;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
+import de.amr.graph.grid.impl.GridFactory;
+import de.amr.graph.grid.impl.Top4;
 import de.amr.maze.alg.RecursiveDivision;
-import de.amr.maze.alg.core.UnobservableGridFactory;
 import de.amr.maze.alg.mst.KruskalMST;
 import de.amr.util.StopWatch;
 
 public class LargeMazesTest {
 
 	private void test_Kruskal(int numCols, int numRows) {
-		GridGraph2D<TraversalState, Integer> grid = UnobservableGridFactory.get().emptyGrid(numCols, numRows,
-				TraversalState.UNVISITED);
+		GridGraph2D<TraversalState, Integer> grid = GridFactory.emptyGrid(numCols, numRows, Top4.get(), UNVISITED,
+				0);
 		StopWatch watch = new StopWatch();
 		watch.measure(() -> new KruskalMST(grid).createMaze(0, 0));
 		System.out.println(String.format("Kruskal: %d vertices (%.0f ms)", numCols * numRows, watch.getMillis()));
 	}
 
 	private void test_RecursiveDivision(int numCols, int numRows) {
-		GridGraph2D<TraversalState, Integer> grid = UnobservableGridFactory.get().emptyGrid(numCols, numRows,
-				TraversalState.UNVISITED);
+		GridGraph2D<TraversalState, Integer> grid = GridFactory.emptyGrid(numCols, numRows, Top4.get(), UNVISITED,
+				0);
 		StopWatch watch = new StopWatch();
 		watch.measure(() -> new RecursiveDivision(grid).createMaze(0, 0));
 		System.out.println(
