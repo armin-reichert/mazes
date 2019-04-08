@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
 import de.amr.datastruct.Partition;
@@ -26,7 +25,6 @@ import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.shapes.Rectangle;
 import de.amr.graph.grid.shapes.Square;
 import de.amr.maze.alg.core.MazeGenerator;
-import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Maze generator similar to Eller's algorithm but growing the maze inside-out. To my knowledge this
@@ -34,10 +32,8 @@ import de.amr.maze.alg.core.MazeGridFactory;
  * 
  * @author Armin Reichert
  */
-public class Armin implements MazeGenerator {
+public class Armin extends MazeGenerator {
 
-	private GridGraph2D<TraversalState, Integer> grid;
-	private Random rnd = new Random();
 	private Partition<Integer> mazeParts;
 	private GridGraph2D<TraversalState, Integer> squareGrid;
 	private Square square;
@@ -46,19 +42,14 @@ public class Armin implements MazeGenerator {
 	private int offsetX;
 	private int offsetY;
 
-	public Armin(MazeGridFactory factory, int numCols, int numRows) {
-		grid = factory.emptyGrid(numCols, numRows, UNVISITED);
+	public Armin(GridGraph2D<TraversalState, Integer> grid) {
+		super(grid);
 		int n = max(grid.numCols(), grid.numRows());
-		squareGrid = factory.emptyGrid(n, n, UNVISITED);
+		squareGrid = emptyGrid(n, n, UNVISITED);
 	}
 
 	@Override
-	public GridGraph2D<TraversalState, Integer> getGrid() {
-		return grid;
-	}
-
-	@Override
-	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
+	public void createMaze(int x, int y) {
 		mazeParts = new Partition<>();
 		int n = max(grid.numCols(), grid.numRows());
 		offsetX = (n - grid.numCols()) / 2;
@@ -69,7 +60,6 @@ public class Armin implements MazeGenerator {
 		}
 		layer = new Rectangle(grid, grid.cell(TOP_LEFT), grid.numCols(), grid.numRows());
 		connectCellsInsideLayer(true);
-		return grid;
 	}
 
 	private int nextLayer() {

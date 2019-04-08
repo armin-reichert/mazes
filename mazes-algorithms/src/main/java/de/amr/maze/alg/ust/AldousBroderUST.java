@@ -2,13 +2,11 @@ package de.amr.maze.alg.ust;
 
 import static de.amr.datastruct.StreamUtils.randomElement;
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
-import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import static de.amr.graph.core.api.TraversalState.VISITED;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.maze.alg.core.MazeGenerator;
-import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Let G = (V,E) be a graph with vertices V and edge set E.
@@ -32,29 +30,18 @@ import de.amr.maze.alg.core.MazeGridFactory;
  *        Generation: Aldous-Broder algorithm</a>
  * 
  */
-public class AldousBroderUST implements MazeGenerator {
+public class AldousBroderUST extends MazeGenerator {
 
-	private GridGraph2D<TraversalState, Integer> grid;
 	private int numVisitedCells;
 	private int currentCell;
 
-	public AldousBroderUST(MazeGridFactory factory, int numCols, int numRows) {
-		grid = factory.emptyGrid(numCols, numRows, UNVISITED);
-	}
-
-	@Override
-	public GridGraph2D<TraversalState, Integer> getGrid() {
-		return grid;
-	}
-
 	public AldousBroderUST(GridGraph2D<TraversalState, Integer> grid) {
-		this.grid = grid;
+		super(grid);
 	}
 
 	@Override
-	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
+	public void createMaze(int x, int y) {
 		run(grid.cell(x, y), grid.numVertices());
-		return grid;
 	}
 
 	public void run(int start, int limit) {

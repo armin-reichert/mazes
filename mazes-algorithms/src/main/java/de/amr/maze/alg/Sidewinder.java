@@ -1,15 +1,11 @@
 package de.amr.maze.alg;
 
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
-import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import static java.util.stream.IntStream.range;
-
-import java.util.Random;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.maze.alg.core.MazeGenerator;
-import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * The "Sidewinder" algorithm.
@@ -20,23 +16,16 @@ import de.amr.maze.alg.core.MazeGridFactory;
  *      "http://weblog.jamisbuck.org/2011/2/3/maze-generation-sidewinder-algorithm.html">Jamis
  *      Buck's blog: Sidewinder algorithm</a>
  */
-public class Sidewinder implements MazeGenerator {
+public class Sidewinder extends MazeGenerator {
 
-	private GridGraph2D<TraversalState, Integer> grid;
-	private Random rnd = new Random();
 	private int current;
 
-	public Sidewinder(MazeGridFactory factory, int numCols, int numRows) {
-		grid = factory.emptyGrid(numCols, numRows, UNVISITED);
+	public Sidewinder(GridGraph2D<TraversalState, Integer> grid) {
+		super(grid);
 	}
 
 	@Override
-	public GridGraph2D<TraversalState, Integer> getGrid() {
-		return grid;
-	}
-
-	@Override
-	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
+	public void createMaze(int x, int y) {
 		range(0, grid.numRows()).forEach(row -> {
 			current = 0;
 			range(0, grid.numCols()).forEach(col -> {
@@ -56,6 +45,5 @@ public class Sidewinder implements MazeGenerator {
 				}
 			});
 		});
-		return grid;
 	}
 }

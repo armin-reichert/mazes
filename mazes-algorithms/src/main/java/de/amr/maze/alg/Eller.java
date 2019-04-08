@@ -1,21 +1,18 @@
 package de.amr.maze.alg;
 
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
-import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import static java.util.stream.IntStream.range;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 import de.amr.datastruct.Partition;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.maze.alg.core.MazeGenerator;
-import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Maze generator using Eller's algorithm.
@@ -26,29 +23,21 @@ import de.amr.maze.alg.core.MazeGridFactory;
  *      Generation: Eller's Algorithm</a>.
  * 
  */
-public class Eller implements MazeGenerator {
+public class Eller extends MazeGenerator {
 
-	private GridGraph2D<TraversalState, Integer> grid;
-	private Random rnd = new Random();
 	private Partition<Integer> parts = new Partition<>();
 
-	public Eller(MazeGridFactory factory, int numCols, int numRows) {
-		grid = factory.emptyGrid(numCols, numRows, UNVISITED);
+	public Eller(GridGraph2D<TraversalState, Integer> grid) {
+		super(grid);
 	}
 
 	@Override
-	public GridGraph2D<TraversalState, Integer> getGrid() {
-		return grid;
-	}
-
-	@Override
-	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
+	public void createMaze(int x, int y) {
 		range(0, grid.numRows() - 1).forEach(row -> {
 			connectCellsInsideRow(row, false);
 			connectCellsWithNextRow(row);
 		});
 		connectCellsInsideRow(grid.numRows() - 1, true);
-		return grid;
 	}
 
 	private void connectCells(int u, int v) {

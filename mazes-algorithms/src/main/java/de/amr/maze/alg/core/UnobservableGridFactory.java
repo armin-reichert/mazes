@@ -11,22 +11,20 @@ import de.amr.graph.grid.impl.Top4;
  * 
  * @author Armin Reichert
  */
-public class UnobservableMazesFactory implements MazeGridFactory {
+public class UnobservableGridFactory {
 
-	private static final UnobservableMazesFactory it = new UnobservableMazesFactory();
+	private static final UnobservableGridFactory it = new UnobservableGridFactory();
 
-	public static final UnobservableMazesFactory get() {
+	public static final UnobservableGridFactory get() {
 		return it;
 	}
 
-	@Override
 	public GridGraph2D<TraversalState, Integer> emptyGrid(int numCols, int numRows,
 			TraversalState defaultState) {
 		return new GridGraph<>(numCols, numRows, Top4.get(), cell -> defaultState, (u, v) -> 1,
 				UndirectedEdge::new);
 	}
 
-	@Override
 	public GridGraph2D<TraversalState, Integer> fullGrid(int numCols, int numRows,
 			TraversalState defaultState) {
 		GridGraph<TraversalState, Integer> grid = new GridGraph<>(numCols, numRows, Top4.get(),

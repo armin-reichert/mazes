@@ -2,14 +2,12 @@ package de.amr.maze.alg.ust;
 
 import static de.amr.datastruct.StreamUtils.randomElement;
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
-import static de.amr.graph.core.api.TraversalState.UNVISITED;
 
 import java.util.stream.IntStream;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.maze.alg.core.MazeGenerator;
-import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Wilson's algorithm.
@@ -31,36 +29,23 @@ import de.amr.maze.alg.core.MazeGridFactory;
  *      wikipedia.org/wiki/Loop -erased_random_walk</>
  * 
  */
-public abstract class WilsonUST implements MazeGenerator {
+public abstract class WilsonUST extends MazeGenerator {
 
-	protected MazeGridFactory factory;
-	protected GridGraph2D<TraversalState, Integer> grid;
 	private int[] lastWalkDir;
 	private int current;
 
-	public WilsonUST(MazeGridFactory factory, int numCols, int numRows) {
-		this.factory = factory;
-		grid = factory.emptyGrid(numCols, numRows, UNVISITED);
-	}
-
 	public WilsonUST(GridGraph2D<TraversalState, Integer> grid) {
-		this.grid = grid;
+		super(grid);
 	}
 
 	@Override
-	public GridGraph2D<TraversalState, Integer> getGrid() {
-		return grid;
+	public void createMaze(int x, int y) {
+		runWilsonAlgorithm(grid.cell(x, y));
 	}
 
-	@Override
-	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
-		return runWilsonAlgorithm(grid.cell(x, y));
-	}
-
-	protected GridGraph2D<TraversalState, Integer> runWilsonAlgorithm(int start) {
+	protected void runWilsonAlgorithm(int start) {
 		grid.set(start, COMPLETED);
 		randomWalkStartCells().forEach(this::loopErasedRandomWalk);
-		return grid;
 	}
 
 	/**

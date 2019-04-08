@@ -12,7 +12,6 @@ import java.util.stream.IntStream;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.curves.PeanoCurve;
-import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Wilson's algorithm where the random walks start in the order defined by a Peano curve.
@@ -21,8 +20,8 @@ import de.amr.maze.alg.core.MazeGridFactory;
  */
 public class WilsonUSTPeanoCurve extends WilsonUST {
 
-	public WilsonUSTPeanoCurve(MazeGridFactory factory, int numCols, int numRows) {
-		super(factory, numCols, numRows);
+	public WilsonUSTPeanoCurve(GridGraph2D<TraversalState, Integer> grid) {
+		super(grid);
 	}
 
 	private int i;
@@ -31,7 +30,7 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 	protected IntStream randomWalkStartCells() {
 		int[] walkStartCells = new int[grid.numVertices()];
 		int n = nextPow(3, max(grid.numCols(), grid.numRows()));
-		GridGraph2D<TraversalState, Integer> square = factory.emptyGrid(n, n, UNVISITED);
+		GridGraph2D<TraversalState, Integer> square = emptyGrid(n, n, UNVISITED);
 		PeanoCurve peano = new PeanoCurve(log(3, n));
 		int current = square.cell(BOTTOM_LEFT);
 		addCell(walkStartCells, square.col(current), square.row(current));

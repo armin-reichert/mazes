@@ -13,6 +13,7 @@ import java.util.function.Function;
 import java.util.stream.IntStream;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import de.amr.graph.core.api.TraversalState;
@@ -21,7 +22,7 @@ import de.amr.graph.grid.impl.GridGraph;
 import de.amr.graph.pathfinder.impl.AStarSearch;
 import de.amr.graph.pathfinder.impl.BestFirstSearch;
 import de.amr.graph.util.GraphUtils;
-import de.amr.maze.alg.core.UnobservableMazesFactory;
+import de.amr.maze.alg.core.UnobservableGridFactory;
 import de.amr.maze.alg.traversal.IterativeDFS;
 import de.amr.maze.alg.traversal.RandomBFS;
 
@@ -42,6 +43,13 @@ public class MazeTest {
 		cells.forEach(cell -> assertTrue(Arrays.stream(expected).anyMatch(s -> s == fnSupplyState.apply(cell))));
 	}
 
+	private GridGraph2D<TraversalState, Integer> grid;
+
+	@Before
+	public void setUp() {
+		grid = UnobservableGridFactory.get().emptyGrid(WIDTH, HEIGHT, UNVISITED);
+	}
+
 	@After
 	public void tearDown() {
 	}
@@ -49,8 +57,7 @@ public class MazeTest {
 	@Test
 	public void testCycleChecker() {
 		// create a spanning tree
-		GridGraph2D<TraversalState, Integer> grid = new RandomBFS(UnobservableMazesFactory.get(), WIDTH, HEIGHT)
-				.createMaze(0, 0);
+		new RandomBFS(grid).createMaze(0, 0);
 		assertFalse(GraphUtils.containsCycle(grid));
 
 		// Find vertex with non-adjacent neighbor. Adding an edge to this neighbor produces a cycle.
@@ -71,8 +78,8 @@ public class MazeTest {
 
 	@Test
 	public void testBestFS() {
-		GridGraph2D<TraversalState, Integer> grid = new IterativeDFS(UnobservableMazesFactory.get(), N, N)
-				.createMaze(0, 0);
+		grid = UnobservableGridFactory.get().emptyGrid(N, N, UNVISITED);
+		new IterativeDFS(grid).createMaze(0, 0);
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
 		BestFirstSearch best = new BestFirstSearch(grid, x -> grid.manhattan(x, target));
 		assertState(grid.vertices(), best::getState, UNVISITED);
@@ -83,8 +90,8 @@ public class MazeTest {
 
 	@Test
 	public void testAStar() {
-		GridGraph2D<TraversalState, Integer> grid = new IterativeDFS(UnobservableMazesFactory.get(), N, N)
-				.createMaze(0, 0);
+		grid = UnobservableGridFactory.get().emptyGrid(N, N, UNVISITED);
+		new IterativeDFS(grid).createMaze(0, 0);
 		grid.setDefaultEdgeLabel((u, v) -> 1);
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
 		AStarSearch astar = new AStarSearch(grid, (u, v) -> 1, (u, v) -> grid.manhattan(u, v));
@@ -94,5 +101,4 @@ public class MazeTest {
 		assertTrue(astar.getParent(target) != -1);
 		assertTrue(astar.getCost(target) != -1);
 	}
-
 }

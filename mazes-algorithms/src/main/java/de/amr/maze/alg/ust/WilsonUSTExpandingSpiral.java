@@ -7,7 +7,6 @@ import java.util.stream.IntStream;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.traversals.Spiral;
-import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Wilson's algorithm where the vertices are selected from an expanding spiral.
@@ -16,13 +15,13 @@ import de.amr.maze.alg.core.MazeGridFactory;
  */
 public class WilsonUSTExpandingSpiral extends WilsonUST {
 
-	public WilsonUSTExpandingSpiral(MazeGridFactory factory, int numCols, int numRows) {
-		super(factory, numCols, numRows);
+	public WilsonUSTExpandingSpiral(GridGraph2D<TraversalState, Integer> grid) {
+		super(grid);
 	}
 
 	@Override
-	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
-		return runWilsonAlgorithm(grid.cell(CENTER));
+	public void createMaze(int x, int y) {
+		runWilsonAlgorithm(grid.cell(CENTER));
 	}
 
 	@Override

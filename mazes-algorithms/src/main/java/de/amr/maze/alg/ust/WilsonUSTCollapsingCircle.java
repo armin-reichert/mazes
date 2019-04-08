@@ -7,7 +7,6 @@ import static java.lang.Math.max;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.shapes.Circle;
-import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Wilson's algorithm where the vertices are selected from a collapsing circle.
@@ -16,17 +15,16 @@ import de.amr.maze.alg.core.MazeGridFactory;
  */
 public class WilsonUSTCollapsingCircle extends WilsonUST {
 
-	public WilsonUSTCollapsingCircle(MazeGridFactory factory, int numCols, int numRows) {
-		super(factory, numCols, numRows);
+	public WilsonUSTCollapsingCircle(GridGraph2D<TraversalState, Integer> grid) {
+		super(grid);
 	}
 
 	@Override
-	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
+	public void createMaze(int x, int y) {
 		int center = grid.cell(CENTER);
 		grid.set(center, COMPLETED);
 		for (int r = max(grid.numRows(), grid.numCols()) - 1; r > 0; r--) {
 			new Circle(grid, center, r).forEach(this::loopErasedRandomWalk);
 		}
-		return grid;
 	}
 }

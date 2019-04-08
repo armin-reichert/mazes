@@ -6,7 +6,6 @@ import static de.amr.graph.grid.api.GridPosition.CENTER;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.shapes.Rectangle;
-import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Wilson's algorithm where the vertices are selected from a collapsing rectangle.
@@ -15,12 +14,12 @@ import de.amr.maze.alg.core.MazeGridFactory;
  */
 public class WilsonUSTCollapsingRectangle extends WilsonUST {
 
-	public WilsonUSTCollapsingRectangle(MazeGridFactory factory, int numCols, int numRows) {
-		super(factory, numCols, numRows);
+	public WilsonUSTCollapsingRectangle(GridGraph2D<TraversalState, Integer> grid) {
+		super(grid);
 	}
 
 	@Override
-	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
+	public void createMaze(int x, int y) {
 		int start = grid.cell(CENTER);
 		grid.set(start, COMPLETED);
 		int col = 0, row = 0;
@@ -32,6 +31,5 @@ public class WilsonUSTCollapsingRectangle extends WilsonUST {
 			col += 1;
 			row += 1;
 		}
-		return grid;
 	}
 }

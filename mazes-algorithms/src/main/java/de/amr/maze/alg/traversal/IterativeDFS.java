@@ -2,7 +2,6 @@ package de.amr.maze.alg.traversal;
 
 import static de.amr.datastruct.StreamUtils.randomElement;
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
-import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import static de.amr.graph.core.api.TraversalState.VISITED;
 
 import java.util.ArrayDeque;
@@ -12,28 +11,20 @@ import java.util.OptionalInt;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.maze.alg.core.MazeGenerator;
-import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Generates a maze by iterative random depth-first traversal of a grid.
  * 
  * @author Armin Reichert
  */
-public class IterativeDFS implements MazeGenerator {
+public class IterativeDFS extends MazeGenerator {
 
-	private GridGraph2D<TraversalState, Integer> grid;
-
-	public IterativeDFS(MazeGridFactory factory, int numCols, int numRows) {
-		grid = factory.emptyGrid(numCols, numRows, UNVISITED);
+	public IterativeDFS(GridGraph2D<TraversalState, Integer> grid) {
+		super(grid);
 	}
 
 	@Override
-	public GridGraph2D<TraversalState, Integer> getGrid() {
-		return grid;
-	}
-
-	@Override
-	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
+	public void createMaze(int x, int y) {
 		Deque<Integer> stack = new ArrayDeque<>();
 		int current = grid.cell(x, y);
 		grid.set(current, VISITED);
@@ -59,7 +50,6 @@ public class IterativeDFS implements MazeGenerator {
 				}
 			}
 		}
-		return grid;
 	}
 
 	private OptionalInt randomUnvisitedNeighbor(int cell) {

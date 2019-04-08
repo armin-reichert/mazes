@@ -2,7 +2,6 @@ package de.amr.maze.alg.traversal;
 
 import static de.amr.datastruct.StreamUtils.permute;
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
-import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import static de.amr.graph.core.api.TraversalState.VISITED;
 
 import java.util.ArrayList;
@@ -11,7 +10,6 @@ import java.util.List;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.maze.alg.core.MazeGenerator;
-import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * "Growing tree" base algorithm.
@@ -22,21 +20,14 @@ import de.amr.maze.alg.core.MazeGridFactory;
  * 
  * @author Armin Reichert
  */
-public abstract class GrowingTree implements MazeGenerator {
+public abstract class GrowingTree extends MazeGenerator {
 
-	private final GridGraph2D<TraversalState, Integer> grid;
-
-	public GrowingTree(MazeGridFactory factory, int numCols, int numRows) {
-		grid = factory.emptyGrid(numCols, numRows, UNVISITED);
+	public GrowingTree(GridGraph2D<TraversalState, Integer> grid) {
+		super(grid);
 	}
 
 	@Override
-	public GridGraph2D<TraversalState, Integer> getGrid() {
-		return grid;
-	}
-
-	@Override
-	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
+	public void createMaze(int x, int y) {
 		List<Integer> frontier = new ArrayList<>();
 		int start = grid.cell(x, y);
 		grid.set(start, VISITED);
@@ -50,7 +41,6 @@ public abstract class GrowingTree implements MazeGenerator {
 			});
 			grid.set(cell, COMPLETED);
 		}
-		return grid;
 	}
 
 	/** Selects and removes a cell from the frontier. */

@@ -12,7 +12,6 @@ import de.amr.datastruct.StreamUtils;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.traversals.ExpandingCircle;
-import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Wilson's algorithm where grid cells are selected from five expanding circles.
@@ -21,13 +20,13 @@ import de.amr.maze.alg.core.MazeGridFactory;
  */
 public class WilsonUSTExpandingCircles extends WilsonUST {
 
-	public WilsonUSTExpandingCircles(MazeGridFactory factory, int numCols, int numRows) {
-		super(factory, numCols, numRows);
+	public WilsonUSTExpandingCircles(GridGraph2D<TraversalState, Integer> grid) {
+		super(grid);
 	}
 
 	@Override
-	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
-		return runWilsonAlgorithm(grid.cell(CENTER));
+	public void createMaze(int x, int y) {
+		runWilsonAlgorithm(grid.cell(CENTER));
 	}
 
 	@Override

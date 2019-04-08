@@ -2,7 +2,6 @@ package de.amr.maze.alg.traversal;
 
 import static de.amr.datastruct.StreamUtils.randomElement;
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
-import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import static de.amr.graph.core.api.TraversalState.VISITED;
 
 import java.util.OptionalInt;
@@ -10,7 +9,6 @@ import java.util.OptionalInt;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.maze.alg.core.MazeGenerator;
-import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Maze generator using randomized, recursive depth-first search. Not suited for larger grids
@@ -22,23 +20,15 @@ import de.amr.maze.alg.core.MazeGridFactory;
  *      "http://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking">Maze
  *      Generation: Recursive Backtracking</a>
  */
-public class RecursiveDFS implements MazeGenerator {
+public class RecursiveDFS extends MazeGenerator {
 
-	private GridGraph2D<TraversalState, Integer> grid;
-
-	public RecursiveDFS(MazeGridFactory factory, int numCols, int numRows) {
-		grid = factory.emptyGrid(numCols, numRows, UNVISITED);
+	public RecursiveDFS(GridGraph2D<TraversalState, Integer> grid) {
+		super(grid);
 	}
 
 	@Override
-	public GridGraph2D<TraversalState, Integer> getGrid() {
-		return grid;
-	}
-
-	@Override
-	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
+	public void createMaze(int x, int y) {
 		dfs(grid.cell(x, y));
-		return grid;
 	}
 
 	private void dfs(int v) {

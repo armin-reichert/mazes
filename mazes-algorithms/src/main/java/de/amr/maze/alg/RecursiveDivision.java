@@ -3,12 +3,9 @@ package de.amr.maze.alg;
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
 import static java.util.stream.IntStream.range;
 
-import java.util.Random;
-
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.maze.alg.core.MazeGenerator;
-import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Creates maze by recursive division.
@@ -19,24 +16,17 @@ import de.amr.maze.alg.core.MazeGridFactory;
  *      "http://weblog.jamisbuck.org/2011/1/12/maze-generation-recursive-division-algorithm.html">Maze
  *      Generation: Recursive Division</a>
  */
-public class RecursiveDivision implements MazeGenerator {
+public class RecursiveDivision extends MazeGenerator {
 
-	private GridGraph2D<TraversalState, Integer> grid;
-	private Random rnd = new Random();
-
-	public RecursiveDivision(MazeGridFactory factory, int numCols, int numRows) {
-		grid = factory.fullGrid(numCols, numRows, COMPLETED);
+	public RecursiveDivision(GridGraph2D<TraversalState, Integer> grid) {
+		super(grid);
+		grid.fill();
+		grid.setDefaultVertexLabel(cell -> COMPLETED);
 	}
 
 	@Override
-	public GridGraph2D<TraversalState, Integer> getGrid() {
-		return grid;
-	}
-
-	@Override
-	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
+	public void createMaze(int x, int y) {
 		divide(0, 0, grid.numCols(), grid.numRows());
-		return grid;
 	}
 
 	/**

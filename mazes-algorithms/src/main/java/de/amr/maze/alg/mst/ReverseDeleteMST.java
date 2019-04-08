@@ -6,7 +6,6 @@ import de.amr.graph.core.api.Edge;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.maze.alg.core.MazeGenerator;
-import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Maze generator derived from the Reverse-Delete-MST algorithm.
@@ -15,21 +14,16 @@ import de.amr.maze.alg.core.MazeGridFactory;
  *
  * @see <a href="https://en.wikipedia.org/wiki/Reverse-delete_algorithm">Wikipedia</a>
  */
-public abstract class ReverseDeleteMST implements MazeGenerator {
+public abstract class ReverseDeleteMST extends MazeGenerator {
 
-	protected GridGraph2D<TraversalState, Integer> grid;
-
-	public ReverseDeleteMST(MazeGridFactory factory, int numCols, int numRows) {
-		grid = factory.fullGrid(numCols, numRows, TraversalState.COMPLETED);
+	public ReverseDeleteMST(GridGraph2D<TraversalState, Integer> grid) {
+		super(grid);
+		grid.fill();
+		grid.setDefaultVertexLabel(cell -> TraversalState.COMPLETED);
 	}
 
 	@Override
-	public GridGraph2D<TraversalState, Integer> getGrid() {
-		return grid;
-	}
-
-	@Override
-	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
+	public void createMaze(int x, int y) {
 		Iterable<Edge> edges = permute(grid.edges())::iterator;
 		for (Edge edge : edges) {
 			if (grid.numEdges() == grid.numVertices() - 1) {
@@ -41,7 +35,6 @@ public abstract class ReverseDeleteMST implements MazeGenerator {
 				grid.addEdge(u, v);
 			}
 		}
-		return grid;
 	}
 
 	/**

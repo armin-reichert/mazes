@@ -7,7 +7,6 @@ import java.util.stream.IntStream;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.traversals.RightToLeftSweep;
-import de.amr.maze.alg.core.MazeGridFactory;
 
 /**
  * Wilson's algorithm where the vertices are selected column-wise left-to-right.
@@ -16,13 +15,13 @@ import de.amr.maze.alg.core.MazeGridFactory;
  */
 public class WilsonUSTRightToLeftSweep extends WilsonUST {
 
-	public WilsonUSTRightToLeftSweep(MazeGridFactory factory, int numCols, int numRows) {
-		super(factory, numCols, numRows);
+	public WilsonUSTRightToLeftSweep(GridGraph2D<TraversalState, Integer> grid) {
+		super(grid);
 	}
 
 	@Override
-	public GridGraph2D<TraversalState, Integer> createMaze(int x, int y) {
-		return runWilsonAlgorithm(grid.cell(BOTTOM_RIGHT));
+	public void createMaze(int x, int y) {
+		runWilsonAlgorithm(grid.cell(BOTTOM_RIGHT));
 	}
 
 	@Override
