@@ -18,7 +18,7 @@ public abstract class ReverseDeleteMST extends MazeGenerator {
 
 	public ReverseDeleteMST(GridGraph2D<TraversalState, Integer> grid) {
 		super(grid);
-		if (grid.numEdges() != grid.numVertices() - 1) {
+		if (grid.numEdges() != 2 * grid.numCols() * grid.numRows() - (grid.numCols() + grid.numRows())) {
 			grid.removeEdges();
 			grid.fill();
 		}
