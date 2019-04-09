@@ -28,19 +28,25 @@ public class RecursiveDFS extends MazeGenerator {
 
 	@Override
 	public void createMaze(int x, int y) {
-		dfs(grid.cell(x, y));
+		createMazeFrom(grid.cell(x, y));
 	}
 
-	private void dfs(int v) {
-		grid.set(v, VISITED);
-		for (OptionalInt next = neighbor(v); next.isPresent(); next = neighbor(v)) {
-			grid.addEdge(v, next.getAsInt());
-			dfs(next.getAsInt());
+	private void createMazeFrom(int cell) {
+		/*@formatter:off*/
+		grid.set(cell, VISITED);
+		for (OptionalInt unvisitedNeighbor = randomUnvisitedNeighbor(cell);
+				unvisitedNeighbor.isPresent(); 
+				unvisitedNeighbor = randomUnvisitedNeighbor(cell)) 
+		{
+			int neighbor = unvisitedNeighbor.getAsInt();
+			grid.addEdge(cell, neighbor);
+			createMazeFrom(neighbor);
 		}
-		grid.set(v, COMPLETED);
+		grid.set(cell, COMPLETED);
+		/*@formatter:on*/
 	}
 
-	private OptionalInt neighbor(int v) {
-		return randomElement(grid.neighbors(v).filter(this::isCellUnvisited));
+	private OptionalInt randomUnvisitedNeighbor(int cell) {
+		return randomElement(grid.neighbors(cell).filter(this::isCellUnvisited));
 	}
 }
