@@ -12,7 +12,7 @@ import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.maze.alg.core.MazeGenerator;
 
 /**
- * Maze generator using a randomized breadth-first-traversal.
+ * Maze generator based on a randomized breadth-first search.
  * 
  * @author Armin Reichert
  */

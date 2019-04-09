@@ -25,28 +25,28 @@ public class IterativeDFS extends MazeGenerator {
 
 	@Override
 	public void createMaze(int x, int y) {
-		Deque<Integer> stack = new ArrayDeque<>();
+		Deque<Integer> frontier = new ArrayDeque<>();
 		int current = grid.cell(x, y);
 		grid.set(current, VISITED);
-		stack.push(current);
-		while (!stack.isEmpty()) {
+		frontier.push(current);
+		while (!frontier.isEmpty()) {
 			OptionalInt unvisitedNeighbor = randomUnvisitedNeighbor(current);
 			if (unvisitedNeighbor.isPresent()) {
 				int neighbor = unvisitedNeighbor.getAsInt();
 				grid.addEdge(current, neighbor);
 				grid.set(neighbor, VISITED);
 				if (randomUnvisitedNeighbor(neighbor).isPresent()) {
-					stack.push(neighbor);
+					frontier.push(neighbor);
 				}
 				current = neighbor;
 			}
 			else {
 				grid.set(current, COMPLETED);
-				if (!stack.isEmpty()) {
-					current = stack.pop();
-				}
-				if (!isCellCompleted(current)) {
-					stack.push(current);
+				if (!frontier.isEmpty()) {
+					current = frontier.peek();
+					if (isCellCompleted(current)) {
+						frontier.pop();
+					}
 				}
 			}
 		}
