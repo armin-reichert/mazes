@@ -6,8 +6,8 @@ import static de.amr.graph.core.api.TraversalState.VISITED;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.OptionalInt;
 
+import de.amr.graph.core.api.Graph;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.maze.alg.core.MazeGenerator;
@@ -25,32 +25,28 @@ public class IterativeDFS extends MazeGenerator {
 
 	@Override
 	public void createMaze(int x, int y) {
-		Deque<Integer> frontier = new ArrayDeque<>();
+		Deque<Integer> stack = new ArrayDeque<>();
 		int current = grid.cell(x, y);
 		grid.set(current, VISITED);
-		frontier.push(current);
-		while (!frontier.isEmpty()) {
-			OptionalInt unvisitedNeighbor = randomUnvisitedNeighbor(current);
-			if (unvisitedNeighbor.isPresent()) {
-				int neighbor = unvisitedNeighbor.getAsInt();
+		stack.push(current);
+		while (!stack.isEmpty()) {
+			int neighbor = randomElement(grid.neighbors(current).filter(this::isCellUnvisited))
+					.orElse(Graph.NO_VERTEX);
+			if (neighbor != Graph.NO_VERTEX) {
 				grid.addEdge(current, neighbor);
 				grid.set(neighbor, VISITED);
-				frontier.push(neighbor);
+				stack.push(neighbor);
 				current = neighbor;
 			}
 			else {
 				grid.set(current, COMPLETED);
 				// Note: current = frontier.pop() would also be correct. The following lines
 				// just give a better visualization.
-				current = frontier.peek();
+				current = stack.peek();
 				if (isCellCompleted(current)) {
-					frontier.pop();
+					stack.pop();
 				}
 			}
 		}
-	}
-
-	private OptionalInt randomUnvisitedNeighbor(int cell) {
-		return randomElement(grid.neighbors(cell).filter(this::isCellUnvisited));
 	}
 }
