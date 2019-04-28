@@ -35,18 +35,16 @@ public class IterativeDFS extends MazeGenerator {
 				int neighbor = unvisitedNeighbor.getAsInt();
 				grid.addEdge(current, neighbor);
 				grid.set(neighbor, VISITED);
-				if (randomUnvisitedNeighbor(neighbor).isPresent()) {
-					frontier.push(neighbor);
-				}
+				frontier.push(neighbor);
 				current = neighbor;
 			}
 			else {
 				grid.set(current, COMPLETED);
-				if (!frontier.isEmpty()) {
-					current = frontier.peek();
-					if (isCellCompleted(current)) {
-						frontier.pop();
-					}
+				// Note: current = frontier.pop() would also be correct. The following lines
+				// just give a better visualization.
+				current = frontier.peek();
+				if (isCellCompleted(current)) {
+					frontier.pop();
 				}
 			}
 		}
