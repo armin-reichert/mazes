@@ -21,7 +21,7 @@ import de.amr.graph.grid.impl.GridGraph;
 import de.amr.graph.grid.impl.Top4;
 
 /**
- * Wilson's algorithm with random walk sequence defined by a Hilbert curve.
+ * Wilson's algorithm where the random walk start cells are defined by a Hilbert curve.
  * 
  * @author Armin Reichert
  */
