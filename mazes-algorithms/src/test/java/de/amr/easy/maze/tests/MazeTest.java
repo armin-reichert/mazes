@@ -41,7 +41,8 @@ public class MazeTest {
 
 	private static void assertState(IntStream cells, Function<Integer, TraversalState> fnSupplyState,
 			TraversalState... expected) {
-		cells.forEach(cell -> assertTrue(Arrays.stream(expected).anyMatch(s -> s == fnSupplyState.apply(cell))));
+		cells.forEach(
+				cell -> assertTrue(Arrays.stream(expected).anyMatch(s -> s == fnSupplyState.apply(cell))));
 	}
 
 	private GridGraph2D<TraversalState, Integer> grid;

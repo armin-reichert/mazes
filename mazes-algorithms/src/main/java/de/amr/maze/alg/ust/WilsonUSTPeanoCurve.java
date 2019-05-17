@@ -32,7 +32,8 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 	protected IntStream randomWalkStartCells() {
 		int[] walkStartCells = new int[grid.numVertices()];
 		int n = nextPow(3, max(grid.numCols(), grid.numRows()));
-		GridGraph2D<TraversalState, Integer> square = GridFactory.emptyGrid(n, n, Top4.get(), UNVISITED, 0);
+		GridGraph2D<TraversalState, Integer> square = GridFactory.emptyGrid(n, n, Top4.get(), UNVISITED,
+				0);
 		PeanoCurve peano = new PeanoCurve(log(3, n));
 		int current = square.cell(BOTTOM_LEFT);
 		addCell(walkStartCells, square.col(current), square.row(current));

@@ -50,7 +50,8 @@ public class MazeGeneratorTestSmall {
 
 	@Before
 	public void setUp() {
-		smallGrid = GridFactory.emptyObservableGrid(WIDTH, HEIGHT, Top4.get(), TraversalState.UNVISITED, 0);
+		smallGrid = GridFactory.emptyObservableGrid(WIDTH, HEIGHT, Top4.get(), TraversalState.UNVISITED,
+				0);
 	}
 
 	@After

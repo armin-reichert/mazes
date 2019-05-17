@@ -34,7 +34,8 @@ public class KruskalMST extends MazeGenerator {
 	@Override
 	public void createMaze(int x, int y) {
 		Partition<Integer> forest = new Partition<>();
-		Stream<Edge> fullGridEdges = fullGrid(grid.numCols(), grid.numRows(), Top4.get(), UNVISITED, 0).edges();
+		Stream<Edge> fullGridEdges = fullGrid(grid.numCols(), grid.numRows(), Top4.get(), UNVISITED, 0)
+				.edges();
 		permute(fullGridEdges).forEach(edge -> {
 			int u = edge.either(), v = edge.other();
 			if (forest.find(u) != forest.find(v)) {

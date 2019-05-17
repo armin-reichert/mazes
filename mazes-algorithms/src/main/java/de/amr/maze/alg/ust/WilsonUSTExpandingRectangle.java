@@ -4,6 +4,7 @@ import static de.amr.graph.grid.api.GridPosition.TOP_LEFT;
 
 import java.util.stream.IntStream;
 
+import de.amr.datastruct.StreamUtils;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.shapes.Rectangle;
@@ -32,6 +33,6 @@ public class WilsonUSTExpandingRectangle extends WilsonUST {
 		expRect.setExpandHorizontally(true);
 		expRect.setExpandVertically(true);
 		expRect.setMaxExpansion(grid.numCols() - 1);
-		return expRect.stream();
+		return StreamUtils.toIntStream(expRect);
 	}
 }

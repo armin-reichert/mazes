@@ -4,6 +4,7 @@ import static de.amr.graph.grid.api.GridPosition.TOP_LEFT;
 
 import java.util.stream.IntStream;
 
+import de.amr.datastruct.StreamUtils;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.traversals.LeftToRightSweep;
@@ -26,6 +27,6 @@ public class WilsonUSTLeftToRightSweep extends WilsonUST {
 
 	@Override
 	protected IntStream randomWalkStartCells() {
-		return new LeftToRightSweep(grid).stream();
+		return StreamUtils.toIntStream(new LeftToRightSweep(grid));
 	}
 }

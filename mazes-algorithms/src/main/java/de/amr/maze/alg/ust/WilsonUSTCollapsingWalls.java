@@ -2,6 +2,7 @@ package de.amr.maze.alg.ust;
 
 import java.util.stream.IntStream;
 
+import de.amr.datastruct.StreamUtils;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.traversals.CollapsingWalls;
@@ -20,6 +21,6 @@ public class WilsonUSTCollapsingWalls extends WilsonUST {
 
 	@Override
 	protected IntStream randomWalkStartCells() {
-		return new CollapsingWalls(grid).stream();
+		return StreamUtils.toIntStream(new CollapsingWalls(grid));
 	}
 }

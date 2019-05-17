@@ -5,6 +5,7 @@ import static java.lang.Math.max;
 
 import java.util.stream.IntStream;
 
+import de.amr.datastruct.StreamUtils;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.traversals.ExpandingCircle;
@@ -27,6 +28,7 @@ public class WilsonUSTExpandingCircle extends WilsonUST {
 
 	@Override
 	protected IntStream randomWalkStartCells() {
-		return new ExpandingCircle(grid, grid.cell(CENTER), 1, max(grid.numCols(), grid.numRows())).stream();
+		return StreamUtils.toIntStream(
+				new ExpandingCircle(grid, grid.cell(CENTER), 1, max(grid.numCols(), grid.numRows())));
 	}
 }
