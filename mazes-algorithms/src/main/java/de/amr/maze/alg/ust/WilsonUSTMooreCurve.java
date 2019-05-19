@@ -30,13 +30,12 @@ public class WilsonUSTMooreCurve extends WilsonUST {
 		int[] cells = new int[grid.numVertices()];
 		int n = nextPow(2, max(grid.numCols(), grid.numRows()));
 		GridGraph2D<?, ?> squareGrid = emptyGrid(n, n, Top4.get(), UNVISITED, 0);
-		MooreLCurve mooreCurve = new MooreLCurve(log(2, n));
 		int cell = squareGrid.cell(n / 2, n - 1);
 		int i = 0;
 		if (grid.isValidCol(n / 2) && grid.isValidRow(n - 1)) {
 			cells[i++] = grid.cell(n / 2, n - 1);
 		}
-		for (int dir : mooreCurve) {
+		for (int dir : new MooreLCurve(log(2, n))) {
 			cell = squareGrid.neighbor(cell, dir).getAsInt();
 			int col = squareGrid.col(cell), row = squareGrid.row(cell);
 			if (grid.isValidCol(col) && grid.isValidRow(row)) {

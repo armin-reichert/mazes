@@ -2,6 +2,7 @@ package de.amr.maze.alg.ust;
 
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import static de.amr.graph.grid.api.GridPosition.BOTTOM_LEFT;
+import static de.amr.graph.grid.impl.GridFactory.emptyGrid;
 import static de.amr.graph.util.GraphUtils.log;
 import static de.amr.graph.util.GraphUtils.nextPow;
 import static java.lang.Math.max;
@@ -12,7 +13,6 @@ import java.util.stream.IntStream;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.curves.PeanoCurve;
-import de.amr.graph.grid.impl.GridFactory;
 import de.amr.graph.grid.impl.Top4;
 
 /**
@@ -22,29 +22,28 @@ import de.amr.graph.grid.impl.Top4;
  */
 public class WilsonUSTPeanoCurve extends WilsonUST {
 
+	private int i;
+	private int[] walkStartCells;
+
 	public WilsonUSTPeanoCurve(GridGraph2D<TraversalState, Integer> grid) {
 		super(grid);
+		walkStartCells = new int[grid.numVertices()];
 	}
-
-	private int i;
 
 	@Override
 	protected IntStream randomWalkStartCells() {
-		int[] walkStartCells = new int[grid.numVertices()];
 		int n = nextPow(3, max(grid.numCols(), grid.numRows()));
-		GridGraph2D<TraversalState, Integer> square = GridFactory.emptyGrid(n, n, Top4.get(), UNVISITED,
-				0);
-		PeanoCurve peano = new PeanoCurve(log(3, n));
-		int current = square.cell(BOTTOM_LEFT);
-		addCell(walkStartCells, square.col(current), square.row(current));
-		for (int dir : peano) {
-			current = square.neighbor(current, dir).getAsInt();
-			addCell(walkStartCells, square.col(current), square.row(current));
+		GridGraph2D<?, ?> squareGrid = emptyGrid(n, n, Top4.get(), UNVISITED, 0);
+		int cell = squareGrid.cell(BOTTOM_LEFT);
+		addCell(squareGrid.col(cell), squareGrid.row(cell));
+		for (int dir : new PeanoCurve(log(3, n))) {
+			cell = squareGrid.neighbor(cell, dir).getAsInt();
+			addCell(squareGrid.col(cell), squareGrid.row(cell));
 		}
 		return stream(walkStartCells);
 	}
 
-	private void addCell(int[] walkStartCells, int col, int row) {
+	private void addCell(int col, int row) {
 		if (grid.isValidCol(col) && grid.isValidRow(row)) {
 			walkStartCells[i++] = grid.cell(col, row);
 		}
