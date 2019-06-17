@@ -1,4 +1,4 @@
-package de.amr.maze.alg;
+package de.amr.maze.alg.others;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;

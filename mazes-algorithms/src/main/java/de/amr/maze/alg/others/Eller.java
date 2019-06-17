@@ -1,4 +1,4 @@
-package de.amr.maze.alg;
+package de.amr.maze.alg.others;
 
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
 import static java.util.stream.IntStream.range;

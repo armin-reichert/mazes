@@ -8,8 +8,8 @@ import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.impl.GridFactory;
 import de.amr.graph.grid.impl.Top4;
-import de.amr.maze.alg.RecursiveDivision;
 import de.amr.maze.alg.mst.KruskalMST;
+import de.amr.maze.alg.others.RecursiveDivision;
 import de.amr.util.StopWatch;
 
 public class LargeMazesTest {
