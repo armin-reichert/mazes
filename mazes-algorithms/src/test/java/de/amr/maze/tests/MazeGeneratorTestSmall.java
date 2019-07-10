@@ -1,4 +1,4 @@
-package de.amr.easy.maze.tests;
+package de.amr.maze.tests;
 
 import static java.lang.String.format;
 import static java.lang.System.out;

@@ -1,4 +1,4 @@
-package de.amr.easy.maze.tests;
+package de.amr.maze.tests;
 
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
 
