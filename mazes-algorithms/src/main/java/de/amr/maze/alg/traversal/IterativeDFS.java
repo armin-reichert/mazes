@@ -40,7 +40,7 @@ public class IterativeDFS extends MazeGenerator {
 			}
 			else {
 				grid.set(current, COMPLETED);
-				// Note: current = frontier.pop() would also be correct. The following lines
+				// Note: current = stack.pop() would also be correct. The following lines
 				// just give a better visualization.
 				current = stack.peek();
 				if (isCellCompleted(current)) {

@@ -26,7 +26,6 @@ public abstract class MazeGenerator {
 	 *            x-coordinate (column) of start cell
 	 * @param y
 	 *            y-coordinate (row) of start cell
-	 * @return maze (spanning tree)
 	 */
 	public abstract void createMaze(int x, int y);
 
