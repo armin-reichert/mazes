@@ -8,7 +8,7 @@ import static de.amr.graph.grid.impl.GridFactory.fullGrid;
 import de.amr.datastruct.Partition;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
-import de.amr.graph.grid.impl.Top4;
+import de.amr.graph.grid.impl.Grid4Topology;
 import de.amr.maze.alg.core.MazeGenerator;
 
 /**
@@ -31,7 +31,7 @@ public class KruskalMST extends MazeGenerator {
 	@Override
 	public void createMaze(int x, int y) {
 		Partition<Integer> forest = new Partition<>();
-		GridGraph2D<?, ?> fullGrid = fullGrid(grid.numCols(), grid.numRows(), Top4.get(), UNVISITED, 0);
+		GridGraph2D<?, ?> fullGrid = fullGrid(grid.numCols(), grid.numRows(), Grid4Topology.get(), UNVISITED, 0);
 		permute(fullGrid.edges()).forEach(edge -> {
 			int u = edge.either(), v = edge.other();
 			if (forest.find(u) != forest.find(v)) {

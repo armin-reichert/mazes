@@ -8,7 +8,7 @@ import java.util.stream.IntStream;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.api.GridPosition;
-import de.amr.graph.grid.impl.Top4;
+import de.amr.graph.grid.impl.Grid4Topology;
 import de.amr.maze.alg.core.MazeGenerator;
 
 /**
@@ -51,15 +51,15 @@ public class BinaryTree extends MazeGenerator {
 	private int[] getBranching() {
 		switch (rootPosition) {
 		case BOTTOM_LEFT:
-			return new int[] { Top4.S, Top4.W };
+			return new int[] { Grid4Topology.S, Grid4Topology.W };
 		case BOTTOM_RIGHT:
-			return new int[] { Top4.S, Top4.E };
+			return new int[] { Grid4Topology.S, Grid4Topology.E };
 		case TOP_LEFT:
-			return new int[] { Top4.N, Top4.W };
+			return new int[] { Grid4Topology.N, Grid4Topology.W };
 		case TOP_RIGHT:
-			return new int[] { Top4.N, Top4.E };
+			return new int[] { Grid4Topology.N, Grid4Topology.E };
 		default:
-			return new int[] { Top4.N, Top4.W };
+			return new int[] { Grid4Topology.N, Grid4Topology.W };
 		}
 	}
 }

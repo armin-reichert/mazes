@@ -3,10 +3,10 @@ package de.amr.maze.alg.ust;
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import static de.amr.graph.grid.api.GridPosition.TOP_LEFT;
 import static de.amr.graph.grid.impl.GridFactory.emptyGrid;
-import static de.amr.graph.grid.impl.Top4.E;
-import static de.amr.graph.grid.impl.Top4.N;
-import static de.amr.graph.grid.impl.Top4.S;
-import static de.amr.graph.grid.impl.Top4.W;
+import static de.amr.graph.grid.impl.Grid4Topology.E;
+import static de.amr.graph.grid.impl.Grid4Topology.N;
+import static de.amr.graph.grid.impl.Grid4Topology.S;
+import static de.amr.graph.grid.impl.Grid4Topology.W;
 import static de.amr.graph.util.GraphUtils.log;
 import static de.amr.graph.util.GraphUtils.nextPow;
 import static java.lang.Math.max;
@@ -18,7 +18,7 @@ import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.curves.HilbertCurve;
 import de.amr.graph.grid.impl.GridGraph;
-import de.amr.graph.grid.impl.Top4;
+import de.amr.graph.grid.impl.Grid4Topology;
 
 /**
  * Wilson's algorithm where the random walk start cells are defined by a Hilbert curve.
@@ -35,7 +35,7 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 	protected IntStream randomWalkStartCells() {
 		int[] cells = new int[grid.numVertices()];
 		int n = nextPow(2, max(grid.numCols(), grid.numRows()));
-		GridGraph<?, ?> squareGrid = emptyGrid(n, n, Top4.get(), UNVISITED, 0);
+		GridGraph<?, ?> squareGrid = emptyGrid(n, n, Grid4Topology.get(), UNVISITED, 0);
 		int cell = squareGrid.cell(TOP_LEFT);
 		int i = 0;
 		cells[i++] = cell;

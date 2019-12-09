@@ -7,7 +7,7 @@ import org.junit.Test;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.impl.GridFactory;
-import de.amr.graph.grid.impl.Top4;
+import de.amr.graph.grid.impl.Grid4Topology;
 import de.amr.maze.alg.mst.KruskalMST;
 import de.amr.maze.alg.others.RecursiveDivision;
 import de.amr.util.StopWatch;
@@ -15,7 +15,7 @@ import de.amr.util.StopWatch;
 public class LargeMazesTest {
 
 	private void test_Kruskal(int numCols, int numRows) {
-		GridGraph2D<TraversalState, Integer> grid = GridFactory.emptyGrid(numCols, numRows, Top4.get(),
+		GridGraph2D<TraversalState, Integer> grid = GridFactory.emptyGrid(numCols, numRows, Grid4Topology.get(),
 				UNVISITED, 0);
 		StopWatch watch = new StopWatch();
 		watch.measure(() -> new KruskalMST(grid).createMaze(0, 0));
@@ -24,7 +24,7 @@ public class LargeMazesTest {
 	}
 
 	private void test_RecursiveDivision(int numCols, int numRows) {
-		GridGraph2D<TraversalState, Integer> grid = GridFactory.emptyGrid(numCols, numRows, Top4.get(),
+		GridGraph2D<TraversalState, Integer> grid = GridFactory.emptyGrid(numCols, numRows, Grid4Topology.get(),
 				UNVISITED, 0);
 		StopWatch watch = new StopWatch();
 		watch.measure(() -> new RecursiveDivision(grid).createMaze(0, 0));

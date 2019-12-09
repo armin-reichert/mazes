@@ -13,7 +13,7 @@ import java.util.stream.IntStream;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.curves.PeanoCurve;
-import de.amr.graph.grid.impl.Top4;
+import de.amr.graph.grid.impl.Grid4Topology;
 
 /**
  * Wilson's algorithm where the random walks start in the order defined by a Peano curve.
@@ -33,7 +33,7 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 	@Override
 	protected IntStream randomWalkStartCells() {
 		int n = nextPow(3, max(grid.numCols(), grid.numRows()));
-		GridGraph2D<?, ?> squareGrid = emptyGrid(n, n, Top4.get(), UNVISITED, 0);
+		GridGraph2D<?, ?> squareGrid = emptyGrid(n, n, Grid4Topology.get(), UNVISITED, 0);
 		int cell = squareGrid.cell(BOTTOM_LEFT);
 		addCell(squareGrid.col(cell), squareGrid.row(cell));
 		for (int dir : new PeanoCurve(log(3, n))) {

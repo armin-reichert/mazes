@@ -19,7 +19,7 @@ import org.junit.Test;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.impl.GridFactory;
-import de.amr.graph.grid.impl.Top4;
+import de.amr.graph.grid.impl.Grid4Topology;
 import de.amr.graph.util.GraphUtils;
 import de.amr.maze.alg.core.MazeGenerator;
 import de.amr.maze.alg.mst.BoruvkaMST;
@@ -80,7 +80,7 @@ public class MazeGeneratorTest {
 
 	@Before
 	public void setUp() {
-		grid = GridFactory.emptyGrid(WIDTH, HEIGHT, Top4.get(), UNVISITED, 0);
+		grid = GridFactory.emptyGrid(WIDTH, HEIGHT, Grid4Topology.get(), UNVISITED, 0);
 	}
 
 	@After

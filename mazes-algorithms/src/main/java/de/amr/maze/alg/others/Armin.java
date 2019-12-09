@@ -4,10 +4,10 @@ import static de.amr.graph.core.api.TraversalState.COMPLETED;
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import static de.amr.graph.grid.api.GridPosition.CENTER;
 import static de.amr.graph.grid.api.GridPosition.TOP_LEFT;
-import static de.amr.graph.grid.impl.Top4.E;
-import static de.amr.graph.grid.impl.Top4.N;
-import static de.amr.graph.grid.impl.Top4.S;
-import static de.amr.graph.grid.impl.Top4.W;
+import static de.amr.graph.grid.impl.Grid4Topology.E;
+import static de.amr.graph.grid.impl.Grid4Topology.N;
+import static de.amr.graph.grid.impl.Grid4Topology.S;
+import static de.amr.graph.grid.impl.Grid4Topology.W;
 import static java.lang.Math.max;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import de.amr.datastruct.Partition;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.impl.GridFactory;
-import de.amr.graph.grid.impl.Top4;
+import de.amr.graph.grid.impl.Grid4Topology;
 import de.amr.graph.grid.shapes.Rectangle;
 import de.amr.graph.grid.shapes.Square;
 import de.amr.maze.alg.core.MazeGenerator;
@@ -47,7 +47,7 @@ public class Armin extends MazeGenerator {
 	public Armin(GridGraph2D<TraversalState, Integer> grid) {
 		super(grid);
 		int n = max(grid.numCols(), grid.numRows());
-		squareGrid = GridFactory.emptyGrid(n, n, Top4.get(), UNVISITED, 0);
+		squareGrid = GridFactory.emptyGrid(n, n, Grid4Topology.get(), UNVISITED, 0);
 	}
 
 	@Override
