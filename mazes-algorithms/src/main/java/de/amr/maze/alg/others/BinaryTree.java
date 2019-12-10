@@ -1,14 +1,17 @@
 package de.amr.maze.alg.others;
 
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
+import static de.amr.graph.grid.impl.Grid4Topology.E;
+import static de.amr.graph.grid.impl.Grid4Topology.N;
+import static de.amr.graph.grid.impl.Grid4Topology.S;
+import static de.amr.graph.grid.impl.Grid4Topology.W;
 
-import java.util.OptionalInt;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.api.GridPosition;
-import de.amr.graph.grid.impl.Grid4Topology;
 import de.amr.maze.alg.core.MazeGenerator;
 
 /**
@@ -30,7 +33,7 @@ public class BinaryTree extends MazeGenerator {
 
 	@Override
 	public void createMaze(int x, int y) {
-		int[] branching = getBranching();
+		byte[] branching = getBranching();
 		cells().forEach(v -> findRandomParent(v, branching[0], branching[1]).ifPresent(parent -> {
 			grid.addEdge(v, parent);
 			grid.set(v, COMPLETED);
@@ -42,24 +45,24 @@ public class BinaryTree extends MazeGenerator {
 		return grid.vertices();
 	}
 
-	private OptionalInt findRandomParent(int cell, int dir1, int dir2) {
+	private Optional<Integer> findRandomParent(int cell, byte dir1, byte dir2) {
 		boolean choice = rnd.nextBoolean();
-		OptionalInt neighbor = grid.neighbor(cell, choice ? dir1 : dir2);
+		Optional<Integer> neighbor = grid.neighbor(cell, choice ? dir1 : dir2);
 		return neighbor.isPresent() ? neighbor : grid.neighbor(cell, choice ? dir2 : dir1);
 	}
 
-	private int[] getBranching() {
+	private byte[] getBranching() {
 		switch (rootPosition) {
 		case BOTTOM_LEFT:
-			return new int[] { Grid4Topology.S, Grid4Topology.W };
+			return new byte[] { S, W };
 		case BOTTOM_RIGHT:
-			return new int[] { Grid4Topology.S, Grid4Topology.E };
+			return new byte[] { S, E };
 		case TOP_LEFT:
-			return new int[] { Grid4Topology.N, Grid4Topology.W };
+			return new byte[] { N, W };
 		case TOP_RIGHT:
-			return new int[] { Grid4Topology.N, Grid4Topology.E };
+			return new byte[] { N, E };
 		default:
-			return new int[] { Grid4Topology.N, Grid4Topology.W };
+			return new byte[] { N, W };
 		}
 	}
 }

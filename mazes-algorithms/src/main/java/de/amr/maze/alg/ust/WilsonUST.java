@@ -31,7 +31,7 @@ import de.amr.maze.alg.core.MazeGenerator;
  */
 public abstract class WilsonUST extends MazeGenerator {
 
-	private int[] lastWalkDir;
+	private byte[] lastWalkDir;
 	private int current;
 
 	public WilsonUST(GridGraph2D<TraversalState, Integer> grid) {
@@ -64,7 +64,7 @@ public abstract class WilsonUST extends MazeGenerator {
 	 */
 	protected final void loopErasedRandomWalk(int walkStart) {
 		if (lastWalkDir == null) {
-			lastWalkDir = new int[grid.numVertices()];
+			lastWalkDir = new byte[grid.numVertices()];
 		}
 		// if walk start is already inside tree, do nothing
 		if (isCellCompleted(walkStart)) {
@@ -73,7 +73,7 @@ public abstract class WilsonUST extends MazeGenerator {
 		// do a random walk until it touches the tree created so far
 		current = walkStart;
 		while (!isCellCompleted(current)) {
-			int walkDir = randomElement(grid.getTopology().dirs()).getAsInt();
+			byte walkDir = randomElement(grid.getTopology().dirs()).get();
 			grid.neighbor(current, walkDir).ifPresent(neighbor -> {
 				lastWalkDir[current] = walkDir;
 				current = neighbor;

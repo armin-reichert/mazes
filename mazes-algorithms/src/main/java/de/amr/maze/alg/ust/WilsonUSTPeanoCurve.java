@@ -36,8 +36,8 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 		GridGraph2D<?, ?> squareGrid = emptyGrid(n, n, Grid4Topology.get(), UNVISITED, 0);
 		int cell = squareGrid.cell(BOTTOM_LEFT);
 		addCell(squareGrid.col(cell), squareGrid.row(cell));
-		for (int dir : new PeanoCurve(log(3, n))) {
-			cell = squareGrid.neighbor(cell, dir).getAsInt();
+		for (byte dir : new PeanoCurve(log(3, n))) {
+			cell = squareGrid.neighbor(cell, dir).get();
 			addCell(squareGrid.col(cell), squareGrid.row(cell));
 		}
 		return stream(walkStartCells);

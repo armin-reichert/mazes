@@ -4,7 +4,7 @@ import static de.amr.datastruct.StreamUtils.randomElement;
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
 import static de.amr.graph.core.api.TraversalState.VISITED;
 
-import java.util.OptionalInt;
+import java.util.Optional;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
@@ -34,11 +34,11 @@ public class RecursiveDFS extends MazeGenerator {
 	private void createMazeFrom(int cell) {
 		/*@formatter:off*/
 		grid.set(cell, VISITED);
-		for (OptionalInt unvisitedNeighbor = randomUnvisitedNeighbor(cell);
+		for (Optional<Integer> unvisitedNeighbor = randomUnvisitedNeighbor(cell);
 				unvisitedNeighbor.isPresent(); 
 				unvisitedNeighbor = randomUnvisitedNeighbor(cell)) 
 		{
-			int neighbor = unvisitedNeighbor.getAsInt();
+			int neighbor = unvisitedNeighbor.get();
 			grid.addEdge(cell, neighbor);
 			createMazeFrom(neighbor);
 		}
@@ -46,7 +46,7 @@ public class RecursiveDFS extends MazeGenerator {
 		/*@formatter:on*/
 	}
 
-	private OptionalInt randomUnvisitedNeighbor(int cell) {
+	private Optional<Integer> randomUnvisitedNeighbor(int cell) {
 		return randomElement(grid.neighbors(cell).filter(this::isCellUnvisited));
 	}
 }

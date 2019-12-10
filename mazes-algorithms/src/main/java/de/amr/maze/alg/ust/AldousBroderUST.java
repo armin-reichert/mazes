@@ -58,7 +58,7 @@ public class AldousBroderUST extends MazeGenerator {
 	 * time.
 	 */
 	private void visitRandomNeighbor() {
-		int neighbor = randomElement(grid.neighbors(currentCell)).getAsInt();
+		int neighbor = randomElement(grid.neighbors(currentCell)).get();
 		if (isCellUnvisited(neighbor)) {
 			grid.addEdge(currentCell, neighbor);
 			grid.set(neighbor, COMPLETED);

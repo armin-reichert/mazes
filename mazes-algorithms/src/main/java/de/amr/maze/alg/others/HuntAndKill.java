@@ -4,7 +4,7 @@ import static de.amr.datastruct.StreamUtils.randomElement;
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
 
 import java.util.BitSet;
-import java.util.OptionalInt;
+import java.util.Optional;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
@@ -33,15 +33,15 @@ public class HuntAndKill extends MazeGenerator {
 		int animal = grid.cell(x, y);
 		do {
 			kill(animal);
-			OptionalInt livingNeighbor = randomElement(grid.neighbors(animal).filter(this::isAlive));
+			Optional<Integer> livingNeighbor = randomElement(grid.neighbors(animal).filter(this::isAlive));
 			if (livingNeighbor.isPresent()) {
 				grid.neighbors(animal).filter(this::isAlive).forEach(targets::set);
-				grid.addEdge(animal, livingNeighbor.getAsInt());
-				animal = livingNeighbor.getAsInt();
+				grid.addEdge(animal, livingNeighbor.get());
+				animal = livingNeighbor.get();
 			}
 			else if (!targets.isEmpty()) {
 				animal = hunt();
-				grid.addEdge(animal, randomElement(grid.neighbors(animal).filter(this::isDead)).getAsInt());
+				grid.addEdge(animal, randomElement(grid.neighbors(animal).filter(this::isDead)).get());
 			}
 		} while (!targets.isEmpty());
 	}

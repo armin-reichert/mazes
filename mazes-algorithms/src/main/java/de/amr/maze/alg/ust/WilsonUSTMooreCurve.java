@@ -35,8 +35,8 @@ public class WilsonUSTMooreCurve extends WilsonUST {
 		if (grid.isValidCol(n / 2) && grid.isValidRow(n - 1)) {
 			cells[i++] = grid.cell(n / 2, n - 1);
 		}
-		for (int dir : new MooreLCurve(log(2, n))) {
-			cell = squareGrid.neighbor(cell, dir).getAsInt();
+		for (byte dir : new MooreLCurve(log(2, n))) {
+			cell = squareGrid.neighbor(cell, dir).get();
 			int col = squareGrid.col(cell), row = squareGrid.row(cell);
 			if (grid.isValidCol(col) && grid.isValidRow(row)) {
 				cells[i++] = grid.cell(col, row);

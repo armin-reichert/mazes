@@ -39,8 +39,8 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 		int cell = squareGrid.cell(TOP_LEFT);
 		int i = 0;
 		cells[i++] = cell;
-		for (int dir : new HilbertCurve(log(2, n), W, N, E, S)) {
-			cell = squareGrid.neighbor(cell, dir).getAsInt();
+		for (byte dir : new HilbertCurve(log(2, n), W, N, E, S)) {
+			cell = squareGrid.neighbor(cell, dir).get();
 			int col = squareGrid.col(cell), row = squareGrid.row(cell);
 			if (grid.isValidCol(col) && grid.isValidRow(row)) {
 				cells[i++] = grid.cell(col, row);
