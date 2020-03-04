@@ -12,6 +12,8 @@ import java.util.Set;
 import de.amr.datastruct.Partition;
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
+import de.amr.graph.grid.impl.Grid4Topology;
+import de.amr.graph.grid.impl.Grid8Topology;
 import de.amr.maze.alg.core.MazeGenerator;
 
 /**
@@ -19,7 +21,8 @@ import de.amr.maze.alg.core.MazeGenerator;
  * 
  * @author Armin Reichert
  * 
- * @see <a href= "http://weblog.jamisbuck.org/2010/12/29/maze-generation-eller-s-algorithm">Maze
+ * @see <a href=
+ *      "http://weblog.jamisbuck.org/2010/12/29/maze-generation-eller-s-algorithm">Maze
  *      Generation: Eller's Algorithm</a>.
  * 
  */
@@ -60,9 +63,10 @@ public class Eller extends MazeGenerator {
 		// connect randomly selected cells of this row with next row
 		Set<Partition<Integer>.Set> connectedParts = new HashSet<>();
 		range(0, grid.numCols()).filter(col -> rnd.nextBoolean()).forEach(col -> {
-			int top = grid.cell(col, row), bottom = grid.cell(col, row + 1);
-			connectCells(top, bottom);
-			connectedParts.add(parts.find(top));
+			int above = grid.cell(col, row);
+			int below = randomCellBelow(col, row);
+			connectCells(above, below);
+			connectedParts.add(parts.find(above));
 		});
 		// collect cells of still unconnected parts in this row
 		List<Integer> unconnectedCells = new ArrayList<>();
@@ -84,5 +88,22 @@ public class Eller extends MazeGenerator {
 				connectedParts.add(part);
 			}
 		});
+	}
+
+	private int randomCellBelow(int col, int row) {
+		if (grid.getTopology() == Grid4Topology.get()) {
+			return grid.cell(col, row + 1);
+		}
+		if (grid.getTopology() == Grid8Topology.get()) {
+			List<Integer> candidates = new ArrayList<Integer>();
+			for (int dx = -1; dx <= 1; ++dx) {
+				if (grid.isValidCol(col + dx)) {
+					candidates.add(grid.cell(col + dx, row + 1));
+				}
+			}
+			Collections.shuffle(candidates);
+			return candidates.get(0);
+		}
+		throw new IllegalStateException("Unknown grid topology");
 	}
 }
