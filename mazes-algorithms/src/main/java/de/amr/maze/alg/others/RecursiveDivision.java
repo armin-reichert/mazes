@@ -20,10 +20,7 @@ public class RecursiveDivision extends MazeGenerator {
 
 	public RecursiveDivision(GridGraph2D<TraversalState, Integer> grid) {
 		super(grid);
-		if (!grid.isFull()) {
-			grid.removeEdges();
-			grid.fillOrthogonal();
-		}
+		grid.fillOrthogonal();
 		grid.setDefaultVertexLabel(cell -> COMPLETED);
 	}
 

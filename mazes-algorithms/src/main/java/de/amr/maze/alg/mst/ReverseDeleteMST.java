@@ -1,6 +1,7 @@
 package de.amr.maze.alg.mst;
 
 import static de.amr.datastruct.StreamUtils.permute;
+import static de.amr.graph.core.api.TraversalState.COMPLETED;
 
 import de.amr.graph.core.api.Edge;
 import de.amr.graph.core.api.TraversalState;
@@ -12,17 +13,15 @@ import de.amr.maze.alg.core.MazeGenerator;
  * 
  * @author Armin Reichert
  *
- * @see <a href="https://en.wikipedia.org/wiki/Reverse-delete_algorithm">Wikipedia</a>
+ * @see <a href=
+ *      "https://en.wikipedia.org/wiki/Reverse-delete_algorithm">Wikipedia</a>
  */
 public abstract class ReverseDeleteMST extends MazeGenerator {
 
 	public ReverseDeleteMST(GridGraph2D<TraversalState, Integer> grid) {
 		super(grid);
-		if (!grid.isFull()) {
-			grid.removeEdges();
-			grid.fill();
-		}
-		grid.setDefaultVertexLabel(cell -> TraversalState.COMPLETED);
+		grid.fill();
+		grid.setDefaultVertexLabel(cell -> COMPLETED);
 	}
 
 	@Override
@@ -41,10 +40,8 @@ public abstract class ReverseDeleteMST extends MazeGenerator {
 	}
 
 	/**
-	 * @param u
-	 *            a cell
-	 * @param v
-	 *            a cell
+	 * @param u a cell
+	 * @param v a cell
 	 * @return {@code true} if given cells are connected by some path
 	 */
 	protected abstract boolean connected(int u, int v);
