@@ -22,7 +22,7 @@ public class RecursiveDivision extends MazeGenerator {
 		super(grid);
 		if (!grid.isFull()) {
 			grid.removeEdges();
-			grid.fill();
+			grid.fillOrthogonal();
 		}
 		grid.setDefaultVertexLabel(cell -> COMPLETED);
 	}
@@ -35,21 +35,18 @@ public class RecursiveDivision extends MazeGenerator {
 	/**
 	 * Divides the {@code (w x h)}-subgrid with top-left position {@code (x0, y0)}.
 	 * 
-	 * @param x0
-	 *             x-position of subgrid
-	 * @param y0
-	 *             y-position subgrid
-	 * @param w
-	 *             width of subgrid
-	 * @param h
-	 *             height of subgrid
+	 * @param x0 x-position of subgrid
+	 * @param y0 y-position subgrid
+	 * @param w  width of subgrid
+	 * @param h  height of subgrid
 	 */
 	private void divide(int x0, int y0, int w, int h) {
 		if (w <= 1 && h <= 1) {
 			return;
 		}
 		if (w < h || (w == h && rnd.nextBoolean())) {
-			// Build "horizontal wall" at random y from [y0 + 1, y0 + h - 1], keep random door
+			// Build "horizontal wall" at random y from [y0 + 1, y0 + h - 1], keep random
+			// door
 			int y = y0 + 1 + rnd.nextInt(h - 1);
 			int door = x0 + rnd.nextInt(w);
 			range(x0, x0 + w).filter(x -> x != door).forEach(x -> {
@@ -57,8 +54,7 @@ public class RecursiveDivision extends MazeGenerator {
 			});
 			divide(x0, y0, w, y - y0);
 			divide(x0, y, w, h - (y - y0));
-		}
-		else {
+		} else {
 			// Build "vertical wall" at random x from [x0 + 1, x0 + w - 1], keep random door
 			int x = x0 + 1 + rnd.nextInt(w - 1);
 			int door = y0 + rnd.nextInt(h);
