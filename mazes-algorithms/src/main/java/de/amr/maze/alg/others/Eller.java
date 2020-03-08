@@ -65,8 +65,10 @@ public class Eller extends MazeGenerator {
 		range(0, grid.numCols()).filter(col -> rnd.nextBoolean()).forEach(col -> {
 			int above = grid.cell(col, row);
 			int below = randomCellBelow(col, row);
-			connectCells(above, below);
-			connectedParts.add(parts.find(above));
+			if (parts.find(above) != parts.find(below)) {
+				connectCells(above, below);
+				connectedParts.add(parts.find(above));
+			}
 		});
 		// collect cells of still unconnected parts in this row
 		List<Integer> unconnectedCells = new ArrayList<>();
