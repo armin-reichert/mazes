@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.OptionalInt;
 import java.util.Set;
 
 import de.amr.datastruct.Partition;
@@ -64,11 +65,12 @@ public class Eller extends MazeGenerator {
 		Set<Partition<Integer>.Set> connectedParts = new HashSet<>();
 		range(0, grid.numCols()).filter(col -> rnd.nextBoolean()).forEach(col -> {
 			int above = grid.cell(col, row);
-			int below = randomCellBelow(col, row);
-			if (parts.find(above) != parts.find(below)) {
-				connectCells(above, below);
-				connectedParts.add(parts.find(above));
-			}
+			randomUnconnectedCellBelow(col, row).ifPresent(below -> {
+				if (parts.find(above) != parts.find(below)) {
+					connectCells(above, below);
+					connectedParts.add(parts.find(above));
+				}
+			});
 		});
 		// collect cells of still unconnected parts in this row
 		List<Integer> unconnectedCells = new ArrayList<>();
@@ -86,25 +88,34 @@ public class Eller extends MazeGenerator {
 			Partition<Integer>.Set part = parts.find(top);
 			if (!connectedParts.contains(part)) {
 				int bottom = grid.cell(grid.col(top), row + 1);
-				connectCells(top, bottom);
-				connectedParts.add(part);
+				if (parts.find(top) != parts.find(bottom)) {
+					connectCells(top, bottom);
+					connectedParts.add(part);
+				}
 			}
 		});
 	}
 
-	private int randomCellBelow(int col, int row) {
+	private OptionalInt randomUnconnectedCellBelow(int col, int row) {
 		if (grid.getTopology() == Grid4Topology.get()) {
-			return grid.cell(col, row + 1);
+			return OptionalInt.of(grid.cell(col, row + 1));
 		}
 		if (grid.getTopology() == Grid8Topology.get()) {
-			List<Integer> candidates = new ArrayList<Integer>();
+			int above = grid.cell(col, row);
+			List<Integer> candidates = new ArrayList<Integer>(3);
 			for (int dx = -1; dx <= 1; ++dx) {
 				if (grid.isValidCol(col + dx)) {
-					candidates.add(grid.cell(col + dx, row + 1));
+					int below = grid.cell(col + dx, row + 1);
+					if (parts.find(above) != parts.find(below)) {
+						candidates.add(below);
+					}
 				}
 			}
-			Collections.shuffle(candidates);
-			return candidates.get(0);
+			if (candidates.size() > 0) {
+				int randomIndex = rnd.nextInt(candidates.size());
+				return OptionalInt.of(candidates.get(randomIndex));
+			}
+			return OptionalInt.empty();
 		}
 		throw new IllegalStateException("Unknown grid topology");
 	}
