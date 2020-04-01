@@ -2,7 +2,6 @@ package de.amr.maze.tests;
 
 import static de.amr.graph.core.api.TraversalState.UNVISITED;
 import static java.lang.String.format;
-import static java.lang.System.out;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -18,8 +17,9 @@ import org.junit.Test;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
-import de.amr.graph.grid.impl.GridFactory;
 import de.amr.graph.grid.impl.Grid4Topology;
+import de.amr.graph.grid.impl.GridFactory;
+import de.amr.graph.pathfinder.util.GraphSearchUtils;
 import de.amr.graph.util.GraphUtils;
 import de.amr.maze.alg.core.MazeGenerator;
 import de.amr.maze.alg.mst.BoruvkaMST;
@@ -41,6 +41,7 @@ import de.amr.maze.alg.traversal.IterativeDFS;
 import de.amr.maze.alg.traversal.RandomBFS;
 import de.amr.maze.alg.ust.AldousBroderUST;
 import de.amr.maze.alg.ust.AldousBroderWilsonUST;
+import de.amr.maze.alg.ust.WilsonUSTCollapsingCircle;
 import de.amr.maze.alg.ust.WilsonUSTCollapsingRectangle;
 import de.amr.maze.alg.ust.WilsonUSTCollapsingWalls;
 import de.amr.maze.alg.ust.WilsonUSTExpandingCircle;
@@ -60,23 +61,22 @@ import de.amr.util.StopWatch;
 
 public class MazeGeneratorTest {
 
-	private static final int WIDTH = 100;
-	private static final int HEIGHT = 100;
-
-	private static List<String> REPORT;
-
-	private GridGraph2D<TraversalState, Integer> grid;
+	static final int WIDTH = 100;
+	static final int HEIGHT = 100;
+	static List<String> report;
 
 	@BeforeClass
 	public static void beforeAllTests() {
-		REPORT = new ArrayList<>();
+		report = new ArrayList<>();
 	}
 
 	@AfterClass
 	public static void afterAllTests() {
-		Collections.sort(REPORT);
-		REPORT.forEach(out::println);
+		Collections.sort(report);
+		report.forEach(System.out::println);
 	}
+
+	GridGraph2D<TraversalState, Integer> grid;
 
 	@Before
 	public void setUp() {
@@ -85,15 +85,16 @@ public class MazeGeneratorTest {
 
 	@After
 	public void tearDown() {
-		assertEquals(grid.numVertices() - 1, grid.numEdges());
-		assertFalse(GraphUtils.containsCycle(grid));
+		assertEquals("Wrong number of vertices", grid.numVertices() - 1, grid.numEdges());
+		assertFalse("Cycle detected", GraphUtils.containsCycle(grid));
+		assertFalse("Disconnected", !GraphSearchUtils.isConnectedGraph(grid));
 	}
 
 	private void test(MazeGenerator algorithm) {
 		StopWatch watch = new StopWatch();
 		watch.measure(() -> algorithm.createMaze(0, 0));
-		REPORT.add(format("%-30s (%6d cells): %.3f sec", algorithm.getClass().getSimpleName(),
-				grid.numVertices(), watch.getSeconds()));
+		report.add(format("%-30s %6d vertices: %4.0f millisec", algorithm.getClass().getSimpleName(), grid.numVertices(),
+				watch.getMillis()));
 	}
 
 	@Test
@@ -191,11 +192,11 @@ public class MazeGeneratorTest {
 		test(new Sidewinder(grid));
 	}
 
-	// TODO why does this test fail?
-	// @Test
-	// public void testWilsonUSTCollapsingCircle() {
-	// test(new WilsonUSTCollapsingCircle());
-	// }
+	// TODO why does this test often fail?
+//	@Test
+	public void testWilsonUSTCollapsingCircle() {
+		test(new WilsonUSTCollapsingCircle(grid));
+	}
 
 	@Test
 	public void testWilsonUSTCollapsingRectangle() {
