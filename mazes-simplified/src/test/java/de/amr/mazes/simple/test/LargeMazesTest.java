@@ -23,8 +23,8 @@ import de.amr.mazes.simple.graph.GridGraphImpl;
 
 public class LargeMazesTest {
 
-	static final int L = 1000;
-	static final int M = 100;
+	static final int L = 100;
+	static final int M = 50;
 
 	static GridGraph test(String name, Consumer<GridGraph> generator, int rows, int cols) {
 		GridGraph grid = new GridGraphImpl(rows, cols);

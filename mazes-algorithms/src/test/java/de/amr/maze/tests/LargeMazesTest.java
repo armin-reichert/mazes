@@ -42,7 +42,6 @@ public class LargeMazesTest {
 		test_Kruskal(500, 1000);
 	}
 
-	@Test
 	public void test_Kruskal_1_000_000() {
 		test_Kruskal(1000, 1000);
 	}
@@ -57,7 +56,6 @@ public class LargeMazesTest {
 		test_RecursiveDivision(500, 1000);
 	}
 
-	@Test
 	public void test_RecursiveDivision_1_000_000() {
 		test_RecursiveDivision(1000, 1000);
 	}
