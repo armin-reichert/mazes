@@ -11,12 +11,9 @@ import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.maze.alg.core.MazeGenerator;
 
 /**
- * Maze generator derived from Kruskal's minimum spanning tree algorithm.
+ * Maze generator derived from Kruskal's minimum spanning-tree algorithm.
  * 
  * @author Armin Reichert
- * 
- * @see <a href="https://en.wikipedia.org/wiki/Kruskal%27s_algorithm">Kruskal's
- *      Algorithm - Wikipedia</a>
  * 
  * @see <a href=
  *      "http://weblog.jamisbuck.org/2011/1/3/maze-generation-kruskal-s-algorithm.html">Maze
@@ -31,15 +28,15 @@ public class KruskalMST extends MazeGenerator {
 	@Override
 	public void createMaze(int x, int y) {
 		Partition<Integer> forest = new Partition<>();
-		GridGraph2D<?, ?> fullGrid = fullGrid(grid.numCols(), grid.numRows(), grid.getTopology(), UNVISITED, 0);
-		permute(fullGrid.edges()).forEach(edge -> {
-			int u = edge.either(), v = edge.other();
-			if (forest.find(u) != forest.find(v)) {
-				forest.union(u, v);
+		//@formatter:off
+		permute( fullGrid(grid.numCols(), grid.numRows(), grid.getTopology(), UNVISITED, 0).edges() )
+			.filter(edge -> forest.union(edge.either(), edge.other()))
+			.forEach(edge -> {
+				int u = edge.either(), v = edge.other();
 				grid.addEdge(u, v);
 				grid.set(u, COMPLETED);
 				grid.set(v, COMPLETED);
-			}
-		});
+			});
+		//@formatter:on
 	}
 }
