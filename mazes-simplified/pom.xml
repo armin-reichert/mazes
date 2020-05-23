@@ -11,7 +11,7 @@
 		<dependency>
 			<groupId>de.amr.graph</groupId>
 			<artifactId>graph-core</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -22,7 +22,7 @@
 	<parent>
 		<groupId>de.amr.maze</groupId>
 		<artifactId>mazes-all</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0</version>
 		<relativePath>..</relativePath>
 	</parent>
 </project>
