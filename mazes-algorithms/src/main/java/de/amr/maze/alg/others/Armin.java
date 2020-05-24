@@ -11,13 +11,13 @@ import static de.amr.graph.grid.impl.Grid4Topology.W;
 import static java.lang.Math.max;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import de.amr.datastruct.Partition;
 import de.amr.graph.core.api.TraversalState;
@@ -71,8 +71,7 @@ public class Armin extends MazeGenerator {
 			x = grid.col(center) + offsetX;
 			y = grid.row(center) + offsetY;
 			size = 1;
-		}
-		else {
+		} else {
 			x = squareGrid.col(square.getTopLeft()) - 1;
 			y = squareGrid.row(square.getTopLeft()) - 1;
 			size = square.getSize() + 2;
@@ -177,38 +176,31 @@ public class Armin extends MazeGenerator {
 		List<Integer> result = new ArrayList<>(4);
 		int squareSize = square.getSize();
 		if (squareSize == 1) {
-			addNeighborsIfAny(result, cell, Stream.of(N, E, S, W));
+			addNeighborsIfAny(result, cell, N, E, S, W);
 			return result;
 		}
 		int index = cellIndex.get(cell);
 		if (index == 0) {
-			addNeighborsIfAny(result, cell, Stream.of(W, N));
-		}
-		else if (index < squareSize - 1) {
-			addNeighborsIfAny(result, cell, Stream.of(N));
-		}
-		else if (index == squareSize - 1) {
-			addNeighborsIfAny(result, cell, Stream.of(N, E));
-		}
-		else if (index < 2 * (squareSize - 1)) {
-			addNeighborsIfAny(result, cell, Stream.of(E));
-		}
-		else if (index == 2 * (squareSize - 1)) {
-			addNeighborsIfAny(result, cell, Stream.of(E, S));
-		}
-		else if (index < 3 * (squareSize - 1)) {
-			addNeighborsIfAny(result, cell, Stream.of(S));
-		}
-		else if (index == 3 * (squareSize - 1)) {
-			addNeighborsIfAny(result, cell, Stream.of(S, W));
-		}
-		else {
-			addNeighborsIfAny(result, cell, Stream.of(W));
+			addNeighborsIfAny(result, cell, W, N);
+		} else if (index < squareSize - 1) {
+			addNeighborsIfAny(result, cell, N);
+		} else if (index == squareSize - 1) {
+			addNeighborsIfAny(result, cell, N, E);
+		} else if (index < 2 * (squareSize - 1)) {
+			addNeighborsIfAny(result, cell, E);
+		} else if (index == 2 * (squareSize - 1)) {
+			addNeighborsIfAny(result, cell, E, S);
+		} else if (index < 3 * (squareSize - 1)) {
+			addNeighborsIfAny(result, cell, S);
+		} else if (index == 3 * (squareSize - 1)) {
+			addNeighborsIfAny(result, cell, S, W);
+		} else {
+			addNeighborsIfAny(result, cell, W);
 		}
 		return result;
 	}
 
-	private void addNeighborsIfAny(List<Integer> list, int cell, Stream<Byte> dirs) {
-		dirs.forEach(dir -> grid.neighbor(cell, dir).ifPresent(list::add));
+	private void addNeighborsIfAny(List<Integer> list, int cell, Byte... dirs) {
+		Arrays.stream(dirs).forEach(dir -> grid.neighbor(cell, dir).ifPresent(list::add));
 	}
 }
