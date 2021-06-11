@@ -1,7 +1,7 @@
 ## Maze generation algorithms
 
 
-A NOTE to all who are interested in the content of this repository: The idiots of moderators at StackExchange deleted some of my answers there because I just wanted to help people implementing some maze algorithms by pointing to this repository. These morons claimed I would do "self promoting". Self promoting what? Free code with an MIT license or the documentation, animations etc.?
+A note to allof you who are interested in the content of this repository: The idiots of moderators at StackExchange deleted some of my answers there because I just wanted to help people implementing some maze algorithms by pointing to this repository. These morons claimed I would do "self promoting". Self promoting what? Free code with an MIT license or the documentation, animations etc.?
 
 @StackExchange: Fuck you.
 
