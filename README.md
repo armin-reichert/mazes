@@ -1,10 +1,9 @@
 ## Maze generation algorithms
 
 
-A NOTE to all who are interesting in this stuff: The idiots of moderators at StackExchange deleted some of my answers there where I wanted to just help people implementing some maze algorithms by pointing to this repository. These morons claimed I would "self promote". Self promoting what? Code with an MIT license or the documentation, animations etc.?
+A NOTE to all who are interested in the content of this repository: The idiots of moderators at StackExchange deleted some of my answers there because I just wanted to help people implementing some maze algorithms by pointing to this repository. These morons claimed I would do "self promoting". Self promoting what? Free code with an MIT license or the documentation, animations etc.?
 
-@StackExchange: Get a life.
-
+@StackExchange: Fuck you.
 
 
 This project provides Java implementations of more than 35 algorithms for generating so called "perfect mazes" (which are just spanning trees of undirected graphs).
