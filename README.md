@@ -3,7 +3,7 @@
 
 A note to all of you who are interested in the content of this repository: The idiots of moderators at StackExchange deleted some of my answers there because I just wanted to help people implementing some maze algorithms and gave them pointers to this repository. These morons claimed I would do "self promoting". Self promoting what? Free code with an MIT license written by a retired software developer?
 
-@StackExchange moderators: Fuck you
+@StackExchange moderators: Fuck you!
 
 
 This project provides Java implementations of more than 35 algorithms for generating so called "perfect mazes" (which are just spanning trees of undirected graphs).
