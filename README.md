@@ -1,7 +1,7 @@
 ## Maze generation algorithms
 
 
-A note to all of you who are interested in the content of this repository: The idiots of moderators at StackExchange deleted some of my answers there because I just wanted to help people implementing some maze algorithms and gave them pointers to this repository. These morons claimed I would do "self promoting". Self promoting what? Free code with an MIT license written by a retired software developer?
+A note to all of you who are interested in the content of this repository: The idiots of moderators at StackExchange deleted some of my answers to StackExchange users and set my reputation to zero (LOL) because I provided pointers to this repository. These StackExchange moderator morons claimed I would do "self promoting". Self promoting what? Free code with an MIT license written by a retired software developer?
 
 @StackExchange moderators: Fuck you!
 
