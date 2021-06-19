@@ -1,7 +1,7 @@
 ## Maze generation algorithms
 
 
-*A note to all of you who are interested in the content of this repository: An idiot of moderator at StackOverflow deleted some of my answers to StackOverflow users and set my reputation to zero (LOL) because I gave them pointers to this repository. This moderator moron claimed I would do "self promoting". Self promoting what? Free code with an MIT license written by a retired software developer? @StackOverflow moderator: Fuck you, you are a complete idiot!*
+*Some idiot of moderator at StackOverflow deleted some of my answers to StackOverflow users and set my reputation to zero (LOL) because I gave them pointers to this repository. This moderator moron claimed I would do "self promoting". Self promoting what? Free code with an MIT license written by a retired software developer? @StackOverflow moderator: Fuck you, you are a complete idiot!*
 
 This project provides Java implementations of more than 35 algorithms for generating so called "perfect mazes" (which are just spanning trees of undirected graphs).
 
