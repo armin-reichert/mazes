@@ -42,8 +42,7 @@ public class RecursiveDivision extends MazeGenerator {
 			return;
 		}
 		if (w < h || (w == h && rnd.nextBoolean())) {
-			// Build "horizontal wall" at random y from [y0 + 1, y0 + h - 1], keep random
-			// door
+			// Build "horizontal wall" at random y from [y0 + 1, y0 + h - 1], keep random door
 			int y = y0 + 1 + rnd.nextInt(h - 1);
 			int door = x0 + rnd.nextInt(w);
 			range(x0, x0 + w).filter(x -> x != door).forEach(x -> {
