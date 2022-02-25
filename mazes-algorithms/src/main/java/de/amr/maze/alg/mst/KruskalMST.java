@@ -15,9 +15,8 @@ import de.amr.maze.alg.core.MazeGenerator;
  * 
  * @author Armin Reichert
  * 
- * @see <a href=
- *      "http://weblog.jamisbuck.org/2011/1/3/maze-generation-kruskal-s-algorithm.html">Maze
- *      Generation: Kruskal's Algorithm</a>
+ * @see <a href= "http://weblog.jamisbuck.org/2011/1/3/maze-generation-kruskal-s-algorithm.html">Maze Generation:
+ *      Kruskal's Algorithm</a>
  */
 public class KruskalMST extends MazeGenerator {
 
@@ -27,16 +26,15 @@ public class KruskalMST extends MazeGenerator {
 
 	@Override
 	public void createMaze(int x, int y) {
-		Partition<Integer> forest = new Partition<>();
-		//@formatter:off
-		permute( fullGrid(grid.numCols(), grid.numRows(), grid.getTopology(), UNVISITED, 0).edges() )
-			.filter(edge -> forest.union(edge.either(), edge.other()))
-			.forEach(edge -> {
-				int u = edge.either(), v = edge.other();
+		var forest = new Partition<>();
+		var fullGrid = fullGrid(grid.numCols(), grid.numRows(), grid.getTopology(), UNVISITED, 0);
+		permute(fullGrid.edges()).forEach(edge -> {
+			int u = edge.either(), v = edge.other();
+			if (forest.union(u, v)) {
 				grid.addEdge(u, v);
-				grid.set(u, COMPLETED);
-				grid.set(v, COMPLETED);
-			});
-		//@formatter:on
+				grid.set(u, COMPLETED); // only for visualization
+				grid.set(v, COMPLETED); // only for visualization
+			}
+		});
 	}
 }
