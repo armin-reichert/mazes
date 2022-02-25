@@ -5,7 +5,7 @@ This project provides Java implementations of more than 35 algorithms for genera
 
 ![Maze Demo Application](https://github.com/armin-reichert/mazes/wiki/images/mazedemoapp.png)
 
-The shown demo application can be downloaded [here](https://github.com/armin-reichert/mazes/releases). (Java 8 or later runtime needed.)
+The shown demo application can be downloaded [here](https://github.com/armin-reichert/mazes/releases). (Java runtime needed.)
 
 On the web, many maze generation implementations in all possible programming languages can be found. The popularity of these algorithms probably comes from the fact that mazes and their creation processes are visually appealing and not really difficult to implement. The most popular algorithm seems to be "recursive backtracking" which is random depth-first traversal of a graph. 
 
