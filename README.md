@@ -13,7 +13,7 @@ On the other hand, there are only a few websites where the whole spectrum of maz
 
 <details>
   <summary>And then this guy...</summary>
-Some idiot of moderator at StackOverflow deleted my answers to StackOverflow users about maze generation and set my reputation to zero (LOL) because I gave them pointers to this repository. This moderator moron claimed I would do "self promoting". Self promoting what? Free code with an MIT license written by a retired software developer? @StackOverflow moderator: Fuck you, you are a complete idiot!
+Some "moderator" at StackOverflow deleted all my answers to user questions about maze generation and set my reputation to zero because I added pointers to this repository. This moron claimed I would do "self promoting". Self promoting what? Free code with an MIT license written by a retired software developer? @StackOverflow moderator: You are a complete idiot!
 </details>
 
 [Read more...](https://github.com/armin-reichert/mazes/wiki)
