@@ -6,8 +6,8 @@ import org.junit.Test;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
-import de.amr.graph.grid.impl.GridFactory;
 import de.amr.graph.grid.impl.Grid4Topology;
+import de.amr.graph.grid.impl.GridFactory;
 import de.amr.maze.alg.mst.KruskalMST;
 import de.amr.maze.alg.others.RecursiveDivision;
 import de.amr.util.StopWatch;

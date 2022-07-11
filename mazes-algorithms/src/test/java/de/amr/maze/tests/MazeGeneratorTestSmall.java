@@ -17,8 +17,8 @@ import org.junit.Test;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
-import de.amr.graph.grid.impl.GridFactory;
 import de.amr.graph.grid.impl.Grid4Topology;
+import de.amr.graph.grid.impl.GridFactory;
 import de.amr.graph.util.GraphUtils;
 import de.amr.maze.alg.core.MazeGenerator;
 import de.amr.maze.alg.mst.ReverseDeleteMST_BFS;
