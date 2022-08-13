@@ -12,7 +12,7 @@ import static de.amr.graph.grid.impl.Grid4Topology.S;
 import static de.amr.graph.grid.impl.Grid4Topology.W;
 
 import java.util.Arrays;
-import java.util.EnumMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -26,21 +26,20 @@ import de.amr.maze.alg.core.MazeGenerator;
  * 
  * @author Armin Reichert
  * 
- * @see <a href=
- *      "http://weblog.jamisbuck.org/2011/2/1/maze-generation-binary-tree-algorithm.html">Maze
- *      Generation: Binary Tree algorithm</a>
+ * @see <a href= "http://weblog.jamisbuck.org/2011/2/1/maze-generation-binary-tree-algorithm.html">Maze Generation:
+ *      Binary Tree algorithm</a>
  */
 public class BinaryTree extends MazeGenerator {
 
-	static final EnumMap<GridPosition, byte[]> branchingByRootPosition = new EnumMap<>(GridPosition.class);
-
-	static {
-		branchingByRootPosition.put(TOP_LEFT, new byte[] { N, W });
-		branchingByRootPosition.put(TOP_RIGHT, new byte[] { N, E });
-		branchingByRootPosition.put(CENTER, new byte[] { N, W });
-		branchingByRootPosition.put(BOTTOM_LEFT, new byte[] { S, W });
-		branchingByRootPosition.put(BOTTOM_RIGHT, new byte[] { S, E });
+	static record Branch(byte first, byte second) {
 	}
+
+	static final Map<GridPosition, Branch> BRANCH_BY_ROOT_POS = Map.of(//
+			TOP_LEFT, new Branch(N, W), //
+			TOP_RIGHT, new Branch(N, E), //
+			CENTER, new Branch(N, W), //
+			BOTTOM_LEFT, new Branch(S, W), //
+			BOTTOM_RIGHT, new Branch(S, E));
 
 	public BinaryTree(GridGraph2D<TraversalState, Integer> grid) {
 		super(grid);
@@ -48,10 +47,10 @@ public class BinaryTree extends MazeGenerator {
 
 	@Override
 	public void createMaze(int x, int y) {
-		GridPosition rootPosition = Arrays.stream(GridPosition.values()).filter(pos -> grid.cell(pos) == grid.cell(x, y))
-				.findFirst().orElse(TOP_LEFT);
-		byte[] branching = branchingByRootPosition.get(rootPosition);
-		cells().forEach(v -> findRandomParent(v, branching[0], branching[1]).ifPresent(parent -> {
+		var rootPosition = Arrays.stream(GridPosition.values()).filter(pos -> grid.cell(pos) == grid.cell(x, y)).findFirst()
+				.orElse(TOP_LEFT);
+		var branch = BRANCH_BY_ROOT_POS.get(rootPosition);
+		cells().forEach(v -> findRandomParent(v, branch.first, branch.second).ifPresent(parent -> {
 			grid.addEdge(v, parent);
 			grid.set(v, COMPLETED);
 			grid.set(parent, COMPLETED);
@@ -64,7 +63,10 @@ public class BinaryTree extends MazeGenerator {
 
 	private Optional<Integer> findRandomParent(int cell, byte dir1, byte dir2) {
 		boolean choice = rnd.nextBoolean();
-		Optional<Integer> neighbor = grid.neighbor(cell, choice ? dir1 : dir2);
-		return neighbor.isPresent() ? neighbor : grid.neighbor(cell, choice ? dir2 : dir1);
+		var neighbor = grid.neighbor(cell, choice ? dir1 : dir2);
+		if (neighbor.isPresent()) {
+			return neighbor;
+		}
+		return grid.neighbor(cell, choice ? dir2 : dir1);
 	}
 }
