@@ -29,7 +29,7 @@ public class RecursiveDivision extends MazeGenerator {
 	}
 
 	/**
-	 * Divides the {@code (w x h)}-subgrid at top-left position {@code (x0, y0)}.
+	 * Divides the {@code (numCols x numRows)}-subgrid at top-left position {@code (x, y)}.
 	 * 
 	 * @param x       top-left x-position
 	 * @param y       top-left y-position
