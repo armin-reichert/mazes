@@ -4,7 +4,6 @@ import static de.amr.datastruct.StreamUtils.randomElement;
 import static de.amr.graph.core.api.TraversalState.COMPLETED;
 
 import java.util.BitSet;
-import java.util.Optional;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
@@ -15,9 +14,8 @@ import de.amr.maze.alg.core.MazeGenerator;
  *
  * @author Armin Reichert
  * 
- * @see <a href=
- *      "http://weblog.jamisbuck.org/2011/1/24/maze-generation-hunt-and-kill-algorithm.html"> Maze
- *      Generation: Hunt-and-Kill algorithm</a>
+ * @see <a href= "http://weblog.jamisbuck.org/2011/1/24/maze-generation-hunt-and-kill-algorithm.html"> Maze Generation:
+ *      Hunt-and-Kill algorithm</a>
  */
 public class HuntAndKill extends MazeGenerator {
 
@@ -33,15 +31,17 @@ public class HuntAndKill extends MazeGenerator {
 		int animal = grid.cell(x, y);
 		do {
 			kill(animal);
-			Optional<Integer> livingNeighbor = randomElement(grid.neighbors(animal).filter(this::isAlive));
+			var livingNeighbor = randomElement(grid.neighbors(animal).filter(this::isAlive));
 			if (livingNeighbor.isPresent()) {
 				grid.neighbors(animal).filter(this::isAlive).forEach(targets::set);
 				grid.addEdge(animal, livingNeighbor.get());
 				animal = livingNeighbor.get();
-			}
-			else if (!targets.isEmpty()) {
+			} else if (!targets.isEmpty()) {
 				animal = hunt();
-				grid.addEdge(animal, randomElement(grid.neighbors(animal).filter(this::isDead)).get());
+				var deadNeighbor = randomElement(grid.neighbors(animal).filter(this::isDead));
+				if (!deadNeighbor.isEmpty()) {
+					grid.addEdge(animal, deadNeighbor.get());
+				}
 			}
 		} while (!targets.isEmpty());
 	}
