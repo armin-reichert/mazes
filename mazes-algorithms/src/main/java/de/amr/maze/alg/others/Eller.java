@@ -22,9 +22,8 @@ import de.amr.maze.alg.core.MazeGenerator;
  * 
  * @author Armin Reichert
  * 
- * @see <a href=
- *      "http://weblog.jamisbuck.org/2010/12/29/maze-generation-eller-s-algorithm">Maze
- *      Generation: Eller's Algorithm</a>.
+ * @see <a href= "http://weblog.jamisbuck.org/2010/12/29/maze-generation-eller-s-algorithm">Maze Generation: Eller's
+ *      Algorithm</a>.
  * 
  */
 public class Eller extends MazeGenerator {
@@ -53,7 +52,8 @@ public class Eller extends MazeGenerator {
 
 	private void connectCellsInsideRow(int row, boolean all) {
 		range(0, grid.numCols() - 1).filter(col -> all || rnd.nextBoolean()).forEach(col -> {
-			int left = grid.cell(col, row), right = grid.cell(col + 1, row);
+			int left = grid.cell(col, row);
+			int right = grid.cell(col + 1, row);
 			if (parts.find(left) != parts.find(right)) {
 				connectCells(left, right);
 			}
@@ -102,7 +102,7 @@ public class Eller extends MazeGenerator {
 		}
 		if (grid.getTopology() == Grid8Topology.get()) {
 			int above = grid.cell(col, row);
-			List<Integer> candidates = new ArrayList<Integer>(3);
+			List<Integer> candidates = new ArrayList<>(3);
 			for (int dx = -1; dx <= 1; ++dx) {
 				if (grid.isValidCol(col + dx)) {
 					int below = grid.cell(col + dx, row + 1);
@@ -111,7 +111,7 @@ public class Eller extends MazeGenerator {
 					}
 				}
 			}
-			if (candidates.size() > 0) {
+			if (!candidates.isEmpty()) {
 				int randomIndex = rnd.nextInt(candidates.size());
 				return OptionalInt.of(candidates.get(randomIndex));
 			}
