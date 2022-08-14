@@ -6,6 +6,8 @@ import static de.amr.graph.core.api.TraversalState.VISITED;
 import static de.amr.graph.grid.api.GridPosition.BOTTOM_RIGHT;
 import static de.amr.graph.grid.api.GridPosition.TOP_LEFT;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -41,8 +43,7 @@ public class MazeTest {
 
 	private static void assertState(IntStream cells, Function<Integer, TraversalState> fnSupplyState,
 			TraversalState... expected) {
-		cells.forEach(
-				cell -> assertTrue(Arrays.stream(expected).anyMatch(s -> s == fnSupplyState.apply(cell))));
+		cells.forEach(cell -> assertTrue(Arrays.stream(expected).anyMatch(s -> s == fnSupplyState.apply(cell))));
 	}
 
 	private GridGraph2D<TraversalState, Integer> grid;
@@ -99,8 +100,8 @@ public class MazeTest {
 		AStarSearch astar = new AStarSearch(grid, (u, v) -> 1, (u, v) -> grid.manhattan(u, v));
 		assertState(grid.vertices(), astar::getState, UNVISITED);
 		astar.findPath(source, target);
-		assertTrue(astar.getState(target) == COMPLETED);
-		assertTrue(astar.getParent(target) != -1);
-		assertTrue(astar.getCost(target) != -1);
+		assertSame(astar.getState(target), COMPLETED);
+		assertNotEquals(astar.getParent(target), -1);
+		assertNotEquals(astar.getCost(target), -1);
 	}
 }

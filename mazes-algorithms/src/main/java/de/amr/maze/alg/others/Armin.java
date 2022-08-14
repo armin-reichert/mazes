@@ -11,7 +11,6 @@ import static de.amr.graph.grid.impl.Grid4Topology.W;
 import static java.lang.Math.max;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -29,8 +28,7 @@ import de.amr.graph.grid.shapes.Square;
 import de.amr.maze.alg.core.MazeGenerator;
 
 /**
- * Maze generator similar to Eller's algorithm but growing the maze inside-out. To my knowledge this
- * is a new algorithm.
+ * Maze generator similar to Eller's algorithm but growing the maze inside-out. To my knowledge this is a new algorithm.
  * 
  * @author Armin Reichert
  */
@@ -111,27 +109,22 @@ public class Armin extends MazeGenerator {
 	}
 
 	private void connectCellsInsideLayer(boolean all) {
-		int prevCell = -1, firstCell = -1;
+		int prevCell = -1;
+		int firstCell = -1;
 		for (int cell : layer) {
 			if (firstCell == -1) {
 				firstCell = cell;
 			}
-			if (prevCell != -1 && grid.areNeighbors(prevCell, cell)) {
-				if (all || rnd.nextBoolean()) {
-					if (mazeParts.find(prevCell) != mazeParts.find(cell)) {
-						connectCells(prevCell, cell);
-					}
-				}
+			if (prevCell != -1 && grid.areNeighbors(prevCell, cell) && (all || rnd.nextBoolean())
+					&& mazeParts.find(prevCell) != mazeParts.find(cell)) {
+				connectCells(prevCell, cell);
 			}
 			prevCell = cell;
 		}
 		if (prevCell != -1 && firstCell != -1 && prevCell != firstCell && grid.areNeighbors(prevCell, firstCell)
-				&& !grid.adjacent(prevCell, firstCell)) {
-			if (all || rnd.nextBoolean()) {
-				if (mazeParts.find(prevCell) != mazeParts.find(firstCell)) {
-					connectCells(prevCell, firstCell);
-				}
-			}
+				&& !grid.adjacent(prevCell, firstCell) && (all || rnd.nextBoolean())
+				&& mazeParts.find(prevCell) != mazeParts.find(firstCell)) {
+			connectCells(prevCell, firstCell);
 		}
 	}
 
@@ -141,7 +134,7 @@ public class Armin extends MazeGenerator {
 		// equivalence class is already connected to that layer
 		for (int cell : layer) {
 			if (rnd.nextBoolean() && !connected.contains(mazeParts.find(cell))) {
-				List<Integer> candidates = collectNeighborsInNextLayer(cell);
+				List<Integer> candidates = addNeighborsInNextLayer(cell);
 				if (!candidates.isEmpty()) {
 					int neighbor = candidates.get(rnd.nextInt(candidates.size()));
 					connectCells(cell, neighbor);
@@ -162,7 +155,7 @@ public class Armin extends MazeGenerator {
 		// connect remaining cells and mark maze parts as connected
 		for (int cell : unconnectedCells) {
 			if (!connected.contains(mazeParts.find(cell))) {
-				List<Integer> candidates = collectNeighborsInNextLayer(cell);
+				List<Integer> candidates = addNeighborsInNextLayer(cell);
 				if (!candidates.isEmpty()) {
 					int neighbor = candidates.get(rnd.nextInt(candidates.size()));
 					connectCells(cell, neighbor);
@@ -172,35 +165,37 @@ public class Armin extends MazeGenerator {
 		}
 	}
 
-	private List<Integer> collectNeighborsInNextLayer(int cell) {
-		List<Integer> result = new ArrayList<>(4);
-		int squareSize = square.getSize();
-		if (squareSize == 1) {
-			addNeighborsIfAny(result, cell, N, E, S, W);
-			return result;
+	private List<Integer> addNeighborsInNextLayer(int cell) {
+		List<Integer> neighbors = new ArrayList<>(4);
+		int size = square.getSize();
+		if (size == 1) {
+			addNeighbors(neighbors, cell, N, E, S, W);
+			return neighbors;
 		}
 		int index = cellIndex.get(cell);
 		if (index == 0) {
-			addNeighborsIfAny(result, cell, W, N);
-		} else if (index < squareSize - 1) {
-			addNeighborsIfAny(result, cell, N);
-		} else if (index == squareSize - 1) {
-			addNeighborsIfAny(result, cell, N, E);
-		} else if (index < 2 * (squareSize - 1)) {
-			addNeighborsIfAny(result, cell, E);
-		} else if (index == 2 * (squareSize - 1)) {
-			addNeighborsIfAny(result, cell, E, S);
-		} else if (index < 3 * (squareSize - 1)) {
-			addNeighborsIfAny(result, cell, S);
-		} else if (index == 3 * (squareSize - 1)) {
-			addNeighborsIfAny(result, cell, S, W);
+			addNeighbors(neighbors, cell, W, N);
+		} else if (index < size - 1) {
+			addNeighbors(neighbors, cell, N);
+		} else if (index == size - 1) {
+			addNeighbors(neighbors, cell, N, E);
+		} else if (index < 2 * (size - 1)) {
+			addNeighbors(neighbors, cell, E);
+		} else if (index == 2 * (size - 1)) {
+			addNeighbors(neighbors, cell, E, S);
+		} else if (index < 3 * (size - 1)) {
+			addNeighbors(neighbors, cell, S);
+		} else if (index == 3 * (size - 1)) {
+			addNeighbors(neighbors, cell, S, W);
 		} else {
-			addNeighborsIfAny(result, cell, W);
+			addNeighbors(neighbors, cell, W);
 		}
-		return result;
+		return neighbors;
 	}
 
-	private void addNeighborsIfAny(List<Integer> list, int cell, Byte... dirs) {
-		Arrays.stream(dirs).forEach(dir -> grid.neighbor(cell, dir).ifPresent(list::add));
+	private void addNeighbors(List<Integer> neighbors, int cell, byte... dirs) {
+		for (var dir : dirs) {
+			grid.neighbor(cell, dir).ifPresent(neighbors::add);
+		}
 	}
 }
