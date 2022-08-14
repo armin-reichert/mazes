@@ -18,7 +18,6 @@ import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
 import de.amr.graph.grid.curves.HilbertCurve;
 import de.amr.graph.grid.impl.Grid4Topology;
-import de.amr.graph.grid.impl.GridGraph;
 
 /**
  * Wilson's algorithm where the random walk start cells are defined by a Hilbert curve.
@@ -35,15 +34,19 @@ public class WilsonUSTHilbertCurve extends WilsonUST {
 	protected IntStream randomWalkStartCells() {
 		int[] cells = new int[grid.numVertices()];
 		int n = nextPow(2, max(grid.numCols(), grid.numRows()));
-		GridGraph<?, ?> squareGrid = emptyGrid(n, n, Grid4Topology.get(), UNVISITED, 0);
+		var squareGrid = emptyGrid(n, n, Grid4Topology.get(), UNVISITED, 0);
 		int cell = squareGrid.cell(TOP_LEFT);
 		int i = 0;
 		cells[i++] = cell;
 		for (byte dir : new HilbertCurve(log(2, n), W, N, E, S)) {
-			cell = squareGrid.neighbor(cell, dir).get();
-			int col = squareGrid.col(cell), row = squareGrid.row(cell);
-			if (grid.isValidCol(col) && grid.isValidRow(row)) {
-				cells[i++] = grid.cell(col, row);
+			var neighbor = squareGrid.neighbor(cell, dir);
+			if (neighbor.isPresent()) {
+				cell = neighbor.get();
+				int col = squareGrid.col(cell);
+				int row = squareGrid.row(cell);
+				if (grid.isValidCol(col) && grid.isValidRow(row)) {
+					cells[i++] = grid.cell(col, row);
+				}
 			}
 		}
 		return stream(cells);

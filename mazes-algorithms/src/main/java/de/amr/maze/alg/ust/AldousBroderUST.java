@@ -26,8 +26,8 @@ import de.amr.maze.alg.core.MazeGenerator;
  * 
  * @author Armin Reichert
  * 
- * @see<a href= "http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-broder-algorithm">Maze
- *        Generation: Aldous-Broder algorithm</a>
+ * @see<a href= "http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-broder-algorithm">Maze Generation:
+ *        Aldous-Broder algorithm</a>
  * 
  */
 public class AldousBroderUST extends MazeGenerator {
@@ -54,20 +54,22 @@ public class AldousBroderUST extends MazeGenerator {
 	}
 
 	/**
-	 * Visits a random neighbor of the current cell and adds it to the maze if visited for the first
-	 * time.
+	 * Visits a random neighbor of the current cell and adds it to the maze if visited for the first time.
 	 */
 	private void visitRandomNeighbor() {
-		int neighbor = randomElement(grid.neighbors(currentCell)).get();
-		if (isCellUnvisited(neighbor)) {
-			grid.addEdge(currentCell, neighbor);
-			grid.set(neighbor, COMPLETED);
-			++numVisitedCells;
+		var randomNeighbor = randomElement(grid.neighbors(currentCell));
+		if (randomNeighbor.isPresent()) {
+			int neighbor = randomNeighbor.get();
+			if (isCellUnvisited(neighbor)) {
+				grid.addEdge(currentCell, neighbor);
+				grid.set(neighbor, COMPLETED);
+				++numVisitedCells;
+			}
+			currentCell = neighbor;
+			// for animation only:
+			var state = grid.get(currentCell);
+			grid.set(currentCell, VISITED);
+			grid.set(currentCell, state);
 		}
-		currentCell = neighbor;
-		// for animation only:
-		TraversalState state = grid.get(currentCell);
-		grid.set(currentCell, VISITED);
-		grid.set(currentCell, state);
 	}
 }
