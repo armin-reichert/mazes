@@ -33,12 +33,15 @@ public class WilsonUSTPeanoCurve extends WilsonUST {
 	@Override
 	protected IntStream randomWalkStartCells() {
 		int n = nextPow(3, max(grid.numCols(), grid.numRows()));
-		GridGraph2D<?, ?> squareGrid = emptyGrid(n, n, Grid4Topology.get(), UNVISITED, 0);
+		var squareGrid = emptyGrid(n, n, Grid4Topology.get(), UNVISITED, 0);
 		int cell = squareGrid.cell(BOTTOM_LEFT);
 		addCell(squareGrid.col(cell), squareGrid.row(cell));
 		for (byte dir : new PeanoCurve(log(3, n))) {
-			cell = squareGrid.neighbor(cell, dir).get();
-			addCell(squareGrid.col(cell), squareGrid.row(cell));
+			var neighbor = squareGrid.neighbor(cell, dir);
+			if (neighbor.isPresent()) {
+				cell = neighbor.get();
+				addCell(squareGrid.col(cell), squareGrid.row(cell));
+			}
 		}
 		return stream(walkStartCells);
 	}

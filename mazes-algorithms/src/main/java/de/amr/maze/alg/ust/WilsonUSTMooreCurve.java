@@ -29,17 +29,21 @@ public class WilsonUSTMooreCurve extends WilsonUST {
 	protected IntStream randomWalkStartCells() {
 		int[] cells = new int[grid.numVertices()];
 		int n = nextPow(2, max(grid.numCols(), grid.numRows()));
-		GridGraph2D<?, ?> squareGrid = emptyGrid(n, n, Grid4Topology.get(), UNVISITED, 0);
+		var squareGrid = emptyGrid(n, n, Grid4Topology.get(), UNVISITED, 0);
 		int cell = squareGrid.cell(n / 2, n - 1);
 		int i = 0;
 		if (grid.isValidCol(n / 2) && grid.isValidRow(n - 1)) {
 			cells[i++] = grid.cell(n / 2, n - 1);
 		}
 		for (byte dir : new MooreLCurve(log(2, n))) {
-			cell = squareGrid.neighbor(cell, dir).get();
-			int col = squareGrid.col(cell), row = squareGrid.row(cell);
-			if (grid.isValidCol(col) && grid.isValidRow(row)) {
-				cells[i++] = grid.cell(col, row);
+			var neighbor = squareGrid.neighbor(cell, dir);
+			if (neighbor.isPresent()) {
+				cell = neighbor.get();
+				int col = squareGrid.col(cell);
+				int row = squareGrid.row(cell);
+				if (grid.isValidCol(col) && grid.isValidRow(row)) {
+					cells[i++] = grid.cell(col, row);
+				}
 			}
 		}
 		return stream(cells);
