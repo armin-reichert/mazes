@@ -22,8 +22,10 @@ public class WilsonUSTCollapsingRectangle extends WilsonUST {
 	public void createMaze(int x, int y) {
 		int start = grid.cell(CENTER);
 		grid.set(start, COMPLETED);
-		int col = 0, row = 0;
-		int width = grid.numCols(), height = grid.numRows();
+		int col = 0;
+		int row = 0;
+		int width = grid.numCols();
+		int height = grid.numRows();
 		while (width > 0 && height > 0) {
 			new Rectangle(grid, grid.cell(col, row), width, height).forEach(this::loopErasedRandomWalk);
 			width -= 2;

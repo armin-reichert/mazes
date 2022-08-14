@@ -63,7 +63,9 @@ public class Armin extends MazeGenerator {
 	}
 
 	private int nextLayer() {
-		int x, y, size;
+		int x;
+		int y;
+		int size;
 		if (square == null) {
 			int center = grid.cell(CENTER);
 			x = grid.col(center) + offsetX;

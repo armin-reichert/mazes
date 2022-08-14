@@ -30,7 +30,8 @@ public abstract class ReverseDeleteMST extends MazeGenerator {
 			if (grid.numEdges() == grid.numVertices() - 1) {
 				break;
 			}
-			int u = edge.either(), v = edge.other();
+			int u = edge.either();
+			int v = edge.other();
 			grid.removeEdge(u, v);
 			if (!connected(u, v)) {
 				grid.addEdge(u, v);

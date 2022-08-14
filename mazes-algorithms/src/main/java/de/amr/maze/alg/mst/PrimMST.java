@@ -14,8 +14,8 @@ import de.amr.maze.alg.core.MazeGenerator;
  * 
  * @author Armin Reichert
  * 
- * @see <a href="http://weblog.jamisbuck.org/2011/1/10/maze-generation-prim-s-algorithm.html">Maze
- *      Generation: Prim's Algorithm</a>
+ * @see <a href="http://weblog.jamisbuck.org/2011/1/10/maze-generation-prim-s-algorithm.html">Maze Generation: Prim's
+ *      Algorithm</a>
  * @see <a href="https://en.wikipedia.org/wiki/Prim%27s_algorithm">Wikipedia: Prim's Algorithm</a>
  */
 public class PrimMST extends MazeGenerator {
@@ -32,7 +32,8 @@ public class PrimMST extends MazeGenerator {
 		expand(grid.cell(x, y));
 		while (!cut.isEmpty()) {
 			WeightedEdge<Integer> minEdge = cut.poll();
-			int u = minEdge.either(), v = minEdge.other();
+			int u = minEdge.either();
+			int v = minEdge.other();
 			if (isCellUnvisited(u) || isCellUnvisited(v)) {
 				grid.addEdge(u, v);
 				expand(isCellUnvisited(u) ? u : v);
@@ -42,8 +43,7 @@ public class PrimMST extends MazeGenerator {
 
 	private void expand(int cell) {
 		grid.set(cell, COMPLETED);
-		grid.neighbors(cell).filter(this::isCellUnvisited).forEach(neighbor -> {
-			cut.add(new WeightedEdge<>(cell, neighbor, rnd.nextInt()));
-		});
+		grid.neighbors(cell).filter(this::isCellUnvisited)
+				.forEach(neighbor -> cut.add(new WeightedEdge<>(cell, neighbor, rnd.nextInt())));
 	}
 }

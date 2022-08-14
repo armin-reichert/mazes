@@ -29,7 +29,8 @@ public class KruskalMST extends MazeGenerator {
 		var forest = new Partition<>();
 		var fullGrid = fullGrid(grid.numCols(), grid.numRows(), grid.getTopology(), UNVISITED, 0);
 		permute(fullGrid.edges()).forEach(edge -> {
-			int u = edge.either(), v = edge.other();
+			int u = edge.either();
+			int v = edge.other();
 			if (forest.union(u, v)) {
 				grid.addEdge(u, v);
 				grid.set(u, COMPLETED); // only for visualization

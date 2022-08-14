@@ -18,8 +18,7 @@ import de.amr.maze.alg.core.MazeGenerator;
  * 
  * @author Armin Reichert
  * 
- * @see <a href="http://iss.ices.utexas.edu/?p=projects/galois/benchmarks/mst">Boruvka's
- *      Algorithm</a>
+ * @see <a href="http://iss.ices.utexas.edu/?p=projects/galois/benchmarks/mst">Boruvka's Algorithm</a>
  */
 public class BoruvkaMST extends MazeGenerator {
 
@@ -40,7 +39,8 @@ public class BoruvkaMST extends MazeGenerator {
 	}
 
 	private void combineTrees(Edge edge) {
-		int u = edge.either(), v = edge.other();
+		int u = edge.either();
+		int v = edge.other();
 		if (forest.find(u) != forest.find(v)) {
 			grid.addEdge(u, v);
 			grid.set(u, COMPLETED);

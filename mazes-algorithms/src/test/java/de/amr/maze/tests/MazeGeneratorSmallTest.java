@@ -28,7 +28,7 @@ import de.amr.maze.alg.mst.ReverseDeleteMST_HillClimbing;
 import de.amr.maze.alg.traversal.RecursiveDFS;
 import de.amr.util.StopWatch;
 
-public class MazeGeneratorTestSmall {
+public class MazeGeneratorSmallTest {
 
 	private static final int WIDTH = 25;
 	private static final int HEIGHT = 25;
