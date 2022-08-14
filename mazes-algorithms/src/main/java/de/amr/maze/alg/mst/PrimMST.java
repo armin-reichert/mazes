@@ -31,9 +31,9 @@ public class PrimMST extends MazeGenerator {
 		cut = new PriorityQueue<>();
 		expand(grid.cell(x, y));
 		while (!cut.isEmpty()) {
-			WeightedEdge<Integer> minEdge = cut.poll();
-			int u = minEdge.either();
-			int v = minEdge.other();
+			var minWeightEdge = cut.poll();
+			int u = minWeightEdge.either();
+			int v = minWeightEdge.other();
 			if (isCellUnvisited(u) || isCellUnvisited(v)) {
 				grid.addEdge(u, v);
 				expand(isCellUnvisited(u) ? u : v);

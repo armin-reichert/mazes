@@ -2,6 +2,8 @@ package de.amr.maze.alg.mst;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
+import de.amr.graph.grid.api.GridMetrics;
+import de.amr.graph.grid.impl.GridGraph;
 import de.amr.graph.pathfinder.api.Path;
 import de.amr.graph.pathfinder.impl.HillClimbingSearch;
 
@@ -20,6 +22,7 @@ public class ReverseDeleteMST_HillClimbing extends ReverseDeleteMST {
 
 	@Override
 	protected boolean connected(int u, int v) {
-		return new HillClimbingSearch(grid, x -> grid.manhattan(x, v)).findPath(u, v) != Path.NULL;
+		var pathFinder = new HillClimbingSearch(grid, x -> GridMetrics.manhattan((GridGraph<?, ?>) grid, x, v));
+		return pathFinder.findPath(u, v) != Path.NULL;
 	}
 }

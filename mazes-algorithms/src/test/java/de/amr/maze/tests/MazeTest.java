@@ -20,6 +20,7 @@ import org.junit.Test;
 
 import de.amr.graph.core.api.TraversalState;
 import de.amr.graph.grid.api.GridGraph2D;
+import de.amr.graph.grid.api.GridMetrics;
 import de.amr.graph.grid.impl.Grid4Topology;
 import de.amr.graph.grid.impl.GridFactory;
 import de.amr.graph.grid.impl.GridGraph;
@@ -84,7 +85,7 @@ public class MazeTest {
 		grid = GridFactory.emptyGrid(N, N, Grid4Topology.get(), UNVISITED, 0);
 		new IterativeDFS(grid).createMaze(0, 0);
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		BestFirstSearch best = new BestFirstSearch(grid, x -> grid.manhattan(x, target));
+		var best = new BestFirstSearch(grid, x -> GridMetrics.manhattan((GridGraph<?, ?>) grid, x, target));
 		assertState(grid.vertices(), best::getState, UNVISITED);
 		best.exploreGraph(source);
 		assertState(grid.vertices(), best::getState, VISITED, COMPLETED);
@@ -97,7 +98,7 @@ public class MazeTest {
 		new IterativeDFS(grid).createMaze(0, 0);
 		grid.setDefaultEdgeLabel((u, v) -> 1);
 		int source = grid.cell(TOP_LEFT), target = grid.cell(BOTTOM_RIGHT);
-		AStarSearch astar = new AStarSearch(grid, (u, v) -> 1, (u, v) -> grid.manhattan(u, v));
+		var astar = new AStarSearch(grid, (u, v) -> 1, (u, v) -> GridMetrics.manhattan((GridGraph<?, ?>) grid, u, v));
 		assertState(grid.vertices(), astar::getState, UNVISITED);
 		astar.findPath(source, target);
 		assertSame(COMPLETED, astar.getState(target));
