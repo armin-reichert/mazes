@@ -32,35 +32,29 @@ public class WilsonUSTNestedRectangles extends WilsonUST {
 
 	@Override
 	protected IntStream randomWalkStartCells() {
-		Iterable<Integer> it = new Iterable<Integer>() {
-
-			@Override
-			public Iterator<Integer> iterator() {
-				Rectangle firstCell = new Rectangle(grid, grid.cell(TOP_LEFT), 1, 1);
-				List<Iterator<Integer>> expRects = new ArrayList<>();
-				int rate = grid.numCols();
-				while (rate > 1) {
-					expRects.add(expandingRectangle(firstCell, rate).iterator());
-					rate /= 2;
-				}
-				@SuppressWarnings("unchecked")
-				Iterator<Integer>[] expRectsArray = expRects.toArray(new Iterator[expRects.size()]);
-
-				Rectangle firstColumn = new Rectangle(grid, grid.cell(TOP_LEFT), 1, grid.numRows());
-				ExpandingRectangle sweep = new ExpandingRectangle(firstColumn);
-				sweep.setExpandHorizontally(true);
-				sweep.setExpandVertically(false);
-				sweep.setExpansionRate(1);
-				sweep.setMaxExpansion(grid.numCols());
-
-				return IteratorFactory.sequence(IteratorFactory.sequence(expRectsArray), sweep.iterator());
+		Iterable<Integer> it = () -> {
+			var firstRect = new Rectangle(grid, grid.cell(TOP_LEFT), 1, 1);
+			List<Iterator<Integer>> expRects = new ArrayList<>();
+			int rate = grid.numCols();
+			while (rate > 1) {
+				expRects.add(expandingRectangle(firstRect, rate).iterator());
+				rate /= 2;
 			}
+			@SuppressWarnings("unchecked")
+			Iterator<Integer>[] expRectsArray = expRects.toArray(new Iterator[expRects.size()]);
+			var firstColumn = new Rectangle(grid, grid.cell(TOP_LEFT), 1, grid.numRows());
+			var sweep = new ExpandingRectangle(firstColumn);
+			sweep.setExpandHorizontally(true);
+			sweep.setExpandVertically(false);
+			sweep.setExpansionRate(1);
+			sweep.setMaxExpansion(grid.numCols());
+			return IteratorFactory.sequence(IteratorFactory.sequence(expRectsArray), sweep.iterator());
 		};
 		return StreamUtils.toIntStream(it);
 	}
 
 	private ExpandingRectangle expandingRectangle(Rectangle startRectangle, int rate) {
-		ExpandingRectangle expRect = new ExpandingRectangle(startRectangle);
+		var expRect = new ExpandingRectangle(startRectangle);
 		expRect.setExpandHorizontally(true);
 		expRect.setExpandVertically(true);
 		expRect.setExpansionRate(rate);
