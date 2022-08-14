@@ -15,25 +15,22 @@ public abstract class MazeGenerator {
 	protected final GridGraph2D<TraversalState, Integer> grid;
 	protected final Random rnd = new Random();
 
-	public MazeGenerator(GridGraph2D<TraversalState, Integer> grid) {
+	protected MazeGenerator(GridGraph2D<TraversalState, Integer> grid) {
 		this.grid = grid;
 	}
 
 	/**
 	 * Creates a maze starting at the grid cell {@code (x, y)}.
 	 * 
-	 * @param x
-	 *            x-coordinate (column) of start cell
-	 * @param y
-	 *            y-coordinate (row) of start cell
+	 * @param x x-coordinate (column) of start cell
+	 * @param y y-coordinate (row) of start cell
 	 */
 	public abstract void createMaze(int x, int y);
 
 	/**
 	 * Tells if the given cell is unvisited by the maze generator.
 	 * 
-	 * @param cell
-	 *               grid cell
+	 * @param cell grid cell
 	 * @return {@code true} if cell has not yet been visited
 	 */
 	protected boolean isCellUnvisited(int cell) {
@@ -43,8 +40,7 @@ public abstract class MazeGenerator {
 	/**
 	 * Tells if the given cell has already been visited by the maze generator.
 	 * 
-	 * @param cell
-	 *               grid cell
+	 * @param cell grid cell
 	 * @return {@code true} if cell has already been visited
 	 */
 	protected boolean isCellVisited(int cell) {
@@ -54,8 +50,7 @@ public abstract class MazeGenerator {
 	/**
 	 * Tells if the given cell has been completed by the maze generator.
 	 * 
-	 * @param cell
-	 *               grid cell
+	 * @param cell grid cell
 	 * @return {@code true} if cell has been completed
 	 */
 	protected boolean isCellCompleted(int cell) {

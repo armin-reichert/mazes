@@ -14,15 +14,14 @@ import de.amr.maze.alg.core.MazeGenerator;
 /**
  * "Growing tree" base algorithm.
  * 
- * @see <a href=
- *      "http://weblog.jamisbuck.org/2011/1/27/maze-generation-growing-tree-algorithm.html">Maze
- *      Generation: Growing Tree algorithm</a>
+ * @see <a href= "http://weblog.jamisbuck.org/2011/1/27/maze-generation-growing-tree-algorithm.html">Maze Generation:
+ *      Growing Tree algorithm</a>
  * 
  * @author Armin Reichert
  */
 public abstract class GrowingTree extends MazeGenerator {
 
-	public GrowingTree(GridGraph2D<TraversalState, Integer> grid) {
+	protected GrowingTree(GridGraph2D<TraversalState, Integer> grid) {
 		super(grid);
 	}
 

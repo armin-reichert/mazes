@@ -13,12 +13,11 @@ import de.amr.maze.alg.core.MazeGenerator;
  * 
  * @author Armin Reichert
  *
- * @see <a href=
- *      "https://en.wikipedia.org/wiki/Reverse-delete_algorithm">Wikipedia</a>
+ * @see <a href= "https://en.wikipedia.org/wiki/Reverse-delete_algorithm">Wikipedia</a>
  */
 public abstract class ReverseDeleteMST extends MazeGenerator {
 
-	public ReverseDeleteMST(GridGraph2D<TraversalState, Integer> grid) {
+	protected ReverseDeleteMST(GridGraph2D<TraversalState, Integer> grid) {
 		super(grid);
 		grid.fill();
 		grid.setDefaultVertexLabel(cell -> COMPLETED);

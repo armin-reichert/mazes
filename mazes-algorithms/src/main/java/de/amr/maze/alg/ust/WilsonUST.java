@@ -13,29 +13,28 @@ import de.amr.maze.alg.core.MazeGenerator;
  * Wilson's algorithm.
  * 
  * <p>
- * Take any two vertices and perform a loop-erased random walk from one to the other. Now take a
- * third vertex (not on the constructed path) and perform loop-erased random walk until hitting the
- * already constructed path. This gives a tree with either two or three leaves. Choose a fourth
- * vertex and do loop-erased random walk until hitting this tree. Continue until the tree spans all
- * the vertices. It turns out that no matter which method you use to choose the starting vertices
- * you always end up with the same distribution on the spanning trees, namely the uniform one.
+ * Take any two vertices and perform a loop-erased random walk from one to the other. Now take a third vertex (not on
+ * the constructed path) and perform loop-erased random walk until hitting the already constructed path. This gives a
+ * tree with either two or three leaves. Choose a fourth vertex and do loop-erased random walk until hitting this tree.
+ * Continue until the tree spans all the vertices. It turns out that no matter which method you use to choose the
+ * starting vertices you always end up with the same distribution on the spanning trees, namely the uniform one.
  * 
  * @author Armin Reichert
  * 
- * @see <a href= "http://www.cs.cmu.edu/~15859n/RelatedWork/RandomTrees-Wilson.pdf"> Generating
- *      Random Spanning Trees More Quickly than the Cover Time</a>
+ * @see <a href= "http://www.cs.cmu.edu/~15859n/RelatedWork/RandomTrees-Wilson.pdf"> Generating Random Spanning Trees
+ *      More Quickly than the Cover Time</a>
  * 
- * @see <a href="http://en.wikipedia.org/wiki/Loop-erased_random_walk">http:// en.
- *      wikipedia.org/wiki/Loop -erased_random_walk</>
+ * @see <a href="http://en.wikipedia.org/wiki/Loop-erased_random_walk">http:// en. wikipedia.org/wiki/Loop
+ *      -erased_random_walk</>
  * 
  */
 public abstract class WilsonUST extends MazeGenerator {
 
-	private byte[] lastWalkDir;
-	private int current;
+	private final byte[] lastWalkDir;
 
-	public WilsonUST(GridGraph2D<TraversalState, Integer> grid) {
+	protected WilsonUST(GridGraph2D<TraversalState, Integer> grid) {
 		super(grid);
+		lastWalkDir = new byte[grid.numVertices()];
 	}
 
 	@Override
@@ -56,37 +55,41 @@ public abstract class WilsonUST extends MazeGenerator {
 	}
 
 	/**
-	 * Performs a loop-erased random walk that starts with the given cell and ends when it touches the
-	 * tree created so far. If the start cell is already in the tree, the method does nothing.
+	 * Performs a loop-erased random walk that starts with the given cell and ends when it touches the tree created so
+	 * far. If the start cell is already in the tree, the method does nothing.
 	 * 
-	 * @param walkStart
-	 *                    the start cell of the random walk
+	 * @param startCell the start cell of the random walk
 	 */
-	protected final void loopErasedRandomWalk(int walkStart) {
-		if (lastWalkDir == null) {
-			lastWalkDir = new byte[grid.numVertices()];
-		}
-		// if walk start is already inside tree, do nothing
-		if (isCellCompleted(walkStart)) {
+	protected final void loopErasedRandomWalk(int startCell) {
+
+		// if start cell is already inside tree ("completed"), do nothing
+		if (isCellCompleted(startCell)) {
 			return;
 		}
-		// do a random walk until it touches the tree created so far
-		current = walkStart;
+
+		// do a random walk touching the tree created so far
+		int current = startCell;
 		while (!isCellCompleted(current)) {
-			byte walkDir = randomElement(grid.getTopology().dirs()).get();
-			grid.neighbor(current, walkDir).ifPresent(neighbor -> {
-				lastWalkDir[current] = walkDir;
-				current = neighbor;
-			});
+			var randomDir = randomElement(grid.getTopology().dirs());
+			if (randomDir.isPresent()) {
+				byte walkDir = randomDir.get();
+				var neighbor = grid.neighbor(current, walkDir);
+				if (neighbor.isPresent()) {
+					lastWalkDir[current] = walkDir;
+					current = neighbor.get();
+				}
+			}
 		}
+
 		// add the (loop-erased) random walk to the tree
-		current = walkStart;
+		current = startCell;
 		while (!isCellCompleted(current)) {
-			grid.neighbor(current, lastWalkDir[current]).ifPresent(neighbor -> {
+			var neighbor = grid.neighbor(current, lastWalkDir[current]);
+			if (neighbor.isPresent()) {
+				grid.addEdge(current, neighbor.get());
 				grid.set(current, COMPLETED);
-				grid.addEdge(current, neighbor);
-				current = neighbor;
-			});
+				current = neighbor.get();
+			}
 		}
 	}
 }
