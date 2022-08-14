@@ -31,40 +31,44 @@ public class WilsonUSTExpandingCircles extends WilsonUST {
 
 	@Override
 	protected IntStream randomWalkStartCells() {
-		Iterable<Integer> it = new Iterable<Integer>() {
-
-			@Override
-			public Iterator<Integer> iterator() {
-				int w = grid.numCols(), h = grid.numRows(), r = max(w / 2, h / 2);
-				/*@formatter:off*/
-				return sequence(
-					// expand 4 circles in parallel to certain size	
-					parallel(
-						expandingCircle(grid, w / 4, h / 4, 1, r / 4),
-						expandingCircle(grid, 3 * w / 4, h / 4, 1, r / 4),
-						expandingCircle(grid, w / 4, 3 * h / 4, 1, r / 4), 
-						expandingCircle(grid, 3 * w / 4, 3 * h / 4, 1, r / 4)
-					),
-					// expand 5th circle to half its size
-					expandingCircle(grid, w / 2, h / 2, 1, r / 2),
-					// expand first 4 circles to final size
-					parallel(
-						expandingCircle(grid, w / 4, h / 4, r / 4, r / 2),
-						expandingCircle(grid, 3 * w / 4, h / 4, r / 4, r / 2), 
-						expandingCircle(grid, w / 4, 3 * h / 4, r / 4, r / 2),
-						expandingCircle(grid, 3 * w / 4, 3 * h / 4, r / 4, r / 2)
-					),
-					// expand 5th circle to final size
-					expandingCircle(grid, w / 2, h / 2, r / 2, 2 * r)
-				);
-				/*@formatter:on*/
-			}
+		Iterable<Integer> it = () -> {
+			int w = grid.numCols();
+			int w2 = w / 2;
+			int w4 = w / 4;
+			int h = grid.numRows();
+			int h2 = h / 2;
+			int h4 = h / 4;
+			int r = max(w2, h2);
+			int r2 = r / 2;
+			int r4 = r / 4;
+			/*@formatter:off*/
+			return sequence(
+				// expand 4 circles in parallel to certain size	
+				parallel(
+					expandingCircle(grid, w4, h4, 1, r4),
+					expandingCircle(grid, 3 * w4, h4, 1, r4),
+					expandingCircle(grid, w4, 3 * h4, 1, r4), 
+					expandingCircle(grid, 3 * w4, 3 * h4, 1, r4)
+				),
+				// expand 5th circle to half its size
+				expandingCircle(grid, w2, h2, 1, r2),
+				// expand first 4 circles to final size
+				parallel(
+					expandingCircle(grid, w4, h4, r4, r2),
+					expandingCircle(grid, 3 * w4, h4, r4, r2), 
+					expandingCircle(grid, w4, 3 * h4, r4, r2),
+					expandingCircle(grid, 3 * w4, 3 * h4, r4, r2)
+				),
+				// expand 5th circle to final size
+				expandingCircle(grid, w2, h2, r2, 2 * r)
+			);
+			/*@formatter:on*/
 		};
 		return StreamUtils.toIntStream(it);
 	}
 
-	private Iterator<Integer> expandingCircle(GridGraph2D<TraversalState, Integer> grid, int centerX,
-			int centerY, int rmin, int rmax) {
+	private Iterator<Integer> expandingCircle(GridGraph2D<TraversalState, Integer> grid, int centerX, int centerY,
+			int rmin, int rmax) {
 		return new ExpandingCircle(grid, grid.cell(centerX, centerY), rmin, rmax).iterator();
 	}
 }

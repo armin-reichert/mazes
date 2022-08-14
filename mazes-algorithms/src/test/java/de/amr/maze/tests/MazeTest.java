@@ -100,8 +100,8 @@ public class MazeTest {
 		AStarSearch astar = new AStarSearch(grid, (u, v) -> 1, (u, v) -> grid.manhattan(u, v));
 		assertState(grid.vertices(), astar::getState, UNVISITED);
 		astar.findPath(source, target);
-		assertSame(astar.getState(target), COMPLETED);
-		assertNotEquals(astar.getParent(target), -1);
-		assertNotEquals(astar.getCost(target), -1);
+		assertSame(COMPLETED, astar.getState(target));
+		assertNotEquals(-1, astar.getParent(target));
+		assertNotEquals(-1.0, astar.getCost(target));
 	}
 }
