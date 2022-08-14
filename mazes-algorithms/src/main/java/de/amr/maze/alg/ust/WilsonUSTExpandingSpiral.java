@@ -27,6 +27,6 @@ public class WilsonUSTExpandingSpiral extends WilsonUST {
 
 	@Override
 	protected IntStream randomWalkStartCells() {
-		return StreamUtils.toIntStream(new Spiral(grid, grid.cell(CENTER)));
+		return StreamUtils.toIntStream(new Spiral(grid));
 	}
 }
