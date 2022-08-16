@@ -1,12 +1,8 @@
 package de.amr.mazes.simple;
 
-import static de.amr.mazes.simple.MazeAlgorithms.createMazeByAldousBroder;
-import static de.amr.mazes.simple.MazeAlgorithms.createMazeByGrowingTree;
-import static de.amr.mazes.simple.MazeAlgorithms.createMazeByRecursiveDivision;
-import static de.amr.mazes.simple.MazeAlgorithms.createMazeBySidewinder;
-import static de.amr.mazes.simple.MazeAlgorithms.createMazeByWilson;
 import static de.amr.mazes.simple.graph.GraphFunctions.prettyPrint;
 
+import java.io.PrintStream;
 import java.util.function.Consumer;
 
 import de.amr.mazes.simple.graph.GraphFunctions;
@@ -19,27 +15,38 @@ import de.amr.mazes.simple.graph.GridGraphImpl;
  */
 public class SimpleMazeApp {
 
+	static int numRows = 10;
+	static int numCols = 20;
+	static PrintStream p = System.out;
+
 	public static void main(String[] args) {
-		printMaze("AldousBroder", grid -> createMazeByAldousBroder(grid, 0), 10, 10);
-		printMaze("Growing Tree", grid -> createMazeByGrowingTree(grid, 0), 10, 10);
-		printMaze("Sidewinder", grid -> createMazeBySidewinder(grid), 10, 10);
-		printMaze("Recursive Division", grid -> createMazeByRecursiveDivision(grid), 10, 10);
-		printMaze("Wilson", grid -> createMazeByWilson(grid), 10, 10);
+		maze(p, "AldousBroder", grid -> MazeAlgorithms.createMazeByAldousBroder(grid, 0), numRows, numCols);
+		maze(p, "Growing Tree", grid -> MazeAlgorithms.createMazeByGrowingTree(grid, 0), numRows, numCols);
+		maze(p, "Sidewinder", grid -> MazeAlgorithms.createMazeBySidewinder(grid), numRows, numCols);
+		maze(p, "Recursive Division", grid -> MazeAlgorithms.createMazeByRecursiveDivision(grid), numRows, numCols);
+		maze(p, "Wilson", grid -> MazeAlgorithms.createMazeByWilson(grid), numRows, numCols);
 	}
 
-	static void printMaze(String name, Consumer<GridGraphImpl> generator, int rows, int cols) {
-		GridGraphImpl grid = new GridGraphImpl(rows, cols);
+	static void maze(PrintStream p, String generatorName, Consumer<GridGraphImpl> generator, int numRows, int numCols) {
+
+		GridGraphImpl grid = new GridGraphImpl(numRows, numCols);
+
 		long start = System.currentTimeMillis();
 		generator.accept(grid);
 		long time = System.currentTimeMillis() - start;
-		System.out.println(String.format(name + ": %,d vertices, %d ms", grid.numVertices(), time));
+
+		p.println();
+		p.println("Graph:     %d vertices, %d edges".formatted(grid.numVertices(), grid.numEdges()));
+		p.println("Algorithm: %s".formatted(generatorName));
+		p.println("Time:      %d milliseconds".formatted(time));
+		prettyPrint(grid, p);
+
 		if (grid.numEdges() != grid.numVertices() - 1) {
-			throw new IllegalStateException(
-					String.format("Wrong #edges: %d (expected %d)", grid.numEdges(), grid.numVertices() - 1));
+			p.println("Wrong #edges: %d (expected %d)".formatted(grid.numEdges(), grid.numVertices() - 1));
 		}
+
 		if (GraphFunctions.containsCycle(grid)) {
-			throw new IllegalStateException("Graph contains cycle");
+			p.println("No maze. Graph contains cycle");
 		}
-		prettyPrint(grid);
 	}
 }

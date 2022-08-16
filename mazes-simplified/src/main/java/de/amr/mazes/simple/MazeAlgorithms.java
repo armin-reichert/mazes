@@ -22,7 +22,9 @@ import de.amr.mazes.simple.graph.GridGraph;
  * 
  * @author Armin Reichert
  */
-public class MazeAlgorithms {
+public interface MazeAlgorithms {
+
+	static final Random RND = new Random();
 
 	// Random Depth-First-Search (recursive)
 
@@ -62,11 +64,10 @@ public class MazeAlgorithms {
 	public static void createMazeByBFS(GridGraph grid, int startVertex) {
 		BitSet visited = new BitSet();
 		List<Integer> frontier = new ArrayList<>();
-		Random rnd = new Random();
 		visited.set(startVertex);
 		frontier.add(startVertex);
 		while (!frontier.isEmpty()) {
-			int vertex = frontier.remove(rnd.nextInt(frontier.size()));
+			int vertex = frontier.remove(RND.nextInt(frontier.size()));
 			for (Dir dir : Dir.shuffled()) {
 				int neighbor = grid.neighbor(vertex, dir);
 				if (neighbor != -1 && !visited.get(neighbor)) {
@@ -96,7 +97,8 @@ public class MazeAlgorithms {
 		Collections.shuffle(edges);
 		Partition<Integer> forest = new Partition<>();
 		for (Edge edge : edges) {
-			int u = edge.either, v = edge.other;
+			int u = edge.either();
+			int v = edge.other();
 			if (forest.find(u) != forest.find(v)) {
 				grid.connect(u, v);
 				forest.union(u, v);
@@ -109,25 +111,24 @@ public class MazeAlgorithms {
 	public static void createMazeByPrim(GridGraph grid, int startVertex) {
 		BitSet visited = new BitSet();
 		PriorityQueue<Edge> cut = new PriorityQueue<>();
-		Random rnd = new Random();
-		expand(grid, startVertex, cut, visited, rnd);
+		expand(grid, startVertex, cut, visited);
 		while (!cut.isEmpty()) {
 			Edge edge = cut.poll();
-			int u = edge.either, v = edge.other;
+			int u = edge.either();
+			int v = edge.other();
 			if (!visited.get(u) || !visited.get(v)) {
 				grid.connect(u, v);
-				expand(grid, !visited.get(u) ? u : v, cut, visited, rnd);
+				expand(grid, !visited.get(u) ? u : v, cut, visited);
 			}
 		}
 	}
 
-	private static void expand(GridGraph grid, int vertex, PriorityQueue<Edge> cut, BitSet visited,
-			Random rnd) {
+	private static void expand(GridGraph grid, int vertex, PriorityQueue<Edge> cut, BitSet visited) {
 		visited.set(vertex);
 		for (Dir dir : Dir.values()) {
 			int neighbor = grid.neighbor(vertex, dir);
 			if (neighbor != -1 && !visited.get(neighbor)) {
-				Edge edge = new Edge(grid, vertex, neighbor, rnd.nextInt());
+				Edge edge = new Edge(grid, vertex, neighbor, RND.nextInt());
 				cut.add(edge);
 			}
 		}
@@ -136,15 +137,13 @@ public class MazeAlgorithms {
 	// Binary tree algorithm
 
 	public static void createMazeByBinaryTree(GridGraph grid) {
-		Random rnd = new Random();
 		Dir[] dirs = { Dir.E, Dir.S };
 		for (int vertex = 0; vertex < grid.numVertices(); ++vertex) {
-			int choice = rnd.nextInt(2);
+			int choice = RND.nextInt(2);
 			int neighbor = grid.neighbor(vertex, dirs[choice]);
 			if (neighbor != -1) {
 				grid.connect(vertex, dirs[choice]);
-			}
-			else {
+			} else {
 				neighbor = grid.neighbor(vertex, dirs[1 - choice]);
 				if (neighbor != -1) {
 					grid.connect(vertex, dirs[1 - choice]);
@@ -156,12 +155,11 @@ public class MazeAlgorithms {
 	// Growing tree algorithm
 
 	public static void createMazeByGrowingTree(GridGraph grid, int startVertex) {
-		Random rnd = new Random();
 		BitSet visited = new BitSet();
 		List<Integer> vertices = new ArrayList<>();
 		vertices.add(startVertex);
 		do {
-			int index = rnd.nextBoolean() ? vertices.size() - 1 : rnd.nextInt(vertices.size());
+			int index = RND.nextBoolean() ? vertices.size() - 1 : RND.nextInt(vertices.size());
 			int vertex = vertices.remove(index);
 			for (Dir dir : Dir.shuffled()) {
 				int neighbor = grid.neighbor(vertex, dir);
@@ -178,21 +176,21 @@ public class MazeAlgorithms {
 	// Sidewinder algorithm
 
 	public static void createMazeBySidewinder(GridGraph grid) {
-		Random rnd = new Random();
 		BitSet visited = new BitSet();
 		for (int row = 0; row < grid.numRows(); ++row) {
 			int current = 0;
 			for (int col = 0; col < grid.numCols(); ++col) {
-				if (row > 0 && (col == grid.numCols() - 1 || rnd.nextBoolean())) {
-					int passageCol = current + rnd.nextInt(col - current + 1);
-					int north = grid.vertex(row - 1, passageCol), south = grid.vertex(row, passageCol);
+				if (row > 0 && (col == grid.numCols() - 1 || RND.nextBoolean())) {
+					int passageCol = current + RND.nextInt(col - current + 1);
+					int north = grid.vertex(row - 1, passageCol);
+					int south = grid.vertex(row, passageCol);
 					grid.connect(north, Dir.S);
 					visited.set(north);
 					visited.set(south);
 					current = col + 1;
-				}
-				else if (col + 1 < grid.numCols()) {
-					int west = grid.vertex(row, col), east = grid.vertex(row, col + 1);
+				} else if (col + 1 < grid.numCols()) {
+					int west = grid.vertex(row, col);
+					int east = grid.vertex(row, col + 1);
 					grid.connect(west, Dir.E);
 					visited.set(west);
 					visited.set(east);
@@ -233,8 +231,7 @@ public class MazeAlgorithms {
 			}
 			divide(grid, rnd, x0, y0, w, y - y0);
 			divide(grid, rnd, x0, y, w, h - (y - y0));
-		}
-		else {
+		} else {
 			// Build "vertical wall" at random x from [x0 + 1, x0 + w - 1], keep random door
 			int x = x0 + 1 + rnd.nextInt(w - 1);
 			int door = y0 + rnd.nextInt(h);

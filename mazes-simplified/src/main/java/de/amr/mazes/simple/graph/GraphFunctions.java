@@ -1,16 +1,19 @@
 package de.amr.mazes.simple.graph;
 
+import java.io.PrintStream;
 import java.util.BitSet;
 import java.util.function.IntConsumer;
 
 import de.amr.datastruct.Partition;
 
-public class GraphFunctions {
+/**
+ * @author Armin Reichert
+ */
+public interface GraphFunctions {
 
 	public static void dfs(GridGraph grid, int vertex, BitSet visited, IntConsumer fnAction) {
 		visited.set(vertex);
 		fnAction.accept(vertex);
-		System.out.println("Visit " + grid.name(vertex));
 		for (Dir dir : Dir.values()) {
 			int neighbor = grid.neighbor(vertex, dir);
 			if (neighbor != -1 && grid.connected(vertex, dir) && !visited.get(neighbor)) {
@@ -22,7 +25,8 @@ public class GraphFunctions {
 	public static boolean containsCycle(GridGraph grid) {
 		Partition<Integer> p = new Partition<>();
 		for (Edge edge : grid.edges()) {
-			int u = edge.either, v = edge.other;
+			int u = edge.either();
+			int v = edge.other();
 			if (p.find(u) == p.find(v)) {
 				return true;
 			}
@@ -31,24 +35,21 @@ public class GraphFunctions {
 		return false;
 	}
 
-	public static void prettyPrint(GridGraph grid) {
+	public static void prettyPrint(GridGraph grid, PrintStream p) {
 		for (int row = 0; row < grid.numRows(); ++row) {
 			for (int col = 0; col < grid.numCols(); ++col) {
 				int vertex = grid.vertex(row, col);
-				System.out.print(grid.name(vertex));
-				System.out.print(grid.connected(vertex, Dir.E) ? "\u2014" : " ");
+				p.print(grid.name(vertex));
+				p.print(grid.connected(vertex, Dir.E) ? "-" : " ");
 			}
 			if (row < grid.numRows() - 1) {
-				System.out.println();
+				p.println();
 				for (int col = 0; col < grid.numCols(); ++col) {
 					int below = grid.vertex(row + 1, col);
-					System.out.print(grid.connected(below, Dir.N) ? "  |   " : "      ");
+					p.print(grid.connected(below, Dir.N) ? "  |   " : "      ");
 				}
 			}
-			System.out.println();
+			p.println();
 		}
-		System.out.println(String.format("Num vertices: %d (%d rows, %d cols)", grid.numVertices(),
-				grid.numRows(), grid.numCols()));
-		System.out.println("Num edges: " + grid.numEdges());
 	}
 }

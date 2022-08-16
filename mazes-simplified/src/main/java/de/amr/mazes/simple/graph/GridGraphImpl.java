@@ -58,7 +58,8 @@ public class GridGraphImpl implements GridGraph {
 
 	@Override
 	public int neighbor(int vertex, Dir dir) {
-		int row = row(vertex), col = col(vertex);
+		int row = row(vertex);
+		int col = col(vertex);
 		switch (dir) {
 		case N:
 			return row - 1 >= 0 ? vertex(row - 1, col) : -1;
@@ -130,15 +131,15 @@ public class GridGraphImpl implements GridGraph {
 
 	@Override
 	public Iterable<Edge> edges() {
-		List<Edge> edges = new ArrayList<>();
+		List<Edge> edgeList = new ArrayList<>();
 		for (int vertex = 0; vertex < numVertices(); ++vertex) {
 			for (Dir dir : new Dir[] { Dir.E, Dir.S }) {
 				if (connected(vertex, dir)) {
-					edges.add(new Edge(this, vertex, neighbor(vertex, dir)));
+					edgeList.add(new Edge(this, vertex, neighbor(vertex, dir)));
 				}
 			}
 		}
-		return edges;
+		return edgeList;
 	}
 
 	@Override
@@ -152,7 +153,7 @@ public class GridGraphImpl implements GridGraph {
 		sb.append("Rows: ").append(rows).append("\n");
 		sb.append("Cols: ").append(cols).append("\n");
 		for (Edge edge : edges()) {
-			sb.append(name(edge.either)).append("->").append(name(edge.other)).append("\n");
+			sb.append(name(edge.either())).append("->").append(name(edge.other())).append("\n");
 		}
 		return sb.toString();
 	}
