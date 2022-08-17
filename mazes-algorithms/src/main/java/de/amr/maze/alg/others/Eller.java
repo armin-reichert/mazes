@@ -62,7 +62,7 @@ public class Eller extends MazeGenerator {
 
 	private void connectCellsWithNextRow(int row) {
 		// connect randomly selected cells of this row with next row
-		Set<Partition<Integer>.Set> connectedParts = new HashSet<>();
+		Set<Partition<Integer>.PSet> connectedParts = new HashSet<>();
 		range(0, grid.numCols()).filter(col -> rnd.nextBoolean()).forEach(col -> {
 			int above = grid.cell(col, row);
 			randomUnconnectedCellBelow(col, row).ifPresent(below -> {
@@ -76,7 +76,7 @@ public class Eller extends MazeGenerator {
 		List<Integer> unconnectedCells = new ArrayList<>();
 		range(0, grid.numCols()).forEach(col -> {
 			int cell = grid.cell(col, row);
-			Partition<Integer>.Set part = parts.find(cell);
+			Partition<Integer>.PSet part = parts.find(cell);
 			if (!connectedParts.contains(part)) {
 				unconnectedCells.add(cell);
 			}
@@ -85,7 +85,7 @@ public class Eller extends MazeGenerator {
 		Collections.shuffle(unconnectedCells);
 		// connect cells and mark component as connected
 		unconnectedCells.forEach(top -> {
-			Partition<Integer>.Set part = parts.find(top);
+			Partition<Integer>.PSet part = parts.find(top);
 			if (!connectedParts.contains(part)) {
 				int bottom = grid.cell(grid.col(top), row + 1);
 				if (parts.find(top) != parts.find(bottom)) {

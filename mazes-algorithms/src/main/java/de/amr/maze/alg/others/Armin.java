@@ -131,7 +131,7 @@ public class Armin extends MazeGenerator {
 	}
 
 	private void connectCellsWithNextLayer() {
-		Set<Partition<Integer>.Set> connected = new HashSet<>();
+		Set<Partition<Integer>.PSet> connected = new HashSet<>();
 		// randomly select cells and connect with the next layer unless another cell from the same
 		// equivalence class is already connected to that layer
 		for (int cell : layer) {

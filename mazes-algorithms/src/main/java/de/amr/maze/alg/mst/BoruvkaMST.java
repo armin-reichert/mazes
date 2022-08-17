@@ -49,7 +49,7 @@ public class BoruvkaMST extends MazeGenerator {
 		}
 	}
 
-	private Optional<Edge> findCombiningEdge(Partition<Integer>.Set tree) {
+	private Optional<Edge> findCombiningEdge(Partition<Integer>.PSet tree) {
 		return permute(tree.elements()).flatMap(this::inventCombiningEdges).findFirst();
 	}
 
