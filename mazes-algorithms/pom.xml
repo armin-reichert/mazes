@@ -1,12 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<artifactId>mazes-algorithms</artifactId>
+
 	<parent>
 		<groupId>de.amr.maze</groupId>
 		<artifactId>mazes-all</artifactId>
 		<version>1.0</version>
 		<relativePath>..</relativePath>
 	</parent>
+
 	<dependencies>
 		<dependency>
 			<groupId>de.amr.graph</groupId>
@@ -39,4 +42,5 @@
 			</plugin>
 		</plugins>
 	</build>
+
 </project>
