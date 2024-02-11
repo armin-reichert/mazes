@@ -30,8 +30,7 @@ public class IterativeDFS extends MazeGenerator {
 		grid.set(current, VISITED);
 		stack.push(current);
 		while (!stack.isEmpty()) {
-			int neighbor = randomElement(grid.neighbors(current).filter(this::isCellUnvisited))
-					.orElse(Graph.NO_VERTEX);
+			int neighbor = randomElement(grid.neighbors(current).filter(this::isCellUnvisited)).orElse(Graph.NO_VERTEX);
 			if (neighbor != Graph.NO_VERTEX) {
 				grid.addEdge(current, neighbor);
 				grid.set(neighbor, VISITED);
