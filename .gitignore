@@ -28,3 +28,6 @@ hs_err_pid*
 /bin/
 /target/
 /.idea/
+/mazes-algorithms/build/
+/.gradle/
+/mazes-algorithms/.gradle/
