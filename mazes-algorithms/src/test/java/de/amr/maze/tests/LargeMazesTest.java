@@ -19,8 +19,7 @@ public class LargeMazesTest {
 				UNVISITED, 0);
 		StopWatch watch = new StopWatch();
 		watch.measure(() -> new KruskalMST(grid).createMaze(0, 0));
-		System.out.println(
-				String.format("Kruskal: %d vertices (%.0f ms)", numCols * numRows, watch.getMillis()));
+		System.out.printf("Kruskal: %d vertices (%.0f ms)%n", numCols * numRows, watch.getMillis());
 	}
 
 	private void test_RecursiveDivision(int numCols, int numRows) {
@@ -28,8 +27,8 @@ public class LargeMazesTest {
 				UNVISITED, 0);
 		StopWatch watch = new StopWatch();
 		watch.measure(() -> new RecursiveDivision(grid).createMaze(0, 0));
-		System.out.println(String.format("RecursiveDivision: %d vertices (%.0f ms)", numCols * numRows,
-				watch.getMillis()));
+		System.out.printf("RecursiveDivision: %d vertices (%.0f ms)%n", numCols * numRows,
+				watch.getMillis());
 	}
 
 	@Test
@@ -42,6 +41,7 @@ public class LargeMazesTest {
 		test_Kruskal(500, 1000);
 	}
 
+	@Test
 	public void test_Kruskal_1_000_000() {
 		test_Kruskal(1000, 1000);
 	}
@@ -56,6 +56,7 @@ public class LargeMazesTest {
 		test_RecursiveDivision(500, 1000);
 	}
 
+	@Test
 	public void test_RecursiveDivision_1_000_000() {
 		test_RecursiveDivision(1000, 1000);
 	}

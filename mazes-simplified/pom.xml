@@ -8,7 +8,7 @@
 		<groupId>de.amr.maze</groupId>
 		<artifactId>mazes-all</artifactId>
 		<version>1.0</version>
-		<relativePath>..</relativePath>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 
 	<dependencies>

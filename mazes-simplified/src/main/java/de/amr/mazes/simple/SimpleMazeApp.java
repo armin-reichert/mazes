@@ -22,9 +22,9 @@ public class SimpleMazeApp {
 	public static void main(String[] args) {
 		maze(p, "AldousBroder", grid -> MazeAlgorithms.createMazeByAldousBroder(grid, 0), numRows, numCols);
 		maze(p, "Growing Tree", grid -> MazeAlgorithms.createMazeByGrowingTree(grid, 0), numRows, numCols);
-		maze(p, "Sidewinder", grid -> MazeAlgorithms.createMazeBySidewinder(grid), numRows, numCols);
-		maze(p, "Recursive Division", grid -> MazeAlgorithms.createMazeByRecursiveDivision(grid), numRows, numCols);
-		maze(p, "Wilson", grid -> MazeAlgorithms.createMazeByWilson(grid), numRows, numCols);
+		maze(p, "Sidewinder", MazeAlgorithms::createMazeBySidewinder, numRows, numCols);
+		maze(p, "Recursive Division", MazeAlgorithms::createMazeByRecursiveDivision, numRows, numCols);
+		maze(p, "Wilson", MazeAlgorithms::createMazeByWilson, numRows, numCols);
 	}
 
 	static void maze(PrintStream p, String generatorName, Consumer<GridGraphImpl> generator, int numRows, int numCols) {
@@ -36,13 +36,13 @@ public class SimpleMazeApp {
 		long time = System.currentTimeMillis() - start;
 
 		p.println();
-		p.println("Graph:     %d vertices, %d edges".formatted(grid.numVertices(), grid.numEdges()));
-		p.println("Algorithm: %s".formatted(generatorName));
-		p.println("Time:      %d milliseconds".formatted(time));
+		p.printf("Graph:     %d vertices, %d edges%n", grid.numVertices(), grid.numEdges());
+		p.printf("Algorithm: %s%n", generatorName);
+		p.printf("Time:      %d milliseconds%n", time);
 		prettyPrint(grid, p);
 
 		if (grid.numEdges() != grid.numVertices() - 1) {
-			p.println("Wrong #edges: %d (expected %d)".formatted(grid.numEdges(), grid.numVertices() - 1));
+			p.printf("Wrong #edges: %d (expected %d)%n", grid.numEdges(), grid.numVertices() - 1);
 		}
 
 		if (GraphFunctions.containsCycle(grid)) {
