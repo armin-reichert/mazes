@@ -1,4 +1,5 @@
 rootProject.name = 'mazes'
+
 include 'mazes-algorithms', 'mazes-simplified'
 
 // until there is no clean solution, the following jar files have to be produced

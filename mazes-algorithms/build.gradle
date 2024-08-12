@@ -6,13 +6,17 @@ group 'de.amr.graph'
 version '1.0'
 
 dependencies {
-    implementation fileTree(dir: '../libs', include: '*.jar')
+    //implementation fileTree(dir: '../libs', include: '*.jar')
+    implementation 'de.amr.graph:graph-core:1.0'
+    implementation 'de.amr.graph:graph-grid:1.0'
+    implementation 'de.amr.graph:graph-search:1.0'
     implementation 'org.tinylog:tinylog-api:2.7.0'
     implementation 'org.tinylog:tinylog-impl:2.7.0'
     testImplementation group: 'junit', name: 'junit', version: '4.13.2'
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 

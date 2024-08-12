@@ -4,7 +4,6 @@ import java.io.PrintStream;
 import java.util.BitSet;
 import java.util.function.IntConsumer;
 
-import de.amr.datastruct.Partition;
 
 /**
  * @author Armin Reichert

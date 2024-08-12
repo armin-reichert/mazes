@@ -1,21 +1,10 @@
 package de.amr.mazes.simple;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.Collections;
-import java.util.Deque;
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Random;
+import de.amr.mazes.simple.graph.*;
+
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import de.amr.datastruct.Partition;
-import de.amr.mazes.simple.graph.Dir;
-import de.amr.mazes.simple.graph.DirMap;
-import de.amr.mazes.simple.graph.Edge;
-import de.amr.mazes.simple.graph.GridGraph;
 
 /**
  * Collection of maze generation algorithms.
