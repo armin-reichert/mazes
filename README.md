@@ -8,20 +8,25 @@ The shown demo application can be downloaded [here](https://github.com/armin-rei
 
 ### How to build the library
 
-`cd <your_root_dir>`
-`git clone https://github.com/armin-reichert/graph.git`
-`cd graph`
-`mvn clean install`
-`cd <your_root_dir>`
-`git clone https://github.com/armin-reichert/mazes.git`
-`mvn clean install`
+```
+cd <your_root_dir>
+git clone https://github.com/armin-reichert/graph.git
+cd graph
+mvn clean install
+cd <your_root_dir>
+git clone https://github.com/armin-reichert/mazes.git
+cd mazes
+mvn clean install
+```
 
 ### How to build the Swing sample application 
 
-`cd <your_root_dir>`
-`git clone https://github.com/armin-reichert/mazes-demos.git`
-`cd SwingMazeDemo`
-`mvn clean install`
+```
+cd <your_root_dir>
+git clone https://github.com/armin-reichert/mazes-demos.git
+cd mazes-demos/SwingMazeDemo
+mvn clean install
+```
 
 Then you find an executable jar file named `SwingMazeDemo-1.0-jar-with-dependencies.jar` inside the folder `target`.
 
