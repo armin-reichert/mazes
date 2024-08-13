@@ -11,11 +11,10 @@ The shown demo application can be downloaded [here](https://github.com/armin-rei
 ```
 cd <your_root_dir>
 git clone https://github.com/armin-reichert/graph.git
+git clone https://github.com/armin-reichert/mazes.git
 cd graph
 mvn clean install
-cd <your_root_dir>
-git clone https://github.com/armin-reichert/mazes.git
-cd mazes
+cd ../mazes
 mvn clean install
 ```
 
