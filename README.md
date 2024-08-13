@@ -1,11 +1,32 @@
 ## Maze generation algorithms
 
-
 This project provides Java implementations of more than 35 algorithms for generating so called "perfect mazes" (which are just spanning trees of undirected graphs).
 
 ![Maze Demo Application](https://github.com/armin-reichert/mazes/wiki/images/mazedemoapp.png)
 
 The shown demo application can be downloaded [here](https://github.com/armin-reichert/mazes/releases). (Java runtime needed.)
+
+### How to build the library
+
+`cd <your_root_dir>`
+`git clone https://github.com/armin-reichert/graph.git`
+`cd graph`
+`mvn clean install`
+`cd <your_root_dir>`
+`git clone https://github.com/armin-reichert/mazes.git`
+`mvn clean install`
+
+### How to build the Swing sample application 
+
+`cd <your_root_dir>`
+`git clone https://github.com/armin-reichert/mazes-demos.git`
+`cd SwingMazeDemo`
+`mvn clean install`
+
+Then you find an executable jar file named `SwingMazeDemo-1.0-jar-with-dependencies.jar` inside the folder `target`.
+
+
+## Mazes are fun
 
 On the web, many maze generation implementations in all possible programming languages can be found. The popularity of these algorithms probably comes from the fact that mazes and their creation processes are visually appealing and not really difficult to implement. The most popular algorithm seems to be "recursive backtracking" which is random depth-first traversal of a graph. 
 
