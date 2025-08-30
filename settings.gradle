@@ -1,9 +1,20 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+    plugins {
+        id("java").apply(false)
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
 rootProject.name = 'mazes'
 
 include 'mazes-algorithms', 'mazes-simplified'
-
-// until there is no clean solution, the following jar files have to be produced
-// and copied to the "libs" folder:
-//   graph-core.1.0.jar
-//   graph-grid-1.0.jar
-//   graph-search-1.0.jar
